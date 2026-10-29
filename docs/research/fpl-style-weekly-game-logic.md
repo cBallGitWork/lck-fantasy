@@ -145,3 +145,41 @@ The traps are as clear. **Rolling lockout with a worldwide audience** rewards wh
 The research turns the question round. FPL's week is built to absorb an irregular calendar, and the LCK's regular season is perfectly regular. Most of FPL's planning machinery therefore matters only at the edges of the season: blanks, doubles, best-N scoring, extra transfers and chips saved for special weeks. What carries the weekly decision in the LCK is the economy: performance prices with public breakevens, cash-cow rookies, a tight transfer bank and chips that reshape a small squad. This favours open, computable rules over FPL's secret ones, which is also the shape this repo already prefers ("the league's rules are data"). Every threshold, allowance, cap and deadline above belongs in league data, ready to be tuned after the LCK Cup beta.
 
 Three open items move because of this research. The **playoffs** look better as a separate stage game, which leaves Road to MSI as the main game's only blank week. **Bench size** can be small, since auto-subs fire only for rotations and blanks. And the **chip set** gains a strong, LoL-native candidate in a bot-lane duo, while Stand-in should keep its budget. None of the numbers here should go into a spec until someone has read the primary rules pages that this session could not open.
+
+## Checked against FPL's live settings (29 Oct 2026)
+
+FPL's help page needs a browser, but its public settings feed (`fantasy.premierleague.com/api/bootstrap-static/`) holds the same rules as data. Read on 29 Oct 2026, for 2026/27:
+
+| Rule | FPL 2026/27 |
+|---|---|
+| Squad | 15: 2 GK, 5 DEF, 5 MID, 3 FWD; 11 start |
+| Legal line-up | at least 1 GK, 3 DEF, 2 MID, 1 FWD; a goalkeeper only swaps with a goalkeeper |
+| Players per club | at most 3 |
+| Budget | £100.0m (held as 1000, shown ÷10) |
+| Captain | vice-captain on |
+| Free transfers | up to 4 extra banked, so a cap of 5 |
+| Selling price | half the profit (sell-on fee 0.5); not sold at purchase price |
+| Chips | two sets, one per half: Wildcard and Free Hit from GW2–19 and GW20–38; Bench Boost and Triple Captain from GW1–19 and GW20–38 |
+| Head-to-head | win 3, draw 1, loss 0; private H2H leagues up to 16; tie-break goals scored, then goals conceded |
+| Leagues | join up to 30 private and 5 public; public leagues hold 20 |
+| Time | stored in UTC |
+
+Scoring:
+
+| Action | GK | DEF | MID | FWD |
+|---|---|---|---|---|
+| Played under 60 min / 60+ | 1 / 2 | 1 / 2 | 1 / 2 | 1 / 2 |
+| Goal | 10 | 6 | 5 | 4 |
+| Assist | 3 | 3 | 3 | 3 |
+| Clean sheet | 4 | 4 | 1 | 0 |
+| Goals conceded (per step) | −1 | −1 | 0 | 0 |
+| Defensive contribution | 0 | 2 | 2 | 2 |
+| Saves (per step) | 1 | | | |
+| Penalty saved / missed | 5 / −2 | −2 | −2 | −2 |
+| Yellow / red / own goal | −1 / −3 / −2 | same | same | same |
+| Bonus | 1 per bonus point (top three in the match's bonus ranking) | | | |
+
+The feed gives point values, not thresholds: how many saves, goals conceded or defensive actions make one step is in the help text, not checked here. The −4 cost of an extra transfer is not in the feed either.
+
+What this settles for the LCK game: the bank cap of 5 and half-profit selling, which this note had from snippets, are confirmed. Two things are new. Wildcard and Free Hit can't be played in GW1, and scoring is weighted by position, so the same action is worth more for the position that rarely does it (a goalkeeper's goal is 10, a forward's 4). That second point supports position weights in LCK scoring: a support's kill can be worth more than a mid laner's.
+

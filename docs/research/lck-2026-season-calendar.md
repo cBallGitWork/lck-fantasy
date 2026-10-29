@@ -15,13 +15,23 @@ Read from Liquipedia's LCK 2026 pages on 29 Oct 2026, through its API. Times are
 
 **Series per team per week.** In both regular stages every team plays exactly two Bo3 series a week (Wednesday to Sunday, 17:00 and about 19:30 KST). Road to MSI and the post-season are uneven: four teams sit out Road to MSI, and in the playoffs a team can play none, one or several Bo5s in a week.
 
-**Post-season by Monday-to-Sunday week:**
+**Post-season, series by series** (all Bo5, 17:00 KST unless shown):
 
-| Week of | Series | Days |
+| Date | Round | Who goes out |
 |---|---|---|
-| 24 Aug | 3 Play-In + 2 playoff | Wed–Fri Play-In, Sat–Sun playoffs |
-| 31 Aug | 6 playoff | Tue to Sun, one a day |
-| 7 Sep | 2 playoff | Sat 12 lower final, Sun 13 grand final |
+| Wed 26 Aug | Play-In R1: Legend 5th v Rise 1st; the winner goes to the playoffs | |
+| Thu 27 Aug | Play-In R2: Rise 2nd v Rise 3rd | loser out |
+| Fri 28 Aug | Play-In R3: R1 loser v R2 winner; the winner goes to the playoffs | loser out |
+| Sat 29, Sun 30 Aug | Upper round 1: Legend 3rd and 4th v the two Play-In qualifiers | losers drop to the lower bracket |
+| Tue 1, Wed 2 Sep | Upper round 2: Legend 1st and 2nd join (a bye until now) | losers drop |
+| Thu 3, Fri 4 Sep | Lower round 1 | 2 teams out |
+| Sat 5 Sep | Upper final | loser drops |
+| Sun 6 Sep | Lower round 2 | 1 team out |
+| Mon 7 – Fri 11 Sep | no matches | |
+| Sat 12 Sep, 14:00 | Lower final, KSPO Dome | 1 team out |
+| Sun 13 Sep, 14:00 | Grand final, KSPO Dome | |
+
+By Monday-to-Sunday week: 24 Aug has 5 series (the top two seeds don't play), 31 Aug has 6 (a team can play one, two or three of them), and 7 Sep has the 2 finals.
 
 **Checks and gaps.** Liquipedia lists 9 week blocks of 10 series for Rounds 1–2 and gives the stage an end date of 31 May. The rendered page only had times up to week 7 (17 May), so weeks 8–9 falling on 20–24 and 27–31 May is inferred from the end date. Rounds 3–4 lists weeks 10–13 with 40 series, matching the times found. Hanwha Life Esports won MSI 2026, so if they finished top 3, 4th place also went to Worlds. Finals MVP was Ruler (13 Sep).
 

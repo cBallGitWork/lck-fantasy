@@ -14,7 +14,6 @@ Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC
 
 - The LCK Cup (January–March 2027) is the beta and the test.
 - The main game splits into Split 1 and Split 2. Chips reset at the split, the way FPL's reset at GW19.
-- Whether to include playoffs is undecided.
 
 ## Squad and slots
 
@@ -70,9 +69,18 @@ Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC
 - The look: "research lck colours and lol. i like shirts, see if player portraits appear too". The pitch view becomes a Rift view with the lanes, each player in "the equivalent of a shirt".
 - How we work is ported from the draft product: hooks, skills, reviewer agents and the build pipeline.
 
+## Season and gameweeks grill (11 Nov 2026)
+
+Settled; the spec is [spec/10-season-and-gameweeks.md](../spec/10-season-and-gameweeks.md).
+
+- The Cup "is a proof of concept/beta test, just do both": groups and knockouts score. Later: "lck cup just a closed beta anyways"; Road to MSI and the LCK playoffs are "the real test".
+- Knockouts: "we probably need to remove the budget too, as its based around not getting the top guys", and "can increase the max players per squad too".
+- Uneven weeks: first "i dont like that as towards the end some teams will plkay more, funnels picks to just them", then "i think every series should count". A gameweek per match day is out: "lots of transfers/betting on one team more admin". Stacking in thin weeks is still open: "every gameweek would just be stacking 2 teams".
+- "we dont know what they are, but we can code/build the ability change it whenever", and the values are decided "when the fixture dates come out next year".
+- Round 1: per-stage settings as data, yes; settings change only before a deadline, yes; deadline "15 mins before" the first series; Road to MSI in Split 1, yes; the glossary, yes.
+
 ## Open
 
-- Playoffs: include them or not, and if so as a side game.
 - Scoring per series: best game or the whole series.
 - Size of the squad and bench, and what the flex slot can hold.
 - How the coach slot scores.

@@ -41,14 +41,28 @@ and the detail waits for its `/grill`; nothing is built.
 | 7 | [Achievement book](spec/07-achievement-book.md) | Each achievement is worth about 1 point, and it is packed with LCK memes and history. Example: "Ryu sad face": your opponent loses a solo 1v1, after Faker beat Ryu in 2013. | to grill |
 | 8 | [Leagues](spec/08-leagues.md) | FPL-style global leagues, and team supporter leagues. | to grill |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: the first page is one where you can just pick a team, with no sign-up wall. "Its a great way to get people in" (Craig, 11 Nov 2026). | to grill |
-| 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is the beta. Split 1 and Split 2, with chips resetting at the split. | to grill |
+| 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series. | not built |
 | 11 | [Live points](spec/11-live-points.md) | Points that move during a match "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
+
+## Later
+
+- The values of each stage's settings, set when the 2027 fixture dates come out
+  ([spec/10](spec/10-season-and-gameweeks.md)).
+- How to stop squads stacking the few teams left in a thin knockout week. In 2026 the LCK
+  playoffs' last week had 3 teams playing (checked 11 Nov 2026, Wikipedia).
 
 ## Out of scope
 
 - A draft game.
 - Cash prizes.
+- A gameweek per match day: "lots of transfers… more admin" (Craig, 11 Nov 2026).
 
 ## Glossary
 
-Empty until the first `/grill` settles a word.
+| Term | Meaning | Not |
+|---|---|---|
+| gameweek | The window one squad and one captain score for, with one deadline. | week |
+| series | One fixture between two teams, a Bo3 or Bo5. | match |
+| game | One game within a series. | map |
+| stage | A part of a competition with its own settings: groups, Road to MSI, play-in, playoffs. | phase |
+| round | One round of a knockout bracket. | |

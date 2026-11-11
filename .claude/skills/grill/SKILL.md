@@ -11,6 +11,8 @@ A one-sentence ask leaves gaps, and an agent fills every gap with a silent guess
 turns those guesses into questions Craig answers before the first line is written. After Matt
 Pocock's `grill-me` (skills v1.3, Oct 2026).
 
+**Contents:** 1. Map the decisions · 2. Facts are yours, decisions are Craig's · 3. One numbered round at a time · 4. One word for one thing · 5. Done is an empty frontier and a yes · 6. Then the tickets
+
 ## 1. Map the decisions
 
 Draw the ask as a tree: the ask at the top, every decision it implies underneath, and the
@@ -100,6 +102,8 @@ A feature grilled for building ends in GitHub issues, which are the build queue:
   it, then the issue that builds each. Those issues are its blockers.
 - **Reuses**: the existing reads, parts and test fixtures the ticket builds on, and the folder
   its code goes in (`ARCHITECTURE.md`).
+- **Label**: `lane:auto` on each issue the grill cuts, so the pipeline's lead builds it
+  (`docs/PIPELINE.md`); `lane:craig` instead on one that waits for Craig.
 
 A feature bigger than one fresh session (~150k tokens) is cut into several issues, each a thin
 slice through every layer that works on its own, with the blocking order named. So is one past

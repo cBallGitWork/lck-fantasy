@@ -2,6 +2,8 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+
 ## What it is
 
 - The name is Flol, said "flol" as one syllable (Craig, 11 Nov 2026). It is written Flol, not FLoL, to keep Riot's "LoL" mark out of the name.
@@ -79,11 +81,18 @@ Settled; the spec is [spec/10-season-and-gameweeks.md](../spec/10-season-and-gam
 - "we dont know what they are, but we can code/build the ability change it whenever", and the values are decided "when the fixture dates come out next year".
 - Round 1: per-stage settings as data, yes; settings change only before a deadline, yes; deadline "15 mins before" the first series; Road to MSI in Split 1, yes; the glossary, yes.
 
+## Squad and slots grill (11 Nov 2026)
+
+Settled; the spec is [spec/01-squad-and-slots.md](../spec/01-squad-and-slots.md).
+
+- Round 1: one per role plus a flex and the coach start, yes; a bench of 2, yes; the flex holds any role, yes; auto-subs into own role or flex, in bench order, yes.
+- The coach: "id like more info on cblol", "coach could be towers, drakes, smart strats (example can we detect if they build for early or late and fix accordingly?) winning opent to ideas", and "coach is essentially the \"team\" but we will use a head coach as the role figurehead".
+- Round 2: coach counts toward the team cap, yes; slot follows the listed role, yes; the coach scores the team's play, not CBLOL's average, yes; smart strats to the scoring grill, yes; no bench coach, yes; the pick stays through a coach change, yes.
+- Auto-sub gaps the review found: a missing flex takes any bench player, yes; each bench player takes his own role before the flex, in bench order, yes; a bench player who didn't play is skipped, yes.
+
 ## Open
 
 - Scoring per series: best game or the whole series.
-- Size of the squad and bench, and what the flex slot can hold.
-- How the coach slot scores.
 - The chip set and names.
 - How the achievements cap and rank: a separate column, and base points decide ties?
 

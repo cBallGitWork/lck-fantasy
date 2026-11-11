@@ -1,6 +1,7 @@
 # LCK fantasy scoring backtest, 2026
 
-Contents: Decision · Data · Scoring tested · Headline · Per role · Components · Game length · Top 15 · Surprises · Files
+**Contents:** [Decision](#decision) · [Data](#data) · [Scoring tested (per game; all toggles)](#scoring-tested-per-game-all-toggles) · [Headline](#headline) · [Per role, points per series: mean (sd) [90th pct]](#per-role-points-per-series-mean-sd-90th-pct) · [Components](#components) · [Game length (the key concern)](#game-length-the-key-concern) · [Top 15, season total (best 2 games per series)](#top-15-season-total-best-2-games-per-series) · [Surprises](#surprises) · [Files](#files)
+
 
 ## Decision
 

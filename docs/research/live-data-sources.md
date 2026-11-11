@@ -1,5 +1,7 @@
 # LCK fantasy: per-player stats sources
 
+**Contents:** [1. The short answer](#1-the-short-answer) · [2. Comparison table](#2-comparison-table) · [3. Riot's lolesports feeds](#3-riots-lolesports-feeds) · [4. GRID](#4-grid) · [5. Oracle's Elixir](#5-oracles-elixir) · [6. Leaguepedia Cargo API](#6-leaguepedia-cargo-api) · [7. Riot developer terms](#7-riot-developer-terms) · [8. Recommendation](#8-recommendation) · [9. Decisions for Craig](#9-decisions-for-craig)
+
 Desk research, 11 Nov 2026. Public pages and keyless public endpoints only. No sign-ups, no keys used.
 "Checked" means I fetched it today. "Unverified" means I read it second-hand or could not test it.
 

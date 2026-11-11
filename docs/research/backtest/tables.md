@@ -1,3 +1,7 @@
+# Scoring backtest 2026: raw tables
+
+**Contents:** [Data](#data) · [Game lengths (min)](#game-lengths-min) · [Per-game points (base A+B+C+D) distribution](#per-game-points-base-abcd-distribution) · [Per-role points per series: mean (sd) [p90]](#per-role-points-per-series-mean-sd-p90) · [Component share of base points (all games), and mean per game by role](#component-share-of-base-points-all-games-and-mean-per-game-by-role) · [Game-length bias (Pearson r)](#game-length-bias-pearson-r) · [Top 15 by season total (best 2 games per series)](#top-15-by-season-total-best-2-games-per-series) · [Top 15 by season total (best game per series)](#top-15-by-season-total-best-game-per-series) · [Top 15 by season total (series sum)](#top-15-by-season-total-series-sum)
+
 ## Data
 | league | split | playoffs | rows |
 |---|---|---|---|

@@ -18,6 +18,7 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 - The weights by position.
 - What the coach (the team) scores from: wins, towers, drakes, and "smart strats", such as a team
   that plays for early or late and pulls it off, defined from the game data (Craig, 11 Nov 2026).
+- Whether a coach whose team plays but loses can score 0 or below.
 
 ## Open from the foundations work (11 Nov 2026)
 

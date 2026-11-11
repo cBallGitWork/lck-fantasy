@@ -27,6 +27,12 @@ FPL's rule, with role in place of formation:
 - A starter who plays no game in the gameweek is replaced by a bench player, in bench order.
 - A bench player comes on only into his own role or the flex slot. Example: your top laner sits
   out; bench 1 is a support, bench 2 a top laner, so bench 2 comes on.
+- If the flex starter is out, the first bench player who played comes on into the flex, whatever
+  his role.
+- Each bench player, in bench order, takes the first open slot he fits: his own role before the
+  flex. Example: your mid and flex are out and both bench players are mids, so bench 1 goes to mid
+  and bench 2 to flex.
+- A bench player who also played no game is skipped, and the next one is tried.
 
 ## The coach
 

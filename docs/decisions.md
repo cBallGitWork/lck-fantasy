@@ -88,6 +88,7 @@ Settled; the spec is [spec/01-squad-and-slots.md](../spec/01-squad-and-slots.md)
 - Round 1: one per role plus a flex and the coach start, yes; a bench of 2, yes; the flex holds any role, yes; auto-subs into own role or flex, in bench order, yes.
 - The coach: "id like more info on cblol", "coach could be towers, drakes, smart strats (example can we detect if they build for early or late and fix accordingly?) winning opent to ideas", and "coach is essentially the \"team\" but we will use a head coach as the role figurehead".
 - Round 2: coach counts toward the team cap, yes; slot follows the listed role, yes; the coach scores the team's play, not CBLOL's average, yes; smart strats to the scoring grill, yes; no bench coach, yes; the pick stays through a coach change, yes.
+- Auto-sub gaps the review found: a missing flex takes any bench player, yes; each bench player takes his own role before the flex, in bench order, yes; a bench player who didn't play is skipped, yes.
 
 ## Open
 

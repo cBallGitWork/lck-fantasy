@@ -39,7 +39,8 @@ Notes:
   between spells, and a stand-in can play out of role for one game. The lineup is what happened;
   the contract is what the game lists him as.
 - **The coach** is a `contracts` row with the role `coach`. The coach slot picks the team, not
-  the person: it scores the team's play and shows the team's current head coach
+  the person: its pick holds a team, which scores the team's play and shows whoever holds the
+  team's current coach contract, so a change of head coach changes no pick
   ([spec/01](../spec/01-squad-and-slots.md)). What it scores from is open (to-grill).
 - **Roles** are a fixed list for LoL: top, jungle, mid, bot, support, plus coach. This is a rule
   of the sport, like FPL's four positions, so it can be a constant.
@@ -89,7 +90,7 @@ Notes:
 |---|---|---|
 | `managers` | a signed-in person | name, country, favourite team |
 | `entries` | a manager's team in one season | manager, season, team name, bank |
-| `picks` | an entry's squad for one gameweek | entry, gameweek, player, slot (role, flex, coach, bench order), captain, vice-captain, buy price |
+| `picks` | an entry's squad for one gameweek | entry, gameweek, player (a team for the coach slot), slot (role, flex, coach, bench order), captain, vice-captain, buy price |
 | `transfers` | one player out, one in | entry, gameweek, out, in, prices, free or a −4 hit |
 | `chipPlays` | a chip used | entry, gameweek, chip |
 | `prices` | a player's price over time | player, season, from gameweek, price in won |
@@ -104,7 +105,7 @@ Notes:
   sign-up.
 - **A team always has a lineup.** `picks` rows are copied forward at each deadline, so an entry
   that does nothing still fields last week's team.
-- **Chips, slots and squad sizes are data per season**, since all three are still open.
+- **Chips, slots and squad sizes are data per season**, so they can be tuned after the beta.
 
 ## What the LCK forces
 

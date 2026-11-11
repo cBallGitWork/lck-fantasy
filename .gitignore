@@ -1,0 +1,9 @@
+node_modules/
+.env*
+.DS_Store
+__pycache__/
+.claude/settings.local.json
+.claude/worktrees/
+# Pull request bodies are written to files, then passed with --body-file.
+/pr-body-*.md
+/.pr-body-*.md

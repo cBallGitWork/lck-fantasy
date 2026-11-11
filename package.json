@@ -1,0 +1,8 @@
+{
+  "name": "lck-fantasy",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "verify": "node scripts/contents-lists.mjs && .claude/hooks/test.sh"
+  }
+}

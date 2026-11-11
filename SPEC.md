@@ -9,7 +9,7 @@ own `/grill` before it is built, and lands in its `spec/NN-name.md` file. What i
 
 ## What it is
 
-**FLoL** (Craig, 11 Nov 2026: "the name is FLoL"): a free, season-long fantasy game for the LCK (League of Legends Champions Korea) that copies
+**Flol** (Craig, 11 Nov 2026: "the name is FLoL"; written Flol and said "flol", one syllable): a free, season-long fantasy game for the LCK (League of Legends Champions Korea) that copies
 FPL's structure: a budget, a squad with a bench, weekly transfers, a captain, chips, and global
 and supporter leagues. It is not a draft game. The theme is Korean.
 

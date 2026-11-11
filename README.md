@@ -4,5 +4,9 @@ A free, season-long fantasy game for the LCK (League of Legends Champions Korea)
 
 Nothing is built yet. The LCK Cup (January to March 2027) is the planned beta.
 
-- [Decisions so far](docs/decisions.md): what's settled and what's still open.
+- [SPEC.md](SPEC.md): the product, in Craig's answers only.
+- [To grill](docs/to-grill.md): what's still open.
+- [ARCHITECTURE.md](ARCHITECTURE.md): the services, and why.
+- [Data model](docs/data-model.md): a proposal for how the LCK is held.
+- [Decisions so far](docs/decisions.md): the history of what Craig said and when.
 - [Research](docs/research/): the competitors, the LCK season, scoring and pricing, weekly logic and onboarding.

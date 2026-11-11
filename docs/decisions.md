@@ -4,6 +4,7 @@ Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC
 
 ## What it is
 
+- The name is Flol, said "flol" as one syllable (Craig, 11 Nov 2026). It is written Flol, not FLoL, to keep Riot's "LoL" mark out of the name.
 - A free, season-long fantasy game for the LCK that copies FPL's structure. It is not a draft game.
 - Players are worldwide and the game is in English first. Deadlines are stored in UTC and shown in each user's local time.
 - The LCK goes first because its schedule is more regular than the LEC's three splits.

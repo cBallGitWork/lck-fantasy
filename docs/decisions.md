@@ -61,6 +61,9 @@ Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC
 - Stats: "live points would be great".
 - This round is the repo setup and spec, the site flow and designs, the LCK data layer and a scoring backtest. No app skeleton: "cant be bothered with that".
 - The repo is this one, `lck-fantasy`.
+- A series scores a player's "best 2 games of a series".
+- Live points: ask GRID first, and fall back to Riot's unofficial live feed.
+- The look: "research lck colours and lol. i like shirts, see if player portraits appear too". The pitch view becomes a Rift view with the lanes, each player in "the equivalent of a shirt".
 - How we work is ported from the draft product: hooks, skills, reviewer agents and the build pipeline.
 
 ## Open

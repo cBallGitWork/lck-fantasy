@@ -33,13 +33,13 @@ and the detail waits for its `/grill`; nothing is built.
 | 2 | Prices and budget | Prices, with a Korean feel, for example in won. | to grill |
 | 3 | Transfers | Weekly transfers with −4 hits. | to grill |
 | 4 | Captain | A captain, as in FPL. | to grill |
-| 5 | Scoring | A set of toggles, with weights by position. Point values stay low, like FPL's. It must not reward long games, so raw kill totals are out. Points work per series. Backtested on 2026 LCK data. | to grill |
+| 5 | Scoring | A set of toggles, with weights by position. Point values stay low, like FPL's. It must not reward long games, so raw kill totals are out. Points work per series, and a series scores a player's best 2 games (Craig, 11 Nov 2026). Backtested on 2026 LCK data. | to grill |
 | 6 | Chips | FPL-style chips with names themed on the league. | to grill |
 | 7 | Achievement book | Each achievement is worth about 1 point, and it is packed with LCK memes and history. Example: "Ryu sad face": your opponent loses a solo 1v1, after Faker beat Ryu in 2013. | to grill |
 | 8 | Leagues | FPL-style global leagues, and team supporter leagues. | to grill |
 | 9 | Onboarding | Pick your squad before you sign up, as UCL Fantasy does. No sign-up wall first. | to grill |
 | 10 | Season and gameweeks | The LCK Cup is the beta. Split 1 and Split 2, with chips resetting at the split. | to grill |
-| 11 | Live points | Points that move during a match "would be great". | to grill |
+| 11 | Live points | Points that move during a match "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
 
 ## Out of scope
 

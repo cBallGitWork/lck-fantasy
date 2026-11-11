@@ -1,5 +1,8 @@
 # Site flow: a proposal
 
+The site map as a picture: [site-map.png](site-map.png) (source `site-map.html`). The front door is
+Pick team: onboarding copies UCL Fantasy, a page where you can just pick a team (Craig, 11 Nov 2026).
+
 How a visitor moves through the site. Claude's proposal from Craig's outline in
 [SPEC.md](../../SPEC.md); each screen is settled by its own `/grill` and picture before it is built.
 

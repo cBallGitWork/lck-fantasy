@@ -1,7 +1,8 @@
 # Approves every pull request from this repository so it can merge without Craig; no label is needed. The `main`
 # ruleset needs one approval; this bot supplies it. It does not approve a pull request by anyone but the repo's owner
-# that touches .claude/ or .github/, the pipeline's own guards, so the builder (the pipeline's account) can't loosen
-# the checks that judge it; a session Craig works in opens its pull requests as him, so those merge on green. Checks
+# that touches the pipeline's own guards (.claude/, .github/, scripts/, package.json, CLAUDE.md: the hooks, the
+# workflows, and what `npm run verify` runs), so the builder (the pipeline's account) can't loosen the checks that
+# judge it; narrow the list when app code needs package.json; a session Craig works in opens its pull requests as him, so those merge on green. Checks
 # still gate the merge: the approval does not merge anything, and `lane:craig` on the same pull request withholds
 # it; adding `lane:craig` later takes a given approval back (the withdraw job).
 # Needs the repo setting "Allow GitHub Actions to create and approve pull requests". Until it is on, the approval is
@@ -31,7 +32,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           PR: ${{ github.event.pull_request.number }}
           BY_OWNER: ${{ github.event.pull_request.user.login == github.repository_owner }}
-          GUARDS: '^\.(claude|github)/'  # the pipeline's own guards
+          GUARDS: '^(\.(claude|github)/|scripts/|package\.json$|CLAUDE\.md$)'  # the pipeline's own guards
           BOT: github-actions[bot]  # the login this job's reviews carry
         run: |
           if [ "$BY_OWNER" != true ]; then
@@ -46,7 +47,7 @@ jobs:
                 --jq ".[] | select(.user.login == \"$BOT\" and .state == \"APPROVED\") | .id")
               for id in $ids; do
                 gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$PR/reviews/$id/dismissals" \
-                  -f event=DISMISS -f message="Approval withdrawn: this pull request now touches .claude/ or .github/ and waits for Craig."
+                  -f event=DISMISS -f message="Approval withdrawn: this pull request now touches the pipeline's guards and waits for Craig."
               done
               exit 0
             fi

@@ -2,6 +2,7 @@
 # actionlint over the workflows. The job named `verify` is the result the `main` ruleset requires
 # (docs/PIPELINE.md). The repo has no app yet, so there is no build and no smoke job: they go where the comment
 # at the bottom says. Until package.json exists, `npm run verify` is skipped with a notice and the job stays green.
+# Actions pinned to the SHAs claude-build.yml uses.
 name: verify
 
 on:
@@ -31,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
         with:
           fetch-depth: 0  # origin/main and the branch's commits, for checks that read git history
       - id: repo
@@ -42,7 +43,7 @@ jobs:
             echo "::notice::No package.json yet: \`npm run verify\` is skipped. Only actionlint runs."
           fi
           if [ -f .nvmrc ]; then echo "node=$(tr -d 'v[:space:]' < .nvmrc)" >> "$GITHUB_OUTPUT"; else echo "node=$DEFAULT_NODE" >> "$GITHUB_OUTPUT"; fi
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4.4.0
         if: steps.repo.outputs.package == 'true'
         with:
           node-version: ${{ steps.repo.outputs.node }}

@@ -1,5 +1,5 @@
 # The lead: keeps the builders busy all day, so no session has to start, watch or restart a build. Every pass
-# (when a build ends, an issue is labelled to build, and every 30 minutes) it fills up to MAX_IN_FLIGHT
+# (when a build ends, an issue is labelled to build, and four times a day on the clock) it fills up to MAX_IN_FLIGHT
 # claude-build.yml runs, in this order:
 #   1. A fix round. A ready builder pull request (opened by a build, not Craig's session) whose `verify` failed, that
 #      conflicts with main, or whose review says "look at these first", gets one claude-build run in mode `fix` on
@@ -21,13 +21,14 @@
 # Every pass it rewrites the `Today` issue (label `lead:board`): next up in build order, in flight, blocked and on
 # what, merged today, red. It is the day's one report to Craig. An issue Craig labels `next` goes to the front of
 # the queue. At 01:37 UTC it also sweeps, as the team's analyst: the next SWEEP_SIZE candidates get claude-build in
-# mode `rules-only`. A candidate is any other open issue whose body names a spec/NN file and whose title isn't one
-# of NOT_BUILDS. Its open rules land on the issue, labelled `rules:open`, before the day starts, so no daytime
+# mode `rules-only`. A candidate is any other open issue the repo's owner wrote whose body names a spec/NN file and
+# whose title isn't one of NOT_BUILDS (never a stranger's, should the repo go public). Its open rules land on the issue, labelled `rules:open`, before the day starts, so no daytime
 # build stops to ask; a settled one gets `rules:clear` and is built; one already built or out of date gets
 # STALE_LABEL and a comment saying why. Nothing is built that the sweep, a grill or Craig's `next` hasn't checked.
 # Nothing runs until setup is finished (docs/PIPELINE.md). The schedule, a build's end and a label start a pass only
-# once the repository variable PIPELINE_ON is `true`, so no Actions minutes are spent before then (about 49 passes
-# a day). A pass then stops green, saying which, if BUILD_TOKEN or the model secret is missing.
+# once the repository variable PIPELINE_ON is `true`, so no Actions minutes are spent before then. A pass then stops
+# green, saying which, if BUILD_TOKEN, the model secret or the `main` ruleset is missing. The clock is four passes a
+# day, to keep inside a free private repo's Actions minutes: a build's end and a build label wake it in between.
 # A run by hand with `dry_run` says what it would start and label and starts nothing: how a change here is tested
 # from its branch. Builds are dispatched on the lead's own ref, so a branch's lead runs that branch's
 # claude-build.yml. It dispatches rather than labelling `build`: a label added with the default token starts no
@@ -36,8 +37,8 @@ name: lead
 
 on:
   schedule:
-    # off the hour and half hour, GitHub's busiest minutes
-    - cron: "7,37 * * * *"
+    # off the hour and half hour, GitHub's busiest minutes; four passes a day with the sweep's
+    - cron: "37 7,13,19 * * *"
     - cron: "37 1 * * *"  # the rules sweep, before the day's builds
   # GitHub's schedule is not to be relied on. So the lead also passes when a build ends (a slot is free) and when an
   # issue gets a label that makes it buildable; the job's `if` drops the rest
@@ -62,6 +63,8 @@ permissions:
   issues: write  # the lead's labels, on issues and pull requests
   pull-requests: write  # labelling a pull request (FIXED_LABEL, RESUMED_LABEL) needs it: issues: write alone gets 403
   contents: read
+  checks: read  # a pull request's statusCheckRollup: on a private repo the job's token reads neither without these
+  statuses: read
 
 # One pass at a time. GitHub keeps one pass waiting in a group and drops the one it replaces, so an event the job's
 # `if` drops (a skipped build, any other label) runs in a group of its own: in the lead's group it replaced the real
@@ -76,7 +79,7 @@ concurrency:
 env:
   GH_TOKEN: ${{ github.token }}
   GH_REPO: ${{ github.repository }}
-  MAX_IN_FLIGHT: 4
+  MAX_IN_FLIGHT: 2
   SWEEP_SIZE: 10
   FIXED_LABEL: "lead:fixed"
   RESUMED_LABEL: "lead:resumed"
@@ -94,6 +97,11 @@ env:
   STUCK_LABEL: "lead:stuck"
   REVIEW_STARTED_LABEL: "lead:review-started"  # the lead started review.yml for this pull request, whose own never ran
   REVIEW_WAIT_MINUTES: 30  # how long a ready pull request may go with no review before the lead starts one
+  # the login review.yml's comment carries (it posts with the job's token) and the line it ends with; only that
+  # account's comment counts as the review, so nobody else's can pass for it. As review-gate.yml has them.
+  REVIEWER_LOGIN: "github-actions"
+  REVIEWER_SIGNATURE: "*Reviewer: pr-reviewer"
+  DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
   CONFLICT_LABEL: "lead:conflict-round"  # the lead gave this builder pull request a round for main's conflicts
   PASS_CHECK: "lck-lead-pass"  # Healthchecks check slugs: a pass of the lead, and a merge to main in the last day
   MERGE_CHECK: "lck-main-merged"
@@ -116,11 +124,18 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # a dry run starts nothing, so it needs no secret
+      # a dry run starts nothing, so it needs no secret and no ruleset. Without the `main` ruleset nothing stops the
+      # builder's account pushing to main, so the lead starts no build (a free private repo is refused rulesets: the
+      # read fails, and counts as none)
       - id: setup
         name: Is setup finished?
         run: |
           go=true
+          # a refused read prints its error as the answer, so the read's own result is tested, then the count
+          if ! rules=$(gh api "repos/$GH_REPO/rules/branches/$DEFAULT_BRANCH" --jq 'length' 2>/dev/null) || ! [ "$rules" -gt 0 ] 2>/dev/null; then
+            echo "::notice::No ruleset on $DEFAULT_BRANCH: nothing would stop the builder's account pushing to it, so the lead starts nothing. Make the \`main\` ruleset first (docs/PIPELINE.md; it needs GitHub Pro on a private repo)."
+            [ "$DRY_RUN" = true ] || go=false
+          fi
           if [ "$DRY_RUN" != true ]; then
             [ "$HAS_BUILD_TOKEN" = true ] || { go=false; echo "::notice::No BUILD_TOKEN secret: builds have no account to run as, so the lead starts nothing (docs/PIPELINE.md)."; }
             [ "$HAS_MODEL" = true ] || { go=false; echo "::notice::No CLAUDE_CODE_OAUTH_TOKEN secret (and no ANTHROPIC_API_KEY): builds have no model, so the lead starts nothing (docs/PIPELINE.md)."; }
@@ -233,7 +248,7 @@ jobs:
             [ -n "$n" ] || continue
             if [ "$red" != true ]; then
               # read first, then test: under pipefail, grep -q closing the pipe early fails it, and a match was skipped
-              comments=$(gh pr view "$pr" --json comments --jq '.comments[].body')
+              comments=$(gh pr view "$pr" --json comments --jq ".comments[] | select(.author.login == \"$REVIEWER_LOGIN\") | .body")
               grep -q 'look at these first' <<<"$comments" || continue
             fi
             take "$n" || continue
@@ -265,8 +280,8 @@ jobs:
               | select((.createdAt | fromdateiso8601) < (now - (env.REVIEW_WAIT_MINUTES | tonumber) * 60))
               | .number' <<<"$prs"); do
             # pending can also mean a "look at these first" waiting on its fix round: only a pull request with no review
-            comments=$(gh pr view "$pr" --json comments --jq '.comments[].body')
-            grep -qF '*Reviewer: pr-reviewer' <<<"$comments" && continue
+            comments=$(gh pr view "$pr" --json comments --jq ".comments[] | select(.author.login == \"$REVIEWER_LOGIN\") | .body")
+            grep -qF "$REVIEWER_SIGNATURE" <<<"$comments" && continue
             echo "#$pr has no review ${REVIEW_WAIT_MINUTES} minutes on: starting one"
             if [ "$DRY_RUN" != true ] && ! GH_TOKEN="$DISPATCH_TOKEN" gh workflow run review.yml --ref "$GITHUB_REF_NAME" -f pr="$pr"; then
               echo "::warning::Couldn't start #$pr's review: the next pass tries again"; continue  # the rest of the pass still runs
@@ -288,8 +303,9 @@ jobs:
 
           # 3. new builds: Craig's `next` first, then the oldest ready issue
           # each open issue with what it is: `build` (lane:auto, or the sweep found it settled), `sweep` (a candidate
-          # the sweep hasn't checked), `rules` (waits on Craig's answers), `craig` (lane:craig), or nothing
-          issues=$(gh issue list --state open --limit 300 --json number,title,body,labels)
+          # the sweep hasn't checked: only one the owner wrote, so a stranger's issue never reaches a builder unless
+          # Craig labels it), `rules` (waits on Craig's answers), `craig` (lane:craig), or nothing
+          issues=$(gh issue list --state open --limit 300 --json number,title,body,labels,author)
           ready=$(jq -r '
               .[] | select(((.title + " " + ([.labels[]?.name] | join(" "))) | test(env.OWN_JOBS)) | not)
               | select(all(.labels[]?; .name != env.STALE_LABEL and .name != env.STUCK_LABEL))
@@ -299,7 +315,7 @@ jobs:
                 elif any(.labels[]?; .name == "lane:auto" or .name == env.CLEAR_LABEL) then "\($prio):\(.number):build"
                 # a `next` label from Craig is a go-ahead even with no spec file named; the build still stops on any open rule
                 elif any(.labels[]?; .name == env.NEXT_LABEL) and ((.title | test(env.NOT_BUILDS; "i")) | not) then "\($prio):\(.number):build"
-                elif ((.body // "") | test("spec/[0-9]+")) and ((.title | test(env.NOT_BUILDS; "i")) | not) then "\($prio):\(.number):sweep"
+                elif .author.login == env.OWNER and ((.body // "") | test("spec/[0-9]+")) and ((.title | test(env.NOT_BUILDS; "i")) | not) then "\($prio):\(.number):sweep"
                 else empty end' <<<"$issues" | sort -t: -k1,1n -k2,2n | cut -d: -f2-)
           # an issue a pull request merged in the last fortnight names is likely built but never closed, so it is
           # swept, not built: the sweep labels it stale, or clear if work is left. Only code PRs (`feat/`, `fix/`, a

@@ -27,7 +27,7 @@ permissions:
   contents: read
   pull-requests: write
   issues: read
-  id-token: write
+  # no id-token: claude-code-action is handed the job's token, so it never trades an OIDC token for its app's
 
 concurrency:
   group: review-${{ github.event.pull_request.number || inputs.pr }}
@@ -43,7 +43,9 @@ jobs:
     timeout-minutes: 20
     env:
       PR: ${{ github.event.pull_request.number || inputs.pr }}
-      REVIEWER_SIGNATURE: "*Reviewer: pr-reviewer"  # the line review-gate.yml finds the review by; keep the two in step
+      # the line review-gate.yml and lead.yml find the review by, with the account that posts it (the job's token,
+      # `github-actions`, in "Post the review"); keep the three in step
+      REVIEWER_SIGNATURE: "*Reviewer: pr-reviewer"
       REVIEWER_BRIEF: .claude/agents/pr-reviewer.md
       HAS_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}  # a step's `if` cannot read secrets, so this carries it
     steps:

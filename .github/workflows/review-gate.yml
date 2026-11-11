@@ -4,7 +4,8 @@
 # is on the pull request; then, if its verdict is "look at these first", pending until a commit newer than that
 # comment (the lead's fix round) is in; success otherwise. A review run that ended without posting passes it, so a
 # broken reviewer never holds the queue. With no CLAUDE_CODE_OAUTH_TOKEN secret no review can run, so it passes
-# every pull request and says why.
+# every pull request and says why. Only a comment by REVIEWER_LOGIN, the account review.yml posts as, counts as the
+# review: the builder may comment on its own pull request, and its comment never passes for one.
 # The verdict is the comment's own `**Verdict:**` line, never the brief's template, which names both.
 # No model runs here. A run by hand sets it on every open pull request (how it is first filled in).
 name: review-gate
@@ -20,6 +21,7 @@ on:
 permissions:
   statuses: write
   pull-requests: read
+  contents: read  # a pull request's commits: on a private repo the job's token can't read them without it
   actions: read
 
 concurrency:
@@ -31,6 +33,7 @@ env:
   GH_REPO: ${{ github.repository }}
   STATUS: review-landed
   REVIEWER_SIGNATURE: "*Reviewer: pr-reviewer"
+  REVIEWER_LOGIN: "github-actions"  # how `gh pr view` names the account review.yml posts as (the job's token)
   LOOK_VERDICT: "look at these first"
   # a pull request from a fork or from Dependabot runs with no secrets, so its event can't say whether the token is set
   REVIEWS_ON: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
@@ -66,7 +69,7 @@ jobs:
               set_status "$sha" success "no review token is set: not held"; return
             fi
             [ "$(jq -r '.isDraft' <<<"$view")" = false ] || { set_status "$sha" pending "a draft: reviewed once it is ready"; return; }
-            review=$(jq -c --arg sig "$REVIEWER_SIGNATURE" '[.comments[] | select(.body | contains($sig))] | last // empty' <<<"$view")
+            review=$(jq -c --arg sig "$REVIEWER_SIGNATURE" '[.comments[] | select(.author.login == env.REVIEWER_LOGIN and (.body | contains($sig)))] | last // empty' <<<"$view")
             if [ -z "$review" ]; then
               if [ "$EVENT" = workflow_run ] && [ "$REVIEW_RUN_OK" != true ]; then
                 set_status "$sha" success "the review run failed without posting: not held"

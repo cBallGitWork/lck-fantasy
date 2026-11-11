@@ -20,6 +20,13 @@ FAST_WIN_MIN = 25           # D: win in under this many minutes -> +1
 DEATHS_PER_MINUS = 4        # deaths toggle: -1 per N deaths (default off)
 DEATHS_ON = False
 FAST_THRESHOLDS = [22, 24, 25, 26, 28, 30]
+BEST_N = 2                  # Craig, 11 Nov 2026: a series scores its best 2 games
+SERIES_KEYS = ["best2", "best", "sum", "mean"]
+
+
+def best_n(xs, n=BEST_N):
+    """Sum of the n highest game scores; a player with fewer games scores what he played."""
+    return sum(sorted(xs, reverse=True)[:n])
 
 
 def f(x):
@@ -86,6 +93,11 @@ def main(src, out):
                            k=k, d=d, a=a, pts=base, ptsB2=base - comp["B"] + comp["B2"],
                            ptsX=base + comp["X"], **comp))
 
+    # series scoreline per team: (team's game wins, opponent's game wins)
+    twins = defaultdict(lambda: defaultdict(int))
+    for (gid, team), r in teamrows.items():
+        twins[meta[gid][0]][team] += r["result"] == "1"
+
     # per player per series
     ps = defaultdict(list)
     for g in pg:
@@ -104,9 +116,17 @@ def main(src, out):
                    assists=sum(x["a"] for x in gs))
         for c in ["A", "B", "B2", "C", "D", "X"]:
             rec["sum_" + c] = sum(x[c] for x in gs)
+        w_team = twins[sid][team]
+        w_opp = sum(v for t, v in twins[sid].items() if t != team)
+        rec["series_score"] = f"{w_team}-{w_opp}"
+        rec["series_games"] = w_team + w_opp
+        rec["won_series"] = w_team > w_opp
+        rec["best2"] = best_n([x["pts"] for x in gs])
         rec["best"] = max(x["pts"] for x in gs)
         rec["sum"] = sum(x["pts"] for x in gs)
         rec["mean"] = round(rec["sum"] / n, 3)
+        rec["best2_B2"] = best_n([x["ptsB2"] for x in gs])
+        rec["best2_deaths"] = best_n([x["ptsX"] for x in gs])
         rec["best_B2"] = max(x["ptsB2"] for x in gs)
         rec["sum_B2tier"] = sum(x["ptsB2"] for x in gs)
         rec["best_deaths"] = max(x["ptsX"] for x in gs)
@@ -152,7 +172,8 @@ def main(src, out):
 
     # per-role per-variant
     p("\n## Per-role points per series: mean (sd) [p90]")
-    variants = [("best", "Best game"), ("sum", "Series sum"), ("mean", "Series mean/game"),
+    variants = [("best2", "Best 2 games"), ("best", "Best game"), ("sum", "Series sum"), ("mean", "Series mean/game"),
+                ("best2_B2", "Best 2, B tiered"), ("best2_deaths", "Best 2, deaths on"),
                 ("best_B2", "Best, B tiered"), ("sum_B2tier", "Sum, B tiered"),
                 ("best_deaths", "Best, deaths on"), ("sum_deaths", "Sum, deaths on")]
     p("| variant | " + " | ".join(ROLES) + " | all |\n|---|" + "---|" * 6)
@@ -187,18 +208,36 @@ def main(src, out):
     losers = [g for g in pg if not g["won"]]
     p(f"| winners only: base points vs length | {pearson([g['len'] for g in winners], [g['pts'] for g in winners]):.2f} |")
     p(f"| losers only: base points vs length | {pearson([g['len'] for g in losers], [g['pts'] for g in losers]):.2f} |")
-    for key in ["best", "sum", "mean"]:
+    for key in SERIES_KEYS:
         p(f"| per series: {key} vs games played | {pearson([r['games'] for r in srows], [r[key] for r in srows]):.2f} |")
         p(f"| per series: {key} vs total series minutes | {pearson([r['series_len_min'] for r in srows], [r[key] for r in srows]):.2f} |")
 
+    for label, sub in [("series winners", [r for r in srows if r["won_series"]]),
+                       ("series losers", [r for r in srows if not r["won_series"]]),
+                       ("Bo3 only", [r for r in srows if max(map(int, r["series_score"].split("-"))) == 2]),
+                       ("Bo5 only", [r for r in srows if max(map(int, r["series_score"].split("-"))) == 3])]:
+        for key in SERIES_KEYS:
+            p(f"| {label}: {key} vs games played | "
+              f"{pearson([r['series_games'] for r in sub], [r[key] for r in sub]):.2f} |")
+
+    p("\n### Mean points per series by series scoreline (team's games won-lost)")
+    p("| scoreline | n | best 2 | best | sum | mean |\n|---|---|---|---|---|---|")
+    for sc in ["2-0", "2-1", "1-2", "0-2", "3-0", "3-1", "3-2", "2-3", "1-3", "0-3"]:
+        xs = [r for r in srows if r["series_score"] == sc]
+        if xs:
+            p(f"| {sc} | {len(xs)} | " + " | ".join(f"{st.mean(r[k] for r in xs):.2f}" for k in SERIES_KEYS) + " |")
+    for bo, need in [("Bo3", 2), ("Bo5", 3)]:
+        xs = [r for r in srows if max(map(int, r["series_score"].split("-"))) == need]
+        p(f"| all {bo} | {len(xs)} | " + " | ".join(f"{st.mean(r[k] for r in xs):.2f}" for k in SERIES_KEYS) + " |")
+
     p("\n### Mean points per series by games played and series result")
-    p("| games | won series? | n | best | sum | mean |\n|---|---|---|---|---|---|")
+    p("| games | won series? | n | best 2 | best | sum | mean |\n|---|---|---|---|---|---|---|")
     for n in sorted({r["games"] for r in srows}):
         for won in (True, False):
             xs = [r for r in srows if r["games"] == n and (r["game_wins"] > n / 2) == won]
             if xs:
-                p(f"| {n} | {'yes' if won else 'no'} | {len(xs)} | {st.mean(r['best'] for r in xs):.2f} | "
-                  f"{st.mean(r['sum'] for r in xs):.2f} | {st.mean(r['mean'] for r in xs):.2f} |")
+                p(f"| {n} | {'yes' if won else 'no'} | {len(xs)} | "
+                  + " | ".join(f"{st.mean(r[k] for r in xs):.2f}" for k in SERIES_KEYS) + " |")
 
     p("\n### Mean per-game points by game-length band, winners vs losers")
     p("| length | n games | winners | losers | K+A/3 (all) |\n|---|---|---|---|---|")
@@ -218,30 +257,33 @@ def main(src, out):
         a = agg[(r["player"], r["team"], r["role"])]
         a["series"] += 1
         a["games"] += r["games"]
-        for k in ["best", "sum", "sum_A", "sum_B", "sum_C", "sum_D"]:
+        for k in ["best2", "best", "sum", "sum_A", "sum_B", "sum_C", "sum_D"]:
             a[k] += r[k]
-    for key, name in [("best", "best game per series"), ("sum", "series sum")]:
+    for key, name in [("best2", "best 2 games per series"), ("best", "best game per series"), ("sum", "series sum")]:
         p(f"\n## Top 15 by season total ({name})")
-        p("| # | player | team | role | series | games | best-game total | sum total | sum/game | A | B | C | D |\n"
-          "|---|---|---|---|---|---|---|---|---|---|---|---|---|")
+        p("| # | player | team | role | series | games | best-2 total | best-2/series | best-game total | sum total | sum/game | A | B | C | D |\n"
+          "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
         top = sorted(agg.items(), key=lambda kv: -kv[1][key])[:15]
         for i, ((pl, tm, rl), a) in enumerate(top, 1):
-            p(f"| {i} | {pl} | {tm} | {rl} | {int(a['series'])} | {int(a['games'])} | {int(a['best'])} | "
+            p(f"| {i} | {pl} | {tm} | {rl} | {int(a['series'])} | {int(a['games'])} | {int(a['best2'])} | {a['best2'] / a['series']:.2f} | {int(a['best'])} | "
               f"{int(a['sum'])} | {a['sum'] / a['games']:.2f} | {int(a['sum_A'])} | {int(a['sum_B'])} | "
               f"{int(a['sum_C'])} | {int(a['sum_D'])} |")
 
     # season totals vs games played (players with >= 10 series)
-    regs = [(a["games"], a["sum"], a["best"], a["series"]) for a in agg.values() if a["series"] >= 10]
+    regs = [(a["games"], a["sum"], a["best"], a["series"], a["best2"]) for a in agg.values() if a["series"] >= 10]
     p(f"\nSeason totals, players with 10+ series (n={len(regs)}): r(sum total, games played) = "
       f"{pearson([x[0] for x in regs], [x[1] for x in regs]):.2f}; r(best total, series played) = "
-      f"{pearson([x[3] for x in regs], [x[2] for x in regs]):.2f}")
+      f"{pearson([x[3] for x in regs], [x[2] for x in regs]):.2f}; r(best-2 total, series played) = "
+      f"{pearson([x[3] for x in regs], [x[4] for x in regs]):.2f}; r(best-2 total, games played) = "
+      f"{pearson([x[0] for x in regs], [x[4] for x in regs]):.2f}")
 
     # role parity: share of top-50 by role
-    top50 = sorted(agg.items(), key=lambda kv: -kv[1]["best"] / kv[1]["series"] if kv[1]["series"] >= 10 else 0)[:50]
-    rc = defaultdict(int)
-    for (pl, tm, rl), _ in top50:
-        rc[rl] += 1
-    p(f"\nTop 50 by best-game points per series (10+ series), by role: {dict(rc)}")
+    for key, name in [("best2", "best-2"), ("best", "best-game")]:
+        top50 = sorted(agg.items(), key=lambda kv: -kv[1][key] / kv[1]["series"] if kv[1]["series"] >= 10 else 0)[:50]
+        rc = defaultdict(int)
+        for (pl, tm, rl), _ in top50:
+            rc[rl] += 1
+        p(f"\nTop 50 by {name} points per series (10+ series), by role: {dict(rc)}")
 
     # supports: cs@15 noise
     sup = [g for g in pg if g["role"] == "sup"]

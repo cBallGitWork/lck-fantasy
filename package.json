@@ -3,6 +3,6 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "verify": "node scripts/contents-lists.mjs && .claude/hooks/test.sh"
+    "verify": "node scripts/contents-lists.mjs && node scripts/studio-kit.mjs && .claude/hooks/test.sh"
   }
 }

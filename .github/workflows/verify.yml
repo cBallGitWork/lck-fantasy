@@ -1,0 +1,68 @@
+# The local gate, on every pull request and on main: `npm run verify` (the hook tests and the doc checks) and
+# actionlint over the workflows. The job named `verify` is the result the `main` ruleset requires
+# (docs/PIPELINE.md). The repo has no app yet, so there is no build and no smoke job: they go where the comment
+# at the bottom says. Until package.json exists, `npm run verify` is skipped with a notice and the job stays green.
+name: verify
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:  # a newer push to a pull request cancels its older run; a run on main gets its own
+  group: verify-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  DEFAULT_NODE: 24  # used until the repo has an .nvmrc
+  # actionlint checks every workflow, and the shell in its `run:` blocks through shellcheck, at warning and above.
+  # Pinned, and its download checked against the release's checksum.
+  ACTIONLINT_VERSION: 1.7.12
+  ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8  # its linux_amd64 tarball
+  SHELLCHECK_OPTS: --severity=warning
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # origin/main and the branch's commits, for checks that read git history
+      - id: repo
+        name: See what the repo has
+        run: |
+          if [ -f package.json ]; then echo "package=true" >> "$GITHUB_OUTPUT"; else
+            echo "package=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No package.json yet: \`npm run verify\` is skipped. Only actionlint runs."
+          fi
+          if [ -f .nvmrc ]; then echo "node=$(tr -d 'v[:space:]' < .nvmrc)" >> "$GITHUB_OUTPUT"; else echo "node=$DEFAULT_NODE" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/setup-node@v4
+        if: steps.repo.outputs.package == 'true'
+        with:
+          node-version: ${{ steps.repo.outputs.node }}
+      # the hook checks run on the runner's own bash, python3, git and jq: say which
+      - if: steps.repo.outputs.package == 'true'
+        run: bash --version | head -1 && python3 --version && git --version && jq --version
+      - name: Install
+        if: steps.repo.outputs.package == 'true'
+        run: if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+      - name: npm run verify
+        if: steps.repo.outputs.package == 'true'
+        run: npm run verify
+      - name: actionlint
+        run: |
+          tarball="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -sSfLO "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/$tarball"
+          echo "$ACTIONLINT_SHA256  $tarball" | sha256sum -c -
+          tar -xzf "$tarball" actionlint
+          shellcheck --version | sed -n 2p
+          ./actionlint -color
+
+  # When the app exists, its jobs go here, beside `verify`: `build` (the production bundle) and `smoke` (the app
+  # loaded in a browser). Add `smoke` to the `main` ruleset's required checks then (docs/PIPELINE.md).

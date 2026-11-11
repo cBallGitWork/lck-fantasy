@@ -1,0 +1,93 @@
+# The review lands before the merge. review.yml's Sonnet review only comments, and a pull request green first time
+# could merge before it posted, or before the fix round answered a "look at these first". This sets the commit
+# status STATUS on the pull request's head, which the `main` ruleset requires: pending until a pr-reviewer comment
+# is on the pull request; then, if its verdict is "look at these first", pending until a commit newer than that
+# comment (the lead's fix round) is in; success otherwise. A review run that ended without posting passes it, so a
+# broken reviewer never holds the queue. With no CLAUDE_CODE_OAUTH_TOKEN secret no review can run, so it passes
+# every pull request and says why.
+# The verdict is the comment's own `**Verdict:**` line, never the brief's template, which names both.
+# No model runs here. A run by hand sets it on every open pull request (how it is first filled in).
+name: review-gate
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+  workflow_run:
+    workflows: [review]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  statuses: write
+  pull-requests: read
+  actions: read
+
+concurrency:
+  group: review-gate-${{ github.event.pull_request.number || github.event.workflow_run.head_sha || 'all' }}
+  cancel-in-progress: true
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  GH_REPO: ${{ github.repository }}
+  STATUS: review-landed
+  REVIEWER_SIGNATURE: "*Reviewer: pr-reviewer"
+  LOOK_VERDICT: "look at these first"
+  # a pull request from a fork or from Dependabot runs with no secrets, so its event can't say whether the token is set
+  REVIEWS_ON: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
+  SECRETS_READABLE: >-
+    ${{ github.event_name != 'pull_request'
+        || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]') }}
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Set the review-landed status
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_FROM_EVENT: ${{ github.event.pull_request.number || github.event.workflow_run.pull_requests[0].number || '' }}
+          # a review started by hand (the lead's, for one whose review never ran) is tied to no pull request: its title
+          # names it ("review #N", review.yml's run-name)
+          RUN_TITLE: ${{ github.event.workflow_run.display_title || '' }}
+          REVIEW_RUN_OK: ${{ github.event.workflow_run.conclusion == 'success' }}
+        run: |
+          set -euo pipefail
+          set_status() { # sha state description
+            echo "$1: $2 ($3)"
+            gh api "repos/$GH_REPO/statuses/$1" -f state="$2" -f context="$STATUS" -f description="$3" > /dev/null
+          }
+          gate() { # pr
+            local pr=$1 view sha review verdict at newer
+            view=$(gh pr view "$pr" --json headRefOid,isDraft,comments,commits)
+            sha=$(jq -r '.headRefOid' <<<"$view")
+            if [ "$REVIEWS_ON" != true ] && [ "$SECRETS_READABLE" = true ]; then
+              echo "::notice::No CLAUDE_CODE_OAUTH_TOKEN secret, so no review can run: #$pr is not held (docs/PIPELINE.md)."
+              set_status "$sha" success "no review token is set: not held"; return
+            fi
+            [ "$(jq -r '.isDraft' <<<"$view")" = false ] || { set_status "$sha" pending "a draft: reviewed once it is ready"; return; }
+            review=$(jq -c --arg sig "$REVIEWER_SIGNATURE" '[.comments[] | select(.body | contains($sig))] | last // empty' <<<"$view")
+            if [ -z "$review" ]; then
+              if [ "$EVENT" = workflow_run ] && [ "$REVIEW_RUN_OK" != true ]; then
+                set_status "$sha" success "the review run failed without posting: not held"
+              else
+                set_status "$sha" pending "waiting for the review"
+              fi
+              return
+            fi
+            verdict=$(jq -r '.body' <<<"$review" | grep -m1 -i '\*\*Verdict:\*\*' || true)
+            if ! grep -qi "$LOOK_VERDICT" <<<"$verdict" || grep -qi "fine to merge" <<<"$verdict"; then
+              set_status "$sha" success "reviewed: fine to merge"; return
+            fi
+            at=$(jq -r '.createdAt' <<<"$review")
+            newer=$(jq -r --arg at "$at" '[.commits[] | select(.committedDate > $at)] | length' <<<"$view")
+            if [ "$newer" -gt 0 ]; then set_status "$sha" success "reviewed; the fix round's commit is in"
+            else set_status "$sha" pending "the review said look at these first: waiting for its fix round"; fi
+          }
+          if [ -z "$PR_FROM_EVENT" ] && [ "$EVENT" = workflow_run ]; then
+            PR_FROM_EVENT=$(grep -oE '^review #[0-9]+$' <<<"$RUN_TITLE" | grep -oE '[0-9]+$' || true)
+            # a review run that names no pull request gates none: passing every unreviewed one on its result would be wrong
+            [ -n "$PR_FROM_EVENT" ] || { echo "The review run names no pull request: nothing to gate"; exit 0; }
+          fi
+          if [ -n "$PR_FROM_EVENT" ]; then gate "$PR_FROM_EVENT"
+          else for pr in $(gh pr list --state open --limit 100 --json number --jq '.[].number'); do gate "$pr"; done; fi

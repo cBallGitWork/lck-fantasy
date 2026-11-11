@@ -41,3 +41,9 @@ set per stage:
 - the cap on players from one team rises as teams drop out;
 - transfers are unlimited, with no hits;
 - every series a player plays counts.
+
+Two choices wait for the 2027 fixtures, and the settings must allow either answer (Craig, 11 Nov
+2026: "we dont know yet as we dont know the fixtures, but allow us to make the decision later"):
+
+- whether a knockout gameweek is a week or a bracket round;
+- how to stop squads stacking the few teams left in a thin knockout week.

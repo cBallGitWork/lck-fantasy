@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Look C · Sports daily</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Archivo:wdth,wght@75..125,400..900&family=Noto+Sans+KR:wght@400;700;900&display=swap">
+<style>
+/* Layout: a Korean sports daily's front page. A loud masthead and headline, the squad as a lineup box left, the player list as the results table right. */
+:root{--paper:#fffdf2;--ink:#111;--red:#e60012;--yellow:#ffe100;--blue:#0a3cff;--dim:#5c5c55;--line:#111;
+  --display:"Black Han Sans","Archivo",sans-serif;--body:"Archivo","Noto Sans KR",sans-serif}
+*{box-sizing:border-box}body{margin:0;width:1440px;min-height:900px;background:var(--paper);color:var(--ink);font:14px/1.35 var(--body)}
+header{display:flex;align-items:stretch;height:70px;background:var(--red);color:#fff}
+.logo{font:400 34px/70px var(--display);padding:0 28px;background:var(--ink);letter-spacing:.01em}.logo i{font-style:normal;color:var(--yellow)}
+nav{display:flex;align-items:center;gap:0;font:800 15px var(--body);font-stretch:85%;text-transform:uppercase}nav span{padding:0 20px;line-height:70px}nav .on{background:var(--yellow);color:var(--ink)}
+.save{margin:14px 28px 14px auto;background:#fff;color:var(--red);border:0;font:900 15px var(--body);padding:0 22px;text-transform:uppercase}
+.head{display:grid;grid-template-columns:1fr 330px;gap:28px;padding:22px 28px 16px;border-bottom:4px solid var(--ink);align-items:end}
+.head h1{font:400 76px/.95 var(--display);margin:0;letter-spacing:-.01em}.head h1 mark{background:var(--yellow);padding:0 10px}
+.head p{margin:10px 0 0;font:700 17px var(--body)}.head p b{color:var(--red)}
+.money{display:grid;grid-template-columns:1fr 1fr 1fr;border:3px solid var(--ink)}.money div{padding:8px 10px;border-left:3px solid var(--ink)}.money div:first-child{border:0}
+.money span{display:block;font:800 11px var(--body);text-transform:uppercase}.money b{font:900 24px var(--body);font-stretch:80%;font-variant-numeric:tabular-nums}.money .bank{background:var(--yellow)}
+main{display:grid;grid-template-columns:560px 1fr;gap:28px;padding:20px 28px 36px}
+h2{font:400 26px var(--display);margin:0 0 10px;display:flex;align-items:center;gap:10px}h2 i{font:900 12px var(--body);font-style:normal;background:var(--ink);color:#fff;padding:3px 8px;text-transform:uppercase}
+.box{border:3px solid var(--ink);display:grid;grid-template-columns:1fr 1fr}
+.slot{position:relative;padding:10px 12px 12px 74px;border-bottom:3px solid var(--ink);min-height:86px;display:grid;align-content:center}
+.slot:nth-child(odd){border-right:3px solid var(--ink)}.slot:nth-last-child(-n+1){border-bottom:0}
+.slot label{position:absolute;left:0;top:0;bottom:0;width:62px;background:var(--ink);color:#fff;display:grid;place-content:center;text-align:center;font:900 10px var(--body);text-transform:uppercase;letter-spacing:.04em}
+.slot label i{display:block;font:400 22px var(--display);font-style:normal;order:-1;letter-spacing:0}
+.s-mid label{background:var(--red)}.s-flex label{background:var(--blue)}.s-coach label,.s-bench label{background:var(--paper);color:var(--ink);border-right:3px solid var(--ink)}
+.slot b{font:900 27px/1 var(--body);font-stretch:80%;text-transform:uppercase}.slot .t{font-weight:900;color:var(--red);margin-right:8px}.slot .nx{color:var(--dim);font-weight:600}.slot .pr{position:absolute;right:12px;bottom:10px;font:900 16px var(--body);font-variant-numeric:tabular-nums}
+.slot .t,.slot .nx{display:inline;font-size:13px}.slot .empty{font-size:18px;color:var(--dim)}
+.mark{position:absolute;right:12px;top:10px;background:var(--yellow);font:900 12px var(--body);font-style:normal;padding:1px 8px;border:2px solid var(--ink)}
+.s-coach{grid-column:1/-1;border-right:0!important}.slot.i7{border-right:3px solid var(--ink);border-bottom:0}.slot.i8{border-right:0;border-bottom:0}
+.kicker{margin-top:14px;font:700 15px var(--body);border-left:10px solid var(--red);padding-left:12px}
+.tabs{display:flex;gap:0;margin-bottom:0;border:3px solid var(--ink);border-bottom:0;width:max-content}.tabs span{padding:6px 14px;font:800 13px var(--body);text-transform:uppercase;border-left:3px solid var(--ink)}.tabs span:first-child{border:0}.tabs .on{background:var(--ink);color:#fff}
+table{width:100%;border-collapse:collapse;border:3px solid var(--ink);font-variant-numeric:tabular-nums}
+td{padding:6px 8px;border-bottom:1px solid var(--ink);white-space:nowrap}
+td.r span{font:900 11px var(--body);text-transform:uppercase}td.r i{font-style:normal;margin-left:6px;font-weight:700;color:var(--dim)}
+td.n b{font:900 17px var(--body);font-stretch:85%;text-transform:uppercase}td.n span{margin-left:8px;font-weight:800;color:var(--red);font-size:12px}
+td.f,td.o{color:var(--dim);font-weight:600;font-size:13px}td.o,td.p{text-align:right}td.p{font-weight:900;font-size:15px}
+td.a{text-align:right}td.a button{background:var(--ink);color:#fff;border:0;padding:4px 12px;font:900 12px var(--body);text-transform:uppercase}
+tr.in{background:var(--yellow)}tr.in button{background:none;color:var(--ink)}
+</style></head><body>
+<header><div class="logo">LCK <i>판타지</i></div>
+<nav><span class="on">Pick team</span><span>Points</span><span>Transfers</span><span>Leagues</span><span>Fixtures</span><span>The Book</span></nav>
+<button class="save">Save team</button></header>
+<div class="head"><div><h1>Pick your <mark>nine</mark></h1><p>LCK Cup week 1 · deadline <b>Wed 13 Jan 07:30</b> your time · no account until you save</p></div>
+<div class="money"><div><span>Budget</span><b data-budget></b></div><div><span>Spent</span><b data-spent></b></div><div class="bank"><span>Bank</span><b data-bank></b></div></div></div>
+<main><section><h2>Your lineup <i data-count></i></h2><div class="box" data-slots></div>
+<p class="kicker">Faker has the armband. Keria takes it if he sits out.</p></section>
+<section><div class="tabs"><span class="on">All</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span><span>Coach</span></div>
+<table><tbody data-rows></tbody></table></section></main>
+<script src="shared.js"></script></body></html>

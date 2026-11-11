@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Look A · The Rift</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: the squad sits on the map by lane, as FPL's sits on a pitch. List left, map centre, money right. */
+:root{--ink:#0d1b2a;--deep:#12263a;--panel:#183247;--line:#2a4a63;--text:#e9f1f5;--dim:#8fa9ba;--gold:#e7b85a;--river:#3fb6c9;--blue:#4f8ff0;--red:#ef6a5b;
+  --display:"Sora","IBM Plex Sans KR",sans-serif;--body:"IBM Plex Sans KR","Sora",sans-serif;--num:"IBM Plex Mono",monospace}
+*{box-sizing:border-box}body{margin:0;width:1440px;min-height:900px;background:var(--ink);color:var(--text);font:14px/1.4 var(--body)}
+header{display:flex;align-items:center;gap:36px;padding:0 32px;height:60px;border-bottom:1px solid var(--line)}
+.logo{font:800 20px var(--display);letter-spacing:-.02em}.logo i{font-style:normal;color:var(--gold)}
+nav{display:flex;gap:26px;font:600 14px var(--display);color:var(--dim)}nav .on{color:var(--text);box-shadow:0 21px 0 -18px var(--gold)}
+.save{margin-left:auto;background:var(--gold);color:var(--ink);border:0;font:700 14px var(--display);padding:10px 18px;border-radius:4px}
+.bar{display:flex;gap:40px;align-items:baseline;padding:14px 32px;background:var(--deep);border-bottom:1px solid var(--line)}
+.bar h1{font:800 26px var(--display);margin:0;letter-spacing:-.02em}.bar span{color:var(--dim)}.bar b{font-family:var(--num);color:var(--text)}
+main{display:grid;grid-template-columns:470px 1fr 250px;gap:24px;padding:24px 32px}
+h2{font:700 13px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:0 0 10px}
+.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs span{padding:5px 11px;border:1px solid var(--line);border-radius:3px;color:var(--dim);font-size:13px}.tabs .on{background:var(--text);color:var(--ink);border-color:var(--text);font-weight:600}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}td{padding:7px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+td.r span{font:600 12px var(--display)}td.r i{font-style:normal;color:var(--dim);margin-left:5px;font-size:12px}
+td.n b{font:600 14px var(--display)}td.n span{color:var(--dim);margin-left:7px;font-size:12px}td.f,td.o{color:var(--dim);font-size:12px}td.o,td.p{text-align:right}td.p{font-family:var(--num)}
+td.a button{background:none;border:1px solid var(--line);color:var(--text);border-radius:3px;padding:3px 10px;font:600 12px var(--display)}
+tr.in td{color:var(--dim)}tr.in td.n b{color:var(--gold)}tr.in button{border-color:transparent;color:var(--gold)}
+.map{position:relative;height:640px;border:1px solid var(--line);border-radius:6px;overflow:hidden;
+  background:linear-gradient(135deg,#143a52 0 49.2%,var(--river) 49.2% 50.8%,#3a2432 50.8%)}
+.map:before,.map:after{content:"";position:absolute;border:2px solid rgba(233,241,245,.14)}
+.map:before{inset:36px;border-radius:4px}.map:after{left:36px;bottom:36px;width:120px;height:120px;border-radius:0 100% 0 0;border-left:0;border-bottom:0}
+.lane{position:absolute;left:36px;right:36px;top:50%;height:2px;background:rgba(233,241,245,.14);transform:rotate(-31.5deg)}
+.slot{position:absolute;width:150px;padding:9px 11px 10px;background:rgba(13,27,42,.9);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:4px;display:grid;gap:1px}
+.slot label{font:600 11px var(--display);letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}.slot label i{font-style:normal;margin-left:6px;letter-spacing:0}
+.slot b{font:700 17px var(--display)}.slot .t{color:var(--gold);font-size:12px;font-weight:600}.slot .nx{color:var(--dim);font-size:12px}.slot .pr{font:500 13px var(--num)}
+.slot .empty{font-size:14px;color:var(--dim);font-weight:600}.slot.is-empty{border-style:dashed;border-top-style:dashed}
+.mark{position:absolute;right:8px;top:8px;width:20px;height:20px;border-radius:50%;background:var(--gold);color:var(--ink);font:800 11px/20px var(--display);text-align:center;font-style:normal}
+.s-top{left:60px;top:54px}.s-jng{left:60px;top:50%;transform:translateY(-50%)}.s-mid{left:50%;top:50%;transform:translate(-50%,-50%)}.s-bot{right:230px;bottom:54px}.s-sup{right:60px;bottom:54px}
+.s-flex{right:60px;top:54px;border-top-color:var(--river)}.s-coach{left:60px;bottom:54px;border-top-color:var(--text)}
+.bench{display:flex;gap:12px;margin-top:14px;align-items:center}.bench h2{margin:0 8px 0 0}.bench .slot{position:static;border-top-color:var(--line);flex:0 0 190px}
+.map .s-bench,.bench .slot:not(.s-bench){display:none}
+aside dl{margin:0 0 22px;display:grid;gap:10px}aside dt{color:var(--dim);font-size:12px}aside dd{margin:0;font:500 24px var(--num)}aside dd.big{color:var(--gold);font-size:34px}
+.note{border-top:1px solid var(--line);padding-top:14px;color:var(--dim);font-size:13px}.note b{color:var(--text);display:block;font:600 14px var(--display);margin-bottom:4px}
+</style></head><body>
+<header><div class="logo">LCK <i>Fantasy</i></div>
+<nav><span class="on">Pick team</span><span>Points</span><span>Transfers</span><span>Leagues</span><span>Fixtures</span><span>The Book</span></nav>
+<button class="save">Save team</button></header>
+<div class="bar"><h1>LCK Cup · Week 1</h1><span>Deadline <b>Wed 13 Jan 07:30</b> your time</span><span>First series <b>GEN v KT</b></span><span>Picked <b data-count></b></span></div>
+<main>
+<section><h2>Players</h2><div class="tabs"><span class="on">All</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span><span>Coach</span></div>
+<table><tbody data-rows></tbody></table></section>
+<section><div class="map"><div class="lane"></div><div data-slots></div></div>
+<div class="bench"><h2>Bench</h2><div data-slots style="display:contents"></div></div></section>
+<aside><h2>Money</h2><dl><div><dt>In the bank</dt><dd class="big" data-bank></dd></div><div><dt>Spent</dt><dd data-spent></dd></div><div><dt>Budget</dt><dd data-budget></dd></div></dl>
+<div class="note"><b>No account needed yet</b>Pick your nine, then save. We ask for an email only when you save.</div></aside>
+</main><script src="shared.js"></script></body></html>

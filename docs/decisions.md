@@ -1,6 +1,6 @@
 # LCK fantasy: decisions so far
 
-Craig's answers in chat, 26–29 Oct 2026. Not a spec. Open items are listed at the end.
+Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
 ## What it is
 
@@ -55,6 +55,14 @@ Craig's answers in chat, 26–29 Oct 2026. Not a spec. Open items are listed at 
 - Many LoL fantasy games open with a sign-up wall, and that puts new users off.
 - UCL Fantasy lets you pick your squad first. Copy that: let people pick their squad before they sign up.
 
+## Foundations (11 Nov 2026)
+
+- Services: "same as draft": Convex, Vercel's free plan and Resend magic links ([ARCHITECTURE.md](../ARCHITECTURE.md)).
+- Stats: "live points would be great".
+- This round is the repo setup and spec, the site flow and designs, the LCK data layer and a scoring backtest. No app skeleton: "cant be bothered with that".
+- The repo is this one, `lck-fantasy`.
+- How we work is ported from the draft product: hooks, skills, reviewer agents and the build pipeline.
+
 ## Open
 
 - Playoffs: include them or not, and if so as a side game.
@@ -63,7 +71,6 @@ Craig's answers in chat, 26–29 Oct 2026. Not a spec. Open items are listed at 
 - How the coach slot scores.
 - The chip set and names.
 - How the achievements cap and rank: a separate column, and base points decide ties?
-- Where it lives: a new repo, and its name.
 
 ## Research behind this
 

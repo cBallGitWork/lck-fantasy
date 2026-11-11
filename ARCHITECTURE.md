@@ -35,4 +35,35 @@ proven on these services.
 
 ## Where code lives
 
-Set with the first code.
+The folders exist now, each with a README saying what goes in it. No code yet.
+
+| Folder | What lives there |
+|---|---|
+| `convex/lck/` | The real world: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. |
+| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload. |
+| `convex/stats/` | Per-player stats for each game, as the feed sent them, plus the latest live reading. |
+| `convex/scoring/` | Scoring rules as data, the engine that turns stats into series points, and the re-score. |
+| `convex/gameweeks/` | Gameweeks, deadlines and settling a gameweek. |
+| `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, chips, prices. |
+| `convex/leagues/` | Global, supporter and private leagues, and their tables. |
+| `convex/achievements/` | The achievement book: the pages, the rules that award them, the awards. |
+| `convex/signIn/` | Magic-link sign-in, and turning a squad picked signed out into an entry. |
+| `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
+| `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
+| `src/screens/` | One folder per screen in the site map (`docs/design/site-map.md`), named as it is there. |
+| `src/rift/` | The Rift view: the map, the lanes, the shirts and the role icons. |
+| `src/parts/` | Parts shared by two or more screens: tables, the player row, buttons. |
+| `data/` | Seed data held per competition and season: teams, kit colours, stages. Data, never constants in code. |
+| `tests/` | Tests that cross features: a replayed gameweek, the signed-out pick to sign-up path. |
+| `docs/design/approved/` | One folder per screen with the picture Craig approved. An approved picture binds the layout. |
+| `spec/` | One file per feature, Craig's answers only. |
+| `docs/` | Decisions, research, design proposals, the data model. |
+| `scripts/` | Checks and one-off tools run from the command line. |
+
+The rules:
+
+- A feature's server code, its tests and its fixtures sit in its one `convex/` folder.
+- `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`, `achievements`). The game reads the real world; it never writes it.
+- Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
+- A screen imports from `src/parts` and `src/rift`, never from another screen.
+- Before adding a helper or a fixture, search for its home and reuse it.

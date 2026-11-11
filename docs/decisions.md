@@ -63,6 +63,9 @@ Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC
 - The repo is this one, `lck-fantasy`.
 - A series scores a player's "best 2 games of a series".
 - Live points: ask GRID first, and fall back to Riot's unofficial live feed.
+- The base assumption: "keep rules as close to fpl (or at least the logic if ever in doubt)".
+- Onboarding "copies fantasy UCL, its a page where you can just pick a team, its a great way to get people in".
+- "Lets build folder structure etc" and "draw a site map".
 - The look: "research lck colours and lol. i like shirts, see if player portraits appear too". The pitch view becomes a Rift view with the lanes, each player in "the equivalent of a shirt".
 - How we work is ported from the draft product: hooks, skills, reviewer agents and the build pipeline.
 

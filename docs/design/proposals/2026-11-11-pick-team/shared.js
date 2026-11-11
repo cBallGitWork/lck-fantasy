@@ -20,7 +20,7 @@ const PLAYERS = [
   ["Cuzz", "KT", "jng", 9.0, 6], ["Kingen", "NS", "top", 9.0, 7], ["Siwoo", "DK", "top", 8.0, 19],
   ["PerfecT", "KT", "top", 7.5, 4], ["kkOma", "T1", "coach", 6.0, 52], ["KIM", "GEN", "coach", 6.0, 33],
 ].map(([name, team, role, price, owned]) => ({ name, team, role, price, owned }));
-const NEXT = { GEN: "KT · DK", T1: "HLE · NS", HLE: "T1 · BRO", DK: "DRX · GEN", KT: "GEN · BFX", NS: "DNF · T1" };
+const NEXT = { GEN: "KT · DK", T1: "HLE · NS", HLE: "T1 · BRO", DK: "KRX · GEN", KT: "GEN · BFX", NS: "DNS · T1" };
 const SQUAD = [
   { slot: "top", name: "Zeus" }, { slot: "jng", name: "Canyon" }, { slot: "mid", name: "Faker", mark: "C" },
   { slot: "bot", name: "Ruler" }, { slot: "sup", name: "Keria", mark: "V" }, { slot: "flex", name: "ShowMaker" },

@@ -32,7 +32,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 
 | # | Feature | What Craig has said | Status |
 |---|---|---|---|
-| 1 | [Squad and slots](spec/01-squad-and-slots.md) | Follows FPL: a squad with a bench and auto-subs. It has a flex position and a coach slot. | to grill |
+| 1 | [Squad and slots](spec/01-squad-and-slots.md) | A squad of 9: one player per role, a flex player of any role and the coach start; two on the bench. Auto-subs as in FPL, into the player's own role or the flex. The coach is the team: it scores the team's play, shown as its head coach. | not built |
 | 2 | [Prices and budget](spec/02-prices-and-budget.md) | Prices, with a Korean feel, for example in won. | to grill |
 | 3 | [Transfers](spec/03-transfers.md) | Weekly transfers with −4 hits. | to grill |
 | 4 | [Captain](spec/04-captain.md) | A captain, as in FPL. | to grill |
@@ -54,6 +54,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A draft game.
 - Cash prizes.
 - A gameweek per match day: "lots of transfers… more admin" (Craig, 11 Nov 2026).
+- A coach scored as the average of his players' points, CBLOL's 2026 way (Craig, 11 Nov 2026).
 
 ## Glossary
 
@@ -64,3 +65,4 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | game | One game within a series. | map |
 | stage | A part of a competition with its own settings: groups, Road to MSI, play-in, playoffs. | phase |
 | round | One round of a knockout bracket. | |
+| coach | The slot that is a team, scoring the team's play, shown as its head coach. | team slot |

@@ -38,8 +38,9 @@ Notes:
 - **Role is on the contract and on the lineup, not on the player.** A player can change role
   between spells, and a stand-in can play out of role for one game. The lineup is what happened;
   the contract is what the game lists him as.
-- **The coach** is a `contracts` row with the role `coach`, so the coach slot needs no table of
-  its own. What a coach scores from is open (to-grill).
+- **The coach** is a `contracts` row with the role `coach`. The coach slot picks the team, not
+  the person: it scores the team's play and shows the team's current head coach
+  ([spec/01](../spec/01-squad-and-slots.md)). What it scores from is open (to-grill).
 - **Roles** are a fixed list for LoL: top, jungle, mid, bot, support, plus coach. This is a rule
   of the sport, like FPL's four positions, so it can be a constant.
 - **Substitutes and call-ups.** LCK teams register more than five players and promote from the

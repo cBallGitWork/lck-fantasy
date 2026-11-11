@@ -1,9 +1,39 @@
 # Squad and slots
 
-Craig's answers only. Not grilled yet: nothing here is built, and where this file is silent the
-rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
+Craig's answers only, from the `/grill` of 11 Nov 2026. Where this file is silent the rule is
+FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
 [docs/to-grill.md](../docs/to-grill.md).
 
-## What Craig has said
+## The squad
 
-Follows FPL: a squad with a bench and auto-subs. It has a flex position and a coach slot.
+- A squad is 9: seven starters and a bench of two.
+- The seven starters are one per role (top, jungle, mid, bot, support), a flex player and the
+  coach. All seven score each gameweek.
+- The flex slot holds a player of any role, never the coach. Example: Gumayusi at bot and Ruler
+  in flex.
+- The bench is two players of any roles, ordered 1 and 2, as in FPL.
+- There is no bench coach.
+- The sizes are data per competition, like every value Craig may tune ([CLAUDE.md](../CLAUDE.md)).
+
+## Roles
+
+- A player's slot follows his listed role on his team's roster, not the role he plays on the day.
+  Example: a mid stand-in who jungles one game still fills a mid slot.
+
+## Auto-subs
+
+FPL's rule, with role in place of formation:
+
+- A starter who plays no game in the gameweek is replaced by a bench player, in bench order.
+- A bench player comes on only into his own role or the flex slot. Example: your top laner sits
+  out; bench 1 is a support, bench 2 a top laner, so bench 2 comes on.
+
+## The coach
+
+- The coach slot is the team. It scores the team's play (wins, towers, drakes and the like),
+  never its players' points. The head coach is only its face and name. What it scores and how
+  much is settled by the scoring grill ([spec/05](05-scoring.md)).
+- A team with no series in the gameweek scores 0 in the coach slot.
+- The coach counts toward the cap on players from one team ([spec/10](10-season-and-gameweeks.md)
+  makes the cap's value a stage setting). Example: with a cap of 2, T1's coach and Faker fill T1.
+- If a team changes head coach mid-season, the pick stays and shows the new coach.

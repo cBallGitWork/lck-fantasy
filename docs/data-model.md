@@ -30,7 +30,7 @@ and later another league are rows, not code.
 | `players` | a person | handle (Faker), real name, country, the feed's ids |
 | `contracts` | a player at a team for a spell | player, team, role, from, to, starter or substitute |
 | `series` | one Bo3 or Bo5 | stage, the two teams, scheduled start (UTC), state (to come, live, final), score in games, winner |
-| `games` | one map in a series | series, game number, sides (blue, red), length in seconds, winner, patch |
+| `games` | one game in a series | series, game number, sides (blue, red), length in seconds, winner, patch |
 | `gameLineups` | who played a game | game, player, team, role, champion |
 
 Notes:
@@ -109,7 +109,7 @@ Notes:
 
 Things FPL never has to handle, which the model above allows for:
 
-1. **A match is a series of games.** Points per series, with best-game or whole-series as a rule.
+1. **A series is several games.** Points per series, with best-game or whole-series as a rule.
 2. **Series length is unknown in advance.** A Bo3 lasts two or three games, so anything summed
    rewards the loser of a 2–1 less than the winner of a 2–0 only if the rules say so. The
    backtest measures this.

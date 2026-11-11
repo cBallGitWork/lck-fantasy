@@ -21,7 +21,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - how a player's series in one gameweek count;
   - the budget, on or off;
   - the cap on players from one team;
-  - transfers: free ones, the hit, unlimited, or locked;
+  - transfers;
   - which chips can be played.
 - The values are set when the 2027 fixture dates come out, not before.
 - A setting changes only before a gameweek's deadline. Each gameweek keeps the settings it ran
@@ -30,8 +30,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 ## Gameweeks
 
 - By default a gameweek is one LCK week.
-- Its deadline is 15 minutes before its first series. Deadlines are stored in UTC and shown in
-  each user's local time.
+- Its deadline is 15 minutes before its first series.
 
 ## Knockouts
 
@@ -40,5 +39,5 @@ set per stage:
 
 - the budget is lifted, since it exists to stop a squad of only the top players;
 - the cap on players from one team rises as teams drop out;
-- transfers open up;
+- transfers are unlimited, with no hits;
 - every series a player plays counts.

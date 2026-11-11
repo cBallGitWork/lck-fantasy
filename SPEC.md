@@ -28,7 +28,7 @@ use FPL's rule, or at least its logic (Craig, 11 Nov 2026).
 ## Features
 
 A feature's status lives only in this table. `to grill` means Craig has given the outline below
-and the detail waits for its `/grill`; nothing is built.
+and the detail waits for its `/grill`; `not built` means it is grilled and waits to be built.
 
 | # | Feature | What Craig has said | Status |
 |---|---|---|---|
@@ -42,14 +42,12 @@ and the detail waits for its `/grill`; nothing is built.
 | 8 | [Leagues](spec/08-leagues.md) | FPL-style global leagues, and team supporter leagues. | to grill |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: the first page is one where you can just pick a team, with no sign-up wall. "Its a great way to get people in" (Craig, 11 Nov 2026). | to grill |
 | 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series. | not built |
-| 11 | [Live points](spec/11-live-points.md) | Points that move during a match "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
+| 11 | [Live points](spec/11-live-points.md) | Points that move during a series "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
 
 ## Later
 
 - The values of each stage's settings, set when the 2027 fixture dates come out
   ([spec/10](spec/10-season-and-gameweeks.md)).
-- How to stop squads stacking the few teams left in a thin knockout week. In 2026 the LCK
-  playoffs' last week had 3 teams playing (checked 11 Nov 2026, Wikipedia).
 
 ## Out of scope
 

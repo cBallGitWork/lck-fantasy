@@ -1,0 +1,79 @@
+# Approves every pull request from this repository so it can merge without Craig; no label is needed. The `main`
+# ruleset needs one approval; this bot supplies it. It does not approve a pull request by anyone but the repo's owner
+# that touches the pipeline's own guards (.claude/, .github/, scripts/, package.json, CLAUDE.md: the hooks, the
+# workflows, and what `npm run verify` runs), so the builder (the pipeline's account) can't loosen the checks that
+# judge it; narrow the list when app code needs package.json; a session Craig works in opens its pull requests as him, so those merge on green. Checks
+# still gate the merge: the approval does not merge anything, and `lane:craig` on the same pull request withholds
+# it; adding `lane:craig` later takes a given approval back (the withdraw job).
+# Needs the repo setting "Allow GitHub Actions to create and approve pull requests". Until it is on, the approval is
+# refused: the run says so as a warning and stays green.
+name: lane-auto
+
+# pull_request_target runs main's copy of this file, never the pull request's, so a pull request can't edit the rule
+# that judges it; nothing here checks out or runs the pull request's code. ready_for_review re-judges a draft that
+# took on guard files after an approval.
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, labeled, unlabeled, ready_for_review]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  approve:
+    if: >-
+      !contains(github.event.pull_request.labels.*.name, 'lane:craig')
+      && !github.event.pull_request.draft
+      && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          BY_OWNER: ${{ github.event.pull_request.user.login == github.repository_owner }}
+          GUARDS: '^(\.(claude|github)/|scripts/|package\.json$|CLAUDE\.md$)'  # the pipeline's own guards
+          BOT: github-actions[bot]  # the login this job's reviews carry
+        run: |
+          if [ "$BY_OWNER" != true ]; then
+            # a file moved out of a guard folder counts too, so its old name is read as well
+            guarded=$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/files" \
+              --jq '.[] | .filename, (.previous_filename // empty)' | grep -E "$GUARDS" || true)
+            if [ -n "$guarded" ]; then
+              echo "::notice::Not approved: #$PR is not by the repo's owner and touches the pipeline's guards, so it waits for Craig:"
+              echo "$guarded"
+              # an approval given before a later push added these files is taken back (stale approvals aren't dismissed on push)
+              ids=$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/reviews" \
+                --jq ".[] | select(.user.login == \"$BOT\" and .state == \"APPROVED\") | .id")
+              for id in $ids; do
+                gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$PR/reviews/$id/dismissals" \
+                  -f event=DISMISS -f message="Approval withdrawn: this pull request now touches the pipeline's guards and waits for Craig."
+              done
+              exit 0
+            fi
+          fi
+          gh pr review "$PR" --approve --repo "$GITHUB_REPOSITORY" --body "Approved by the lane-auto rule. The checks decide the merge." \
+            || echo "::warning::Couldn't approve #$PR. Is the repo setting \"Allow GitHub Actions to create and approve pull requests\" on (docs/PIPELINE.md)? It waits for an approval by hand."
+
+  # Takes the approval back when `lane:craig` goes on: the ruleset does not dismiss a stale approval on push, so
+  # nothing else would, and the pull request could merge on an approval its labels no longer give.
+  withdraw:
+    if: >-
+      github.event.action == 'labeled' && github.event.label.name == 'lane:craig'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+          BOT: github-actions[bot]  # the login the approve job's reviews carry
+          LABEL_CHANGE: ${{ github.event.action }} ${{ github.event.label.name }}
+        run: |
+          ids=$(gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$PR/reviews" \
+            --jq ".[] | select(.user.login == \"$BOT\" and .state == \"APPROVED\") | .id")
+          [ -n "$ids" ] || { echo "No lane-auto approval to take back on #$PR."; exit 0; }
+          for id in $ids; do
+            gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$PR/reviews/$id/dismissals" \
+              -f event=DISMISS -f message="Approval withdrawn: $LABEL_CHANGE. This pull request now waits for Craig."
+            echo "Dismissed review $id on #$PR."
+          done

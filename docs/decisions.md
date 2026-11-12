@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -98,10 +98,44 @@ The philosophy is settled in [spec/05-scoring.md](../spec/05-scoring.md); the ta
 - A point per game won: "will do later". A quick win: "25 min". The Carry: "×1.5", rounded down, yes.
 - The table and the coach in a later session, with a new backtest, yes.
 
+## Chips grill (12 Nov 2026)
+
+Settled; the spec is [spec/06-chips.md](../spec/06-chips.md).
+
+- "we will have chips, undecided yet, but build the ability for us to make them"; chips as data, from a list of effects, yes.
+- Names: "Captain is Carry, Triple Cap is Hyper Carry. Bench Boost. Something shop related for Free Hit?"; Recall for the Free Hit, Remake for the Wildcard, the Vice-carry, yes.
+- Unkillable: later. One chip a gameweek, yes.
+- "1 chip a week, Transfer dont roll for a free hit or WC".
+
+## Prices grill (12 Nov 2026)
+
+Settled; the spec is [spec/02-prices-and-budget.md](../spec/02-prices-and-budget.md).
+
+- Money in 억, yes.
+- First prices: "combo of both", a formula from last season adjusted by hand, yes; the coach priced like a player, yes.
+- Moves: "yes on performance, a little on demand and reduction for when nobody (relatively) is picking them (means their price was too high) but have a price floor"; weekly at the deadline, yes; the formula public, yes.
+- Selling: "Full current price".
+
+## Transfers grill (12 Nov 2026)
+
+Settled; the spec is [spec/03-transfers.md](../spec/03-transfers.md).
+
+- One free transfer a week, yes; the coach counts as a transfer, yes; unlimited before the first deadline, yes.
+- Banking: "Up to 3. gw2 they start on 2".
+- Split 2: "split 2 you get unlimited before its first week", then the same as the season's start, yes.
+- An admin top-up to the cap, as FPL's AFCON one, yes.
+
+## Captain grill (12 Nov 2026)
+
+Settled; the spec is [spec/04-captain.md](../spec/04-captain.md).
+
+- The multiplier: "willl be a multiplier, undecided yet, depends on scoring".
+- A vice-captain as in FPL, yes; picked from the six starters, yes; never the coach, yes.
+- In the chips grill: "Captain is Carry", and the vice is the Vice-carry, yes.
+
 ## Open
 
 - Scoring per series: best game or the whole series.
-- The chip set and names.
 - How the achievements cap and rank: a separate column, and base points decide ties?
 
 ## Research behind this

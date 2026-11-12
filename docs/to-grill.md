@@ -5,8 +5,7 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 ## Open from the first chats (26–29 Oct 2026)
 
-- The chip set and names. Suggested, not chosen: Remake (Wildcard), Stand-in (Free Hit), Sixth
-  Man (Bench Boost), Baron Buff (Triple Captain), Unkillable (No Negative).
+- Which chips the beta has, picked from the effects in [spec/06](../spec/06-chips.md).
 - How achievements cap and rank: a separate column, and do base points decide ties?
 
 ## Scoring ideas, not yet values
@@ -24,7 +23,4 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 - What GRID says, and which feed settles the final points
   ([docs/research/live-data-sources.md](research/live-data-sources.md)).
-- The budget, the price range, and how prices move.
-- Free transfers a week, and how many can be banked.
-- Whether the coach can be captain.
 - The screens and the look ([docs/design/](design/)). Craig likes the Rift view with team shirts, and asked whether player portraits can appear too (11 Nov 2026).

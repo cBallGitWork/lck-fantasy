@@ -33,7 +33,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | # | Feature | What Craig has said | Status |
 |---|---|---|---|
 | 1 | [Squad and slots](spec/01-squad-and-slots.md) | A squad of 9: one player per role, a flex player of any role and the coach start; two on the bench. Auto-subs as in FPL, into the player's own role or the flex. The coach is the team: it scores the team's play, shown as its head coach. | not built |
-| 2 | [Prices and budget](spec/02-prices-and-budget.md) | Prices, with a Korean feel, for example in won. | to grill |
+| 2 | [Prices and budget](spec/02-prices-and-budget.md) | Money in 억. First prices from a formula, adjusted by hand. Prices move weekly at the deadline, mostly on points, a little on demand, down when few own a player, above a floor; the formula is public. Sell at the full current price. | not built |
 | 3 | [Transfers](spec/03-transfers.md) | One free transfer a week, banking to 3, each extra −4. Unlimited before the season's and Split 2's first deadline, then 2 free in the next gameweek. An admin can top banks up. | not built |
 | 4 | [Carry (captain)](spec/04-captain.md) | A Carry and Vice-carry (FPL's captain and vice) from the six starting players, never the coach. The Carry's points are multiplied; the Vice-carry takes over if the Carry plays no game. | not built |
 | 5 | [Scoring](spec/05-scoring.md) | A set of toggles, with weights by position. Point values stay low, like FPL's. It must not reward long games, so raw kill totals are out. Points work per series, and a series scores a player's best 2 games (Craig, 11 Nov 2026). Backtested on 2026 LCK data. | to grill |
@@ -54,6 +54,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A draft game.
 - Cash prizes.
 - A gameweek per match day: "lots of transfers… more admin" (Craig, 11 Nov 2026).
+- FPL's selling price, keeping half of a rise: a player sells at his full current price (Craig, 12 Nov 2026).
 - A coach scored as the average of his players' points, CBLOL's 2026 way (Craig, 11 Nov 2026).
 - The coach as Carry or Vice-carry (Craig, 12 Nov 2026).
 

@@ -25,5 +25,4 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 - What GRID says, and which feed settles the final points
   ([docs/research/live-data-sources.md](research/live-data-sources.md)).
-- The budget, the price range, and how prices move.
 - The screens and the look ([docs/design/](design/)). Craig likes the Rift view with team shirts, and asked whether player portraits can appear too (11 Nov 2026).

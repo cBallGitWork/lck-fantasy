@@ -1,9 +1,33 @@
 # Prices and budget
 
-Craig's answers only. Not grilled yet: nothing here is built, and where this file is silent the
-rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
+Craig's answers only, from the `/grill` of 12 Nov 2026. Where this file is silent the rule is
+FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
 [docs/to-grill.md](../docs/to-grill.md).
 
-## What Craig has said
+## Money
 
-Prices, with a Korean feel, for example in won.
+- Money is shown in 억 (100 million won). As a guide: a budget of about ₩100억, stars at about
+  ₩18–22억, cheap picks at about ₩5억. The values are data per competition, set before each split.
+- A one-line note tells overseas players what it means: "1억 = 100 million won, game money only".
+- The coach (the team) has a price, like a player ([spec/01](01-squad-and-slots.md)).
+- Knockout stages can lift the budget through their stage settings
+  ([spec/10](10-season-and-gameweeks.md)).
+
+## First prices
+
+- A formula proposes each player's and coach's first price from last season's data, then an admin
+  adjusts them by hand before the competition opens.
+- A rookie with no data is priced by hand.
+
+## Price moves
+
+- Prices move once a week, at the deadline.
+- A move is mostly on recent points, a little on transfers in and out, and down when relatively
+  few managers own the player, since that means his price is too high.
+- No price falls below a floor.
+- The coach moves by the same rule, on its own score.
+- Step sizes, weights and the floor are data. The formula is public, on a help page.
+
+## Selling
+
+- A player or coach sells at his full current price.

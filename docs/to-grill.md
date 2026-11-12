@@ -13,9 +13,8 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 - 1 point per 3 kills + assists.
 - Gold lead at 15 minutes.
 - CS.
-- A bonus for winning quickly.
+- Something to stop kills and assists rewarding a long loss, such as a point per game won: "will do later" (Craig, 12 Nov 2026).
 - The weights by position.
-- The Carry's (captain's) multiplier: "will be a multiplier, undecided yet, depends on scoring" (Craig, 12 Nov 2026).
 - What the coach (the team) scores from: wins, towers, drakes, and "smart strats", such as a team
   that plays for early or late and pulls it off, defined from the game data (Craig, 11 Nov 2026).
 - Whether a coach whose team plays but loses can score 0 or below.

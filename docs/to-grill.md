@@ -5,8 +5,7 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 ## Open from the first chats (26–29 Oct 2026)
 
-- The chip set and names. Suggested, not chosen: Remake (Wildcard), Stand-in (Free Hit), Sixth
-  Man (Bench Boost), Baron Buff (Triple Captain), Unkillable (No Negative).
+- Which chips the beta has, picked from the effects in [spec/06](../spec/06-chips.md).
 - How achievements cap and rank: a separate column, and do base points decide ties?
 
 ## Scoring ideas, not yet values

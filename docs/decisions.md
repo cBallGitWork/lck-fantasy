@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -90,10 +90,18 @@ Settled; the spec is [spec/01-squad-and-slots.md](../spec/01-squad-and-slots.md)
 - Round 2: coach counts toward the team cap, yes; slot follows the listed role, yes; the coach scores the team's play, not CBLOL's average, yes; smart strats to the scoring grill, yes; no bench coach, yes; the pick stays through a coach change, yes.
 - Auto-sub gaps the review found: a missing flex takes any bench player, yes; each bench player takes his own role before the flex, in bench order, yes; a bench player who didn't play is skipped, yes.
 
+## Chips grill (12 Nov 2026)
+
+Settled; the spec is [spec/06-chips.md](../spec/06-chips.md).
+
+- "we will have chips, undecided yet, but build the ability for us to make them"; chips as data, from a list of effects, yes.
+- Names: "Captain is Carry, Triple Cap is Hyper Carry. Bench Boost. Something shop related for Free Hit?"; Recall for the Free Hit, Remake for the Wildcard, the Vice-carry, yes.
+- Unkillable: later. One chip a gameweek, yes.
+- "1 chip a week, Transfer dont roll for a free hit or WC".
+
 ## Open
 
 - Scoring per series: best game or the whole series.
-- The chip set and names.
 - How the achievements cap and rank: a separate column, and base points decide ties?
 
 ## Research behind this

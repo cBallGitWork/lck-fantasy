@@ -37,7 +37,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 3 | [Transfers](spec/03-transfers.md) | Weekly transfers with −4 hits. | to grill |
 | 4 | [Captain](spec/04-captain.md) | A captain, as in FPL. | to grill |
 | 5 | [Scoring](spec/05-scoring.md) | A set of toggles, with weights by position. Point values stay low, like FPL's. It must not reward long games, so raw kill totals are out. Points work per series, and a series scores a player's best 2 games (Craig, 11 Nov 2026). Backtested on 2026 LCK data. | to grill |
-| 6 | [Chips](spec/06-chips.md) | FPL-style chips with names themed on the league. | to grill |
+| 6 | [Chips](spec/06-chips.md) | Chips are data: a name, an effect from the code's list, a count per split, the stages that allow it. One a gameweek. Names so far: Remake, Recall, Bench Boost, Hyper Carry. The set is picked before the beta. | not built |
 | 7 | [Achievement book](spec/07-achievement-book.md) | Each achievement is worth about 1 point, and it is packed with LCK memes and history. Example: "Ryu sad face": your opponent loses a solo 1v1, after Faker beat Ryu in 2013. | to grill |
 | 8 | [Leagues](spec/08-leagues.md) | FPL-style global leagues, and team supporter leagues. | to grill |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: the first page is one where you can just pick a team, with no sign-up wall. "Its a great way to get people in" (Craig, 11 Nov 2026). | to grill |
@@ -48,6 +48,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 
 - The values of each stage's settings, set when the 2027 fixture dates come out
   ([spec/10](spec/10-season-and-gameweeks.md)).
+- Unkillable, a chip with no negative points for a gameweek ([spec/06](spec/06-chips.md)).
 
 ## Out of scope
 

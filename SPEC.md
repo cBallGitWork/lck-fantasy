@@ -34,7 +34,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 |---|---|---|---|
 | 1 | [Squad and slots](spec/01-squad-and-slots.md) | A squad of 9: one player per role, a flex player of any role and the coach start; two on the bench. Auto-subs as in FPL, into the player's own role or the flex. The coach is the team: it scores the team's play, shown as its head coach. | not built |
 | 2 | [Prices and budget](spec/02-prices-and-budget.md) | Prices, with a Korean feel, for example in won. | to grill |
-| 3 | [Transfers](spec/03-transfers.md) | Weekly transfers with −4 hits. | to grill |
+| 3 | [Transfers](spec/03-transfers.md) | One free transfer a week, banking to 3, each extra −4. Unlimited before the season's and Split 2's first deadline, then 2 free in the next gameweek. An admin can top banks up. | not built |
 | 4 | [Captain](spec/04-captain.md) | A captain, as in FPL. | to grill |
 | 5 | [Scoring](spec/05-scoring.md) | A set of toggles, with weights by position. Point values stay low, like FPL's. It must not reward long games, so raw kill totals are out. Points work per series, and a series scores a player's best 2 games (Craig, 11 Nov 2026). Backtested on 2026 LCK data. | to grill |
 | 6 | [Chips](spec/06-chips.md) | FPL-style chips with names themed on the league. | to grill |

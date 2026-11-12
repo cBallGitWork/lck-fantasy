@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -98,6 +98,14 @@ Settled; the spec is [spec/03-transfers.md](../spec/03-transfers.md).
 - Banking: "Up to 3. gw2 they start on 2".
 - Split 2: "split 2 you get unlimited before its first week", then the same as the season's start, yes.
 - An admin top-up to the cap, as FPL's AFCON one, yes.
+
+## Captain grill (12 Nov 2026)
+
+Settled; the spec is [spec/04-captain.md](../spec/04-captain.md).
+
+- The multiplier: "willl be a multiplier, undecided yet, depends on scoring".
+- A vice-captain as in FPL, yes; picked from the six starters, yes; never the coach, yes.
+- In the chips grill: "Captain is Carry", and the vice is the Vice-carry, yes.
 
 ## Open
 

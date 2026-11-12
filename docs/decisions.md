@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -89,6 +89,14 @@ Settled; the spec is [spec/01-squad-and-slots.md](../spec/01-squad-and-slots.md)
 - The coach: "id like more info on cblol", "coach could be towers, drakes, smart strats (example can we detect if they build for early or late and fix accordingly?) winning opent to ideas", and "coach is essentially the \"team\" but we will use a head coach as the role figurehead".
 - Round 2: coach counts toward the team cap, yes; slot follows the listed role, yes; the coach scores the team's play, not CBLOL's average, yes; smart strats to the scoring grill, yes; no bench coach, yes; the pick stays through a coach change, yes.
 - Auto-sub gaps the review found: a missing flex takes any bench player, yes; each bench player takes his own role before the flex, in bench order, yes; a bench player who didn't play is skipped, yes.
+
+## Captain grill (12 Nov 2026)
+
+Settled; the spec is [spec/04-captain.md](../spec/04-captain.md).
+
+- The multiplier: "willl be a multiplier, undecided yet, depends on scoring".
+- A vice-captain as in FPL, yes; picked from the six starters, yes; never the coach, yes.
+- In the chips grill: "Captain is Carry", and the vice is the Vice-carry, yes.
 
 ## Open
 

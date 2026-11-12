@@ -96,6 +96,7 @@ Settled; the spec is [spec/04-captain.md](../spec/04-captain.md).
 
 - The multiplier: "willl be a multiplier, undecided yet, depends on scoring".
 - A vice-captain as in FPL, yes; picked from the six starters, yes; never the coach, yes.
+- In the chips grill: "Captain is Carry", and the vice is the Vice-carry, yes.
 
 ## Open
 

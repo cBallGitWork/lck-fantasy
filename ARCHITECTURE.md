@@ -62,6 +62,7 @@ Each folder has a README saying what goes in it.
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
+| `src/` | The app's entry (`main.tsx`) and its routes (`router.tsx`). |
 | `src/screens/` | One folder per screen in the site map (`docs/design/site-map.md`), named as it is there. |
 | `src/rift/` | The Rift view: the map, the lanes, the shirts and the role icons. |
 | `src/parts/` | Parts shared by two or more screens: tables, the player row, buttons. |

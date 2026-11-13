@@ -41,8 +41,8 @@ export function freeTransfersFor(carried: number, gameweek: TransferGameweek, se
 export interface GameweekTransferResult {
   /** Points taken off this gameweek's score. */
   hit: number;
-  /** Free transfers carried into the next gameweek; null after a knockout gameweek, which spec/03
-   *  doesn't settle (asked on #20). */
+  /** Free transfers carried into the next gameweek; null after a knockout gameweek or a Remake or
+   *  Limitless one, which the spec doesn't settle (asked on #20 and #25). */
   nextFree: number | null;
 }
 
@@ -55,11 +55,9 @@ export function settleTransfers(
   settings: TransferSettings,
   chip: ChipEffect | null = null,
 ): GameweekTransferResult {
-  if (transfersUnlimited(chip)) {
-    // spec/06: "his free transfer doesn't roll over". Whether a bank of 2 then stays 2 or drops
-    // to 1 is asked on #25; until Craig answers, a Remake or Limitless gameweek is never settled.
-    throw new Error("Free transfers after a Remake or Limitless gameweek wait for Craig's answer on #25.");
-  }
+  // spec/06: a Remake or Limitless week's "free transfer doesn't roll over". Whether a bank of 2
+  // then stays 2 or drops to 1 is asked on #25, so the bank after it is left unsettled.
+  if (transfersUnlimited(chip)) return { hit: 0, nextFree: null };
   const made = transfers.length;
   if (gameweek.unlimited) return { hit: 0, nextFree: gameweek.opensSplit ? settings.freeAfterUnlimited : null };
   const extra = Math.max(0, made - free);

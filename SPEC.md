@@ -43,6 +43,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series, knockouts included. In knockouts the team cap rises from 2 to 3, the budget is raised, transfers are unlimited and every series counts. | not built |
 | 11 | [Live points](spec/11-live-points.md) | Points that move during a series "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
 | 12 | [Pages](spec/12-pages.md) | Home (a status page), Pick Team, Transfers, Points, Leagues, Stats, an LCK hub for the LCK's fixtures, standings and rosters, a series page, player and coach pop-ups, public manager profiles, Perfect game (the week's best team), Price changes, Live (a stream picker: official broadcasts and co-streamers beside live points), Help and Settings. | not built |
+| 13 | [Korean touches](spec/13-korean-touches.md) | Made-up Korean sponsors from LCK memes, each explaining its meme on tap; protest trucks for a league-mate's bad week; a birthday cake on a player's week; a hangul banner for your team. No points. | not built |
 
 ## Later
 

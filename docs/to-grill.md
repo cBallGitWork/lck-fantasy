@@ -14,6 +14,14 @@ From the Transfers research ([docs/research/transfers-page-references.md](resear
 - A watchlist (FPL).
 - A switch on the squad to show next series, owned % or form in place of price (FPL 2026/27).
 
+## Transfers picture, not yet specced (13 Nov 2026)
+
+Drawn into the approved Transfers picture on Craig's chat yes; no spec file holds them yet:
+
+- Card view beside Rift view, and whether the choice is remembered.
+- A chip ticked on the confirm sheet is final once confirmed (FPL lets you cancel until the deadline), and whether the screen says boost or chip.
+- The team-count strip, the "new" marker on a bought player, and greyed players sorted last.
+
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

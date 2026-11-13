@@ -18,12 +18,12 @@ Where a manager sells and buys players and plays Remake or Limitless. Reached fr
 
 ## Controls
 
-- **Rift view | Card view**: the same choice as Pick Team, remembered (spec/12).
+- **Rift view | Card view**: the same choice as Pick Team. Not in the spec yet; in [to-grill](../../../to-grill.md).
 - **A player on the squad**: sells him; the list filters to his slot (his role, or any role for the Flex) and what the bank allows. Any of the nine, coach included, can be sold.
 - **A row's +**: buys that player into the empty slot; he shows on the squad marked "new". A greyed row opens his card but can't be bought.
 - **Top strip**: free transfers left, the points cost, the bank after, and each team's count after the transfer against the cap (spec/03, spec/10).
 - **Bottom bar**: the transfers so far, Reset, and Review and confirm.
-- **Confirm sheet**: what changes, the cost and the bank; Remake or Limitless ticked here are final once confirmed (spec/06). Back or Confirm, with the deadline.
+- **Confirm sheet**: what changes, the cost and the bank; Remake or Limitless can be ticked here. Whether a chip is final once confirmed, and whether the screen says boost or chip, are not in the spec yet; in [to-grill](../../../to-grill.md). Back or Confirm, with the deadline.
 
 ## Placeholders
 

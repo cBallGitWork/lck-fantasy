@@ -8,8 +8,11 @@ const SETTINGS = { freePerGameweek: 1, bankCap: 3, hitPoints: 4, freeAfterUnlimi
 const DAY = 24 * 60 * 60 * 1000;
 const DEADLINE = Date.UTC(2027, 3, 7, 7, 45); // a Wednesday, 16:45 KST
 
-const counted: TransferGameweek = { opensAt: DEADLINE - 7 * DAY, deadline: DEADLINE, unlimited: false, toppedUp: false };
-const unlimited: TransferGameweek = { ...counted, unlimited: true };
+const counted: TransferGameweek = {
+  opensAt: DEADLINE - 7 * DAY, deadline: DEADLINE, unlimited: false, opensSplit: false, toppedUp: false,
+};
+const splitOpener: TransferGameweek = { ...counted, unlimited: true, opensSplit: true };
+const knockout: TransferGameweek = { ...counted, unlimited: true };
 
 /** `count` transfers; who moves doesn't matter to the count. */
 const transfers = (count: number): Transfer[] =>
@@ -33,18 +36,18 @@ describe("settleTransfers", () => {
   });
 
   test("before the first deadline transfers are free and unlimited, then 2 free for gameweek 2", () => {
-    expect(settleTransfers(0, transfers(9), unlimited, SETTINGS)).toEqual({ hit: 0, nextFree: 2 });
+    expect(settleTransfers(0, transfers(9), splitOpener, SETTINGS)).toEqual({ hit: 0, nextFree: 2 });
   });
 
   test("Split 2 starts the same way: unlimited, then 2 free, then 1 a week up to 3", () => {
-    const split2First = settleTransfers(0, transfers(5), unlimited, SETTINGS);
+    const split2First = settleTransfers(0, transfers(5), splitOpener, SETTINGS);
     expect(split2First).toEqual({ hit: 0, nextFree: 2 });
-    const split2Second = settleTransfers(split2First.nextFree, [], counted, SETTINGS);
+    const split2Second = settleTransfers(split2First.nextFree!, [], counted, SETTINGS);
     expect(split2Second.nextFree).toBe(3);
   });
 
-  test("a knockout gameweek is unlimited with no hits", () => {
-    expect(settleTransfers(1, transfers(6), unlimited, SETTINGS).hit).toBe(0);
+  test("a knockout gameweek is unlimited with no hits; the bank after it waits for Craig", () => {
+    expect(settleTransfers(1, transfers(6), knockout, SETTINGS)).toEqual({ hit: 0, nextFree: null });
   });
 
   test("the numbers are the competition's", () => {
@@ -62,7 +65,7 @@ describe("freeTransfersFor", () => {
 
 describe("transfersOpen", () => {
   // Split 2's first gameweek opens 2 weeks before its deadline; the break before is locked.
-  const split2First = { ...unlimited, opensAt: DEADLINE - 14 * DAY };
+  const split2First = { ...splitOpener, opensAt: DEADLINE - 14 * DAY };
 
   test("between the splits, transfers are locked until the window opens", () => {
     expect(transfersOpen(split2First, DEADLINE - 15 * DAY)).toBe(false);

@@ -1,0 +1,77 @@
+// Between the splits (spec/03-transfers.md): the Road to MSI budget raise comes back off, and a
+// squad still over the budget or the cap at Split 2's first deadline is fixed by Flol, at no
+// points cost.
+import { priceOf, requirePrice, type Prices } from "./budget";
+import { allPicks, pickKey, picksPerTeam, type Pick, type Squad } from "./squad";
+
+/** The money bank once Split 2 starts: the raise comes off, and may leave it below zero. */
+export function bankAtSplitStart(bank: number, knockoutRaise: number): number {
+  return bank - knockoutRaise;
+}
+
+export interface SplitFix {
+  squad: Squad;
+  bank: number;
+  sold: Pick[];
+  bought: Pick[];
+}
+
+/** Flol's fix, in spec/03's order: (1) for each team over the cap, sell its most expensive extras;
+ *  (2) while the bank is below zero, sell the most expensive player left, never the coach; (3) for
+ *  each sale, buy the cheapest pick of the same role (a coach for a coach) that keeps the squad
+ *  within the cap. The bank is read after each sale's buy. `pool` is every pick on sale. */
+export function fixSquadForSplit(squad: Squad, bank: number, teamCap: number, pool: Pick[], prices: Prices): SplitFix {
+  let current = squad;
+  let money = bank;
+  const sold: Pick[] = [];
+  const bought: Pick[] = [];
+
+  const swap = (out: Pick) => {
+    const replacement = cheapestReplacement(current, out, teamCap, pool, prices);
+    if (!replacement) throw new Error(`No pick on sale can replace ${pickKey(out)} within the cap.`);
+    current = replacePick(current, out, replacement);
+    money += requirePrice(out, prices) - requirePrice(replacement, prices);
+    sold.push(out);
+    bought.push(replacement);
+  };
+
+  for (const [teamId, count] of picksPerTeam(allPicks(squad))) {
+    const extras = mostExpensiveFirst(allPicks(squad).filter((pick) => pick.teamId === teamId), prices);
+    for (const extra of extras.slice(0, Math.max(0, count - teamCap))) swap(extra);
+  }
+
+  const original = new Set(allPicks(squad).map(pickKey));
+  while (money < 0) {
+    const left = allPicks(current).filter(
+      (pick) => pick.role !== "coach" && original.has(pickKey(pick)),
+    );
+    const mostExpensive = mostExpensiveFirst(left, prices)[0];
+    if (!mostExpensive) throw new Error("Selling every player left still leaves the bank below zero.");
+    swap(mostExpensive);
+  }
+  return { squad: current, bank: money, sold, bought };
+}
+
+function cheapestReplacement(squad: Squad, out: Pick, teamCap: number, pool: Pick[], prices: Prices): Pick | undefined {
+  const inSquad = new Set(allPicks(squad).map(pickKey));
+  const perTeam = picksPerTeam(allPicks(squad).filter((pick) => pick !== out));
+  const candidates = pool.filter(
+    (pick) =>
+      pick.role === out.role &&
+      !inSquad.has(pickKey(pick)) &&
+      (perTeam.get(pick.teamId) ?? 0) < teamCap &&
+      priceOf(pick, prices) !== undefined,
+  );
+  return candidates.sort((a, b) => requirePrice(a, prices) - requirePrice(b, prices))[0];
+}
+
+function replacePick(squad: Squad, out: Pick, replacement: Pick): Squad {
+  return {
+    starters: squad.starters.map((starter) => (starter.pick === out ? { ...starter, pick: replacement } : starter)),
+    bench: squad.bench.map((pick) => (pick === out ? replacement : pick)),
+  };
+}
+
+function mostExpensiveFirst(picks: Pick[], prices: Prices): Pick[] {
+  return [...picks].sort((a, b) => requirePrice(b, prices) - requirePrice(a, prices));
+}

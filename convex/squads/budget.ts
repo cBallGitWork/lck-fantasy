@@ -24,19 +24,20 @@ export function budgetProblems(squad: Squad, prices: Prices, budget: number | nu
   return cost > budget ? [{ rule: "overBudget", budget, cost }] : [];
 }
 
-export interface PriceSwap {
+export interface Transfer {
   out: Pick;
   in: Pick;
 }
 
-/** The bank after swaps: each pick out sells at his full current price (spec/02, Selling), each
+/** The money bank after transfers: each pick out sells at his full current price (spec/02, Selling), each
  *  pick in costs his. It can fall below zero; whether that is allowed is the caller's rule.
  *  Throws on a pick with no price: a missing price is a data fault, never a free player. */
-export function bankAfterSwaps(bank: number, swaps: PriceSwap[], prices: Prices): number {
-  return swaps.reduce((total, swap) => total + requirePrice(swap.out, prices) - requirePrice(swap.in, prices), bank);
+export function bankAfterTransfers(bank: number, transfers: Transfer[], prices: Prices): number {
+  return transfers.reduce((total, transfer) => total + requirePrice(transfer.out, prices) - requirePrice(transfer.in, prices), bank);
 }
 
-function requirePrice(pick: Pick, prices: Prices): number {
+/** A pick's price; throws when he has none, since a missing price is a data fault. */
+export function requirePrice(pick: Pick, prices: Prices): number {
   const price = priceOf(pick, prices);
   if (price === undefined) throw new Error(`No current price for ${pickKey(pick)}.`);
   return price;

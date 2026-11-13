@@ -64,6 +64,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 
 .rift { position: relative; width: 948px; height: 700px; }
 .rift svg.map { position: absolute; inset: 0; width: 948px; height: 700px; }
+.plist td.nx { font-size: 12px; line-height: 1.3; white-space: nowrap; }
 .tile { position: absolute; width: 132px; transform: translate(-50%, -50%); text-align: center; }
 .benchb .tile { position: relative; transform: none; }
 .tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto -2px; }
@@ -116,7 +117,8 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .plist tr.no .add { border-color: var(--line); color: var(--line); } .plist tr.pick td { background: var(--fill); } .plist tr.pick .add { background: var(--ink); color: #fff; }
 .confirm { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; border: 1.5px solid var(--ink); background: var(--paper); padding: 10px 14px; font-size: 14px; }
 .confirm .out { text-decoration: line-through; color: var(--mid); }
-.tile .pr { background: var(--ink); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 13px; padding: 2px 0; }
+.tile .pr { background: var(--ink); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 12px; line-height: 1.35; padding: 2px 0; }
+.ctl .show { border: 1.5px solid var(--ink); padding: 5px 12px; font-size: 13px; color: var(--ink); background: var(--paper); }
 .tile.sold .kit, .tile.sold .nm, .tile.sold .sl { opacity: .35; } .tile.sold .pr { background: var(--paper); color: var(--ink); border: 1.5px dashed var(--ink); }
 .tstats { gap: 18px; } .tstats b, .caps span, .flt2 span { white-space: nowrap; } .tstats > div > span { display: block; max-width: 140px; } .bz { max-width: 150px; }
 </style></head><body>
@@ -138,11 +140,10 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 <div class="page"><main>
 <div class="ph1"><div><h1>Transfers · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">1d 20h 45m</b></div></div></div>
 <div class="tstats">
-  <div><b>0 of 1</b><span>Free left · extras −4 pts each</span></div><div><b>0 pts</b><span>Cost</span></div><div><b>1.5억</b><span style="white-space:nowrap">Bank after · of 100억</span></div>
-  <div class="caps"><span class="k">Team cap 2 · after</span><span class="f">T1 2</span><span class="f">GEN 2</span><span class="f">HLE 2</span><span class="f">KT 2</span><span>DK 0</span><span>NS 1</span></div>
-  <div class="bz" style="font-size:12px;color:var(--mid)">1억 = 100 million won, game money only</div>
+  <div><b>0 of 1</b><span>Free transfers</span></div><div><b>0 pts</b><span>Cost</span></div><div><b>1.5억</b><span>Bank</span></div>
+  <div class="bz" style="max-width:none"><span class="chip2">Remake<small>Play</small></span><span class="chip2">Limitless<small>Play</small></span></div>
 </div>
-<div class="ctl"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span><span>Tap a player to sell him, then pick his replacement from the list.</span></div>
+<div class="ctl"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span><span class="show">Show: Fixtures ▾</span></div>
 <div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
         <rect x="0" y="0" width="680" height="680" fill="#ededeb"/>
         <!-- river: top-left to bottom-right -->
@@ -162,20 +163,17 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
         <circle cx="200" cy="200" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/><circle cx="480" cy="480" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/>
         <g font-family="IBM Plex Sans KR" font-size="10" fill="#9a9a9a"><text x="186" y="230">Baron</text><text x="462" y="510">Dragon</text>
         <text x="300" y="34">TOP LANE</text><text x="300" y="656">BOT LANE</text></g>
-      </svg><div class="basebox"><span>Your base: Coach and Flex</span></div></div>
-<div class="benchb" id="bench"><h3>Bench<i>벤치</i><small>Sell any of the nine, coach included.</small></h3></div>
+      </svg></div>
+<div class="benchb" id="bench"><h3>Bench<i>벤치</i></h3></div>
 
 <div class="confirm"><div><b>1 transfer</b> · free · <span class="out">Siwoo 7.5억</span> → <b>Kingen 6.5억</b> · bank 0.5 → 1.5억</div><span><span class="reset">Reset</span><button class="save">Review and confirm ›</button></span></div>
 </main>
 <aside>
-<section class="pl2"><h2>Pick a replacement for Siwoo <span>Flex: any role · up to 8.0억</span></h2>
+<section class="pl2"><h2>Pick a replacement for Siwoo</h2>
 <div class="flt"><span class="on">All roles</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span></div>
-<div class="flt2"><span class="srch">Search a player</span><span>Sort: Form ▾</span><span>Team: All ▾</span></div>
-<table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th>Form</th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
-<div class="note2">Greyed, listed last: over your 8.0억, or his team is full (2 a team, the coach counts). Tap any row for his card.</div></section>
-<section style="margin-top:22px"><h2>Boosts <span>one a week · final once confirmed</span></h2><div class="chips">
-<div class="chip"><span class="lft">1 left</span><b>Remake</b><small>Unlimited free transfers this week, kept</small><span class="go">Play</span></div>
-<div class="chip"><span class="lft">1 left</span><b>Limitless</b><small>No budget, no team cap for one week, then your squad comes back</small><span class="go">Play</span></div></div></section>
+<div class="flt2"><span class="srch">Search a player</span><span>Sort: Points ▾</span><span>Team: All ▾</span></div>
+<table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
+</section>
 </aside>
 </div>
 <script>// Made-up LCK Cup Week 4 for the Pick Team wireframes. Every number is an example.
@@ -189,15 +187,15 @@ const W4 = [
 ];
 const nextOf = (team) => W4.filter((s) => s[3] === team || s[4] === team).map((s) => `v ${s[3] === team ? s[4] : s[3]} ${s[0]}`);
 const PSQ = [
-  { slot: "top", name: "Zeus", team: "HLE", price: "16.0", form: "7.0" },
-  { slot: "jng", name: "Canyon", team: "GEN", price: "15.5", form: "7.3" },
-  { slot: "mid", name: "Faker", team: "T1", price: "18.5", form: "8.8", mark: "C" },
-  { slot: "bot", name: "Ruler", team: "GEN", price: "17.0", form: "8.0", mark: "V" },
-  { slot: "sup", name: "Delight", team: "HLE", price: "9.0", form: "5.0" },
-  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "7.5", form: "4.5", news: "Benched for Wednesday's series" },
-  { slot: "coach", name: "kkOma", team: "T1", price: "7.0", form: "6.0" },
-  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "5.0", form: "3.3" },
-  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "4.0", form: "4.8" },
+  { slot: "top", name: "Zeus", team: "HLE", price: "16.0" },
+  { slot: "jng", name: "Canyon", team: "GEN", price: "15.5" },
+  { slot: "mid", name: "Faker", team: "T1", price: "18.5", mark: "C" },
+  { slot: "bot", name: "Ruler", team: "GEN", price: "17.0", mark: "V" },
+  { slot: "sup", name: "Delight", team: "HLE", price: "9.0" },
+  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "7.5", news: "Benched for Wednesday's series" },
+  { slot: "coach", name: "kkOma", team: "T1", price: "7.0" },
+  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "5.0" },
+  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "4.0" },
 ];
 const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
 const SLOTNAME = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support", flex: "Flex", coach: "Coach", b1: "Bench 1", b2: "Bench 2" };
@@ -211,18 +209,18 @@ function tile(p) {
   const nx = p.slot === "coach" ? nextOf(p.team).join(" · ") : nextOf(p.team).join(" · ");
   const sl = p.slot === "flex" ? `<div class="sl">Flex · plays ${SLOTNAME[p.role]}</div>` : p.slot === "coach" ? `<div class="sl">Coach 감독</div>` : p.news ? `<div class="sl">${p.news}</div>` : "";
   return `<div class="tile ${p.name === "Kingen" ? "sel" : ""}"><div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span><span class="ri"><svg><use href="#${iconOf(p)}"/></svg></span>${mk}${nw}</div>
-  <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div><div class="pr">${p.name === "Kingen" ? "6.5억 · new" : "sells " + p.price + "억"}</div>${sl}</div>`;
+  <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div><div class="pr">${nextOf(p.team).map((x) => "vs " + x.split(" ")[1]).join(", ")}</div>${sl}</div>`;
 }
 PSQ.map((p) => p.name === "Siwoo" ? Object.assign({}, p, IN, { news: null, price: "6.5" }) : p).filter((p) => POS[p.slot]).forEach((p) => { const w = document.createElement("div"); w.innerHTML = tile(p); const t = w.firstElementChild; t.style.left = POS[p.slot][0] + "px"; t.style.top = POS[p.slot][1] + "px"; document.getElementById("rift").appendChild(t); });
 document.getElementById("bench").insertAdjacentHTML("beforeend", PSQ.filter((p) => /^b\d/.test(p.slot)).map((p, i) => `<div><div style="font-size:12px;color:var(--mid);margin-bottom:4px">${i + 1} · ${SLOTNAME[p.role]}</div>${tile(p)}</div>`).join(""));
 const PL = [
- ["mid","Chovy","GEN","17.5","9.1","61","41%","BRO Thu",1],["sup","Keria","T1","12.0","8.2","52","47%","KT Wed",1],["bot","Aiming","DK","11.5","7.4","46","14%","HLE Wed",2],
- ["mid","ShowMaker","DK","10.5","6.9","44","18%","HLE Wed",2],["jng","Lucid","DK","9.0","6.5","41","11%","HLE Wed",2],
- ["top","Kingen","NS","6.5","6.1","38","9%","DNS Thu",0],["top","PerfecT","KT","7.0","5.8","36","4%","T1 Wed",1],["top","DuDu","DNS","6.0","5.6","33","6%","NS Thu",0],
- ["bot","Hype","KRX","5.5","5.3","31","4%","BFX Fri",0],["top","Clear","BFX","5.5","5.2","29","3%","KRX Fri",0],["mid","Clozer","BRO","5.0","5.0","27","5%","GEN Thu",0],
- ["sup","Pollu","BRO","4.5","4.9","26","2%","GEN Thu",0]];
+ ["mid","Chovy","GEN","17.5","61","41%",1],["sup","Keria","T1","12.0","52","47%",1],["bot","Aiming","DK","11.5","46","14%",2],
+ ["mid","ShowMaker","DK","10.5","44","18%",2],["jng","Lucid","DK","9.0","41","11%",2],
+ ["top","Kingen","NS","6.5","38","9%",0],["top","PerfecT","KT","7.0","36","4%",1],["top","DuDu","DNS","6.0","33","6%",0],
+ ["bot","Hype","KRX","5.5","31","4%",0],["top","Clear","BFX","5.5","29","3%",0],["mid","Clozer","BRO","5.0","27","5%",0],
+ ["sup","Pollu","BRO","4.5","26","2%",0]];
 const WHY = ["", "team full", "over 8.0억"];
-document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[8] > 0) - (b[8] > 0)).map((r) => `<tr class="${r[8] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[8] ? `<small>${WHY[r[8]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="n">${r[6]}</td><td>${r[7]}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
+document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[6] > 0) - (b[6] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2]).map((x) => x.slice(2)).join("<br>")}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
 const MINE = new Set();
 void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
 </script></body></html>

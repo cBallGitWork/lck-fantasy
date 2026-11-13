@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -190,6 +190,19 @@ Settled; the spec is [spec/08-leagues.md](../spec/08-leagues.md).
 - A season table plus one per split, yes; "And have a split 1 and 2 league". The word is table, not leaderboard.
 - "Split the global league from split 1 into legend and rise": Split 1's top half to Legend, yes; "Scores carry over"; Split 2 joiners to Rise, yes; Overall only, yes; the whole Overall table stays, yes.
 - The Leagues page (later the same day, by dialog): the list of leagues, the table's columns, the maker's admin, and 25 private leagues with no size cap, all as FPL, yes.
+
+## Pages grill (13 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md).
+
+- FPL's core pages, with "League/fixtures can be merged into LCK. Can include standings, fixtures, squads"; Settings too.
+- Extras: series page, LCK hub, team of the week, price changes. Home: a status page, yes. Teams public, as FPL, yes.
+- Points: series inside each player, and rank movement. Chips confirm as FPL, yes. Coach pop-up: "Yes he's essentially the 6th role".
+- Stats: "Whatever stats we have with scoring a priority". Player pop-up: champions, lines per game, price history.
+- Live in the beta, on LCK's Twitch; a Live now banner, yes; next series and countdown, yes; says so when the feed is down, yes.
+- Later: trophy room, difficulty ratings. No predictor, no prizes page.
+- Team of the week: "Perfect game. Carry and 7 starters", "Perfect game includes the rules such as 2 per team".
+- The player card (later the same day, by dialog): header as FPL, actions as FPL, scoring lines only, yes. Tabs: "Look at other games too and let's see how we can improve"; after the survey, the front strip, a Champions tab, ranks and transfers in and out, yes. "Compare yes watchlist no. News yes"; news written by an admin, Compare in the beta, the coach card with a Roster tab, yes.
 
 ## Open
 

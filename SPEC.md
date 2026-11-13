@@ -42,6 +42,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: a new visitor lands on the pick-a-team page, with Auto-fill, and the squad is kept in the browser. Sign-up comes on Save: email link, team name, favourite team, country. Late joiners as in FPL. | not built |
 | 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series, knockouts included. In knockouts the team cap rises from 2 to 3, the budget is raised, transfers are unlimited and every series counts. | not built |
 | 11 | [Live points](spec/11-live-points.md) | Points that move during a series "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
+| 12 | [Pages](spec/12-pages.md) | Home (a status page), Pick Team, Transfers, Points, Leagues, Stats, an LCK hub for the LCK's fixtures, standings and rosters, a series page, player and coach pop-ups, public manager profiles, Perfect game (the week's best team), Price changes, Live (the LCK's Twitch beside live points), Help and Settings. | not built |
 
 ## Later
 
@@ -53,6 +54,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - Head-to-head leagues, and FPL's public leagues of strangers (Craig, 13 Nov 2026).
 - A guided tour for newcomers; the beta has the Help page only (Craig, 13 Nov 2026)
   ([spec/09](spec/09-onboarding.md)).
+- A trophy room of a manager's big achievements, on their profile, and a difficulty rating for each series (Craig, 13 Nov 2026).
 
 ## Out of scope
 
@@ -65,6 +67,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A point for a game won, for players or the coach; role quests; CS and vision lines (Craig, 12 Nov 2026).
 - Points for playing (Craig, 13 Nov 2026).
 - A cup: "Cup is just head to head. We stick to points for now" (Craig, 13 Nov 2026).
+- A prizes page, and a price predictor (Craig, 13 Nov 2026).
+- A watchlist, and projected points on the player card (Craig, 13 Nov 2026).
 
 ## Glossary
 
@@ -77,4 +81,6 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | round | One round of a knockout bracket. | |
 | Carry | The player whose points are multiplied this gameweek: FPL's captain. Vice-carry is the vice-captain. | captain |
 | table | A league's ranking: one for the season and one per split. | leaderboard |
+| Perfect game | The gameweek's best team under the squad rules: a Carry and 7 starters. | team of the week |
+| LCK hub | The LCK's own fixtures, standings and rosters. | fixtures page |
 | coach | The slot that is a team, scoring the team's play, shown as its head coach. | team slot |

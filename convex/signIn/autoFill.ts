@@ -10,8 +10,8 @@ import {
  *  first in tests. */
 export type Chooser = (candidates: Pick[]) => Pick;
 
-/** The squad with every empty slot filled from `pool`. Each choice leaves enough money for the
- *  cheapest fill of the slots still empty, so the squad ends within the budget (null: no budget).
+/** The squad with every empty slot filled from `pool`. Each choice leaves a fill of the slots still
+ *  empty, the cheapest distinct picks within the cap, that the budget covers (null: no budget).
  *  Throws when no valid fill exists, rather than hand back a squad that breaks a rule. */
 export function autoFill(
   squad: Squad,
@@ -31,21 +31,37 @@ export function autoFill(
   ];
   const priced = pool.filter((pick) => priceOf(pick, prices) !== undefined);
   const cost = (pick: Pick) => priceOf(pick, prices)!;
+  const fill = (picks: Pick[], slot: StarterSlot | "bench") => {
+    const perTeam = picksPerTeam(picks);
+    const taken = new Set(picks.map(pickKey));
+    return priced.filter(
+      (pick) =>
+        fitsSlot(pick.role, slot) &&
+        !taken.has(pickKey(pick)) &&
+        (settings.teamCap === null || (perTeam.get(pick.teamId) ?? 0) < settings.teamCap),
+    );
+  };
+  /** The cost of filling `slots` with the cheapest distinct picks within the cap; null if none. */
+  const cheapestCompletion = (picks: Pick[], slots: (StarterSlot | "bench")[]): number | null => {
+    const chosen = [...picks];
+    let total = 0;
+    for (const slot of slots) {
+      const cheapest = fill(chosen, slot).sort((a, b) => cost(a) - cost(b))[0];
+      if (!cheapest) return null;
+      chosen.push(cheapest);
+      total += cost(cheapest);
+    }
+    return total;
+  };
 
   while (empty.length > 0) {
     const slot = empty.shift()!;
     const picks = [...starters.map((s) => s.pick), ...bench];
-    const taken = new Set(picks.map(pickKey));
-    const perTeam = picksPerTeam(picks);
     const spent = picks.reduce((sum, pick) => sum + (priceOf(pick, prices) ?? 0), 0);
-    const reserve = empty.reduce((sum, later) => sum + cheapestFor(later, priced, taken, cost), 0);
-    const candidates = priced.filter(
-      (pick) =>
-        fitsSlot(pick.role, slot) &&
-        !taken.has(pickKey(pick)) &&
-        (settings.teamCap === null || (perTeam.get(pick.teamId) ?? 0) < settings.teamCap) &&
-        (budget === null || spent + cost(pick) + reserve <= budget),
-    );
+    const candidates = fill(picks, slot).filter((pick) => {
+      const rest = cheapestCompletion([...picks, pick], empty);
+      return rest !== null && (budget === null || spent + cost(pick) + rest <= budget);
+    });
     if (candidates.length === 0) throw new Error(`Auto-fill found no pick for the ${slot} slot within the rules.`);
     const pick = choose(candidates);
     if (slot === "bench") bench.push(pick);
@@ -53,9 +69,3 @@ export function autoFill(
   }
   return { starters, bench };
 }
-
-function cheapestFor(slot: StarterSlot | "bench", pool: Pick[], taken: Set<string>, cost: (pick: Pick) => number): number {
-  const prices = pool.filter((pick) => fitsSlot(pick.role, slot) && !taken.has(pickKey(pick))).map(cost);
-  return prices.length > 0 ? Math.min(...prices) : 0;
-}
-

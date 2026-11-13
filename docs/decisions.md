@@ -146,6 +146,7 @@ Settled; the spec is [spec/05-scoring.md](../spec/05-scoring.md). Worked live ag
 - Teams: a whole 2025 team in the top 10 is "Fine geng dominated".
 - After the review (13 Nov): "No playing points"; "Coach can go below zero", with the line that does it left open ("leave the coach thing"); ties, "Yes tie nobody gets points"; the series win, "+2", then "Or +3?", "Sure".
 - The 2026 top 50 under the final rules: "It's fine". Prices: "we price the top coaches a little higher than others".
+- The coach penalty: "-1 for losing a series that's it"; Gen.G's coach moves from 5th to 6th in 2026, and "Pricing sorts that out anyways".
 - Achievements: "Achievements list, a love letter to lck lore"; "Think like Xbox achievements / The Reddit memes etc"; stored for later, "Ok let's store the achieved tor now".
 
 ## Open

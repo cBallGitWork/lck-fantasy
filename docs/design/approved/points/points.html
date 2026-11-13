@@ -136,6 +136,11 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
 .key span:last-child { margin-left: auto; }
 .kc { display: inline-flex; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; align-items: center; justify-content: center; margin-right: -8px; }
 .kc.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
+.rift { height: 560px !important; } .rift svg.map { height: 560px !important; }
+.basebox { position: absolute; left: 14px; top: 386px; width: 304px; height: 164px; border: 1.5px dashed var(--ink); background: rgba(255,255,255,.55); }
+.basebox span { position: absolute; left: 8px; top: 4px; font-size: 11px; color: var(--mid); }
+.tile { z-index: 2; } .basebox { top: 346px; height: 208px; }
+.ctl2 { margin-top: 14px; } .tog { display: inline-flex; border: 1px solid var(--line); background: var(--fill); padding: 3px; font-size: 13px; } .tog span { padding: 5px 24px; color: var(--mid); } .tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute">
@@ -163,7 +168,7 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
       <div><b>48,211</b><span>Overall rank <span class="up">6,904</span></span></div><div><b>+24</b><span>vs avg manager</span></div></div>
     <div class="livebar"><span class="tag live">LIVE NOW</span><b>T1 v DK, game 2</b><a>Watch ›</a><span class="sep"></span><span class="tag prov">Not final yet</span>GEN v HLE · points lock ~13:20</div>
     <div class="st3"><span><b>3</b> in play</span><span><b>0</b> to play</span><span><b>≈6 pts</b> to climb overall</span></div></div>
-  <div class="key"><span class="kc">C</span> Carry: points ×1.5 <span class="kc v">V</span> Vice: takes ×1.5 if your Carry plays no game <span>● playing now</span><span>Tap a player for his games</span></div><div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
+  <div class="ctl2"><span class="tog"><span class="on">Rift</span><span>List</span></span></div><div class="key"><span class="kc">C</span> Carry: points ×1.5 <span class="kc v">V</span> Vice: takes ×1.5 if your Carry plays no game <span>● playing now</span><span>Tap a player for his games</span></div><div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
         <rect x="0" y="0" width="680" height="680" fill="#ededeb"/>
         <!-- river: top-left to bottom-right -->
         <path d="M0 40 L40 0 L680 640 L640 680 Z" fill="#dcdcd8"/>
@@ -181,8 +186,8 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
         <!-- pits -->
         <circle cx="200" cy="200" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/><circle cx="480" cy="480" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/>
         <g font-family="IBM Plex Sans KR" font-size="10" fill="#9a9a9a"><text x="186" y="230">Baron</text><text x="462" y="510">Dragon</text>
-        <text x="300" y="34">TOP LANE</text><text x="300" y="656">BOT LANE</text><text x="16" y="672">Your base</text></g>
-      </svg></div>
+        <text x="300" y="34">TOP LANE</text><text x="300" y="656">BOT LANE</text></g>
+      </svg><div class="basebox"><span>Your base: Coach and Flex</span></div></div>
   <div class="benchb" id="bench"><h3>Bench<i>벤치</i></h3></div>
 </main>
 <aside>
@@ -307,7 +312,7 @@ const COACH = {
 };
 
 const $ = (id) => document.getElementById(id);
-const POS = { top: [104, 84], jng: [280, 332], mid: [500, 330], flex: [370, 520], coach: [110, 616], sup: [650, 620], bot: [846, 620] };
+const POS = { top: [104, 70], jng: [280, 262], mid: [500, 260], coach: [92, 468], flex: [238, 468], sup: [650, 486], bot: [846, 486] };
 const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
 function line(p) {
   return p.series.map((x) => `v ${opp(p, x[0])} ${x[2] === null ? seriesPts(x) + " so far" : seriesPts(x)}${SERIES[x[0]].state === "live" ? "●" : ""}`).join(" · ");
@@ -323,7 +328,7 @@ function tile(p, cls = "") {
     <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div>
     <div class="pt">${pts}${small}</div>
     ${p.series.length ? `<div class="sr">${line(p)}</div>` : `<div class="sr">No game this week</div>`}${tag}
-    ${p.slot === "flex" ? `<div class="tag" style="border-color:var(--line);color:var(--mid)">Flex · Top</div>` : ""}${p.slot === "coach" ? `<div class="tag" style="border-color:var(--line);color:var(--mid)">Coach 감독</div>` : ""}
+    ${p.slot === "flex" ? `<div class="tag" style="border-color:var(--line);color:var(--mid)">Flex · plays Top</div>` : ""}${p.slot === "coach" ? `<div class="tag" style="border-color:var(--line);color:var(--mid)">Coach 감독</div>` : ""}
   </div>`;
 }
 STARTERS.forEach((p) => {

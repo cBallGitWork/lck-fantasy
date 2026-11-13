@@ -81,7 +81,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 
 | Term | Meaning | Not |
 |---|---|---|
-| gameweek | The window one squad and one captain score for, with one deadline. | week |
+| gameweek | The window one squad and one captain score for, with one deadline. On screen it is "Week", as LCK fans say "LCK Week 3" (Craig, 13 Nov 2026). | |
+| chip | A once-a-split power ([spec/06](spec/06-chips.md)). On screen the section is "Boosts"; each chip keeps its name (Craig, 13 Nov 2026). | |
 | series | One fixture between two teams, a Bo3 or Bo5. | match |
 | game | One game within a series. | map |
 | stage | A part of a competition with its own settings: groups, Road to MSI, play-in, playoffs. | phase |

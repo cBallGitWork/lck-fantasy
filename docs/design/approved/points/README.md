@@ -16,7 +16,7 @@ Names, teams and numbers are a made-up LCK Cup week, not roster data. No `plate.
 ## Layout
 
 - **Header:** team name and its hangul; ‹ week ›; avg manager · top manager · **your points** (not final while a series is live or not final) · overall rank and its move · points against the average; a Live now bar (the live series, Watch ›, and the series not final yet with when its points lock); then a key to C, V and the live dot above the Rift; then how many of your players are in play and to play, and roughly how many points you need for an up arrow overall.
-- **Left:** the Rift, each starter in his lane: shirt, role icon, name, points, each series' points; C and V marks; Flex and Coach labelled; a live dot.
+- **Left:** a Rift/List switch, then the Rift, each starter in his lane, with the Coach and the Flex together in your base (Craig, 13 Nov 2026): shirt, role icon, name, points, each series' points; C and V marks; Flex and Coach labelled; a live dot.
 - **Under the Rift:** the bench, then the Automatic subs table (Out / In), provisional until the series is final.
 - **Right:** the tapped player's games, with the average Carry's points beside a Carry's, (the player card's This week tab, spec/12; the card's header, buttons and other tabs aren't drawn here), then Your week so far (star, flop and killer: the player you don't own who cost you most), Ranks (with this week's rank and transfers), the week's series, the sponsor slot.
 
@@ -46,7 +46,6 @@ Names, teams and numbers are a made-up LCK Cup week, not roster data. No `plate.
 
 Suggestions from the review panels (LoL fan, FPL manager, UX designer, behaviour expert), not Craig's wants; none is the product:
 - Rank arrow colour: green up (FPL) or red up (Korean). Decided at the reskin.
-- A Pitch/List switch, as FPL has.
 - A "still to play" line under the total.
 - Where the protest truck (spec/13) sits when someone else opens this page.
 - Fun ideas to grill: the 확정/잠정 seal, the multikill banner, a kill feed on the Live page. The A–D post-game grade was dropped.

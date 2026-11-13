@@ -8,16 +8,29 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 - Which chips the beta has, picked from the effects in [spec/06](../spec/06-chips.md).
 - How achievements cap and rank: a separate column, and do base points decide ties?
 
-## Scoring ideas, not yet values
+## Scoring, left open (13 Nov 2026)
 
-- 1 point per 3 kills + assists.
-- Gold lead at 15 minutes.
-- CS.
-- Something to stop kills and assists rewarding a long loss, such as a point per game won: "will do later" (Craig, 12 Nov 2026).
-- The weights by position.
-- What the coach (the team) scores from: wins, towers, drakes, and "smart strats", such as a team
-  that plays for early or late and pulls it off, defined from the game data (Craig, 11 Nov 2026).
-- Whether a coach whose team plays but loses can score 0 or below.
+- What takes a coach below 0. Craig: a coach can go below zero. Tested per series: −2 if swept
+  gives 4.3; −1 per game lost gives 4.0–4.2; either way about 1 series in 5 goes below 0.
+
+## Achievements, drafts (12–13 Nov 2026)
+
+Craig's own, with his names:
+
+- Unkillable Demon King: win with Faker when he has 0 deaths.
+- Flame Horizon: your laner beats their lane opponent by 100 CS.
+- Got excited: own a KT player; KT wins game 1, then loses the series.
+- Church of Chovy (named only).
+- Get the trucks: you start two T1 players who lose.
+- Cut the western shit: your coach loses a game in under 25 minutes.
+- LS: win a game on Renekton. Supportal Kombat (DoA). OK Bro (OKSavingsBank BRION).
+- Champion achievements tied to lore, such as your bot on Xayah and your support on Rakan in
+  the same gameweek.
+
+How Craig wants them: Xbox-style achievements from LCK and wider LoL memes (Reddit, casters, old
+heads, teams, champions), never FPL-style stat trophies; once a year, worth a point or two.
+Claude's drafts and their sources are in
+[docs/research/achievement-memes.md](research/achievement-memes.md); none is the product.
 
 ## Open from the foundations work (11 Nov 2026)
 

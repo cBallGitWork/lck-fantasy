@@ -1,6 +1,6 @@
 # Prices and budget
 
-Craig's answers only, from the `/grill` of 12 Nov 2026. Where this file is silent the rule is
+Craig's answers only, from the `/grill` of 12 Nov 2026 and chat on 13 Nov 2026. Where this file is silent the rule is
 FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
 [docs/to-grill.md](../docs/to-grill.md).
 
@@ -18,6 +18,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - A formula proposes each player's and coach's first price from last season's data, then an admin
   adjusts them by hand before the competition opens.
 - A rookie with no data is priced by hand.
+- The top coaches are priced a little higher than the others (Craig, 13 Nov 2026): in the 2026
+  backtest Gen.G's coach scored 6.8 a series, among the top five picks, against 4.5–5.9 for the
+  rest.
 
 ## Price moves
 

@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -133,9 +133,23 @@ Settled; the spec is [spec/04-captain.md](../spec/04-captain.md).
 - A vice-captain as in FPL, yes; picked from the six starters, yes; never the coach, yes.
 - In the chips grill: "Captain is Carry", and the vice is the Vice-carry, yes.
 
+## Scoring table bench (12–13 Nov 2026)
+
+Settled; the spec is [spec/05-scoring.md](../spec/05-scoring.md). Worked live against 2025 and 2026 LCK data.
+
+- Spread: "I need you to elevate a good distribution of teams and roles"; "5 in top 20 is fine… Top 10 would be a problem"; mids "should be a tad higher too".
+- Kills: "No FPL values simplicity", then "Just top and supp 2 kills then"; support kills stayed at 1 per 2 ("Supp, 2 sounds best?").
+- Assists: "Ok assists we change for 1 every 5". Deaths: "Supports 1 per 4 deaths". Caps: "The point of caps was to stop long games", "Can of two too small", a cap of 3 for supports too, "Yes".
+- Lines: "Change cs siff to Gold diff" ("Cs ans gold prob too linked"); solo kills, "Just +1 is fine" ("An isolated kill where there's no assist"); "Deathless game 1 point / First blood 1 point"; "Quadra penta bonus can return"; steals, "Maybe just +1 for a steal, simple".
+- Out: "Top teams already at top so don't need winning"; "Ditch roles quests for now"; "Remove quick win and keep for coach"; vision, Claude's call when asked ("Your call"), then dropped with support kills at 1 per 2.
+- The coach: "Most drakes / Most barons / Most elders / First tower / Most grubs / Series bonus win", then "Remove grubs" and "Ok series bonus"; "I'd like coaches to be just under other roles".
+- Teams: a whole 2025 team in the top 10 is "Fine geng dominated".
+- After the review (13 Nov): "No playing points"; "Coach can go below zero", with the line that does it left open ("leave the coach thing"); ties, "Yes tie nobody gets points"; the series win, "+2", then "Or +3?", "Sure".
+- The 2026 top 50 under the final rules: "It's fine". Prices: "we price the top coaches a little higher than others".
+- Achievements: "Achievements list, a love letter to lck lore"; "Think like Xbox achievements / The Reddit memes etc"; stored for later, "Ok let's store the achieved tor now".
+
 ## Open
 
-- Scoring per series: best game or the whole series.
 - How the achievements cap and rank: a separate column, and base points decide ties?
 
 ## Research behind this

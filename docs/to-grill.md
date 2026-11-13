@@ -3,13 +3,12 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
-## Open from the first chats (26–29 Oct 2026)
+## Achievements, parked (13 Nov 2026)
 
-- How achievements cap and rank: a separate column, and do base points decide ties?
+Not grilled until Craig picks the achievement book up again. Open then: how achievements cap
+and rank (a separate column, and do base points decide ties?).
 
-## Achievements, drafts (12–13 Nov 2026)
-
-Craig's own, with his names:
+Craig's drafts (12–13 Nov 2026), with his names:
 
 - Unkillable Demon King: win with Faker when he has 0 deaths.
 - Flame Horizon: your laner beats their lane opponent by 100 CS.

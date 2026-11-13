@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Korean touches grill](#korean-touches-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Korean touches grill](#korean-touches-grill-13-nov-2026) · [Settings and sign-in grill](#settings-and-sign-in-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -211,6 +211,15 @@ Settled; the spec is [spec/13-korean-touches.md](../spec/13-korean-touches.md). 
 - Fake ads: the header line, banners and the Overall badge; admin data, Craig approves each; memes only, no real player endorsing; tap explains the meme; hangul and English with a made-up note; random, about 10 for the beta. All yes.
 - Picked from the ideas list: coffee truck, birthday week, hangul banner. "The trucks were t1 fans sending it to there team with hq after bad play": protest trucks only, to a league-mate below the league's average, yes; preset lines.
 - Birthday week and the typed hangul banner, yes.
+
+## Settings and sign-in grill (13 Nov 2026)
+
+Settled; the specs are [spec/12-pages.md](../spec/12-pages.md) (Settings) and [spec/09-onboarding.md](../spec/09-onboarding.md) (sign-in). By dialog.
+
+- Settings: team name, email, banner text, favourite team and country locked with why; time zone; theme follows the device; delete account. All yes.
+- Emails: "Add a weekly recap"; both opt-in, off by default, for Resend's 100 a day, yes.
+- "And log in pages and how we handle that (Google only so we don't store passwords)". Google only or more: "Your call"; Claude added Discord, where LoL fans are. Sign-up asks team name, favourite team, country; stay signed in until sign-out. Yes.
+- Live: "Options of languages, official and streamers"; an admin list, Twitch and YouTube in the beta, official English first and the last pick remembered. All yes.
 
 ## Open
 

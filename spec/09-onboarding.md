@@ -20,13 +20,23 @@ Copies UCL Fantasy: the first page is one where you can just pick a team, with n
 ## Signing up
 
 - Sign-up is asked on Save, once all 9 are picked and the squad is valid.
-- It asks four things: email (sign-in by an emailed link), team name, favourite team and country.
+- The guest signs in with Google or Discord ("Continue with Google"). Flol stores no passwords
+  (Craig, 13 Nov 2026: "Google only so we don't store passwords"; Discord added on his "Your
+  call"). The email comes from that account.
+- Sign-up then asks three things: team name, favourite team and country.
   The favourite team and country place the manager in their supporter and country leagues
   ([spec/08](08-leagues.md)).
 - Country is filled in from where the visitor is. Like the favourite team, it can change until
   the manager's first gameweek scores; after that it is fixed.
 - Team names are as in FPL: free text, need not be unique, with a length cap, and offensive names
   can be removed. Example: two managers can both be called Faker's Chair.
+
+## Signing in again
+
+- A returning manager uses the Log in link on the pick-a-team page, with the same Google or
+  Discord account.
+- A manager stays signed in on that device until they sign out, as in FPL. Sign out is in
+  Settings ([spec/12](12-pages.md)).
 
 ## Joining late
 

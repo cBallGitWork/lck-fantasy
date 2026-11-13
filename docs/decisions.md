@@ -144,6 +144,7 @@ Settled; the spec is [spec/05-scoring.md](../spec/05-scoring.md). Worked live ag
 - Out: "Top teams already at top so don't need winning"; "Ditch roles quests for now"; "Remove quick win and keep for coach"; vision, Claude's call when asked ("Your call"), then dropped with support kills at 1 per 2.
 - The coach: "Most drakes / Most barons / Most elders / First tower / Most grubs / Series bonus win", then "Remove grubs" and "Ok series bonus"; "I'd like coaches to be just under other roles".
 - Teams: a whole 2025 team in the top 10 is "Fine geng dominated".
+- After the review (13 Nov): "No playing points"; "Coach can go below zero", with the line that does it left open ("leave the coach thing"); ties, "Yes tie nobody gets points"; the series win, "+2", then "Or +3?", "Sure".
 - Achievements: "Achievements list, a love letter to lck lore"; "Think like Xbox achievements / The Reddit memes etc"; stored for later, "Ok let's store the achieved tor now".
 
 ## Open

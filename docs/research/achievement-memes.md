@@ -47,7 +47,8 @@ Check every date against Leaguepedia before writing achievement text.
 
 ## Champions
 
-2026 LCK picks in brackets, from 502 games.
+2026 LCK picks in brackets, from 502 games: the `champion` column of Oracle's Elixir's 2026
+file, LCK rows, counted 13 Nov 2026.
 
 | Name | Unlock |
 |---|---|

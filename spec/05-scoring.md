@@ -22,24 +22,26 @@ assumption). Open questions are in [docs/to-grill.md](../docs/to-grill.md).
 
 ## The player table
 
-Per game. Every value below is data, held per competition.
+Per game. Every value below is data, held per competition. "Per 2" and the like round down, as
+whole numbers must.
 
 | Line | Points |
 |---|---|
 | Kills | +1 per 2 kills for tops and supports, +1 per 3 for junglers, mids and bots; at most +3 |
 | Assists | +1 per 5; at most +3 |
 | Deaths | −1 per 3 deaths, −1 per 4 for supports; at most −3 |
-| Gold lead at 15 minutes | +1 if ahead of the lane opponent |
+| Gold lead at 15 minutes | +1 if ahead of the lane opponent; level scores 0 |
 | Solo kill | +1 each: a kill with no assist |
 | First blood | +1 |
 | Deathless game | +1 |
 | Multikill | quadra +1, penta +2, the biggest only; a triple scores 0 |
 | Steal | +1 per objective stolen, any monster |
 
-- Example: a mid who goes 7/2/11 with a gold lead at 15 scores 2 (kills) + 2 (assists) + 0
-  (deaths) + 1 (gold) = 5.
+- Example: a mid who goes 7/2/11 with a gold lead at 15, and no solo kill, first blood,
+  multikill or steal, scores 2 (kills) + 2 (assists) + 0 (deaths) + 1 (gold) = 5.
 - No points for a win, no role quests, no CS line (too linked to gold), no vision line, and no
   quick-win point for players (Craig, 12 Nov 2026).
+- No points for playing (Craig, 13 Nov 2026).
 
 ## The coach
 
@@ -53,10 +55,11 @@ The coach is the team ([spec/01](01-squad-and-slots.md)). Per game:
 | Most elders | +1 |
 | Quick win | +1: a game won in under 25 minutes |
 
-- "Most" means more than the opponent; a tie scores 0.
-- A series scores the coach's best 2 games, plus +3 if the team wins the series.
-- No point for a game won (Craig, 12 Nov 2026: the series bonus instead). A coach never scores
-  below 0.
+- "Most" means more than the opponent; on a tie nobody scores (Craig, 13 Nov 2026).
+- A series scores the coach's best 2 games, plus +3 if the team wins the series. No point for a
+  game won (Craig, 13 Nov 2026).
+- A coach can go below 0 (Craig, 13 Nov 2026). The line that takes points off is still open, in
+  [docs/to-grill.md](../docs/to-grill.md).
 - A coach scores a little under the lowest role (Craig, 12 Nov 2026).
 
 ## The Carry

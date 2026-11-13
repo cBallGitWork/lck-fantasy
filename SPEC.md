@@ -59,6 +59,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A coach scored as the average of his players' points, CBLOL's 2026 way (Craig, 11 Nov 2026).
 - The coach as Carry or Vice-carry (Craig, 12 Nov 2026).
 - A point for a game won, for players or the coach; role quests; CS and vision lines (Craig, 12 Nov 2026).
+- Points for playing (Craig, 13 Nov 2026).
 
 ## Glossary
 

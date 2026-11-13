@@ -1,0 +1,50 @@
+flowchart TD
+  %% Flol site flow, proposed 13 Nov 2026 from the page survey. Dashed = Craig's ideas (talk, not spec).
+
+  subgraph Out[Signed out]
+    Land[Landing] --> Guest[Pick a team as a guest]
+    Guest -->|Save| SignUp[Sign up: magic link, team name, favourite team]
+  end
+
+  SignUp --> Home
+
+  subgraph Nav[Signed-in nav]
+    Home[Home: deadline, gameweek points, my leagues]
+    Pick[Pick Team: line-up, Carry, bench]
+    Trans[Transfers]
+    Pts[Points: gameweek]
+    Lg[Leagues]
+    Stats[Stats: player list]
+    Fix[Fixtures: series by gameweek]
+    Help[Help and rules]
+    LCK[LCK hub: standings, schedule, teams, players]
+  end
+
+  Pick --> ChipA[Chip sheet: Bench Boost, Hyper Carry]
+  Trans --> Confirm[Confirm transfers: cost per transfer, -4 each extra]
+  Confirm --> ChipB[Chip offer: Remake, Recall]
+
+  Pts --> Series[Series view: games played, best 2 counted]
+  Series --> Player[Player or coach pop-up]
+  Stats --> Player
+  Fix --> Player
+
+  Lg --> Join[Join or create a league: code]
+  Lg --> Table[League table]
+  Table --> Profile[Manager profile]
+  Profile --> Pts
+  Profile --> Hist[Gameweek history and past seasons]
+  Profile --> TH[Transfer history]
+  Profile -.-> Trophy[Trophy room]
+
+  Home -.->|series live| Live[Live: stream and live points]
+  Fix -.-> Live
+
+  Home --> Settings[Settings: team name, favourite team]
+  Land --> Stats
+  Land --> Fix
+  Land --> Help
+  Land --> LCK
+  LCK --> SeriesPg[Series page: score, games, lines per game]
+  Fix --> SeriesPg
+  LCK --> Player

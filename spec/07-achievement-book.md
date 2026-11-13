@@ -1,5 +1,7 @@
 # Achievement book
 
+**Parked** (Craig, 13 Nov 2026): not in the beta and not grilled until Craig picks it up again.
+
 Craig's answers only. Not grilled yet: nothing here is built, and where this file is silent the
 rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
 [docs/to-grill.md](../docs/to-grill.md).

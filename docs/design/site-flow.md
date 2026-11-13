@@ -30,7 +30,7 @@ flowchart LR
 | Points | This gameweek's points, moving live, with each player's breakdown. | Points |
 | Series page | One series, game by game: who scored what and why. | Match pop-up |
 | Transfers | Swap players inside the budget; see the −4 before confirming. | Transfers |
-| Leagues | The global table, the supporter league, private leagues with a join code. | Leagues & Cups |
+| Leagues | Overall, the country league, the supporter league and private leagues with a join code; Legend and Rise in Split 2. | Leagues & Cups |
 | Another manager's team | A rival's lineup and points, after the deadline. | Entry view |
 | Fixtures | The LCK's week: series, times in the visitor's time zone, results. | Fixtures |
 | The Book | The achievement book: pages earned, pages still blank, the story behind each. | none |

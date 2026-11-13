@@ -95,7 +95,7 @@ Notes:
 | `chipPlays` | a chip used | entry, gameweek, chip |
 | `prices` | a player's price over time | player, season, from gameweek, price in won |
 | `entryGameweeks` | an entry's result for a gameweek | entry, gameweek, points, hits, rank, the auto-subs made |
-| `leagues` | a mini-league | name, kind (global, supporter, private), join code |
+| `leagues` | a mini-league | name, kind (overall, country, supporter, private, Legend, Rise), join code |
 | `leagueEntries` | an entry in a league | league, entry, joined from gameweek |
 | `achievements` | one page of the achievement book | name, the story, the rule that awards it, points |
 | `achievementAwards` | an entry earning one | entry, achievement, series, gameweek |

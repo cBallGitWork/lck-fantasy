@@ -12,6 +12,9 @@ questions are in [docs/to-grill.md](../docs/to-grill.md).
   and you join the T1 league.
 - A manager can change their favourite team any time until their first gameweek scores; after
   that it is fixed (Craig, 13 Nov 2026).
+  Since no points have counted by then, a change only moves the manager to the new team's
+  league; nothing carries over.
+- The country is set at sign-up and fixed on the same rule ([spec/09](09-onboarding.md)).
 
 ## Tables
 

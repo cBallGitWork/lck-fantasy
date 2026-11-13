@@ -23,6 +23,12 @@ export interface SquadPick {
   pick: Pick;
 }
 
+/** A pick in a gameweek's scoring line-up: a starter, or a bench player when the bench scores. */
+export interface ScoringPick {
+  slot: StarterSlot | "bench";
+  pick: Pick;
+}
+
 export interface Squad {
   starters: SquadPick[];
   /** In bench order: the first is bench 1. */

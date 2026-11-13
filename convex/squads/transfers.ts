@@ -1,6 +1,7 @@
 // Free transfers, the bank of them, and hits (spec/03-transfers.md). Every number is the
 // competition's data; whether a gameweek is unlimited or topped up is the gameweek's.
 import type { Transfer } from "./budget";
+import { transfersUnlimited, type ChipEffect } from "./chips";
 
 export interface TransferSettings {
   /** Free transfers gained each gameweek. */
@@ -49,7 +50,13 @@ export function settleTransfers(
   transfers: readonly Transfer[],
   gameweek: TransferGameweek,
   settings: TransferSettings,
+  chip: ChipEffect | null = null,
 ): GameweekTransferResult {
+  if (transfersUnlimited(chip)) {
+    // spec/06: "his free transfer doesn't roll over". Whether a bank of 2 then stays 2 or drops
+    // to 1 is asked on #25; until Craig answers, a Remake or Limitless gameweek is never settled.
+    throw new Error("Free transfers after a Remake or Limitless gameweek wait for Craig's answer on #25.");
+  }
   const made = transfers.length;
   if (gameweek.unlimited) return { hit: 0, nextFree: settings.freeAfterUnlimited };
   const extra = Math.max(0, made - free);

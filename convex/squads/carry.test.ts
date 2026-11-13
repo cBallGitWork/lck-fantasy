@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { armbandProblems, carryingPlayer, lineupPoints, multiplied } from "./carry";
+import { armbandProblems, carryingPlayers, lineupPoints, multiplied } from "./carry";
 import { chovy, gumayusi, keria, playedExcept, validSquad } from "./fixtures";
 import { allPicks, pickKey } from "./squad";
 
@@ -48,33 +48,34 @@ describe("multiplied", () => {
 });
 
 describe("the Carry's points", () => {
+  /** The starters' points with the usual armband: one Carry, no Dual Carry. */
+  function pointsFor(played: Set<string>, points = pointsOf(4), band = armband) {
+    return lineupPoints(validSquad().starters, points, carryingPlayers(band, played, false), CARRY_MULTIPLIER);
+  }
+  const pointsOfPick = (result: ReturnType<typeof pointsFor>, id: string) => result.find((s) => s.pick.id === id)?.points;
+
   test("a Carry who played has his points multiplied, nobody else's", () => {
-    const squad = validSquad();
-    const result = lineupPoints(squad.starters, pointsOf(4, { "player:chovy": 9 }), armband, playedExcept(squad), CARRY_MULTIPLIER);
-    expect(result.find((s) => s.pick.id === "chovy")?.points).toBe(13);
-    expect(result.find((s) => s.pick.id === "keria")?.points).toBe(4);
+    const result = pointsFor(playedExcept(validSquad()), pointsOf(4, { "player:chovy": 9 }));
+    expect(pointsOfPick(result, "chovy")).toBe(13);
+    expect(pointsOfPick(result, "keria")).toBe(4);
   });
 
   test("a Carry who played no game passes the multiplier to the Vice-carry", () => {
-    const squad = validSquad();
-    const played = playedExcept(squad, chovy);
-    expect(carryingPlayer(armband, played)).toBe("keria");
-    const result = lineupPoints(squad.starters, pointsOf(4), armband, played, CARRY_MULTIPLIER);
-    expect(result.find((s) => s.pick.id === "keria")?.points).toBe(6);
+    const played = playedExcept(validSquad(), chovy);
+    expect(carryingPlayers(armband, played, false)).toEqual(new Set(["keria"]));
+    expect(pointsOfPick(pointsFor(played), "keria")).toBe(6);
   });
 
   test("if neither played, nobody's points are multiplied", () => {
-    const squad = validSquad();
-    const played = playedExcept(squad, chovy, keria);
-    expect(carryingPlayer(armband, played)).toBeNull();
-    const result = lineupPoints(squad.starters, pointsOf(4), armband, played, CARRY_MULTIPLIER);
-    expect(result.find((s) => s.pick.id === "gumayusi")?.points).toBe(4);
-    expect(result.map((s) => s.points)).toEqual([4, 4, 4, 4, 4, 4, 4]);
+    const played = playedExcept(validSquad(), chovy, keria);
+    expect(carryingPlayers(armband, played, false)).toEqual(new Set());
+    expect(pointsFor(played).map((s) => s.points)).toEqual([4, 4, 4, 4, 4, 4, 4]);
   });
 
   test("the multiplier is the competition's: ×2 doubles", () => {
     const squad = validSquad();
-    const result = lineupPoints(squad.starters, pointsOf(4), { carry: "gumayusi", viceCarry: "keria" }, playedExcept(squad), 2);
-    expect(result.find((s) => s.pick.id === gumayusi.id)?.points).toBe(8);
+    const carrying = carryingPlayers({ carry: "gumayusi", viceCarry: "keria" }, playedExcept(squad), false);
+    const result = lineupPoints(squad.starters, pointsOf(4), carrying, 2);
+    expect(pointsOfPick(result, gumayusi.id)).toBe(8);
   });
 });

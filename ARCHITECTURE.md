@@ -14,7 +14,8 @@ reason, and a change to either changes this file.
 |---|---|---|
 | Backend | [Convex](https://docs.convex.dev): database, live queries, timers, sign-in | live points reach browsers with no extra service; deadlines and price changes are timers saved with the data; one vendor, hard-capped free plan; Craig and Claude already know its rough edges |
 | Pages | Vercel, free (Hobby) plan | Hobby is for non-commercial use, which fits: the game is free with no cash prizes. Payments, ads or a donate button would need the paid plan |
-| Sign-in email | Resend, magic links | no passwords to keep; the free plan's 100 emails a day is the limit to watch at launch |
+| Sign-in | Google and Discord, through Convex Auth (Craig, 13 Nov 2026) | no passwords to keep, and no sign-in email to break across devices |
+| Email | Resend, for the opt-in deadline reminder and weekly recap | the free plan's 100 emails a day is the limit to watch at launch |
 | LCK stats, live | Riot's unofficial live stats feed, shown as provisional; game ids read from lolesports.com's schedule pages (Craig, 13 Nov 2026; Leaguepedia lacks them) | free and works without a key; unsupported, and can be switched off. GRID, the official partner, is commercial and not asked ([research](docs/research/live-data-sources.md)) |
 | LCK stats, settled | Oracle's Elixir's daily CSV, plus Leaguepedia's match data for solo kills and steals (Craig, 13 Nov 2026) | free for fans; Oracle's Elixir has the 15-minute stats, Leaguepedia the lines it lacks. Unchecked: whether Leaguepedia holds solo kills and steals, how fast it lands, and whether it needs a bot login ([research](docs/research/live-data-sources.md)) |
 
@@ -47,7 +48,7 @@ The folders exist now, each with a README saying what goes in it. No code yet.
 | `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, chips, prices. |
 | `convex/leagues/` | Global, supporter and private leagues, and their tables. |
 | `convex/achievements/` | The achievement book: the pages, the rules that award them, the awards. |
-| `convex/signIn/` | Magic-link sign-in, and turning a squad picked signed out into an entry. |
+| `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
 | `src/screens/` | One folder per screen in the site map (`docs/design/site-map.md`), named as it is there. |

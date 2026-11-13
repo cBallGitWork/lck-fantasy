@@ -1,5 +1,5 @@
 // Test fixtures for the squad rules: picks and settings, never product data.
-import type { Pick, PlayerRole, Squad, SquadSettings, StarterSlot } from "./squad";
+import { allPicks, pickKey, type Pick, type PlayerRole, type Squad, type SquadSettings, type StarterSlot } from "./squad";
 
 export const player = (id: string, teamId: string, role: PlayerRole): Pick => ({ id, teamId, role });
 export const coach = (teamId: string): Pick => ({ id: teamId, teamId, role: "coach" });
@@ -39,4 +39,10 @@ export function validSquad(): Squad {
 /** The squad with one starter slot's pick swapped. */
 export function withStarter(squad: Squad, slot: StarterSlot, pick: Pick): Squad {
   return { ...squad, starters: squad.starters.map((s) => (s.slot === slot ? { ...s, pick } : s)) };
+}
+
+/** The `pickKey`s of everyone in the squad who played, all but `sitOut`. */
+export function playedExcept(squad: Squad, ...sitOut: Pick[]): Set<string> {
+  const out = new Set(sitOut.map(pickKey));
+  return new Set(allPicks(squad).map(pickKey).filter((key) => !out.has(key)));
 }

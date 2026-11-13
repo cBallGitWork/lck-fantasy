@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -148,6 +148,15 @@ Settled; the spec is [spec/05-scoring.md](../spec/05-scoring.md). Worked live ag
 - The 2026 top 50 under the final rules: "It's fine". Prices: "we price the top coaches a little higher than others".
 - The coach penalty: "-1 for losing a series that's it"; Gen.G's coach moves from 5th to 6th in 2026, and "Pricing sorts that out anyways".
 - Achievements: "Achievements list, a love letter to lck lore"; "Think like Xbox achievements / The Reddit memes etc"; stored for later, "Ok let's store the achieved tor now".
+
+## Beta chips grill (13 Nov 2026)
+
+Settled; the spec is [spec/06-chips.md](../spec/06-chips.md).
+
+- All four chips in the beta; "One for each split when we start. All in beta", then one of each in the beta, yes.
+- Hyper Carry at ×2: "Well we have 2 series in a week so x2 a lot. 1.5x good"; then ×2, picked in a dialog; then "Change hypercarry to dual carry, vice carry gets the carry points too". No stand-in if the Carry doesn't play, yes.
+- Stages: "Nah allow every stage. Names are too similar though" (Remake and Recall).
+- The Free Hit chip: "Limitless. No budget, no team restrictions per team"; it replaces Recall, roles still apply, yes.
 
 ## Open
 

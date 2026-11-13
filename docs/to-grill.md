@@ -5,7 +5,6 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 ## Open from the first chats (26–29 Oct 2026)
 
-- Which chips the beta has, picked from the effects in [spec/06](../spec/06-chips.md).
 - How achievements cap and rank: a separate column, and do base points decide ties?
 
 ## Achievements, drafts (12–13 Nov 2026)

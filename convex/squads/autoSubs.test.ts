@@ -1,13 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { autoSubs } from "./autoSubs";
-import { bdd, chovy, ktCoach, player, ruler, validSquad, zeus } from "./fixtures";
-import { allPicks, pickKey, type Pick, type Squad } from "./squad";
-
-/** Everyone in the squad played, except `sitOut`. */
-function playedExcept(squad: Squad, ...sitOut: Pick[]): Set<string> {
-  const out = new Set(sitOut.map(pickKey));
-  return new Set(allPicks(squad).map(pickKey).filter((key) => !out.has(key)));
-}
+import { bdd, chovy, ktCoach, player, playedExcept, ruler, validSquad, zeus } from "./fixtures";
 
 const slotOf = (lineup: ReturnType<typeof autoSubs>["lineup"], slot: string) =>
   lineup.find((starter) => starter.slot === slot)?.pick.id;

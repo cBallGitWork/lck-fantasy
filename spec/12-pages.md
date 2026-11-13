@@ -11,7 +11,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Home**: a status page, not the Points page: the deadline, the last gameweek's points, free
   transfers and league ranks. While a series is live it shows a Live now banner.
 - **Pick Team** and **Transfers**, as FPL's. Pick Team has a Rift view and a Card view; each
-  manager picks one and Flol remembers it (Craig, 13 Nov 2026).
+  manager picks one and Flol remembers it (Craig, 13 Nov 2026). Swaps, the Carry, the Vice-carry and
+  boosts take effect only when the manager presses Save (Craig, 13 Nov 2026).
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
 - **Leagues** ([spec/08](08-leagues.md)).

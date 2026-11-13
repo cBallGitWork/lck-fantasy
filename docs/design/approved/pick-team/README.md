@@ -23,7 +23,7 @@ Where a manager sets his starters, bench order, Carry and Vice-carry, and plays 
 - **Swap with bench**: the bench players who fit (own role or flex, spec/01) are marked and the rest greyed; tap one to swap in, or Cancel swap.
 - **⇅ Swap order**: swaps bench 1 and 2.
 - **Boosts**: Bench Boost and Dual Carry show Play, then Cancel until the deadline; one a week, so the other greys with why. Remake and Limitless link to Transfers (spec/06, spec/12).
-- **Save team / Reset**: at the top, with what changed. Disabled with no changes.
+- **Save team / Reset**: at the top, with what changed. Disabled with no changes. Swaps, Carry, Vice-carry and boosts take effect only on Save (spec/12).
 
 ## Placeholders
 
@@ -40,5 +40,4 @@ Where a manager sets his starters, bench order, Carry and Vice-carry, and plays 
 
 ## Still open
 
-- Swaps, Carry, Vice-carry and boosts are drawn as saving together on Save team. Craig hasn't settled that yet: on Save, or the moment they are tapped.
 - Panel suggestions, not Craig's wants; none is the product: a ready check before the deadline, and a count of how many of your players are in each series. Lock in, a trade-style swap and a bot-lane duo badge were dropped; a team-cap counter belongs on Transfers.

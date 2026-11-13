@@ -1,6 +1,6 @@
 # Rivals score bigger, Flol scores flatter
 
-**Contents**
+## Contents
 1. Bottom line
 2. Riot's current games share one decimal, bonus-heavy table
 3. DraftKings and the prop sites scale up the old Fantasy LCS table

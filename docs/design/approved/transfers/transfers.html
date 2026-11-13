@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Transfers</title>
+<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --hot: #1d1d1d; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
+.num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+i.ko { font-style: normal; color: var(--soft); font-size: 11px; margin-left: 4px; }
+nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
+nav.top a { color: var(--mid); text-decoration: none; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
+nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vertical-align: 2px; }
+nav.top .sp { flex: 1; }
+.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
+.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.note { position: absolute; background: #fffbe0; border: 1px solid #d8cf8a; font-size: 11px; padding: 4px 7px; color: #5a5420; max-width: 220px; line-height: 1.3; z-index: 5; }
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; line-height: 16px; }
+.tag.prov { border-style: dashed; color: var(--mid); border-color: var(--mid); }
+.tag.live { background: var(--ink); color: #fff; }
+.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 10px; }
+.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 10px; }
+.gw { display: flex; align-items: center; gap: 16px; }
+.gw button { border: 1px solid var(--line); background: var(--paper); padding: 4px 10px; font: inherit; color: var(--mid); }
+.gw h1 { font-size: 26px; letter-spacing: -0.5px; }
+.cnt { text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.unc { color: var(--soft); text-decoration: line-through; }
+.lv { font-weight: 600; }
+.lv::after { content: "●"; font-size: 8px; vertical-align: 4px; margin-left: 1px; }
+.cake::after { content: " 🎂"; }
+
+.page { display: grid; grid-template-columns: 1fr 400px; gap: 28px; padding: 22px 32px 48px; }
+.ph1 { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
+.ph1 h1 { font-size: 26px; letter-spacing: -0.5px; }
+.ph1 .dl { font-size: 15px; margin-top: 4px; } .ph1 .dl span { color: var(--soft); } .ph1 .dl b.cd { margin-left: 10px; border: 1px solid var(--ink); padding: 1px 8px; font-family: "IBM Plex Mono", monospace; }
+.save { background: var(--ink); color: #fff; font-weight: 700; padding: 10px 26px; border: 0; font: inherit; font-weight: 700; }
+.ctl { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; color: var(--mid); }
+.tog { display: inline-flex; border: 1px solid var(--line); background: var(--fill); padding: 3px; }
+.tog span { padding: 5px 24px; color: var(--mid); } .tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
+aside > section { border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 24px; }
+aside h2 { font-size: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
+.card { background: var(--paper); border: 1px solid var(--ink); margin-bottom: 24px; }
+.card header { display: flex; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); align-items: center; }
+.card header b { font-size: 19px; display: block; } .card header .x { margin-left: auto; color: var(--mid); align-self: flex-start; }
+.card .st { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+.card .st div { padding: 8px 14px; } .card .st b { display: block; font-family: "IBM Plex Mono", monospace; font-size: 17px; } .card .st span { font-size: 11px; color: var(--mid); }
+.card .nx { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--line); }
+.card .nx div { display: flex; justify-content: space-between; padding: 3px 0; } .card .nx .k { color: var(--mid); }
+.card .bt { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
+.card .bt span { border: 1px solid var(--ink); text-align: center; padding: 7px 0; font-size: 13px; font-weight: 600; }
+.card .bt span.pri { background: var(--ink); color: #fff; } .card .bt span.dim { border-color: var(--line); color: var(--mid); font-weight: 400; }
+.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.chip { border: 1px solid var(--ink); padding: 8px 10px; background: var(--paper); font-size: 13px; }
+.chip b { display: block; font-size: 14px; } .chip small { color: var(--mid); font-size: 11px; display: block; margin: 2px 0 6px; }
+.chip .go { display: inline-block; border: 1px solid var(--ink); padding: 0 10px; font-size: 12px; font-weight: 600; }
+.chip.off { border-color: var(--line); color: var(--mid); } .chip.off b { color: var(--mid); }
+.wk { font-size: 13px; }
+.wk div { display: grid; grid-template-columns: 34px 1fr auto; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--fill); align-items: center; }
+.wk .d { color: var(--mid); font-size: 12px; } .wk .t { font-size: 12px; text-align: right; font-family: "IBM Plex Mono", monospace; }
+.wk div.mine b.y { text-decoration: underline; text-underline-offset: 3px; }
+.ad { height: 100px; margin-bottom: 6px; } .adline { font-size: 11px; color: var(--soft); }
+.note2 { font-size: 12px; color: var(--mid); margin-top: 8px; }
+
+.rift { position: relative; width: 948px; height: 700px; }
+.rift svg.map { position: absolute; inset: 0; width: 948px; height: 700px; }
+.tile { position: absolute; width: 132px; transform: translate(-50%, -50%); text-align: center; }
+.benchb .tile { position: relative; transform: none; }
+.tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto -2px; }
+.tile .kit svg.shirt { width: 56px; height: 50px; }
+.tile .kit .code { position: absolute; left: 0; right: 0; top: 18px; font-size: 10px; font-weight: 700; }
+.tile .ri { position: absolute; left: -22px; top: -2px; width: 26px; height: 26px; background: var(--paper); border: 1px solid var(--ink); display: flex; align-items: center; justify-content: center; }
+.tile .ri svg { width: 18px; height: 18px; }
+.tile .mk { position: absolute; right: -16px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.tile .mk.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
+.tile .nm { background: var(--paper); border: 1px solid var(--ink); font-weight: 700; font-size: 13px; padding: 2px 4px; }
+.tile .nx { background: var(--ink); color: #fff; font-size: 11px; padding: 2px 0; }
+.tile .sl { font-size: 10px; color: var(--mid); margin-top: 2px; background: var(--paper); display: inline-block; padding: 0 4px; }
+.tile .nw { position: absolute; right: -14px; top: 26px; width: 18px; height: 18px; background: var(--paper); border: 1px solid var(--ink); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.tile.sel .nm, .tile.sel .nx { outline: 3px solid var(--ink); }
+.benchb { background: var(--fill); border: 1px solid var(--line); border-top: 0; padding: 12px 24px 18px; display: flex; gap: 70px; align-items: flex-start; }
+.benchb h3 { font-size: 13px; width: 120px; } .benchb h3 i { font-style: normal; color: var(--soft); font-weight: 400; font-size: 11px; margin-left: 4px; }
+.benchb h3 small { display: block; font-weight: 400; color: var(--mid); font-size: 11px; margin-top: 4px; }
+.savebar { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 13px; color: var(--mid); }
+.reset { margin-right: 16px; text-decoration: underline; color: var(--ink); }
+.benchb .ord { font-size: 12px; border: 1px solid var(--ink); padding: 2px 8px; margin-top: 8px; display: inline-block; color: var(--ink); background: var(--paper); }
+.tile.dim { opacity: .35; } .tile.ok .nm { outline: 3px dashed var(--ink); outline-offset: 2px; }
+.chip.on { background: var(--ink); color: #fff; } .chip.on small { color: #cfcfcf; } .chip.on .go { border-color: #fff; }
+.unsv { border: 1px dashed var(--ink); padding: 4px 10px; font-size: 13px; }
+.key { display: flex; gap: 14px; align-items: center; font-size: 12px; color: var(--mid); margin: 0 0 8px; }
+.key span:last-child { margin-left: auto; }
+.kc { display: inline-flex; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; align-items: center; justify-content: center; margin-right: -8px; }
+.kc.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
+.ph1 .act { display: flex; align-items: center; gap: 14px; font-size: 13px; }
+.card .bt span.lbl { border: 0; text-align: left; font-weight: 700; padding-left: 0; }
+.chip .lft { float: right; font-size: 11px; color: var(--mid); }
+.chip.off a { color: var(--ink); text-decoration: underline; font-size: 12px; }
+.bprompt { font-size: 13px; color: var(--ink); font-weight: 600; margin-top: 8px; }
+.rift { height: 560px !important; } .rift svg.map { height: 560px !important; }
+.basebox { position: absolute; left: 14px; top: 386px; width: 304px; height: 164px; border: 1.5px dashed var(--ink); background: rgba(255,255,255,.55); }
+.basebox span { position: absolute; left: 8px; top: 4px; font-size: 11px; color: var(--mid); }
+.tile { z-index: 2; }
+.tstats { display: flex; gap: 28px; align-items: center; border: 1px solid var(--line); background: var(--paper); padding: 10px 16px; margin-bottom: 14px; }
+.tstats > div > b { display: block; font-family: "IBM Plex Mono", monospace; font-size: 20px; } .tstats > div > span { font-size: 12px; color: var(--mid); }
+.caps { display: flex; gap: 6px; align-items: center; font-size: 12px; } .caps span { border: 1px solid var(--line); padding: 1px 6px; } .caps .k { border: 0; color: var(--mid); } .caps .f { border-color: var(--ink); font-weight: 600; }
+.bz { margin-left: auto; display: flex; gap: 8px; } .chip2 { border: 1px solid var(--ink); padding: 4px 10px; font-size: 13px; font-weight: 600; } .chip2 small { font-weight: 400; color: var(--mid); margin-left: 4px; }
+.pl2 h2 { font-size: 15px; } .flt, .flt2 { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; font-size: 12px; }
+.flt span { border: 1px solid var(--line); padding: 3px 8px; background: var(--paper); } .flt span.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+.flt2 span { border: 1px solid var(--line); padding: 4px 8px; background: var(--paper); color: var(--mid); } .flt2 .srch { flex: 1; }
+.plist { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--paper); }
+.plist th { text-align: left; font-weight: 500; color: var(--mid); font-size: 11px; padding: 5px 6px; border-bottom: 1px solid var(--line); }
+.plist td { padding: 6px; border-bottom: 1px solid var(--fill); } .plist td.n { font-family: "IBM Plex Mono", monospace; text-align: right; }
+.plist td svg { width: 14px; height: 14px; } .plist td small { color: var(--mid); display: block; font-size: 11px; }
+.plist tr.no td { color: var(--soft); } .plist tr.no td small { color: var(--soft); }
+.plist .add { border: 1px solid var(--ink); width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+.plist tr.no .add { border-color: var(--line); color: var(--line); } .plist tr.pick td { background: var(--fill); } .plist tr.pick .add { background: var(--ink); color: #fff; }
+.confirm { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; border: 1.5px solid var(--ink); background: var(--paper); padding: 10px 14px; font-size: 14px; }
+.confirm .out { text-decoration: line-through; color: var(--mid); }
+.tile .pr { background: var(--ink); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 13px; padding: 2px 0; }
+.tile.sold .kit, .tile.sold .nm, .tile.sold .sl { opacity: .35; } .tile.sold .pr { background: var(--paper); color: var(--ink); border: 1.5px dashed var(--ink); }
+.tstats { gap: 18px; } .tstats b, .caps span, .flt2 span { white-space: nowrap; } .tstats > div > span { display: block; max-width: 140px; } .bz { max-width: 150px; }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Position icons drawn after LoL's own: Top and Bot are opposite corners, Mid the diagonal, Jungle a claw, Support a crest. -->
+    <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
+    <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
+    <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+    <symbol id="i-flex" viewBox="0 0 16 16"><path d="M8 1l2 5h5l-4 3 2 6-5-4-5 4 2-6-4-3h5z" fill="none" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+    <symbol id="shirt" viewBox="0 0 56 50"><path d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z" fill="#fff" stroke="#1d1d1d" stroke-width="1.6"/><path d="M18 2 Q28 9 38 2" fill="none" stroke="#1d1d1d" stroke-width="1.6"/></symbol>
+  </defs>
+</svg>
+
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a class="on">Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+<div class="page"><main>
+<div class="ph1"><div><h1>Transfers · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">1d 20h 45m</b></div></div></div>
+<div class="tstats">
+  <div><b>0 of 1</b><span>Free left · extras −4 pts each</span></div><div><b>0 pts</b><span>Cost</span></div><div><b>1.5억</b><span style="white-space:nowrap">Bank after · of 100억</span></div>
+  <div class="caps"><span class="k">Team cap 2 · after</span><span class="f">T1 2</span><span class="f">GEN 2</span><span class="f">HLE 2</span><span class="f">KT 2</span><span>DK 0</span><span>NS 1</span></div>
+  <div class="bz" style="font-size:12px;color:var(--mid)">1억 = 100 million won, game money only</div>
+</div>
+<div class="ctl"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span><span>Tap a player to sell him, then pick his replacement from the list.</span></div>
+<div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
+        <rect x="0" y="0" width="680" height="680" fill="#ededeb"/>
+        <!-- river: top-left to bottom-right -->
+        <path d="M0 40 L40 0 L680 640 L640 680 Z" fill="#dcdcd8"/>
+        <!-- lanes -->
+        <path d="M60 640 L60 60 L640 60" fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round"/>
+        <path d="M40 620 L620 620 L620 40" fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round"/>
+        <path d="M60 620 L620 60" fill="none" stroke="#fff" stroke-width="40"/>
+        <!-- bases -->
+        <path d="M0 520 A160 160 0 0 1 160 680 L0 680 Z" fill="#c9c9c9"/>
+        <path d="M520 0 A160 160 0 0 0 680 160 L680 0 Z" fill="#c9c9c9"/>
+        <!-- towers -->
+        <g fill="#9a9a9a"><rect x="54" y="400" width="12" height="12"/><rect x="54" y="220" width="12" height="12"/><rect x="250" y="54" width="12" height="12"/><rect x="430" y="54" width="12" height="12"/>
+        <rect x="270" y="614" width="12" height="12"/><rect x="450" y="614" width="12" height="12"/><rect x="614" y="440" width="12" height="12"/><rect x="614" y="260" width="12" height="12"/>
+        <rect x="250" y="424" width="12" height="12"/><rect x="420" y="254" width="12" height="12"/></g>
+        <!-- pits -->
+        <circle cx="200" cy="200" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/><circle cx="480" cy="480" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/>
+        <g font-family="IBM Plex Sans KR" font-size="10" fill="#9a9a9a"><text x="186" y="230">Baron</text><text x="462" y="510">Dragon</text>
+        <text x="300" y="34">TOP LANE</text><text x="300" y="656">BOT LANE</text></g>
+      </svg><div class="basebox"><span>Your base: Coach and Flex</span></div></div>
+<div class="benchb" id="bench"><h3>Bench<i>벤치</i><small>Sell any of the nine, coach included.</small></h3></div>
+
+<div class="confirm"><div><b>1 transfer</b> · free · <span class="out">Siwoo 7.5억</span> → <b>Kingen 6.5억</b> · bank 0.5 → 1.5억</div><span><span class="reset">Reset</span><button class="save">Review and confirm ›</button></span></div>
+</main>
+<aside>
+<section class="pl2"><h2>Pick a replacement for Siwoo <span>Flex: any role · up to 8.0억</span></h2>
+<div class="flt"><span class="on">All roles</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span></div>
+<div class="flt2"><span class="srch">Search a player</span><span>Sort: Form ▾</span><span>Team: All ▾</span></div>
+<table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th>Form</th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
+<div class="note2">Greyed, listed last: over your 8.0억, or his team is full (2 a team, the coach counts). Tap any row for his card.</div></section>
+<section style="margin-top:22px"><h2>Boosts <span>one a week · final once confirmed</span></h2><div class="chips">
+<div class="chip"><span class="lft">1 left</span><b>Remake</b><small>Unlimited free transfers this week, kept</small><span class="go">Play</span></div>
+<div class="chip"><span class="lft">1 left</span><b>Limitless</b><small>No budget, no team cap for one week, then your squad comes back</small><span class="go">Play</span></div></div></section>
+</aside>
+</div>
+<script>// Made-up LCK Cup Week 4 for the Pick Team wireframes. Every number is an example.
+// Monday 20:00 KST (11:00 London). Deadline Wed 16:45 KST = 07:45 London (15 min before the first series, spec/10).
+const W4 = [
+  ["Wed","08:00","17:00","HLE","DK"],["Wed","10:30","19:30","T1","KT"],
+  ["Thu","08:00","17:00","GEN","BRO"],["Thu","10:30","19:30","NS","DNS"],
+  ["Fri","08:00","17:00","KRX","BFX"],["Fri","10:30","19:30","DK","KT"],
+  ["Sat","08:00","17:00","T1","GEN"],["Sat","10:30","19:30","HLE","NS"],
+  ["Sun","08:00","17:00","BRO","BFX"],["Sun","10:30","19:30","KRX","DNS"],
+];
+const nextOf = (team) => W4.filter((s) => s[3] === team || s[4] === team).map((s) => `v ${s[3] === team ? s[4] : s[3]} ${s[0]}`);
+const PSQ = [
+  { slot: "top", name: "Zeus", team: "HLE", price: "16.0", form: "7.0" },
+  { slot: "jng", name: "Canyon", team: "GEN", price: "15.5", form: "7.3" },
+  { slot: "mid", name: "Faker", team: "T1", price: "18.5", form: "8.8", mark: "C" },
+  { slot: "bot", name: "Ruler", team: "GEN", price: "17.0", form: "8.0", mark: "V" },
+  { slot: "sup", name: "Delight", team: "HLE", price: "9.0", form: "5.0" },
+  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "7.5", form: "4.5", news: "Benched for Wednesday's series" },
+  { slot: "coach", name: "kkOma", team: "T1", price: "7.0", form: "6.0" },
+  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "5.0", form: "3.3" },
+  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "4.0", form: "4.8" },
+];
+const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
+const SLOTNAME = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support", flex: "Flex", coach: "Coach", b1: "Bench 1", b2: "Bench 2" };
+const iconOf = (p) => ICON[p.role || p.slot];
+
+const IN = { name: "Kingen", team: "NS", slot: "flex", role: "top" };
+const POS = { top: [104, 70], jng: [280, 262], mid: [500, 260], coach: [92, 468], flex: [238, 468], sup: [650, 486], bot: [846, 486] };
+function tile(p) {
+  const mk = p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : "";
+  const nw = p.news ? `<span class="nw">!</span>` : "";
+  const nx = p.slot === "coach" ? nextOf(p.team).join(" · ") : nextOf(p.team).join(" · ");
+  const sl = p.slot === "flex" ? `<div class="sl">Flex · plays ${SLOTNAME[p.role]}</div>` : p.slot === "coach" ? `<div class="sl">Coach 감독</div>` : p.news ? `<div class="sl">${p.news}</div>` : "";
+  return `<div class="tile ${p.name === "Kingen" ? "sel" : ""}"><div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span><span class="ri"><svg><use href="#${iconOf(p)}"/></svg></span>${mk}${nw}</div>
+  <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div><div class="pr">${p.name === "Kingen" ? "6.5억 · new" : "sells " + p.price + "억"}</div>${sl}</div>`;
+}
+PSQ.map((p) => p.name === "Siwoo" ? Object.assign({}, p, IN, { news: null, price: "6.5" }) : p).filter((p) => POS[p.slot]).forEach((p) => { const w = document.createElement("div"); w.innerHTML = tile(p); const t = w.firstElementChild; t.style.left = POS[p.slot][0] + "px"; t.style.top = POS[p.slot][1] + "px"; document.getElementById("rift").appendChild(t); });
+document.getElementById("bench").insertAdjacentHTML("beforeend", PSQ.filter((p) => /^b\d/.test(p.slot)).map((p, i) => `<div><div style="font-size:12px;color:var(--mid);margin-bottom:4px">${i + 1} · ${SLOTNAME[p.role]}</div>${tile(p)}</div>`).join(""));
+const PL = [
+ ["mid","Chovy","GEN","17.5","9.1","61","41%","BRO Thu",1],["sup","Keria","T1","12.0","8.2","52","47%","KT Wed",1],["bot","Aiming","DK","11.5","7.4","46","14%","HLE Wed",2],
+ ["mid","ShowMaker","DK","10.5","6.9","44","18%","HLE Wed",2],["jng","Lucid","DK","9.0","6.5","41","11%","HLE Wed",2],
+ ["top","Kingen","NS","6.5","6.1","38","9%","DNS Thu",0],["top","PerfecT","KT","7.0","5.8","36","4%","T1 Wed",1],["top","DuDu","DNS","6.0","5.6","33","6%","NS Thu",0],
+ ["bot","Hype","KRX","5.5","5.3","31","4%","BFX Fri",0],["top","Clear","BFX","5.5","5.2","29","3%","KRX Fri",0],["mid","Clozer","BRO","5.0","5.0","27","5%","GEN Thu",0],
+ ["sup","Pollu","BRO","4.5","4.9","26","2%","GEN Thu",0]];
+const WHY = ["", "team full", "over 8.0억"];
+document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[8] > 0) - (b[8] > 0)).map((r) => `<tr class="${r[8] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[8] ? `<small>${WHY[r[8]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="n">${r[6]}</td><td>${r[7]}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
+const MINE = new Set();
+void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
+</script></body></html>

@@ -3,6 +3,25 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
+## Transfers ideas from other games (13 Nov 2026)
+
+From the Transfers research ([docs/research/transfers-page-references.md](research/transfers-page-references.md)); Claude's suggestions, not Craig's wants:
+
+- Selling a player and buying him back in the same week costs nothing (F1 Fantasy).
+- Playing Remake after paid transfers wipes that week's −4s (UCL Fantasy).
+- A price-change arrow on each player, once Flol decides whether prices move in a split (#23).
+- A Sell all button for Remake and Limitless (LTA Fantasy).
+- A watchlist (FPL).
+- A switch on the squad to show next series, owned % or form in place of price (FPL 2026/27).
+
+## Transfers picture, not yet specced (13 Nov 2026)
+
+Drawn into the approved Transfers picture on Craig's chat yes; no spec file holds them yet:
+
+- Card view beside Rift view, and whether the choice is remembered.
+- A chip ticked on the confirm sheet is final once confirmed (FPL lets you cancel until the deadline), and whether the screen says boost or chip.
+- The team-count strip, the "new" marker on a bought player, and greyed players sorted last.
+
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

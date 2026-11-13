@@ -56,10 +56,9 @@ The coach is the team ([spec/01](01-squad-and-slots.md)). Per game:
 | Quick win | +1: a game won in under 25 minutes |
 
 - "Most" means more than the opponent; on a tie nobody scores (Craig, 13 Nov 2026).
-- A series scores the coach's best 2 games, plus +3 if the team wins the series. No point for a
-  game won (Craig, 13 Nov 2026).
-- A coach can go below 0 (Craig, 13 Nov 2026). The line that takes points off is still open, in
-  [docs/to-grill.md](../docs/to-grill.md).
+- A series scores the coach's best 2 games, plus +3 if the team wins the series and −1 if it
+  loses (Craig, 13 Nov 2026). No point for a game won (Craig, 13 Nov 2026). So a coach can go
+  below 0.
 - A coach scores a little under the lowest role (Craig, 12 Nov 2026).
 
 ## The Carry

@@ -8,11 +8,6 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 - Which chips the beta has, picked from the effects in [spec/06](../spec/06-chips.md).
 - How achievements cap and rank: a separate column, and do base points decide ties?
 
-## Scoring, left open (13 Nov 2026)
-
-- What takes a coach below 0. Craig: a coach can go below zero. Tested per series: −2 if swept
-  gives 4.3; −1 per game lost gives 4.0–4.2; either way about 1 series in 5 goes below 0.
-
 ## Achievements, drafts (12–13 Nov 2026)
 
 Craig's own, with his names:

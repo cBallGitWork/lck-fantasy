@@ -160,6 +160,7 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md).
 - Live in the beta, on LCK's Twitch; a Live now banner, yes; next series and countdown, yes; says so when the feed is down, yes.
 - Later: trophy room, difficulty ratings. No predictor, no prizes page.
 - Team of the week: "Perfect game. Carry and 7 starters", "Perfect game includes the rules such as 2 per team".
+- The player card (later the same day, by dialog): header as FPL, actions as FPL, scoring lines only, yes. Tabs: "Look at other games too and let's see how we can improve"; after the survey, the front strip, a Champions tab, ranks and transfers in and out, yes. "Compare yes watchlist no. News yes"; news written by an admin, Compare in the beta, the coach card with a Roster tab, yes.
 
 ## Open
 

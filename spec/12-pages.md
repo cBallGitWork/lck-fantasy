@@ -19,10 +19,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.
 - **Series page**: one series, its games and each player's lines in each game.
-- **Player pop-up**: FPL's, plus the champion played, the scoring lines in each game, and the
-  player's price history.
+- **Player pop-up**: see [The player card](#the-player-card).
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the
-  6th role", Craig, 13 Nov 2026).
+  6th role", Craig, 13 Nov 2026). See [The coach card](#the-coach-card).
 - **Manager profile**: public, as in FPL. Any manager's points, history and transfers open from a
   league table.
 - **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
@@ -35,8 +34,38 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Home shows a Live now banner while a series is live; it never redirects.
 - **Help** and **Settings**.
 
+## The player card
+
+What opens when a manager taps a player (the `/grill` of 13 Nov 2026, after a look at FPL,
+F1 Fantasy, Sleeper and gol.gg).
+
+- **Header**, as FPL's: team, role, price, owned by %, form (average of the last 4 gameweeks)
+  and season total. The stats show their rank. Example: form 7.3, 2nd of 10 mids. Once the game
+  is live it also shows the gameweek's transfers in and out.
+- **News**: a short line and a flag an admin writes by hand, as FPL's staff do. Example: Benched
+  for the Wednesday series.
+- **Front**, before any tab: his points in the last 3 gameweeks and his next series. Example:
+  9 · 14 · 6, next T1 v Gen.G, Wednesday, Bo3.
+- **Tabs**:
+  - This week: each series and each game, with the champion, the scoring lines, the points, and
+    which 2 games counted.
+  - Fixtures: his team's next series, Bo3 or Bo5.
+  - History: each gameweek's points and price, then past seasons.
+  - Champions: each champion he has played this season, with games and average points.
+- **Season stats**: the scoring lines only ([spec/05](05-scoring.md)), as per-game averages and
+  totals.
+- **Buttons**, as FPL's, by where it opened: transfer in or out, Make Carry, Make Vice-carry,
+  substitute.
+- **Compare**, in the beta: two players side by side, with header stats, form, scoring lines and
+  next series.
+
+## The coach card
+
+The same as the player card, with the coach's lines in place of a player's. A Roster tab, the
+team's players and prices, replaces Champions.
+
 ## Chips
 
-Chips confirm as in FPL: Remake and Recall are final once confirmed, like FPL's Wildcard and Free
-Hit; Bench Boost and Hyper Carry can be cancelled until the deadline
+Chips confirm as in FPL: Remake and Limitless are final once confirmed, like FPL's Wildcard and
+Free Hit; Bench Boost and Dual Carry can be cancelled until the deadline
 ([spec/06](06-chips.md)).

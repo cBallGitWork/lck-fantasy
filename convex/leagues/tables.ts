@@ -11,6 +11,8 @@ export interface EntryGameweek {
 
 export interface LeagueMember {
   entryId: string;
+  /** A gameweek with no row counts 0: right for one before a late joiner's first deadline. Settling
+   *  a gameweek must write a row for every entry, so a data gap fails there, not here. */
   gameweeks: EntryGameweek[];
 }
 

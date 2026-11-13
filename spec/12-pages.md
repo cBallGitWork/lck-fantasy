@@ -28,6 +28,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
 - **Price changes**: the week's rises and falls. Past moves only, no prediction.
 - **Live**: in the beta. It embeds the LCK's Twitch stream beside the manager's live points.
+  Its points panel waits on the live points spec ([spec/11](11-live-points.md)).
   - With nothing live, it shows the next series and a countdown.
   - If the live feed is down, the points panel says so; final points follow
     ([spec/11](11-live-points.md)).

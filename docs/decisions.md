@@ -211,6 +211,7 @@ Settled; the specs are [spec/12-pages.md](../spec/12-pages.md) (Settings) and [s
 - Settings: team name, email, banner text, favourite team and country locked with why; time zone; theme follows the device; delete account. All yes.
 - Emails: "Add a weekly recap"; both opt-in, off by default, for Resend's 100 a day, yes.
 - "And log in pages and how we handle that (Google only so we don't store passwords)". Google only or more: "Your call"; Claude added Discord, where LoL fans are. Sign-up asks team name, favourite team, country; stay signed in until sign-out. Yes.
+- Live: "Options of languages, official and streamers"; an admin list, Twitch and YouTube in the beta, official English first and the last pick remembered. All yes.
 
 ## Open
 

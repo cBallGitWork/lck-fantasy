@@ -27,8 +27,15 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
 - **Price changes**: the week's rises and falls. Past moves only, no prediction.
-- **Live**: in the beta. It embeds the LCK's Twitch stream beside the manager's live points.
-  Its points panel waits on the live points spec ([spec/11](11-live-points.md)).
+- **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
+  waits on the live points spec ([spec/11](11-live-points.md)).
+  - A picker chooses the stream. The list is admin data (name, language, platform, channel): the
+    LCK's official broadcasts in each language, and co-streamers Craig approves, such as
+    Caedrel.
+  - The beta embeds Twitch and YouTube only. SOOP and CHZZK are later, once their embedding is
+    checked.
+  - It opens on the official English stream, then remembers each manager's last pick. Streams
+    not live show greyed out.
   - With nothing live, it shows the next series and a countdown.
   - If the live feed is down, the points panel says so; final points follow
     ([spec/11](11-live-points.md)).

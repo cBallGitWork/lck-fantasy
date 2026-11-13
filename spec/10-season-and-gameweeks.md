@@ -11,7 +11,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - The real test is the main season's knockouts: Road to MSI and the LCK playoffs.
 - The main game splits into Split 1 and Split 2, and chips reset at the split, the way FPL's
   reset at GW19.
-- Road to MSI counts in Split 1's leaderboard.
+- Road to MSI counts in Split 1's table.
 
 ## Stages and their settings
 
@@ -34,7 +34,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## Knockouts
 
-Knockouts run in the same game, on the same leaderboard. Craig's intent for them, with the values
+Knockouts run in the same game, on the same tables. Craig's intent for them, with the values
 set per stage:
 
 - the budget is lifted, since it exists to stop a squad of only the top players;

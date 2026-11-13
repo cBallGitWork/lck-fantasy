@@ -149,6 +149,17 @@ Settled; the spec is [spec/05-scoring.md](../spec/05-scoring.md). Worked live ag
 - The coach penalty: "-1 for losing a series that's it"; Gen.G's coach moves from 5th to 6th in 2026, and "Pricing sorts that out anyways".
 - Achievements: "Achievements list, a love letter to lck lore"; "Think like Xbox achievements / The Reddit memes etc"; stored for later, "Ok let's store the achieved tor now".
 
+## Leagues grill (13 Nov 2026)
+
+Settled; the spec is [spec/08-leagues.md](../spec/08-leagues.md).
+
+- Head-to-head: later. A cup: "Cup is just head to head. We stick to points for now".
+- Automatic leagues: Overall, country and team, yes. Public leagues: later.
+- Favourite team: required; "Fixed but can change anytime before their first gameweek starts and scores".
+- Private leagues by code or link, from any gameweek, as in FPL, yes.
+- A season table plus one per split, yes; "And have a split 1 and 2 league". The word is table, not leaderboard.
+- "Split the global league from split 1 into legend and rise": Split 1's top half to Legend, yes; "Scores carry over"; Split 2 joiners to Rise, yes; Overall only, yes; the whole Overall table stays, yes.
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

@@ -39,7 +39,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 5 | [Scoring](spec/05-scoring.md) | Per game, low whole numbers, about even for quick and long games; a series scores the best 2 games. Players score kills, assists and deaths (each capped at 3), gold lead at 15, solo kills, first blood, deathless games, multikills and steals. The coach scores first tower, most drakes, barons and elders, a quick win, +3 for a series win and −1 for a series loss. The Carry scores ×1.5, rounded down. | not built |
 | 6 | [Chips](spec/06-chips.md) | Chips are data: a name, an effect from the code's list, a count per split, the stages that allow it. One a gameweek. Names so far: Remake, Recall, Bench Boost, Hyper Carry. The set is picked before the beta. | not built |
 | 7 | [Achievement book](spec/07-achievement-book.md) | Each achievement is worth about 1 point, and it is packed with LCK memes and history. Example: "Ryu sad face": your opponent loses a solo 1v1, after Faker beat Ryu in 2013. | to grill |
-| 8 | [Leagues](spec/08-leagues.md) | FPL-style global leagues, and team supporter leagues. | to grill |
+| 8 | [Leagues](spec/08-leagues.md) | Every manager joins Overall, their country's league and their team's supporter league; the team is required at sign-up. Leagues rank on total points, with a season table and one per split. In Split 2, Overall splits into Legend (Split 1's top half) and Rise, points carried. Private leagues by code or link, from any gameweek. | not built |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: the first page is one where you can just pick a team, with no sign-up wall. "Its a great way to get people in" (Craig, 11 Nov 2026). | to grill |
 | 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series. | not built |
 | 11 | [Live points](spec/11-live-points.md) | Points that move during a series "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
@@ -49,6 +49,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - The values of each stage's settings, set when the 2027 fixture dates come out
   ([spec/10](spec/10-season-and-gameweeks.md)).
 - Unkillable, a chip with no negative points for a gameweek ([spec/06](spec/06-chips.md)).
+- Head-to-head leagues, and FPL's public leagues of strangers (Craig, 13 Nov 2026).
 
 ## Out of scope
 
@@ -60,6 +61,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - The coach as Carry or Vice-carry (Craig, 12 Nov 2026).
 - A point for a game won, for players or the coach; role quests; CS and vision lines (Craig, 12 Nov 2026).
 - Points for playing (Craig, 13 Nov 2026).
+- A cup: "Cup is just head to head. We stick to points for now" (Craig, 13 Nov 2026).
 
 ## Glossary
 
@@ -71,4 +73,5 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | stage | A part of a competition with its own settings: groups, Road to MSI, play-in, playoffs. | phase |
 | round | One round of a knockout bracket. | |
 | Carry | The player whose points are multiplied this gameweek: FPL's captain. Vice-carry is the vice-captain. | captain |
+| table | A league's ranking: one for the season and one per split. | leaderboard |
 | coach | The slot that is a team, scoring the team's play, shown as its head coach. | team slot |

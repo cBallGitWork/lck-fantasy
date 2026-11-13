@@ -149,6 +149,18 @@ Settled; the spec is [spec/05-scoring.md](../spec/05-scoring.md). Worked live ag
 - The coach penalty: "-1 for losing a series that's it"; Gen.G's coach moves from 5th to 6th in 2026, and "Pricing sorts that out anyways".
 - Achievements: "Achievements list, a love letter to lck lore"; "Think like Xbox achievements / The Reddit memes etc"; stored for later, "Ok let's store the achieved tor now".
 
+## Pages grill (13 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md).
+
+- FPL's core pages, with "League/fixtures can be merged into LCK. Can include standings, fixtures, squads"; Settings too.
+- Extras: series page, LCK hub, team of the week, price changes. Home: a status page, yes. Teams public, as FPL, yes.
+- Points: series inside each player, and rank movement. Chips confirm as FPL, yes. Coach pop-up: "Yes he's essentially the 6th role".
+- Stats: "Whatever stats we have with scoring a priority". Player pop-up: champions, lines per game, price history.
+- Live in the beta, on LCK's Twitch; a Live now banner, yes; next series and countdown, yes; says so when the feed is down, yes.
+- Later: trophy room, difficulty ratings. No predictor, no prizes page.
+- Team of the week: "Perfect game. Carry and 7 starters", "Perfect game includes the rules such as 2 per team".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

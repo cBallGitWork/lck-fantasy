@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -178,6 +178,18 @@ Settled; the spec is [spec/10-season-and-gameweeks.md](../spec/10-season-and-gam
 - The team cap: "Should move to 3 (we have 9 slots max)"; 2 in the regular season, 3 in knockouts, yes.
 - The budget: "Keep the budget but increase it. Final 3 means all good teams"; the amount set with the 2027 prices, yes.
 - Split 2's start: the raise taken back, yes; squads fixed before Split 2's first deadline, yes; a squad left as it is: "Nah this would be exploit for a team having 3 each of best players", so Flol fixes it, yes. "And transfers locked after end of split 1 opens 2 weeks before split 2".
+
+## Leagues grill (13 Nov 2026)
+
+Settled; the spec is [spec/08-leagues.md](../spec/08-leagues.md).
+
+- Head-to-head: later. A cup: "Cup is just head to head. We stick to points for now".
+- Automatic leagues: Overall, country and team, yes. Public leagues: later.
+- Favourite team: required; "Fixed but can change anytime before their first gameweek starts and scores".
+- Private leagues by code or link, from any gameweek, as in FPL, yes.
+- A season table plus one per split, yes; "And have a split 1 and 2 league". The word is table, not leaderboard.
+- "Split the global league from split 1 into legend and rise": Split 1's top half to Legend, yes; "Scores carry over"; Split 2 joiners to Rise, yes; Overall only, yes; the whole Overall table stays, yes.
+- The Leagues page (later the same day, by dialog): the list of leagues, the table's columns, the maker's admin, and 25 private leagues with no size cap, all as FPL, yes.
 
 ## Open
 

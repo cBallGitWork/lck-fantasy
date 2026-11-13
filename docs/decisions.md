@@ -214,6 +214,8 @@ Settled; the spec is [spec/11-live-points.md](../spec/11-live-points.md).
 - Ranks and prices: "live ranks - update after each series", on final points; "prices update once a gamweek deadline has passed / new gameweek begins (dont like daily changes)".
 - Feed down: no live points, "but we could look at other sites to grab the basic data like kills etc?", placed under Later.
 
+- Live game ids (13 Nov, later): Leaguepedia has no live-feed ids; "Find similar site as another backup?"; none exists, so read them from lolesports.com's pages: "yes".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

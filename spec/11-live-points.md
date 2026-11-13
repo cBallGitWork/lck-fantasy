@@ -12,8 +12,10 @@ questions are in [docs/to-grill.md](../docs/to-grill.md).
 - Live points show only the lines the feed carries: kills, deaths, assists, gold lead at 15,
   multikills, first blood and the coach's team objectives. Solo kills and steals are added when
   the series is final ([spec/05](05-scoring.md)).
-- Each game's id for the feed comes from Leaguepedia, and an admin can paste one in. Riot's
-  schedule API is not used: its key is Riot's own site's, not ours.
+- Each game's id for the feed is read from lolesports.com's own schedule pages, which carry
+  every game's id before it starts (Craig, 13 Nov 2026). Leaguepedia does not hold these ids.
+  No second public source was found. Riot's schedule API is not used: its key is Riot's own
+  site's, not ours.
 - If the feed breaks or is switched off, there are no live points; final points still arrive.
 
 ## Final

@@ -317,7 +317,7 @@ SQUAD.filter((p) => p.slot === "bench").forEach((p, i) => {
   const w = document.createElement("div"); w.innerHTML = `<div style="position:relative;padding-left:22px"><span class="n">${i + 1}</span>${tile(p, p.subOut ? "out" : "")}</div>`;
   $("bench").appendChild(w.firstElementChild);
 });
-$("bench").insertAdjacentHTML("beforeend", `<div class="subs"><b style="font-size:13px">Automatic subs</b><div class="h" style="margin-top:6px"><span>Out</span><span>In</span></div><div><span>Bdd · Flex</span><span>Siwoo · Flex</span></div><div class="note2">Provisional until DK's series is final.</div>
+$("bench").insertAdjacentHTML("beforeend", `<div class="subs"><b style="font-size:13px">Automatic subs</b><div class="h" style="margin-top:6px"><span>Out</span><span>In</span></div><div><span>Bdd · Flex</span><span>Siwoo · Flex</span></div><div class="note2">Provisional until the week ends.</div>
 <div class="legend" style="margin-top:14px">● live · C Carry · V Vice-carry, ×1.5 only if the Carry plays no game</div></div>`);
 $("total").textContent = TOTAL; $("hangul").textContent = MANAGER.hangul; $("mname").textContent = MANAGER.name;
 $("ranks").innerHTML = MANAGER.ranks.map(([n, r, m]) => `<span>${n}</span><span class="r num">${r}</span><span class="m num ${m > 0 ? "up" : "down"}">${Math.abs(m).toLocaleString("en-GB")}</span>`).join("");

@@ -215,7 +215,7 @@ function tile(p) {
   const nx = p.slot === "coach" ? nextOf(p.team).join(" · ") : nextOf(p.team).join(" · ");
   const sl = p.slot === "flex" ? `<div class="sl">Flex · plays ${SLOTNAME[p.role]}</div>` : p.slot === "coach" ? `<div class="sl">Coach 감독</div>` : p.news ? `<div class="sl">${p.news}</div>` : "";
   return `<div class="tile ${p.name === "Kingen" ? "sel" : ""}"><div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span><span class="ri"><svg><use href="#${iconOf(p)}"/></svg></span>${mk}${nw}</div>
-  <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div><div class="pr">${nextOf(p.team).map((x) => x.slice(2)).join("<br>")}</div>${sl}</div>`;
+  <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div><div class="pr">${nextOf(p.team).map((x) => "vs " + x.split(" ")[1]).join(", ")}</div>${sl}</div>`;
 }
 PSQ.map((p) => p.name === "Siwoo" ? Object.assign({}, p, IN, { news: null, price: "6.5" }) : p).filter((p) => POS[p.slot]).forEach((p) => { const w = document.createElement("div"); w.innerHTML = tile(p); const t = w.firstElementChild; t.style.left = POS[p.slot][0] + "px"; t.style.top = POS[p.slot][1] + "px"; document.getElementById("rift").appendChild(t); });
 document.getElementById("bench").insertAdjacentHTML("beforeend", PSQ.filter((p) => /^b\d/.test(p.slot)).map((p, i) => `<div><div style="font-size:12px;color:var(--mid);margin-bottom:4px">${i + 1} · ${SLOTNAME[p.role]}</div>${tile(p)}</div>`).join(""));

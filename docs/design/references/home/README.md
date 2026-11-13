@@ -1,0 +1,1 @@
+- `lolesports-home-schedule-2026-11-13.jpg`: lolesports.com's home at 1440 wide, signed out: event timeline on the left, the day's schedule in the middle with a "Reveal spoilers" bar, power rankings and news on the right. Captured 13 Nov 2026 from https://lolesports.com/en-GB/leagues/lck.

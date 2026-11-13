@@ -1,0 +1,118 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Home · Live</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --hot: #1d1d1d; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
+.num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+i.ko { font-style: normal; color: var(--soft); font-size: 11px; margin-left: 4px; }
+nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
+nav.top a { color: var(--mid); text-decoration: none; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
+nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vertical-align: 2px; }
+nav.top .sp { flex: 1; }
+.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
+.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.note { position: absolute; background: #fffbe0; border: 1px solid #d8cf8a; font-size: 11px; padding: 4px 7px; color: #5a5420; max-width: 220px; line-height: 1.3; z-index: 5; }
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; line-height: 16px; }
+.tag.prov { border-style: dashed; color: var(--mid); border-color: var(--mid); }
+.tag.live { background: var(--ink); color: #fff; }
+.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 10px; }
+.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 10px; }
+.gw { display: flex; align-items: center; gap: 16px; }
+.gw button { border: 1px solid var(--line); background: var(--paper); padding: 4px 10px; font: inherit; color: var(--mid); }
+.gw h1 { font-size: 26px; letter-spacing: -0.5px; }
+.cnt { text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.unc { color: var(--soft); text-decoration: line-through; }
+.lv { font-weight: 600; }
+.lv::after { content: "●"; font-size: 8px; vertical-align: 4px; margin-left: 1px; }
+.cake::after { content: " 🎂"; }
+
+
+.page { padding: 22px 32px 40px; }
+.top2 { display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px; } .top2 h1 { font-size: 24px; letter-spacing: -.5px; } .top2 i { font-style: normal; color: var(--soft); }
+.top2 .sp { flex: 1; } .top2 .wk { color: var(--mid); font-size: 14px; } .top2 .wk b { color: var(--ink); font-family: "IBM Plex Mono", monospace; font-size: 18px; }
+.hero { display: grid; grid-template-columns: 960px 1fr; gap: 24px; }
+.screen { position: relative; width: 960px; height: 540px; background: #2a2a2a; color: #fff; overflow: hidden; }
+.screen .ph2 { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #888; font-size: 14px; background: repeating-linear-gradient(45deg,#2a2a2a,#2a2a2a 10px,#303030 10px,#303030 20px); }
+.screen .ov { position: absolute; left: 0; right: 0; top: 0; display: flex; gap: 12px; align-items: center; padding: 12px 16px; background: rgba(0,0,0,.55); font-size: 15px; }
+.screen .ov .tag.live { background: #fff; color: var(--ink); border-color: #fff; } .screen .ov small { color: #bbb; }
+.pick { display: flex; gap: 6px; margin-top: 10px; font-size: 13px; } .pick span { border: 1px solid var(--line); background: var(--paper); padding: 4px 10px; color: var(--mid); } .pick span.on { border-color: var(--ink); color: var(--ink); font-weight: 600; } .pick span.off { color: var(--soft); border-style: dashed; }
+.side { background: var(--paper); border-top: 2px solid var(--ink); padding: 16px 18px; }
+.side h2, .band h2 { font-size: 15px; display: flex; justify-content: space-between; margin-bottom: 10px; } .side h2 span, .band h2 span { font-weight: 400; color: var(--mid); font-size: 13px; }
+.tot { display: flex; align-items: baseline; gap: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.tot .big { font-family: "IBM Plex Mono", monospace; font-size: 60px; font-weight: 600; line-height: .9; } .tot .sm { color: var(--mid); font-size: 13px; } .tot .sm b { font-family: "IBM Plex Mono", monospace; color: var(--ink); font-size: 18px; margin-left: 3px; }
+table.pl { width: 100%; border-collapse: collapse; font-size: 14px; } table.pl td { padding: 7px 0; border-bottom: 1px solid var(--fill); } table.pl td.n { text-align: right; font-family: "IBM Plex Mono", monospace; font-weight: 600; } table.pl td.s { color: var(--mid); font-size: 12px; }
+table.pl svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 6px; }
+.more { display: inline-block; margin-top: 10px; font-weight: 600; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.band { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 24px; }
+.band > section { background: var(--paper); border-top: 2px solid var(--ink); padding: 16px 18px 18px; }
+.cd { font-family: "IBM Plex Mono", monospace; font-size: 46px; font-weight: 600; line-height: 1; letter-spacing: -1px; } .cd small { font-size: 18px; color: var(--mid); font-weight: 400; margin: 0 8px 0 2px; }
+.when { color: var(--mid); margin: 6px 0 14px; font-size: 13px; } .when b { color: var(--ink); }
+.acts { display: flex; gap: 8px; align-items: center; } .btn { border: 1.5px solid var(--ink); padding: 8px 16px; font-weight: 700; background: var(--paper); font-size: 14px; } .btn.dark { background: var(--ink); color: #fff; } .ftl { margin-left: auto; font-size: 13px; } .ftl b { font-family: "IBM Plex Mono", monospace; font-size: 18px; }
+.trk { display: grid; grid-template-columns: 96px 1fr; gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--fill); }
+.led2 { background: #111; color: #fff; font: 600 12px/1.25 "IBM Plex Mono", monospace; padding: 8px 8px; height: 54px; display: flex; align-items: center; background-image: radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1.4px); background-size: 4px 4px; }
+.trk small { color: var(--mid); font-size: 12px; display: block; } .send { margin-top: 10px; font-size: 13px; }
+table.lg { width: 100%; border-collapse: collapse; font-size: 14px; } table.lg td { padding: 7px 0; border-bottom: 1px solid var(--fill); } table.lg td.n { font-family: "IBM Plex Mono", monospace; text-align: right; } table.lg td.m { text-align: right; width: 70px; font-size: 13px; font-family: "IBM Plex Mono", monospace; } table.lg tr.hd td { color: var(--mid); font-size: 12px; font-family: inherit; padding-top: 0; }
+.adrow { margin-top: 24px; } .made { color: var(--soft); font-size: 11px; margin-top: 6px; }
+.stage { position: absolute; inset: 0; background: #262626; }
+.stage::before { content: ""; position: absolute; left: -40px; right: -40px; bottom: 0; height: 150px; background: #363636; transform: skewY(-4deg); transform-origin: left; }
+.stage .p { position: absolute; bottom: 64px; width: 122px; text-align: center; }
+.stage .p svg.sh { width: 84px; height: 75px; display: block; margin: 0 auto -2px; }
+.stage .p .tm { position: absolute; top: 26px; left: 0; right: 0; font: 600 12px "IBM Plex Mono", monospace; color: var(--ink); }
+.stage .pl { background: #fff; color: var(--ink); transform: skewX(-12deg); padding: 7px 0 5px; border-top: 3px solid var(--ink); }
+.stage .pl b, .stage .pl span { display: block; transform: skewX(12deg); } .stage .pl b { font-size: 16px; } .stage .pl span { font-size: 10px; letter-spacing: .6px; color: var(--mid); }
+.stage .mk { position: absolute; top: -6px; right: 14px; background: #fff; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 50%; width: 22px; height: 22px; font: 700 11px/19px "IBM Plex Sans KR"; }
+.stage .cap { position: absolute; left: 22px; top: 18px; } .stage .cap b { font-size: 22px; display: block; } .stage .cap span { color: #bbb; font-size: 13px; }
+.stage .nx { position: absolute; left: 0; right: 0; bottom: 0; background: #fff; color: var(--ink); display: flex; gap: 14px; align-items: center; padding: 10px 18px; font-size: 15px; } .stage .nx .sp { flex: 1; } .stage .nx b.c { font-family: "IBM Plex Mono", monospace; }
+.stage .pt { position: absolute; right: 22px; top: 22px; color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.stage .nx2 { position: absolute; left: 22px; top: 96px; } .stage .nx2 span { display: block; color: #bbb; font-size: 14px; } .stage .nx2 b { display: block; font-size: 44px; letter-spacing: -1px; line-height: 1.1; } .stage .nx2 b.c { display: inline; font-size: 14px; color: #fff; font-family: "IBM Plex Mono", monospace; letter-spacing: 0; }
+.fd { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--fill); font-size: 14px; }
+.fd small { display: block; color: var(--mid); font-size: 12px; } .fd .tk { border: 1px solid var(--line); padding: 2px 8px; font-size: 13px; filter: grayscale(1); }
+.fd.in { grid-template-columns: 150px 1fr; }
+.idea { display: inline-block; background: #fffbe0; border: 1px solid #d8cf8a; color: #5a5420; font-size: 11px; padding: 2px 7px; margin-left: 8px; font-weight: 400; }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Position icons drawn after LoL's own: Top and Bot are opposite corners, Mid the diagonal, Jungle a claw, Support a crest. -->
+    <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
+    <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
+    <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+    <symbol id="i-flex" viewBox="0 0 16 16"><path d="M8 1l2 5h5l-4 3 2 6-5-4-5 4 2-6-4-3h5z" fill="none" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+    <symbol id="shirt" viewBox="0 0 56 50"><path d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z" fill="#fff" stroke="#1d1d1d" stroke-width="1.6"/><path d="M18 2 Q28 9 38 2" fill="none" stroke="#1d1d1d" stroke-width="1.6"/></symbol>
+  </defs>
+</svg>
+<nav class="top"><b class="word">Flol</b><a class="on">Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+
+<div class="page">
+<div class="top2"><h1>Baron Steal FC</h1><i>바론 스틸 FC</i><span class="sp"></span></div>
+<div class="hero"><div><div class="screen"><div class="ph2">LCK stream · English · Twitch</div>
+<div class="ov"><span class="tag live">LIVE</span><b>KRX 1–0 BRO</b><small>Game 2 · Bo3 · LCK Cup Week 3</small><span style="flex:1"></span><a style="color:#fff;font-weight:700">Live ›</a></div></div>
+<div class="pick"><span class="on">LCK English</span><span>LCK 한국어</span><span>Caedrel</span><span class="off">LCK Français · offline</span><span>More ▾</span></div></div><aside class="side"><h2>Your week <span class="tag prov">Not final</span></h2>
+<div class="tot"><span class="big">98</span><span class="sm">Average<b>74</b></span><span class="sm">Highest<b>131</b></span></div>
+<h2>In this series <span>KRX 1–0 BRO</span></h2>
+<table class="pl"><tr><td><svg><use href="#i-bot"/></svg>Hype <span class="s">KRX</span></td><td class="s">G2 · 0/0/1</td><td class="n">7</td></tr>
+<tr><td><svg><use href="#i-mid"/></svg>Clozer <span class="s">BRO</span></td><td class="s">G2 · 1/1/0</td><td class="n">5</td></tr></table>
+<h2 style="margin-top:14px">Still to play <span>2 players</span></h2>
+<table class="pl"><tr><td><svg><use href="#i-sup"/></svg>Pollu <span class="s">BRO</span></td><td class="s">this series</td><td class="n">–</td></tr>
+<tr><td><svg><use href="#i-top"/></svg>DuDu <span class="s">DNS</span></td><td class="s">BFX vs DNS · 19:30</td><td class="n">–</td></tr></table>
+<a class="more">Points ›</a></aside></div>
+<div class="band">
+<section><h2>Week 4 deadline <span>LCK Cup</span></h2><div class="cd">1<small>d</small>20<small>h</small>45<small>m</small></div>
+<div class="when"><b>Wed 07:45</b> your time · 16:45 KST</div>
+<div class="acts"><span class="btn dark">Pick Team</span><span class="btn">Transfers</span><span class="ftl"><b>1</b> free transfer</span></div></section>
+<section><h2>Following <span class="idea">Fun idea · to grill</span></h2>
+<div class="fd"><div><b>Minji</b> · GEN vs HLE<small>34 pts</small></div><span class="tk">🚚</span></div>
+<div class="fd"><div><b>Dan</b> · Carry Faker<small>41 pts in T1 vs KT</small></div><span class="tk">🚚</span></div>
+<div class="fd"><div><b>Jae</b> · KRX vs BRO<small>9 pts</small></div><span class="tk">🚚</span></div>
+<div class="fd in"><div class="led2" style="height:40px">SELL YOUR BOT LANER</div><div><b>Truck from Minji</b><small>Week 3</small></div></div>
+<a class="more">Following ›</a></section>
+<section><h2>Leagues</h2><table class="lg"><tr class="hd"><td>League</td><td class="n">Rank</td><td class="m">Move</td></tr>
+<tr><td>Overall <span class="ph" style="display:inline-flex;width:50px;height:15px;font-size:9px;vertical-align:-3px">badge</span></td><td class="n">48,211</td><td class="m up">6,904</td></tr>
+<tr><td>United Kingdom</td><td class="n">1,402</td><td class="m up">233</td></tr><tr><td>T1 supporters</td><td class="n">3,118</td><td class="m up">510</td></tr>
+<tr><td>Pub League</td><td class="n">2nd</td><td class="m up">1</td></tr><tr><td>Flol Discord</td><td class="n">14th</td><td class="m down">2</td></tr></table><a class="more">All leagues ›</a></section>
+</div>
+<div class="adrow"><div class="ph" style="height:100px">sponsor banner</div><div class="made">All sponsors are made up.</div></div>
+</div></body></html>

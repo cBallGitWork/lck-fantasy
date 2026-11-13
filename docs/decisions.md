@@ -156,6 +156,7 @@ Settled; the spec is [spec/10-season-and-gameweeks.md](../spec/10-season-and-gam
 - A knockout gameweek is one week, yes. Every series counts, transfers unlimited, yes.
 - The team cap: "Should move to 3 (we have 9 slots max)"; 2 in the regular season, 3 in knockouts, yes.
 - The budget: "Keep the budget but increase it. Final 3 means all good teams"; the amount set with the 2027 prices, yes.
+- Split 2's start: the raise taken back, yes; squads fixed before Split 2's first deadline, yes; a squad left as it is: "Nah this would be exploit for a team having 3 each of best players", so Flol fixes it, yes. "And transfers locked after end of split 1 opens 2 weeks before split 2".
 
 ## Open
 

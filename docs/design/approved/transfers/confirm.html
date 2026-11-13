@@ -64,6 +64,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 
 .rift { position: relative; width: 948px; height: 700px; }
 .rift svg.map { position: absolute; inset: 0; width: 948px; height: 700px; }
+.plist td.nx { font-size: 12px; line-height: 1.3; white-space: nowrap; }
 .tile { position: absolute; width: 132px; transform: translate(-50%, -50%); text-align: center; }
 .benchb .tile { position: relative; transform: none; }
 .tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto -2px; }
@@ -176,8 +177,8 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 <aside>
 <section class="pl2"><h2>Pick a replacement for Siwoo <span>Flex: any role · up to 8.0억</span></h2>
 <div class="flt"><span class="on">All roles</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span></div>
-<div class="flt2"><span class="srch">Search a player</span><span>Sort: Form ▾</span><span>Team: All ▾</span></div>
-<table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th>Form</th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
+<div class="flt2"><span class="srch">Search a player</span><span>Sort: Points ▾</span><span>Team: All ▾</span></div>
+<table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
 <div class="note2">Greyed: over your 8.0억, or his team is full (2 a team, the coach counts). Tap any row for his card.</div></section>
 <section style="margin-top:22px"><h2>Boosts <span>one a week · final once confirmed</span></h2><div class="chips">
 <div class="chip"><span class="lft">1 left</span><b>Remake</b><small>Unlimited free transfers this week, kept</small><span class="go">Play</span></div>
@@ -195,15 +196,15 @@ const W4 = [
 ];
 const nextOf = (team) => W4.filter((s) => s[3] === team || s[4] === team).map((s) => `v ${s[3] === team ? s[4] : s[3]} ${s[0]}`);
 const PSQ = [
-  { slot: "top", name: "Zeus", team: "HLE", price: "16.0", form: "7.0" },
-  { slot: "jng", name: "Canyon", team: "GEN", price: "15.5", form: "7.3" },
-  { slot: "mid", name: "Faker", team: "T1", price: "18.5", form: "8.8", mark: "C" },
-  { slot: "bot", name: "Ruler", team: "GEN", price: "17.0", form: "8.0", mark: "V" },
-  { slot: "sup", name: "Delight", team: "HLE", price: "9.0", form: "5.0" },
-  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "7.5", form: "4.5", news: "Benched for Wednesday's series" },
-  { slot: "coach", name: "kkOma", team: "T1", price: "7.0", form: "6.0" },
-  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "5.0", form: "3.3" },
-  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "4.0", form: "4.8" },
+  { slot: "top", name: "Zeus", team: "HLE", price: "16.0" },
+  { slot: "jng", name: "Canyon", team: "GEN", price: "15.5" },
+  { slot: "mid", name: "Faker", team: "T1", price: "18.5", mark: "C" },
+  { slot: "bot", name: "Ruler", team: "GEN", price: "17.0", mark: "V" },
+  { slot: "sup", name: "Delight", team: "HLE", price: "9.0" },
+  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "7.5", news: "Benched for Wednesday's series" },
+  { slot: "coach", name: "kkOma", team: "T1", price: "7.0" },
+  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "5.0" },
+  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "4.0" },
 ];
 const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
 const SLOTNAME = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support", flex: "Flex", coach: "Coach", b1: "Bench 1", b2: "Bench 2" };
@@ -222,13 +223,13 @@ function tile(p) {
 PSQ.map((p) => p.name === "Siwoo" ? Object.assign({}, p, IN, { news: null, price: "6.5" }) : p).filter((p) => POS[p.slot]).forEach((p) => { const w = document.createElement("div"); w.innerHTML = tile(p); const t = w.firstElementChild; t.style.left = POS[p.slot][0] + "px"; t.style.top = POS[p.slot][1] + "px"; document.getElementById("rift").appendChild(t); });
 document.getElementById("bench").insertAdjacentHTML("beforeend", PSQ.filter((p) => /^b\d/.test(p.slot)).map((p, i) => `<div><div style="font-size:12px;color:var(--mid);margin-bottom:4px">${i + 1} · ${SLOTNAME[p.role]}</div>${tile(p)}</div>`).join(""));
 const PL = [
- ["mid","Chovy","GEN","17.5","9.1","61","41%","BRO Thu",1],["sup","Keria","T1","12.0","8.2","52","47%","KT Wed",1],["bot","Aiming","DK","11.5","7.4","46","14%","HLE Wed",2],
- ["mid","ShowMaker","DK","10.5","6.9","44","18%","HLE Wed",2],["jng","Lucid","DK","9.0","6.5","41","11%","HLE Wed",2],
- ["top","Kingen","NS","6.5","6.1","38","9%","DNS Thu",0],["top","PerfecT","KT","7.0","5.8","36","4%","T1 Wed",1],["top","DuDu","DNS","6.0","5.6","33","6%","NS Thu",0],
- ["bot","Hype","KRX","5.5","5.3","31","4%","BFX Fri",0],["top","Clear","BFX","5.5","5.2","29","3%","KRX Fri",0],["mid","Clozer","BRO","5.0","5.0","27","5%","GEN Thu",0],
- ["sup","Pollu","BRO","4.5","4.9","26","2%","GEN Thu",0]];
+ ["mid","Chovy","GEN","17.5","61","41%",1],["sup","Keria","T1","12.0","52","47%",1],["bot","Aiming","DK","11.5","46","14%",2],
+ ["mid","ShowMaker","DK","10.5","44","18%",2],["jng","Lucid","DK","9.0","41","11%",2],
+ ["top","Kingen","NS","6.5","38","9%",0],["top","PerfecT","KT","7.0","36","4%",1],["top","DuDu","DNS","6.0","33","6%",0],
+ ["bot","Hype","KRX","5.5","31","4%",0],["top","Clear","BFX","5.5","29","3%",0],["mid","Clozer","BRO","5.0","27","5%",0],
+ ["sup","Pollu","BRO","4.5","26","2%",0]];
 const WHY = ["", "team full", "over 8.0억"];
-document.getElementById("pl").innerHTML = PL.map((r) => `<tr class="${r[8] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[8] ? `<small>${WHY[r[8]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="n">${r[6]}</td><td>${r[7]}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
+document.getElementById("pl").innerHTML = PL.map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2]).map((x) => x.slice(2)).join("<br>")}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
 const MINE = new Set();
 void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
 </script><div class="veil"></div><div class="sheet2"><h3>Confirm your transfers</h3>

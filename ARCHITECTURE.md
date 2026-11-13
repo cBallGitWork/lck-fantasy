@@ -15,8 +15,8 @@ reason, and a change to either changes this file.
 | Backend | [Convex](https://docs.convex.dev): database, live queries, timers, sign-in | live points reach browsers with no extra service; deadlines and price changes are timers saved with the data; one vendor, hard-capped free plan; Craig and Claude already know its rough edges |
 | Pages | Vercel, free (Hobby) plan | Hobby is for non-commercial use, which fits: the game is free with no cash prizes. Payments, ads or a donate button would need the paid plan |
 | Sign-in email | Resend, magic links | no passwords to keep; the free plan's 100 emails a day is the limit to watch at launch |
-| LCK stats, live | GRID if it grants free non-commercial access; otherwise Riot's unofficial live stats feed, shown as provisional (Craig, 11 Nov 2026) | GRID is Riot's official data partner but commercial; the unofficial feed is free, unsupported, and can be switched off ([research](docs/research/live-data-sources.md)) |
-| LCK stats, settled | not chosen; Oracle's Elixir's daily CSV is the proposal | free for fans, and it has the 15-minute stats the live feed lacks |
+| LCK stats, live | Riot's unofficial live stats feed, shown as provisional; game ids from Leaguepedia (Craig, 13 Nov 2026) | free and works without a key; unsupported, and can be switched off. GRID, the official partner, is commercial and not asked ([research](docs/research/live-data-sources.md)) |
+| LCK stats, settled | Oracle's Elixir's daily CSV, plus Leaguepedia's match data for solo kills and steals (Craig, 13 Nov 2026) | free for fans; Oracle's Elixir has the 15-minute stats, Leaguepedia the lines it lacks and usually lands within hours |
 
 ## Libraries (Claude's)
 

@@ -42,10 +42,12 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 8 | [Leagues](spec/08-leagues.md) | FPL-style global leagues, and team supporter leagues. | to grill |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: the first page is one where you can just pick a team, with no sign-up wall. "Its a great way to get people in" (Craig, 11 Nov 2026). | to grill |
 | 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series. | not built |
-| 11 | [Live points](spec/11-live-points.md) | Points that move during a series "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
+| 11 | [Live points](spec/11-live-points.md) | The beta has live points from Riot's unofficial feed, shown as provisional. A series turns final 3 hours after it ends, from Oracle's Elixir and Leaguepedia. Ranks move when a series is final; prices only at the deadline. | not built |
 
 ## Later
 
+- A second live source, researched if Riot's live feed breaks during the beta (Craig, 13 Nov 2026)
+  ([spec/11](spec/11-live-points.md)).
 - The values of each stage's settings, set when the 2027 fixture dates come out
   ([spec/10](spec/10-season-and-gameweeks.md)).
 - Unkillable, a chip with no negative points for a gameweek ([spec/06](spec/06-chips.md)).
@@ -60,6 +62,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - The coach as Carry or Vice-carry (Craig, 12 Nov 2026).
 - A point for a game won, for players or the coach; role quests; CS and vision lines (Craig, 12 Nov 2026).
 - Points for playing (Craig, 13 Nov 2026).
+- GRID as a data source: not asked (Craig, 13 Nov 2026).
+- Riot's esports schedule API and its key, which is Riot's own (Craig, 13 Nov 2026).
 
 ## Glossary
 

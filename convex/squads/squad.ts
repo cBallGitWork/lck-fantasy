@@ -75,7 +75,7 @@ export function squadProblems(squad: Squad, settings: SquadSettings): SquadProbl
   const picks = allPicks(squad);
   const seen = new Set<string>();
   for (const pick of picks) {
-    const key = `${pick.role === "coach" ? "coach" : "player"}:${pick.id}`;
+    const key = pickKey(pick);
     if (seen.has(key)) problems.push({ rule: "pickedTwice", pickId: pick.id });
     seen.add(key);
   }
@@ -86,6 +86,11 @@ export function squadProblems(squad: Squad, settings: SquadSettings): SquadProbl
     }
   }
   return problems;
+}
+
+/** A pick's key, apart from a player and a team sharing an id: prices and ownership are keyed by it. */
+export function pickKey(pick: Pick): string {
+  return `${pick.role === "coach" ? "coach" : "player"}:${pick.id}`;
 }
 
 export function allPicks(squad: Squad): Pick[] {

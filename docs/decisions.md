@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -148,6 +148,14 @@ Settled; the spec is [spec/05-scoring.md](../spec/05-scoring.md). Worked live ag
 - The 2026 top 50 under the final rules: "It's fine". Prices: "we price the top coaches a little higher than others".
 - The coach penalty: "-1 for losing a series that's it"; Gen.G's coach moves from 5th to 6th in 2026, and "Pricing sorts that out anyways".
 - Achievements: "Achievements list, a love letter to lck lore"; "Think like Xbox achievements / The Reddit memes etc"; stored for later, "Ok let's store the achieved tor now".
+
+## Knockouts grill (13 Nov 2026)
+
+Settled; the spec is [spec/10-season-and-gameweeks.md](../spec/10-season-and-gameweeks.md).
+
+- A knockout gameweek is one week, yes. Every series counts, transfers unlimited, yes.
+- The team cap: "Should move to 3 (we have 9 slots max)"; 2 in the regular season, 3 in knockouts, yes.
+- The budget: "Keep the budget but increase it. Final 3 means all good teams"; the amount set with the 2027 prices, yes.
 
 ## Open
 

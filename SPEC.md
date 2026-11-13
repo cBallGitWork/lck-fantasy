@@ -41,7 +41,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 7 | [Achievement book](spec/07-achievement-book.md) | Each achievement is worth about 1 point, and it is packed with LCK memes and history. Example: "Ryu sad face": your opponent loses a solo 1v1, after Faker beat Ryu in 2013. | to grill |
 | 8 | [Leagues](spec/08-leagues.md) | FPL-style global leagues, and team supporter leagues. | to grill |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: the first page is one where you can just pick a team, with no sign-up wall. "Its a great way to get people in" (Craig, 11 Nov 2026). | to grill |
-| 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series. | not built |
+| 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series, knockouts included. In knockouts the team cap rises from 2 to 3, the budget is raised, transfers are unlimited and every series counts. | not built |
 | 11 | [Live points](spec/11-live-points.md) | Points that move during a series "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
 
 ## Later

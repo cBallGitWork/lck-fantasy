@@ -23,5 +23,5 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## Knockouts
 
-- Knockout stages follow their stage settings ([spec/10](10-season-and-gameweeks.md)): Craig's
-  intent there is unlimited transfers with no hits.
+- In knockout stages transfers are unlimited, with no hits; the team cap rises to 3 and the
+  budget is raised ([spec/10](10-season-and-gameweeks.md)).

@@ -220,7 +220,7 @@ const PL = [
  ["bot","Hype","KRX","5.5","31","4%",0],["top","Clear","BFX","5.5","29","3%",0],["mid","Clozer","BRO","5.0","27","5%",0],
  ["sup","Pollu","BRO","4.5","26","2%",0]];
 const WHY = ["", "team full", "over 8.0억"];
-document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[8] > 0) - (b[8] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2]).map((x) => x.slice(2)).join("<br>")}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
+document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[6] > 0) - (b[6] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2]).map((x) => x.slice(2)).join("<br>")}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
 const MINE = new Set();
 void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
 </script></body></html>

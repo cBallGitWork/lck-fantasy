@@ -15,10 +15,10 @@ Names, teams and numbers are a made-up LCK Cup week, not roster data. No `plate.
 
 ## Layout
 
-- **Header:** team name and its hangul; ‹ week ›; average · highest · **total** (provisional while a series is live or not final) · week rank (as of the last final series) · transfers; one line naming the live and provisional series; then how many of your players are in play and to play, and roughly how many points you need for an up arrow overall.
+- **Header:** team name and its hangul; ‹ week ›; avg manager · top manager · **your points** (not final while a series is live or not final) · overall rank and its move · points against the average; a Live now bar (the live series, Watch ›, and the series not final yet with when its points lock); then a key to C, V and the live dot above the Rift; then how many of your players are in play and to play, and roughly how many points you need for an up arrow overall.
 - **Left:** the Rift, each starter in his lane: shirt, role icon, name, points, each series' points; C and V marks; Flex and Coach labelled; a live dot.
 - **Under the Rift:** the bench, then the Automatic subs table (Out / In), provisional until the series is final.
-- **Right:** the tapped player's games, with the average Carry's points beside a Carry's, (the player card's This week tab, spec/12; the card's header, buttons and other tabs aren't drawn here), then Your week so far (star, flop and killer: the player you don't own who cost you most), then the hangul banner and manager name, Ranks, the week's series, the sponsor slot.
+- **Right:** the tapped player's games, with the average Carry's points beside a Carry's, (the player card's This week tab, spec/12; the card's header, buttons and other tabs aren't drawn here), then Your week so far (star, flop and killer: the player you don't own who cost you most), Ranks (with this week's rank and transfers), the week's series, the sponsor slot.
 
 ## Controls
 
@@ -52,3 +52,5 @@ Suggestions from the review panels (LoL fan, FPL manager, UX designer, behaviour
 - Fun ideas to grill: the 확정/잠정 seal, the multikill banner, a kill feed on the Live page. The A–D post-game grade was dropped.
 
 `points.html` keeps `LINES` and `COACH` in its data for a later Full stats picture; they aren't drawn here.
+
+Revised 13 Nov 2026 after a cold read by a LoL player new to FPL: plain labels (Avg manager, Not final yet, Subbed in for Bdd, 2 so far), overall rank in the header, a Live now bar, a key above the Rift, and the hangul banner out of the right column (the team's hangul stays in the header).

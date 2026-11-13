@@ -130,6 +130,12 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
 .sfk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .sfk div { border: 1px solid var(--line); background: var(--paper); padding: 8px 10px; font-size: 12px; color: var(--mid); }
 .sfk .k { display: block; font-size: 11px; text-transform: none; } .sfk b { display: block; color: var(--ink); font-size: 15px; }
+.livebar { display: flex; align-items: center; gap: 10px; justify-content: center; margin-top: 14px; padding: 9px 14px; border: 1.5px solid var(--ink); background: var(--paper); font-size: 14px; }
+.livebar a { text-decoration: underline; color: var(--ink); } .livebar .sep { width: 1px; height: 18px; background: var(--line); margin: 0 6px; }
+.key { display: flex; gap: 14px; align-items: center; font-size: 12px; color: var(--mid); margin: 14px 0 8px; }
+.key span:last-child { margin-left: auto; }
+.kc { display: inline-flex; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; align-items: center; justify-content: center; margin-right: -8px; }
+.kc.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute">
@@ -152,12 +158,12 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
 <main>
   <div class="mhd"><div class="tn">Baron Steal FC<i>바론 스틸 FC</i></div>
     <div class="wkn"><span>‹</span>LCK Cup · Week 3<span class="off">›</span></div>
-    <div class="stats"><div><b>74</b><span>Average</span></div><div><b>131</b><span>Highest ›</span></div>
-      <div class="tot"><b id="total"></b><span>Total · provisional</span></div>
-      <div><b>21,880</b><span>Week rank · as of Fri</span></div><div><b>1</b><span>Transfers ›</span></div></div>
-    <div class="st2"><span class="tag live">LIVE</span> T1 v DK, game 2 · <span class="tag prov">Provisional</span> GEN v HLE, final ~13:20</div>
-    <div class="st3"><span><b>3</b> in play</span><span><b>0</b> to play</span><span><b>≈6 pts</b> to an up arrow overall</span></div></div>
-  <div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
+    <div class="stats"><div><b>74</b><span>Avg manager</span></div><div><b>131</b><span>Top manager ›</span></div>
+      <div class="tot"><b id="total"></b><span>Your points · not final</span></div>
+      <div><b>48,211</b><span>Overall rank <span class="up">6,904</span></span></div><div><b>+24</b><span>vs avg manager</span></div></div>
+    <div class="livebar"><span class="tag live">LIVE NOW</span><b>T1 v DK, game 2</b><a>Watch ›</a><span class="sep"></span><span class="tag prov">Not final yet</span>GEN v HLE · points lock ~13:20</div>
+    <div class="st3"><span><b>3</b> in play</span><span><b>0</b> to play</span><span><b>≈6 pts</b> to climb overall</span></div></div>
+  <div class="key"><span class="kc">C</span> Carry: points ×1.5 <span class="kc v">V</span> Vice: takes ×1.5 if your Carry plays no game <span>● playing now</span><span>Tap a player for his games</span></div><div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
         <rect x="0" y="0" width="680" height="680" fill="#ededeb"/>
         <!-- river: top-left to bottom-right -->
         <path d="M0 40 L40 0 L680 640 L640 680 Z" fill="#dcdcd8"/>
@@ -188,16 +194,16 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
     <div class="ser"><h4>Sat · v DK <span>1–0 · game 2 live</span></h4>
       <div class="g"><span class="r">G1</span><span>Orianna · W</span><span class="p"><span class="box">4</span></span></div>
       <div class="g live"><span class="r">G2</span><span>Sylas · 14:20</span><span class="p"><span class="box">1</span></span></div></div>
-    <div class="sum"><span>Best 2 a series: 12 + 5 = 17<br><span style="color:var(--mid);font-size:13px">Carry ×1.5 · average Carry 19</span></span><b>25</b></div>
+    <div class="sum"><span><span style="font-size:11px;color:var(--mid)">YOUR CARRY</span><br>Best 2 a series: 12 + 5 = 17<br><span style="color:var(--mid);font-size:13px">Carry ×1.5 · average Carry 19</span></span><b>25</b></div>
     <div class="ft"><span>Boxed games count. Solo kills and steals land when the series is final.</span><a>Full stats ›</a></div></section>
-  <section><h2>Your week so far <span>final when the week is</span></h2>
+  <section><h2>Your week so far <span>final when the week ends</span></h2>
     <div class="sfk"><div><span class="k">Star</span><b>Ruler</b><span>18 · owned by 38%</span></div>
     <div><span class="k">Flop</span><b>Delight</b><span>9 · owned by 17%</span></div>
     <div><span class="k">Killer</span><b>Chovy</b><span>22 · you don't own him · 41%</span></div></div>
     <div class="note2">Killer: the player you don't own who cost you most against other managers.</div></section>
-  <section class="mgr"><div class="banner ph" id="hangul"></div><span id="mname"></span></section>
+  
   <section><h2>Ranks <span>since Week 2</span></h2><div class="rk" id="ranks"></div>
-    <div class="note2">As of Friday. Ranks move when a series is final, next ~13:20. <a style="color:var(--ink)">All leagues ›</a></div></section>
+    <div class="note2">Rank this week 21,880 · 1 transfer. As of Friday. Ranks move when a series is final, next ~13:20. <a style="color:var(--ink)">All leagues ›</a></div></section>
   <section><h2>This week's series <span>your time · KST</span></h2><div class="wk" id="week"></div></section>
   <div class="ad ph">sponsor banner</div><div class="adline">All sponsors are made up.</div>
 </aside>
@@ -304,20 +310,20 @@ const $ = (id) => document.getElementById(id);
 const POS = { top: [104, 84], jng: [280, 332], mid: [500, 330], flex: [370, 520], coach: [110, 616], sup: [650, 620], bot: [846, 620] };
 const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
 function line(p) {
-  return p.series.map((x) => `v ${opp(p, x[0])} ${x[2] === null ? seriesPts(x) + "+?" : seriesPts(x)}${SERIES[x[0]].state === "live" ? "●" : ""}`).join(" · ");
+  return p.series.map((x) => `v ${opp(p, x[0])} ${x[2] === null ? seriesPts(x) + " so far" : seriesPts(x)}${SERIES[x[0]].state === "live" ? "●" : ""}`).join(" · ");
 }
 function tile(p, cls = "") {
   const icon = p.slot === "bench" ? ICON[p.role] : p.slot === "flex" ? ICON[p.role] : ICON[p.slot];
   const pts = p.subOut ? "–" : p.slot === "bench" ? weekPts(p) : scored(p);
   const small = p.mark === "C" ? "<small>17×1.5</small>" : "";
-  const tag = p.subIn ? `<div class="tag prov">↑ in for ${p.subIn} · prov.</div>` : p.subOut ? "" : p.slot === "flex" ? "" : "";
+  const tag = p.subIn ? `<div class="tag">↑ Subbed in for ${p.subIn}</div>` : p.subOut ? "" : p.slot === "flex" ? "" : "";
   return `<div class="tile ${cls}">
     <div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span>
       <span class="ri"><svg><use href="#${icon}"/></svg></span>${p.mark ? `<span class="mark ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}</div>
     <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div>
     <div class="pt">${pts}${small}</div>
     ${p.series.length ? `<div class="sr">${line(p)}</div>` : `<div class="sr">No game this week</div>`}${tag}
-    ${p.slot === "flex" ? `<div class="tag" style="border-color:var(--line);color:var(--mid)">Flex</div>` : ""}${p.slot === "coach" ? `<div class="tag" style="border-color:var(--line);color:var(--mid)">Coach 감독</div>` : ""}
+    ${p.slot === "flex" ? `<div class="tag" style="border-color:var(--line);color:var(--mid)">Flex · Top</div>` : ""}${p.slot === "coach" ? `<div class="tag" style="border-color:var(--line);color:var(--mid)">Coach 감독</div>` : ""}
   </div>`;
 }
 STARTERS.forEach((p) => {
@@ -329,11 +335,11 @@ SQUAD.filter((p) => p.slot === "bench").forEach((p, i) => {
   $("bench").appendChild(w.firstElementChild);
 });
 $("bench").insertAdjacentHTML("beforeend", `<div class="subs"><b style="font-size:13px">Automatic subs</b><div class="h" style="margin-top:6px"><span>Out</span><span>In</span></div><div><span>Bdd · Flex</span><span>Siwoo · Flex</span></div><div class="note2">Provisional until the week ends.</div>
-<div class="legend" style="margin-top:14px">● live · C Carry · V Vice-carry, ×1.5 only if the Carry plays no game</div></div>`);
-$("total").textContent = TOTAL; $("hangul").textContent = MANAGER.hangul; $("mname").textContent = MANAGER.name;
+</div>`);
+$("total").textContent = TOTAL; 
 $("ranks").innerHTML = MANAGER.ranks.map(([n, r, m]) => `<span>${n}</span><span class="r num">${r}</span><span class="m num ${m > 0 ? "up" : "down"}">${Math.abs(m).toLocaleString("en-GB")}</span>`).join("");
 $("week").innerHTML = Object.entries(SERIES).map(([sid, s]) => {
-  const st = s.state === "final" ? `${s.sa}–${s.sb}` : s.state === "prov" ? `${s.sa}–${s.sb} <span class="tag prov">Prov.</span>` : s.state === "live" ? `${s.sa}–${s.sb} <span class="tag live">G${s.liveGame}</span>` : when(s.time);
+  const st = s.state === "final" ? `${s.sa}–${s.sb}` : s.state === "prov" ? `${s.sa}–${s.sb} <span class="tag prov">Not final</span>` : s.state === "live" ? `${s.sa}–${s.sb} <span class="tag live">G${s.liveGame}</span>` : when(s.time);
   return `<div><span class="d">${s.day}</span><span><b>${s.a}</b> v <b>${s.b}</b></span><span class="t num">${st}</span></div>`;
 }).join("");
 </script>

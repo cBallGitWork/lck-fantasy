@@ -34,16 +34,18 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## Knockouts
 
-Knockouts run in the same game, on the same leaderboard. Craig's intent for them, with the values
-set per stage:
+Knockouts run in the same game, on the same table. Settled at the `/grill` of 13 Nov 2026, with
+each value held as a stage setting:
 
-- the budget is lifted, since it exists to stop a squad of only the top players;
-- the cap on players from one team rises as teams drop out;
-- transfers are unlimited, with no hits;
-- every series a player plays counts.
-
-Two choices wait for the 2027 fixtures, and the settings must allow either answer (Craig, 11 Nov
-2026: "we dont know yet as we dont know the fixtures, but allow us to make the decision later"):
-
-- whether a knockout gameweek is a week or a bracket round;
-- how to stop squads stacking the few teams left in a thin knockout week.
+- A knockout gameweek is one LCK week, as in the regular season, with its deadline 15 minutes
+  before that week's first series. It is never one bracket round.
+- The cap on players from one team (the coach counts) is 2 in the regular season and 3 in the
+  knockouts. Three is the most, since three teams of three fill all 9 slots. Example: in the
+  final week, 3 T1, 3 Gen.G and 3 HLE is a legal squad.
+- The budget stays in the knockouts but is raised, so a squad from the few good teams left is
+  affordable ("Final 3 means all good teams", Craig). The amount is set when the 2027 prices are
+  made.
+- Transfers are unlimited, with no hits.
+- Every series a player plays that week counts, each scoring its best 2 games
+  ([spec/05](05-scoring.md)). Example: a team plays Bo5s on Wednesday and Saturday, so both
+  count.

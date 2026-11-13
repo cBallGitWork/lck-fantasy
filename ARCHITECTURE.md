@@ -1,6 +1,6 @@
 # Architecture
 
-How the product in [SPEC.md](SPEC.md) will be built. No code exists yet.
+How the product in [SPEC.md](SPEC.md) is built.
 
 **Who decides:** Craig picks the services, because they cost money and are hard to leave. Claude
 picks the libraries inside them, because they are cheap to change. Both are written here with a
@@ -21,9 +21,20 @@ reason, and a change to either changes this file.
 
 ## Libraries (Claude's)
 
-Chosen with the first code, each with a reason. The starting point is the draft product's set
-(a Vite React app with TanStack Router, Convex Auth, Vitest with `convex-test`), because it is
-proven on these services.
+Chosen with the first code (13 Nov 2026), each with a reason. The starting point is the draft
+product's set, because it is proven on these services.
+
+| Library | Why |
+|---|---|
+| Vite with React | a fast dev server and a plain static build, which is all Vercel's Hobby plan needs |
+| TanStack Router | typed routes, so a link to a screen that doesn't exist fails the typecheck |
+| Convex's React client | the live queries that carry live points to the browser |
+| Convex Auth | Google and Discord sign-in inside Convex; it arrives with sign-up (#42) |
+| Vitest with `convex-test` | game rules test as plain functions, and Convex functions run in memory, with no deployment |
+| TypeScript, ESLint | strict types and lint, both in `npm run verify` |
+
+`convex/_generated/` is written by `npx convex dev`, which needs a Convex deployment. Until Craig
+creates one, the rules are pure functions and need none.
 
 ## Data
 
@@ -36,7 +47,7 @@ proven on these services.
 
 ## Where code lives
 
-The folders exist now, each with a README saying what goes in it. No code yet.
+Each folder has a README saying what goes in it.
 
 | Folder | What lives there |
 |---|---|
@@ -51,6 +62,7 @@ The folders exist now, each with a README saying what goes in it. No code yet.
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
+| `src/` | The app's entry (`main.tsx`) and its routes (`router.tsx`). |
 | `src/screens/` | One folder per screen in the site map (`docs/design/site-map.md`), named as it is there. |
 | `src/rift/` | The Rift view: the map, the lanes, the shirts and the role icons. |
 | `src/parts/` | Parts shared by two or more screens: tables, the player row, buttons. |

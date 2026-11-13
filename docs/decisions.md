@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Korean touches grill](#korean-touches-grill-13-nov-2026) · [Settings and sign-in grill](#settings-and-sign-in-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Korean touches grill](#korean-touches-grill-13-nov-2026) · [Settings and sign-in grill](#settings-and-sign-in-grill-13-nov-2026) · [Live points grill](#live-points-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -220,6 +220,18 @@ Settled; the specs are [spec/12-pages.md](../spec/12-pages.md) (Settings) and [s
 - Emails: "Add a weekly recap"; both opt-in, off by default, for Resend's 100 a day, yes.
 - "And log in pages and how we handle that (Google only so we don't store passwords)". Google only or more: "Your call"; Claude added Discord, where LoL fans are. Sign-up asks team name, favourite team, country; stay signed in until sign-out. Yes.
 - Live: "Options of languages, official and streamers"; an admin list, Twitch and YouTube in the beta, official English first and the last pick remembered. All yes.
+
+## Live points grill (13 Nov 2026)
+
+Settled; the spec is [spec/11-live-points.md](../spec/11-live-points.md).
+
+- Live in the beta: "ah we really need live in some way"; from Riot's unofficial feed, provisional; game ids from Leaguepedia, not Riot's schedule key.
+- GRID: asked whether they'd just say no, then "Don't bother".
+- Final: Oracle's Elixir plus Leaguepedia; "3 hours after each series but lol just has the stats via the game so shouldnt be corrections".
+- Ranks and prices: "live ranks - update after each series", on final points; "prices update once a gamweek deadline has passed / new gameweek begins (dont like daily changes)".
+- Feed down: no live points, "but we could look at other sites to grab the basic data like kills etc?", placed under Later.
+
+- Live game ids (13 Nov, later): Leaguepedia has no live-feed ids; "Find similar site as another backup?"; none exists, so read them from lolesports.com's pages: "yes".
 
 ## Open
 

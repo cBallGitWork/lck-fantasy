@@ -20,7 +20,7 @@ The LCK goes first because its schedule is more regular than the LEC's three spl
 Cup (January–March 2027) is the beta and the test. The main game splits into Split 1 and
 Split 2, and chips reset at the split, the way FPL's reset at GW19.
 
-Live points "would be great" (Craig, 11 Nov 2026).
+Live points "would be great" (Craig, 11 Nov 2026), and the beta has them ([spec/11](spec/11-live-points.md)).
 
 **The base assumption:** keep the rules as close to FPL's as possible. Where a rule is in doubt,
 use FPL's rule, or at least its logic (Craig, 11 Nov 2026).
@@ -41,12 +41,14 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 8 | [Leagues](spec/08-leagues.md) | Every manager joins Overall, their country's league and their team's supporter league; the team is required at sign-up. Leagues rank on total points, with a season table and one per split. In Split 2, Overall splits into Legend (Split 1's top half) and Rise, points carried. Private leagues by code or link, from any gameweek. | not built |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: a new visitor lands on the pick-a-team page, with Auto-fill, and the squad is kept in the browser. Sign-up comes on Save: Google or Discord, then team name, favourite team, country. Late joiners as in FPL. | not built |
 | 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series, knockouts included. In knockouts the team cap rises from 2 to 3, the budget is raised, transfers are unlimited and every series counts. | not built |
-| 11 | [Live points](spec/11-live-points.md) | Points that move during a series "would be great". Ask GRID for its feed first; fall back to Riot's unofficial live feed (Craig, 11 Nov 2026). | to grill |
+| 11 | [Live points](spec/11-live-points.md) | The beta has live points from Riot's unofficial feed, shown as provisional. A series turns final 3 hours after it ends, from Oracle's Elixir and Leaguepedia. Ranks move when a series is final; prices only at the deadline. | not built |
 | 12 | [Pages](spec/12-pages.md) | Home (a status page), Pick Team, Transfers, Points, Leagues, Stats, an LCK hub for the LCK's fixtures, standings and rosters, a series page, player and coach pop-ups, public manager profiles, Perfect game (the week's best team), Price changes, Live (a stream picker: official broadcasts and co-streamers beside live points), Help and Settings. | not built |
 | 13 | [Korean touches](spec/13-korean-touches.md) | Made-up Korean sponsors from LCK memes, each explaining its meme on tap; protest trucks for a league-mate's bad week; a birthday cake on a player's week; a hangul banner for your team. No points. | not built |
 
 ## Later
 
+- A second live source, researched if Riot's live feed breaks during the beta (Craig, 13 Nov 2026)
+  ([spec/11](spec/11-live-points.md)).
 - The achievement book, parked: not in the beta, not grilled (Craig, 13 Nov 2026)
   ([spec/07](spec/07-achievement-book.md)).
 - The values of each stage's settings, set when the 2027 fixture dates come out
@@ -69,6 +71,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - The coach as Carry or Vice-carry (Craig, 12 Nov 2026).
 - A point for a game won, for players or the coach; role quests; CS and vision lines (Craig, 12 Nov 2026).
 - Points for playing (Craig, 13 Nov 2026).
+- GRID as a data source: not asked (Craig, 13 Nov 2026).
+- Riot's esports schedule API and its key, which is Riot's own (Craig, 13 Nov 2026).
 - A cup: "Cup is just head to head. We stick to points for now" (Craig, 13 Nov 2026).
 - A prizes page, and a price predictor (Craig, 13 Nov 2026).
 - A watchlist, and projected points on the player card (Craig, 13 Nov 2026).

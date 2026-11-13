@@ -16,8 +16,8 @@ reason, and a change to either changes this file.
 | Pages | Vercel, free (Hobby) plan | Hobby is for non-commercial use, which fits: the game is free with no cash prizes. Payments, ads or a donate button would need the paid plan |
 | Sign-in | Google and Discord, through Convex Auth (Craig, 13 Nov 2026) | no passwords to keep, and no sign-in email to break across devices |
 | Email | Resend, for the opt-in deadline reminder and weekly recap | the free plan's 100 emails a day is the limit to watch at launch |
-| LCK stats, live | GRID if it grants free non-commercial access; otherwise Riot's unofficial live stats feed, shown as provisional (Craig, 11 Nov 2026) | GRID is Riot's official data partner but commercial; the unofficial feed is free, unsupported, and can be switched off ([research](docs/research/live-data-sources.md)) |
-| LCK stats, settled | not chosen; Oracle's Elixir's daily CSV is the proposal | free for fans, and it has the 15-minute stats the live feed lacks |
+| LCK stats, live | Riot's unofficial live stats feed, shown as provisional; game ids read from lolesports.com's schedule pages (Craig, 13 Nov 2026; Leaguepedia lacks them) | free and works without a key; unsupported, and can be switched off. GRID, the official partner, is commercial and not asked ([research](docs/research/live-data-sources.md)) |
+| LCK stats, settled | Oracle's Elixir's daily CSV, plus Leaguepedia's match data for solo kills and steals (Craig, 13 Nov 2026) | free for fans; Oracle's Elixir has the 15-minute stats, Leaguepedia the lines it lacks. Unchecked: whether Leaguepedia holds solo kills and steals, how fast it lands, and whether it needs a bot login ([research](docs/research/live-data-sources.md)) |
 
 ## Libraries (Claude's)
 

@@ -1,6 +1,6 @@
 # Email to GRID: draft
 
-Not sent. Craig sends it, to sales@grid.gg (the address on grid.gg's contact page, 11 Nov 2026).
+Not sent, and dropped on 13 Nov 2026: GRID is out of scope ([SPEC.md](../../SPEC.md)). It was to go to sales@grid.gg (the address on grid.gg's contact page, 11 Nov 2026).
 
 **Subject:** LCK live data for a free fan fantasy game
 

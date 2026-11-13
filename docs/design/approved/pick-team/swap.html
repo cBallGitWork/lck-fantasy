@@ -143,7 +143,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 
 </main>
 <aside>
-<section class="card" style="padding-top:0"><header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Siwoo</b><span style="color:var(--mid)">DK · Top · in your Flex · 9.5억</span></div><span class="x">✕</span></header>
+<section class="card" style="padding-top:0"><header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Siwoo</b><span style="color:var(--mid)">DK · Top · in your Flex · 7.5억</span></div><span class="x">✕</span></header>
 <div style="background:var(--ink);color:#fff;padding:6px 14px;font-size:13px">! Benched for Wednesday's series</div>
 <div class="st"><div><b>4.5</b><span>Form · 7th of 10 tops</span></div><div><b>19%</b><span>Owned · 6th</span></div><div><b>21</b><span>Season pts · 8th</span></div></div>
 <div class="nx"><div><span class="k">Wed 08:00</span><span>v HLE · Bo3</span></div><div><span class="k">Fri 10:30</span><span>v KT · Bo3</span></div></div>
@@ -170,15 +170,15 @@ const W4 = [
 ];
 const nextOf = (team) => W4.filter((s) => s[3] === team || s[4] === team).map((s) => `v ${s[3] === team ? s[4] : s[3]} ${s[0]}`);
 const PSQ = [
-  { slot: "top", name: "Zeus", team: "HLE", price: "19.5", form: "7.0" },
-  { slot: "jng", name: "Canyon", team: "GEN", price: "20.0", form: "7.3" },
-  { slot: "mid", name: "Faker", team: "T1", price: "21.5", form: "8.8", mark: "C" },
-  { slot: "bot", name: "Ruler", team: "GEN", price: "20.5", form: "8.0", mark: "V" },
-  { slot: "sup", name: "Delight", team: "HLE", price: "14.0", form: "5.0" },
-  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "9.5", form: "4.5", news: "Benched for Wednesday's series" },
-  { slot: "coach", name: "kkOma", team: "T1", price: "8.0", form: "6.0" },
-  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "11.0", form: "3.3" },
-  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "6.5", form: "4.8" },
+  { slot: "top", name: "Zeus", team: "HLE", price: "16.0", form: "7.0" },
+  { slot: "jng", name: "Canyon", team: "GEN", price: "15.5", form: "7.3" },
+  { slot: "mid", name: "Faker", team: "T1", price: "18.5", form: "8.8", mark: "C" },
+  { slot: "bot", name: "Ruler", team: "GEN", price: "17.0", form: "8.0", mark: "V" },
+  { slot: "sup", name: "Delight", team: "HLE", price: "9.0", form: "5.0" },
+  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "7.5", form: "4.5", news: "Benched for Wednesday's series" },
+  { slot: "coach", name: "kkOma", team: "T1", price: "7.0", form: "6.0" },
+  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "5.0", form: "3.3" },
+  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "4.0", form: "4.8" },
 ];
 const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
 const SLOTNAME = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support", flex: "Flex", coach: "Coach", b1: "Bench 1", b2: "Bench 2" };

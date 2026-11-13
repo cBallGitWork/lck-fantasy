@@ -148,6 +148,7 @@ Settled; the spec is [spec/05-scoring.md](../spec/05-scoring.md). Worked live ag
 - The 2026 top 50 under the final rules: "It's fine". Prices: "we price the top coaches a little higher than others".
 - The coach penalty: "-1 for losing a series that's it"; Gen.G's coach moves from 5th to 6th in 2026, and "Pricing sorts that out anyways".
 - Achievements: "Achievements list, a love letter to lck lore"; "Think like Xbox achievements / The Reddit memes etc"; stored for later, "Ok let's store the achieved tor now".
+- 13 Nov, offered the achievement book as the next grill: "scrap it for now", then "Yes, file it". Parked, under Later in SPEC.md.
 
 ## Open
 

@@ -10,7 +10,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 - **Home**: a status page, not the Points page: the deadline, the last gameweek's points, free
   transfers and league ranks. While a series is live it shows a Live now banner.
-- **Pick Team** and **Transfers**, as FPL's.
+- **Pick Team** and **Transfers**, as FPL's. Pick Team has a Rift view and a Card view; each
+  manager picks one and Flol remembers it (Craig, 13 Nov 2026).
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
 - **Leagues** ([spec/08](08-leagues.md)).
@@ -77,7 +78,7 @@ Grilled 13 Nov 2026.
 - Favourite team and country: changeable until the manager's first gameweek scores, then shown
   locked, with why ([spec/08](08-leagues.md)).
 - Time zone: the browser's, or one the manager picks. Example: a 16:45 KST deadline shows as
-  08:45 in London.
+  07:45 in London in January (GMT), 08:45 in summer time (BST).
 - Light, dark, or follow the device.
 - Sign out, and delete the account and its data.
 - Emails, both opt-in and off by default: a deadline reminder 24 hours before, and a weekly

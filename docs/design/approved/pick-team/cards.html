@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Pick Team · List</title>
+<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --hot: #1d1d1d; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
+.num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+i.ko { font-style: normal; color: var(--soft); font-size: 11px; margin-left: 4px; }
+nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
+nav.top a { color: var(--mid); text-decoration: none; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
+nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vertical-align: 2px; }
+nav.top .sp { flex: 1; }
+.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
+.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.note { position: absolute; background: #fffbe0; border: 1px solid #d8cf8a; font-size: 11px; padding: 4px 7px; color: #5a5420; max-width: 220px; line-height: 1.3; z-index: 5; }
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; line-height: 16px; }
+.tag.prov { border-style: dashed; color: var(--mid); border-color: var(--mid); }
+.tag.live { background: var(--ink); color: #fff; }
+.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 10px; }
+.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 10px; }
+.gw { display: flex; align-items: center; gap: 16px; }
+.gw button { border: 1px solid var(--line); background: var(--paper); padding: 4px 10px; font: inherit; color: var(--mid); }
+.gw h1 { font-size: 26px; letter-spacing: -0.5px; }
+.cnt { text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.unc { color: var(--soft); text-decoration: line-through; }
+.lv { font-weight: 600; }
+.lv::after { content: "●"; font-size: 8px; vertical-align: 4px; margin-left: 1px; }
+.cake::after { content: " 🎂"; }
+
+.page { display: grid; grid-template-columns: 1fr 400px; gap: 28px; padding: 22px 32px 48px; }
+.ph1 { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
+.ph1 h1 { font-size: 26px; letter-spacing: -0.5px; }
+.ph1 .dl { font-size: 15px; margin-top: 4px; } .ph1 .dl span { color: var(--soft); } .ph1 .dl b.cd { margin-left: 10px; border: 1px solid var(--ink); padding: 1px 8px; font-family: "IBM Plex Mono", monospace; }
+.save { background: var(--ink); color: #fff; font-weight: 700; padding: 10px 26px; border: 0; font: inherit; font-weight: 700; }
+.ctl { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; color: var(--mid); }
+.tog { display: inline-flex; border: 1px solid var(--line); background: var(--fill); padding: 3px; }
+.tog span { padding: 5px 24px; color: var(--mid); } .tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
+aside > section { border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 24px; }
+aside h2 { font-size: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; }
+aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
+.card { background: var(--paper); border: 1px solid var(--ink); margin-bottom: 24px; }
+.card header { display: flex; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); align-items: center; }
+.card header b { font-size: 19px; display: block; } .card header .x { margin-left: auto; color: var(--mid); align-self: flex-start; }
+.card .st { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+.card .st div { padding: 8px 14px; } .card .st b { display: block; font-family: "IBM Plex Mono", monospace; font-size: 17px; } .card .st span { font-size: 11px; color: var(--mid); }
+.card .nx { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--line); }
+.card .nx div { display: flex; justify-content: space-between; padding: 3px 0; } .card .nx .k { color: var(--mid); }
+.card .bt { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
+.card .bt span { border: 1px solid var(--ink); text-align: center; padding: 7px 0; font-size: 13px; font-weight: 600; }
+.card .bt span.pri { background: var(--ink); color: #fff; } .card .bt span.dim { border-color: var(--line); color: var(--mid); font-weight: 400; }
+.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.chip { border: 1px solid var(--ink); padding: 8px 10px; background: var(--paper); font-size: 13px; }
+.chip b { display: block; font-size: 14px; } .chip small { color: var(--mid); font-size: 11px; display: block; margin: 2px 0 6px; }
+.chip .go { display: inline-block; border: 1px solid var(--ink); padding: 0 10px; font-size: 12px; font-weight: 600; }
+.chip.off { border-color: var(--line); color: var(--mid); } .chip.off b { color: var(--mid); }
+.wk { font-size: 13px; }
+.wk div { display: grid; grid-template-columns: 34px 1fr auto; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--fill); align-items: center; }
+.wk .d { color: var(--mid); font-size: 12px; } .wk .t { font-size: 12px; text-align: right; font-family: "IBM Plex Mono", monospace; }
+.wk div.mine b.y { text-decoration: underline; text-underline-offset: 3px; }
+.ad { height: 100px; margin-bottom: 6px; } .adline { font-size: 11px; color: var(--soft); }
+.note2 { font-size: 12px; color: var(--mid); margin-top: 8px; }
+
+.lineup { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+.pc { background: var(--paper); border: 1px solid var(--ink); position: relative; display: flex; flex-direction: column; }
+.pc .rl { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--mid); }
+.pc .rl svg { width: 16px; height: 16px; }
+.pc .por { height: 200px; margin: 10px; }
+.pc .nm { font-size: 20px; font-weight: 700; padding: 0 10px; }
+.pc .tm { font-size: 13px; color: var(--mid); padding: 0 10px 8px; }
+.pc .nx { border-top: 1px solid var(--line); padding: 8px 10px; font-size: 12px; }
+.pc .nx div { display: flex; justify-content: space-between; }
+.pc .ft { border-top: 1px solid var(--line); display: flex; justify-content: space-between; padding: 6px 10px; font-size: 12px; color: var(--mid); font-family: "IBM Plex Mono", monospace; }
+.pc .mk { position: absolute; right: 8px; top: 40px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.pc .mk.v { background: var(--paper); color: var(--ink); border: 1.5px solid var(--ink); }
+.pc.sel { outline: 3px solid var(--ink); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr 24px 1fr 1fr; gap: 10px; margin-top: 10px; }
+.row2 .pc .por { height: 110px; }
+.row2 .sep { border-left: 1px dashed var(--soft); margin-left: 11px; }
+.row2 .bh { font-size: 12px; color: var(--mid); margin-bottom: 4px; }
+.pc.bench { background: var(--fill); border-color: var(--soft); }
+.pc .nw { background: var(--ink); color: #fff; font-size: 11px; padding: 3px 10px; }
+
+.key { display: flex; gap: 14px; align-items: center; font-size: 12px; color: var(--mid); margin: 0 0 8px; }
+.key span:last-child { margin-left: auto; }
+.kc { display: inline-flex; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; align-items: center; justify-content: center; margin-right: -8px; }
+.kc.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
+.ph1 .act { display: flex; align-items: center; gap: 14px; font-size: 13px; }
+.card .bt span.lbl { border: 0; text-align: left; font-weight: 700; padding-left: 0; }
+.chip .lft { float: right; font-size: 11px; color: var(--mid); }
+.chip.off a { color: var(--ink); text-decoration: underline; font-size: 12px; }
+.bprompt { font-size: 13px; color: var(--ink); font-weight: 600; margin-top: 8px; }
+.rift { height: 560px !important; } .rift svg.map { height: 560px !important; }
+.basebox { position: absolute; left: 14px; top: 386px; width: 304px; height: 164px; border: 1.5px dashed var(--ink); background: rgba(255,255,255,.55); }
+.basebox span { position: absolute; left: 8px; top: 4px; font-size: 11px; color: var(--mid); }
+.tile { z-index: 2; }
+
+</style></head><body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Position icons drawn after LoL's own: Top and Bot are opposite corners, Mid the diagonal, Jungle a claw, Support a crest. -->
+    <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
+    <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
+    <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+    <symbol id="i-flex" viewBox="0 0 16 16"><path d="M8 1l2 5h5l-4 3 2 6-5-4-5 4 2-6-4-3h5z" fill="none" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+    <symbol id="shirt" viewBox="0 0 56 50"><path d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z" fill="#fff" stroke="#1d1d1d" stroke-width="1.6"/><path d="M18 2 Q28 9 38 2" fill="none" stroke="#1d1d1d" stroke-width="1.6"/></symbol>
+  </defs>
+</svg>
+
+<nav class="top"><b class="word">Flol</b><a>Home</a><a class="on">Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+<div class="page"><main>
+<div class="ph1"><div><h1>Pick Team · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">1d 20h 45m</b></div></div><div class="act"><span style="color:var(--mid)">No changes</span><button class="save" style="opacity:.4">Save team</button></div></div>
+<div class="ctl"><span class="tog"><span>Rift view</span><span class="on">Card view</span></span><span>Changes save with the team: swaps, Carry, Vice and chips.</span></div>
+<div class="lineup" id="l1"></div>
+<div class="row2" id="l2"></div>
+</main>
+<aside>
+<section class="card" style="border-top:1px solid var(--ink);padding-top:0"><header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Faker</b><span style="color:var(--mid)">T1 · Mid · 21.5억</span></div><span class="x">✕</span></header>
+<div class="st"><div><b>8.8</b><span>Form · 1st of 10 mids</span></div><div><b>63%</b><span>Owned · 1st</span></div><div><b>58</b><span>Season pts · 2nd</span></div></div>
+<div class="nx"><div><span class="k">Last 3 weeks</span><span class="num">22 · 14 · 25</span></div><div><span class="k">Wed 10:30</span><span>v KT · Bo3</span></div><div><span class="k">Sat 08:00</span><span>v GEN · Bo3</span></div></div>
+<div class="bt"><span class="lbl">✓ Your Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><span class="dim">Full card ›</span></div></section>
+<section><h2>Boosts <span>one a week · 1 of each this Cup</span></h2><div class="chips">
+<div class="chip"><span class="lft">1 left</span><b>Bench Boost</b><small>The bench scores too</small><span class="go">Play</span></div>
+<div class="chip"><span class="lft">1 left</span><b>Dual Carry</b><small>The Vice-carry scores ×1.5 too</small><span class="go">Play</span></div>
+<div class="chip off"><b>Remake</b><small>1 left · <a>Use on Transfers ›</a></small></div>
+<div class="chip off"><b>Limitless</b><small>1 left · <a>Use on Transfers ›</a></small></div></div>
+<div class="note2">Bench Boost and Dual Carry can be cancelled until the deadline.</div></section>
+<section><h2>This week's series <span>your time · KST</span></h2><div class="wk" id="week"></div></section>
+<div class="ad ph">sponsor banner</div><div class="adline">All sponsors are made up.</div>
+</aside>
+</div>
+<script>// Made-up LCK Cup Week 4 for the Pick Team wireframes. Every number is an example.
+// Monday 20:00 KST (11:00 London). Deadline Wed 16:45 KST = 07:45 London (15 min before the first series, spec/10).
+const W4 = [
+  ["Wed","08:00","17:00","HLE","DK"],["Wed","10:30","19:30","T1","KT"],
+  ["Thu","08:00","17:00","GEN","BRO"],["Thu","10:30","19:30","NS","DNS"],
+  ["Fri","08:00","17:00","KRX","BFX"],["Fri","10:30","19:30","DK","KT"],
+  ["Sat","08:00","17:00","T1","GEN"],["Sat","10:30","19:30","HLE","NS"],
+  ["Sun","08:00","17:00","BRO","BFX"],["Sun","10:30","19:30","KRX","DNS"],
+];
+const nextOf = (team) => W4.filter((s) => s[3] === team || s[4] === team).map((s) => `v ${s[3] === team ? s[4] : s[3]} ${s[0]}`);
+const PSQ = [
+  { slot: "top", name: "Zeus", team: "HLE", price: "19.5", form: "7.0" },
+  { slot: "jng", name: "Canyon", team: "GEN", price: "20.0", form: "7.3" },
+  { slot: "mid", name: "Faker", team: "T1", price: "21.5", form: "8.8", mark: "C" },
+  { slot: "bot", name: "Ruler", team: "GEN", price: "20.5", form: "8.0", mark: "V" },
+  { slot: "sup", name: "Delight", team: "HLE", price: "14.0", form: "5.0" },
+  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "9.5", form: "4.5", news: "Benched for Wednesday's series" },
+  { slot: "coach", name: "kkOma", team: "T1", price: "8.0", form: "6.0" },
+  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "11.0", form: "3.3" },
+  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "6.5", form: "4.8" },
+];
+const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
+const SLOTNAME = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support", flex: "Flex", coach: "Coach", b1: "Bench 1", b2: "Bench 2" };
+const iconOf = (p) => ICON[p.role || p.slot];
+
+function card(p, cls = "") {
+  const mk = p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : "";
+  const role = p.slot === "flex" ? `Flex · ${SLOTNAME[p.role]}` : /^b\d/.test(p.slot) ? `${SLOTNAME[p.slot]} · ${SLOTNAME[p.role]}` : SLOTNAME[p.slot];
+  const nx = W4.filter((s) => s[3] === p.team || s[4] === p.team).map((s) => `<div><span>v ${s[3] === p.team ? s[4] : s[3]}</span><span style="color:var(--mid)">${s[0]} ${s[1]}</span></div>`).join("");
+  return `<div class="pc ${cls} ${p.name === "Faker" ? "sel" : ""}"><div class="rl"><span>${role}</span><svg><use href="#${iconOf(p)}"/></svg></div>${mk}
+  ${p.news ? `<div class="nw">! ${p.news}</div>` : ""}<div class="por ph">${p.slot === "coach" ? "team crest" : "player photo"}</div><div class="nm">${p.name}</div><div class="tm">${p.team}</div>
+  <div class="nx">${nx}</div><div class="ft"><span>Form ${p.form}</span><span>${p.price}억</span></div></div>`;
+}
+const by = (s) => PSQ.find((p) => p.slot === s);
+document.getElementById("l1").innerHTML = ["top","jng","mid","bot","sup"].map((s) => card(by(s))).join("");
+document.getElementById("l2").innerHTML = `<div>${card(by("flex"))}</div><div>${card(by("coach"))}</div><div class="sep"></div>` + ["b1","b2"].map((s) => `<div>${card(by(s), "bench")}</div>`).join("");
+const MINE = new Set(PSQ.map((p) => p.team));
+document.getElementById("week").innerHTML = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
+</script></body></html>

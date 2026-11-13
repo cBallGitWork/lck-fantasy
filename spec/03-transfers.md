@@ -15,6 +15,25 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   gameweek, then 1 a week up to 3.
 - All these numbers are data per competition, never code.
 
+## Between the splits
+
+Craig, 13 Nov 2026:
+
+- Once Split 1 ends, transfers are locked through the break.
+- They reopen 2 weeks before Split 2's first deadline, unlimited and free. Example: Split 2's
+  first series is Wednesday 17:00 KST, so the deadline is 16:45; transfers open at 16:45 two
+  Wednesdays before.
+- The budget raise from Road to MSI ([spec/10](10-season-and-gameweeks.md)) comes back off every
+  manager's bank when Split 2 starts, so a bank can fall below zero. Price rises earned in Split 1
+  are kept. Example: a raise of 5억 and a bank of 1억 leave −4억.
+- In that window every squad must get back to a bank of zero or more and to the regular cap of 2
+  per team, the coach included.
+- A squad still over at the deadline is fixed by Flol, at no points cost:
+  1. For each team over the cap, it sells the most expensive extra.
+  2. While the bank is below zero, it sells the most expensive player left.
+  3. For each sale, it buys the cheapest player of the same role, or the cheapest coach, that
+     keeps the squad within the cap.
+
 ## Top-ups
 
 - When something outside managers' control wrecks squads, such as a team swapping a starter
@@ -23,5 +42,5 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## Knockouts
 
-- Knockout stages follow their stage settings ([spec/10](10-season-and-gameweeks.md)): Craig's
-  intent there is unlimited transfers with no hits.
+- In knockout stages transfers are unlimited, with no hits; the team cap rises to 3 and the
+  budget is raised ([spec/10](10-season-and-gameweeks.md)).

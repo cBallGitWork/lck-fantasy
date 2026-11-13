@@ -3,10 +3,6 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
-## Open from the first chats (26–29 Oct 2026)
-
-- Which chips the beta has, picked from the effects in [spec/06](../spec/06-chips.md).
-
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

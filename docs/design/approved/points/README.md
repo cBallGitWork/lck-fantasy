@@ -8,15 +8,17 @@ Names, teams and numbers are a made-up LCK Cup week, not roster data. No `plate.
 
 ## Borrowed
 
+- **LiveFPL (livefpl.net)**: points to the next arrow, in play and to play counts, your captain against the average, and star, flop and killer. Craig picked these four on 13 Nov 2026; each needs a grill (`docs/to-grill.md`).
+
 - **FPL's desktop Points page**: the header row (average, highest, the big total box, week rank, transfers), the bench strip under the squad, the Out/In auto-sub table, a click on a player opening his breakdown. Research: `docs/research/points-page-references.md`.
 - **Summoner's Rift**: the squad stands on the map, with LoL's position icons and team shirts (Craig, 13 Nov 2026).
 
 ## Layout
 
-- **Header:** team name and its hangul; ‹ week ›; average · highest · **total** (provisional while a series is live or not final) · week rank (as of the last final series) · transfers; one line naming the live and provisional series.
+- **Header:** team name and its hangul; ‹ week ›; average · highest · **total** (provisional while a series is live or not final) · week rank (as of the last final series) · transfers; one line naming the live and provisional series; then how many of your players are in play and to play, and roughly how many points you need for an up arrow overall.
 - **Left:** the Rift, each starter in his lane: shirt, role icon, name, points, each series' points; C and V marks; Flex and Coach labelled; a live dot.
 - **Under the Rift:** the bench, then the Automatic subs table (Out / In), provisional until the series is final.
-- **Right:** the tapped player's games (the player card's This week tab, spec/12; the card's header, buttons and other tabs aren't drawn here), then the hangul banner and manager name, Ranks, the week's series, the sponsor slot.
+- **Right:** the tapped player's games, with the average Carry's points beside a Carry's, (the player card's This week tab, spec/12; the card's header, buttons and other tabs aren't drawn here), then Your week so far (star, flop and killer: the player you don't own who cost you most), then the hangul banner and manager name, Ranks, the week's series, the sponsor slot.
 
 ## Controls
 

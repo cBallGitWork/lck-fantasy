@@ -25,6 +25,17 @@ heads, teams, champions), never FPL-style stat trophies; once a year, worth a po
 Claude's drafts and their sources are in
 [docs/research/achievement-memes.md](research/achievement-memes.md); none is the product.
 
+## Points page extras, from LiveFPL (Craig, 13 Nov 2026)
+
+Drawn on the Points picture (`docs/design/approved/points/`); none is the product until grilled:
+
+- Points to an up arrow overall, while live. Rank only moves at final (spec/11), so this is an
+  estimate in points, never a live rank. How is it worked out, and how sure must it be to show?
+- In play and to play: how many of your starters are in a live series, and how many still have one.
+- Your Carry's points against the average Carry's. Average over whom: everyone, or the top 10k?
+- Star, flop and killer for the week. Killer: the player you don't own who cost you most against
+  other managers. Needs ownership per player.
+
 ## Open from the foundations work (11 Nov 2026)
 
 - The screens and the look ([docs/design/](design/)). Craig likes the Rift view with team shirts, and asked whether player portraits can appear too (11 Nov 2026).

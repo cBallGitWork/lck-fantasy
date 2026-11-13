@@ -125,6 +125,11 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
 .pl .sum { padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
 .pl .sum b { font-family: "IBM Plex Mono", monospace; font-size: 22px; }
 .pl .ft { padding: 8px 14px 12px; font-size: 12px; color: var(--mid); display: flex; justify-content: space-between; gap: 10px; } .pl .ft a { color: var(--ink); white-space: nowrap; }
+.st3 { display: flex; justify-content: center; gap: 26px; font-size: 13px; color: var(--mid); margin-top: 8px; }
+.st3 b { color: var(--ink); font-family: "IBM Plex Mono", monospace; }
+.sfk { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.sfk div { border: 1px solid var(--line); background: var(--paper); padding: 8px 10px; font-size: 12px; color: var(--mid); }
+.sfk .k { display: block; font-size: 11px; text-transform: none; } .sfk b { display: block; color: var(--ink); font-size: 15px; }
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute">
@@ -150,7 +155,8 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
     <div class="stats"><div><b>74</b><span>Average</span></div><div><b>131</b><span>Highest ›</span></div>
       <div class="tot"><b id="total"></b><span>Total · provisional</span></div>
       <div><b>21,880</b><span>Week rank · as of Fri</span></div><div><b>1</b><span>Transfers ›</span></div></div>
-    <div class="st2"><span class="tag live">LIVE</span> T1 v DK, game 2 · <span class="tag prov">Provisional</span> GEN v HLE, final ~13:20</div></div>
+    <div class="st2"><span class="tag live">LIVE</span> T1 v DK, game 2 · <span class="tag prov">Provisional</span> GEN v HLE, final ~13:20</div>
+    <div class="st3"><span><b>3</b> in play</span><span><b>0</b> to play</span><span><b>≈6 pts</b> to an up arrow overall</span></div></div>
   <div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
         <rect x="0" y="0" width="680" height="680" fill="#ededeb"/>
         <!-- river: top-left to bottom-right -->
@@ -182,8 +188,13 @@ aside .pl header b { font-size: 19px; display: block; } aside .pl header .x { ma
     <div class="ser"><h4>Sat · v DK <span>1–0 · game 2 live</span></h4>
       <div class="g"><span class="r">G1</span><span>Orianna · W</span><span class="p"><span class="box">4</span></span></div>
       <div class="g live"><span class="r">G2</span><span>Sylas · 14:20</span><span class="p"><span class="box">1</span></span></div></div>
-    <div class="sum"><span>Best 2 a series: 12 + 5 = 17<br><span style="color:var(--mid);font-size:13px">Carry ×1.5</span></span><b>25</b></div>
+    <div class="sum"><span>Best 2 a series: 12 + 5 = 17<br><span style="color:var(--mid);font-size:13px">Carry ×1.5 · average Carry 19</span></span><b>25</b></div>
     <div class="ft"><span>Boxed games count. Solo kills and steals land when the series is final.</span><a>Full stats ›</a></div></section>
+  <section><h2>Your week so far <span>final when the week is</span></h2>
+    <div class="sfk"><div><span class="k">Star</span><b>Ruler</b><span>18 · owned by 38%</span></div>
+    <div><span class="k">Flop</span><b>Delight</b><span>9 · owned by 17%</span></div>
+    <div><span class="k">Killer</span><b>Chovy</b><span>22 · you don't own him · 41%</span></div></div>
+    <div class="note2">Killer: the player you don't own who cost you most against other managers.</div></section>
   <section class="mgr"><div class="banner ph" id="hangul"></div><span id="mname"></span></section>
   <section><h2>Ranks <span>since Week 2</span></h2><div class="rk" id="ranks"></div>
     <div class="note2">As of Friday. Ranks move when a series is final, next ~13:20. <a style="color:var(--ink)">All leagues ›</a></div></section>

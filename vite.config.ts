@@ -8,6 +8,5 @@ export default defineConfig({
     environment: "edge-runtime",
     server: { deps: { inline: ["convex-test"] } },
     exclude: [...configDefaults.exclude, ".claude/**"],
-    passWithNoTests: true,
   },
 });

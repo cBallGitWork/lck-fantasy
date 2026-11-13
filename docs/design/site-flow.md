@@ -8,7 +8,7 @@ How a visitor moves through the site. Claude's proposal from Craig's outline in
 
 ```mermaid
 flowchart LR
-  Land[Pick team<br/>no account] -->|Save team| Sign[Email link]
+  Land[Pick team<br/>no account] -->|Save team| Sign[Google or Discord]
   Sign --> Home[My team]
   Home --> Points[Points<br/>live during a series]
   Home --> Transfers
@@ -25,7 +25,7 @@ flowchart LR
 | Screen | Its job | FPL's equivalent |
 |---|---|---|
 | Pick team (signed out) | The front door. Build a squad inside the budget with no account, then save. | Squad selection, but before sign-up, as UCL Fantasy does |
-| Email link | One field. The squad built signed out becomes the manager's team. | Register |
+| Sign in | Google or Discord, then team name, favourite team and country. The squad built signed out becomes the manager's team. | Register |
 | My team | Set the lineup, captain and bench before the deadline. Play a chip. | Pick Team |
 | Points | This gameweek's points, moving live, with each player's breakdown. | Points |
 | Series page | One series, game by game: who scored what and why. | Match pop-up |

@@ -36,7 +36,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 2 | [Prices and budget](spec/02-prices-and-budget.md) | Money in 억. First prices from a formula, adjusted by hand. Prices move weekly at the deadline, mostly on points, a little on demand, down when few own a player, above a floor; the formula is public. Sell at the full current price. | not built |
 | 3 | [Transfers](spec/03-transfers.md) | One free transfer a week, banking to 3, each extra −4. Unlimited before the season's and Split 2's first deadline, then 2 free in the next gameweek. An admin can top banks up. | not built |
 | 4 | [Carry (captain)](spec/04-captain.md) | A Carry and Vice-carry (FPL's captain and vice) from the six starting players, never the coach. The Carry's points are multiplied; the Vice-carry takes over if the Carry plays no game. | not built |
-| 5 | [Scoring](spec/05-scoring.md) | A set of toggles, with weights by role. Whole numbers, low values, about even for quick and long games. A series scores a player's best 2 games. A quick win is under 25 minutes. The Carry scores ×1.5, rounded down. The table and the coach's scoring are still open. Backtested on 2026 LCK data. | to grill |
+| 5 | [Scoring](spec/05-scoring.md) | Per game, low whole numbers, about even for quick and long games; a series scores the best 2 games. Players score kills, assists and deaths (each capped at 3), gold lead at 15, solo kills, first blood, deathless games, multikills and steals. The coach scores first tower, most drakes, barons and elders, a quick win, +3 for a series win and −1 for a series loss. The Carry scores ×1.5, rounded down. | not built |
 | 6 | [Chips](spec/06-chips.md) | Chips are data: a name, an effect from the code's list, a count per split, the stages that allow it. One a gameweek. Names so far: Remake, Recall, Bench Boost, Hyper Carry. The set is picked before the beta. | not built |
 | 7 | [Achievement book](spec/07-achievement-book.md) | Each achievement is worth about 1 point, and it is packed with LCK memes and history. Example: "Ryu sad face": your opponent loses a solo 1v1, after Faker beat Ryu in 2013. | to grill |
 | 8 | [Leagues](spec/08-leagues.md) | FPL-style global leagues, and team supporter leagues. | to grill |
@@ -58,6 +58,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - FPL's selling price, keeping half of a rise: a player sells at his full current price (Craig, 12 Nov 2026).
 - A coach scored as the average of his players' points, CBLOL's 2026 way (Craig, 11 Nov 2026).
 - The coach as Carry or Vice-carry (Craig, 12 Nov 2026).
+- A point for a game won, for players or the coach; role quests; CS and vision lines (Craig, 12 Nov 2026).
+- Points for playing (Craig, 13 Nov 2026).
 
 ## Glossary
 

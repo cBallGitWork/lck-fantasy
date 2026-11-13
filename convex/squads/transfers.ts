@@ -22,6 +22,8 @@ export interface TransferGameweek {
   /** Free and unlimited, with no hits: before a season's or Split 2's first deadline, and in
    *  knockout stages (spec/03). */
   unlimited: boolean;
+  /** The season's or Split 2's first gameweek, after which every manager has `freeAfterUnlimited`. */
+  opensSplit: boolean;
   /** An admin topped every bank up to the cap for this gameweek (spec/03, Top-ups). */
   toppedUp: boolean;
 }
@@ -39,12 +41,13 @@ export function freeTransfersFor(carried: number, gameweek: TransferGameweek, se
 export interface GameweekTransferResult {
   /** Points taken off this gameweek's score. */
   hit: number;
-  /** Free transfers carried into the next gameweek. */
-  nextFree: number;
+  /** Free transfers carried into the next gameweek; null after a knockout gameweek, which spec/03
+   *  doesn't settle (asked on #20). */
+  nextFree: number | null;
 }
 
-/** The hit for the gameweek's transfers, a coach swap counting like any other, and the free transfers carried on: those unused bank up to the cap,
- *  plus the weekly one (spec/03, Free transfers). */
+/** The hit for the gameweek's transfers, a coach swap counting like any other, and the free
+ *  transfers carried on: those unused bank up to the cap, plus the weekly one (spec/03). */
 export function settleTransfers(
   free: number,
   transfers: readonly Transfer[],
@@ -58,7 +61,7 @@ export function settleTransfers(
     throw new Error("Free transfers after a Remake or Limitless gameweek wait for Craig's answer on #25.");
   }
   const made = transfers.length;
-  if (gameweek.unlimited) return { hit: 0, nextFree: settings.freeAfterUnlimited };
+  if (gameweek.unlimited) return { hit: 0, nextFree: gameweek.opensSplit ? settings.freeAfterUnlimited : null };
   const extra = Math.max(0, made - free);
   const unused = Math.max(0, free - made);
   return {

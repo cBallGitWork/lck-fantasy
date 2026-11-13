@@ -8,7 +8,8 @@ export interface PlayerGameStats {
   kills: number;
   deaths: number;
   assists: number;
-  /** Gold against the lane opponent at 15:00; null when the source has none. */
+  /** Gold against the lane opponent at 15:00; null when the source has none, which scores 0 here.
+   *  The loader (#36) must flag a missing reading to the admin, never let it pass silently. */
   goldDiffAt15: number | null;
   soloKills: number;
   firstBlood: boolean;

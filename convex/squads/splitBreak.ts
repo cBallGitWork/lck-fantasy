@@ -16,10 +16,12 @@ export interface SplitFix {
   bought: Pick[];
 }
 
-/** Flol's fix, in spec/03's order: (1) for each team over the cap, sell its most expensive extras;
- *  (2) while the bank is below zero, sell the most expensive player left, never the coach; (3) for
- *  each sale, buy the cheapest pick of the same role (a coach for a coach) that keeps the squad
- *  within the cap. The bank is read after each sale's buy. `pool` is every pick on sale. */
+/** Flol's fix, in spec/03's order: (1) for each team over the cap, sell its most expensive extra
+ *  (over by one at most, from a knockout cap of 3 to 2; more is sold if more are over); (2) while
+ *  the bank is below zero, sell the most expensive player left of the squad he had, never the
+ *  coach and never a pick Flol just bought, so the loop ends; (3) for each sale, buy the cheapest
+ *  pick of the same role (a coach for a coach) that keeps the squad within the cap. The bank is
+ *  read after each sale's buy. `pool` is every pick on sale. */
 export function fixSquadForSplit(squad: Squad, bank: number, teamCap: number, pool: Pick[], prices: Prices): SplitFix {
   let current = squad;
   let money = bank;

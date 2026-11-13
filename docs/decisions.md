@@ -159,6 +159,7 @@ Settled; the spec is [spec/08-leagues.md](../spec/08-leagues.md).
 - Private leagues by code or link, from any gameweek, as in FPL, yes.
 - A season table plus one per split, yes; "And have a split 1 and 2 league". The word is table, not leaderboard.
 - "Split the global league from split 1 into legend and rise": Split 1's top half to Legend, yes; "Scores carry over"; Split 2 joiners to Rise, yes; Overall only, yes; the whole Overall table stays, yes.
+- The Leagues page (later the same day, by dialog): the list of leagues, the table's columns, the maker's admin, and 25 private leagues with no size cap, all as FPL, yes.
 
 ## Open
 

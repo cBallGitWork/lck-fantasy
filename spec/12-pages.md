@@ -25,7 +25,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the
   6th role", Craig, 13 Nov 2026). See [The coach card](#the-coach-card).
 - **Manager profile**: public, as in FPL. Any manager's points, history and transfers open from a
-  league table.
+  league table. Its private leagues show too, as in FPL; a History row opens that week's team
+  (Craig, 14 Nov 2026). Its layout is the approved picture (`docs/design/approved/profile/`).
 - **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
 - **Price changes**: the week's rises and falls. Past moves only, no prediction.

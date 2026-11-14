@@ -43,7 +43,7 @@ export type SquadProblem =
   | { rule: "pickedTwice"; pickId: string }
   | { rule: "overTeamCap"; teamId: string; cap: number; actual: number };
 
-const STARTER_SLOTS = [...PLAYER_ROLES, "flex", "coach"] as const satisfies readonly StarterSlot[];
+export const STARTER_SLOTS = [...PLAYER_ROLES, "flex", "coach"] as const satisfies readonly StarterSlot[];
 
 /** Whether a pick of `role` may fill `slot`: its own role, a player in the flex, a coach in the
  *  coach slot, and only players on the bench (spec/01: there is no bench coach). */

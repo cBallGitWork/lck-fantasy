@@ -36,7 +36,8 @@ export function bankAfterSwaps(bank: number, swaps: PriceSwap[], prices: Prices)
   return swaps.reduce((total, swap) => total + requirePrice(swap.out, prices) - requirePrice(swap.in, prices), bank);
 }
 
-function requirePrice(pick: Pick, prices: Prices): number {
+/** A pick's current price; throws when the price list doesn't know it, rather than count it as free. */
+export function requirePrice(pick: Pick, prices: Prices): number {
   const price = priceOf(pick, prices);
   if (price === undefined) throw new Error(`No current price for ${pickKey(pick)}.`);
   return price;

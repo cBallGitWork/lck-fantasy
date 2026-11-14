@@ -91,7 +91,7 @@ Notes:
 | `entries` | a manager's team in one season | manager, season, team name, bank |
 | `picks` | an entry's squad for one gameweek | entry, gameweek, player (a team for the coach slot), slot (role, flex, coach, bench order), captain, vice-captain, buy price |
 | `transfers` | one player out, one in | entry, gameweek, out, in, prices, free or a −4 hit |
-| `chipPlays` | a buff used | entry, gameweek, buff |
+| `buffPlays` | a buff used | entry, gameweek, buff |
 | `prices` | a player's price over time | player, season, from gameweek, price in won |
 | `entryGameweeks` | an entry's result for a gameweek | entry, gameweek, points, hits, rank, the auto-subs made |
 | `leagues` | a mini-league | name, kind (overall, country, supporter, private, Legend, Rise), join code |

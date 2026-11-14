@@ -50,11 +50,11 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .card .bt { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
 .card .bt span { border: 1px solid var(--ink); text-align: center; padding: 7px 0; font-size: 13px; font-weight: 600; }
 .card .bt span.pri { background: var(--ink); color: #fff; } .card .bt span.dim { border-color: var(--line); color: var(--mid); font-weight: 400; }
-.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.chip { border: 1px solid var(--ink); padding: 8px 10px; background: var(--paper); font-size: 13px; }
-.chip b { display: block; font-size: 14px; } .chip small { color: var(--mid); font-size: 11px; display: block; margin: 2px 0 6px; }
-.chip .go { display: inline-block; border: 1px solid var(--ink); padding: 0 10px; font-size: 12px; font-weight: 600; }
-.chip.off { border-color: var(--line); color: var(--mid); } .chip.off b { color: var(--mid); }
+.buffs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.buff { border: 1px solid var(--ink); padding: 8px 10px; background: var(--paper); font-size: 13px; }
+.buff b { display: block; font-size: 14px; } .buff small { color: var(--mid); font-size: 11px; display: block; margin: 2px 0 6px; }
+.buff .go { display: inline-block; border: 1px solid var(--ink); padding: 0 10px; font-size: 12px; font-weight: 600; }
+.buff.off { border-color: var(--line); color: var(--mid); } .buff.off b { color: var(--mid); }
 .wk { font-size: 13px; }
 .wk div { display: grid; grid-template-columns: 34px 1fr auto; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--fill); align-items: center; }
 .wk .d { color: var(--mid); font-size: 12px; } .wk .t { font-size: 12px; text-align: right; font-family: "IBM Plex Mono", monospace; }
@@ -86,7 +86,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .reset { margin-right: 16px; text-decoration: underline; color: var(--ink); }
 .benchb .ord { font-size: 12px; border: 1px solid var(--ink); padding: 2px 8px; margin-top: 8px; display: inline-block; color: var(--ink); background: var(--paper); }
 .tile.dim { opacity: .35; } .tile.ok .nm { outline: 3px dashed var(--ink); outline-offset: 2px; }
-.chip.on { background: var(--ink); color: #fff; } .chip.on small { color: #cfcfcf; } .chip.on .go { border-color: #fff; }
+.buff.on { background: var(--ink); color: #fff; } .buff.on small { color: #cfcfcf; } .buff.on .go { border-color: #fff; }
 .unsv { border: 1px dashed var(--ink); padding: 4px 10px; font-size: 13px; }
 .key { display: flex; gap: 14px; align-items: center; font-size: 12px; color: var(--mid); margin: 0 0 8px; }
 .key span:last-child { margin-left: auto; }
@@ -94,8 +94,8 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .kc.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
 .ph1 .act { display: flex; align-items: center; gap: 14px; font-size: 13px; }
 .card .bt span.lbl { border: 0; text-align: left; font-weight: 700; padding-left: 0; }
-.chip .lft { float: right; font-size: 11px; color: var(--mid); }
-.chip.off a { color: var(--ink); text-decoration: underline; font-size: 12px; }
+.buff .lft { float: right; font-size: 11px; color: var(--mid); }
+.buff.off a { color: var(--ink); text-decoration: underline; font-size: 12px; }
 .bprompt { font-size: 13px; color: var(--ink); font-weight: 600; margin-top: 8px; }
 .rift { height: 560px !important; } .rift svg.map { height: 560px !important; }
 .basebox { position: absolute; left: 14px; top: 386px; width: 304px; height: 164px; border: 1.5px dashed var(--ink); background: rgba(255,255,255,.55); }
@@ -104,7 +104,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .tstats { display: flex; gap: 28px; align-items: center; border: 1px solid var(--line); background: var(--paper); padding: 10px 16px; margin-bottom: 14px; }
 .tstats > div > b { display: block; font-family: "IBM Plex Mono", monospace; font-size: 20px; } .tstats > div > span { font-size: 12px; color: var(--mid); }
 .caps { display: flex; gap: 6px; align-items: center; font-size: 12px; } .caps span { border: 1px solid var(--line); padding: 1px 6px; } .caps .k { border: 0; color: var(--mid); } .caps .f { border-color: var(--ink); font-weight: 600; }
-.bz { margin-left: auto; display: flex; gap: 8px; } .chip2 { border: 1px solid var(--ink); padding: 4px 10px; font-size: 13px; font-weight: 600; } .chip2 small { font-weight: 400; color: var(--mid); margin-left: 4px; }
+.bz { margin-left: auto; display: flex; gap: 8px; } .buff2 { border: 1px solid var(--ink); padding: 4px 10px; font-size: 13px; font-weight: 600; } .buff2 small { font-weight: 400; color: var(--mid); margin-left: 4px; }
 .pl2 h2 { font-size: 15px; } .flt, .flt2 { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; font-size: 12px; }
 .flt span { border: 1px solid var(--line); padding: 3px 8px; background: var(--paper); } .flt span.on { background: var(--ink); color: #fff; border-color: var(--ink); }
 .flt2 span { border: 1px solid var(--line); padding: 4px 8px; background: var(--paper); color: var(--mid); } .flt2 .srch { flex: 1; }
@@ -147,7 +147,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 <div class="ph1"><div><h1>Transfers · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">1d 20h 45m</b></div></div></div>
 <div class="tstats">
   <div><b>0 of 1</b><span>Free transfers</span></div><div><b>0 pts</b><span>Cost</span></div><div><b>1.5억</b><span>Bank</span></div>
-  <div class="bz" style="max-width:none"><span class="chip2">Remake<small>Play</small></span><span class="chip2">Limitless<small>Play</small></span></div>
+  <div class="bz" style="max-width:none"><span class="buff2">Remake<small>Play</small></span><span class="buff2">Limitless<small>Play</small></span></div>
 </div>
 <div class="ctl"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span><span class="show">Show: Fixtures ▾</span></div>
 <div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">

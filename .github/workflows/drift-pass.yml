@@ -26,11 +26,12 @@ env:
   REFACTOR_SKILL: .claude/skills/refactor/SKILL.md
   # a step's `if` cannot read secrets, so these carry whether each is set
   HAS_BUILD_TOKEN: ${{ secrets.BUILD_TOKEN != '' }}
-  HAS_MODEL: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' || secrets.ANTHROPIC_API_KEY != '' }}
+  HAS_MODEL: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN != '' }}
 
 jobs:
   open:
-    if: github.event_name == 'workflow_dispatch' || vars.PIPELINE_ON == 'true'
+    # and nothing while Craig's stop switch (PIPELINE_STOP, claude-build.yml's header) is set
+    if: vars.PIPELINE_STOP == '' && (github.event_name == 'workflow_dispatch' || vars.PIPELINE_ON == 'true')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -39,7 +40,7 @@ jobs:
         run: |
           go=true
           [ "$HAS_BUILD_TOKEN" = true ] || { go=false; echo "::notice::No BUILD_TOKEN secret: the build has no account to run as, so no drift pass starts (docs/PIPELINE.md)."; }
-          [ "$HAS_MODEL" = true ] || { go=false; echo "::notice::No CLAUDE_CODE_OAUTH_TOKEN secret (and no ANTHROPIC_API_KEY): the build has no model, so no drift pass starts (docs/PIPELINE.md)."; }
+          [ "$HAS_MODEL" = true ] || { go=false; echo "::notice::No CLAUDE_CODE_OAUTH_TOKEN secret: the build has no model, so no drift pass starts (docs/PIPELINE.md)."; }
           echo "go=$go" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4.4.0
         if: steps.setup.outputs.go == 'true'

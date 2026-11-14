@@ -7,50 +7,6 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 - A chart of the league's ranks week by week.
 
-## Overall as LoL ranks (14 Nov 2026)
-
-Craig's want: Overall shows your rank as a LoL tier, Iron to Challenger, as the centrepiece.
-His yes came in the Points design round, drawn there as "Overall · Emerald I" and "≈6 pts to
-Diamond IV", and again in chat; not specced.
-
-- The tier leads; the overall rank sits smaller beneath, with no total of managers (Craig,
-  14 Nov 2026). Example: Emerald I, 48,211.
-- Promotion and demotion: Points shows your tier and the points to promote, or to avoid
-  demotion.
-- Iron to Diamond have divisions IV to I. Master and Grandmaster show the tier name, the rank
-  beneath. Challenger is numbered by its overall rank and gets a green arrow for its move.
-  Example: Challenger, 4th ▲2.
-- Cut-offs by percentile, as data, from all-server solo queue data. Diamond IV is the top
-  4.4%; the median manager is Gold III, about where Legend (Split 1's top half) ends.
-- Everyone is Unranked until gameweek 1 is final.
-- A rules page explains the tiers. Spec/09 has only a Help page for the beta.
-- Only Overall: country, supporter and private leagues keep plain numbers.
-- Drawn on Home (approved 14 Nov 2026): the tier with a shield by the team name, and the
-  Leagues card drops its Overall row ([docs/design/approved/home/](design/approved/home/)).
-
-- Master, Grandmaster and Challenger at beta size: a late call, once sign-ups are known (Craig,
-  14 Nov 2026). Percentiles alone fail small: at 2,000 managers the top 0.02% is under one
-  person; fixed seats are one option (example: Challenger is the top 10).
-
-Open: whether tiers show on Leagues' Overall table and profiles; how the points to promote are estimated.
-
-Draft cut-offs (top % of Overall), from 2026 tier shares split by Gold's division ratios
-([nerfplz](https://www.nerfplz.com/2026/08/league-of-legends-rank-distribution.html),
-[dodge.gg](https://www.dodge.gg/en-US/lol/news/ranked-solo-duo-guide-2026)):
-
-| Tier | I | II | III | IV |
-|---|---|---|---|---|
-| Challenger | 0.02 | | | |
-| Grandmaster | 0.06 | | | |
-| Master | 0.7 | | | |
-| Diamond | 1.5 | 2.4 | 3.3 | 4.4 |
-| Emerald | 6.9 | 9.6 | 13 | 16 |
-| Platinum | 20 | 24 | 29 | 34 |
-| Gold | 39 | 45 | 51 | 58 |
-| Silver | 62 | 68 | 73 | 80 |
-| Bronze | 83 | 87 | 91 | 96 |
-| Iron | 97 | 98 | 99 | 100 |
-
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

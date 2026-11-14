@@ -20,7 +20,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
     ownership. Home keeps the global star and flop.
   - The Carry's games show your Carry's points beside the average Carry's.
-  - Points to climb overall: see [docs/to-grill.md](../docs/to-grill.md) (rank tiers).
+  - Your Overall tier and ≈ points to promote, or to avoid demotion ([spec/08](08-leagues.md#overall-tiers)).
   - Its layout is the approved picture (`docs/design/approved/points/`).
 - **Leagues** ([spec/08](08-leagues.md)).
 - **Stats**: every stat Flol holds, the scoring lines first ("Whatever stats we have with scoring
@@ -32,7 +32,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the
   6th role", Craig, 13 Nov 2026). See [The coach card](#the-coach-card).
 - **Manager profile**: public, as in FPL. Any manager's points, history and transfers open from a
-  league table. Its private leagues show too, as in FPL; a History row opens that week's team
+  league table. Its tier shows by the team name, and History keeps each season's final tier and rank
+  ([spec/08](08-leagues.md#overall-tiers)). Its private leagues show too, as in FPL; a History row opens that week's team
   (Craig, 14 Nov 2026). Its layout is the approved picture (`docs/design/approved/profile/`).
 - **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
@@ -51,7 +52,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     ([spec/11](11-live-points.md)).
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
 - **Following**: the feed, follows, requests and trucks received ([spec/14](14-following.md)).
-- **Help**, and **Settings** ([below](#settings)).
+- **Help**, with a Ranks section holding the tier cut-offs ([spec/08](08-leagues.md#overall-tiers)),
+  and **Settings** ([below](#settings)).
 
 ## Home
 

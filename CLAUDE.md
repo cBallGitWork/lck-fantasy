@@ -1,7 +1,7 @@
 # lck-fantasy
 
 The product's name is Flol (Craig, 11 Nov 2026); the repo keeps its name. A free, season-long fantasy game for the LCK (League of Legends Champions Korea) that copies FPL's structure: a budget, a squad with a bench, weekly transfers, a captain, chips, global and supporter leagues.
-Nothing is built yet: the repo holds docs and this working setup. The LCK Cup (January to March 2027) is the planned beta.
+The app is being built: the scaffold and the game rules land issue by issue. The LCK Cup (January to March 2027) is the planned beta.
 
 ## The product is SPEC.md
 

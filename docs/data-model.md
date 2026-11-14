@@ -1,8 +1,7 @@
-# Data model: a proposal
+# Data model
 
-How the LCK could be held as data. This is Claude's proposal, not Craig's answers: nothing here
-is the product until a `/grill` moves it into [SPEC.md](../SPEC.md). Lines marked **ask** need
-his call. The facts come from [the 2026 calendar](research/lck-2026-season-calendar.md).
+How the LCK is held as data. Claude proposed it; Craig said yes on 14 Nov 2026, so #36 builds
+these tables. The facts come from [the 2026 calendar](research/lck-2026-season-calendar.md).
 
 **Contents:** [The shape](#the-shape) · [The real world](#the-real-world) ·
 [Gameweeks](#gameweeks) · [Stats and points](#stats-and-points) · [The game](#the-game) ·

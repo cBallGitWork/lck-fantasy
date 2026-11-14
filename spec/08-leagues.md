@@ -46,6 +46,8 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 - The maker can rename the league, remove a manager and delete it. Any member can leave. As in
   FPL.
 - The maker can't leave without deleting the league (Craig, 14 Nov 2026).
+- Ties on points go to fewer transfers, as in FPL. Only regular transfers count: those made in a
+  Remake or Limitless week don't (Craig, 14 Nov 2026).
 - A manager can be in up to 25 private leagues, and a private league has no size cap, as in FPL.
   Both numbers are data.
 

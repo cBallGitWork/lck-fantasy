@@ -272,11 +272,15 @@ jobs:
       # The step, not the agent, turns on auto-merge for the pull request the build opened: green builder pull
       # requests merge on their own, with no label and nobody running the merge. The merge itself still waits for the
       # required checks and lane-auto.yml's approval.
+      # Turned on as the pipeline's own account (BUILD_TOKEN, CBHelper180), so the merge is credited to it: a merge
+      # credited to github-actions leaves its `Closes #N` issue open (#69 left #68 open, 14 Nov 2026; the same fault
+      # in draft-platform left 23 of 23 open on 11 Nov 2026).
       - name: Turn on auto-merge for the build's pull request
         # a build that opened its pull request and then ran out of turns ends red, and its pull request still merges
         if: always() && steps.gate.outputs.go == 'true' && steps.decide.outcome != 'skipped' && env.MODE != 'rules-only'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.BUILD_TOKEN || github.token }}
+          JOB_TOKEN: ${{ github.token }}  # if the account can't turn it on, the job's token still can, as before
         run: |
           branch=$(git rev-parse --abbrev-ref HEAD)
           # GITHUB_REF_NAME is the branch the run started on: main, or a pipeline branch under test, whose own pull request
@@ -286,6 +290,8 @@ jobs:
           [ -n "$pr" ] || { echo "No open, ready pull request from $branch: nothing to merge."; exit 0; }
           if gh pr merge "$pr" --auto --squash; then
             echo "::notice::Auto-merge is on for #$pr: it merges once its checks pass and it is approved."
+          elif GH_TOKEN="$JOB_TOKEN" gh pr merge "$pr" --auto --squash; then
+            echo "::warning::Auto-merge is on for #$pr with the job's token, not the pipeline's account: its issue may stay open after the merge."
           else  # the pull request is open and fine; only the merge waits for a hand
             echo "::warning::Couldn't turn on auto-merge for #$pr (is the repo's \"Allow auto-merge\" setting on, and the \`main\` ruleset made? docs/PIPELINE.md): it waits to be merged by hand."
           fi

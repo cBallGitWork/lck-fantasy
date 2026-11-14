@@ -299,6 +299,17 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - Save in a bar under the pitch, as Transfers; tall photos kept in Card view; all 10 series, as Points; roles as icons only in Rift view: recommended, picked.
 - The picture: "Yes, save".
 
+## Player card design round (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/player-card/`.
+
+- Looked at other fantasy sites first: Craig's UCL Fantasy and FPL companion app screenshots.
+- Past seasons: "yes and more years if we can get it". Season panel on every tab, Transfer out kept: recommended, picked.
+- "that drawn player card is a sea of info and stats, might need to organise it more"; UI and UX designers in, twice.
+- "it should be grouped by series tbh"; the price once per gameweek in History.
+- The big number stays Season on every tab; the news line stays a black bar: "1 ok season 2 ok".
+- The picture: "save".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

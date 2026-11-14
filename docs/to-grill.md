@@ -22,9 +22,11 @@ Craig's want: Overall shows your rank as a LoL tier, Iron to Challenger, as the 
 - Only Overall: country, supporter and private leagues keep plain numbers.
 - Changes Home's approved Leagues card, so it needs a `/design` round.
 
-Open: at beta size (about 2,000 managers) the top 0.02% is under one person, so do Master,
-Grandmaster and Challenger take fixed seats (example: Challenger is the top 10), set per
-competition? And where does the rank out of all managers sit?
+- Master, Grandmaster and Challenger at beta size: a late call, once sign-ups are known (Craig,
+  14 Nov 2026). Percentiles alone fail small: at 2,000 managers the top 0.02% is under one
+  person; fixed seats are one option (example: Challenger is the top 10).
+
+Open: where does the rank out of all managers sit?
 
 Draft cut-offs (top % of Overall), from 2026 tier shares split by Gold's division ratios
 ([nerfplz](https://www.nerfplz.com/2026/08/league-of-legends-rank-distribution.html),

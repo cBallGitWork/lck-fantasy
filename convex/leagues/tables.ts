@@ -31,6 +31,14 @@ export interface TableRow {
   transfers: number;
 }
 
+/** A member's points in gameweek `to`. Every member needs a row for it (a late joiner's is 0), so
+ *  a missing row is a data gap and throws, rather than show as a real 0. */
+function latestPoints(member: LeagueMember, to: number): number {
+  const row = member.gameweeks.find((gw) => gw.gameweek === to);
+  if (row === undefined) throw new Error(`No points row for ${member.entryId} in gameweek ${to}.`);
+  return row.points;
+}
+
 /** A table up to `upTo`: total points over `range` from `startGameweek` (a private league's own
  *  start). Ties go to fewer transfers, as in FPL; still level, they share the rank (1, 1, 3). */
 export function leagueTable(
@@ -45,7 +53,7 @@ export function leagueTable(
     const counted = member.gameweeks.filter((gw) => gw.gameweek >= from && gw.gameweek <= to);
     return {
       entryId: member.entryId,
-      gameweekPoints: counted.find((gw) => gw.gameweek === to)?.points ?? 0,
+      gameweekPoints: latestPoints(member, to),
       total: counted.reduce((sum, gw) => sum + gw.points, 0),
       transfers: counted.reduce((sum, gw) => sum + gw.transfers, 0),
     };

@@ -35,6 +35,10 @@ describe("leagueTable", () => {
     expect(leagueTable(members, SEASON, 4, 4)[0]!.total).toBe(10);
   });
 
+  test("a member with no row for the latest gameweek throws, rather than show 0", () => {
+    expect(() => leagueTable([member("a", [9, 4]), member("b", [7])], SEASON, 1, 2)).toThrow("No points row for b in gameweek 2.");
+  });
+
   test("a tie on points goes to fewer transfers; still level, the rank is shared", () => {
     const table = leagueTable([member("a", [20], 2), member("b", [20], 1), member("c", [20], 2), member("d", [5])], SEASON, 1, 1);
     expect(table.map((r) => [r.entryId, r.rank])).toEqual([["b", 1], ["a", 2], ["c", 2], ["d", 4]]);
@@ -52,12 +56,12 @@ describe("rankMovement", () => {
 
 describe("legendAndRise", () => {
   test("the top half of Split 1's Overall is Legend, the rest Rise", () => {
-    const split1 = leagueTable([member("a", [9]), member("b", [7]), member("c", [5]), member("d", [3])], SPLIT_1, 1, 4);
+    const split1 = leagueTable([member("a", [9, 0, 0, 0]), member("b", [7, 0, 0, 0]), member("c", [5, 0, 0, 0]), member("d", [3, 0, 0, 0])], SPLIT_1, 1, 4);
     expect(legendAndRise(split1, ["a", "b", "c", "d"])).toEqual({ legend: ["a", "b"], rise: ["c", "d"] });
   });
 
   test("a manager who joins in Split 2 goes into Rise", () => {
-    const split1 = leagueTable([member("a", [9]), member("b", [7])], SPLIT_1, 1, 4);
+    const split1 = leagueTable([member("a", [9, 0, 0, 0]), member("b", [7, 0, 0, 0])], SPLIT_1, 1, 4);
     expect(legendAndRise(split1, ["a", "b", "new"])).toEqual({ legend: ["a"], rise: ["b", "new"] });
   });
 

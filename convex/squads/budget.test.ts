@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { bankAfterSwaps, budgetProblems } from "./budget";
+import { bankAfterTransfers, budgetProblems } from "./budget";
 import { chovy, coach, ktCoach, player, validSquad } from "./fixtures";
 import { allPicks, pickKey } from "./squad";
 
@@ -51,14 +51,14 @@ describe("budgetProblems", () => {
   });
 });
 
-describe("bankAfterSwaps", () => {
+describe("bankAfterTransfers", () => {
   test("selling pays the full current price, buying costs the new pick's", () => {
     // Bought at 7.5억, Chovy has risen to 9.0억: selling him pays all 9.0억.
     const prices = new Map([
       [pickKey(chovy), 9 * EOK],
       [pickKey(player("faker", "t1", "mid")), 8.5 * EOK],
     ]);
-    const bank = bankAfterSwaps(0.5 * EOK, [{ out: chovy, in: player("faker", "t1", "mid") }], prices);
+    const bank = bankAfterTransfers(0.5 * EOK, [{ out: chovy, in: player("faker", "t1", "mid") }], prices);
     expect(bank).toBe(1 * EOK);
   });
 
@@ -67,10 +67,10 @@ describe("bankAfterSwaps", () => {
       [pickKey(ktCoach), 6 * EOK],
       [pickKey(coach("t1")), 7 * EOK],
     ]);
-    expect(bankAfterSwaps(0, [{ out: ktCoach, in: coach("t1") }], prices)).toBe(-1 * EOK);
+    expect(bankAfterTransfers(0, [{ out: ktCoach, in: coach("t1") }], prices)).toBe(-1 * EOK);
   });
 
   test("a swap with an unpriced pick throws rather than treat him as free", () => {
-    expect(() => bankAfterSwaps(0, [{ out: chovy, in: ktCoach }], new Map())).toThrow("No current price for player:chovy.");
+    expect(() => bankAfterTransfers(0, [{ out: chovy, in: ktCoach }], new Map())).toThrow("No current price for player:chovy.");
   });
 });

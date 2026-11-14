@@ -1,7 +1,7 @@
 # Price formula: a draft for Craig
 
-Claude's draft for #23, not Craig's answers: nothing here is the product until Craig approves it
-and `spec/02` says so. Every number is a setting, data per competition. Backtested 14 Nov 2026 with
+Claude's draft for #23. Craig approved its shape and thresholds on 14 Nov 2026, now in
+[spec/02](../../spec/02-prices-and-budget.md); first prices are this line as a base, then set by hand. Every number is a setting, data per competition. Backtested 14 Nov 2026 with
 [backtest/prices.ts](backtest/prices.ts), using the game's own scoring code: first prices from
 2025's LCK, then weekly moves over 2026's.
 
@@ -66,6 +66,5 @@ can't check:
 
 ## For Craig
 
-1. Is the shape right: first prices on a line from last season, then one fixed step a week on
-   form? Example: over 2026, Ucal climbs from 6.5억 to 8.7억, Siwoo falls from 12.0억 to 8.8억, and Ruler from 20.0억 to 18.2억.
-2. Are the two terms in "What the backtest can't test" what you meant, and are 5% and 2% about right?
+Answered 14 Nov 2026: first prices are this line as a base, then set by hand; moves run on form and
+ownership; the 5% and 2% thresholds stand. [spec/02](../../spec/02-prices-and-budget.md) holds the answers.

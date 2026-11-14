@@ -18,6 +18,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - A formula proposes each player's and coach's first price from last season's data, then an admin
   adjusts them by hand before the competition opens.
 - A rookie with no data is priced by hand.
+- The formula is a mix of data and hand work (Craig, 14 Nov 2026): last season's points per series
+  set a base on a line from the floor to the top price (5억 to 20억 in the
+  [draft](../docs/research/prices-formula.md)), and Craig then sets each price by hand. Prices stay
+  data he can edit, per competition.
 - The top coaches are priced a little higher than the others (Craig, 13 Nov 2026): in the 2026
   backtest Gen.G's coach scored 6.8 a series, among the top five picks, against 4.5–5.9 for the
   rest.
@@ -27,6 +31,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - Prices move once a week, at the deadline.
 - A move is mostly on recent points, a little on transfers in and out, and down when relatively
   few managers own the player, since that means his price is too high.
+- Moves are driven by form and ownership (Craig, 14 Nov 2026), as in the
+  [draft](../docs/research/prices-formula.md): one step a week when a pick's form over his last
+  series is well above or below his price, and a step down when few own him.
+- A pick rises a step when net transfers in reach 5% of managers in a week, and falls a step at 5%
+  net out. One owned by under 2% of managers, with form not above his price, falls a step. Both
+  thresholds are data (Craig, 14 Nov 2026).
 - No price falls below a floor.
 - The coach moves by the same rule, on its own score.
 - Step sizes, weights and the floor are data. The formula is public, on a help page.

@@ -23,7 +23,9 @@ assumption). Open questions are in [docs/to-grill.md](../docs/to-grill.md).
 ## The player table
 
 Per game. Every value below is data, held per competition. "Per 2" and the like round down, as
-whole numbers must.
+whole numbers must. Kills and deaths go by the role played in the game, not the listed one: a
+support playing top dies per 3 (Craig, 14 Nov 2026). First blood is the killer's only, not the
+assists' (Craig, 14 Nov 2026).
 
 | Line | Points |
 |---|---|
@@ -32,7 +34,7 @@ whole numbers must.
 | Deaths | −1 per 3 deaths, −1 per 4 for supports; at most −3 |
 | Gold lead at 15 minutes | +1 if ahead of the lane opponent; level scores 0 |
 | Solo kill | +1 each: a kill with no assist |
-| First blood | +1 |
+| First blood | +1, the killer only |
 | Deathless game | +1 |
 | Multikill | quadra +1, penta +2, the biggest only; a triple scores 0 |
 | Steal | +1 per objective stolen, any monster |
@@ -65,3 +67,4 @@ The coach is the team ([spec/01](01-squad-and-slots.md)). Per game:
 
 - The Carry's points are multiplied by 1.5 and rounded down: a 9 becomes 13
   ([spec/04](04-captain.md)). The multiplier is data.
+- A minus rounds towards zero: a −3 becomes −4, not −5 (Craig, 14 Nov 2026).

@@ -4,6 +4,7 @@
 import type { PlayerRole } from "../squads/squad";
 
 export interface PlayerGameStats {
+  /** The role played in this game, not the listed one: a support playing top scores as a top. */
   role: PlayerRole;
   kills: number;
   deaths: number;
@@ -12,6 +13,7 @@ export interface PlayerGameStats {
    *  The loader (#36) must flag a missing reading to the admin, never let it pass silently. */
   goldDiffAt15: number | null;
   soloKills: number;
+  /** The first blood's killer only; an assist on it scores nothing. */
   firstBlood: boolean;
   /** The biggest multikill in the game: 0 or 1 for none, 2 a double, up to 5 a penta. */
   biggestMultikill: number;

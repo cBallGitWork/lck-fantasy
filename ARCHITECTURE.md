@@ -38,7 +38,7 @@ creates one, the rules are pure functions and need none.
 
 ## Data
 
-[docs/data-model.md](docs/data-model.md) is the proposal. Two rules are fixed:
+[docs/data-model.md](docs/data-model.md) is the model, approved by Craig on 14 Nov 2026. Two rules are fixed:
 
 - FPL's structure is the model for the game. The LCK's facts (teams, players, stages, formats,
   dates) are data held per competition and per season, never hardcoded, so the LCK Cup, the

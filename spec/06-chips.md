@@ -20,7 +20,8 @@ rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
   - the Vice-carry scores the Carry's multiplier too ([spec/04](04-captain.md)).
 - A manager plays at most one chip a gameweek.
 - In a gameweek a manager plays Remake or Limitless, his free transfer doesn't roll over
-  ([spec/03](03-transfers.md)).
+  ([spec/03](03-transfers.md)). His bank is kept: 2 banked, Remake played, still 2 the next week
+  (Craig, 14 Nov 2026).
 
 ## The chips
 

@@ -62,13 +62,6 @@ heads, teams, champions), never FPL-style stat trophies; once a year, worth a po
 Claude's drafts and their sources are in
 [docs/research/achievement-memes.md](research/achievement-memes.md); none is the product.
 
-## Leagues, from building #38 (14 Nov 2026)
-
-Rules the league code picked where spec/08 is silent; each needs Craig's answer:
-
-- Can a private league's maker leave it without deleting it, and who then holds the maker's rights? Built as no for now.
-- Do Remake and Limitless weeks count towards the fewer-transfers tie-break? Built as not counting, as FPL leaves out Wildcard and Free Hit.
-
 ## Open from the foundations work (11 Nov 2026)
 
 - The screens and the look ([docs/design/](design/)). Craig likes the Rift view with team shirts, and asked whether player portraits can appear too (11 Nov 2026).

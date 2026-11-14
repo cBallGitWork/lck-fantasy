@@ -36,9 +36,9 @@ export function carryingPlayers(armband: Armband, played: ReadonlySet<string>, d
   return new Set(vicePlayed ? [armband.viceCarry] : []);
 }
 
-/** Points multiplied and rounded down to a whole number: ×1.5 makes a 9 a 13 (spec/05, The Carry). */
+/** Points multiplied and rounded towards zero: ×1.5 makes a 9 a 13 and a −3 a −4 (spec/05, The Carry). */
 export function multiplied(points: number, multiplier: number): number {
-  return Math.floor(points * multiplier);
+  return Math.trunc(points * multiplier) + 0;
 }
 
 export interface SlotPoints extends ScoringPick {

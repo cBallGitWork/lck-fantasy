@@ -3,22 +3,9 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
-## Leagues picture, not yet specced (13–14 Nov 2026)
+## Leagues, parked (14 Nov 2026)
 
-Craig's yes in the Leagues design round, drawn in `docs/design/approved/leagues/`; no spec file holds them yet:
-
-- A Carry column in every league table.
-- A chase tag on your own row: points to the rank above ("16 pts to 1st"), your lead when 1st, nothing when level.
-- Parked: a chart of the league's ranks week by week.
-
-## Transfers ideas from other games (13 Nov 2026)
-
-From the Transfers research ([docs/research/transfers-page-references.md](research/transfers-page-references.md)); Claude's suggestions, not Craig's wants:
-
-- Selling a player and buying him back in the same week costs nothing (F1 Fantasy).
-- Playing Remake after paid transfers wipes that week's −4s (UCL Fantasy).
-- A price-change arrow on each player, once Flol decides whether prices move in a split (#23).
-- A watchlist (FPL).
+- A chart of the league's ranks week by week.
 
 ## Achievements, parked (13 Nov 2026)
 

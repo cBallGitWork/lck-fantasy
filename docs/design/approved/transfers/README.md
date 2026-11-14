@@ -40,4 +40,4 @@ Where a manager sells and buys players. Reached from **Transfers** in the top ba
 
 ## Still open
 
-Ideas from other games, in [docs/to-grill.md](../../../to-grill.md); none is the product.
+Specced 14 Nov 2026 but not drawn yet: each confirm this week with one Undo at the top, and ▲/▼ price arrows in the list ([spec/03](../../../../spec/03-transfers.md#undoing-a-transfer), [spec/12](../../../../spec/12-pages.md#pick-team-and-transfers)). Hits are now −6.

@@ -35,12 +35,9 @@ Every league a manager is in, and one league's table. Reached from **Leagues** i
 - **Join a league**: a code or a link.
 - Back is a text link in every sheet, as in the Transfers confirm.
 
-## Pending a grill
+## Carry and chase
 
-Drawn on Craig's yes, not yet in the spec (in [to-grill](../../../to-grill.md)):
-
-- The **Carry** column: each manager's Carry for the week.
-- The **chase tag** on your own row: points to the rank above ("16 pts to 1st"), your lead when 1st, nothing when level.
+Specced 14 Nov 2026 ([spec/08](../../../../spec/08-leagues.md#the-leagues-page)): the Carry column shows once the week's deadline passes; the chase tag reads "16 pts to 1st", "+16 clear" when 1st, nothing when level.
 
 ## Placeholders
 

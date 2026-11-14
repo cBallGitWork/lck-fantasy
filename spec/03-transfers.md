@@ -1,12 +1,12 @@
 # Transfers
 
-Craig's answers only, from the `/grill` of 12 Nov 2026. Where this file is silent the rule is
+Craig's answers only, from the `/grill`s of 12 and 14 Nov 2026. Where this file is silent the rule is
 FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
 [docs/to-grill.md](../docs/to-grill.md).
 
 ## Free transfers
 
-- A manager gets one free transfer a gameweek. Each transfer beyond the free ones costs −4 points.
+- A manager gets one free transfer a gameweek. Each transfer beyond the free ones costs −6 points (Craig, 14 Nov 2026; it was −4).
 - Swapping the coach counts as a transfer, like swapping a player.
 - Unused free transfers bank, up to 3.
 - Before a season's first deadline, transfers are free and unlimited. Every manager then has 2
@@ -14,6 +14,24 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - Split 2 starts the same way: unlimited before its first deadline, 2 free for its second
   gameweek, then 1 a week up to 3.
 - All these numbers are data per competition, never code.
+
+## Undoing a transfer
+
+Grilled 14 Nov 2026.
+
+- Selling a player and buying him back before the same deadline cancels out, as in FPL: no free
+  transfer used, no −6, and his old price kept.
+- A manager makes as many transfers as they like, then confirms them together, as in FPL.
+- Undo works on a whole confirm, never one transfer of it, since one sale can pay for another
+  buy (Craig, 14 Nov 2026). At the top of Transfers, each confirm this gameweek is one line with
+  one Undo, until the deadline. Example: Siwoo → Kingen, Doran → Zeus · Undo.
+- Only the latest confirm can be undone; after it, the one before, newest first. A later confirm
+  may spend money an earlier one freed.
+- Undo puts the old players back at their old prices and gives back exactly what the confirm
+  used: free transfers return to the week's count (never above the bank cap of 3), and its −6s
+  are dropped. It isn't offered for transfers made under Remake or Limitless.
+- Playing Remake or Limitless wipes that gameweek's −6s, as FPL's Wildcard and Free Hit do
+  ([spec/06](06-buffs.md)).
 
 ## Between the splits
 

@@ -63,3 +63,8 @@ As FPL's (Craig, 13 Nov 2026):
   1,920 ▲, Pub League 3rd.
 - A league's table shows rank, a movement arrow, team and manager name, gameweek points and total,
   with the season and each split as tabs above it. A row opens that manager's team.
+- A Carry column shows each manager's Carry for the gameweek in the Week column, on every tab.
+  It shows only once that gameweek's deadline has passed, as FPL hides picks until then (Craig,
+  14 Nov 2026).
+- A chase tag on the manager's own row shows the points to the rank above (16 pts to 1st), their
+  lead over 2nd when 1st (+16 clear), and nothing when level (Craig, 14 Nov 2026).

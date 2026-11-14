@@ -71,6 +71,11 @@ Grilled 14 Nov 2026.
   Rift view; after that each manager's last choice is remembered.
 - On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in
   the list, greyed, with why, and sorts last.
+- Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the
+  deadline, [spec/02](02-prices-and-budget.md)); his card shows the amount. Example: Faker
+  ▲ ₩0.5억. Before a player's price first moves, nothing shows.
+- Transfers lists each of the gameweek's confirms at the top, each with one Undo
+  ([spec/03](03-transfers.md#undoing-a-transfer)).
 
 ## The player card
 

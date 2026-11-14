@@ -9,8 +9,9 @@ const FINAL_AFTER = 3 * HOUR; // spec/11's 3 hours, passed in as data
 
 describe("groupSeries", () => {
   test("three games of BRION v DRX are one series, DRX winning 2–1", () => {
-    const [series, ...rest] = groupSeries([...games].reverse());
+    const { series: [series, ...rest], unplaced } = groupSeries([...games].reverse());
     expect(rest).toEqual([]);
+    expect(unplaced).toEqual([]);
     expect(series!.teamIds).toEqual([BRION, DRX]);
     expect(series!.games.map((g) => g.gameNumber)).toEqual([1, 2, 3]);
     expect(series!.score).toEqual([1, 2]);
@@ -19,11 +20,14 @@ describe("groupSeries", () => {
 
   test("a game 1 opens a new series for the same pair", () => {
     const later = games.map((g) => ({ ...g, gameId: `${g.gameId}-b`, startedAt: g.startedAt + 24 * HOUR }));
-    expect(groupSeries([...games, ...later]).map((s) => s.games.length)).toEqual([3, 3]);
+    expect(groupSeries([...games, ...later]).series.map((s) => s.games.length)).toEqual([3, 3]);
   });
 
-  test("a game with no game before it in its series throws", () => {
-    expect(() => groupSeries(games.slice(1))).toThrow("Game LOLTMNT03_183538 is game 2 with no game before it in its series.");
+  test("a game with no game before it in its series is set aside, and the rest still load", () => {
+    const later = games.map((g) => ({ ...g, gameId: `${g.gameId}-b`, startedAt: g.startedAt + 24 * HOUR }));
+    const { series, unplaced } = groupSeries([...games.slice(1), ...later]);
+    expect(unplaced.map((g) => g.gameId)).toEqual(["LOLTMNT03_183538", "LOLTMNT03_183544"]);
+    expect(series.map((s) => s.games.length)).toEqual([3]);
   });
 });
 

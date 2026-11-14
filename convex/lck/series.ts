@@ -22,11 +22,14 @@ export interface Series<G extends SeriesGame> {
 const MS_PER_SECOND = 1000;
 
 /** Games grouped into series, in start order: game 1 opens a series for its two teams, and each
- *  later game joins the pair's open series. Throws on a game out of sequence. */
-export function groupSeries<G extends SeriesGame>(games: readonly G[]): Series<G>[] {
+ *  later game joins the pair's open series. A game out of sequence (the file has game 2 but no
+ *  game 1, as DK v Gen.G on 1 Aug 2026) is returned in `unplaced`, for an admin to see, rather
+ *  than stop the rest of the day's games loading. */
+export function groupSeries<G extends SeriesGame>(games: readonly G[]): { series: Series<G>[]; unplaced: G[] } {
   const pairKey = (game: SeriesGame) => [...game.teamIds].sort().join(" v ");
   const open = new Map<string, G[]>();
   const all: G[][] = [];
+  const unplaced: G[] = [];
   for (const game of [...games].sort((a, b) => a.startedAt - b.startedAt)) {
     const key = pairKey(game);
     const current = open.get(key);
@@ -37,15 +40,17 @@ export function groupSeries<G extends SeriesGame>(games: readonly G[]): Series<G
     } else if (current !== undefined && current.at(-1)!.gameNumber === game.gameNumber - 1) {
       current.push(game);
     } else {
-      throw new Error(`Game ${game.gameId} is game ${game.gameNumber} with no game before it in its series.`);
+      unplaced.push(game);
     }
   }
-  return all.map((seriesGames) => {
+  const series = all.map((seriesGames) => {
     const teamIds: [string, string] = [...seriesGames[0]!.teamIds];
     const wins = (teamId: string) => seriesGames.filter((game) => game.winnerId === teamId).length;
     const last = seriesGames.at(-1)!;
-    return { teamIds, games: seriesGames, score: [wins(teamIds[0]), wins(teamIds[1])], endedAt: last.startedAt + last.lengthSeconds * MS_PER_SECOND };
+    const score: [number, number] = [wins(teamIds[0]), wins(teamIds[1])];
+    return { teamIds, games: seriesGames, score, endedAt: last.startedAt + last.lengthSeconds * MS_PER_SECOND };
   });
+  return { series, unplaced };
 }
 
 export type SeriesState = "provisional" | "final";

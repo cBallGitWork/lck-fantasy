@@ -90,7 +90,11 @@ export function squadProblems(squad: Squad, settings: SquadSettings): SquadProbl
 
 /** A pick's key, apart from a player and a team sharing an id: prices and ownership are keyed by it. */
 export function pickKey(pick: Pick): string {
-  return `${pick.role === "coach" ? "coach" : "player"}:${pick.id}`;
+  return pick.role === "coach" ? `coach:${pick.id}` : playerKey(pick.id);
+}
+
+export function playerKey(playerId: string): string {
+  return `player:${playerId}`;
 }
 
 export function allPicks(squad: Squad): Pick[] {

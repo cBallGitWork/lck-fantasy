@@ -9,7 +9,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 Flol has no sponsors, so made-up Korean sponsors drawn from LCK memes fill the slots FPL sells.
 
 - Where: a "presented by" line in the header, banner slots between sections on pages, and the
-  sponsor's badge on the Overall table. Not on players' shirts: team kits are the teams' own.
+  sponsor's badge beside your Overall tier (Craig, 14 Nov 2026). Not on players' shirts: team
+  kits are the teams' own.
 - Each ad is data an admin adds: a name, art, a line of copy, and where it shows. Claude drafts
   them, and Craig approves each before it goes live.
 - Real players appear only as memes and nicknames, never as a real person endorsing a product.

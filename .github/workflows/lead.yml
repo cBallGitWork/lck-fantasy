@@ -122,7 +122,7 @@ env:
   # a day, which also pauses builds until Craig closes the pause issue.
   TRIP_CHECK: "lck-tripwire"
   TRIP_WINDOW_MINUTES: 420  # past the six hours between scheduled passes
-  MAX_BUILDS_A_DAY: 400  # draft-platform's, whose busiest day was 307
+  MAX_BUILDS_A_DAY: 400  # draft-platform's (its lead.yml, 14 Nov 2026)
   KNOWN_ACTORS: "CBHelper180 claude[bot] github-actions[bot]"  # and OWNER
   TRIP_PATHS: "^(\\.github/|\\.claude/|CLAUDE\\.md$)"
   # a step's `if` cannot read secrets, so these carry whether each is set
@@ -437,25 +437,31 @@ jobs:
           set -euo pipefail
           since=$(date -u -d "$TRIP_WINDOW_MINUTES minutes ago" +%FT%TZ)
           trips=()
+          # each read is held in a variable first, so a failed read (a 403, the API quota) fails the step rather than
+          # finding nothing and pinging all clear
           # a workflow run for an actor the pipeline doesn't know (a stranger's pull request from a fork included)
           known=" $OWNER $KNOWN_ACTORS "
+          runs=$(gh api --paginate "repos/$GH_REPO/actions/runs?created=>=$since&per_page=100" \
+                   --jq '.workflow_runs[] | "\(.triggering_actor.login // "?") \(.name) run \(.html_url)"')
           while read -r who what; do
             [ -n "$who" ] || continue
             [[ "$known" == *" $who "* ]] || trips+=("$what ran for $who, not a known account")
-          done < <(gh api --paginate "repos/$GH_REPO/actions/runs?created=>=$since&per_page=100" \
-                     --jq '.workflow_runs[] | "\(.triggering_actor.login // "?") \(.name) run \(.html_url)"')
+          done <<<"$runs"
           # a commit on main that no pull request merged
+          commits=$(gh api "repos/$GH_REPO/commits?sha=$DEFAULT_BRANCH&since=$since&per_page=100" --jq '.[].sha')
           while read -r sha; do
             [ -n "$sha" ] || continue
             [ "$(gh api "repos/$GH_REPO/commits/$sha/pulls" --jq length)" != 0 ] || trips+=("commit $sha reached main with no pull request")
-          done < <(gh api "repos/$GH_REPO/commits?sha=$DEFAULT_BRANCH&since=$since&per_page=100" --jq '.[].sha')
+          done <<<"$commits"
           # a pull request not opened by Craig that touches the pipeline's own files
+          prs=$(gh pr list --state all --search "created:>=$since" --limit 100 --json number,author \
+                  --jq '.[] | select(.author.login != env.OWNER) | "\(.number) \(.author.login)"')
           while read -r pr who; do
             [ -n "$pr" ] || continue
-            files=$(gh pr view "$pr" --json files --jq '.files[].path' | grep -E "$TRIP_PATHS" || true)
+            paths=$(gh pr view "$pr" --json files --jq '.files[].path')
+            files=$(grep -E "$TRIP_PATHS" <<<"$paths" || true)
             [ -z "$files" ] || trips+=("#$pr by $who touches $(tr '\n' ' ' <<<"$files")")
-          done < <(gh pr list --state all --search "created:>=$since" --limit 100 --json number,author \
-                     --jq '.[] | select(.author.login != env.OWNER) | "\(.number) \(.author.login)"')
+          done <<<"$prs"
           # a runaway: more builds started in a day than it has ever needed; this one also pauses builds
           day=$(date -u -d '24 hours ago' +%FT%TZ)
           builds=$(gh api --paginate "repos/$GH_REPO/actions/workflows/claude-build.yml/runs?created=>=$day&per_page=100" \

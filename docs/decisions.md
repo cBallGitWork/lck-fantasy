@@ -310,6 +310,13 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - The big number stays Season on every tab; the news line stays a black bar: "1 ok season 2 ok".
 - The picture: "save".
 
+## Coach card design round (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/coach-card/`.
+
+- "coach card should be not much differetn from player really": drawn as a variant of the player card, without the four-reviewer panel.
+- The picture: "save".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

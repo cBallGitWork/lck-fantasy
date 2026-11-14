@@ -32,6 +32,11 @@ describe("autoFill", () => {
     expect(allPicks(squad).filter((pick) => pick.teamId === "a").length).toBeGreaterThan(0);
   });
 
+  test("a guest pick with no price throws, rather than count as free", () => {
+    const partial: Squad = { starters: [{ slot: "mid", pick: player("unpriced-mid", "a", "mid") }], bench: [] };
+    expect(() => autoFill(partial, pool, prices, REGULAR_SETTINGS, 100 * EOK, first)).toThrow("No current price for player:unpriced-mid");
+  });
+
   test("keeps the guest's picks and fills only the empty slots", () => {
     const partial: Squad = { starters: [{ slot: "mid", pick: player("a-mid", "a", "mid") }], bench: [] };
     const squad = autoFill(partial, pool, prices, REGULAR_SETTINGS, 100 * EOK, first);

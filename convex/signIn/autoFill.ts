@@ -1,6 +1,6 @@
 // Auto-fill (spec/09-onboarding.md, Picking as a guest): fill a guest's empty slots with a valid
 // squad under budget, as UCL Fantasy and FPL do.
-import { priceOf, type Prices } from "../squads/budget";
+import { priceOf, requirePrice, type Prices } from "../squads/budget";
 import {
   fitsSlot, pickKey, picksPerTeam, STARTER_SLOTS,
   type Pick, type Squad, type SquadSettings, type StarterSlot,
@@ -29,6 +29,7 @@ export function autoFill(
     ),
     ...Array(Math.max(0, settings.benchSize - bench.length)).fill("bench"),
   ];
+  // A pool pick with no price can't be bought, so Auto-fill never offers it.
   const priced = pool.filter((pick) => priceOf(pick, prices) !== undefined);
   const cost = (pick: Pick) => priceOf(pick, prices)!;
   const fill = (picks: Pick[], slot: StarterSlot | "bench") => {
@@ -57,7 +58,7 @@ export function autoFill(
   while (empty.length > 0) {
     const slot = empty.shift()!;
     const picks = [...starters.map((s) => s.pick), ...bench];
-    const spent = picks.reduce((sum, pick) => sum + (priceOf(pick, prices) ?? 0), 0);
+    const spent = picks.reduce((sum, pick) => sum + requirePrice(pick, prices), 0);
     const candidates = fill(picks, slot).filter((pick) => {
       const rest = cheapestCompletion([...picks, pick], empty);
       return rest !== null && (budget === null || spent + cost(pick) + rest <= budget);

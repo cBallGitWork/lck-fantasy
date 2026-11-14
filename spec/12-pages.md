@@ -79,6 +79,8 @@ Grilled 14 Nov 2026.
 
 - Both have Rift view and Card view (FPL's Pitch View and List View). The first visit opens on
   Rift view; after that each manager's last choice is remembered.
+- On Pick Team, swaps, the Carry, the Vice-carry and buffs take effect only when the manager
+  presses Save (Craig, 13 Nov 2026). Reset clears what isn't saved.
 - On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in
   the list, greyed, with why, and sorts last.
 - Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the

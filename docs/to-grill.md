@@ -7,6 +7,15 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 - A chart of the league's ranks week by week.
 
+## Overall rank as LoL tiers (14 Nov 2026)
+
+Craig's yes in the Points design round ("tiers for overall"), drawn on Points as "Overall · Emerald I" and "≈6 pts to Diamond IV"; not specced:
+
+- Overall rank shows as LoL ranked tiers, Iron to Challenger, with promotion and demotion.
+- Points shows your tier and the points to promote, or to avoid demotion.
+- Challenger shows the raw rank and needs a green arrow: "challenger needs great arrow essentially since its raw number".
+- Open: each tier's cut-off (a share of managers, as data), divisions (I–IV), whether tiers show on Home, Leagues' Overall table and profiles, and how "points to promote" is estimated.
+
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

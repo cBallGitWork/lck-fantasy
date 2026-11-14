@@ -13,7 +13,7 @@ Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in the shar
 - **FPL's Points page**: total beside Average and Highest, the squad with the bench under it, a tap opening a player's breakdown.
 - **LiveFPL**: your Carry against the average Carry, points to climb, Killer.
 - **Summoner's Rift**: each starter in his lane; Coach and Flex in your base.
-- **LoL ranked tiers**: overall rank as "Emerald I", to grill.
+- **LoL ranked tiers**: overall rank as "Emerald I" ([spec/08](../../../../spec/08-leagues.md#overall-tiers)).
 
 ## Layout
 
@@ -40,9 +40,9 @@ Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in the shar
 | Auto-subs | #14 |
 | Leagues | #38 |
 | Buffs, hits (shown beside the total when played or taken) | #25, #20 |
-| Overall tiers | to-grill |
+| Overall tiers | #108, #109 |
 | Hangul banner, sponsors, birthday cake | spec/13 |
 
 ## Still open
 
-Overall rank as tiers is in [docs/to-grill.md](../../../to-grill.md). The profile's Points tab follows this page's Card view.
+Overall rank as tiers is specced in [spec/08](../../../../spec/08-leagues.md#overall-tiers). The profile's Points tab follows this page's Card view.

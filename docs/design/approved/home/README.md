@@ -29,7 +29,7 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 
 ## Still open
 
-- Overall as a tier is a want in [docs/to-grill.md](../../../to-grill.md), not specced; its cut-offs and the top three tiers at beta size are open there.
+- Overall as a tier is specced in [spec/08](../../../../spec/08-leagues.md#overall-tiers) (14 Nov 2026); the top three tiers at beta size are a late call there.
 
 - The stream on Home, the lineup when idle, and star and flop are specced in [spec/12](../../../../spec/12-pages.md#home) (14 Nov 2026). Star and flop now use effective ownership, so the drawn pair is a placeholder.
 - **Following** is specced in [spec/14](../../../../spec/14-following.md) (14 Nov 2026). The drawn card's items and its "Fun idea · to grill" tag are placeholders.
@@ -42,7 +42,7 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 | Final points, Average and Highest | #33 |
 | Free transfers | #20 |
 | Leagues, ranks and moves | #38 |
-| Overall tier, its cut-offs and shield | to-grill |
+| Overall tier, its cut-offs and shield | #108, #109 |
 | Series and player stats | #36 |
 | Streams list and picker | spec/12, no issue yet |
 | Sponsor slots and badge | spec/13, no issue yet |

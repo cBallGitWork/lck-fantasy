@@ -158,7 +158,7 @@ A2 = A.replace(lst_row(*MINE[0]), OV_ROW).replace(lst_row(*PRIV[0], on=True), ls
 a2_right = f'''<div><div class="hd"><h1>Overall</h1><small>LCK 2027 · Split 2</small><span class="sp"></span><span class="seg"><span class="on">Legend</span><span>Rise</span><span>All</span></span></div>
 <div class="tabs"><span>Season</span><span>Split 1</span><span class="on">Split 2</span><span style="flex:1;border:0"></span><span style="border:0"><span class="ph" style="width:130px;height:22px;font-size:10px">sponsor badge</span></span></div>
 <table class="st">{HEAD}{rows(LEG)}<tr class="gap"><td colspan="7">⋯</td></tr>{rows(NEAR)}</table>
-<div class="pager"><span class="on">1</span><span>2</span><span>3</span><span>⋯</span><span>2,125</span><span>Find me</span></div></div>'''
+<div class="pager"><span class="on">1</span><span>2</span><span>3</span><span>⋯</span><span>1,063</span><span>Find me</span></div></div>'''
 start = A2.index('<div><div class="hd"><h1>Pub League</h1>')
 A2 = A2[:start] + a2_right + '</div>'
 A2 = A2.replace('<td>Baron Steal FC <span class="chase">16 pts to 1st</span><small>Craig</small></td>', '<td>Baron Steal FC <span class="chase">1 to climb</span><small>Craig</small></td>')
@@ -189,13 +189,13 @@ MENU = '''<div class="menu"><a>Rename</a><a>Remove a manager</a><a class="bad">D
 
 CREATE = '''<div class="dim"></div><div class="sheet"><h2>Create a league</h2>
 <label>Name</label><div class="in">Office Rift<span class="soft">11 / 30</span></div>
-<label>Scoring starts</label><div class="in">Week 15 · Wed 17 Feb<span>▾</span></div>
+<label>Scoring starts</label><div class="in">Week 14 · Wed 10 Feb<span>▾</span></div>
 <div class="row"><a class="back">Back</a><span class="btn dark">Create</span></div>
 <div class="count">Private leagues: 2 of 25</div></div>'''
 (d / "a4.html").write_text(page("Leagues · A4 · Create", A + CREATE, A_CSS + CH + SHEET_CSS))
 
 CREATED = '''<div class="dim"></div><div class="sheet"><h2>Office Rift</h2>
-<div style="color:var(--mid);font-size:13px">Scoring from Week 15</div>
+<div style="color:var(--mid);font-size:13px">Scoring from Week 14</div>
 <div class="done"><b>OFF-9R3D</b><span class="btn">Copy code</span><span class="btn">Copy link</span></div>
 <div class="row"><span class="btn dark">Open league</span></div></div>'''
 (d / "a4b.html").write_text(page("Leagues · A4b · Created", A + CREATED, A_CSS + CH + SHEET_CSS))
@@ -235,3 +235,12 @@ LEAVE = '''<div class="dim"></div><div class="sheet"><h2>Leave Flol Discord?</h2
 <div style="font-size:15px">14th of 86</div>
 <div class="row"><a class="back">Back</a><span class="btn dark">Leave</span></div></div>'''
 (d / "a8.html").write_text(page("Leagues · A8 · Leave", MEMBER2 + LEAVE, A_CSS + CH + SHEET_CSS))
+
+# Split 2 on Legend/Rise (Craig, 14 Nov): Total is season points, with a Split 2 column beside it.
+SP2 = {"1,642": "402", "1,631": "415", "1,628": "377", "1,619": "390", "1,611": "398", "1,604": "371", "1,598": "366",
+       "1,199": "301", "1,198": "298", "1,197": "260"}
+import re as _re
+A2b = A2.replace('<th class="n">Week 14</th><th class="n">Total</th>', '<th class="n">Week 14</th><th class="n">Split 2</th><th class="n">Total</th>')
+A2b = _re.sub(r'<td class="n">(\d+)</td><td class="n">([\d,]+)</td>', lambda m: f'<td class="n">{m.group(1)}</td><td class="n">{SP2.get(m.group(2), "300")}</td><td class="n">{m.group(2)}</td>', A2b)
+A2b = A2b.replace('colspan="7"', 'colspan="8"')
+(d / "a2.html").write_text(page("Leagues · A2 · Overall in Split 2", A2b, A_CSS + CH))

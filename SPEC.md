@@ -34,7 +34,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 |---|---|---|---|
 | 1 | [Squad and slots](spec/01-squad-and-slots.md) | A squad of 9: one player per role, a flex player of any role and the coach start; two on the bench. Auto-subs as in FPL, into the player's own role or the flex. The coach is the team: it scores the team's play, shown as its head coach. | partly built: rules only, no screen or storage yet |
 | 2 | [Prices and budget](spec/02-prices-and-budget.md) | Money in 억. First prices from a formula, adjusted by hand. Prices move weekly at the deadline, mostly on points, a little on demand, down when few own a player, above a floor; the formula is public. Sell at the full current price. | partly built: budget rules only, no prices, screen or storage yet |
-| 3 | [Transfers](spec/03-transfers.md) | One free transfer a week, banking to 3, each extra −4. Unlimited before the season's and Split 2's first deadline, then 2 free in the next gameweek. An admin can top banks up. Locked between the splits; Split 2's window opens 2 weeks before its first deadline, when the knockout budget raise comes back off and Flol fixes any squad left over. | partly built: rules only, no screen or storage yet |
+| 3 | [Transfers](spec/03-transfers.md) | One free transfer a week, banking to 3, each extra −6. Unlimited before the season's and Split 2's first deadline, then 2 free in the next gameweek. An admin can top banks up. Locked between the splits; Split 2's window opens 2 weeks before its first deadline, when the knockout budget raise comes back off and Flol fixes any squad left over. | partly built: rules only, no screen or storage yet |
 | 4 | [Carry (captain)](spec/04-captain.md) | A Carry and Vice-carry (FPL's captain and vice) from the six starting players, never the coach. The Carry's points are multiplied; the Vice-carry takes over if the Carry plays no game. | partly built: rules only, no screen or storage yet |
 | 5 | [Scoring](spec/05-scoring.md) | Per game, low whole numbers, about even for quick and long games; a series scores the best 2 games. Players score kills, assists and deaths (each capped at 3), gold lead at 15, solo kills, first blood, deathless games, multikills and steals. The coach scores first tower, most drakes, barons and elders, a quick win, +3 for a series win and −1 for a series loss. The Carry scores ×1.5, rounded down. | partly built: rules only, no stats loaded or screen yet |
 | 6 | [Buffs](spec/06-buffs.md) | Buffs are data: a name, an effect from the code's list, a count per split, the stages that allow it. One a gameweek. The buffs are Remake, Limitless (no budget or team cap for a week), Bench Boost and Dual Carry (the Vice-carry scores ×1.5 too): one each in the beta, one each per split, in every stage. | partly built: rules only, no screen or storage yet |
@@ -47,6 +47,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 
 ## Later
 
+- A watchlist, as FPL's (Craig, 14 Nov 2026) ([spec/03](spec/03-transfers.md)).
 - A second live source, researched if Riot's live feed breaks during the beta (Craig, 13 Nov 2026)
   ([spec/11](spec/11-live-points.md)).
 - The achievement book, parked: not in the beta, not grilled (Craig, 13 Nov 2026)

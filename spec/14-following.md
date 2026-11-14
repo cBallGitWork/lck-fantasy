@@ -13,9 +13,13 @@ of this is Flol's own. Open questions are in [docs/to-grill.md](../docs/to-grill
   feed. She sees his only if she asks too.
 - A manager can unfollow, and can remove or block a follower.
 - Profiles stay public, as in FPL ([spec/12](12-pages.md)); the feed is what needs the yes.
+- A follow request is sent from the manager's profile, which opens from any league table. There
+  is no search (Craig, 14 Nov 2026).
+- A manager can follow up to a cap, held as data per competition (drawn as 50).
 
 ## The feed
 
+One timeline of every manager followed, newest first, split by gameweek (Craig, 14 Nov 2026).
 For each manager followed:
 
 - their points at the end of each series;
@@ -29,7 +33,8 @@ For each manager followed:
 Trucks are the feed's reaction, after LCK fans' LED trucks
 ([research](../docs/research/truck-culture.md)).
 
-- A manager can truck anyone they follow, any week, on any feed item: one truck per manager
+- A manager can truck anyone they follow on any feed item of the live gameweek, or of the
+  previous gameweek until the next one starts (Craig, 14 Nov 2026): one truck per manager
   followed per gameweek.
 - Two trucks a manager sends: a **coffee truck** (커피차) to cheer, a **protest truck** to jeer.
 - A truck parks on the receiver's profile for the gameweek, with the sender's name.
@@ -57,4 +62,4 @@ Trucks are the feed's reaction, after LCK fans' LED trucks
 
 - Home's Following card shows the latest feed items ([spec/12](12-pages.md#home)).
 - **Following ›** opens the Following page: the feed, who the manager follows, requests, and
-  the trucks received.
+  the trucks received. Its layout is the approved picture (`docs/design/approved/following/`).

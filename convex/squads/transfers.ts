@@ -45,13 +45,17 @@ export interface ConfirmedTransfer extends Transfer {
   outPrice: number;
   /** What the pick in cost, in won. */
   inPrice: number;
+}
+
+/** Transfers a manager confirmed together (spec/03). */
+export interface Confirm {
+  transfers: readonly ConfirmedTransfer[];
   /** Made under Remake or Limitless, so it can't be undone. */
   underBuff: boolean;
 }
 
 /** The gameweek's confirmed transfers, netted: a pick sold then bought back cancels out, as in FPL,
- *  keeping his old price, and a chain A → B, B → C is the one transfer A → C (spec/03). An undo is
- *  the reverse transfer (`undoTransfer`), so it nets away here too. */
+ *  keeping his old price, and a chain A → B, B → C is the one transfer A → C (spec/03). */
 export function netTransfers(confirmed: readonly ConfirmedTransfer[]): ConfirmedTransfer[] {
   const net: ConfirmedTransfer[] = [];
   for (const transfer of confirmed) {
@@ -73,20 +77,26 @@ export function netTransfers(confirmed: readonly ConfirmedTransfer[]): Confirmed
         in: second.in,
         outPrice: first.outPrice,
         inPrice: second.inPrice,
-        underBuff: first.underBuff || second.underBuff,
       };
     }
   }
   return net;
 }
 
-/** Undo one of the gameweek's netted transfers (from `netTransfers`): the old player comes back at
- *  his old price, and with him the free transfer or the hit. Throws for one made under Remake or
- *  Limitless, which can't be undone (spec/03). */
-export function undoTransfer(confirmed: readonly ConfirmedTransfer[], transfer: ConfirmedTransfer): ConfirmedTransfer[] {
-  if (transfer.underBuff) throw new Error(`A transfer made under a buff can't be undone: ${pickKey(transfer.out)}.`);
-  const reverse = { out: transfer.in, in: transfer.out, outPrice: transfer.inPrice, inPrice: transfer.outPrice, underBuff: false };
-  return [...confirmed, reverse];
+/** Every transfer of the gameweek's confirms, oldest first, for `settleTransfers`. */
+export const transfersOf = (confirms: readonly Confirm[]): ConfirmedTransfer[] =>
+  confirms.flatMap((confirm) => confirm.transfers);
+
+/** Undo a whole confirm, never one transfer of it: only the latest, then the one before, and never
+ *  one made under Remake or Limitless (spec/03). Returns the confirms left: its old players come
+ *  back at the prices it sold them for, and settling the rest gives back exactly the free transfers
+ *  and hits it used. */
+export function undoConfirm(confirms: readonly Confirm[], index: number): Confirm[] {
+  const confirm = confirms[index];
+  if (!confirm) throw new Error(`No confirm ${index} this gameweek.`);
+  if (index !== confirms.length - 1) throw new Error(`Only the latest confirm can be undone, not confirm ${index}.`);
+  if (confirm.underBuff) throw new Error(`Confirm ${index} was made under Remake or Limitless, so it can't be undone.`);
+  return confirms.slice(0, index);
 }
 
 export interface GameweekTransferResult {

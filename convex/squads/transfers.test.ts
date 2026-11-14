@@ -2,7 +2,9 @@ import { describe, expect, test } from "vitest";
 import {
   chovy, coach, confirmed, confirmedTransfers as transfers, ktCoach, player, TRANSFER_SETTINGS as SETTINGS,
 } from "./fixtures";
-import { freeTransfersFor, netTransfers, settleTransfers, transfersOpen, undoTransfer, type TransferGameweek } from "./transfers";
+import {
+  freeTransfersFor, netTransfers, settleTransfers, transfersOf, transfersOpen, undoConfirm, type Confirm, type TransferGameweek,
+} from "./transfers";
 
 // Fixture values: the real ones are the competition's data.
 const DAY = 24 * 60 * 60 * 1000;
@@ -13,7 +15,6 @@ const counted: TransferGameweek = {
 };
 const splitOpener: TransferGameweek = { ...counted, unlimited: true, opensSplit: true };
 const knockout: TransferGameweek = { ...counted, unlimited: true };
-
 
 describe("settleTransfers", () => {
   test("one free transfer a gameweek; each beyond it costs 6", () => {
@@ -86,23 +87,32 @@ describe("undoing a transfer", () => {
     expect(net).toEqual([confirmed(showmaker, faker)]);
   });
 
-  test("an undo after a second transfer brings the old player back at his old price, and the hit back", () => {
-    const first = confirmed(chovy, faker, { outPrice: 20, inPrice: 19 });
-    const second = confirmed(siwoo, kingen, { outPrice: 8, inPrice: 9 });
-    expect(settleTransfers(1, [first, second], counted, SETTINGS).hit).toBe(6);
-    const undone = undoTransfer([first, second], netTransfers([first, second])[0]!);
-    expect(netTransfers(undone)).toEqual([second]);
-    expect(settleTransfers(1, undone, counted, SETTINGS)).toEqual({ hit: 0, nextFree: 1 });
+  // Two confirms: Chovy → Faker, then Siwoo → Kingen and Doran → Zeus, one free transfer: −12.
+  const doran = player("doran", "hle", "top");
+  const zeus = player("zeus", "hle", "top");
+  const first: Confirm = { transfers: [confirmed(chovy, faker, { outPrice: 20, inPrice: 19 })], underBuff: false };
+  const latest: Confirm = { transfers: [confirmed(siwoo, kingen), confirmed(doran, zeus)], underBuff: false };
+
+  test("undoing the latest confirm undoes all of it and gives back exactly its hits", () => {
+    expect(settleTransfers(1, transfersOf([first, latest]), counted, SETTINGS).hit).toBe(12);
+    const left = undoConfirm([first, latest], 1);
+    expect(left).toEqual([first]);
+    expect(settleTransfers(1, transfersOf(left), counted, SETTINGS)).toEqual({ hit: 0, nextFree: 1 });
   });
 
-  test("an undo gives back the free transfer", () => {
-    const only = confirmed(siwoo, kingen);
-    expect(settleTransfers(1, undoTransfer([only], only), counted, SETTINGS)).toEqual({ hit: 0, nextFree: 2 });
+  test("an undo gives back the free transfer, never above the bank cap of 3", () => {
+    expect(settleTransfers(1, transfersOf(undoConfirm([first], 0)), counted, SETTINGS).nextFree).toBe(2);
+    expect(settleTransfers(3, transfersOf(undoConfirm([first], 0)), counted, SETTINGS).nextFree).toBe(3);
   });
 
-  test("a transfer made under Remake or Limitless can't be undone", () => {
-    const buffed = confirmed(siwoo, kingen, {}, true);
-    expect(() => undoTransfer([buffed], buffed)).toThrow("A transfer made under a buff can't be undone: player:siwoo.");
+  test("the earlier confirm can't be undone while the later one stands; after it, it can", () => {
+    expect(() => undoConfirm([first, latest], 0)).toThrow("Only the latest confirm can be undone, not confirm 0.");
+    expect(undoConfirm(undoConfirm([first, latest], 1), 0)).toEqual([]);
+  });
+
+  test("a confirm made under Remake or Limitless can't be undone", () => {
+    const buffed: Confirm = { ...latest, underBuff: true };
+    expect(() => undoConfirm([first, buffed], 1)).toThrow("Confirm 1 was made under Remake or Limitless, so it can't be undone.");
   });
 });
 

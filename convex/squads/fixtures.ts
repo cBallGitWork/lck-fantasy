@@ -5,8 +5,8 @@ import type { ConfirmedTransfer, TransferSettings } from "./transfers";
 export const TRANSFER_SETTINGS: TransferSettings = { freePerGameweek: 1, bankCap: 3, hitPoints: 6, freeAfterUnlimited: 2 };
 
 /** A confirmed transfer; prices in won, 5 a pick unless given. */
-export const confirmed = (out: Pick, pickIn: Pick, prices: { outPrice?: number; inPrice?: number } = {}, underBuff = false): ConfirmedTransfer =>
-  ({ out, in: pickIn, outPrice: prices.outPrice ?? 5, inPrice: prices.inPrice ?? 5, underBuff });
+export const confirmed = (out: Pick, pickIn: Pick, prices: { outPrice?: number; inPrice?: number } = {}): ConfirmedTransfer =>
+  ({ out, in: pickIn, outPrice: prices.outPrice ?? 5, inPrice: prices.inPrice ?? 5 });
 
 /** `count` confirmed transfers, none netting with another; who moves doesn't matter to the count. */
 export const confirmedTransfers = (count: number): ConfirmedTransfer[] =>

@@ -1,6 +1,8 @@
 # Leagues
 
-Craig's answers only, from chat on 11 Nov 2026 and the `/grill` of 13 Nov 2026. Where this file
+**Contents:** [Leagues every manager joins](#leagues-every-manager-joins) · [Tables](#tables) · [Legend and Rise](#legend-and-rise) · [Private leagues](#private-leagues) · [Overall tiers](#overall-tiers) · [The Leagues page](#the-leagues-page)
+
+Craig's answers only, from chat on 11 Nov 2026 and the `/grill`s of 13 and 14 Nov 2026. Where this file
 is silent the rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
 questions are in [docs/to-grill.md](../docs/to-grill.md).
 
@@ -53,6 +55,53 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
   Remake or Limitless week don't (Craig, 14 Nov 2026).
 - A manager can be in up to 25 private leagues, and a private league has no size cap, as in FPL.
   Both numbers are data.
+
+## Overall tiers
+
+Overall shows each manager's place as a LoL ranked tier, Iron to Challenger (Craig, 14 Nov 2026).
+
+- Iron to Diamond have divisions IV to I. Master and Grandmaster have none. Challenger shows the
+  manager's rank instead, with a green arrow for its move. Example: Emerald I; Master; Challenger,
+  4th ▲2.
+- The tier comes from the manager's rank on the whole Overall season table, Split 2 included
+  (not Legend or Rise), against percentile cut-offs. One tier for the season; split tables have
+  none.
+- The cut-offs are data, per competition. Master, Grandmaster and Challenger at beta size are
+  set once sign-ups are known (a late call, Craig, 14 Nov 2026).
+- The tier moves whenever the rank does, when a series turns final
+  ([spec/11](11-live-points.md)). No protection: a manager drops a tier as soon as their rank
+  does. Example: T1 v Gen.G turns final at 10pm KST; Emerald IV becomes Emerald III.
+- Everyone is Unranked until gameweek 1 is final.
+- Only Overall has tiers. Country, team and private leagues show plain ranks.
+- Where it shows:
+  - Home: a shield, the tier and the rank beneath, by the team name, with no total of managers
+    ([approved picture](../docs/design/approved/home/)).
+  - Points: the tier, and the points to promote or to avoid demotion. That is the gap to the
+    manager at the cut-off now, shown with ≈ as others still score. Example: ≈6 pts to
+    Diamond IV.
+  - The manager's profile, by the team name.
+  - The Leagues page's Overall table: a small shield on each row.
+  - Help: a Ranks section with the cut-off table ([spec/09](09-onboarding.md)).
+- At the season's end each manager's final tier and rank are kept, and the profile's History tab
+  lists them per season. Example: LCK 2027, Diamond II, 2,104th.
+
+Starting cut-offs (top % of Overall), from 2026 solo queue shares across all servers, split by
+Gold's division ratios, checked 14 Nov 2026
+([nerfplz](https://www.nerfplz.com/2026/08/league-of-legends-rank-distribution.html),
+[dodge.gg](https://www.dodge.gg/en-US/lol/news/ranked-solo-duo-guide-2026)):
+
+| Tier | I | II | III | IV |
+|---|---|---|---|---|
+| Challenger | 0.02 | | | |
+| Grandmaster | 0.06 | | | |
+| Master | 0.7 | | | |
+| Diamond | 1.5 | 2.4 | 3.3 | 4.4 |
+| Emerald | 6.9 | 9.6 | 13 | 16 |
+| Platinum | 20 | 24 | 29 | 34 |
+| Gold | 39 | 45 | 51 | 58 |
+| Silver | 62 | 68 | 73 | 80 |
+| Bronze | 83 | 87 | 91 | 96 |
+| Iron | 97 | 98 | 99 | 100 |
 
 ## The Leagues page
 

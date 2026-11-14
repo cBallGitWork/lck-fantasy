@@ -38,7 +38,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 4 | [Carry (captain)](spec/04-captain.md) | A Carry and Vice-carry (FPL's captain and vice) from the six starting players, never the coach. The Carry's points are multiplied; the Vice-carry takes over if the Carry plays no game. | partly built: rules only, no screen or storage yet |
 | 5 | [Scoring](spec/05-scoring.md) | Per game, low whole numbers, about even for quick and long games; a series scores the best 2 games. Players score kills, assists and deaths (each capped at 3), gold lead at 15, solo kills, first blood, deathless games, multikills and steals. The coach scores first tower, most drakes, barons and elders, a quick win, +3 for a series win and −1 for a series loss. The Carry scores ×1.5, rounded down. | partly built: rules only, no stats loaded or screen yet |
 | 6 | [Buffs](spec/06-buffs.md) | Buffs are data: a name, an effect from the code's list, a count per split, the stages that allow it. One a gameweek. The buffs are Remake, Limitless (no budget or team cap for a week), Bench Boost and Dual Carry (the Vice-carry scores ×1.5 too): one each in the beta, one each per split, in every stage. | partly built: rules only, no screen or storage yet |
-| 8 | [Leagues](spec/08-leagues.md) | Every manager joins Overall, their country's league and their team's supporter league; the team is required at sign-up. Leagues rank on total points, with a season table and one per split. In Split 2, Overall splits into Legend (Split 1's top half) and Rise, points carried. Private leagues by code or link, from any gameweek. | partly built: rules only, no screen or storage yet |
+| 8 | [Leagues](spec/08-leagues.md) | Every manager joins Overall, their country's league and their team's supporter league; the team is required at sign-up. Leagues rank on total points, with a season table and one per split. In Split 2, Overall splits into Legend (Split 1's top half) and Rise, points carried. Overall shows a LoL tier, Iron to Challenger, from percentile cut-offs. Private leagues by code or link, from any gameweek. | partly built: rules only, no screen or storage yet |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: a new visitor lands on the pick-a-team page, with Auto-fill, and the squad is kept in the browser. Sign-up comes on Save: Google or Discord, then team name, favourite team, country. Late joiners as in FPL. | partly built: rules only, no screen or sign-in yet |
 | 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | The LCK Cup is a closed beta; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series, knockouts included. In knockouts the team cap rises from 2 to 3, the budget is raised, transfers are unlimited and every series counts. | not built |
 | 11 | [Live points](spec/11-live-points.md) | The beta has live points from Riot's unofficial feed, shown as provisional. A series turns final 3 hours after it ends, from Oracle's Elixir and Leaguepedia. Ranks move when a series is final; prices only at the deadline. | partly built: settled-stats rules only, no live feed, fetching or storage yet |
@@ -63,6 +63,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - Head-to-head leagues, and FPL's public leagues of strangers (Craig, 13 Nov 2026).
 - A guided tour for newcomers; the beta has the Help page only (Craig, 13 Nov 2026)
   ([spec/09](spec/09-onboarding.md)).
+- A line on Points when a manager's tier changes, such as "Promoted to Diamond IV" (Craig, 14 Nov 2026)
+  ([spec/08](spec/08-leagues.md)).
 - A trophy room of a manager's big achievements, on their profile, and a difficulty rating for each series (Craig, 13 Nov 2026).
 
 ## Out of scope
@@ -95,4 +97,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | Perfect game | The gameweek's best team under the squad rules: a Carry and 7 starters. | team of the week |
 | LCK hub | The LCK's own fixtures, standings and rosters. | fixtures page |
 | coach | The slot that is a team, scoring the team's play, shown as its head coach. | team slot |
+| tier | An Overall place as a LoL ranked tier, Iron to Challenger (Craig, 14 Nov 2026). | league, rank |
+| division | A step within a tier, IV (lowest) to I. | |
+| rank | A manager's place in a table. Example: 48,211th. | tier |
 | buff | A one-off a manager plays in a gameweek, such as Remake: FPL's chip (Craig, 14 Nov 2026). | chip, boost |

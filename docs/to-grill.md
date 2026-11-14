@@ -7,6 +7,42 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 - A chart of the league's ranks week by week.
 
+## Overall as LoL ranks (14 Nov 2026)
+
+Craig's want: Overall shows your rank as a LoL tier, Iron to Challenger, as the centrepiece.
+
+- The tier leads; the rank out of all managers sits smaller beneath. Example: Gold III,
+  48,213 of 120,000.
+- Iron to Diamond have divisions IV to I. Master and Grandmaster show the tier name, the rank
+  beneath. Challenger is numbered and needs no rank beneath. Example: Challenger 4.
+- Cut-offs by percentile, from all-server solo queue data. Diamond IV is the top 4.4%; the
+  median manager is Gold III, about where Legend (Split 1's top half) ends.
+- Everyone is Unranked until gameweek 1 is final.
+- A rules page explains the tiers. Spec/09 has only a Help page for the beta.
+- Only Overall: country, supporter and private leagues keep plain numbers.
+- Changes Home's approved Leagues card, so it needs a `/design` round.
+
+Open: at beta size (about 2,000 managers) the top 0.02% is under one person, so do Master,
+Grandmaster and Challenger take fixed seats (example: Challenger is the top 10), set per
+competition? And where does the rank out of all managers sit?
+
+Draft cut-offs (top % of Overall), from 2026 tier shares split by Gold's division ratios
+([nerfplz](https://www.nerfplz.com/2026/08/league-of-legends-rank-distribution.html),
+[dodge.gg](https://www.dodge.gg/en-US/lol/news/ranked-solo-duo-guide-2026)):
+
+| Tier | I | II | III | IV |
+|---|---|---|---|---|
+| Challenger | 0.02 | | | |
+| Grandmaster | 0.06 | | | |
+| Master | 0.7 | | | |
+| Diamond | 1.5 | 2.4 | 3.3 | 4.4 |
+| Emerald | 6.9 | 9.6 | 13 | 16 |
+| Platinum | 20 | 24 | 29 | 34 |
+| Gold | 39 | 45 | 51 | 58 |
+| Silver | 62 | 68 | 73 | 80 |
+| Bronze | 83 | 87 | 91 | 96 |
+| Iron | 97 | 98 | 99 | 100 |
+
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

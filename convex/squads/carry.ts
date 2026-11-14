@@ -1,5 +1,5 @@
 // The Carry and Vice-carry (spec/04-captain.md): FPL's captain and vice-captain.
-import { pickKey, playerKey, type Squad, type SquadPick } from "./squad";
+import { pickKey, playerKey, type ScoringPick, type Squad } from "./squad";
 
 /** Player ids: the armband is only ever on a player, never the coach. */
 export interface Armband {
@@ -25,11 +25,15 @@ export function armbandProblems(squad: Squad, armband: Armband): ArmbandProblem[
   return problems;
 }
 
-/** Who takes the multiplier: the Carry if he played, else the Vice-carry if he did, else nobody. */
-export function carryingPlayer(armband: Armband, played: ReadonlySet<string>): string | null {
-  if (played.has(playerKey(armband.carry))) return armband.carry;
-  if (played.has(playerKey(armband.viceCarry))) return armband.viceCarry;
-  return null;
+/** Who takes the multiplier: the Carry if he played, else the Vice-carry if he did, else nobody.
+ *  With Dual Carry both take it if they played, and nobody steps in for a Carry who didn't
+ *  (spec/06, Dual Carry). */
+export function carryingPlayers(armband: Armband, played: ReadonlySet<string>, dualCarry: boolean): Set<string> {
+  const carryPlayed = played.has(playerKey(armband.carry));
+  const vicePlayed = played.has(playerKey(armband.viceCarry));
+  if (dualCarry) return new Set([...(carryPlayed ? [armband.carry] : []), ...(vicePlayed ? [armband.viceCarry] : [])]);
+  if (carryPlayed) return new Set([armband.carry]);
+  return new Set(vicePlayed ? [armband.viceCarry] : []);
 }
 
 /** Points multiplied and rounded down to a whole number: ×1.5 makes a 9 a 13 (spec/05, The Carry). */
@@ -37,23 +41,21 @@ export function multiplied(points: number, multiplier: number): number {
   return Math.floor(points * multiplier);
 }
 
-export interface SlotPoints extends SquadPick {
+export interface SlotPoints extends ScoringPick {
   points: number;
 }
 
-/** Each slot's points for the scoring line-up (after auto-subs), the Carry's multiplied. `points`
- *  holds each pick's gameweek points by `pickKey`; a pick with none scores 0. */
+/** Each scoring pick's points, the carrying players' multiplied. `points` holds each pick's
+ *  gameweek points by `pickKey`; a pick with none scores 0. */
 export function lineupPoints(
-  lineup: SquadPick[],
+  lineup: readonly ScoringPick[],
   points: ReadonlyMap<string, number>,
-  armband: Armband,
-  played: ReadonlySet<string>,
+  carrying: ReadonlySet<string>,
   carryMultiplier: number,
 ): SlotPoints[] {
-  const carrying = carryingPlayer(armband, played);
-  return lineup.map((starter) => {
-    const base = points.get(pickKey(starter.pick)) ?? 0;
-    const isCarrying = starter.pick.role !== "coach" && starter.pick.id === carrying;
-    return { ...starter, points: isCarrying ? multiplied(base, carryMultiplier) : base };
+  return lineup.map((scoring) => {
+    const base = points.get(pickKey(scoring.pick)) ?? 0;
+    const isCarrying = scoring.pick.role !== "coach" && carrying.has(scoring.pick.id);
+    return { ...scoring, points: isCarrying ? multiplied(base, carryMultiplier) : base };
   });
 }

@@ -8,4 +8,5 @@ A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, chips, p
 - `carry.ts`: the Carry and Vice-carry, and each slot's points with the multiplier (spec/04).
 - `transfers.ts`: free transfers, their bank, hits, unlimited and locked windows, top-ups (spec/03).
 - `splitBreak.ts`: the raise coming off at Split 2, and Flol's fix of a squad still over (spec/03).
+- `chips.ts`: chips as data, when one may be played, and the four effects (spec/06).
 - `fixtures.ts`: test picks and settings, shared by this folder's tests.

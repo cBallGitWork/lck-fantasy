@@ -26,7 +26,6 @@ nav.top .sp { flex: 1; }
 .bug .sc { background: #000; font: 600 26px "IBM Plex Mono", monospace; padding: 0 16px; display: flex; align-items: center; letter-spacing: 2px; }
 .bug .gm { padding: 0 18px; display: flex; flex-direction: column; justify-content: center; font-size: 13px; color: #bbb; } .bug .gm b { color: #fff; font: 600 16px "IBM Plex Mono", monospace; }
 .bug .lv { align-self: center; border: 1px solid #fff; color: #fff; font-size: 11px; font-weight: 700; padding: 1px 6px; margin-right: 10px; }
-.bug .rt { display: flex; align-items: center; gap: 10px; color: #bbb; font-size: 13px; } .bug .rt b { color: #fff; }
 
 .side { background: var(--paper); padding: 16px 18px; align-self: start; display: flex; flex-direction: column; }
 .side h2 { font-size: 14px; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; } .side h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
@@ -37,7 +36,6 @@ nav.top .sp { flex: 1; }
 .row .nm { font-weight: 600; } .row .nm small { font-weight: 400; color: var(--mid); font-size: 12px; margin-left: 4px; }
 .row .gl { display: block; color: var(--mid); font-size: 12px; font-family: "IBM Plex Mono", monospace; }
 .row .p { font: 600 20px "IBM Plex Mono", monospace; text-align: right; }
-.row .p small { display: block; font: 400 11px "IBM Plex Sans KR"; color: var(--mid); }
 .mk { display: inline-block; width: 17px; height: 17px; border: 1.5px solid var(--ink); border-radius: 50%; font: 700 10px/14px "IBM Plex Sans KR"; text-align: center; margin-left: 5px; vertical-align: 1px; }
 .mk.c { background: var(--ink); color: #fff; }
 .sec2 { margin-top: 16px; }
@@ -47,21 +45,8 @@ nav.top .sp { flex: 1; }
 .more { font-weight: 600; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
 .down { background: var(--ink); color: #fff; padding: 10px 12px; font-size: 13px; margin-bottom: 12px; } .down b { display: block; font-size: 14px; }
 
-/* the picker */
-.below { display: none; }
+/* the picker: Home's chips */
 .pick { display: flex; gap: 6px; margin-top: 12px; font-size: 13px; flex-wrap: wrap; } .pick span { border: 1px solid #555; color: #ddd; padding: 5px 10px; } .pick span small { color: #999; margin-left: 4px; } .pick span.on { border-color: #fff; background: #fff; color: var(--ink); font-weight: 600; } .pick span.on small { color: var(--mid); } .pick span.off { color: #777; border-style: dashed; } .pick span.off small { color: #666; }
-.below h3 { font-size: 15px; border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 4px; display: flex; justify-content: space-between; } .below h3 span { font-weight: 400; color: var(--mid); font-size: 13px; }
-.st { width: 100%; border-collapse: collapse; background: var(--paper); }
-.st th { text-align: left; font-size: 12px; font-weight: 500; color: var(--mid); padding: 8px 14px 6px; }
-.st td { padding: 0 14px; height: 46px; border-top: 1px solid var(--fill); }
-.st td.c { font-family: "IBM Plex Mono", monospace; color: var(--mid); font-size: 13px; }
-.st tr.on td { border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); font-weight: 600; } .st tr.on td:first-child { box-shadow: inset 4px 0 0 var(--ink); }
-.st tr.off td { color: var(--soft); } .st tr.off td.c { color: var(--soft); }
-.st .s { font-size: 12px; } .st .s.l::before { content: "● "; font-size: 9px; vertical-align: 1px; }
-.st .who { font-size: 12px; color: var(--mid); font-weight: 400; margin-left: 6px; }
-.nx { background: var(--paper); }
-.nx .r { display: grid; grid-template-columns: 50px 1fr auto; padding: 0 14px; height: 46px; align-items: center; border-top: 1px solid var(--fill); }
-.nx .r small { color: var(--mid); } .nx .r .t { font-family: "IBM Plex Mono", monospace; }
 
 /* nothing live */
 .idle { position: absolute; inset: 0; background: var(--stage2); color: #fff; padding: 64px 72px; }
@@ -80,7 +65,6 @@ nav.top .sp { flex: 1; }
 </defs></svg>
 <nav class="top" id="nav"></nav>
 <div class="stage"><div><div class="screen" id="screen"></div><div class="bug" id="bug"></div><div class="pick" id="pick"></div></div><aside class="side" id="side"></aside></div>
-<div class="below"><div><h3 id="sth"></h3><table class="st" id="streams"></table></div><div id="next"></div></div>
 <script>
 // Made-up LCK Cup data. Every player's points match the Points picture (docs/design/approved/points/).
 // ?v=live (default): Week 3 Saturday, T1 v DK game 2 live at 14:20; Baron Steal FC on 94, not final.
@@ -92,25 +76,17 @@ const LIVE = V !== "idle";
 $("nav").innerHTML = `<b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="on ${LIVE ? "live" : ""}">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span>`;
 
 // Streams: admin data (spec/12): name, language, platform, channel. Twitch and YouTube only in the beta.
-// Opens on the official English stream, then the manager's last pick. Not live: greyed.
+// Opens on the official English stream, then the manager's last pick. Not live: dashed and greyed; More ▾ lists each channel.
 const ST = [["LCK", "English", "Twitch", "twitch.tv/lck", "official"], ["LCK", "English", "YouTube", "youtube.com/@LCKglobal", "official"],
   ["LCK", "한국어", "YouTube", "youtube.com/@LCK", "official"], ["Caedrel", "English", "Twitch", "twitch.tv/caedrel", "co-stream"],
   ["LCK", "Tiếng Việt", "YouTube", "youtube.com/@LCKVietnam", "official", true], ["Kameto", "Français", "Twitch", "twitch.tv/kamet0", "co-stream", true]];
 $("pick").innerHTML = ST.map(([n, l, p, c, k, off], i) => `<span class="${i === 0 && LIVE ? "on" : !LIVE || off ? "off" : ""}">${n} · ${l}<small>${p}</small></span>`).join("") + `<span>More ▾</span>`;
-$("sth").innerHTML = `Streams <span>${LIVE ? "6 · 4 live" : "none live"}</span>`;
-$("streams").innerHTML = `<tr><th>Stream</th><th>Language</th><th>Platform</th><th>Channel</th><th></th></tr>` + ST.map(([n, l, p, c, k, off], i) => {
-  const o = !LIVE || off;
-  return `<tr class="${i === 0 && LIVE ? "on" : o ? "off" : ""}"><td>${n}<span class="who">${k}</span></td><td>${l}</td><td>${p}</td><td class="c">${c}</td><td class="s ${o ? "" : "l"}">${i === 0 && LIVE ? "Watching" : o ? "Offline" : "Live"}</td></tr>`;
-}).join("");
 
-const NX = [["Sun", "KRX v BRO", "08:00", "17:00"], ["Sun", "BFX v DNS", "10:30", "19:30"], ["Wed", "T1 v KT", "10:30", "19:30"]];
-$("next").innerHTML = `<h3 style="font-size:15px;border-top:2px solid var(--ink);padding-top:10px;margin-bottom:4px;display:flex;justify-content:space-between">Next <span style="font-weight:400;color:var(--mid);font-size:13px">your time · KST</span></h3><div class="nx">`
-  + NX.map(([d, s, t, k]) => `<div class="r"><small>${d}</small><b>${s}</b><span class="t">${t} <small>${k}</small></span></div>`).join("") + `</div>`;
 
 if (LIVE) {
   $("screen").innerHTML = `<div class="ph2">stream embed · LCK · English · Twitch</div>`;
   $("bug").innerHTML = `<div class="sb"><span class="tm">T1</span><span class="sc">1–0</span><span class="tm">DK</span></div>
-    <div class="gm"><b><span class="lv">LIVE</span>Game 2 · 14:20 in game</b>Bo3 · LCK Cup Week 3</div><div></div>`;
+    <div class="gm"><b><span class="lv">LIVE</span>Game 2</b>Bo3 · LCK Cup Week 3</div><div></div>`;
 } else {
   $("screen").innerHTML = `<div class="idle"><span>Next · Sunday · LCK Cup Week 3 · Bo3</span><div class="vs">KRX<i>v</i>BRO</div><span>08:00 your time · 17:00 KST</span>
     <div class="cd">1<small>h</small>20<small>m</small></div></div>`;
@@ -121,31 +97,31 @@ if (LIVE) {
 // the Carry ×1.5 rounded down; the line under it is this series' games. 14+14+25+14+9+8+10 = 94.
 // Feed down: T1 v DK not counted: Faker 12×1.5 = 18, Siwoo 5, kkOma 8, so 82. Idle: T1 v DK final 2–0, kkOma +3 a series won, so 97.
 const IC = { mid: "i-mid", flex: "i-flex", coach: "i-coach", top: "i-top", jng: "i-jng", bot: "i-bot", sup: "i-sup" };
-const row = (ic, name, team, mk, line, p, sub) => `<div class="row"><svg><use href="#${IC[ic]}"/></svg><div><span class="nm">${name}<small>${team}</small>${mk ? `<span class="mk ${mk === "C" ? "c" : ""}">${mk}</span>` : ""}</span><span class="gl">${line}</span></div><div class="p">${p}${sub ? `<small>${sub}</small>` : ""}</div></div>`;
+const row = (ic, name, team, mk, line, p) => `<div class="row"><svg><use href="#${IC[ic]}"/></svg><div><span class="nm">${name}<small>${team}</small>${mk ? `<span class="mk ${mk === "C" ? "c" : ""}">${mk}</span>` : ""}</span><span class="gl">${line}</span></div><div class="p">${p}</div></div>`;
 const rest = (ic, name, team, mk, p) => `<div class="rest"><span><svg width="12" height="12" style="vertical-align:-1px;margin-right:6px"><use href="#${IC[ic]}"/></svg>${name} <small>${team}</small>${mk ? `<span class="mk">${mk}</span>` : ""}</span><b>${p}</b></div>`;
 const REST = rest("top", "Zeus", "HLE", "", 14) + rest("jng", "Canyon", "GEN", "", 14) + rest("bot", "Ruler", "GEN", "V", 14) + rest("sup", "Delight", "HLE", "", 9);
 
 const side = {
   live: `<h2>Your week <span class="tag prov">Not final</span></h2>
     <div class="tot"><span class="big">94</span><span class="sm">Average<b>74</b></span><span class="sm">Highest<b>131</b></span></div>
-    <h2>T1 v DK <span>week points</span></h2>
+    <h2>T1 v DK</h2>
     ${row("mid", "Faker", "T1", "C", "G1 4 · G2 1 ● 3/0/2", 25)}
     ${row("flex", "Siwoo", "DK", "", "G1 2 · G2 1 ● 0/1/1", 8)}
     ${row("coach", "kkOma", "T1", "", "G1 2 · G2 0 ●", 10)}
-    <div class="sec2"><h2>Rest of your week <span>GEN v HLE final at ~13:20</span></h2>${REST}</div>
+    <div class="sec2"><h2>Rest of your week</h2>${REST}</div>
     <div class="spx"></div><a class="more">Points ›</a>`,
   down: `<div class="down"><b>Live points down</b>Final points follow.</div>
     <h2>Your week <span class="tag prov">Not final</span></h2>
     <div class="tot"><span class="big">82</span><span class="sm">Average<b>66</b></span><span class="sm">Highest<b>118</b></span></div>
-    <h2>T1 v DK <span>week points</span></h2>
+    <h2>T1 v DK</h2>
     ${row("mid", "Faker", "T1", "C", "G1 – · G2 –", 18)}${row("flex", "Siwoo", "DK", "", "G1 – · G2 –", 5)}${row("coach", "kkOma", "T1", "", "G1 – · G2 –", 8)}
-    <div class="sec2"><h2>Rest of your week <span>GEN v HLE final at ~13:20</span></h2>${REST}</div>
+    <div class="sec2"><h2>Rest of your week</h2>${REST}</div>
     <div class="spx"></div><a class="more">Points ›</a>`,
-  idle: `<h2>Your week <span>all 7 final</span></h2>
+  idle: `<h2>Your week</h2>
     <div class="tot"><span class="big">97</span><span class="sm">Average<b>77</b></span><span class="sm">Highest<b>136</b></span></div>
-    <h2>T1 2–0 DK <span>final</span></h2>
+    <h2>T1 2–0 DK</h2>
     ${row("mid", "Faker", "T1", "C", "G1 4 · G2 1", 25)}${row("flex", "Siwoo", "DK", "", "G1 2 · G2 1", 8)}${row("coach", "kkOma", "T1", "", "G1 2 · G2 0 · won +3", 13)}
-    <div class="sec2"><h2>Rest of your week <span>final</span></h2>${REST}</div>
+    <div class="sec2"><h2>Rest of your week</h2>${REST}</div>
     <div class="spx"></div><a class="more">Points ›</a>`,
 }[V];
 $("side").innerHTML = side;

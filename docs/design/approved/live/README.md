@@ -20,9 +20,9 @@ The Live page: a stream beside the manager's live points (spec/12, Live). It is 
 
 - **Stage** (dark): the stream at 1040 × 585, the scorebug under it, then the picker.
 - **Picker**: one chip per stream, showing name, language and platform. The one you're watching is filled; streams that are not live are dashed and greyed. **More ▾** opens the full list, with each stream's channel.
-- **Points panel**:
+- **Points panel**, no captions:
   - your week, with a Not final tag, Average and Highest;
-  - your players in the live series, each with his week points (the Carry ×1.5 included) and this series' games beneath (● live);
+  - your players in the live series, each with his week points (the Carry ×1.5 included) and this series' games beneath;
   - then the rest of your week, and **Points ›**.
 - **Nothing live**: the stage shows the next series, its time (yours and KST) and a countdown. The scorebug shows the last series as final, and every chip is greyed.
 - **Feed down**: a black bar at the top of the panel, "Live points down · Final points follow". The live series' games show dashes, and the total leaves them out.

@@ -89,7 +89,7 @@ Never print a secret: paste it at `gh secret set`'s prompt, or pipe it in.
    EOF
    ```
 8. *Done 14 Nov 2026.* Fill in `review-landed` on the open pull requests: `gh workflow run review-gate.yml -R cBallGitWork/lck-fantasy`.
-9. Test before switching on: `gh workflow run lead.yml -f dry_run=true` (it needs no secret and no ruleset, and proves the lead can read each pull request's checks), then one real build, `gh workflow run claude-build.yml --ref main -f issue=<n>`. Check its time, its pull request, its review and that it merges itself.
-10. Switch on: `gh variable set PIPELINE_ON --body true -R cBallGitWork/lck-fantasy`.
+9. *Done 14 Nov 2026: a lead practice run, then #68 built into #69, which reviewed and merged itself.* Test before switching on: `gh workflow run lead.yml -f dry_run=true` (it needs no secret and no ruleset, and proves the lead can read each pull request's checks), then one real build, `gh workflow run claude-build.yml --ref main -f issue=<n>`. Check its time, its pull request, its review and that it merges itself.
+10. *Done 14 Nov 2026.* Switch on: `gh variable set PIPELINE_ON --body true -R cBallGitWork/lck-fantasy`.
 
 Cost to know: the repo is public, so Actions minutes are free. The lead's clock is 4 short passes a day, about 120 minutes a month, plus one pass for each build that ends and each build label; a build is up to 75 minutes, 2 at a time. `PIPELINE_ON` is the off switch, not a budget.

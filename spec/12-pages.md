@@ -42,6 +42,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - If the live feed is down, the points panel says so; final points follow
     ([spec/11](11-live-points.md)).
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
+- **Following**: the feed, follows, requests and trucks received ([spec/14](14-following.md)).
 - **Help**, and **Settings** ([below](#settings)).
 
 ## Home

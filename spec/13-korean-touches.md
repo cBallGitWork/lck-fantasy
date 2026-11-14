@@ -20,14 +20,10 @@ Flol has no sponsors, so made-up Korean sponsors drawn from LCK memes fill the s
 - Each slot shows one approved ad, picked at random on each visit. About 10 are ready for the
   beta.
 
-## Protest trucks
+## Trucks
 
-LCK fans park LED protest trucks outside a team's base after bad play.
-
-- Once a gameweek, a manager can send a protest truck to a league-mate who scored below that
-  league's average for the gameweek.
-- It carries a line picked from a preset list, never free text, so nothing needs moderating.
-- It parks on that manager's profile for the gameweek, with the sender's name.
+LCK fans park LED trucks outside a team's base: protest trucks after bad play, coffee trucks to
+cheer. Flol's trucks, and their lines, are in [spec/14](14-following.md#trucks).
 
 ## Birthday week
 

@@ -12,18 +12,6 @@ From the Transfers research ([docs/research/transfers-page-references.md](resear
 - A price-change arrow on each player, once Flol decides whether prices move in a split (#23).
 - A watchlist (FPL).
 
-## Following and trucks, parked (13 Nov 2026)
-
-Craig's leanings, to grill later; trucks in big private leagues would pile up, so this replaces "a league-mate":
-
-- Follow by request: one-way, the other manager accepts.
-- A feed of the managers you follow: each series' total points, and big Carry performances.
-- Trucks are the reaction: truck anyone you follow, any week.
-- Maybe: other reactions; Following as its own tab.
-- Open: what counts as a big Carry.
-- At each deadline, post each followed manager's transfers and buff, then how each swap is doing as series finish ("Chovy → Faker, +6 so far"). LiveFPL's league table shows this per manager, and its favourite-manager list is the nearest thing to following (seen 13 Nov 2026).
-- Three kinds of truck, after LCK fans' own: a coffee truck to cheer a good series, a protest truck for a bad one, and a sponsor truck from a made-up sponsor (spec/13) to each private league's top manager of the week.
-
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

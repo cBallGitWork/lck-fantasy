@@ -48,7 +48,7 @@ FEED = f'''
 <div class="it">{who(*JAE)}<div class="what">Deadline: no transfers<span class="when">Tue 09:00 · 18:00 KST</span></div>{tb()}</div>
 <div class="wk">Week 2</div>
 <div class="it">{who(*JAE)}<div class="what"><span class="pts">21</span>GEN 2–0 DNF <span class="bo">Bo3</span> <span class="tag">Big Carry</span><small>Ruler 21 (14 × 1.5)</small><span class="when">Ended Sun 08:20 · 17:20 KST</span></div><span></span></div>
-<div class="it">{who(*MINJI)}<div class="what"><span class="pts">47</span>GEN 2–0 DNF <span class="bo">Bo3</span><small>Kiin 11 · Chovy 21 · Ruler 15</small><span class="when">Ended Sun 08:20 · 17:20 KST</span></div><span></span></div>
+<div class="it">{who(*MINJI)}<div class="what"><span class="pts">21</span>GEN 2–0 DNF <span class="bo">Bo3</span><small>Chovy 21</small><span class="when">Ended Sun 08:20 · 17:20 KST</span></div><span></span></div>
 '''
 
 def side():

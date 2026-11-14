@@ -1,7 +1,8 @@
-// Free transfers, the bank of them, and hits (spec/03-transfers.md). Every number is the
-// competition's data; whether a gameweek is unlimited or topped up is the gameweek's.
+// Free transfers, the bank of them, hits, and undoing a transfer (spec/03-transfers.md). Every
+// number is the competition's data; whether a gameweek is unlimited or topped up is the gameweek's.
 import type { Transfer } from "./budget";
 import { transfersUnlimited, type BuffEffect } from "./buffs";
+import { pickKey } from "./squad";
 
 export interface TransferSettings {
   /** Free transfers gained each gameweek. */
@@ -38,6 +39,56 @@ export function freeTransfersFor(carried: number, gameweek: TransferGameweek, se
   return gameweek.toppedUp ? settings.bankCap : carried;
 }
 
+/** A transfer as confirmed, with the prices it was made at (spec/03, Undoing a transfer). */
+export interface ConfirmedTransfer extends Transfer {
+  /** What the pick out sold for, in won. */
+  outPrice: number;
+  /** What the pick in cost, in won. */
+  inPrice: number;
+  /** Made under Remake or Limitless, so it can't be undone. */
+  underBuff: boolean;
+}
+
+/** The gameweek's confirmed transfers, netted: a pick sold then bought back cancels out, as in FPL,
+ *  keeping his old price, and a chain A → B, B → C is the one transfer A → C (spec/03). An undo is
+ *  the reverse transfer (`undoTransfer`), so it nets away here too. */
+export function netTransfers(confirmed: readonly ConfirmedTransfer[]): ConfirmedTransfer[] {
+  const net: ConfirmedTransfer[] = [];
+  for (const transfer of confirmed) {
+    let pending: ConfirmedTransfer | null = transfer;
+    while (pending) {
+      const current: ConfirmedTransfer = pending;
+      // The pick sold now was bought earlier this gameweek, or the pick bought now was sold earlier.
+      const boughtEarlier = net.findIndex((earlier) => pickKey(earlier.in) === pickKey(current.out));
+      const soldEarlier = net.findIndex((earlier) => pickKey(earlier.out) === pickKey(current.in));
+      if (boughtEarlier < 0 && soldEarlier < 0) {
+        net.push(current);
+        break;
+      }
+      const index = boughtEarlier >= 0 ? boughtEarlier : soldEarlier;
+      const earlier = net.splice(index, 1)[0]!;
+      const [first, second] = boughtEarlier >= 0 ? [earlier, current] : [current, earlier];
+      pending = pickKey(first.out) === pickKey(second.in) ? null : {
+        out: first.out,
+        in: second.in,
+        outPrice: first.outPrice,
+        inPrice: second.inPrice,
+        underBuff: first.underBuff || second.underBuff,
+      };
+    }
+  }
+  return net;
+}
+
+/** Undo one of the gameweek's netted transfers (from `netTransfers`): the old player comes back at
+ *  his old price, and with him the free transfer or the hit. Throws for one made under Remake or
+ *  Limitless, which can't be undone (spec/03). */
+export function undoTransfer(confirmed: readonly ConfirmedTransfer[], transfer: ConfirmedTransfer): ConfirmedTransfer[] {
+  if (transfer.underBuff) throw new Error(`A transfer made under a buff can't be undone: ${pickKey(transfer.out)}.`);
+  const reverse = { out: transfer.in, in: transfer.out, outPrice: transfer.inPrice, inPrice: transfer.outPrice, underBuff: false };
+  return [...confirmed, reverse];
+}
+
 export interface GameweekTransferResult {
   /** Points taken off this gameweek's score. */
   hit: number;
@@ -45,21 +96,21 @@ export interface GameweekTransferResult {
   nextFree: number;
 }
 
-/** The hit for the gameweek's transfers, a coach swap counting like any other, and the free
+/** The hit for the gameweek's netted transfers, a coach swap counting like any other, and the free
  *  transfers carried on: those unused bank up to the cap, plus the weekly one (spec/03). */
 export function settleTransfers(
   free: number,
-  transfers: readonly Transfer[],
+  confirmed: readonly ConfirmedTransfer[],
   gameweek: TransferGameweek,
   settings: TransferSettings,
   buff: BuffEffect | null = null,
 ): GameweekTransferResult {
-  // spec/06: a Remake or Limitless week's free transfer doesn't roll over, and the bank is kept:
-  // 2 banked stay 2.
+  // spec/03 and spec/06: Remake or Limitless wipes the week's hits; its free transfer doesn't roll
+  // over, and the bank is kept: 2 banked stay 2.
   if (transfersUnlimited(buff)) return { hit: 0, nextFree: free };
-  const made = transfers.length;
   // spec/03: a knockout week keeps the bank as it was: 1 banked stays 1.
   if (gameweek.unlimited) return { hit: 0, nextFree: gameweek.opensSplit ? settings.freeAfterUnlimited : free };
+  const made = netTransfers(confirmed).length;
   const extra = Math.max(0, made - free);
   const unused = Math.max(0, free - made);
   return {

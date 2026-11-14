@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import { budgetProblems } from "./budget";
 import { lineupPoints } from "./carry";
 import { buffLineup, buffProblems, buffSquadRules, squadAfterGameweek, transfersUnlimited, type Buff } from "./buffs";
-import { chovy, coach, player, playedExcept, REGULAR_SETTINGS, validSquad, withStarter } from "./fixtures";
+import { chovy, coach, confirmedTransfers, player, playedExcept, REGULAR_SETTINGS, TRANSFER_SETTINGS, validSquad, withStarter } from "./fixtures";
 import { allPicks, pickKey, squadProblems } from "./squad";
 import { settleTransfers } from "./transfers";
 
@@ -47,10 +47,8 @@ describe("Remake", () => {
   });
 
   test("costs no hits and keeps the bank: 2 stay 2", () => {
-    const settings = { freePerGameweek: 1, bankCap: 3, hitPoints: 4, freeAfterUnlimited: 2 };
     const gw = { opensAt: 0, deadline: 1, unlimited: false, opensSplit: false, toppedUp: false };
-    const fiveTransfers = Array.from({ length: 5 }, () => ({ out: chovy, in: player("faker", "t1", "mid") }));
-    expect(settleTransfers(2, fiveTransfers, gw, settings, "remake")).toEqual({ hit: 0, nextFree: 2 });
+    expect(settleTransfers(2, confirmedTransfers(5), gw, TRANSFER_SETTINGS, "remake")).toEqual({ hit: 0, nextFree: 2 });
   });
 });
 

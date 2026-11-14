@@ -1,5 +1,16 @@
 // Test fixtures for the squad rules: picks and settings, never product data.
 import { allPicks, pickKey, type Pick, type PlayerRole, type Squad, type SquadSettings, type StarterSlot } from "./squad";
+import type { ConfirmedTransfer, TransferSettings } from "./transfers";
+
+export const TRANSFER_SETTINGS: TransferSettings = { freePerGameweek: 1, bankCap: 3, hitPoints: 6, freeAfterUnlimited: 2 };
+
+/** A confirmed transfer; prices in won, 5 a pick unless given. */
+export const confirmed = (out: Pick, pickIn: Pick, prices: { outPrice?: number; inPrice?: number } = {}, underBuff = false): ConfirmedTransfer =>
+  ({ out, in: pickIn, outPrice: prices.outPrice ?? 5, inPrice: prices.inPrice ?? 5, underBuff });
+
+/** `count` confirmed transfers, none netting with another; who moves doesn't matter to the count. */
+export const confirmedTransfers = (count: number): ConfirmedTransfer[] =>
+  Array.from({ length: count }, (_, i) => confirmed(player(`out${i}`, "t1", "mid"), player(`in${i}`, "gen", "mid")));
 
 export const player = (id: string, teamId: string, role: PlayerRole): Pick => ({ id, teamId, role });
 export const coach = (teamId: string): Pick => ({ id: teamId, teamId, role: "coach" });

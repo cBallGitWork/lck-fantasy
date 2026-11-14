@@ -1,10 +1,10 @@
 import { describe, expect, test } from "vitest";
-import type { Transfer } from "./budget";
-import { coach, ktCoach, player } from "./fixtures";
-import { freeTransfersFor, settleTransfers, transfersOpen, type TransferGameweek } from "./transfers";
+import {
+  chovy, coach, confirmed, confirmedTransfers as transfers, ktCoach, player, TRANSFER_SETTINGS as SETTINGS,
+} from "./fixtures";
+import { freeTransfersFor, netTransfers, settleTransfers, transfersOpen, undoTransfer, type TransferGameweek } from "./transfers";
 
 // Fixture values: the real ones are the competition's data.
-const SETTINGS = { freePerGameweek: 1, bankCap: 3, hitPoints: 4, freeAfterUnlimited: 2 };
 const DAY = 24 * 60 * 60 * 1000;
 const DEADLINE = Date.UTC(2027, 3, 7, 7, 45); // a Wednesday, 16:45 KST
 
@@ -14,19 +14,16 @@ const counted: TransferGameweek = {
 const splitOpener: TransferGameweek = { ...counted, unlimited: true, opensSplit: true };
 const knockout: TransferGameweek = { ...counted, unlimited: true };
 
-/** `count` transfers; who moves doesn't matter to the count. */
-const transfers = (count: number): Transfer[] =>
-  Array.from({ length: count }, (_, i) => ({ out: player(`out${i}`, "t1", "mid"), in: player(`in${i}`, "gen", "mid") }));
 
 describe("settleTransfers", () => {
-  test("one free transfer a gameweek; each beyond it costs 4", () => {
+  test("one free transfer a gameweek; each beyond it costs 6", () => {
     expect(settleTransfers(1, transfers(1), counted, SETTINGS)).toEqual({ hit: 0, nextFree: 1 });
-    expect(settleTransfers(1, transfers(3), counted, SETTINGS)).toEqual({ hit: 8, nextFree: 1 });
+    expect(settleTransfers(1, transfers(3), counted, SETTINGS)).toEqual({ hit: 12, nextFree: 1 });
   });
 
   test("swapping the coach counts as a transfer", () => {
-    const coachSwap = [{ out: ktCoach, in: coach("t1") }];
-    expect(settleTransfers(0, coachSwap, counted, SETTINGS).hit).toBe(4);
+    const coachSwap = [confirmed(ktCoach, coach("t1"))];
+    expect(settleTransfers(0, coachSwap, counted, SETTINGS).hit).toBe(6);
   });
 
   test("unused free transfers bank, up to 3 and no further", () => {
@@ -53,6 +50,59 @@ describe("settleTransfers", () => {
   test("the numbers are the competition's", () => {
     const generous = { freePerGameweek: 2, bankCap: 5, hitPoints: 3, freeAfterUnlimited: 4 };
     expect(settleTransfers(2, transfers(4), counted, generous)).toEqual({ hit: 6, nextFree: 2 });
+  });
+
+  test("playing Remake or Limitless wipes the gameweek's hits", () => {
+    expect(settleTransfers(1, transfers(4), counted, SETTINGS, "remake").hit).toBe(0);
+    expect(settleTransfers(1, transfers(4), counted, SETTINGS, "limitless").hit).toBe(0);
+  });
+});
+
+describe("undoing a transfer", () => {
+  const faker = player("faker", "t1", "mid");
+  const showmaker = player("showmaker", "dk", "mid");
+  const kingen = player("kingen", "kt", "top");
+  const siwoo = player("siwoo", "dk", "top");
+
+  test("selling a player and buying him back cancels out: no free transfer used, no hit, his old price kept", () => {
+    const sold = confirmed(chovy, faker, { outPrice: 20, inPrice: 19 });
+    const boughtBack = confirmed(faker, chovy, { outPrice: 19, inPrice: 21 });
+    expect(netTransfers([sold, boughtBack])).toEqual([]);
+    expect(settleTransfers(1, [sold, boughtBack], counted, SETTINGS)).toEqual({ hit: 0, nextFree: 2 });
+    // Sold, then bought back after another move: the chain keeps his first sale price.
+    const onward = confirmed(faker, showmaker, { outPrice: 19, inPrice: 15 });
+    expect(netTransfers([sold, onward])).toEqual([confirmed(chovy, showmaker, { outPrice: 20, inPrice: 15 })]);
+  });
+
+  test("sell A, buy B, sell B, buy A nets to nothing", () => {
+    const aToB = confirmed(chovy, faker);
+    const bToA = confirmed(faker, chovy);
+    expect(netTransfers([aToB, bToA])).toEqual([]);
+    expect(settleTransfers(0, [aToB, bToA], counted, SETTINGS).hit).toBe(0);
+  });
+
+  test("a bought player swapped back in another slot still nets: A → B, C → A is the one C → B", () => {
+    const net = netTransfers([confirmed(chovy, faker), confirmed(showmaker, chovy)]);
+    expect(net).toEqual([confirmed(showmaker, faker)]);
+  });
+
+  test("an undo after a second transfer brings the old player back at his old price, and the hit back", () => {
+    const first = confirmed(chovy, faker, { outPrice: 20, inPrice: 19 });
+    const second = confirmed(siwoo, kingen, { outPrice: 8, inPrice: 9 });
+    expect(settleTransfers(1, [first, second], counted, SETTINGS).hit).toBe(6);
+    const undone = undoTransfer([first, second], netTransfers([first, second])[0]!);
+    expect(netTransfers(undone)).toEqual([second]);
+    expect(settleTransfers(1, undone, counted, SETTINGS)).toEqual({ hit: 0, nextFree: 1 });
+  });
+
+  test("an undo gives back the free transfer", () => {
+    const only = confirmed(siwoo, kingen);
+    expect(settleTransfers(1, undoTransfer([only], only), counted, SETTINGS)).toEqual({ hit: 0, nextFree: 2 });
+  });
+
+  test("a transfer made under Remake or Limitless can't be undone", () => {
+    const buffed = confirmed(siwoo, kingen, {}, true);
+    expect(() => undoTransfer([buffed], buffed)).toThrow("A transfer made under a buff can't be undone: player:siwoo.");
   });
 });
 

@@ -317,6 +317,14 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - "coach card should be not much differetn from player really": drawn as a variant of the player card, without the four-reviewer panel.
 - The picture: "save".
 
+## Live design round (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/live/`.
+
+- "ok, live first".
+- Average and Highest beside the total on Live: "Keep them".
+- The picture: "save".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

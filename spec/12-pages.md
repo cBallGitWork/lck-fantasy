@@ -47,6 +47,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     checked.
   - It opens on the official English stream, then remembers each manager's last pick. Streams
     not live show greyed out.
+  - The points panel shows the week's total with Average and Highest, as Points (Craig, 14 Nov
+    2026).
   - With nothing live, it shows the next series and a countdown.
   - If the live feed is down, the points panel says so; final points follow
     ([spec/11](11-live-points.md)).

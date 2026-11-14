@@ -1,6 +1,6 @@
 # lck-fantasy
 
-The product's name is Flol (Craig, 11 Nov 2026); the repo keeps its name. A free, season-long fantasy game for the LCK (League of Legends Champions Korea) that copies FPL's structure: a budget, a squad with a bench, weekly transfers, a captain, chips, global and supporter leagues.
+The product's name is Flol (Craig, 11 Nov 2026); the repo keeps its name. A free, season-long fantasy game for the LCK (League of Legends Champions Korea) that copies FPL's structure: a budget, a squad with a bench, weekly transfers, a captain, buffs, global and supporter leagues.
 The app is being built: the scaffold and the game rules land issue by issue. The LCK Cup (January to March 2027) is the planned beta.
 
 ## The product is SPEC.md
@@ -14,7 +14,7 @@ The app is being built: the scaffold and the game rules land issue by issue. The
 
 - Opus plans and builds. The reviewer runs on a different model from the builder (`pr-reviewer`, on Sonnet).
 - FPL's structure is the model: where a spec file is silent on how a part works, look at how FPL does it, then ask Craig.
-- The LCK's facts (teams, rosters, splits, dates, series length) and every value Craig may tune (prices, points, chips, deadlines) are data, held per competition, never hardcoded.
+- The LCK's facts (teams, rosters, splits, dates, series length) and every value Craig may tune (prices, points, buffs, deadlines) are data, held per competition, never hardcoded.
 - The theme is Korean: Korean feel, LCK culture. FPL gives the structure, never the look.
 - The stack is in `ARCHITECTURE.md`: Craig picks services, Claude picks libraries, both with a reason.
 - A screen's approved picture, once it has one in `docs/design/approved/<screen>/`, binds its layout. Pictures are drawn through `/design`, 1440 wide, and approved by Craig; the first design round also writes `docs/design/plate.md`, the look. No screen is built before its picture.

@@ -12,22 +12,6 @@ From the Transfers research ([docs/research/transfers-page-references.md](resear
 - A price-change arrow on each player, once Flol decides whether prices move in a split (#23).
 - A watchlist (FPL).
 
-## Transfers picture, not yet specced (13 Nov 2026)
-
-Drawn into the approved Transfers picture on Craig's chat yes; no spec file holds them yet:
-
-- Card view beside Rift view, and whether the choice is remembered.
-- Whether a chip is final once played (FPL lets you cancel until the deadline), and whether the screen says boost or chip.
-- Greyed players sorted last.
-
-## Home picture, not yet specced (13 Nov 2026)
-
-Craig's yes in the Home design round; no spec file holds them yet:
-
-- While a series is live, Home embeds the stream, muted, with the Live page's picker and its remembered pick; Live › opens the Live page.
-- With nothing live, Home shows the week's 7 starters as a broadcast lineup, the next series on stream, and Pick Team ›.
-- Home shows last week's star and flop, from the Points page.
-
 ## Following and trucks, parked (13 Nov 2026)
 
 Craig's leanings, to grill later; trucks in big private leagues would pile up, so this replaces "a league-mate":
@@ -37,7 +21,7 @@ Craig's leanings, to grill later; trucks in big private leagues would pile up, s
 - Trucks are the reaction: truck anyone you follow, any week.
 - Maybe: other reactions; Following as its own tab.
 - Open: what counts as a big Carry.
-- At each deadline, post each followed manager's transfers and chip, then how each swap is doing as series finish ("Chovy → Faker, +6 so far"). LiveFPL's league table shows this per manager, and its favourite-manager list is the nearest thing to following (seen 13 Nov 2026).
+- At each deadline, post each followed manager's transfers and buff, then how each swap is doing as series finish ("Chovy → Faker, +6 so far"). LiveFPL's league table shows this per manager, and its favourite-manager list is the nearest thing to following (seen 13 Nov 2026).
 - Three kinds of truck, after LCK fans' own: a coffee truck to cheer a good series, a protest truck for a bad one, and a sponsor truck from a made-up sponsor (spec/13) to each private league's top manager of the week.
 
 ## Achievements, parked (13 Nov 2026)

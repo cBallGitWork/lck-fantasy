@@ -69,7 +69,7 @@ is one.
 
 Short labels ("6th"), no caption that says what the screen already shows, nothing explained that
 any fantasy manager knows. What is new to an FPL manager (roles, series, the flex and coach
-slots, the chips' names) gets a line where he meets it.
+slots, the buffs' names) gets a line where he meets it.
 
 ## 4. Look at it
 

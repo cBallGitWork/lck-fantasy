@@ -28,7 +28,7 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 
 ## Still open
 
-- Not in the spec yet, Craig's yes in this round: the stream on Home, the lineup when idle, star and flop. In [to-grill](../../../to-grill.md).
+- The stream on Home, the lineup when idle, and star and flop are specced in [spec/12](../../../../spec/12-pages.md#home) (14 Nov 2026). Star and flop now use effective ownership, so the drawn pair is a placeholder.
 - **Following** (follows, a feed, trucks as reactions) is parked for a later grill, in to-grill. The card is drawn as an idea, not the product.
 
 ## Placeholders

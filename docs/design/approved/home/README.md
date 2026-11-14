@@ -22,14 +22,14 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 - **Left, idle:** Week 4 lineup: the seven starters (five roles, Flex, Coach) with C and V; the next series on stream and when; **Pick Team ›**.
 - **Right, live:** your week (not final) with Average and Highest; your players in this series with live points; who is still to play; **Points ›**.
 - **Right, idle:** last week (final) with Average and Highest; star and flop; **Points ›**.
-- **Below, three cards:** the deadline (countdown, your time and KST, Pick Team, Transfers, free transfers); Following, an idea only (below); Leagues (rank and move, the sponsor's badge on Overall, **All leagues ›**).
+- **Below, three cards:** the deadline (countdown, your time and KST, Pick Team, Transfers, free transfers); Following (spec/14); Leagues (rank and move, the sponsor's badge on Overall, **All leagues ›**).
 - **Bottom:** a sponsor banner and "All sponsors are made up." (spec/13).
 - The nav's Live dot shows only while a series is live.
 
 ## Still open
 
 - The stream on Home, the lineup when idle, and star and flop are specced in [spec/12](../../../../spec/12-pages.md#home) (14 Nov 2026). Star and flop now use effective ownership, so the drawn pair is a placeholder.
-- **Following** (follows, a feed, trucks as reactions) is parked for a later grill, in to-grill. The card is drawn as an idea, not the product.
+- **Following** is specced in [spec/14](../../../../spec/14-following.md) (14 Nov 2026). The drawn card's items and its "Fun idea · to grill" tag are placeholders.
 
 ## Placeholders
 

@@ -32,6 +32,7 @@ product's set, because it is proven on these services.
 | Convex Auth | Google and Discord sign-in inside Convex; it arrives with sign-up (#42) |
 | Vitest with `convex-test` | game rules test as plain functions, and Convex functions run in memory, with no deployment |
 | TypeScript, ESLint | strict types and lint, both in `npm run verify` |
+| Papa Parse | reads Oracle's Elixir's daily CSV, quoted fields included, with errors reported, not skipped (#36) |
 
 `convex/_generated/` is written by `npx convex dev`, which needs a Convex deployment. Until Craig
 creates one, the rules are pure functions and need none.

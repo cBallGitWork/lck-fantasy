@@ -36,7 +36,7 @@ export function bankAfterTransfers(bank: number, transfers: Transfer[], prices: 
   return transfers.reduce((total, transfer) => total + requirePrice(transfer.out, prices) - requirePrice(transfer.in, prices), bank);
 }
 
-/** A pick's price; throws when he has none, since a missing price is a data fault. */
+/** A pick's current price; throws when the price list doesn't know it, rather than count it as free. */
 export function requirePrice(pick: Pick, prices: Prices): number {
   const price = priceOf(pick, prices);
   if (price === undefined) throw new Error(`No current price for ${pickKey(pick)}.`);

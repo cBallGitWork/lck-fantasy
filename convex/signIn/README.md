@@ -1,5 +1,6 @@
 # convex/signIn
 
-Magic-link sign-in, and turning a squad picked signed out into an entry.
+Google and Discord sign-in (ARCHITECTURE.md), and turning a squad picked signed out into an entry.
 
-Nothing is built here yet.
+- `autoFill.ts`: fills a guest's empty slots with a valid squad under budget (spec/09).
+- `signUp.ts`: what a Save needs to become an entry, and the first gameweek a late joiner scores.

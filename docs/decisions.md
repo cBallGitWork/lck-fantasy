@@ -292,6 +292,13 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - Points to climb: "rank, we cn use promoted or demoted / challenger needs great arrow essentially since its raw number", then "tiers for overall". Parked in to-grill.
 - The picture: "File and merge".
 
+## Pick Team redraw (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/pick-team/`. Redrawn from the 13 Nov picture (PR #48, never merged), whose Save rule moves into spec/12.
+
+- Save in a bar under the pitch, as Transfers; tall photos kept in Card view; all 10 series, as Points; roles as icons only in Rift view: recommended, picked.
+- The picture: "Yes, save".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

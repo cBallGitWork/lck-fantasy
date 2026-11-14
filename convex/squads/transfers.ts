@@ -41,9 +41,8 @@ export function freeTransfersFor(carried: number, gameweek: TransferGameweek, se
 export interface GameweekTransferResult {
   /** Points taken off this gameweek's score. */
   hit: number;
-  /** Free transfers carried into the next gameweek; null after a knockout gameweek or a Remake or
-   *  Limitless one, which the spec doesn't settle (asked on #20 and #25). */
-  nextFree: number | null;
+  /** Free transfers carried into the next gameweek. */
+  nextFree: number;
 }
 
 /** The hit for the gameweek's transfers, a coach swap counting like any other, and the free
@@ -55,11 +54,12 @@ export function settleTransfers(
   settings: TransferSettings,
   chip: ChipEffect | null = null,
 ): GameweekTransferResult {
-  // spec/06: a Remake or Limitless week's "free transfer doesn't roll over". Whether a bank of 2
-  // then stays 2 or drops to 1 is asked on #25, so the bank after it is left unsettled.
-  if (transfersUnlimited(chip)) return { hit: 0, nextFree: null };
+  // spec/06: a Remake or Limitless week's free transfer doesn't roll over, and the bank is kept:
+  // 2 banked stay 2.
+  if (transfersUnlimited(chip)) return { hit: 0, nextFree: free };
   const made = transfers.length;
-  if (gameweek.unlimited) return { hit: 0, nextFree: gameweek.opensSplit ? settings.freeAfterUnlimited : null };
+  // spec/03: a knockout week keeps the bank as it was: 1 banked stays 1.
+  if (gameweek.unlimited) return { hit: 0, nextFree: gameweek.opensSplit ? settings.freeAfterUnlimited : free };
   const extra = Math.max(0, made - free);
   const unused = Math.max(0, free - made);
   return {

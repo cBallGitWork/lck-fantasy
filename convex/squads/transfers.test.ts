@@ -46,8 +46,8 @@ describe("settleTransfers", () => {
     expect(split2Second.nextFree).toBe(3);
   });
 
-  test("a knockout gameweek is unlimited with no hits; the bank after it waits for Craig", () => {
-    expect(settleTransfers(1, transfers(6), knockout, SETTINGS)).toEqual({ hit: 0, nextFree: null });
+  test("a knockout gameweek is unlimited with no hits and keeps the bank: 1 stays 1", () => {
+    expect(settleTransfers(1, transfers(6), knockout, SETTINGS)).toEqual({ hit: 0, nextFree: 1 });
   });
 
   test("the numbers are the competition's", () => {

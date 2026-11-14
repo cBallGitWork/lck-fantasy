@@ -45,6 +45,7 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
   gameweek 4 can count from gameweek 4.
 - The maker can rename the league, remove a manager and delete it. Any member can leave. As in
   FPL.
+- The maker can't leave without deleting the league (Craig, 14 Nov 2026).
 - A manager can be in up to 25 private leagues, and a private league has no size cap, as in FPL.
   Both numbers are data.
 

@@ -46,11 +46,11 @@ describe("Remake", () => {
     expect(squadAfterGameweek("remake", validSquad(), after)).toBe(after);
   });
 
-  test("costs no hits; the bank of free transfers after it waits for Craig", () => {
+  test("costs no hits and keeps the bank: 2 stay 2", () => {
     const settings = { freePerGameweek: 1, bankCap: 3, hitPoints: 4, freeAfterUnlimited: 2 };
     const gw = { opensAt: 0, deadline: 1, unlimited: false, opensSplit: false, toppedUp: false };
     const fiveTransfers = Array.from({ length: 5 }, () => ({ out: chovy, in: player("faker", "t1", "mid") }));
-    expect(settleTransfers(2, fiveTransfers, gw, settings, "remake")).toEqual({ hit: 0, nextFree: null });
+    expect(settleTransfers(2, fiveTransfers, gw, settings, "remake")).toEqual({ hit: 0, nextFree: 2 });
   });
 });
 

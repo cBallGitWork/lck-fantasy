@@ -44,3 +44,5 @@ Craig, 13 Nov 2026:
 
 - In knockout stages transfers are unlimited, with no hits; the team cap rises to 3 and the
   budget is raised ([spec/10](10-season-and-gameweeks.md)).
+- A knockout week keeps the free-transfer bank as it was: 1 banked, then a Road to MSI week, still
+  1 after (Craig, 14 Nov 2026).

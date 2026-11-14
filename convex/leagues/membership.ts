@@ -39,8 +39,8 @@ export function joinProblems(privateLeaguesIn: number, members: number, settings
 
 export type PrivateLeagueAction = "rename" | "remove" | "delete" | "leave";
 
-/** The maker can rename, remove a manager and delete; any member can leave. The maker leaving is
- *  not settled by spec/08 or FPL's help, so it is refused rather than guessed. */
+/** The maker can rename, remove a manager and delete; any other member can leave. The maker can't
+ *  leave: they delete the league instead (spec/08). */
 export function mayAct(action: PrivateLeagueAction, actorId: string, makerId: string): boolean {
   const isMaker = actorId === makerId;
   if (action === "leave") return !isMaker;

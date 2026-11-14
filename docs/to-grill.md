@@ -64,9 +64,8 @@ Claude's drafts and their sources are in
 
 ## Leagues, from building #38 (14 Nov 2026)
 
-Rules the league code picked where spec/08 is silent; each needs Craig's answer:
+A rule the league code picked where spec/08 is silent; it needs Craig's answer:
 
-- Can a private league's maker leave it without deleting it, and who then holds the maker's rights? Built as no for now.
 - Do Remake and Limitless weeks count towards the fewer-transfers tie-break? Built as not counting, as FPL leaves out Wildcard and Free Hit.
 
 ## Open from the foundations work (11 Nov 2026)

@@ -45,6 +45,11 @@ describe("multiplied", () => {
     expect(multiplied(9, CARRY_MULTIPLIER)).toBe(13);
     expect(multiplied(10, CARRY_MULTIPLIER)).toBe(15);
   });
+
+  test("a minus rounds towards zero: a −3 becomes −4, and 0 stays 0", () => {
+    expect(multiplied(-3, CARRY_MULTIPLIER)).toBe(-4);
+    expect(Object.is(multiplied(0, CARRY_MULTIPLIER), 0)).toBe(true);
+  });
 });
 
 describe("the Carry's points", () => {

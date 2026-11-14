@@ -112,7 +112,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .plist th { text-align: left; font-weight: 500; color: var(--mid); font-size: 11px; padding: 5px 6px; border-bottom: 1px solid var(--line); }
 .plist td { padding: 6px; border-bottom: 1px solid var(--fill); } .plist td.n { font-family: "IBM Plex Mono", monospace; text-align: right; }
 .plist td svg { width: 14px; height: 14px; } .plist td small { color: var(--mid); display: block; font-size: 11px; }
-.plist tr.no td { color: var(--soft); } .plist tr.no td small { color: var(--soft); }
+.plist tr.no td { color: var(--mid); } .plist tr.no td small { color: var(--mid); } .plist tr.no td b { font-weight: 500; }
 .plist .add { border: 1px solid var(--ink); width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
 .plist tr.no .add { border-color: var(--line); color: var(--line); } .plist tr.pick td { background: var(--fill); } .plist tr.pick .add { background: var(--ink); color: #fff; }
 .confirm { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; border: 1.5px solid var(--ink); background: var(--paper); padding: 10px 14px; font-size: 14px; }
@@ -121,6 +121,13 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .ctl .show { border: 1.5px solid var(--ink); padding: 5px 12px; font-size: 13px; color: var(--ink); background: var(--paper); }
 .tile.sold .kit, .tile.sold .nm, .tile.sold .sl { opacity: .35; } .tile.sold .pr { background: var(--paper); color: var(--ink); border: 1.5px dashed var(--ink); }
 .tstats { gap: 18px; } .tstats b, .caps span, .flt2 span { white-space: nowrap; } .tstats > div > span { display: block; max-width: 140px; } .bz { max-width: 150px; }
+.done { background: var(--paper); border-top: 2px solid var(--ink); margin-top: 24px; padding: 10px 0 4px; }
+.done h3 { font-size: 15px; margin: 0 0 4px; padding: 0 8px; }
+.cf { display: grid; grid-template-columns: 72px 1fr 44px 56px; gap: 10px; align-items: center; padding: 8px; border-top: 1px solid var(--fill); font-size: 14px; }
+.cf .t { color: var(--mid); font-size: 12px; } .cf .c { font-family: "IBM Plex Mono", monospace; text-align: right; font-size: 13px; }
+.cf .u { justify-self: end; border: 1.5px solid var(--ink); padding: 2px 10px; font-weight: 700; font-size: 12px; }
+.cf.old { color: var(--mid); } .cf.old b { font-weight: 500; }
+.ar { font-size: 10px; color: var(--ink); } .plist td.arw { width: 16px; padding-left: 2px; padding-right: 6px; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute">
   <defs>
@@ -138,10 +145,10 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 
 <nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a class="on">Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
 <div class="page"><main>
-<div class="ph1"><div><h1>Transfers · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">1d 20h 45m</b></div></div></div>
+<div class="ph1"><div><h1>Transfers · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">9h 45m</b></div></div></div>
 <div class="tstats">
-  <div><b>0 of 1</b><span>Free transfers</span></div><div><b>0 pts</b><span>Cost</span></div><div><b>1.5억</b><span>Bank</span></div>
-  <div class="bz" style="max-width:none"><span class="buff2">Remake<small>Play</small></span><span class="buff2">Limitless<small>Play</small></span></div>
+  <div><b>0</b><span>Free transfers</span></div><div><b>−6</b><span>Pending hit</span></div><div><b>1.5억</b><span>Bank</span></div>
+  <div class="bz" style="max-width:none"><span class="buff2">Remake</span><span class="buff2">Limitless</span></div>
 </div>
 <div class="ctl"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span><span class="show">Show: Fixtures ▾</span></div>
 <div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
@@ -161,19 +168,21 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
         <rect x="250" y="424" width="12" height="12"/><rect x="420" y="254" width="12" height="12"/></g>
         <!-- pits -->
         <circle cx="200" cy="200" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/><circle cx="480" cy="480" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/>
-        <g font-family="IBM Plex Sans KR" font-size="10" fill="#9a9a9a"><text x="186" y="230">Baron</text><text x="462" y="510">Dragon</text>
-        <text x="300" y="34">TOP LANE</text><text x="300" y="656">BOT LANE</text></g>
       </svg></div>
-<div class="benchb" id="bench"><h3>Bench<i>벤치</i></h3></div>
+<div class="benchb" id="bench"><h3>Bench</h3></div>
 
-<div class="confirm"><div><b>1 transfer</b> · free · <span class="out">Siwoo 7.5억</span> → <b>Kingen 6.5억</b> · bank 0.5 → 1.5억</div><span><span class="reset">Reset</span><button class="save">Review and confirm ›</button></span></div>
+<div class="confirm"><div><b>1 transfer</b> · −6 · <span class="out">Siwoo 7.5억</span> → <b>Kingen 6.5억</b> · bank 0.5억 → 1.5억</div><span><span class="reset">Reset</span><button class="save">Review and confirm ›</button></span></div>
 </main>
 <aside>
-<section class="pl2"><h2>Pick a replacement for Siwoo</h2>
+<section class="pl2"><h2>Replacing Siwoo</h2>
 <div class="flt"><span class="on">All roles</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span></div>
 <div class="flt2"><span class="srch">Search a player</span><span>Sort: Points ▾</span><span>Team: All ▾</span></div>
-<table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
+<table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th></th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
 </section>
+<div class="done"><h3>Confirmed · Week 4</h3>
+<div class="cf"><span class="t">Tue 21:10</span><span><b>Kiin → Zeus</b></span><span class="c">−6</span><span class="u">Undo</span></div>
+<div class="cf old"><span class="t">Mon 18:02</span><span><b>Peyz → Ruler, Lehends → Delight</b></span><span class="c">free</span><span></span></div>
+</div>
 </aside>
 </div>
 <script>// Made-up LCK Cup Week 4 for the Pick Team wireframes. Every number is an example.
@@ -220,7 +229,9 @@ const PL = [
  ["bot","Hype","KRX","5.5","31","4%",0],["top","Clear","BFX","5.5","29","3%",0],["mid","Clozer","BRO","5.0","27","5%",0],
  ["sup","Pollu","BRO","4.5","26","2%",0]];
 const WHY = ["", "team full", "over 8.0억"];
-document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[6] > 0) - (b[6] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2]).map((x) => x.slice(2)).join("<br>")}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
+const ARW = { Chovy: "▲", Kingen: "▲", DuDu: "▼", Aiming: "▼", Hype: "▲", Clear: "▼", Lucid: "▲" };
+const arw = (n) => ARW[n] ? `<span class="ar ${ARW[n] === "▼" ? "dn" : ""}">${ARW[n]}</span>` : "";
+document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[6] > 0) - (b[6] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="arw">${arw(r[1])}</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2]).map((x) => x.slice(2)).join("<br>")}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
 const MINE = new Set();
 void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
 </script></body></html>

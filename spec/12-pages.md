@@ -15,6 +15,13 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Pick Team** and **Transfers**, as FPL's. See [Pick Team and Transfers](#pick-team-and-transfers).
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
+  - Rift view and Card view, Rift on the first visit, then remembered, as Pick Team.
+  - Your own week (Craig, 14 Nov 2026): your Star, the top starter after the Carry ×1.5; your
+    Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
+    ownership. Home keeps the global star and flop.
+  - The Carry's games show your Carry's points beside the average Carry's.
+  - Points to climb overall: see [docs/to-grill.md](../docs/to-grill.md) (rank tiers).
+  - Its layout is the approved picture (`docs/design/approved/points/`).
 - **Leagues** ([spec/08](08-leagues.md)).
 - **Stats**: every stat Flol holds, the scoring lines first ("Whatever stats we have with scoring
   a priority", Craig, 13 Nov 2026).
@@ -25,7 +32,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the
   6th role", Craig, 13 Nov 2026). See [The coach card](#the-coach-card).
 - **Manager profile**: public, as in FPL. Any manager's points, history and transfers open from a
-  league table.
+  league table. Its private leagues show too, as in FPL; a History row opens that week's team
+  (Craig, 14 Nov 2026). Its layout is the approved picture (`docs/design/approved/profile/`).
 - **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
 - **Price changes**: the week's rises and falls. Past moves only, no prediction.
@@ -42,6 +50,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - If the live feed is down, the points panel says so; final points follow
     ([spec/11](11-live-points.md)).
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
+- **Following**: the feed, follows, requests and trucks received ([spec/14](14-following.md)).
 - **Help**, and **Settings** ([below](#settings)).
 
 ## Home
@@ -70,6 +79,11 @@ Grilled 14 Nov 2026.
   Rift view; after that each manager's last choice is remembered.
 - On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in
   the list, greyed, with why, and sorts last.
+- Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the
+  deadline, [spec/02](02-prices-and-budget.md)); his card shows the amount. Example: Faker
+  ▲ ₩0.5억. Before a player's price first moves, nothing shows.
+- Transfers lists each of the gameweek's confirms at the top, each with one Undo
+  ([spec/03](03-transfers.md#undoing-a-transfer)).
 
 ## The player card
 

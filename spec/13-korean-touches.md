@@ -9,7 +9,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 Flol has no sponsors, so made-up Korean sponsors drawn from LCK memes fill the slots FPL sells.
 
 - Where: a "presented by" line in the header, banner slots between sections on pages, and the
-  sponsor's badge on the Overall table. Not on players' shirts: team kits are the teams' own.
+  sponsor's badge beside your Overall tier (Craig, 14 Nov 2026). Not on players' shirts: team
+  kits are the teams' own.
 - Each ad is data an admin adds: a name, art, a line of copy, and where it shows. Claude drafts
   them, and Craig approves each before it goes live.
 - Real players appear only as memes and nicknames, never as a real person endorsing a product.
@@ -20,14 +21,10 @@ Flol has no sponsors, so made-up Korean sponsors drawn from LCK memes fill the s
 - Each slot shows one approved ad, picked at random on each visit. About 10 are ready for the
   beta.
 
-## Protest trucks
+## Trucks
 
-LCK fans park LED protest trucks outside a team's base after bad play.
-
-- Once a gameweek, a manager can send a protest truck to a league-mate who scored below that
-  league's average for the gameweek.
-- It carries a line picked from a preset list, never free text, so nothing needs moderating.
-- It parks on that manager's profile for the gameweek, with the sender's name.
+LCK fans park LED trucks outside a team's base: protest trucks after bad play, coffee trucks to
+cheer. Flol's trucks, and their lines, are in [spec/14](14-following.md#trucks).
 
 ## Birthday week
 

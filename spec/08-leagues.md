@@ -35,6 +35,8 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 - Points carry over: Legend and Rise rank by season points, Split 1 included ("Scores carry
   over").
 - A manager who joins in Split 2 goes into Rise.
+- On the Split 2 tab, Legend and Rise show season points as the total, with a Split 2 column
+  beside it (Craig, 14 Nov 2026).
 - Only Overall splits. Country, team and private leagues stay whole, and the whole Overall table
   stays alongside Legend and Rise.
 
@@ -42,7 +44,8 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 
 - Any manager can make a private league and invite others with a code or a link, as in FPL.
 - A private league's scoring starts from the gameweek its maker picks. Example: a league made in
-  gameweek 4 can count from gameweek 4.
+  gameweek 4 can count from gameweek 4. The choice is this gameweek or a later one, this one by
+  default (Craig, 14 Nov 2026).
 - The maker can rename the league, remove a manager and delete it. Any member can leave. As in
   FPL.
 - The maker can't leave without deleting the league (Craig, 14 Nov 2026).
@@ -60,3 +63,8 @@ As FPL's (Craig, 13 Nov 2026):
   1,920 ▲, Pub League 3rd.
 - A league's table shows rank, a movement arrow, team and manager name, gameweek points and total,
   with the season and each split as tabs above it. A row opens that manager's team.
+- A Carry column shows each manager's Carry for the gameweek in the Week column, on every tab.
+  It shows only once that gameweek's deadline has passed, as FPL hides picks until then (Craig,
+  14 Nov 2026).
+- A chase tag on the manager's own row shows the points to the rank above (16 pts to 1st), their
+  lead over 2nd when 1st (+16 clear), and nothing when level (Craig, 14 Nov 2026).

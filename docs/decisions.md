@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Korean touches grill](#korean-touches-grill-13-nov-2026) · [Settings and sign-in grill](#settings-and-sign-in-grill-13-nov-2026) · [Live points grill](#live-points-grill-13-nov-2026) · [Picture bits grill](#picture-bits-grill-14-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Korean touches grill](#korean-touches-grill-13-nov-2026) · [Settings and sign-in grill](#settings-and-sign-in-grill-13-nov-2026) · [Live points grill](#live-points-grill-13-nov-2026) · [Picture bits grill](#picture-bits-grill-14-nov-2026) · [Following grill](#following-and-trucks-grill-14-nov-2026) · [Transfers ideas grill](#transfers-ideas-grill-14-nov-2026) · [Following design](#following-design-round-14-nov-2026) · [Transfers redraw](#transfers-redraw-14-nov-2026) · [Profile design](#manager-profile-design-round-14-nov-2026) · [Points redraw](#points-redraw-14-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -240,6 +240,57 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md) and the glossary.
 - Rift view and Card view on Pick Team and Transfers, the last choice remembered; greyed players sorted last; Home's muted stream when live and the lineup when idle: yes to each.
 - Chips: asked for a league term instead, then picked buffs over spells and ults; the rename goes everywhere, the code through an issue.
 - Star and flop: "star and flop takes in ownsership too i believe", then a differential star, "but also remember a carry means you own 150% of them"; yes to the formula with effective ownership.
+
+## Transfers ideas grill (14 Nov 2026)
+
+Settled; the spec is [spec/03-transfers.md](../spec/03-transfers.md) and spec/12.
+
+- Buy-back cancels out: "yes and allow an undo transfer somwhere too (at the top?)"; the undo as drawn up, per transfer until the deadline, filed on "File it".
+- Remake wipes the week's hits; a price arrow on each player: yes. A watchlist: "Later".
+- Hits: "up the -4 to -6 too".
+- Several transfers confirm together, as FPL; Undo: "no we probably need to undo the transaction no the indicidual ones (as one trasnfer could be an enabler for another)", then latest confirm first. Undo returns exactly what the confirm used; no arrow before a first price move.
+- Leagues: the Carry column (shown after the deadline) and the chase tag (pts to the rank above, "+16 clear" when 1st, nothing when level): yes.
+
+## Following and trucks grill (14 Nov 2026)
+
+Settled; the spec is [spec/14-following.md](../spec/14-following.md).
+
+- Following in the beta, by request and one-way; the feed's three items; a big Carry at 20+: "Yes, all five". Later: "we could have a notable personalities in the future/show followed teams/players etc".
+- Trucks: asked for research on truck culture first, then anyone you follow; coffee and protest with preset lines, one per person a week; sponsor trucks; a Following page; protest lines never name a player; lines take the manager's numbers.
+- Lines: "get a comedy writer agent in for it", "buuld a db of lines like a game like fm would for dialogue", "use fpl terms/lingo too, explore that, uk english". The first 63 are drafts in docs/research/truck-lines.md.
+
+## Following design round (14 Nov 2026)
+
+Settled; the spec is [spec/14-following.md](../spec/14-following.md), the picture `docs/design/approved/following/`.
+
+- A follow request from the profile only, no search; one timeline, newest first; a following cap held as data: Craig's picks in the round.
+- Trucking past weeks: "live or previous week (if next gameweek hasnt started)".
+- The picture: "Yes, save it".
+
+## Transfers redraw (14 Nov 2026)
+
+Settled; the spec is [spec/03-transfers.md](../spec/03-transfers.md), the picture `docs/design/approved/transfers/`.
+
+- "get fresh eyes on that transfers design and imrpove", "and less obvious esxplaing text too pelse".
+- Undo with changes not yet confirmed: "Undo clears pending too". A Remake or Limitless confirm: listed, no Undo.
+- The picture: "yes save".
+
+## Manager profile design round (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/profile/`.
+
+- Asked "does manager profile have transfer history?", then picked it as the next design.
+- Private leagues shown, as FPL; trucks from the feed only, no Truck button on a profile; a History row opens that week: recommended, picked.
+- The picture: "File and merge".
+
+## Points redraw (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/points/`. Redrawn from the 13 Nov start (PR #47, never merged).
+
+- LiveFPL picks: Carry v average Carry, points to climb, Killer kept; in play / to play dropped.
+- Star and flop on Points are your own; Star after the Carry, Flop the lowest who played, Killer the top scorer you don't own: "As drawn". Rift view first.
+- Points to climb: "rank, we cn use promoted or demoted / challenger needs great arrow essentially since its raw number", then "tiers for overall". Parked in to-grill.
+- The picture: "File and merge".
 
 ## Open
 

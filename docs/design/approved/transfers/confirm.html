@@ -144,10 +144,10 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 
 <nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a class="on">Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
 <div class="page"><main>
-<div class="ph1"><div><h1>Transfers · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">1d 20h 45m</b></div></div></div>
+<div class="ph1"><div><h1>Transfers · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">9h 45m</b></div></div></div>
 <div class="tstats">
-  <div><b>0 of 1</b><span>Free transfers</span></div><div><b>0 pts</b><span>Cost</span></div><div><b>1.5억</b><span>Bank</span></div>
-  <div class="bz" style="max-width:none"><span class="buff2">Remake<small>Play</small></span><span class="buff2">Limitless<small>Play</small></span></div>
+  <div><b>0</b><span>Free transfers</span></div><div><b>−6</b><span>Pending hit</span></div><div><b>1.5억</b><span>Bank</span></div>
+  <div class="bz" style="max-width:none"><span class="buff2">Remake</span><span class="buff2">Limitless</span></div>
 </div>
 <div class="ctl"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span><span class="show">Show: Fixtures ▾</span></div>
 <div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
@@ -167,15 +167,13 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
         <rect x="250" y="424" width="12" height="12"/><rect x="420" y="254" width="12" height="12"/></g>
         <!-- pits -->
         <circle cx="200" cy="200" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/><circle cx="480" cy="480" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/>
-        <g font-family="IBM Plex Sans KR" font-size="10" fill="#9a9a9a"><text x="186" y="230">Baron</text><text x="462" y="510">Dragon</text>
-        <text x="300" y="34">TOP LANE</text><text x="300" y="656">BOT LANE</text></g>
       </svg></div>
-<div class="benchb" id="bench"><h3>Bench<i>벤치</i></h3></div>
+<div class="benchb" id="bench"><h3>Bench</h3></div>
 
-<div class="confirm"><div><b>1 transfer</b> · free · <span class="out">Siwoo 7.5억</span> → <b>Kingen 6.5억</b> · bank 0.5 → 1.5억</div><span><span class="reset">Reset</span><button class="save">Review and confirm ›</button></span></div>
+<div class="confirm"><div><b>1 transfer</b> · −6 · <span class="out">Siwoo 7.5억</span> → <b>Kingen 6.5억</b> · bank 0.5억 → 1.5억</div><span><span class="reset">Reset</span><button class="save">Review and confirm ›</button></span></div>
 </main>
 <aside>
-<section class="pl2"><h2>Pick a replacement for Siwoo</h2>
+<section class="pl2"><h2>Replacing Siwoo</h2>
 <div class="flt"><span class="on">All roles</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span></div>
 <div class="flt2"><span class="srch">Search a player</span><span>Sort: Points ▾</span><span>Team: All ▾</span></div>
 <table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
@@ -231,5 +229,5 @@ const MINE = new Set();
 void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
 </script><div class="veil"></div><div class="sheet2"><h3>Confirm your transfers</h3>
 <table><tr><td class="k">Out</td><td><b>Siwoo</b> DK · Flex · 7.5억</td></tr><tr><td class="k">In</td><td><b>Kingen</b> NS · Flex, plays Top · 6.5억</td></tr>
-<tr><td class="k">Cost</td><td>Free (1 of 1 free used) · 0 pts</td></tr><tr><td class="k">Bank</td><td>0.5억 → <b>1.5억</b></td></tr></table>
+<tr><td class="k">Cost</td><td>−6 · no free transfers left</td></tr><tr><td class="k">Bank</td><td>0.5억 → <b>1.5억</b></td></tr></table>
 <div class="sb"><span>Back</span><button class="save">Confirm</button></div><p>Deadline Wed 07:45 your time · 16:45 KST</p></div></body></html>

@@ -70,6 +70,16 @@ table.lg { width: 100%; border-collapse: collapse; font-size: 14px; } table.lg t
 .fd small { display: block; color: var(--mid); font-size: 12px; } .fd .tk { border: 1px solid var(--line); padding: 2px 8px; font-size: 13px; filter: grayscale(1); }
 .fd.in { grid-template-columns: 150px 1fr; }
 .idea { display: inline-block; background: #fffbe0; border: 1px solid #d8cf8a; color: #5a5420; font-size: 11px; padding: 2px 7px; margin-left: 8px; font-weight: 400; }
+.top2 { align-items: center; }
+.rankc { display: flex; align-items: center; gap: 12px; margin-left: 28px; padding-left: 28px; border-left: 1px solid var(--line); }
+.rankc svg { width: 40px; height: 46px; display: block; }
+.rankc .tn { font-size: 20px; font-weight: 700; letter-spacing: -.3px; line-height: 1.1; }
+.rankc .tn i { font-style: normal; font-weight: 400; color: var(--mid); font-size: 13px; margin-left: 6px; }
+.rankc .rt { font-size: 14px; color: var(--mid); margin-top: 2px; } .rankc .rt b { font-family: "IBM Plex Mono", monospace; color: var(--ink); font-size: 15px; margin-right: 8px; }
+.gup { color: #1f8a3c; font-weight: 600; } .gup::before { content: "▲ "; font-size: 10px; }
+.board { margin-top: 36px; border-top: 1px dashed var(--soft); padding-top: 18px; }
+.board h3 { font-size: 15px; margin-bottom: 12px; }
+.board .st { color: var(--mid); font-size: 12px; margin-bottom: 4px; display: block; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute">
   <defs>
@@ -87,7 +97,7 @@ table.lg { width: 100%; border-collapse: collapse; font-size: 14px; } table.lg t
 <nav class="top"><b class="word">Flol</b><a class="on">Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
 
 <div class="page">
-<div class="top2"><h1>Baron Steal FC</h1><i>바론 스틸 FC</i><span class="sp"></span></div>
+<div class="top2"><h1>Baron Steal FC</h1><i>바론 스틸 FC</i><div class="rankc"><svg viewBox="0 0 40 46"><path d="M20 4 L35 9 V24 C35 33 28 39 20 42 C12 39 5 33 5 24 V9 Z" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 15 H35" stroke="#fff" stroke-width="1" opacity=".45"/><text x="20" y="31" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="12" fill="#fff">I</text></svg><div><div class="tn">Emerald I<i>에메랄드 1</i></div><div class="rt"><b>48,211</b><span class="up">6,904</span></div></div><span class="ph" style="width:50px;height:15px;font-size:9px;margin-left:6px;align-self:flex-start;margin-top:6px">badge</span></div><span class="sp"></span></div>
 <div class="hero"><div><div class="screen"><div class="ph2">LCK stream · English · Twitch</div>
 <div class="ov"><span class="tag live">LIVE</span><b>KRX 1–0 BRO</b><small>Game 2 · Bo3 · LCK Cup Week 3</small><span style="flex:1"></span><a style="color:#fff;font-weight:700">Live ›</a></div></div>
 <div class="pick"><span class="on">LCK English</span><span>LCK 한국어</span><span>Caedrel</span><span class="off">LCK Français · offline</span><span>More ▾</span></div></div><aside class="side"><h2>Your week <span class="tag prov">Not final</span></h2>
@@ -110,7 +120,6 @@ table.lg { width: 100%; border-collapse: collapse; font-size: 14px; } table.lg t
 <div class="fd in"><div class="led2" style="height:40px">SELL YOUR BOT LANER</div><div><b>Truck from Minji</b><small>Week 3</small></div></div>
 <a class="more">Following ›</a></section>
 <section><h2>Leagues</h2><table class="lg"><tr class="hd"><td>League</td><td class="n">Rank</td><td class="m">Move</td></tr>
-<tr><td>Overall <span class="ph" style="display:inline-flex;width:50px;height:15px;font-size:9px;vertical-align:-3px">badge</span></td><td class="n">48,211</td><td class="m up">6,904</td></tr>
 <tr><td>United Kingdom</td><td class="n">1,402</td><td class="m up">233</td></tr><tr><td>T1 supporters</td><td class="n">3,118</td><td class="m up">510</td></tr>
 <tr><td>Pub League</td><td class="n">2nd</td><td class="m up">1</td></tr><tr><td>Flol Discord</td><td class="n">14th</td><td class="m down">2</td></tr></table><a class="more">All leagues ›</a></section>
 </div>

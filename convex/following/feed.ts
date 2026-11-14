@@ -1,4 +1,4 @@
-// A manager's feed (spec/14-following.md, The feed): for each manager he follows, their moves at
+// A manager's feed (spec/14-following.md, The feed): for each manager they follow, their moves at
 // the deadline and how each swap is doing, their points at the end of each series, and a big Carry.
 import type { Transfer } from "../squads/budget";
 import type { BuffEffect } from "../squads/buffs";
@@ -12,7 +12,7 @@ export interface FeedSettings {
   carryMultiplier: number;
 }
 
-/** A finished series of the gameweek: each pick who played in it, by `pickKey`, with his series points. */
+/** A finished series of the gameweek: each pick who played in it, by `pickKey`, with their series points. */
 export interface FinishedSeries {
   id: string;
   finishedAt: number;
@@ -24,7 +24,7 @@ export interface FeedGameweek {
   series: readonly FinishedSeries[];
 }
 
-/** One manager's gameweek: the line-up that scores, who takes the multiplier, and his moves. */
+/** One manager's gameweek: the line-up that scores, who takes the multiplier, and their moves. */
 export interface ManagerWeek {
   managerId: string;
   lineup: readonly ScoringPick[];
@@ -74,7 +74,7 @@ function movesItem(week: ManagerWeek, deadline: number, series: readonly Finishe
   return { kind: "moves", managerId: week.managerId, at: deadline, buff: week.buff, swaps };
 }
 
-/** The manager's points from one series, and any big Carry in it; nothing when none of his
+/** The manager's points from one series, and any big Carry in it; nothing when none of their
  *  line-up played in it. */
 function seriesItems(week: ManagerWeek, series: FinishedSeries, settings: FeedSettings): FeedItem[] {
   const played = week.lineup.filter((scoring) => series.points.has(pickKey(scoring.pick)));

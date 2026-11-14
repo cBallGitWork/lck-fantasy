@@ -47,7 +47,7 @@ export function blockedEitherWay(state: Follows, a: string, b: string): boolean 
   );
 }
 
-/** Why `follower` can't ask to follow `followed`; empty when he can. */
+/** Why `follower` can't ask to follow `followed`; empty when they can. */
 export function requestProblems(state: Follows, follower: string, followed: string): FollowProblem[] {
   if (follower === followed) return [{ rule: "followSelf" }];
   if (blockedEitherWay(state, follower, followed)) return [{ rule: "blocked" }];
@@ -62,7 +62,7 @@ export function requestFollow(state: Follows, follower: string, followed: string
   return { ...state, follows: [...state.follows, { follower, followed, accepted: false }] };
 }
 
-/** The followed manager accepts a request waiting for him. */
+/** The followed manager accepts a request waiting for them. */
 export function acceptFollow(state: Follows, manager: string, follower: string): Follows {
   const request = findFollow(state, follower, manager);
   if (!request || request.accepted) throw new FollowError({ rule: "noRequest" });
@@ -92,7 +92,7 @@ export function block(state: Follows, blocker: string, blocked: string): Follows
   };
 }
 
-/** The managers whose weeks show in `manager`'s feed: those who accepted him, and not blocked. */
+/** The managers whose weeks show in `manager`'s feed: those who accepted them, and not blocked. */
 export function followedBy(state: Follows, manager: string): string[] {
   return state.follows
     .filter((follow) => follow.follower === manager && follow.accepted)

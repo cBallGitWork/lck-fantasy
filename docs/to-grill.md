@@ -13,26 +13,26 @@ Craig's want: Overall shows your rank as a LoL tier, Iron to Challenger, as the 
 His yes came in the Points design round, drawn there as "Overall · Emerald I" and "≈6 pts to
 Diamond IV", and again in chat; not specced.
 
-- The tier leads; the rank out of all managers sits smaller beneath. Example: Gold III,
-  58,000 of 120,000.
+- The tier leads; the overall rank sits smaller beneath, with no total of managers (Craig,
+  14 Nov 2026). Example: Emerald I, 48,211.
 - Promotion and demotion: Points shows your tier and the points to promote, or to avoid
   demotion.
 - Iron to Diamond have divisions IV to I. Master and Grandmaster show the tier name, the rank
-  beneath. Challenger is numbered, needs no rank beneath, and gets a green arrow for its move.
-  Example: Challenger 4.
+  beneath. Challenger is numbered by its overall rank and gets a green arrow for its move.
+  Example: Challenger, 4th ▲2.
 - Cut-offs by percentile, as data, from all-server solo queue data. Diamond IV is the top
   4.4%; the median manager is Gold III, about where Legend (Split 1's top half) ends.
 - Everyone is Unranked until gameweek 1 is final.
 - A rules page explains the tiers. Spec/09 has only a Help page for the beta.
 - Only Overall: country, supporter and private leagues keep plain numbers.
-- Changes Home's approved Leagues card, so it needs a `/design` round.
+- Drawn on Home (approved 14 Nov 2026): the tier with a shield by the team name, and the
+  Leagues card drops its Overall row ([docs/design/approved/home/](design/approved/home/)).
 
 - Master, Grandmaster and Challenger at beta size: a late call, once sign-ups are known (Craig,
   14 Nov 2026). Percentiles alone fail small: at 2,000 managers the top 0.02% is under one
   person; fixed seats are one option (example: Challenger is the top 10).
 
-Open: where the rank out of all managers sits (settled in the `/design` round); whether tiers
-show on Leagues' Overall table and profiles; how the points to promote are estimated.
+Open: whether tiers show on Leagues' Overall table and profiles; how the points to promote are estimated.
 
 Draft cut-offs (top % of Overall), from 2026 tier shares split by Gold's division ratios
 ([nerfplz](https://www.nerfplz.com/2026/08/league-of-legends-rank-distribution.html),

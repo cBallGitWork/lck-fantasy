@@ -21,10 +21,15 @@ Grilled 14 Nov 2026.
 
 - Selling a player and buying him back before the same deadline cancels out, as in FPL: no free
   transfer used, no −6, and his old price kept.
-- At the top of Transfers, the gameweek's confirmed transfers are listed, each with Undo, until
-  the deadline. Example: Siwoo → Kingen, Undo. Undo puts the old player back at his old price and
-  gives back the free transfer or the −6. It isn't offered for transfers made under Remake or
-  Limitless.
+- A manager makes as many transfers as they like, then confirms them together, as in FPL.
+- Undo works on a whole confirm, never one transfer of it, since one sale can pay for another
+  buy (Craig, 14 Nov 2026). At the top of Transfers, each confirm this gameweek is one line with
+  one Undo, until the deadline. Example: Siwoo → Kingen, Doran → Zeus · Undo.
+- Only the latest confirm can be undone; after it, the one before, newest first. A later confirm
+  may spend money an earlier one freed.
+- Undo puts the old players back at their old prices and gives back exactly what the confirm
+  used: free transfers return to the week's count (never above the bank cap of 3), and its −6s
+  are dropped. It isn't offered for transfers made under Remake or Limitless.
 - Playing Remake or Limitless wipes that gameweek's −6s, as FPL's Wildcard and Free Hit do
   ([spec/06](06-buffs.md)).
 

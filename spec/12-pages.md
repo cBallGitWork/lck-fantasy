@@ -42,6 +42,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - If the live feed is down, the points panel says so; final points follow
     ([spec/11](11-live-points.md)).
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
+- **Following**: the feed, follows, requests and trucks received ([spec/14](14-following.md)).
 - **Help**, and **Settings** ([below](#settings)).
 
 ## Home
@@ -72,8 +73,8 @@ Grilled 14 Nov 2026.
   the list, greyed, with why, and sorts last.
 - Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the
   deadline, [spec/02](02-prices-and-budget.md)); his card shows the amount. Example: Faker
-  ▲ ₩0.5억.
-- Transfers lists the gameweek's confirmed transfers at the top, each with Undo
+  ▲ ₩0.5억. Before a player's price first moves, nothing shows.
+- Transfers lists each of the gameweek's confirms at the top, each with one Undo
   ([spec/03](03-transfers.md#undoing-a-transfer)).
 
 ## The player card

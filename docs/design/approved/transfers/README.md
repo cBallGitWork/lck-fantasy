@@ -40,4 +40,4 @@ Where a manager sells and buys players. Reached from **Transfers** in the top ba
 
 ## Still open
 
-Specced 14 Nov 2026 but not drawn yet: the confirmed transfers with Undo at the top, and ▲/▼ price arrows in the list ([spec/03](../../../../spec/03-transfers.md#undoing-a-transfer), [spec/12](../../../../spec/12-pages.md#pick-team-and-transfers)). Hits are now −6.
+Specced 14 Nov 2026 but not drawn yet: each confirm this week with one Undo at the top, and ▲/▼ price arrows in the list ([spec/03](../../../../spec/03-transfers.md#undoing-a-transfer), [spec/12](../../../../spec/12-pages.md#pick-team-and-transfers)). Hits are now −6.

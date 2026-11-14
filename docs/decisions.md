@@ -294,7 +294,7 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 
 ## Pick Team redraw (14 Nov 2026)
 
-Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/pick-team/`. Redrawn from the 13 Nov picture (PR #48, never merged), whose Save rule moves into spec/12.
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/pick-team/`. Redrawn from the 13 Nov picture (PR #48, never merged), whose Save rule ("2 has to be Save", Craig, 13 Nov) moves into spec/12.
 
 - Save in a bar under the pitch, as Transfers; tall photos kept in Card view; all 10 series, as Points; roles as icons only in Rift view: recommended, picked.
 - The picture: "Yes, save".

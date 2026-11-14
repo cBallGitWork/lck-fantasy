@@ -57,7 +57,7 @@ Each folder has a README saying what goes in it.
 | `convex/stats/` | Per-player stats for each game, as the feed sent them, plus the latest live reading. |
 | `convex/scoring/` | Scoring rules as data, the engine that turns stats into series points, and the re-score. |
 | `convex/gameweeks/` | Gameweeks, deadlines and settling a gameweek. |
-| `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, chips, prices. |
+| `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, buffs, prices. |
 | `convex/leagues/` | Global, supporter and private leagues, and their tables. |
 | `convex/achievements/` | The achievement book: the pages, the rules that award them, the awards. |
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |

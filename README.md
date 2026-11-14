@@ -1,6 +1,6 @@
 # Flol
 
-Flol is a free, season-long fantasy game for the LCK (League of Legends Champions Korea) that copies FPL's structure. You get a budget, a squad with a bench, weekly transfers, a captain, chips with LCK-themed names, and global and supporter leagues. The theme is Korean.
+Flol is a free, season-long fantasy game for the LCK (League of Legends Champions Korea) that copies FPL's structure. You get a budget, a squad with a bench, weekly transfers, a captain, buffs with LCK-themed names, and global and supporter leagues. The theme is Korean.
 
 The app is being built. The LCK Cup (January to March 2027) is the planned beta.
 

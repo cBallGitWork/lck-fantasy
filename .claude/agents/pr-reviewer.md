@@ -51,7 +51,7 @@ and its check is marked "not there yet", never passed.
    `docs/to-grill.md` holds is not the product yet.
 3. **The LCK's facts are data.** A fact of a competition (its teams, rosters, splits and dates,
    how many games a series has, a role's name) or a value Craig may tune (a price, a points
-   weight, a chip, a deadline) written as a constant is a RULE BROKEN: each is data, held per
+   weight, a buff, a deadline) written as a constant is a RULE BROKEN: each is data, held per
    competition. FPL's structure is the model the game copies (CLAUDE.md, Decided); a number
    copied from FPL is still this game's data.
 4. **The stack.** A new service or library is in `ARCHITECTURE.md` with its reason, in this diff.

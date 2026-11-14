@@ -1,5 +1,7 @@
 # Pages
 
+**Contents:** [The pages](#the-pages) · [Home](#home) · [Pick Team and Transfers](#pick-team-and-transfers) · [The player card](#the-player-card) · [Settings](#settings) · [The coach card](#the-coach-card) · [Buffs](#buffs)
+
 Craig's answers only, from the `/grill` of 13 Nov 2026. Where this file is silent the rule is
 FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
 [docs/to-grill.md](../docs/to-grill.md). Each page's layout is set by its approved picture
@@ -9,8 +11,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 ## The pages
 
 - **Home**: a status page, not the Points page: the deadline, the last gameweek's points, free
-  transfers and league ranks. While a series is live it shows a Live now banner.
-- **Pick Team** and **Transfers**, as FPL's.
+  transfers and league ranks. See [Home](#home).
+- **Pick Team** and **Transfers**, as FPL's. See [Pick Team and Transfers](#pick-team-and-transfers).
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
 - **Leagues** ([spec/08](08-leagues.md)).
@@ -39,8 +41,35 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - With nothing live, it shows the next series and a countdown.
   - If the live feed is down, the points panel says so; final points follow
     ([spec/11](11-live-points.md)).
-  - Home shows a Live now banner while a series is live; it never redirects.
+  - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
 - **Help**, and **Settings** ([below](#settings)).
+
+## Home
+
+Craig's yes in the Home design round, grilled 14 Nov 2026. Its layout is the approved picture
+(`docs/design/approved/home/`).
+
+- **A series live:** the stream, muted, with the Live page's picker and the manager's remembered
+  pick. **Live ›** opens the Live page.
+- **Nothing live:** the manager's 7 starters for the week as a broadcast lineup, with C and V;
+  the next series on stream and when; **Pick Team ›**.
+- **Star and flop** of the last gameweek, the same pair for every manager, each shown with its
+  points and effective ownership.
+  - Effective ownership: the share of managers starting a player, a Carry counting 1.5. Example:
+    40% start Faker, 20% of them as Carry, so 50%.
+  - Star: the most points × (1 − effective ownership). Example: Kiin, 15 points at 8%, beats
+    Chovy, 18 at 45% (13.8 against 9.9).
+  - Flop: the fewest points among the 10 highest by effective ownership. Example: Faker, 2 points
+    at 62%.
+
+## Pick Team and Transfers
+
+Grilled 14 Nov 2026.
+
+- Both have Rift view and Card view (FPL's Pitch View and List View). The first visit opens on
+  Rift view; after that each manager's last choice is remembered.
+- On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in
+  the list, greyed, with why, and sorts last.
 
 ## The player card
 
@@ -89,8 +118,8 @@ Grilled 13 Nov 2026.
 The same as the player card, with the coach's lines in place of a player's. A Roster tab, the
 team's players and prices, replaces Champions.
 
-## Chips
+## Buffs
 
-Chips confirm as in FPL: Remake and Limitless are final once confirmed, like FPL's Wildcard and
+Buffs confirm as in FPL: Remake and Limitless are final once confirmed, like FPL's Wildcard and
 Free Hit; Bench Boost and Dual Carry can be cancelled until the deadline
-([spec/06](06-chips.md)).
+([spec/06](06-buffs.md)).

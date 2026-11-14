@@ -2,7 +2,7 @@
 
 Where a manager sells and buys players. Reached from **Transfers** in the top bar. Drawn at 1440 in the same frame as Points and Pick Team: the squad on the left, the bench under it, the player list on the right.
 
-**Approved:** Craig, 13 Nov 2026. He asked for players who are too dear to be greyed but still listed ("we need to see those players"), then said "Yes save". Later that day he cut Form, asked for both of the week's series under each player and in Next, a toggle for what shows under a player, no explainer sentences, and the transfer chips at the top as FPL's, the others on Pick Team. Names, teams and numbers are a made-up LCK Cup Week 4, not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type.
+**Approved:** Craig, 13 Nov 2026. He asked for players who are too dear to be greyed but still listed ("we need to see those players"), then said "Yes save". Later that day he cut Form, asked for both of the week's series under each player and in Next, a toggle for what shows under a player, no explainer sentences, and the transfer buffs at the top as FPL's, the others on Pick Team. Names, teams and numbers are a made-up LCK Cup Week 4, not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type.
 
 | File | Shows |
 |---|---|
@@ -25,7 +25,7 @@ Where a manager sells and buys players. Reached from **Transfers** in the top ba
 - **Top strip**: free transfers, the points cost, the bank.
 - **Bottom bar**: the transfers so far, Reset, and Review and confirm.
 - **Confirm sheet**: what changes, the cost and the bank. Back or Confirm, with the deadline.
-- **Remake and Limitless**: the transfer chips, at the top beside the bank, as FPL's Wildcard and Free Hit. Bench Boost and Dual Carry stay on Pick Team.
+- **Remake and Limitless**: the transfer buffs (FPL's chips; renamed 14 Nov 2026, the pictures too), at the top beside the bank, as FPL's Wildcard and Free Hit. Bench Boost and Dual Carry stay on Pick Team.
 
 ## Placeholders
 

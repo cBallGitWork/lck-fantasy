@@ -99,16 +99,18 @@ F1 Fantasy, Sleeper and gol.gg).
   is live it also shows the gameweek's transfers in and out.
 - **News**: a short line and a flag an admin writes by hand, as FPL's staff do. Example: Benched
   for the Wednesday series.
-- **Front**, before any tab: his points in the last 3 gameweeks and his next series. Example:
-  9 · 14 · 6, next T1 v Gen.G, Wednesday, Bo3.
+- **Front**, before any tab: his points in the last 3 series and the next 3 series, by series,
+  not by gameweek (Craig, 14 Nov 2026). Example: 10 · 12 · 5, next T1 v KT, Wednesday, Bo3.
 - **Tabs**:
   - This week: each series and each game, with the champion, the scoring lines, the points, and
     which 2 games counted.
   - Fixtures: his team's next series, Bo3 or Bo5.
-  - History: each gameweek's points and price, then past seasons.
+  - History: each series' points, with each gameweek's price and total shown once, then past
+    seasons: past LCK seasons scored by Flol's lines, as many years as the data allows (Craig,
+    14 Nov 2026).
   - Champions: each champion he has played this season, with games and average points.
 - **Season stats**: the scoring lines only ([spec/05](05-scoring.md)), as per-game averages and
-  totals.
+  totals, beside every tab (Craig, 14 Nov 2026).
 - **Buttons**, as FPL's, by where it opened: transfer in or out, Make Carry, Make Vice-carry,
   substitute.
 - **Compare**, in the beta: two players side by side, with header stats, form, scoring lines and

@@ -2,6 +2,8 @@
 
 Research for Flol, 14 Nov 2026. Background only, not product.
 
+**Contents:** [Summary](#summary) · [Method](#method) · [Protest trucks](#1-protest-trucks-트럭-시위) · [Coffee trucks](#2-support-and-coffee-trucks-커피차-서포트) · [Brand and joke trucks](#3-brand-and-joke-trucks) · [The meme abroad](#4-the-meme-abroad) · [For the game](#5-for-the-game) · [Sensitivities](#sensitivities) · [Sources](#sources)
+
 ## Summary
 
 1. Korean fans rent LED trucks to drive or park outside a team's office or LoL Park, with rotating messages. It started in K-pop (late 2019) and reached LoL in November 2020 (T1 and KT).

@@ -15,6 +15,13 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Pick Team** and **Transfers**, as FPL's. See [Pick Team and Transfers](#pick-team-and-transfers).
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
+  - Rift view and Card view, Rift on the first visit, then remembered, as Pick Team.
+  - Your own week (Craig, 14 Nov 2026): your Star, the top starter after the Carry ×1.5; your
+    Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
+    ownership. Home keeps the global star and flop.
+  - The Carry's games show your Carry's points beside the average Carry's.
+  - Points to climb overall: see [docs/to-grill.md](../docs/to-grill.md) (rank tiers).
+  - Its layout is the approved picture (`docs/design/approved/points/`).
 - **Leagues** ([spec/08](08-leagues.md)).
 - **Stats**: every stat Flol holds, the scoring lines first ("Whatever stats we have with scoring
   a priority", Craig, 13 Nov 2026).

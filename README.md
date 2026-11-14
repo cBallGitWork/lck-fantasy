@@ -8,6 +8,7 @@ The app is being built. The LCK Cup (January to March 2027) is the planned beta.
 - [To grill](docs/to-grill.md): what's still open.
 - [ARCHITECTURE.md](ARCHITECTURE.md): the services, and why.
 - [Data model](docs/data-model.md): how the LCK is held.
+- [The build pipeline](docs/PIPELINE.md): how issues get built.
 - [Decisions so far](docs/decisions.md): the history of what Craig said and when.
 - [Research](docs/research/): the competitors, the LCK season, scoring and pricing, weekly logic and onboarding.
 

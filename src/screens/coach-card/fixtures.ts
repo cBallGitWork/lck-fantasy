@@ -51,6 +51,7 @@ const GAME_LINES: Record<string, Pick<WeekGame, "result" | "lines">[]> = {
 const COUNTED: Record<string, boolean[]> = { "w3-wed-1": [true, false, true], "w3-sat-2": [true, true] };
 
 const COACH = POINTS_SQUAD.find((p) => p.slot === "coach");
+if (!COACH?.series) throw new Error("Week 3's Points squad has no coach with series");
 
 function weekSeries(id: string, games: number[], coachResult?: number): WeekSeries {
   const s = WEEK3_SERIES_AT_POINTS.find((x) => x.id === id);
@@ -75,7 +76,7 @@ function weekSeries(id: string, games: number[], coachResult?: number): WeekSeri
   };
 }
 
-const WEEK3_COACH_SERIES = (COACH?.series ?? []).map((s) => weekSeries(s.id, s.games, s.coachResult));
+const WEEK3_COACH_SERIES = COACH.series.map((s) => weekSeries(s.id, s.games, s.coachResult));
 const WEEK3: CoachWeek = {
   week: 3,
   series: WEEK3_COACH_SERIES,

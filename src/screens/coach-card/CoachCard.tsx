@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Crest, LinkGo, OutlinedKey, SideSection, Table, Tabs, Tag } from "../../parts";
+import { Crest, Empty, LinkGo, OutlinedKey, SideSection, Table, Tabs, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CoachFixtures, CoachHistoryTab, CoachRoster, CoachThisWeek } from "./CoachTabs";
@@ -63,10 +63,7 @@ export function CoachCard({
           <Strip past={data.past} next={data.next} />
           <Tabs tabs={COACH_TABS} chosen={tab} onChoose={onTab} label="Coach card" />
           <div className="coach-card__main">
-            {tab === "This week" && data.week && <CoachThisWeek week={data.week} />}
-            {tab === "Fixtures" && data.fixtures && <CoachFixtures rows={data.fixtures} team={head.team} />}
-            {tab === "History" && data.history && <CoachHistoryTab history={data.history} team={head.team} />}
-            {tab === "Roster" && data.roster && <CoachRoster rows={data.roster} />}
+            <TabPanel data={data} tab={tab} />
           </div>
         </div>
         <div className="coach-card__rail">
@@ -75,6 +72,24 @@ export function CoachCard({
       </div>
     </article>
   );
+}
+
+/** What an opening without data for a tab shows there, so the panel is never blank. */
+export const EMPTY_TAB: Record<CoachTab, string> = {
+  "This week": "No series yet",
+  Fixtures: "No fixtures left",
+  History: "No history yet",
+  Roster: "No roster yet",
+};
+
+/** The chosen tab's panel, or its empty state when this opening has no data for it. */
+function TabPanel({ data, tab }: { data: CoachCardData; tab: CoachTab }) {
+  const team = data.head.team;
+  if (tab === "This week" && data.week) return <CoachThisWeek week={data.week} />;
+  if (tab === "Fixtures" && data.fixtures) return <CoachFixtures rows={data.fixtures} team={team} />;
+  if (tab === "History" && data.history) return <CoachHistoryTab history={data.history} team={team} />;
+  if (tab === "Roster" && data.roster) return <CoachRoster rows={data.roster} />;
+  return <Empty title={EMPTY_TAB[tab]} />;
 }
 
 function Figure({ figure, children }: { figure: string; children: ReactNode }) {

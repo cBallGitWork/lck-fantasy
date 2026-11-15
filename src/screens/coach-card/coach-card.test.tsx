@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
-import { CoachCard } from "./CoachCard";
+import { CoachCard, EMPTY_TAB } from "./CoachCard";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
 import { ordinal, signed } from "./format";
 import { CoachCardPage, FIRST_TAB } from "./index";
@@ -34,6 +34,18 @@ describe("the page", () => {
     const out = html(<CoachCardPage data={FROM_POINTS} from="points" onClose={noop} />);
     expect(out).toMatch(/aria-current="page"[^>]*>Points/);
     expect(out).toMatch(/aria-pressed="true"[^>]*>This week</);
+  });
+});
+
+describe("a tab without data", () => {
+  test("shows its empty state, never a blank panel", () => {
+    expect(FROM_POINTS.history).toBeUndefined();
+    expect(FROM_POINTS.roster).toBeUndefined();
+    expect(FROM_PICK_TEAM.week).toBeUndefined();
+    expect(text(card(FROM_POINTS, "points", "History"))).toContain(EMPTY_TAB.History);
+    expect(text(card(FROM_POINTS, "points", "Roster"))).toContain(EMPTY_TAB.Roster);
+    expect(text(card(FROM_PICK_TEAM, "pickTeam", "This week"))).toContain(EMPTY_TAB["This week"]);
+    expect(text(card(FROM_PICK_TEAM, "pickTeam", "History"))).not.toContain(EMPTY_TAB.History);
   });
 });
 

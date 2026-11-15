@@ -139,7 +139,7 @@ export interface RosterRow {
   mine?: boolean;
 }
 
-/** Everything one opening of the card shows. A tab with nothing to show is left out. */
+/** Everything one opening of the card shows. A tab with no data shows its empty state. */
 export interface CoachCardData {
   head: CoachHead;
   meta: CoachMeta;

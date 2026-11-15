@@ -47,5 +47,9 @@ export const STATS_PLAYERS: StatsPlayer[] = [
   { role: "coach", name: "Joker", team: "KRX", priceEok: 5.0, move: 0, ownedPct: 2, points: 11 },
 ];
 
-/** A player in the Stats list, if he is in it. */
-export const statsOf = (name: string): StatsPlayer | undefined => STATS_PLAYERS.find((p) => p.name === name);
+/** A player in the Stats list; one missing from it is a broken fixture. */
+export function statsOf(name: string): StatsPlayer {
+  const found = STATS_PLAYERS.find((p) => p.name === name);
+  if (!found) throw new Error(`${name} is not in the Stats list`);
+  return found;
+}

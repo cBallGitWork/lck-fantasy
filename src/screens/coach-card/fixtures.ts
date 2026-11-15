@@ -2,8 +2,9 @@
 // moments the picture draws: from Pick Team (Week 4, Tuesday) and from Points (Week 3 Saturday,
 // T1 v DK game 2 live). This week's series and points come from the shared Week 3 (week3.ts).
 import { hangulOf, ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
-import { fromSide, opponent, seriesById, seriesOf } from "../../fixtures/series";
-import { BEST_OF, POINTS_SQUAD, WEEK3_SERIES_AT_POINTS, WEEK4_SERIES } from "../../fixtures/week3";
+import { fromSide, seriesById } from "../../fixtures/series";
+import { KKOMA_OWNED_PCT, KKOMA_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
+import { BEST_OF, pickedAt, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
 import { bestOf, type StripNext, type StripPast } from "../../parts";
 import type { RoleKey } from "../../rift";
 import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, WeekGame, WeekSeries } from "./types";
@@ -23,33 +24,18 @@ const SERIES_WON = 3;
 const SERIES_LOST = -1;
 const FORMAT = bestOf(BEST_OF);
 
-const NEXT: StripNext[] = [
-  { week: 4, day: "Wed", opponent: "KT", bestOf: BEST_OF },
-  { week: 4, day: "Sat", opponent: "GEN", bestOf: BEST_OF },
-  { week: 5, day: "Thu", opponent: "BRO", bestOf: BEST_OF },
-];
+const NEXT: StripNext[] = T1_NEXT3.map(({ week, day, opponent, bestOf }) => ({ week, day, opponent, bestOf }));
 
-const PAST_BEFORE_SAT: StripPast[] = [
-  { week: 2, day: "Fri", opponent: "BFX", points: 4 },
-  { week: 3, day: "Wed", opponent: "HLE", points: 8 },
-];
+/** His last three series before Week 4, oldest first. */
+const PAST: StripPast[] = last3(KKOMA_SEASON).map(({ week, day, opponent, points }) => ({ week, day, opponent, points }));
 
-/** T1's next series, as the player card's Fixtures draws them (Week 4's from week3.ts). */
-const T1_WEEK4: FixtureRow[] = seriesOf(WEEK4_SERIES, "T1").map((s) => ({
-  week: 4,
-  day: s.day,
-  opponent: opponent(s, "T1"),
-  format: FORMAT,
-  local: s.local,
-  kst: s.kst,
-}));
-const LATER: FixtureRow[] = [
-  { week: 5, day: "Thu", opponent: "BRO", format: FORMAT, local: "08:00", kst: "17:00" },
-  { week: 5, day: "Sun", opponent: "KRX", format: FORMAT, local: "10:30", kst: "19:30" },
-  { week: 6, day: "Wed", opponent: "DK", format: FORMAT, local: "08:00", kst: "17:00" },
-  { week: 6, day: "Sat", opponent: "HLE", format: FORMAT, local: "10:30", kst: "19:30" },
-];
-const FIXTURES = [...T1_WEEK4, ...LATER];
+/** T1's next series, as the player card's Fixtures draws them. */
+const FIXTURES: FixtureRow[] = T1_FIXTURES.map(({ week, day, opponent, local, kst }) => ({ week, day, opponent, format: FORMAT, local, kst }));
+
+/** His price in 억 in each of T1's series, in T1_PLAYED's order (newest first). */
+const HISTORY_PRICES = [7.0, 7.0, 6.5, 6.5, 6.5, 6.5];
+
+const AT_PICK_TEAM = pickedAt(HEAD.name);
 
 /** Each game's result and the coach lines it scored, beside its points from week3.ts. */
 const GAME_LINES: Record<string, Pick<WeekGame, "result" | "lines">[]> = {
@@ -109,27 +95,33 @@ const lines = (counts: [number, number][]): SeasonLine[] =>
 /** Opened from Pick Team: Week 4, Tuesday, before the deadline. History is the drawn tab. */
 export const FROM_PICK_TEAM: CoachCardData = {
   head: HEAD,
-  meta: { priceEok: 7.0, moveEok: 0.5, form: 9.0, formRank: 1, ownedPct: 22, ownedRank: 2, transfersIn: 310, transfersOut: 95 },
-  season: {
-    points: 27,
-    rank: 1,
-    of: 10,
-    games: 15,
-    lines: lines([[8, 6], [7, 5], [3, 2], [1, 0], [0, 0], [5, 15], [1, -1]]),
+  meta: {
+    priceEok: AT_PICK_TEAM.priceEok,
+    moveEok: KKOMA_SEASON.riseEok,
+    form: AT_PICK_TEAM.form,
+    formRank: 1,
+    ownedPct: KKOMA_OWNED_PCT,
+    ownedRank: 2,
+    transfersIn: 310,
+    transfersOut: 95,
   },
-  past: [...PAST_BEFORE_SAT, { week: 3, day: "Sat", opponent: "DK", points: 8 }],
+  season: {
+    points: statsOf(HEAD.name).points,
+    rank: KKOMA_SEASON.place,
+    of: KKOMA_SEASON.of,
+    games: KKOMA_SEASON.games,
+    lines: KKOMA_SEASON.lines.map(({ line, total, points, series }) => ({ name: line, total, points, series: series ?? false })),
+  },
+  past: PAST,
   next: NEXT,
   fixtures: FIXTURES,
   history: {
     competition: "LCK Cup 2027",
-    rows: [
-      { week: 3, day: "Sat", opponent: "DK", score: [2, 0], games: 2, priceEok: 7.0, points: 8 },
-      { week: 3, day: "Wed", opponent: "HLE", score: [2, 1], games: 3, priceEok: 7.0, points: 8 },
-      { week: 2, day: "Fri", opponent: "BFX", score: [2, 1], games: 3, priceEok: 6.5, points: 4 },
-      { week: 2, day: "Wed", opponent: "DNS", score: [2, 0], games: 2, priceEok: 6.5, points: 4 },
-      { week: 1, day: "Sat", opponent: "NS", score: [2, 0], games: 2, priceEok: 6.5, points: 3 },
-      { week: 1, day: "Wed", opponent: "GEN", score: [1, 2], games: 3, priceEok: 6.5, points: 0 },
-    ],
+    rows: playedBy(KKOMA_SEASON).map(({ week, day, opponent, score, games, points, id }, i) => {
+      const priceEok = HISTORY_PRICES[i];
+      if (priceEok === undefined) throw new Error(`${HEAD.name} has no price for ${id}`);
+      return { week, day, opponent, score, games, priceEok, points };
+    }),
     past: [
       { season: "LCK 2026", games: 98, points: 284 },
       { season: "LCK 2025", games: 104, points: 322 },
@@ -147,7 +139,7 @@ export const FROM_PICK_TEAM: CoachCardData = {
 /** Opened from Points: Week 3 Saturday, T1 v DK game 2 live. This week is the drawn tab. */
 export const FROM_POINTS: CoachCardData = {
   head: HEAD,
-  meta: { priceEok: 7.0, moveEok: 0.5, form: 5.5, formRank: 2, ownedPct: 22, ownedRank: 2, transfersIn: 204, transfersOut: 58 },
+  meta: { priceEok: 7.0, moveEok: 0.5, form: 5.5, formRank: 2, ownedPct: KKOMA_OWNED_PCT, ownedRank: 2, transfersIn: 204, transfersOut: 58 },
   season: {
     points: 11,
     rank: 3,
@@ -155,7 +147,7 @@ export const FROM_POINTS: CoachCardData = {
     games: 10,
     lines: lines([[3, 1], [2, 1], [1, 1], [0, 0], [0, 0], [3, 9], [1, -1]]),
   },
-  past: [...PAST_BEFORE_SAT, { week: 3, day: "Sat", opponent: "DK", points: 2, live: true }],
+  past: [...PAST.slice(0, 2), { week: 3, day: "Sat", opponent: "DK", points: 2, live: true }],
   next: NEXT,
   fixtures: FIXTURES,
   week: WEEK3,

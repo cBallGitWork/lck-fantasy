@@ -10,6 +10,7 @@ Only data two or more screens share lives here. A screen's own made-up data goes
 - `squads.ts`: Baron Steal FC's squads at the Points and Pick Team moments, his Week 3 totals, and Week 3's perfect game.
 - `players.ts`: the Stats picture's players and coaches with prices, owned % and points (`statsOf`).
 - `standings.ts`: the two groups' standings after Week 3, as the LCK hub, Series and Stats share them (`standingOf`, `recordOf`, `gamesOf`).
+- `t1Season.ts`: T1's series played and to come, and Faker's and kkOma's season figures, as their cards and Compare share them.
 - `myLeagues.ts`: Baron Steal FC's Overall rank and tier and his four other leagues, as Home, Points and Leagues list them.
 - `series.ts`: a series by its id, a team's series, its opponent, a series read from one team's side, and the `v KT · v GEN` line.
 - `rosters.ts`: the LCK teams' rosters in role order with hangul (`ROSTERS`, `hangulOf`), and T1's prices.

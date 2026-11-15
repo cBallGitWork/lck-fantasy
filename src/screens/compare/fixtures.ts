@@ -3,7 +3,8 @@
 // are the Stats and Transfers pictures'. Only these four have lines until the backend (#36).
 
 import { hangulOf } from "../../fixtures/rosters";
-import { STATS_PLAYERS, type TeamCode } from "../../fixtures/week3";
+import { FAKER_SEASON, KKOMA_OWNED_PCT, KKOMA_SEASON, last3, T1_NEXT3, type T1MemberSeason, type T1Series } from "../../fixtures/t1Season";
+import { pickedAt, playerId, statsOf, STATS_PLAYERS, type TeamCode } from "../../fixtures/week3";
 import type { PersonRole } from "../../rift";
 
 
@@ -49,47 +50,39 @@ export interface ComparePlayer {
   lines: ScoringLine[];
 }
 
-const NEXT_T1: NextSeries[] = [
-  { when: "W4 · Wed", opp: "KT" },
-  { when: "W4 · Sat", opp: "GEN" },
-  { when: "W5 · Thu", opp: "BRO" },
-];
+/** A series' week and day: `W4 · Wed`. */
+const when = (s: T1Series) => `W${s.week} · ${s.day}`;
+
+const NEXT_T1: NextSeries[] = T1_NEXT3.map((s) => ({ when: when(s), opp: s.opponent }));
+
+/** A T1 member's side, from his card's season figures, his Pick Team price and form, and Stats. */
+function t1Member(season: T1MemberSeason, role: PersonRole, ownedPct: number): ComparePlayer {
+  const { name } = season;
+  const pick = pickedAt(name);
+  return {
+    id: playerId(name),
+    name,
+    hangul: hangulOf(name),
+    team: "T1",
+    role,
+    games: season.games,
+    season: { points: statsOf(name).points, rank: season.place, among: season.of },
+    form: pick.form,
+    priceEok: pick.priceEok,
+    riseEok: season.riseEok,
+    ownedPct,
+    last3: last3(season).map((s) => ({ when: when(s), opp: s.opponent, points: s.points })),
+    next3: NEXT_T1,
+    lines: [...season.lines],
+  };
+}
 const NEXT_GEN: NextSeries[] = [
   { when: "W4 · Thu", opp: "BRO" },
   { when: "W4 · Sat", opp: "T1" },
   { when: "W5 · Wed", opp: "DNS" },
 ];
 
-export const FAKER: ComparePlayer = {
-  id: "faker",
-  name: "Faker",
-  hangul: hangulOf("Faker"),
-  team: "T1",
-  role: "mid",
-  games: 15,
-  season: { points: 58, rank: 2, among: 10 },
-  form: 19.3,
-  priceEok: 18.5,
-  riseEok: 0.5,
-  ownedPct: 46,
-  last3: [
-    { when: "W2 · Fri", opp: "BFX", points: 10 },
-    { when: "W3 · Wed", opp: "HLE", points: 12 },
-    { when: "W3 · Sat", opp: "DK", points: 10 },
-  ],
-  next3: NEXT_T1,
-  lines: [
-    { line: "Kills", total: 73, points: 22 },
-    { line: "Assists", total: 86, points: 16 },
-    { line: "Deaths", total: 26, points: -4 },
-    { line: "Gold lead at 15", total: 9, points: 9 },
-    { line: "Solo kills", total: 5, points: 5 },
-    { line: "First bloods", total: 3, points: 3 },
-    { line: "Deathless", total: 4, points: 4 },
-    { line: "Quadra kills", total: 1, points: 1 },
-    { line: "Steals", total: 2, points: 2 },
-  ],
-};
+export const FAKER: ComparePlayer = t1Member(FAKER_SEASON, "mid", statsOf("Faker").ownedPct);
 
 export const CHOVY: ComparePlayer = {
   id: "chovy",
@@ -122,34 +115,7 @@ export const CHOVY: ComparePlayer = {
   ],
 };
 
-export const KKOMA: ComparePlayer = {
-  id: "kkoma",
-  name: "kkOma",
-  hangul: hangulOf("kkOma"),
-  team: "T1",
-  role: "coach",
-  games: 15,
-  season: { points: 27, rank: 1, among: 10 },
-  form: 9.0,
-  priceEok: 7.0,
-  riseEok: 0.5,
-  ownedPct: 22,
-  last3: [
-    { when: "W2 · Fri", opp: "BFX", points: 4 },
-    { when: "W3 · Wed", opp: "HLE", points: 8 },
-    { when: "W3 · Sat", opp: "DK", points: 8 },
-  ],
-  next3: NEXT_T1,
-  lines: [
-    { line: "First tower", total: 8, points: 6 },
-    { line: "Most drakes", total: 7, points: 5 },
-    { line: "Most barons", total: 3, points: 2 },
-    { line: "Most elders", total: 1, points: 0 },
-    { line: "Quick win", total: 0, points: 0 },
-    { line: "Series won", total: 5, points: 15, series: true },
-    { line: "Series lost", total: 1, points: -1, series: true },
-  ],
-};
+export const KKOMA: ComparePlayer = t1Member(KKOMA_SEASON, "coach", KKOMA_OWNED_PCT);
 
 export const RYU: ComparePlayer = {
   id: "ryu",

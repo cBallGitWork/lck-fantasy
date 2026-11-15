@@ -118,8 +118,10 @@ describe("the page", () => {
     expect(await renderRoute("/leagues")).toContain('href="/manager/tom-reid"');
   });
 
-  test("a table with no made-up data shows Loading", async () => {
-    expect(await renderRoute("/leagues/united-kingdom")).toContain('aria-label="Loading United Kingdom"');
+  test("a table with no made-up data says so, never loads forever", async () => {
+    const out = await renderRoute("/leagues/united-kingdom");
+    expect(out).toContain("No table yet");
+    expect(out).not.toContain("Loading");
   });
 });
 

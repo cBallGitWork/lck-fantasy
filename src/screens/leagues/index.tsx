@@ -42,7 +42,11 @@ export function LeaguesScreen() {
     onFindMe: () => setPage(FIRST_PAGE),
   };
   const actions: LeagueActions = {
-    onCopyLink: () => void navigator.clipboard?.writeText(new URL(pathTo({ to: PATHS.league, params: { leagueId: league.id } }), location.origin).href),
+    onCopyLink: () => {
+      const link = new URL(pathTo({ to: PATHS.league, params: { leagueId: league.id } }), location.origin).href;
+      if (!navigator.clipboard) return console.error("Copy link: no clipboard here", link);
+      navigator.clipboard.writeText(link).catch((err: unknown) => console.error("Copy link failed", err));
+    },
     onRename: (name) => setNames({ ...names, [league.id]: name }),
     onRemoveManager: toSheet,
     onDelete: toSheet,

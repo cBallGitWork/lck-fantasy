@@ -1,5 +1,5 @@
 import { useRef, useState, type ReactNode } from "react";
-import { Loading, Menu, OutlinedKey, Tabs, type MenuItem } from "../../parts";
+import { Empty, Menu, OutlinedKey, Tabs, type MenuItem } from "../../parts";
 import { Pager } from "./Pager";
 import { Standings } from "./Standings";
 import { TABLE_TABS, type LeagueView, type Standings as StandingsData, type TableTab } from "./types";
@@ -8,7 +8,7 @@ import { TABLE_TABS, type LeagueView, type Standings as StandingsData, type Tabl
 export interface TableProps {
   tab: TableTab;
   onTab: (tab: TableTab) => void;
-  /** The table on this tab and page; absent while it loads. */
+  /** The table on this tab and page; absent when there is none yet. */
   table?: StandingsData;
   page: number;
   onPage: (page: number) => void;
@@ -38,7 +38,7 @@ export function LeagueHead({ name, sub, children }: { name: ReactNode; sub?: str
 
 /** The table, and its pager where it holds more than one page. */
 export function TableBody({ league, table, page, onPage, onFindMe }: { league: LeagueView } & Omit<TableProps, "tab" | "onTab">) {
-  if (!table) return <Loading rows={5} label={`Loading ${league.name}`} />;
+  if (!table) return <Empty title="No table yet" />;
   return (
     <>
       <Standings table={table} week={league.week} carryShown={league.carryShown} />

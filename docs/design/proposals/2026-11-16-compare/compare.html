@@ -29,75 +29,100 @@ table { width: 100%; border-collapse: collapse; table-layout: fixed; }
 .wrap { padding: 0 24px 24px; }
 h4 { font-size: 12px; font-weight: 600; border-top: 2px solid var(--ink); padding-top: 8px; margin: 22px 0 4px; display: flex; justify-content: space-between; } h4 span { font-weight: 400; color: var(--mid); }
 th { font-size: 12px; font-weight: 500; color: var(--mid); padding: 0 8px 6px; }
-td { height: 38px; padding: 0 8px; border-top: 1px solid var(--fill); font: 14px "IBM Plex Mono", monospace; color: var(--mid); }
+td { height: 38px; padding: 0 8px; border-top: 1px solid var(--fill); font: 14px "IBM Plex Mono", monospace; color: var(--ink); }
 td.lab { text-align: center; font: 500 13px "IBM Plex Sans KR"; color: var(--ink); background: var(--bg); }
 .L { text-align: right; } .R { text-align: left; }
-td.b { color: var(--ink); font-weight: 600; }
+td.b { font-weight: 700; }
 td.pts { font-size: 14px; }
 td.pts.b { font-size: 14px; }
 td small { font: 12px "IBM Plex Sans KR"; color: var(--mid); margin: 0 6px; }
-tr.big td { height: 52px; } tr.big td.b, tr.big td { font-size: 20px; }
+tr.big td { height: 64px; font-size: 32px; } tr.big td.lab { font-size: 13px; }
 /* series strips, as the card's front */
 .strip { display: flex; gap: 0; } .L .strip { justify-content: flex-end; }
 .strip span { display: inline-flex; flex-direction: column; min-width: 74px; padding: 0 6px; text-align: center; font: 12px "IBM Plex Sans KR"; color: var(--mid); }
 .strip span b { font: 600 20px "IBM Plex Mono", monospace; color: var(--ink); line-height: 1.2; }
-.strip span em { font: 600 14px "IBM Plex Sans KR"; color: var(--ink); font-style: normal; line-height: 1.6; }
-.strip span.first em { text-decoration: underline; text-underline-offset: 3px; }
-tr.str td { height: 64px; }
+.strip span em { font: 400 14px "IBM Plex Sans KR"; color: var(--mid); font-style: normal; line-height: 1.6; }
+.strip span.first em { color: var(--ink); font-weight: 700; }
+tr.str td { height: 60px; }
+.find { border: 1px solid var(--ink); height: 40px; display: flex; align-items: center; padding: 0 12px; font-size: 14px; color: var(--mid); margin-bottom: 10px; }
+.pick td { height: 40px; } .pick td.nm { font: 600 14px "IBM Plex Sans KR"; } .pick td.tm { font: 12px "IBM Plex Sans KR"; color: var(--mid); } .pick .hd { font: 600 12px "IBM Plex Sans KR"; color: var(--mid); padding: 12px 0 4px; } .pick .more { font: 600 13px "IBM Plex Sans KR"; text-decoration: underline; display: block; margin-top: 12px; }
 .up { font-size: 12px; }
 </style></head>
 <body>
-<iframe class="under" src="../../approved/player-card/card.html"></iframe><div class="dim"></div>
+<iframe class="under" id="under"></iframe><div class="dim"></div>
 <div class="sheet">
   <span class="x">✕</span>
   <div class="bar"><b>Compare</b></div>
-  <div class="vs">
-    <div class="lt"><div class="por ph">portrait</div><div><span class="chip">Mid · T1</span><h1>Faker<i>이상혁</i></h1><div class="legal">Lee Sang-hyeok</div></div></div>
-    <div class="v">v</div>
-    <div class="lt r"><div class="por ph">portrait</div><div><span class="chip">Mid · GEN</span><h1>Chovy<i>정지훈</i></h1><div class="legal">Jeong Ji-hoon<a>Change</a></div></div></div>
-  </div>
+  <div class="vs" id="vs"></div>
   <div class="wrap" id="wrap"></div>
 </div>
 <script>
-// Opened from Compare › on Faker's card, from Pick Team: LCK Cup Week 4, Tuesday 22:00 London, Weeks 1 to 3 final.
-// Faker's numbers are the card's; Chovy's are the Stats and Transfers pictures'. Form is points ÷ 3 until Week 4 is final,
-// so Chovy's 61 gives 20.3 (1st) and Faker's 58 gives 19.3 (2nd).
-// [label, Faker, Chovy, which side is better: "L", "R" or "" (not compared), shown big]
-const HEAD = [
-  ["Points", "58<small>2nd</small>", "61<small>1st</small>", "R", true],
-  ["Form", "19.3<small>2nd</small>", "20.3<small>1st</small>", "R"],
-  ["Price", "18.5억 <span class=up>▲0.5</span>", "17.5억 <span class=up>▲0.5</span>", ""],
-  ["Owned", "46%<small>1st</small>", "41%<small>2nd</small>", ""],
-  ["This week", "+1,204 / −310", "+980 / −402", ""],
-];
-// The last 3 series with points, then the next 3, the first underlined (spec/12 Front). GEN W3: v KT 2–0, v HLE 2–1 (Series picture: 8).
-const LAST = { F: [["W2 · Fri", "BFX", 10], ["W3 · Wed", "HLE", 12], ["W3 · Sat", "DK", 5]], C: [["W2 · Sat", "BRO", 11], ["W3 · Wed", "KT", 9], ["W3 · Sat", "HLE", 8]] };
-const NEXT = { F: [["W4 · Wed", "KT"], ["W4 · Sat", "GEN"], ["W5 · Thu", "BRO"]], C: [["W4 · Thu", "BRO"], ["W4 · Sat", "T1"], ["W5 · Wed", "DNS"]] };
-// Season lines (spec/05): [line, Faker total, Faker pts, Chovy total, Chovy pts, lower is better]. Faker 15 games, Chovy 16.
-const GF = 15, GC = 16;
-const LINES = [["Kills", 74, 22, 70, 24], ["Assists", 87, 16, 74, 12], ["Deaths", 25, -4, 9, -2, true], ["Gold lead at 15", 9, 9, 11, 11],
-  ["Solo kills", 5, 5, 8, 8], ["First bloods", 3, 3, 3, 3], ["Deathless", 4, 4, 4, 4], ["Quadra kills", 1, 1, 1, 1], ["Steals", 2, 2, 0, 0]];
-const sum = (i) => LINES.reduce((s, x) => s + x[i], 0); // 58 and 61, the season points
+// Opened from Compare › on a card, from Pick Team: LCK Cup Week 4, Tuesday 22:00 London, Weeks 1 to 3 final.
+// ?v=players (default): Faker v Chovy. ?v=pick: the second player not picked yet. ?v=coaches: kkOma v Ryu.
+// The left side is the card's; the right side's numbers are the Stats and Transfers pictures'.
+// Form is points ÷ 3 until Week 4 is final, so Chovy's 61 gives 20.3 (1st) and Faker's 58 gives 19.3 (2nd).
+const V = new URLSearchParams(location.search).get("v") || "players";
+const $ = (id) => document.getElementById(id);
+const P = {
+  Faker: { chip: "Mid · T1", hangul: "이상혁", legal: "Lee Sang-hyeok", of: "mids", games: 15,
+    season: [58, "2nd"], form: ["19.3", "2nd"], price: "18.5억 ▲0.5", owned: ["46%", "1st"], tx: "+1,204 / −310",
+    last: [["W2 · Fri", "BFX", 10], ["W3 · Wed", "HLE", 12], ["W3 · Sat", "DK", 5]], next: [["W4 · Wed", "KT"], ["W4 · Sat", "GEN"], ["W5 · Thu", "BRO"]],
+    lines: [["Kills", 74, 22], ["Assists", 87, 16], ["Deaths", 25, -4], ["Gold lead at 15", 9, 9], ["Solo kills", 5, 5], ["First bloods", 3, 3], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 2, 2]] },
+  Chovy: { chip: "Mid · GEN", hangul: "정지훈", legal: "Jeong Ji-hoon", of: "mids", games: 16,
+    season: [61, "1st"], form: ["20.3", "1st"], price: "17.5억 ▲0.5", owned: ["41%", "2nd"], tx: "+980 / −402",
+    last: [["W2 · Sat", "BRO", 11], ["W3 · Wed", "KT", 9], ["W3 · Sat", "HLE", 8]], next: [["W4 · Thu", "BRO"], ["W4 · Sat", "T1"], ["W5 · Wed", "DNS"]],
+    lines: [["Kills", 70, 24], ["Assists", 74, 12], ["Deaths", 9, -2], ["Gold lead at 15", 11, 11], ["Solo kills", 8, 8], ["First bloods", 3, 3], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 0, 0]] },
+  // Coaches: the coach card's kkOma; Ryu from Stats (26 = 5 series won × 3 − 1 lost + 12 from the lines).
+  kkOma: { chip: "Coach · T1", hangul: "김정균", legal: "Kim Jeong-gyun", of: "coaches", games: 15, coach: true,
+    season: [27, "1st"], form: ["9.0", "1st"], price: "7.0억 ▲0.5", owned: ["22%", "1st"], tx: "+310 / −95",
+    last: [["W2 · Fri", "BFX", 4], ["W3 · Wed", "HLE", 8], ["W3 · Sat", "DK", 5]], next: [["W4 · Wed", "KT"], ["W4 · Sat", "GEN"], ["W5 · Thu", "BRO"]],
+    lines: [["First tower", 8, 6], ["Most drakes", 7, 5], ["Most barons", 3, 2], ["Most elders", 1, 0], ["Quick win", 0, 0], ["Series won", 5, 15], ["Series lost", 1, -1]] },
+  Ryu: { chip: "Coach · GEN", hangul: "류상욱", legal: "Ryu Sang-wook", of: "coaches", games: 16, coach: true,
+    season: [26, "2nd"], form: ["8.7", "2nd"], price: "7.0억", owned: ["21%", "2nd"], tx: "+188 / −120",
+    last: [["W2 · Sat", "BRO", 5], ["W3 · Wed", "KT", 6], ["W3 · Sat", "HLE", 9]], next: [["W4 · Thu", "BRO"], ["W4 · Sat", "T1"], ["W5 · Wed", "DNS"]],
+    lines: [["First tower", 7, 5], ["Most drakes", 6, 4], ["Most barons", 4, 3], ["Most elders", 0, 0], ["Quick win", 1, 0], ["Series won", 5, 15], ["Series lost", 1, -1]] },
+};
+const [A, B] = V === "coaches" ? ["kkOma", "Ryu"] : ["Faker", "Chovy"];
+$("under").src = V === "coaches" ? "../../approved/coach-card/coach.html" : "../../approved/player-card/card.html";
+const a = P[A], b = V === "pick" ? null : P[B];
 
-const col5 = `<colgroup><col><col style="width:200px"><col></colgroup>`;
-const row = ([lab, f, c, better, big]) => `<tr class="${big ? "big" : ""}"><td class="L ${better === "L" ? "b" : ""}">${f}</td><td class="lab">${lab}</td><td class="R ${better === "R" ? "b" : ""}">${c}</td></tr>`;
+const lt = (n, p, right) => `<div class="lt ${right ? "r" : ""}"><div class="por ph">portrait</div><div><span class="chip">${p.chip}</span><h1>${n}<i>${p.hangul}</i></h1><div class="legal">${p.legal}${right ? "<a>Change</a>" : ""}</div></div></div>`;
+$("vs").innerHTML = lt(A, a) + `<div class="v">v</div>` + (b ? lt(B, b, true) : `<div></div>`);
+
+// Higher is better for season, form and every line's points; price, owned and transfers are not marked.
+const better = (x, y) => (x === y ? "" : x > y ? "L" : "R");
+const cell = (v, r) => `${v}<small>${r}</small>`;
+const row = (lab, f, c, mark, cls = "") => `<tr class="${cls}"><td class="L ${mark === "L" ? "b" : ""}">${f}</td><td class="lab">${lab}</td><td class="R ${mark === "R" ? "b" : ""}">${c}</td></tr>`;
 const strip = (xs, past) => `<div class="strip">${xs.map(([w, o, p], i) => `<span class="${!past && i === 0 ? "first" : ""}">${w}${past ? `<b>${p}</b>v ${o}` : `<em>v ${o}</em>Bo3`}</span>`).join("")}</div>`;
-const head = `<table style="margin-top:4px">${col5}${HEAD.map(row).join("")}
-  <tr class="str"><td class="L">${strip(LAST.F, true)}</td><td class="lab">Last 3</td><td class="R">${strip(LAST.C, true)}</td></tr>
-  <tr class="str"><td class="L">${strip(NEXT.F)}</td><td class="lab">Next 3</td><td class="R">${strip(NEXT.C)}</td></tr></table>`;
+const col3 = `<colgroup><col><col style="width:160px"><col></colgroup>`;
+const pg = (t, g) => (t / g).toFixed(1), sgn = (p) => (p > 0 ? "+" + p : p);
 
-// Each side: total, per game, points; mirrored so the points sit next to the line. The better points are marked.
-const pg = (t, g) => (t / g).toFixed(1);
-const sgn = (p) => (p > 0 ? "+" + p : p);
-const lineRow = ([l, ft, fp, ct, cp, low]) => { const b = fp === cp ? "" : fp > cp ? "L" : "R";
-  return `<tr><td class="L">${ft}</td><td class="L">${pg(ft, GF)}</td><td class="L pts ${b === "L" ? "b" : ""}">${sgn(fp)}</td><td class="lab">${l}</td>
-    <td class="R pts ${b === "R" ? "b" : ""}">${sgn(cp)}</td><td class="R">${pg(ct, GC)}</td><td class="R">${ct}</td></tr>`; };
-const lines = `<h4>Season <span>Faker ${GF} games · Chovy ${GC} games</span></h4><table>
-  <colgroup><col><col style="width:110px"><col style="width:90px"><col style="width:200px"><col style="width:90px"><col style="width:110px"><col></colgroup>
-  <tr><th class="L">Total</th><th class="L">Per game</th><th class="L">Pts</th><th></th><th class="R">Pts</th><th class="R">Per game</th><th class="R">Total</th></tr>
-  ${LINES.map(lineRow).join("")}</table>`;
-
-document.getElementById("wrap").innerHTML = head + lines;
-console.assert(sum(2) === 58 && sum(4) === 61, "season points");
+if (!b) {
+  // The second player not picked yet: a search, his role listed first (spec/12 Compare). Mids from the Stats picture.
+  const MIDS = [["Chovy", "GEN", "17.5억", 61], ["Zeka", "HLE", "15.0억", 41], ["BuLLDoG", "DNS", "11.0억", 36], ["ShowMaker", "DK", "13.0억", 33]];
+  $("wrap").innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:20px">
+    <table style="align-self:start">${col3.replace("160", "120")}${row("Season", cell(a.season[0], a.season[1] + " of 10 " + a.of), "", "", "big")}${row("Form", cell(a.form[0], a.form[1]), "", "")}${row("Price", a.price, "", "")}</table>
+    <div class="pick"><div class="find">Find a player</div><div class="hd">Mids</div><table><colgroup><col><col style="width:70px"><col style="width:80px"><col style="width:60px"></colgroup>
+      ${MIDS.map(([n, t, pr, pt]) => `<tr><td class="nm">${n}</td><td class="tm">${t}</td><td class="R">${pr}</td><td class="R" style="text-align:right;font-weight:600">${pt}</td></tr>`).join("")}</table>
+      <a class="more">All mids · Other roles ›</a></div></div>`;
+} else {
+  const head = `<table style="margin-top:12px">${col3}
+    ${row("Season", cell(a.season[0], a.season[1] + " of 10 " + a.of), cell(b.season[0], b.season[1] + " of 10 " + b.of), better(a.season[0], b.season[0]), "big")}
+    ${row("Form", cell(a.form[0], a.form[1]), cell(b.form[0], b.form[1]), better(+a.form[0], +b.form[0]))}
+    ${row("Price", a.price, b.price, "")}${row("Owned", cell(...a.owned), cell(...b.owned), "")}${row("Transfers in / out", a.tx, b.tx, "")}
+    <tr class="str"><td class="L">${strip(a.last, true)}</td><td class="lab">Last 3</td><td class="R">${strip(b.last, true)}</td></tr>
+    <tr class="str"><td class="L">${strip(a.next)}</td><td class="lab">Next 3</td><td class="R">${strip(b.next)}</td></tr></table>`;
+  // Each side: total, per game, points, mirrored so the points sit next to the line. The better points are bold.
+  const lr = (i) => { const [l, ft, fp] = a.lines[i], [, ct, cp] = b.lines[i], m = better(fp, cp), ser = l.startsWith("Series");
+    return `<tr><td class="L">${ft}</td><td class="L">${ser ? "" : pg(ft, a.games)}</td><td class="L pts ${m === "L" ? "b" : ""}">${sgn(fp)}</td><td class="lab">${l}</td>
+      <td class="R pts ${m === "R" ? "b" : ""}">${sgn(cp)}</td><td class="R">${ser ? "" : pg(ct, b.games)}</td><td class="R">${ct}</td></tr>`; };
+  const lines = `<h4>Season <span>${A} ${a.games} games · ${B} ${b.games} games</span></h4><table>
+    <colgroup><col><col style="width:110px"><col style="width:90px"><col style="width:160px"><col style="width:90px"><col style="width:110px"><col></colgroup>
+    <tr><th class="L">Total</th><th class="L">Per game</th><th class="L">Pts</th><th></th><th class="R">Pts</th><th class="R">Per game</th><th class="R">Total</th></tr>
+    ${a.lines.map((_, i) => lr(i)).join("")}</table>`;
+  $("wrap").innerHTML = head + lines;
+  const tot = (p) => p.lines.reduce((s, x) => s + x[2], 0);
+  console.assert(tot(a) === a.season[0] && tot(b) === b.season[0], "season points");
+}
 </script>
 </body></html>

@@ -2,13 +2,9 @@
 // Pick Team; the picture's README, Controls). Swaps, the Carry, the Vice-carry and buffs change
 // only the draft; Save makes the draft the saved team, Reset drops it.
 
-import type { RoleKey, SlotKey } from "../../rift";
-
-export type BenchSlot = "bench1" | "bench2";
-export type SquadSlot = SlotKey | BenchSlot;
+import { BENCH_SLOTS, isBench, type PersonRole, type SlotKey, type SquadSlot } from "../../rift";
 
 export const STARTER_SLOTS: readonly SlotKey[] = ["top", "jng", "mid", "bot", "sup", "flex", "coach"];
-export const BENCH_SLOTS: readonly BenchSlot[] = ["bench1", "bench2"];
 
 /** The two buffs played on this page; Remake and Limitless are played on Transfers. */
 export type PickBuff = "benchBoost" | "dualCarry";
@@ -34,9 +30,6 @@ export interface PickState {
   swapping?: string;
 }
 
-/** The role a player plays, or coach. */
-export type PlayerRole = RoleKey | "coach";
-
 export type PickAction =
   | { type: "select"; id: string }
   | { type: "close" }
@@ -57,16 +50,14 @@ export function slotOf(team: PickTeam, id: string): SquadSlot | undefined {
   return (Object.keys(team.slots) as SquadSlot[]).find((slot) => team.slots[slot] === id);
 }
 
-export const isBench = (slot: SquadSlot | undefined): slot is BenchSlot => slot === "bench1" || slot === "bench2";
-
 /** A bench player fits a starter's slot when he plays its role; the Flex takes any role (spec/01). */
-export function fits(slot: SlotKey, benchRole: PlayerRole): boolean {
+export function fits(slot: SlotKey, benchRole: PersonRole): boolean {
   if (slot === "coach" || benchRole === "coach") return false;
   return slot === "flex" || slot === benchRole;
 }
 
 /** The ids of the bench players who could come on for the starter going out. */
-export function fitIds(team: PickTeam, outId: string, roleOf: (id: string) => PlayerRole): Set<string> {
+export function fitIds(team: PickTeam, outId: string, roleOf: (id: string) => PersonRole): Set<string> {
   const slot = slotOf(team, outId);
   if (!slot || isBench(slot)) return new Set();
   return new Set(BENCH_SLOTS.map((b) => team.slots[b]).filter((id) => fits(slot, roleOf(id))));
@@ -100,7 +91,7 @@ export function changeCount(saved: PickTeam, draft: PickTeam): number {
 const withDraft = (state: PickState, draft: PickTeam): PickState => ({ ...state, draft });
 
 /** The page's state after one action; the roles say who fits a swap. */
-export function pickReducer(roleOf: (id: string) => PlayerRole) {
+export function pickReducer(roleOf: (id: string) => PersonRole) {
   return (state: PickState, action: PickAction): PickState => {
     const { draft } = state;
     switch (action.type) {

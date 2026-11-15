@@ -77,8 +77,8 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
 
 test("the picture's state boxes the counted games, greys the dropped one and marks Faker chosen", () => {
   const out = html(PICTURE);
-  expect(out.match(/points__counted/g)).toHaveLength(4);
-  expect(out.match(/points__game--dropped/g)).toHaveLength(1);
+  expect(out.match(/player-panel__counted/g)).toHaveLength(4);
+  expect(out.match(/player-panel__game--dropped/g)).toHaveLength(1);
   expect(out.match(/tile--selected/g)).toHaveLength(1);
   expect(out).toContain('aria-pressed="true"');
   // Rank moves: four up, one down.

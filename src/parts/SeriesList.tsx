@@ -1,4 +1,5 @@
 import type { Go } from "../paths";
+import { score, type Score } from "./figures";
 import { GoLink } from "./GoLink";
 import "./SeriesList.css";
 import { Tag } from "./Tag";
@@ -16,26 +17,26 @@ export interface SeriesRow {
   home: string;
   away: string;
   /** Games won, home then away; absent until it starts. */
-  score?: readonly [number, number];
+  score?: Score;
   state: SeriesState;
 }
 
 function Result({ s }: { s: SeriesRow }) {
   if (s.state === "next" || !s.score) return <Time local={s.local} kst={s.kst} />;
-  const score = `${s.score[0]}–${s.score[1]}`;
+  const games = score(s.score);
   if (s.state === "live")
     return (
       <>
-        {score} <Tag kind="live">Live</Tag>
+        {games} <Tag kind="live">Live</Tag>
       </>
     );
   if (s.state === "notFinal")
     return (
       <>
-        {score} <Tag kind="notFinal">Not final</Tag>
+        {games} <Tag kind="notFinal">Not final</Tag>
       </>
     );
-  return <>{score}</>;
+  return <>{games}</>;
 }
 
 /** The week's series, one row each: day, `T1 v DK`, then the score and its state, or the time. */

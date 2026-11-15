@@ -2,8 +2,10 @@
 // LCK Cup Week 3 on the Sunday before its last two series, so Week 3 is not final. Her series are
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
-import { WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
-import type { RoleKey, SlotKey } from "../../rift";
+import { seriesById } from "../../fixtures/series";
+import { playerId, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
+import { score } from "../../parts";
+import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
 /** Whether you follow the manager; `self` is your own profile, which has no key. */
 export type FollowState = "following" | "follow" | "requested" | "self";
@@ -25,10 +27,10 @@ export interface ProfilePlayer {
 }
 
 export interface ProfilePick extends ProfilePlayer {
-  slot: SlotKey | "bench1" | "bench2";
+  slot: SquadSlot;
   /** The role he plays: the Flex's and the bench's, shown after the slot. */
   plays?: RoleKey;
-  mark?: "C" | "V";
+  mark?: Mark;
   /** The week's points, Carry's ×1.5 in; absent when he didn't play. */
   points?: number;
   /** The week's series he played, as his line shows them: `GEN 2–0 KT · Wed`. */
@@ -50,7 +52,7 @@ export interface PointsWeek {
   highest?: number;
   final: boolean;
   /** The buff played that week. */
-  buff?: string;
+  buff?: BuffName;
   /** Her team that week; absent until the backend feeds it. */
   team?: ProfilePick[];
   trucks: Truck[];
@@ -69,7 +71,7 @@ export interface HistoryRow {
   hits?: number;
   bankEok: number;
   valueEok: number;
-  buff?: string;
+  buff?: BuffName;
 }
 
 export interface Transfer {
@@ -107,18 +109,18 @@ export interface ProfileData {
   currentWeek: number;
   weeks: PointsWeek[];
   history: HistoryRow[];
-  buffsLeft: string[];
+  buffsLeft: BuffName[];
   transfers: TransferWeek[];
   leagues: LeagueRow[];
 }
 
-const player = (name: string, team: TeamCode): ProfilePlayer => ({ id: name.toLowerCase(), name, team });
+const player = (name: string, team: TeamCode): ProfilePlayer => ({ id: playerId(name), name, team });
 
 /** A series as a player's line shows it: `GEN 2–0 KT · Wed`. */
 function seriesLine(id: string): string {
-  const s = WEEK3_SERIES_FINAL.find((one) => one.id === id);
-  if (!s?.score) throw new Error(`No final Week 3 series ${id}`);
-  return `${s.home} ${s.score[0]}–${s.score[1]} ${s.away} · ${s.day}`;
+  const s = seriesById(WEEK3_SERIES_FINAL, id);
+  if (!s.score) throw new Error(`No final Week 3 series ${id}`);
+  return `${s.home} ${score(s.score)} ${s.away} · ${s.day}`;
 }
 
 const lines = (...ids: string[]) => ids.map(seriesLine);

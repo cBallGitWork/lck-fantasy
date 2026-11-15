@@ -8,7 +8,7 @@
 // Times show in the manager's zone (London, UTC+0 in January), then KST.
 
 import type { SeriesRow } from "../parts";
-import type { RoleKey, SlotKey } from "../rift";
+import type { Mark, PersonRole, SlotKey, SquadSlot } from "../rift";
 
 export const TEAMS = {
   T1: "T1",
@@ -26,6 +26,12 @@ export const TEAMS = {
 export type TeamCode = keyof typeof TEAMS;
 
 export const COMPETITION = "LCK Cup";
+
+/** The competition's values the pictures share: the Carry's multiplier, each series' length, the four buffs (spec/06). */
+export const CARRY_MULTIPLIER = 1.5;
+export const BEST_OF = 3;
+export const BUFFS = ["Bench Boost", "Dual Carry", "Remake", "Limitless"] as const;
+export type BuffName = (typeof BUFFS)[number];
 
 /** The sample manager every picture shows. */
 export const MANAGER = {
@@ -101,6 +107,9 @@ export const WEEK4_SERIES: Series[] = [
   { id: "w4-sun-2", day: "Sun", date: "24 Jan", ...LATE, home: "KRX", away: "DNS", state: "next" },
 ];
 
+/** Week 3's deadline, 15 minutes before its first series. */
+export const WEEK3_DEADLINE = { day: "Wed", date: "13 Jan", time: "07:45", kst: "16:45" } as const;
+
 /** Week 4's deadline, 15 minutes before its first series (pick.html). */
 export const WEEK4_DEADLINE = { local: "Wed 07:45", kst: "16:45", countdown: "9h 45m" } as const;
 
@@ -110,8 +119,8 @@ export interface PointsPick {
   name: string;
   team: TeamCode;
   /** The role he plays: his slot's, save the Flex and the bench. */
-  role: RoleKey | "coach";
-  mark?: "C" | "V";
+  role: PersonRole;
+  mark?: Mark;
   /** Each series he played this week: its id and points per game. A live series' last game is live. */
   series: { id: string; games: number[]; coachResult?: number }[];
   birthday?: boolean;
@@ -144,13 +153,13 @@ export const POINTS_WEEK = { week: 3, average: 74, highest: 131 } as const;
 
 /** A squad member at the Pick Team picture's moment, with Week 4's price in 억 and form. */
 export interface PickTeamPick {
-  slot: SlotKey | "bench1" | "bench2";
+  slot: SquadSlot;
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   priceEok: number;
   form: number;
-  mark?: "C" | "V";
+  mark?: Mark;
   news?: string;
 }
 
@@ -167,11 +176,17 @@ export const PICK_TEAM_SQUAD: PickTeamPick[] = [
   { slot: "bench2", name: "Cuzz", team: "KT", role: "jng", priceEok: 4.0, form: 7.7 },
 ];
 
+/** A player's or coach's id, as his card is reached by: his name in lower case. */
+export const playerId = (name: string) => name.toLowerCase();
+
+/** The sample manager's nine: the same names in the Points and Pick Team squads. */
+export const MY_PLAYERS: ReadonlySet<string> = new Set(PICK_TEAM_SQUAD.map((p) => p.name));
+
 /** A player in the Stats picture's list: Week 4 price in 억, its move, owned %, season points. */
 export interface StatsPlayer {
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   priceEok: number;
   /** −1 a fall, 0 none, 1 a rise. */
   move: -1 | 0 | 1;
@@ -215,7 +230,7 @@ export interface PerfectPick {
   slot: SlotKey;
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   points: number;
   /** Before ×1.5, for the Carry. */
   raw?: number;

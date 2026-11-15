@@ -1,14 +1,15 @@
 import { Fragment } from "react";
-import { GoLink, Time } from "../../parts";
+import { eok, GoLink, Time } from "../../parts";
+import { cardGo } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { Transfer, TransferWeek } from "./fixtures";
-import { cardGo, eok, signed } from "./format";
+import { gained } from "./format";
 
 /** Transfers: each week's swaps by slot, out → in with team and price, the week's cost and points gained. */
 export function ProfileTransfers({ weeks }: { weeks: TransferWeek[] }) {
   return (
     <section className="profile__transfers">
-      <table className="profile__table">
+      <table className="table profile__table">
         <colgroup>
           <col className="profile__col-swap-slot" />
           <col className="profile__col-out" />
@@ -59,14 +60,14 @@ function SwapRow({ swap }: { swap: Transfer }) {
         <small>{ROLE_NAME[swap.slot]}</small>
       </td>
       <td>
-        <GoLink go={cardGo(swap.out, coach)}>{swap.out.name}</GoLink>{" "}
+        <GoLink go={cardGo(swap.out.id, coach)}>{swap.out.name}</GoLink>{" "}
         <small>
           {swap.out.team} · {eok(swap.out.priceEok)}
         </small>
       </td>
       <td>→</td>
       <td>
-        <GoLink className="profile__name" go={cardGo(swap.in, coach)}>
+        <GoLink className="profile__name" go={cardGo(swap.in.id, coach)}>
           {swap.in.name}
         </GoLink>{" "}
         <small>
@@ -74,7 +75,7 @@ function SwapRow({ swap }: { swap: Transfer }) {
         </small>
       </td>
       <td />
-      <td className="profile__figure num">{signed(swap.gained)}</td>
+      <td className="profile__figure num">{gained(swap.gained)}</td>
     </tr>
   );
 }

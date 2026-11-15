@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import type { TeamCode } from "../../fixtures/week3";
-import { Deadline, Empty, PageFrame, PageHead, Tabs, ViewToggle } from "../../parts";
+import { Columns, Deadline, Empty, PageFrame, PageHead, Tabs, ViewToggle } from "../../parts";
 import { Fixtures } from "./FixturesTab";
 import { nextHub, startHub, weeksOf, type HubAction, type HubState, type WeekTab } from "./hubState";
 import { News } from "./News";
@@ -60,14 +60,14 @@ export function LckHub({ data, account, tab }: { data: LckHubData; account: stri
           />
         </div>
       )}
-      <div className="lck-hub__body">
+      <Columns>
         <div>
           <TabView data={data} state={state} act={act} />
         </div>
         <aside>
           <News news={data.news} />
         </aside>
-      </div>
+      </Columns>
     </PageFrame>
   );
 }

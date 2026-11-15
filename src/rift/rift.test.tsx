@@ -3,12 +3,19 @@ import { expect, test } from "vitest";
 import { PICK_TEAM_SQUAD } from "../fixtures/week3";
 import { html, text } from "../testing/render";
 import {
+  BENCH_SLOTS,
   BenchBar,
   BenchSwap,
   BenchTile,
+  isBench,
   Lineup,
   LineupCard,
   LINEUP_ORDER,
+  PanelFoot,
+  PanelGame,
+  PanelSeries,
+  PanelSum,
+  PanelSumLabel,
   PlayerPanel,
   RIFT_SLOTS,
   RIFT_SLOTS_PICK,
@@ -108,6 +115,28 @@ test("the player panel shows name, meta, ✕ and its body", () => {
   expect(out).toContain("Full stats");
 });
 
+test("the panel's body: a series head, its games with the counted boxed, the sum and Full stats", () => {
+  const out = html(
+    <PlayerPanel name="Faker" meta="T1 · Mid">
+      <PanelSeries title="Wed · v HLE" result={<span>W 2–1</span>}>
+        <PanelGame no={1} what="Azir · W" points={5} counted />
+        <PanelGame no={2} what="Ahri · L" points={2} counted={false} live={<i>Live</i>} />
+      </PanelSeries>
+      <PanelSum lines={<PanelSumLabel>Carry</PanelSumLabel>} figure={40} />
+      <PanelFoot go={{ to: "/player/$playerId", params: { playerId: "faker" } }} />
+    </PlayerPanel>,
+  );
+  expect(out).toContain('<h4 class="player-panel__series-head">Wed · v HLE<span>W 2–1</span></h4>');
+  expect(out).toContain('<span class="player-panel__counted">5</span>');
+  expect(out.match(/player-panel__counted/g)).toHaveLength(1);
+  expect(out).toContain('class="player-panel__game player-panel__game--dropped"');
+  expect(out).toContain("Ahri · L<i>Live</i>");
+  expect(out).toContain('<span class="player-panel__sum-label">Carry</span>');
+  expect(out).toContain('<b class="player-panel__sum-figure num">40</b>');
+  expect(out).toContain('href="/player/faker"');
+  expect(text(<PanelFoot go={{ to: "/points" }} />)).toBe("Full stats ›");
+});
+
 test("the bench bar holds slim tiles and the swap key; a bench tile can be chosen", () => {
   const out = text(
     <BenchBar>
@@ -120,4 +149,10 @@ test("the bench bar holds slim tiles and the swap key; a bench tile can be chose
   const chosen = html(<BenchTile order={1} role="mid" name="Bdd" team="KT" selected onSelect={() => {}} />);
   expect(chosen).toContain("bench-tile--selected");
   expect(chosen).toContain('role="button"');
+});
+
+test("a squad is the seven starters and two bench places, and the bench is told apart", () => {
+  expect(BENCH_SLOTS).toEqual(["bench1", "bench2"]);
+  expect(LINEUP_ORDER.length + BENCH_SLOTS.length).toBe(9);
+  expect([isBench("bench2"), isBench("flex"), isBench(undefined)]).toEqual([true, false, false]);
 });

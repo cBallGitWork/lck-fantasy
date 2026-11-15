@@ -1,9 +1,8 @@
-import { GoLink, OutlinedKey, PageFrame, PageHead, SideSection, SponsorNote, Tag, Time } from "../../parts";
+import { Columns, GoLink, OutlinedKey, PageFrame, PageHead, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
 import {
   movesSummary,
   playersLine,
-  signed,
   SWAPS_SHOWN,
   TRUCK_WORD,
   type DeadlineItem,
@@ -31,7 +30,7 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
   return (
     <PageFrame screen="following" account={MANAGER.team}>
       <PageHead title="Following" hangul="팔로잉" />
-      <div className="following__grid">
+      <Columns className="following__grid">
         <div className="following__feed">
           {data.feed.map((week) => (
             <Week key={week.week} week={week} data={data} onTruck={act.onTruck} />
@@ -65,7 +64,7 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
             />
           </SideSection>
         </div>
-      </div>
+      </Columns>
       <SponsorNote />
     </PageFrame>
   );

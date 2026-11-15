@@ -1,13 +1,9 @@
 import { TEAMS } from "../../fixtures/week3";
-import { cx, Table, type Column } from "../../parts";
+import { cx, signed, Table, type Column } from "../../parts";
 import type { StandingsGroup, StandingsRow } from "./types";
 import { SectionTitle } from "./Week";
 
-const MINUS = "−";
 const NO_GAMES = "—";
-
-/** `+7`, `0`, `−1`. */
-export const signed = (n: number) => (n > 0 ? `+${n}` : n < 0 ? `${MINUS}${-n}` : "0");
 
 /** `67%`; a team yet to play shows a dash. */
 export const winPct = ({ won, lost }: Pick<StandingsRow, "won" | "lost">) =>

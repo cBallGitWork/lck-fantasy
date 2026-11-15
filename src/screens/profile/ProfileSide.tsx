@@ -1,7 +1,7 @@
-import { GoLink, SideSection } from "../../parts";
+import { GoLink, ordinal, SideSection, TierShield } from "../../parts";
 import { PATHS } from "../../paths";
 import type { LeagueRow, Truck } from "./fixtures";
-import { count, ordinal } from "./format";
+import { count } from "./format";
 import { Move } from "./ProfileHistory";
 
 const TRUCK_KIND: Record<Truck["kind"], string> = { coffee: "Coffee", protest: "Protest" };
@@ -19,7 +19,7 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
                   {league.name}
                   {league.tier && (
                     <>
-                      <TierShield division={league.tier.division} />
+                      <TierShield className="profile__tier" division={league.tier.division} />
                       <b>
                         {league.tier.name} {league.tier.division}
                       </b>
@@ -50,15 +50,3 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
   );
 }
 
-/** Overall's tier as a shield with its division (spec/08). */
-function TierShield({ division }: { division: string }) {
-  return (
-    <svg className="profile__tier" viewBox="0 0 40 46" aria-hidden="true">
-      <path d="M20 4 L35 9 V24 C35 33 28 39 20 42 C12 39 5 33 5 24 V9 Z" />
-      <path className="profile__tier-band" d="M5 15 H35" />
-      <text x="20" y="31" textAnchor="middle" fontSize="14">
-        {division}
-      </text>
-    </svg>
-  );
-}

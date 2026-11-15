@@ -2,10 +2,7 @@
 // Pure, so the page's every control is tested without a browser. The rules themselves are built
 // in convex/squads/; this is only what the page shows while the manager is still choosing.
 
-import type { Mark, RoleKey, SlotKey } from "../../rift";
-
-export type SquadSlot = SlotKey | "bench1" | "bench2";
-export type PlayerRole = RoleKey | "coach";
+import { isBench, type Mark, type PersonRole, type SquadSlot } from "../../rift";
 
 /** One of the nine, as the page shows him: his sell price in won. */
 export interface SquadPlayer {
@@ -13,7 +10,7 @@ export interface SquadPlayer {
   id: string;
   name: string;
   team: string;
-  role: PlayerRole;
+  role: PersonRole;
   price: number;
   ownedPct: number;
   mark?: Mark;
@@ -24,7 +21,7 @@ export interface ListPlayer {
   id: string;
   name: string;
   team: string;
-  role: PlayerRole;
+  role: PersonRole;
   price: number;
   /** −1 a fall, 0 none yet, 1 a rise. */
   move: -1 | 0 | 1;
@@ -118,9 +115,9 @@ export function inSlot(squad: SquadPlayer[], plan: Plan, slot: SquadSlot): Squad
 }
 
 /** The roles a slot takes: its own, any player's for the Flex and the bench, a coach for the Coach. */
-export function fits(slot: SquadSlot, role: PlayerRole): boolean {
+export function fits(slot: SquadSlot, role: PersonRole): boolean {
   if (slot === "coach") return role === "coach";
-  if (slot === "flex" || slot === "bench1" || slot === "bench2") return role !== "coach";
+  if (slot === "flex" || isBench(slot)) return role !== "coach";
   return role === slot;
 }
 
@@ -133,7 +130,7 @@ export function whyNot(squad: SquadPlayer[], plan: Plan, slot: SquadSlot, player
   return undefined;
 }
 
-export type RoleFilter = PlayerRole | "all";
+export type RoleFilter = PersonRole | "all";
 export type SortKey = "points" | "price" | "owned";
 
 export interface ListFilters {
@@ -151,7 +148,7 @@ const SORT_VALUE: Record<SortKey, (p: ListPlayer) => number> = {
 
 /** The role chip a slot opens the list on: his role, or All roles where any fits. */
 export function roleFilterFor(slot: SquadSlot): RoleFilter {
-  return slot === "flex" || slot === "bench1" || slot === "bench2" ? "all" : slot;
+  return slot === "flex" || isBench(slot) ? "all" : slot;
 }
 
 /**

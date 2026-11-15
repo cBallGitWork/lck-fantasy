@@ -1,5 +1,6 @@
 // What the coach card shows, as props: the made-up fixture feeds it until the backend does.
 import type { TeamCode } from "../../fixtures/week3";
+import type { Score } from "../../parts";
 import type { RoleKey } from "../../rift";
 
 /** Where the card was opened: from Pick Team it can transfer the coach out; from Points it only compares. */
@@ -81,7 +82,7 @@ export interface WeekSeries {
   day: string;
   opponent: TeamCode;
   /** The coach's team's games first. */
-  score: readonly [number, number];
+  score: Score;
   state: "final" | "live";
   /** The game being played, while live. */
   liveGame?: number;
@@ -111,7 +112,7 @@ export interface HistoryRow {
   week: number;
   day: string;
   opponent: TeamCode;
-  score: readonly [number, number];
+  score: Score;
   games: number;
   priceEok: number;
   points: number;

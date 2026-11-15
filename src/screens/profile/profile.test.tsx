@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import { MANAGER } from "../../fixtures/week3";
 import { html, text } from "../../testing/render";
 import { PROFILE, type ProfileData } from "./fixtures";
-import { ordinal } from "./format";
+import { ordinal } from "../../parts";
 import { nextFollow, Profile, type ProfileTab } from ".";
 
 const page = (tab: ProfileTab, data: ProfileData = PROFILE, week?: number) => (

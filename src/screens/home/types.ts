@@ -1,5 +1,6 @@
 // What Home shows, as the backend will feed it (issue #80's one query). Fixtures fill it until then.
 
+import type { Score } from "../../parts";
 import type { IconKey, Mark, RoleKey, SlotKey } from "../../rift";
 
 /** Overall as a LoL tier with divisions (spec/08): the shield's division, the tier, its hangul, the rank and move. */
@@ -80,7 +81,7 @@ export interface Stream {
 export interface LiveSeries {
   home: string;
   away: string;
-  score: readonly [number, number];
+  score: Score;
   game: number;
   bestOf: number;
   /** `LCK Cup Week 3`. */

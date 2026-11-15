@@ -2,7 +2,7 @@
 import { expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
-import { ordinal } from "./format";
+import { ordinal } from "../../parts";
 import { canSwap, changeCount, fitIds, pickReducer, type PickAction, type PickState } from "./model";
 import { PickTeamView } from "./PickTeam";
 

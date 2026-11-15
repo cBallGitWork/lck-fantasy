@@ -2,6 +2,7 @@
 // built on the shared Week 3 (src/fixtures/week3.ts). Every name and number is an example.
 
 import {
+  BEST_OF,
   COMPETITION,
   MANAGER,
   PICK_TEAM_SQUAD,
@@ -11,15 +12,11 @@ import {
   WEEK4_SERIES,
   type Series,
 } from "../../fixtures/week3";
+import { seriesById } from "../../fixtures/series";
+import { isBench } from "../../rift";
 import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./types";
 
-function series(list: Series[], id: string): Series {
-  const found = list.find((s) => s.id === id);
-  if (!found) throw new Error(`No series ${id} in Week 3's fixtures`);
-  return found;
-}
-
-const atPoints = (id: string) => series(WEEK3_SERIES_AT_POINTS, id);
+const atPoints = (id: string) => seriesById(WEEK3_SERIES_AT_POINTS, id);
 const matchup = (s: Series) => `${s.home} v ${s.away}`;
 
 const SHARED: Omit<HomeShared, "countdown"> = {
@@ -50,7 +47,7 @@ export const HOME_LIVE: HomeLiveData = {
   ...SHARED,
   state: "live",
   countdown: { days: 3, hours: 20, minutes: 15 },
-  series: { home: live.home, away: live.away, score: live.score, game: live.liveGame, bestOf: 3, label: `${COMPETITION} Week 3` },
+  series: { home: live.home, away: live.away, score: live.score, game: live.liveGame, bestOf: BEST_OF, label: `${COMPETITION} Week 3` },
   streams: [
     { id: "lck-en-twitch", name: "LCK · English", platform: "Twitch", live: true },
     { id: "lck-en-youtube", name: "LCK · English", platform: "YouTube", live: true },
@@ -70,12 +67,12 @@ export const HOME_LIVE: HomeLiveData = {
 };
 
 const lineup: LineupStarter[] = PICK_TEAM_SQUAD.flatMap((p) =>
-  p.slot === "bench1" || p.slot === "bench2"
+  isBench(p.slot)
     ? []
     : [{ slot: p.slot, name: p.name, team: p.team, plays: p.slot === "flex" && p.role !== "coach" ? p.role : undefined, mark: p.mark }],
 );
 
-const next = series(WEEK4_SERIES, "w4-wed-1");
+const next = seriesById(WEEK4_SERIES, "w4-wed-1");
 
 /** Home with nothing live, Week 4 to come (idle.html). */
 export const HOME_IDLE: HomeIdleData = {

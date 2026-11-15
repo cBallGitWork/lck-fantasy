@@ -1,6 +1,6 @@
-import { LinkGo, SideSection, Table } from "../../parts";
+import { count, LinkGo, ordinal, SideSection, Table } from "../../parts";
 import { PATHS } from "../../paths";
-import { Move, place, withCommas } from "./format";
+import { Move } from "./format";
 import type { FeedItem, HomeLeague } from "./types";
 
 /** A truck's line on its dotted LED panel, in capitals (plate.md, Never). */
@@ -58,7 +58,7 @@ export function Leagues({ leagues }: { leagues: HomeLeague[] }) {
         rowKey={(l) => l.id}
         columns={[
           { key: "name", head: "League", cell: (l) => l.name, fullText: (l) => l.name },
-          { key: "rank", head: "Rank", figure: true, cell: (l) => (l.kind === "private" ? place(l.rank) : withCommas(l.rank)) },
+          { key: "rank", head: "Rank", figure: true, cell: (l) => (l.kind === "private" ? ordinal(l.rank) : count(l.rank)) },
           { key: "move", head: "Move", figure: true, width: "goCol", cell: (l) => <Move move={l.move} /> },
         ]}
       />

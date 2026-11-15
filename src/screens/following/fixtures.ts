@@ -1,7 +1,8 @@
 // The Following picture's made-up LCK Cup Week 3 (docs/design/approved/following/), mid-week.
 // Names, teams and numbers are examples, not roster data. Truck lines are the unapproved drafts
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
-import { WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
+import { seriesById } from "../../fixtures/series";
+import { BEST_OF, CARRY_MULTIPLIER, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
 import type { FollowingData, Manager, SeriesItem } from "./feed";
 
 const MINJI: Manager = { id: "minji", name: "Minji Park", team: "Chovy Was Right There" };
@@ -15,19 +16,19 @@ const PRIYA: Manager = { id: "priya", name: "Priya Shah", team: "Zeus Juice" };
 
 /** A Week 3 series' teams and score, as the shared fixture holds them. */
 function week3(seriesId: string): Pick<SeriesItem, "home" | "away" | "score" | "bestOf"> {
-  const s = WEEK3_SERIES_AT_POINTS.find((one) => one.id === seriesId);
-  if (!s?.score) throw new Error(`No Week 3 series ${seriesId} with a score.`);
-  return { home: s.home, away: s.away, score: s.score, bestOf: 3 };
+  const s = seriesById(WEEK3_SERIES_AT_POINTS, seriesId);
+  if (!s.score) throw new Error(`No Week 3 series ${seriesId} with a score.`);
+  return { home: s.home, away: s.away, score: s.score, bestOf: BEST_OF };
 }
 
-const DEADLINE = { local: "Wed 07:45", kst: "16:45" } as const;
-const WEEK2_GEN_DNS = { home: "GEN", away: "DNS", score: [2, 0], bestOf: 3 } as const;
+const DEADLINE = { local: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.time}`, kst: WEEK3_DEADLINE.kst };
+const WEEK2_GEN_DNS = { home: "GEN", away: "DNS", score: [2, 0], bestOf: BEST_OF } as const;
 const WEEK2_ENDED = { local: "Sun 12:30", kst: "21:30" } as const;
 
 export const FOLLOWING: FollowingData = {
   week: 3,
   followCap: 50,
-  carryMultiplier: 1.5,
+  carryMultiplier: CARRY_MULTIPLIER,
   feed: [
     {
       week: 3,

@@ -1,6 +1,5 @@
-import { cx, Tag } from "../../parts";
+import { cx, result, score, Tag } from "../../parts";
 import type { CardWeek, WeekSeries } from "./card";
-import { result, score } from "./format";
 
 /** A series' points: the games that count. */
 const seriesPoints = (s: WeekSeries) => s.games.reduce((sum, g) => sum + (g.counts ? g.points : 0), 0);

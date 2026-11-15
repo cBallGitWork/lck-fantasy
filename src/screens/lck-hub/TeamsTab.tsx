@@ -1,14 +1,11 @@
 import type { TeamCode } from "../../fixtures/week3";
 import { cx, formatEok, GoLink, ViewToggle } from "../../parts";
-import { PATHS } from "../../paths";
+import { cardGo } from "../../paths";
 import { RoleIcon, ROLE_NAME } from "../../rift";
-import type { Roster, RosterMember, TeamRosters } from "./types";
+import type { Roster, TeamRosters } from "./types";
 import { SectionTitle } from "./Week";
 
 const NO_PRICE = "—";
-
-const cardGo = (m: RosterMember) =>
-  m.role === "coach" ? { to: PATHS.coachCard, params: { coachId: m.id } } : { to: PATHS.playerCard, params: { playerId: m.id } };
 
 function RosterTable({ roster }: { roster: Roster }) {
   return (
@@ -23,7 +20,7 @@ function RosterTable({ roster }: { roster: Roster }) {
                 {ROLE_NAME[m.role]}
               </td>
               <td>
-                <GoLink className="lck-hub__person" go={cardGo(m)}>
+                <GoLink className="lck-hub__person" go={cardGo(m.id, m.role === "coach")}>
                   <b>{m.name}</b>{" "}
                   <small className="lck-hub__hangul" lang="ko">
                     {m.hangul}

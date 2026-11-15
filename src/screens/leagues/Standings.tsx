@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import { GoLink, Tag } from "../../parts";
+import { count, GoLink, RankMove, Tag } from "../../parts";
 import { PATHS } from "../../paths";
-import { chaseText, figure } from "./format";
+import { chaseText } from "./format";
 import type { StandingRow, Standings as StandingsData } from "./types";
 
 /** Rank, move, team, week, total and `›`; Carry and the split come and go. */
@@ -10,7 +10,7 @@ const ALWAYS_SHOWN_COLUMNS = 6;
 /** A rank's move: ▲ or ▼ in ink and the places, or `—` when it held. */
 export function Move({ move }: { move: number | null }) {
   if (move === null || move === 0) return <span className="leagues__nil">—</span>;
-  return <span className={move > 0 ? "rank-up" : "rank-down"}>{figure(Math.abs(move))}</span>;
+  return <RankMove move={move} />;
 }
 
 /**
@@ -21,7 +21,7 @@ export function Move({ move }: { move: number | null }) {
 export function Standings({ table, week, carryShown }: { table: StandingsData; week: number; carryShown: boolean }) {
   const columns = ALWAYS_SHOWN_COLUMNS + (carryShown ? 1 : 0) + (table.splitColumn ? 1 : 0);
   return (
-    <table className="leagues__table">
+    <table className="table leagues__table">
       <thead>
         <tr>
           <th className="leagues__rank-col">Rank</th>
@@ -55,7 +55,7 @@ export function Standings({ table, week, carryShown }: { table: StandingsData; w
 function Row({ row, carryShown, splitColumn }: { row: StandingRow; carryShown: boolean; splitColumn?: boolean }) {
   return (
     <tr className={row.mine ? "leagues__mine" : undefined}>
-      <td className="leagues__rank num">{figure(row.rank)}</td>
+      <td className="leagues__rank num">{count(row.rank)}</td>
       <td className="leagues__move">
         <Move move={row.move} />
       </td>
@@ -70,8 +70,8 @@ function Row({ row, carryShown, splitColumn }: { row: StandingRow; carryShown: b
       </td>
       {carryShown && <td>{row.carry}</td>}
       <td className="leagues__figure num">{row.week}</td>
-      {splitColumn && <td className="leagues__figure num">{row.split === undefined ? "—" : figure(row.split)}</td>}
-      <td className="leagues__figure num">{figure(row.total)}</td>
+      {splitColumn && <td className="leagues__figure num">{row.split === undefined ? "—" : count(row.split)}</td>}
+      <td className="leagues__figure num">{count(row.total)}</td>
       <td className="leagues__go">
         <GoLink go={{ to: PATHS.profile, params: { managerId: row.managerId } }} label={`Open ${row.team}`}>
           ›

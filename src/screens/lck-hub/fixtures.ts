@@ -3,12 +3,11 @@
 // placeholder; the academy and its prices are made up. Headlines are made up and link to Sheep
 // Esports' front page until #116 brings its LCK tag page.
 
-import { COMPETITION, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
-import { WON_PER_EOK } from "../../parts";
-import type { RoleKey } from "../../rift";
+import { ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
+import { BEST_OF, COMPETITION, playerId, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
+import { eokToWon } from "../../parts";
+import type { PersonRole } from "../../rift";
 import type { LckHubData, Roster, RosterMember, StandingsRow, TeamRosters } from "./types";
-
-const eokToWon = (eok: number) => eok * WON_PER_EOK;
 
 const row = (team: TeamCode, won: number, lost: number, setsWon: number, setsLost: number, last5: string): StandingsRow => ({
   team,
@@ -19,25 +18,23 @@ const row = (team: TeamCode, won: number, lost: number, setsWon: number, setsLos
   last5: [...last5].map((r) => (r === "W" ? "W" : "L")),
 });
 
-const ROLE_ORDER: readonly (RoleKey | "coach")[] = ["top", "jng", "mid", "bot", "sup", "coach"];
+const ROLE_ORDER: readonly PersonRole[] = ["top", "jng", "mid", "bot", "sup", "coach"];
 
 /** A roster in role order, Top to Support then the coach: game name, hangul, and price in 억 where set. */
-const roster = (name: string, league: string, people: [string, string][], pricesEok?: number[]): Roster => ({
+const roster = (name: string, league: string, people: readonly (readonly [string, string])[], pricesEok?: readonly number[]): Roster => ({
   name,
   league,
   members: people.map(([game, hangul], i): RosterMember => {
     const eok = pricesEok?.[i];
-    return { id: game.toLowerCase(), name: game, hangul, role: ROLE_ORDER[i] ?? "coach", ...(eok === undefined ? {} : { priceWon: eokToWon(eok) }) };
+    return { id: playerId(game), name: game, hangul, role: ROLE_ORDER[i] ?? "coach", ...(eok === undefined ? {} : { priceWon: eokToWon(eok) }) };
   }),
 });
 
 const LCK = "LCK";
 const LCK_CL = "LCK CL";
 
-const lck = (team: TeamCode, people: [string, string][], pricesEok?: number[]): TeamRosters => ({ team, lck: roster(team, LCK, people, pricesEok) });
+const lck = (team: TeamCode, pricesEok?: readonly number[]): TeamRosters => ({ team, lck: roster(team, LCK, ROSTERS[team], pricesEok) });
 
-/** T1's prices are the coach card's Roster tab; the coach is the team's slot at 7.0억. */
-const T1_PRICES = [12.5, 14.0, 18.5, 15.0, 14.5, 7.0];
 /** Academy players are in the pool like FPL's reserves, at cheap-pick prices; there is no academy coach. */
 const T1_ACADEMY_PRICES = [5.0, 5.0, 5.5, 5.0, 5.0];
 
@@ -46,7 +43,7 @@ const SHEEP = "https://www.sheepesports.com/";
 export const LCK_HUB: LckHubData = {
   title: `${COMPETITION} 2027`,
   hangul: "LCK 컵",
-  bestOf: 3,
+  bestOf: BEST_OF,
   deadline: WEEK4_DEADLINE,
   stages: [
     {
@@ -85,7 +82,7 @@ export const LCK_HUB: LckHubData = {
   ],
   teams: [
     {
-      ...lck("T1", [["Doran", "최현준"], ["Oner", "문현준"], ["Faker", "이상혁"], ["Peyz", "김수환"], ["Keria", "류민석"], ["kkOma", "김정균"]], T1_PRICES),
+      ...lck("T1", T1_PRICES_EOK),
       academy: roster(
         "T1 Esports Academy",
         LCK_CL,
@@ -93,15 +90,15 @@ export const LCK_HUB: LckHubData = {
         T1_ACADEMY_PRICES,
       ),
     },
-    lck("GEN", [["Kiin", "김기인"], ["Canyon", "김건부"], ["Chovy", "정지훈"], ["Ruler", "박재혁"], ["Duro", "주민규"], ["Ryu", "류상욱"]]),
-    lck("HLE", [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "김건우"], ["Gumayusi", "이민형"], ["Delight", "유환중"], ["Homme", "윤성영"]]),
-    lck("DK", [["Siwoo", "전시우"], ["Lucid", "최용혁"], ["ShowMaker", "허수"], ["Aiming", "김하람"], ["BeryL", "조건희"], ["cvMax", "김대호"]]),
-    lck("KT", [["PerfecT", "이승민"], ["Cuzz", "문우찬"], ["Bdd", "곽보성"], ["deokdam", "서대길"], ["Peter", "정윤수"], ["Score", "고동빈"]]),
-    lck("DNS", [["DuDu", "이동주"], ["Pyosik", "홍창현"], ["BuLLDoG", "이태영"], ["Berserker", "김민철"], ["Life", "김정민"], ["Ssong", "송경호"]]),
-    lck("NS", [["Kingen", "황성훈"], ["Sponge", "배영준"], ["Scout", "이예찬"], ["Taeyoon", "김태윤"], ["Lehends", "손시우"], ["DanDy", "최인규"]]),
-    lck("KRX", [["Rich", "이재원"], ["Willer", "김정현"], ["ucal", "손우현"], ["Hype", "변정현"], ["Andil", "문관빈"], ["Joker", "조재읍"]]),
-    lck("BRO", [["Casting", "신민제"], ["GIDEON", "김민성"], ["Clozer", "이주현"], ["Teddy", "박진성"], ["Pollu", "오동규"], ["Edgar", "최승민"]]),
-    lck("BFX", [["Clear", "송현민"], ["Raptor", "전어진"], ["VicLa", "이대광"], ["Diable", "남대근"], ["Kellin", "김형규"], ["Mowgli", "이재하"]]),
+    lck("GEN"),
+    lck("HLE"),
+    lck("DK"),
+    lck("KT"),
+    lck("DNS"),
+    lck("NS"),
+    lck("KRX"),
+    lck("BRO"),
+    lck("BFX"),
   ],
   news: {
     source: "Sheep Esports",

@@ -1,7 +1,8 @@
 // What a player card shows, as props: the backend feeds these once it is wired (#36, #22, #23, #20, #19).
 
 import type { TeamCode } from "../../fixtures/week3";
-import type { RoleKey } from "../../rift";
+import type { Score } from "../../parts";
+import type { Mark, RoleKey } from "../../rift";
 
 export const CARD_TABS = ["This week", "Fixtures", "History", "Champions"] as const;
 export type CardTab = (typeof CARD_TABS)[number];
@@ -42,7 +43,7 @@ export interface WeekSeries {
   id: string;
   day: string;
   opponent: TeamCode;
-  score: [number, number];
+  score: Score;
   state: "final" | "live";
   /** The game being played, while live. */
   liveGame?: number;
@@ -74,7 +75,7 @@ export interface HistoryRow {
   week: number;
   day: string;
   opponent: TeamCode;
-  score: [number, number];
+  score: Score;
   games: number;
   kda: string;
   priceEok: number;
@@ -140,12 +141,12 @@ export interface PlayerCardData {
 }
 
 /** Your Carry and Vice-carry marks, as Pick Team holds them. */
-export type CardMark = "C" | "V" | undefined;
+export type CardMark = Mark | undefined;
 
 /** The Pick Team keys, shown when the card opens from Pick Team; from Points there are none. */
 export interface CardActions {
   mark: CardMark;
-  onMark: (mark: "C" | "V") => void;
+  onMark: (mark: Mark) => void;
   onSwap: () => void;
   onTransferOut: () => void;
 }

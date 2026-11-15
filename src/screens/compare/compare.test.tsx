@@ -1,7 +1,8 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
-import { better, ordinal, perGame, searchGroups, signed } from "./rules";
+import { ordinal, perGame, signed } from "../../parts";
+import { better, searchGroups } from "./rules";
 import { CHOVY, COMPARE_PLAYERS, FAKER, KKOMA, RYU, SEARCH_ROWS, type ComparePlayer } from "./fixtures";
 import { ComparePage } from ".";
 

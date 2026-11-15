@@ -3,6 +3,7 @@
 // (#33, #34), so nothing here scores.
 import {
   COMPETITION,
+  playerId,
   POINTS_SQUAD,
   POINTS_WEEK,
   WEEK3_SERIES_AT_POINTS,
@@ -10,6 +11,7 @@ import {
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
+import { seriesById } from "../../fixtures/series";
 import type { LiveDownProps, LiveIdleProps, LiveNowProps, PanelPlayer, RestPlayer, Stream } from "./types";
 
 /** The streams list: admin data (spec/12). The first is the official English stream it opens on. */
@@ -30,19 +32,13 @@ export const DEFAULT_STREAM = LIVE_STREAMS[0]!.id;
 const STAGE = `${COMPETITION} Week ${POINTS_WEEK.week}`;
 const FORMAT = "Bo3";
 
-const find = (list: Series[], id: string) => {
-  const series = list.find((s) => s.id === id);
-  if (!series) throw new Error(`No series ${id} in Week 3`);
-  return series;
-};
-const LIVE_SERIES = find(WEEK3_SERIES_AT_POINTS, "w3-sat-2");
-const LAST_SERIES = find(WEEK3_SERIES_FINAL, "w3-sat-2");
-const NEXT_SERIES = find(WEEK3_SERIES_AT_POINTS, "w3-sun-1");
+const LIVE_SERIES = seriesById(WEEK3_SERIES_AT_POINTS, "w3-sat-2");
+const LAST_SERIES = seriesById(WEEK3_SERIES_FINAL, "w3-sat-2");
+const NEXT_SERIES = seriesById(WEEK3_SERIES_AT_POINTS, "w3-sun-1");
 
 const starters = POINTS_SQUAD.filter((p) => p.slot !== "bench");
 const playsIn = (p: PointsPick) => p.series.some((s) => s.id === LIVE_SERIES.id);
-const id = (p: PointsPick) => p.name.toLowerCase();
-const base = (p: PointsPick) => ({ id: id(p), name: p.name, team: p.team, role: p.role, mark: p.mark });
+const base = (p: PointsPick) => ({ id: playerId(p.name), name: p.name, team: p.team, role: p.role, mark: p.mark });
 const liveGames = (p: PointsPick) => p.series.find((s) => s.id === LIVE_SERIES.id)?.games ?? [];
 
 /** Each player's week points at each moment, as the picture gives them. */
@@ -58,7 +54,7 @@ const FINAL_GAMES: Record<string, number[]> = { faker: [4, 6], siwoo: [2, 2], kk
 const FINAL_WON: Record<string, number> = { kkoma: 3 };
 
 const points = (moment: keyof typeof WEEK_POINTS, p: PointsPick) => {
-  const week = WEEK_POINTS[moment][id(p)];
+  const week = WEEK_POINTS[moment][playerId(p.name)];
   if (week === undefined) throw new Error(`No ${moment} points for ${p.name}`);
   return week;
 };
@@ -67,13 +63,13 @@ const rest = (moment: keyof typeof WEEK_POINTS): RestPlayer[] =>
 
 const livePlayers: PanelPlayer[] = starters
   .filter(playsIn)
-  .map((p) => ({ ...base(p), games: liveGames(p), liveGame: true, kda: LIVE_KDA[id(p)], points: points("live", p) }));
+  .map((p) => ({ ...base(p), games: liveGames(p), liveGame: true, kda: LIVE_KDA[playerId(p.name)], points: points("live", p) }));
 const downPlayers: PanelPlayer[] = starters
   .filter(playsIn)
   .map((p) => ({ ...base(p), games: liveGames(p).map(() => null), points: points("down", p) }));
 const finalPlayers: PanelPlayer[] = starters
   .filter(playsIn)
-  .map((p) => ({ ...base(p), games: FINAL_GAMES[id(p)] ?? [], won: FINAL_WON[id(p)], points: points("idle", p) }));
+  .map((p) => ({ ...base(p), games: FINAL_GAMES[playerId(p.name)] ?? [], won: FINAL_WON[playerId(p.name)], points: points("idle", p) }));
 
 const bug = (s: Series) => {
   if (!s.score) throw new Error(`Series ${s.id} has no score`);

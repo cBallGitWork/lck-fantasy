@@ -9,7 +9,7 @@
 }
 .home__screen {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--ratio-stream);
   overflow: hidden;
   background: var(--stage);
   color: var(--text);

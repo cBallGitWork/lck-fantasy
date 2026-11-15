@@ -1,12 +1,8 @@
-import { cx, GoLink, LinkGo, Tag } from "../../parts";
-import { PATHS, type Go } from "../../paths";
+import { cx, GoLink, LinkGo, SectionHead, Tag } from "../../parts";
+import { cardGo, PATHS } from "../../paths";
 import { RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
 import { dash, dot, WORDS } from "./words";
-
-/** A player's card, or a coach's. */
-const cardGo = (p: RestPlayer): Go =>
-  p.role === "coach" ? { to: PATHS.coachCard, params: { coachId: p.id } } : { to: PATHS.playerCard, params: { playerId: p.id } };
 
 function Mark({ mark }: { mark?: "C" | "V" }) {
   return mark ? <span className={cx("live__mark", mark === "C" && "live__mark--c")}>{mark}</span> : null;
@@ -27,7 +23,7 @@ function GameLine({ player }: { player: PanelPlayer }) {
 
 function PlayerRow({ player }: { player: PanelPlayer }) {
   return (
-    <GoLink go={cardGo(player)} className="live__row">
+    <GoLink go={cardGo(player.id, player.role === "coach")} className="live__row">
       <RoleIcon role={player.role} className="live__row-icon" />
       <span>
         <span className="live__name">
@@ -44,7 +40,7 @@ function PlayerRow({ player }: { player: PanelPlayer }) {
 
 function RestRow({ player }: { player: RestPlayer }) {
   return (
-    <GoLink go={cardGo(player)} className="live__rest">
+    <GoLink go={cardGo(player.id, player.role === "coach")} className="live__rest">
       <span className="live__rest-name">
         <RoleIcon role={player.role} className="live__rest-icon" />
         {player.name}
@@ -67,10 +63,10 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
           {WORDS.downNote}
         </div>
       )}
-      <h2 className="live__head">
+      <SectionHead>
         {WORDS.yourWeek}
         {week.notFinal && <Tag kind="notFinal">{WORDS.notFinal}</Tag>}
-      </h2>
+      </SectionHead>
       <div className="live__total">
         <span className="live__key num">{week.total}</span>
         <span className="live__avg">
@@ -81,13 +77,13 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
           <span className="live__go">›</span>
         </span>
       </div>
-      <h2 className="live__head">
+      <SectionHead>
         {series.home} {series.score ? series.score.join(dash) : WORDS.versus} {series.away}
-      </h2>
+      </SectionHead>
       {panel.players.map((p) => (
         <PlayerRow key={p.id} player={p} />
       ))}
-      <h2 className="live__head live__head--apart">{WORDS.rest}</h2>
+      <SectionHead className="live__apart">{WORDS.rest}</SectionHead>
       {panel.rest.map((p) => (
         <RestRow key={p.id} player={p} />
       ))}

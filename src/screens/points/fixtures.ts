@@ -3,7 +3,8 @@
 // (series and games #36, live points #34, final points and ranks #33). The champions and each game's
 // winner are made up, to fit the week's scores.
 
-import { COMPETITION, MANAGER, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
+import { fromSide, seriesById } from "../../fixtures/series";
+import { CARRY_MULTIPLIER, COMPETITION, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
 import { PATHS } from "../../paths";
 import type { SlotKey } from "../../rift";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter } from "./types";
@@ -41,9 +42,9 @@ function countedGames(games: number[]): Set<number> {
 }
 
 function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champions: string[] = []): PointsSeries {
-  const row = WEEK3_SERIES_AT_POINTS.find((s) => s.id === played.id);
-  if (!row?.score) throw new Error(`No played series ${played.id} in Week 3`);
-  const home = row.home === pick.team;
+  const row = seriesById(WEEK3_SERIES_AT_POINTS, played.id);
+  const side = fromSide(row, pick.team);
+  if (!side.score) throw new Error(`No played series ${played.id} in Week 3`);
   const counted = countedGames(played.games);
   const games = played.games.map((points, index) => {
     const live = row.state === "live" && index + 1 === row.liveGame;
@@ -61,8 +62,8 @@ function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champi
   return {
     id: row.id,
     day: row.day,
-    opponent: home ? row.away : row.home,
-    score: home ? row.score : [row.score[1], row.score[0]],
+    opponent: side.opponent,
+    score: side.score,
     state: row.state,
     liveGame: row.liveGame,
     points: gamePoints + (played.coachResult ?? 0),
@@ -70,16 +71,13 @@ function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champi
   };
 }
 
-/** The id a player's or coach's card is reached by. */
-const cardId = (name: string) => name.toLowerCase();
-
 function playerOf(pick: PointsPick): PointsPlayer {
   const series = pick.series.map((played, i) => seriesOf(pick, played, CHAMPIONS[pick.name]?.[i]));
   return {
     name: pick.name,
     team: pick.team,
     role: pick.role,
-    cardId: cardId(pick.name),
+    cardId: playerId(pick.name),
     mark: pick.mark,
     birthday: pick.birthday,
     subbedInFor: pick.subbedInFor,
@@ -89,7 +87,7 @@ function playerOf(pick: PointsPick): PointsPlayer {
 }
 
 /** The Carry's week as the picture shows it: 17 before ×1.5, 25 after, the average Carry 19. */
-const CARRY = { multiplier: 1.5, points: 25, average: 19 } as const;
+const CARRY = { multiplier: CARRY_MULTIPLIER, points: 25, average: 19 } as const;
 
 function starterOf(pick: PointsPick, slot: SlotKey): PointsStarter {
   const player = playerOf(pick);

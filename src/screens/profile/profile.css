@@ -29,9 +29,6 @@
 }
 
 .profile__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--m-side);
-  gap: var(--s-6);
   margin: var(--s-5) 0 var(--s-7);
 }
 
@@ -76,33 +73,9 @@
 }
 
 /* Points' and Transfers' tables: the Table part's look, with a sub-row for the bench or a week. */
-.profile__table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  background: var(--paper);
-}
-.profile__table th {
-  text-align: left;
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  color: var(--mid);
-  padding: var(--s-2) var(--s-3);
-  border-bottom: var(--m-rule) solid var(--line);
-  white-space: nowrap;
-}
-.profile__table td {
-  height: var(--m-row);
-  padding: 0 var(--s-3);
-  border-bottom: var(--m-rule) solid var(--fill);
-  white-space: nowrap;
-}
 .profile__table td small {
   color: var(--mid);
   font-size: var(--size-small);
-}
-.profile__table tbody tr:hover td {
-  background: var(--fill);
 }
 .profile__table .profile__figure {
   text-align: right;
@@ -204,18 +177,18 @@
   display: block;
   width: var(--m-mark);
 }
-.profile__tier path {
+.profile__tier-body {
   fill: var(--ink);
 }
-.profile__tier .profile__tier-band {
-  fill: none;
+.profile__tier-band {
   stroke: var(--on-ink);
   opacity: 0.45;
 }
-.profile__tier text {
+.profile__tier-division {
   fill: var(--on-ink);
   font-family: var(--font-mono);
   font-weight: var(--w-semi);
+  font-size: var(--size-body);
 }
 .profile__truck {
   margin-bottom: var(--s-2);

@@ -1,41 +1,19 @@
-import { LinkGo, Tag } from "../../parts";
-import { PATHS, type Go } from "../../paths";
-import { MARK_NAME, PlayerPanel, ROLE_NAME } from "../../rift";
-import type { PointsGame, PointsPlayer, PointsSeries, PointsStarter } from "./types";
+import { outcome, result, score, Tag } from "../../parts";
+import { cardGo } from "../../paths";
+import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
+import type { PointsPlayer, PointsSeries, PointsStarter } from "./types";
 
 /** `W 2–1 · final`, `1–0 · game 2 live`, or `W 2–1` and a Not final tag. */
 function SeriesResult({ s }: { s: PointsSeries }) {
-  const score = `${s.score[0]}–${s.score[1]}`;
-  if (s.state === "live") return <span>{`${score} · game ${s.liveGame} live`}</span>;
-  const result = `${s.score[0] > s.score[1] ? "W" : "L"} ${score}`;
+  if (s.state === "live") return <span>{`${score(s.score)} · game ${s.liveGame} live`}</span>;
+  const done = result(s.score);
   if (s.state === "notFinal")
     return (
       <span>
-        {result} <Tag kind="notFinal">Not final</Tag>
+        {done} <Tag kind="notFinal">Not final</Tag>
       </span>
     );
-  return <span>{`${result} · final`}</span>;
-}
-
-const outcome = (won?: boolean) => (won === undefined ? undefined : won ? "W" : "L");
-
-/** `G1  Azir · W  [5]`: a counted game's points boxed; a live game shows its clock and Live. */
-function GameRow({ g }: { g: PointsGame }) {
-  const what = [g.champion, g.clock ?? outcome(g.won)].filter(Boolean).join(" · ");
-  return (
-    <div className={g.counted ? "points__game" : "points__game points__game--dropped"}>
-      <span className="points__game-no">G{g.game}</span>
-      <span className="points__game-what">
-        {what}
-        {g.clock && <Tag kind="live">Live</Tag>}
-      </span>
-      <span className="points__game-points num">{g.counted ? <span className="points__counted">{g.points}</span> : g.points}</span>
-    </div>
-  );
-}
-
-function cardGo(p: PointsPlayer): Go {
-  return p.role === "coach" ? { to: PATHS.coachCard, params: { coachId: p.cardId } } : { to: PATHS.playerCard, params: { playerId: p.cardId } };
+  return <span>{`${done} · final`}</span>;
 }
 
 /** The tapped player's games: each series and its games, the counted ones boxed; the Carry's sum; Full stats. */
@@ -45,33 +23,37 @@ export function GamesPanel({ player, onClose }: { player: PointsPlayer & Partial
   return (
     <PlayerPanel name={player.name} meta={meta} onClose={onClose}>
       {player.series.map((s) => (
-        <div key={s.id} className="points__series">
-          <h4 className="points__series-head">
-            {s.day} · v {s.opponent}
-            <SeriesResult s={s} />
-          </h4>
+        <PanelSeries key={s.id} title={`${s.day} · v ${s.opponent}`} result={<SeriesResult s={s} />}>
           {s.games.map((g) => (
-            <GameRow key={g.game} g={g} />
+            // A live game shows its clock and Live.
+            <PanelGame
+              key={g.game}
+              no={g.game}
+              what={[g.champion, g.clock ?? (g.won === undefined ? undefined : outcome(g.won))].filter(Boolean).join(" · ")}
+              points={g.points}
+              counted={g.counted}
+              live={g.clock && <Tag kind="live">Live</Tag>}
+            />
           ))}
-        </div>
+        </PanelSeries>
       ))}
       {carry && (
-        <div className="points__carry">
-          <span>
-            <span className="points__carry-label">Your {MARK_NAME.C}</span>
-            <br />
-            {`${player.series.map((s) => s.points).join(" + ")} = ${carry.raw} × ${carry.multiplier}`}
-            <br />
-            <span className="points__carry-label">
-              Average {MARK_NAME.C} {carry.average}
-            </span>
-          </span>
-          <b className="points__carry-points num">{player.points}</b>
-        </div>
+        <PanelSum
+          lines={
+            <>
+              <PanelSumLabel>Your {MARK_NAME.C}</PanelSumLabel>
+              <br />
+              {`${player.series.map((s) => s.points).join(" + ")} = ${carry.raw} × ${carry.multiplier}`}
+              <br />
+              <PanelSumLabel>
+                Average {MARK_NAME.C} {carry.average}
+              </PanelSumLabel>
+            </>
+          }
+          figure={player.points}
+        />
       )}
-      <div className="points__full">
-        <LinkGo go={cardGo(player)}>Full stats</LinkGo>
-      </div>
+      <PanelFoot go={cardGo(player.cardId, player.role === "coach")} />
     </PlayerPanel>
   );
 }

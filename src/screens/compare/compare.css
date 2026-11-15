@@ -196,10 +196,10 @@
   color: var(--mid);
 }
 .compare__team-col {
-  width: calc(var(--s-7) + var(--s-5));
+  width: var(--m-col-figure);
 }
 .compare__price-col {
-  width: calc(var(--s-7) + var(--s-6));
+  width: var(--m-col-price);
 }
 .compare__score-col {
   width: calc(var(--s-7) + var(--s-3));

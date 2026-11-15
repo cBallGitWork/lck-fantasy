@@ -2,8 +2,9 @@
 // picture's moment: Week 4, Tuesday 22:00 London, before the deadline (pick.html). Faker's and
 // Siwoo's card figures are the picture's; the other players' are made up the same way.
 
-import { COMPETITION, MANAGER, PICK_TEAM_SQUAD, WEEK4_DEADLINE, WEEK4_SERIES, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
-import type { PickBuff, PickState, PickTeam, PlayerRole, SquadSlot } from "./model";
+import { BEST_OF, COMPETITION, MANAGER, PICK_TEAM_SQUAD, playerId, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
+import type { Mark, PersonRole, SquadSlot } from "../../rift";
+import type { PickBuff, PickState, PickTeam } from "./model";
 
 /** A place in a ranking and what it is out of: `1st of 10 mids`. */
 export interface Ranked {
@@ -16,7 +17,7 @@ export interface PickPlayer {
   id: string;
   name: string;
   team: TeamCode;
-  role: PlayerRole;
+  role: PersonRole;
   priceEok: number;
   /** His last price move in 억; absent before it first moves. */
   priceMove?: number;
@@ -34,7 +35,7 @@ export interface PickPlayer {
 
 /** A buff's box: name, one line (spec/06), how many are left; `here` when it is played on this page. */
 export interface PickBuffInfo {
-  name: string;
+  name: BuffName;
   does: string;
   left: number;
   here?: PickBuff;
@@ -54,7 +55,6 @@ export interface PickTeamData {
   buffs: readonly PickBuffInfo[];
 }
 
-const idOf = (name: string) => name.toLowerCase();
 
 /** Each player's card figures, by name. */
 const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceEok" | "form">> = {
@@ -80,15 +80,15 @@ const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "
 const player = (p: PickTeamPick): PickPlayer => {
   const card = CARDS[p.name];
   if (!card) throw new Error(`No card figures for ${p.name}`);
-  return { id: idOf(p.name), name: p.name, team: p.team, role: p.role, priceEok: p.priceEok, form: p.form, ...card };
+  return { id: playerId(p.name), name: p.name, team: p.team, role: p.role, priceEok: p.priceEok, form: p.form, ...card };
 };
 
 export const PICK_TEAM_DATA: PickTeamData = {
   account: MANAGER.team,
   week: `${COMPETITION} Week 4`,
-  players: Object.fromEntries(PICK_TEAM_SQUAD.map((p) => [idOf(p.name), player(p)])),
+  players: Object.fromEntries(PICK_TEAM_SQUAD.map((p) => [playerId(p.name), player(p)])),
   series: WEEK4_SERIES,
-  bestOf: 3,
+  bestOf: BEST_OF,
   deadline: WEEK4_DEADLINE,
   buffs: [
     { name: "Bench Boost", does: "Your bench scores too", left: 1, here: "benchBoost" },
@@ -98,15 +98,15 @@ export const PICK_TEAM_DATA: PickTeamData = {
   ],
 };
 
-const markOf = (mark: "C" | "V") => {
+const markOf = (mark: Mark) => {
   const p = PICK_TEAM_SQUAD.find((x) => x.mark === mark);
   if (!p) throw new Error(`No ${mark} in the Pick Team squad`);
-  return idOf(p.name);
+  return playerId(p.name);
 };
 
 /** Baron Steal FC's saved team at the picture's moment. */
 export const SAVED_TEAM: PickTeam = {
-  slots: Object.fromEntries(PICK_TEAM_SQUAD.map((p) => [p.slot, idOf(p.name)])) as Record<SquadSlot, string>,
+  slots: Object.fromEntries(PICK_TEAM_SQUAD.map((p) => [p.slot, playerId(p.name)])) as Record<SquadSlot, string>,
   carry: markOf("C"),
   vice: markOf("V"),
 };

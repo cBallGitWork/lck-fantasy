@@ -1,17 +1,14 @@
 import { MANAGER } from "../../fixtures/week3";
-import { cx, Empty, formatEok, GoLink, LinkGo, MeDot, PageFrame, PageHead, Table, Time, WON_PER_EOK, type Column } from "../../parts";
-import { PATHS, type Go } from "../../paths";
+import { cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, Table, Time, WeekArrow, type Column } from "../../parts";
+import { cardGo, type Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { PriceMove, PriceWeek } from "./fixtures";
 import "./PatchUpdate.css";
 
 export const NO_MOVES = "No moves yet";
 
-const eok = (value: number) => formatEok(value * WON_PER_EOK);
-
 /** A name opens the player's card, or the coach's. */
-export const cardOf = (row: PriceMove): Go =>
-  row.role === "coach" ? { to: PATHS.coachCard, params: { coachId: row.id } } : { to: PATHS.playerCard, params: { playerId: row.id } };
+export const cardOf = (row: PriceMove) => cardGo(row.id, row.role === "coach");
 
 const COLUMNS: Column<PriceMove>[] = [
   {
@@ -49,18 +46,6 @@ function MoveList({ kind, title, rows }: { kind: "rise" | "fall"; title: string;
       <h2 className="patch-update__list-title">{title}</h2>
       {rows.length === 0 ? <Empty title={NO_MOVES} /> : <Table columns={COLUMNS} rows={rows} rowKey={(row) => row.id} label={title} />}
     </section>
-  );
-}
-
-function WeekArrow({ onStep, label, children }: { onStep?: () => void; label: string; children: string }) {
-  return onStep ? (
-    <button type="button" className="patch-update__arrow" aria-label={label} onClick={onStep}>
-      {children}
-    </button>
-  ) : (
-    <span className={cx("patch-update__arrow", "patch-update__arrow--off")} aria-hidden="true">
-      {children}
-    </span>
   );
 }
 

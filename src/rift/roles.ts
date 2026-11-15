@@ -2,6 +2,14 @@
 
 export type RoleKey = "top" | "jng" | "mid" | "bot" | "sup";
 export type SlotKey = RoleKey | "flex" | "coach";
+/** The role a player plays, or coach. */
+export type PersonRole = RoleKey | "coach";
+/** The squad's two bench places, after the seven starters (spec/01). */
+export type BenchSlot = "bench1" | "bench2";
+export const BENCH_SLOTS: readonly BenchSlot[] = ["bench1", "bench2"];
+/** Any of the nine places in a squad. */
+export type SquadSlot = SlotKey | BenchSlot;
+export const isBench = (slot: SquadSlot | undefined): slot is BenchSlot => slot === "bench1" || slot === "bench2";
 /** What a role icon can show. */
 export type IconKey = SlotKey;
 

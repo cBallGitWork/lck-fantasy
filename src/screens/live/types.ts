@@ -1,6 +1,7 @@
 // What the Live page takes. The fixture feeds it until the backend does (#33, #34, #36).
 import type { TeamCode } from "../../fixtures/week3";
-import type { IconKey } from "../../rift";
+import type { Score } from "../../parts";
+import type { IconKey, Mark } from "../../rift";
 
 /** One stream in the picker: admin data (spec/12). Twitch and YouTube only in the beta. */
 export interface Stream {
@@ -24,7 +25,7 @@ interface Pick {
   name: string;
   team: TeamCode;
   role: IconKey;
-  mark?: "C" | "V";
+  mark?: Mark;
   /** His week points, the Carry ×1.5 included. */
   points: number;
 }
@@ -54,7 +55,7 @@ export interface WeekTotal {
 export interface Panel {
   week: WeekTotal;
   /** The series the panel's players are in; its score once it is final. */
-  series: { home: TeamCode; away: TeamCode; score?: readonly [number, number] };
+  series: { home: TeamCode; away: TeamCode; score?: Score };
   players: PanelPlayer[];
   rest: RestPlayer[];
 }
@@ -62,7 +63,7 @@ export interface Panel {
 interface Bug {
   home: TeamCode;
   away: TeamCode;
-  score: readonly [number, number];
+  score: Score;
   format: string;
   /** `LCK Cup Week 3`. */
   stage: string;

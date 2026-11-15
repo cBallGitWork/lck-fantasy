@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { CoachCard, EMPTY_TAB } from "./CoachCard";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
-import { ordinal, signed } from "./format";
+import { ordinal, signed } from "../../parts";
 import { CoachCardPage, FIRST_TAB } from "./index";
 import type { CoachCardData, CoachFrom, CoachTab } from "./types";
 

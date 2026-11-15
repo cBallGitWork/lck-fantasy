@@ -1,6 +1,7 @@
 // What the Following page shows, as plain data and plain functions, so each control is tested
 // without a browser. The backend feeds `FollowingData` later (#89, #90); the page takes it as props.
-import type { TeamCode } from "../../fixtures/week3";
+import type { BuffName, TeamCode } from "../../fixtures/week3";
+import { MINUS, type Score } from "../../parts";
 
 export interface Manager {
   id: string;
@@ -31,7 +32,7 @@ export interface SeriesItem {
   points: number;
   home: TeamCode;
   away: TeamCode;
-  score: readonly [number, number];
+  score: Score;
   bestOf: number;
   bigCarry?: boolean;
   players: SeriesPlayer[];
@@ -50,7 +51,7 @@ export interface DeadlineItem {
   kind: "deadline";
   id: string;
   manager: Manager;
-  buff?: string;
+  buff?: BuffName;
   transfers: number;
   /** Points taken for extra transfers (6 shows as −6). */
   hit?: number;
@@ -110,13 +111,10 @@ export const TRUCK_KINDS: readonly SentKind[] = ["coffee", "protest"];
 /** Swaps a deadline row lists before `+ 2 more` (the picture). */
 export const SWAPS_SHOWN = 3;
 
-/** A figure with its sign: `+9`, `−1`, `0`. */
-export const signed = (n: number) => (n > 0 ? `+${n}` : n < 0 ? `−${-n}` : "0");
-
 /** `Limitless, 5 transfers`, `2 transfers, −6`, `no transfers`. */
 export function movesSummary(item: DeadlineItem): string {
   const transfers = item.transfers === 0 ? "no transfers" : `${item.transfers} transfer${item.transfers === 1 ? "" : "s"}`;
-  return [item.buff, transfers, item.hit ? `−${item.hit}` : undefined].filter(Boolean).join(", ");
+  return [item.buff, transfers, item.hit ? `${MINUS}${item.hit}` : undefined].filter(Boolean).join(", ");
 }
 
 /** `Kiin 5 · ucal 2 (Carry) · Faker 18 (12 × 1.5)`. */

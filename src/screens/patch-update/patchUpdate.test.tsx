@@ -65,7 +65,7 @@ describe("controls", () => {
     const latest = html(<PatchUpdatePage week={WEEK4_PRICES} onPrev={noop} />);
     expect(latest).toContain('aria-label="Week before"');
     expect(latest).not.toContain('aria-label="Week after"');
-    expect(latest).toContain("patch-update__arrow--off");
+    expect(latest).toContain("week-arrow--off");
   });
 
   test("stepping stops at the first and the latest week", () => {

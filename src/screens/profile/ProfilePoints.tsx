@@ -1,17 +1,17 @@
 import { GoLink, Loading, Tag } from "../../parts";
-import { PATHS } from "../../paths";
-import { MARK_NAME, ROLE_NAME } from "../../rift";
+import { cardGo, PATHS } from "../../paths";
+import { BENCH_SLOTS, isBench, LINEUP_ORDER, MARK_NAME, ROLE_NAME } from "../../rift";
 import type { PointsWeek, ProfilePick } from "./fixtures";
-import { cardGo, NONE } from "./format";
+import { NONE } from "./format";
 
 const BENCH = "Bench";
 
-const onBench = (pick: ProfilePick) => pick.slot === "bench1" || pick.slot === "bench2";
+const onBench = (pick: ProfilePick) => isBench(pick.slot);
 
 /** The slot as the table names it: `Top`, `Flex · Top`, `Bench 1 · Mid`. */
 export function slotLabel(pick: ProfilePick): string {
   const plays = pick.plays ? ` · ${ROLE_NAME[pick.plays]}` : "";
-  if (pick.slot === "bench1" || pick.slot === "bench2") return `${BENCH} ${pick.slot.slice(-1)}${plays}`;
+  if (isBench(pick.slot)) return `${BENCH} ${pick.slot.slice(-1)}${plays}`;
   return `${ROLE_NAME[pick.slot]}${plays}`;
 }
 
@@ -47,7 +47,7 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
         {week.buff && <Tag>{week.buff}</Tag>}
       </div>
       {week.team ? (
-        <table className="profile__table">
+        <table className="table profile__table">
           <colgroup>
             <col className="profile__col-slot" />
             <col className="profile__col-player" />
@@ -77,7 +77,7 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
           </tbody>
         </table>
       ) : (
-        <Loading rows={9} label={`Week ${week.week}'s team`} />
+        <Loading rows={LINEUP_ORDER.length + BENCH_SLOTS.length} label={`Week ${week.week}'s team`} />
       )}
     </section>
   );
@@ -90,7 +90,7 @@ function PickRow({ pick }: { pick: ProfilePick }) {
         <small>{slotLabel(pick)}</small>
       </td>
       <td>
-        <GoLink className="profile__name" go={cardGo(pick, pick.slot === "coach")}>
+        <GoLink className="profile__name" go={cardGo(pick.id, pick.slot === "coach")}>
           {pick.name}
         </GoLink>
         {pick.mark && (

@@ -2,7 +2,8 @@
 // in what order, and on which page. Pure, so the page and its tests share them.
 
 import type { TeamCode } from "../../fixtures/week3";
-import type { RoleKey } from "../../rift";
+import type { Score } from "../../parts";
+import type { PersonRole, RoleKey } from "../../rift";
 
 export const TABS = ["Players", "Coaches"] as const;
 export type Tab = (typeof TABS)[number];
@@ -46,7 +47,7 @@ export interface StatsRow {
   id: string;
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   priceEok: number;
   /** The last move in 억: above 0 a rise, below a fall, 0 none. */
   moveEok: number;
@@ -59,7 +60,7 @@ export interface StatsRow {
   /** Each line's count, by its key. */
   lines: Readonly<Record<string, number>>;
   /** A coach's series won and lost. */
-  series?: readonly [number, number];
+  series?: Score;
 }
 
 /** The columns that sort, besides the lines. */

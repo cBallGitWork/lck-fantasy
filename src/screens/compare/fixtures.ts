@@ -2,10 +2,10 @@
 // LCK Cup Week 4, Tuesday, Weeks 1 to 3 final. Faker and kkOma are the cards' own; Chovy and Ryu
 // are the Stats and Transfers pictures'. Only these four have lines until the backend (#36).
 
+import { hangulOf } from "../../fixtures/rosters";
 import { STATS_PLAYERS, type TeamCode } from "../../fixtures/week3";
-import type { RoleKey } from "../../rift";
+import type { PersonRole } from "../../rift";
 
-export type CompareRole = RoleKey | "coach";
 
 /** A series already played: its week and day, the opponent, his points. */
 export interface PastSeries {
@@ -35,7 +35,7 @@ export interface ComparePlayer {
   name: string;
   hangul: string;
   team: TeamCode;
-  role: CompareRole;
+  role: PersonRole;
   games: number;
   /** Season points, his rank and how many he is ranked among (`2nd of 10 mids`). */
   season: { points: number; rank: number; among: number };
@@ -63,7 +63,7 @@ const NEXT_GEN: NextSeries[] = [
 export const FAKER: ComparePlayer = {
   id: "faker",
   name: "Faker",
-  hangul: "이상혁",
+  hangul: hangulOf("Faker"),
   team: "T1",
   role: "mid",
   games: 15,
@@ -94,7 +94,7 @@ export const FAKER: ComparePlayer = {
 export const CHOVY: ComparePlayer = {
   id: "chovy",
   name: "Chovy",
-  hangul: "정지훈",
+  hangul: hangulOf("Chovy"),
   team: "GEN",
   role: "mid",
   games: 16,
@@ -125,7 +125,7 @@ export const CHOVY: ComparePlayer = {
 export const KKOMA: ComparePlayer = {
   id: "kkoma",
   name: "kkOma",
-  hangul: "김정균",
+  hangul: hangulOf("kkOma"),
   team: "T1",
   role: "coach",
   games: 15,
@@ -154,7 +154,7 @@ export const KKOMA: ComparePlayer = {
 export const RYU: ComparePlayer = {
   id: "ryu",
   name: "Ryu",
-  hangul: "류상욱",
+  hangul: hangulOf("Ryu"),
   team: "GEN",
   role: "coach",
   games: 16,
@@ -186,7 +186,7 @@ export const COMPARE_PLAYERS: Record<string, ComparePlayer> = Object.fromEntries
 export interface SearchRow {
   name: string;
   team: TeamCode;
-  role: CompareRole;
+  role: PersonRole;
   priceEok: number;
   points: number;
 }

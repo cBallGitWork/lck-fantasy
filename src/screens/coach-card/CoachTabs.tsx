@@ -1,8 +1,7 @@
 // The coach card's tabs: This week, Fixtures, History and Roster (coach.html; Fixtures as the player card's).
 import { Fragment } from "react";
-import { MeDot, Table, Tag } from "../../parts";
+import { eok, MeDot, outcome, perGame, result, score, signed, Table, Tag } from "../../parts";
 import { ROLE_NAME } from "../../rift";
-import { eok, score, signed, won } from "./format";
 import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, RosterRow, WeekSeries } from "./types";
 
 const NONE = "—";
@@ -17,7 +16,7 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
             <span>
               {s.day} · v {s.opponent}{" "}
               <span className="coach-card__soft">
-                {s.state === "final" && `${won(s.score) ? "W" : "L"} `}
+                {s.state === "final" && `${outcome(s.score[0] > s.score[1])} `}
                 {score(s.score)} · {s.state === "live" ? <Tag kind="live">G{s.liveGame} live</Tag> : <Tag>Final</Tag>}
               </span>
             </span>
@@ -55,7 +54,7 @@ function SeriesLine({ series, week }: { series: WeekSeries; week: CoachWeek }) {
   const [label, points] =
     series.state === "live"
       ? [`Series · ${signed(week.seriesWon)} if won, ${signed(week.seriesLost)} if lost`, NONE]
-      : won(series.score)
+      : series.score[0] > series.score[1]
         ? ["Series won", signed(week.seriesWon)]
         : ["Series lost", signed(week.seriesLost)];
   return (
@@ -109,7 +108,7 @@ export function CoachHistoryTab({ history, team }: { history: CoachHistory; team
         rowKey={(r) => `${r.week}-${r.day}`}
         columns={[
           { key: "week", head: "Week", width: "goCol", cell: (r) => (firstOfWeek(history.rows, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
-          { key: "series", head: "Series", cell: (r) => `${r.day} · ${won(r.score) ? "W" : "L"} ${score(r.score)} ${r.opponent}` },
+          { key: "series", head: "Series", cell: (r) => `${r.day} · ${result(r.score)} ${r.opponent}` },
           { key: "games", head: "Games", figure: true, cell: (r) => r.games },
           { key: "price", head: "Price", figure: true, cell: (r) => (firstOfWeek(history.rows, r) ? <span className="coach-card__soft">{eok(r.priceEok)}</span> : "") },
           { key: "pts", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },
@@ -126,7 +125,7 @@ export function CoachHistoryTab({ history, team }: { history: CoachHistory; team
         columns={[
           { key: "season", head: "Season", cell: (r) => r.season },
           { key: "games", head: "Games", figure: true, cell: (r) => r.games },
-          { key: "per", head: "Per game", figure: true, cell: (r) => <span className="coach-card__soft">{(r.points / r.games).toFixed(1)}</span> },
+          { key: "per", head: "Per game", figure: true, cell: (r) => <span className="coach-card__soft">{perGame(r.points, r.games)}</span> },
           { key: "pts", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },
         ]}
       />

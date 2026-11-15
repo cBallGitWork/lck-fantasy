@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import { cx, Modal, Placeholder, Tag } from "../../parts";
+import { cx, eok, Modal, ordinal, perGame, Placeholder, signed, Tag } from "../../parts";
 import { ROLE_NAME } from "../../rift";
-import { better, eok, ordinal, perGame, ROLE_PLURAL, signed, type Side } from "./rules";
+import { better, ROLE_PLURAL, type Side } from "./rules";
 import type { ComparePlayer, NextSeries, PastSeries } from "./fixtures";
 import "./compare.css";
 

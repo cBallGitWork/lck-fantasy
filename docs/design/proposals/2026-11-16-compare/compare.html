@@ -15,7 +15,7 @@ iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; bord
 .bar { display: flex; align-items: baseline; gap: 12px; padding: 14px 24px 0; } .bar b { font-size: 14px; } .bar span { font-size: 12px; color: var(--mid); }
 
 /* the two lower-thirds, facing each other as the broadcast's head-to-head */
-.vs { display: grid; grid-template-columns: 1fr 72px 1fr; align-items: end; padding: 18px 24px 18px; border-bottom: 1px solid var(--line); }
+.vs { display: grid; grid-template-columns: 1fr 72px 1fr; align-items: end; padding: 40px 24px 18px; border-bottom: 1px solid var(--line); }
 .lt { display: flex; gap: 16px; align-items: flex-end; } .lt.r { flex-direction: row-reverse; text-align: right; }
 .por { width: 72px; height: 72px; flex: none; }
 .chip { display: inline-block; background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; padding: 2px 8px; margin-bottom: 6px; }
@@ -52,7 +52,7 @@ tr.str td { height: 60px; }
 <iframe class="under" id="under"></iframe><div class="dim"></div>
 <div class="sheet">
   <span class="x">✕</span>
-  <div class="bar"><b>Compare</b></div>
+  
   <div class="vs" id="vs"></div>
   <div class="wrap" id="wrap"></div>
 </div>
@@ -86,37 +86,36 @@ const [A, B] = V === "coaches" ? ["kkOma", "Ryu"] : ["Faker", "Chovy"];
 $("under").src = V === "coaches" ? "../../approved/coach-card/coach.html" : "../../approved/player-card/card.html";
 const a = P[A], b = V === "pick" ? null : P[B];
 
-const lt = (n, p, right) => `<div class="lt ${right ? "r" : ""}"><div class="por ph">portrait</div><div><span class="chip">${p.chip}</span><h1>${n}<i>${p.hangul}</i></h1><div class="legal">${p.legal}${right ? "<a>Change</a>" : ""}</div></div></div>`;
+const lt = (n, p, right) => `<div class="lt ${right ? "r" : ""}"><div class="por ph">portrait</div><div><span class="chip">${p.chip}</span><h1>${n}<i>${p.hangul}</i></h1>${right ? '<div class="legal"><a>Change</a></div>' : ""}</div></div>`;
 $("vs").innerHTML = lt(A, a) + `<div class="v">v</div>` + (b ? lt(B, b, true) : `<div></div>`);
 
 // Higher is better for season, form and every line's points; price, owned and transfers are not marked.
 const better = (x, y) => (x === y ? "" : x > y ? "L" : "R");
 const cell = (v, r) => `${v}<small>${r}</small>`;
 const row = (lab, f, c, mark, cls = "") => `<tr class="${cls}"><td class="L ${mark === "L" ? "b" : ""}">${f}</td><td class="lab">${lab}</td><td class="R ${mark === "R" ? "b" : ""}">${c}</td></tr>`;
-const strip = (xs, past) => `<div class="strip">${xs.map(([w, o, p], i) => `<span class="${!past && i === 0 ? "first" : ""}">${w}${past ? `<b>${p}</b>v ${o}` : `<em>v ${o}</em>Bo3`}</span>`).join("")}</div>`;
+const strip = (xs, past) => `<div class="strip">${xs.map(([w, o, p], i) => `<span class="${!past && i === 0 ? "first" : ""}">${w}${past ? `<b>${p}</b>v ${o}` : `<em>v ${o}</em>`}</span>`).join("")}</div>`;
 const col3 = `<colgroup><col><col style="width:160px"><col></colgroup>`;
 const pg = (t, g) => (t / g).toFixed(1), sgn = (p) => (p > 0 ? "+" + p : p);
 
 if (!b) {
   // The second player not picked yet: a search, his role listed first (spec/12 Compare). Mids from the Stats picture.
   const MIDS = [["Chovy", "GEN", "17.5억", 61], ["Zeka", "HLE", "15.0억", 41], ["BuLLDoG", "DNS", "11.0억", 36], ["ShowMaker", "DK", "13.0억", 33]];
-  $("wrap").innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:20px">
-    <table style="align-self:start">${col3.replace("160", "120")}${row("Season", cell(a.season[0], a.season[1] + " of 10 " + a.of), "", "", "big")}${row("Form", cell(a.form[0], a.form[1]), "", "")}${row("Price", a.price, "", "")}</table>
+  $("wrap").innerHTML = `<div style="margin-top:20px">
     <div class="pick"><div class="find">Find a player</div><div class="hd">Mids</div><table><colgroup><col><col style="width:70px"><col style="width:80px"><col style="width:60px"></colgroup>
       ${MIDS.map(([n, t, pr, pt]) => `<tr><td class="nm">${n}</td><td class="tm">${t}</td><td class="R">${pr}</td><td class="R" style="text-align:right;font-weight:600">${pt}</td></tr>`).join("")}</table>
       <a class="more">All mids · Other roles ›</a></div></div>`;
 } else {
   const head = `<table style="margin-top:12px">${col3}
     ${row("Season", cell(a.season[0], a.season[1] + " of 10 " + a.of), cell(b.season[0], b.season[1] + " of 10 " + b.of), better(a.season[0], b.season[0]), "big")}
-    ${row("Form", cell(a.form[0], a.form[1]), cell(b.form[0], b.form[1]), better(+a.form[0], +b.form[0]))}
-    ${row("Price", a.price, b.price, "")}${row("Owned", cell(...a.owned), cell(...b.owned), "")}${row("Transfers in / out", a.tx, b.tx, "")}
+    ${row("Form", a.form[0], b.form[0], better(+a.form[0], +b.form[0]))}
+    ${row("Price", a.price, b.price, "")}${row("Owned", a.owned[0], b.owned[0], "")}
     <tr class="str"><td class="L">${strip(a.last, true)}</td><td class="lab">Last 3</td><td class="R">${strip(b.last, true)}</td></tr>
     <tr class="str"><td class="L">${strip(a.next)}</td><td class="lab">Next 3</td><td class="R">${strip(b.next)}</td></tr></table>`;
   // Each side: total, per game, points, mirrored so the points sit next to the line. The better points are bold.
   const lr = (i) => { const [l, ft, fp] = a.lines[i], [, ct, cp] = b.lines[i], m = better(fp, cp), ser = l.startsWith("Series");
     return `<tr><td class="L">${ft}</td><td class="L">${ser ? "" : pg(ft, a.games)}</td><td class="L pts ${m === "L" ? "b" : ""}">${sgn(fp)}</td><td class="lab">${l}</td>
       <td class="R pts ${m === "R" ? "b" : ""}">${sgn(cp)}</td><td class="R">${ser ? "" : pg(ct, b.games)}</td><td class="R">${ct}</td></tr>`; };
-  const lines = `<h4>Season <span>${A} ${a.games} games · ${B} ${b.games} games</span></h4><table>
+  const lines = `<table style="margin-top:24px;border-top:2px solid var(--ink)">
     <colgroup><col><col style="width:110px"><col style="width:90px"><col style="width:160px"><col style="width:90px"><col style="width:110px"><col></colgroup>
     <tr><th class="L">Total</th><th class="L">Per game</th><th class="L">Pts</th><th></th><th class="R">Pts</th><th class="R">Per game</th><th class="R">Total</th></tr>
     ${a.lines.map((_, i) => lr(i)).join("")}</table>`;

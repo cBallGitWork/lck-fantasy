@@ -28,3 +28,10 @@ These are the findings of the FPL player, LCK fan, UX and PM reviewers on the fi
 ## Craig, 16 Nov 2026
 
 The 4 calls: "As recommended". Last 3 stays, the Change link stays, there are no buttons, and the series where they meet is not marked. The picture already shows all four. Next: Craig's "save".
+
+## Round 2 (16 Nov 2026)
+
+- Craig: "get rid of the fluff lines and get a ux guy in to review".
+- Cut: Transfers in / out, the legal names, the games caption, the ranks on Form and Owned (Season keeps its rank), "Bo3" on Next 3, the second Season heading and the Compare title.
+- The pick view is the search only, full width.
+- Not taken: folding Owned into Price, and dropping small per-game figures.

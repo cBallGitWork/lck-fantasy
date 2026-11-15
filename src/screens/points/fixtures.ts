@@ -29,7 +29,7 @@ const CHAMPIONS: Record<string, string[][]> = {
   Cuzz: [["Viego", "Xin Zhao"], ["Sejuani", "Vi", "Maokai"]],
 };
 
-/** The games that count in a series: its best two (README, Controls). The backend sends this later. */
+/** The games that count in a series: its best two (spec/05-scoring.md). The backend sends this later. */
 const COUNTED_PER_SERIES = 2;
 
 function countedGames(games: number[]): Set<number> {

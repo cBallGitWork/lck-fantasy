@@ -1,0 +1,191 @@
+/* Settings (docs/design/approved/settings/): one 960 column of label-and-control rows. */
+.settings__column {
+  width: calc(var(--s-6) * 30);
+  max-width: 100%;
+  margin-top: var(--s-5);
+}
+.settings__column section {
+  padding: var(--s-1) 0 var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.settings__row {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) * 3) minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: center;
+  padding: var(--s-3) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.settings__row:last-of-type {
+  border-bottom: 0;
+}
+.settings__label {
+  align-self: start;
+  padding-top: var(--s-2);
+  color: var(--mid);
+}
+.settings__label-note {
+  display: block;
+  font-size: var(--size-small);
+}
+
+/* Fields: a capped text field with its count, and a dropdown. */
+.settings__input,
+.settings__email {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-3);
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  border: var(--m-rule) solid var(--ink);
+  background: var(--paper);
+}
+.settings__input-text {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  outline: none;
+}
+.settings__count {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.settings__select {
+  width: 100%;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  font: inherit;
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+}
+.settings__sub {
+  margin-top: var(--s-2);
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.settings__sent-to {
+  padding-top: var(--s-2);
+}
+
+/* The hangul banner, as Profile draws it. */
+.settings__banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  margin-top: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--stage);
+  border-bottom: var(--s-1) solid var(--gold-rule);
+}
+.settings__banner-hangul {
+  color: var(--gold);
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.settings__banner-sub {
+  color: var(--stage-text);
+  font-size: var(--size-small);
+}
+.settings__banner-name {
+  display: block;
+  color: var(--text);
+  font-size: var(--size-lead);
+}
+
+.settings__locked {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.settings__locked-value {
+  font-weight: var(--w-semi);
+}
+.settings__switch {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+.settings__switch-when {
+  flex: 1;
+}
+
+/* Account. */
+.settings__acts {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+}
+.settings__email {
+  flex: 1;
+  color: var(--mid);
+  border-color: var(--line);
+}
+.settings__provider {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  margin-right: var(--s-2);
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}
+.settings__danger {
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+}
+
+/* The save bar, then the foot. */
+.settings__save-bar {
+  width: calc(var(--s-6) * 30);
+  max-width: 100%;
+  margin-top: var(--s-1);
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+}
+.settings__save-line {
+  flex: 1;
+}
+.settings__text-key,
+.settings__inline-key {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: var(--s-1);
+  cursor: pointer;
+}
+.settings__text-key {
+  min-height: var(--m-target);
+}
+.settings__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  margin-top: var(--s-5);
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.settings__go {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  margin-right: var(--s-4);
+  color: var(--text);
+}
+.settings__foot .settings__go {
+  margin-right: 0;
+}

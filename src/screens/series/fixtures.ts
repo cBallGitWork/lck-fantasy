@@ -6,11 +6,9 @@ import { BEST_OF, COMPETITION, MY_PLAYERS, playerId, TEAMS, WEEK3_SERIES_FINAL, 
 import { ROSTERS, hangulOf } from "../../fixtures/rosters";
 import { seriesById } from "../../fixtures/series";
 import { bestOf } from "../../parts";
-import type { RoleKey } from "../../rift";
+import { ROLE_KEYS, type RoleKey } from "../../rift";
 import type { CoachCell, GameCell, NextSeries, PlayedSeries, PlayerLine, Roster, SeriesView, SeriesWhen } from "./types";
 
-/** The roster's five, in the order ROSTERS holds them. */
-const ROLES: readonly RoleKey[] = ["top", "jng", "mid", "bot", "sup"];
 const FORMAT = bestOf(BEST_OF);
 /** Where VOD links go until #36 fetches each game's own (spec/12). */
 const VOD = "https://lolesports.com/vods";
@@ -145,7 +143,7 @@ function roster(code: TeamCode, record: string): Roster {
     if (!p) throw new Error(`${code}'s roster has no place ${i}`);
     return p;
   };
-  return { ...side(code, record), players: ROLES.map((role, i) => ({ ...at(i), role })), coach: at(ROLES.length) };
+  return { ...side(code, record), players: ROLE_KEYS.map((role, i) => ({ ...at(i), role })), coach: at(ROLE_KEYS.length) };
 }
 
 /** HLE v DK, Week 4, Wednesday, before it starts. */

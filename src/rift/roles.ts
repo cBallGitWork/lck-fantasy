@@ -26,8 +26,14 @@ export const ROLE_NAME: Record<SlotKey, string> = {
 /** The Coach's hangul, as the LCK names him. */
 export const COACH_HANGUL = "감독";
 
+/** The five player roles, in lineup order. */
+export const ROLE_KEYS: readonly RoleKey[] = ["top", "jng", "mid", "bot", "sup"];
+
 /** The seven starters in the LCK broadcast's lineup order. */
-export const LINEUP_ORDER: readonly SlotKey[] = ["top", "jng", "mid", "bot", "sup", "flex", "coach"];
+export const LINEUP_ORDER: readonly SlotKey[] = [...ROLE_KEYS, "flex", "coach"];
+
+/** A squad's nine: the seven starters and the bench. */
+export const SQUAD_SIZE = LINEUP_ORDER.length + BENCH_SLOTS.length;
 
 /** The icon a starter shows: his slot's, save the Flex, who shows the role he plays. */
 export function slotIcon(slot: SlotKey, plays?: RoleKey): IconKey {

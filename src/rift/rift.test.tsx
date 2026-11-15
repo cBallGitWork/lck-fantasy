@@ -11,6 +11,9 @@ import {
   Lineup,
   LineupCard,
   LINEUP_ORDER,
+  ROLE_KEYS,
+  SQUAD_SIZE,
+  VIEWS,
   PanelFoot,
   PanelGame,
   PanelSeries,
@@ -19,6 +22,7 @@ import {
   PlayerPanel,
   RIFT_SLOTS,
   RIFT_SLOTS_PICK,
+  RIFT_VIEW,
   Rift,
   RiftMap,
   RoleIcon,
@@ -72,6 +76,17 @@ test("a Flex tile shows the role he plays, a Coach tile its hangul", () => {
     "Flex · plays Top",
   );
   expect(text(<Tile slot="coach" name="kkOma" team="T1" at={RIFT_SLOTS.coach} mark="V" />)).toContain("Coach 감독");
+});
+
+test("the five roles lead the lineup, and the squad is the seven and the bench", () => {
+  expect(ROLE_KEYS).toEqual(["top", "jng", "mid", "bot", "sup"]);
+  expect(LINEUP_ORDER).toEqual([...ROLE_KEYS, "flex", "coach"]);
+  expect(SQUAD_SIZE).toBe(9);
+});
+
+test("the two views, the Rift first", () => {
+  expect(VIEWS).toEqual(["Rift view", "Card view"]);
+  expect(RIFT_VIEW).toBe("Rift view");
 });
 
 test("both slot sets place all seven starters", () => {

@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 import { Deadline, MainAction, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, ViewToggle } from "../../parts";
+import { VIEWS as BOARD_VIEWS } from "../../rift";
 import { CardBoard, RiftBoard } from "./boards";
 import { Buffs } from "./Buffs";
 import type { PickTeamData } from "./fixtures";
@@ -9,8 +10,8 @@ import { PlayerCard } from "./PlayerCard";
 import "./PickTeam.css";
 
 const VIEWS = [
-  { value: "rift", label: "Rift view" },
-  { value: "cards", label: "Card view" },
+  { value: "rift", label: BOARD_VIEWS[0] },
+  { value: "cards", label: BOARD_VIEWS[1] },
 ] as const;
 
 /** Pick Team, drawn from its state: Rift or Card view, the bench bar, the bar under the pitch, the side column. */

@@ -2,7 +2,7 @@ import type { ChangeEvent, ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
 import { cx, eok, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, Tabs, ViewToggle, type Column } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
-import { ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
+import { ROLE_KEYS, ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import {
   ALL,
   FIGURES,
@@ -21,7 +21,6 @@ import {
 } from "./stats";
 import "./stats.css";
 
-const ROLES: readonly RoleKey[] = ["top", "jng", "mid", "bot", "sup"];
 
 type Ranked = StatsRow & { rank: number };
 
@@ -73,7 +72,7 @@ function Controls({ view, rows, spans, onChange }: Omit<StatsPageProps, "account
         <ViewToggle<RoleKey | typeof ALL>
           options={[
             { value: ALL, label: "All" },
-            ...ROLES.map((role) => ({
+            ...ROLE_KEYS.map((role) => ({
               value: role,
               label: (
                 <span className="stats__role">

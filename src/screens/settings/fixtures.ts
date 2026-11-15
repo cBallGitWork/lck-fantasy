@@ -3,6 +3,7 @@
 // Both emails are off, as spec/12 sets them by default.
 
 import { MANAGER, WEEK4_DEADLINE } from "../../fixtures/week3";
+import { SQUAD_SIZE } from "../../rift";
 import { BROWSER, type Account, type DeleteRow, type SettingsValues } from "./settings";
 import type { SignUpAnswers } from "./SignUp";
 
@@ -51,7 +52,7 @@ export const DELETE_ROWS: DeleteRow[] = [
 ];
 
 /** A guest's squad at sign-up: all nine picked. */
-export const SQUAD_SIZE = 9;
+export { SQUAD_SIZE };
 
 /** Sign-up step 2 as the picture draws it: no team picked, the box unticked. */
 export const SIGN_UP: SignUpAnswers = {

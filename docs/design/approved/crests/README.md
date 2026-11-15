@@ -20,12 +20,12 @@ Flol's crest for each of the ten LCK teams, each leaning into one thing fans kno
 | KT | Never get excited about KT: a star that fizzles (Craig) | A |
 | DK | The Dpboong, the fans' car (Craig) | A |
 | NS | Ramyun noodles (Craig: more noodles) | A |
-| BFX | The Bank Derby: a piggy bank | A |
+| BFX | The fox, Furry-X (Craig); round one | B |
 | DNS | The mad dogs, 물어! | B |
 | BRO | A bro fist, OK BRO (Craig) | B |
 | KRX | The heart that never breaks, 중꺾마 | A |
 
 ## Still open
 
-- **For later:** T1's truck screen shows a T1 close to the real lettering, and KT keeps a leaning R with a star. Both stay for now; they are the first to change when we come back after the reskin.
+- **For later:** T1's truck screen shows a T1 close to the real lettering, KT keeps a leaning R with a star, and BFX's fox head sits near FEARX's own. Both stay for now; they are the first to change when we come back after the reskin.
 - Whether crests show before the teams or Riot answer the permission email ([lck-visual-research.md](../../../research/lck-visual-research.md), Rights).

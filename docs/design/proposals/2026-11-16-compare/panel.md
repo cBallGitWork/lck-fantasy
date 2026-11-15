@@ -24,3 +24,7 @@ These are the findings of the FPL player, LCK fan, UX and PM reviewers on the fi
 2. A Change link on the second player: keep, or ✕ and search again?
 3. Buttons on Compare (Transfer in Chovy): none, or one?
 4. Mark the series where the two meet (W4 Sat T1 v GEN): no, or yes?
+
+## Craig, 16 Nov 2026
+
+The 4 calls: "As recommended". Last 3 stays, the Change link stays, there are no buttons, and the series where they meet is not marked. The picture already shows all four. Next: Craig's "save".

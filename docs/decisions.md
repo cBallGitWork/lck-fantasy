@@ -361,6 +361,15 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - The Your players total: "remove that youyr players line its fluff". It was cut.
 - The picture: "Save".
 
+## Compare design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/compare/`.
+
+- The panel's four calls: "As recommended". The last 3 series stay, Change stays, there are no buttons, and the series where the two meet is not marked.
+- "get rid of the fluff lines and get a ux guy in to review". This cut the transfers row, legal names, the games caption, the ranks except Season's, Bo3 and the title.
+- The player card's form rank and the coach card's season and form ranks are fixed to match Stats.
+- The picture: "Save".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

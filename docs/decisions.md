@@ -349,6 +349,18 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - Per game: "first blood should be a count actually"; "and we have a toggle for count/per game count". Every line is a count, and the toggle divides them all.
 - The picture: "looks good", then "save".
 
+## Series design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/series/`.
+
+- Price changes is renamed **Patch update**, "more league like", in SPEC.md, spec/12 and the Stats picture.
+- "series seems basic": offered POG, a draft strip, kill score and gold, team colours and your points from the series. Claude recommended POG, the draft strip and your points, and Craig said "ok".
+- The panel's five calls: "As recommended". That gives a VOD link per game, no last-meeting line, a monochrome scorebug, sides on the draft strip and a live view.
+- The draft strip: "i dont think we need draft info overload". It was cut, and the sides went with it. A fresh panel reviewed the page again.
+- The second five calls: "As recommended". Your players counts the Carry, there is no series POG, records and K/D/A stay, there is no side tag, and a sat-out player and his sub are drawn.
+- The Your players total: "remove that youyr players line its fluff". It was cut.
+- The picture: "Save".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

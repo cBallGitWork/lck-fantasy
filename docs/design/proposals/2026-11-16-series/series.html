@@ -23,7 +23,6 @@ nav.top .sp { flex: 1; }
 .bug .lo b { color: var(--mid); }
 .meta { display: flex; gap: 24px; align-items: baseline; color: var(--mid); } .meta b { color: var(--ink); font-weight: 600; } .meta .tag { border: 1px solid var(--ink); color: var(--ink); padding: 1px 8px; font-size: 12px; font-weight: 600; }
 .meta .tag.nf { border-style: dashed; font-weight: 500; } .meta .sp { flex: 1; } .meta a { color: var(--ink); font-weight: 600; }
-.meta .fig { color: var(--ink); } .meta .fig b { font: 600 20px "IBM Plex Mono", monospace; margin-left: 8px; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
 h2 { font-size: 14px; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 8px; display: flex; gap: 10px; align-items: baseline; } h2 small { color: var(--mid); font-weight: 400; font-size: 12px; }
 table { width: 100%; border-collapse: collapse; background: var(--paper); table-layout: fixed; }
@@ -32,7 +31,6 @@ td { padding: 0 10px; height: 52px; border-top: 1px solid var(--fill); vertical-
 td.rl { color: var(--mid); font-size: 12px; } td.rl svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 6px; }
 td.pl { white-space: nowrap; } td.pl b { font-weight: 600; } td.pl small { color: var(--mid); font-size: 12px; margin-left: 6px; }
 /* your players: a small square (Points keeps ● for live) */
-.cm { display: inline-flex; width: 15px; height: 15px; border-radius: 50%; background: var(--ink); color: #fff; font: 700 9px "IBM Plex Sans KR"; align-items: center; justify-content: center; margin-left: 6px; vertical-align: 1px; }
 i.me { display: inline-block; width: 6px; height: 6px; background: var(--ink); margin: 0 0 2px 6px; }
 .gm { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .gm > span:first-child { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; } .gm small { display: block; color: var(--mid); font: 12px "IBM Plex Mono", monospace; }
@@ -68,8 +66,8 @@ const V = new URLSearchParams(location.search).get("v") || "final";
 // deaths −1 per 3, per 4 for supports, at most −3; +1 gold lead at 15; +1 a solo kill; +1 first blood; +1 deathless;
 // quadra +1, penta +2; +1 a steal. Per game: [champion, K, D, A, gold lead, solo kills, first blood, multikill, steals]
 // Coach per game: [first tower, most drakes, baron, elder, quick win]; +3 a series win, −1 a loss.
-// Opened at the hub's moment (Week 4, Tuesday 22:00 London). Your players are Baron Steal FC's, from the Points picture.
-const MINE = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"], CARRY = "Faker"; // the Carry scores ×1.5, rounded down (spec/04)
+// Opened at the hub's moment (Week 4, Tuesday 22:00 London). Your players (■) are Baron Steal FC's, from the Points picture.
+const MINE = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"];
 const S = {
   // T1 v DK, Week 3, Sat 16 Jan, T1 2–0 (the hub's Results). Faker G1 Orianna 5/1/9 for 4, Siwoo G1 2, kkOma G1 2 (Points).
   final: { a: "T1", b: "DK", time: ["10:30", "19:30"],
@@ -125,7 +123,7 @@ function pts(role, g) {
 const sum = (xs) => xs.reduce((s, x) => s + x, 0);
 // best 2 games: the indexes that count (the earlier game wins a tie, as on Points)
 const best2 = (xs) => xs.map((x, i) => [x, i]).filter(([x]) => x !== null).sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, 2).map((x) => x[1]);
-const me = (n) => (MINE.includes(n) ? '<i class="me"></i>' : "") + (n === CARRY ? '<span class="cm">C</span>' : "");
+const me = (n) => (MINE.includes(n) ? '<i class="me"></i>' : "");
 const pog = (s, i, n) => (s.games[i].pog === n ? '<span class="pog">POG</span>' : "");
 const cell = (s, i, n, label, sub, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}<small>${sub}</small></span><span class="p">${pog(s, i, n)}${counted ? `<span class="box">${p}</span>` : p}</span></div></td>`;
 const L = ["1st tower", "Drakes", "Baron", "Elder", "Quick win"];
@@ -140,9 +138,7 @@ function team(s, code) {
   const coach = `<tr class="co"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b><small>${ck}</small>${me(cn)}</td>
     ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? L[j] : "")).filter(Boolean).join(" · ") || "–"}</span>`, "", cp[i], c.includes(i))).join("")}
     <td class="tot">${sum(c.map((i) => cp[i])) + sw}<small>${sw > 0 ? "W +3" : sw < 0 ? "L −1" : "&nbsp;"}</small></td></tr>`;
-  return { html: `<section><h2>${t.name}</h2><table>${head}${rows}${coach}</table></section>`,
-    mine: sum(t.p.filter(([, nm]) => MINE.includes(nm)).map(([rl, nm, , gs]) => { const ps = gs.map((g) => pts(rl, g)), x = sum(best2(ps).map((i) => ps[i])); return nm === CARRY ? Math.floor(x * 1.5) : x; }))
-      + (MINE.includes(cn) ? sum(c.map((i) => cp[i])) + sw : 0) };
+  return { html: `<section><h2>${t.name}</h2><table>${head}${rows}${coach}</table></section>` };
 }
 // Before it starts: Week 4's HLE v DK, Wednesday 20 Jan, opened at the hub's moment.
 const NEXT = { HLE: [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "김건우"], ["Gumayusi", "이민형"], ["Delight", "유환중"], ["Homme", "윤성영"]],
@@ -158,7 +154,7 @@ if (V === "next") {
   const rec = (c) => (s[c].name === c ? s[c].rec : `${s[c].name} · ${s[c].rec}`);
   $("bug").innerHTML = `<div class="tm ${!live && wa < wb ? "lo" : ""}"><b>${s.a}</b><small>${rec(s.a)}</small></div><div class="sc">${wa}–${wb}</div><div class="tm b ${!live && wb < wa ? "lo" : ""}"><small>${s[s.b].rec}${s[s.b].name === s.b ? "" : ` · ${s[s.b].name}`}</small><b>${s.b}</b></div>`;
   $("meta").innerHTML = `${live ? '<span class="tag">Live</span><span class="tag nf">Not final</span><span>Solo kills, steals at final</span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b> · ${s.time[1]} KST</span>${live ? "<a>Watch ›</a>" : ""}<span class="sp"></span>
-    <span class="fig"><i class="me" style="margin:0 6px 2px 0"></i>Your players<b>${A.mine + B.mine}</b></span>`;
+    `;
   $("two").innerHTML = A.html + B.html;
 }
 </script></body></html>

@@ -341,6 +341,14 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md). The questions and 
 
 - Shown the Series page's five with recommendations: "Recs for all". Taken as every recommendation in the list, all six screens.
 
+## Stats design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/stats/`.
+
+- The panel's calls, with Claude's picks: "yes". They keep price, form, owned and points in the list, mark your own players with a dot, list academy players last, and show a rise in red and a fall in blue everywhere.
+- Per game: "first blood should be a count actually"; "and we have a toggle for count/per game count". Every line is a count, and the toggle divides them all.
+- The picture: "looks good", then "save".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

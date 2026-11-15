@@ -25,10 +25,14 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Leagues** ([spec/08](08-leagues.md)).
 - **Stats**: every stat Flol holds, the scoring lines first ("Whatever stats we have with scoring
   a priority", Craig, 13 Nov 2026).
-  - A Players | Coaches switch. Lines show the raw count (14 kills, not +5); points are on the
-    player card. Season totals, with a per-game toggle; the season by default, one gameweek as
-    an option. Filters: role, team, max price and a name search (Craig, 16 Nov 2026).
-  - It links to Price changes.
+  - A Players | Coaches switch. Each line shows its count (14 kills, not +5); the points from
+    each line are on the player card. Season totals, with a Totals | Per game toggle that divides
+    every line by games; the season by default, one gameweek as an option. Filters: role, team,
+    max price and a name search (Craig, 16 Nov 2026).
+  - Each row also shows price and its last move, form, owned and points, as FPL's list does. Any
+    column sorts. Your own players carry a dot. Academy players are listed, after everyone with
+    games (Craig, 16 Nov 2026).
+  - It links to Price changes. The picture is `docs/design/approved/stats/`.
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.
   - Tabs: Fixtures, Results, Standings and Teams, each its own (Craig, 15 Nov 2026). Standings
@@ -58,7 +62,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Price changes**: the week's rises and falls. Past moves only, no prediction.
   - Reached from links on Stats and Transfers. ‹ Week › arrows go back through past weeks
     (Craig, 16 Nov 2026).
-  - Rises and falls side by side. A rise is Korean red, a fall blue.
+  - Rises and falls side by side. A rise is Korean red, a fall blue, on every screen that shows
+    a price move (Craig, 16 Nov 2026).
   - Before the first move: "No moves yet".
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).

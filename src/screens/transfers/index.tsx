@@ -1,11 +1,7 @@
-import { MANAGER } from "../../fixtures/week3";
-import { PageFrame, PageHead } from "../../parts";
+import { TRANSFERS_PICTURE } from "./fixtures";
+import { TransfersPage } from "./TransfersPage";
 
-/** A placeholder until its own issue builds it to docs/design/approved/transfers/. */
+/** Transfers, on the picture's made-up week until the backend feeds its props. */
 export function TransfersScreen() {
-  return (
-    <PageFrame screen="transfers" active="transfers" account={MANAGER.team}>
-      <PageHead title={"Transfers"} hangul={"이적"} />
-    </PageFrame>
-  );
+  return <TransfersPage {...TRANSFERS_PICTURE} />;
 }

@@ -1,11 +1,8 @@
 import { MANAGER } from "../../fixtures/week3";
-import { PageFrame, PageHead } from "../../parts";
+import { LCK_HUB } from "./fixtures";
+import { LckHub } from "./LckHub";
 
-/** A placeholder until its own issue builds it to docs/design/approved/lck-hub/. */
+/** The LCK hub's route, on its made-up data until the backend feeds it (#36, #116). */
 export function LckHubScreen() {
-  return (
-    <PageFrame screen="lck-hub" active="lckHub" account={MANAGER.team}>
-      <PageHead title={"LCK Cup 2027"} hangul={"LCK 컵"} />
-    </PageFrame>
-  );
+  return <LckHub data={LCK_HUB} account={MANAGER.team} />;
 }

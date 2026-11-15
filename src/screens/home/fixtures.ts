@@ -12,6 +12,7 @@ import {
   type Series,
 } from "../../fixtures/week3";
 import { seriesById } from "../../fixtures/series";
+import { isBench } from "../../rift";
 import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./types";
 
 const atPoints = (id: string) => seriesById(WEEK3_SERIES_AT_POINTS, id);
@@ -65,7 +66,7 @@ export const HOME_LIVE: HomeLiveData = {
 };
 
 const lineup: LineupStarter[] = PICK_TEAM_SQUAD.flatMap((p) =>
-  p.slot === "bench1" || p.slot === "bench2"
+  isBench(p.slot)
     ? []
     : [{ slot: p.slot, name: p.name, team: p.team, plays: p.slot === "flex" && p.role !== "coach" ? p.role : undefined, mark: p.mark }],
 );

@@ -8,6 +8,6 @@ The Rift view and Card view: the map, the tiles, the shirts, the role icons, the
 - `Lineup.tsx`: Card view: `Lineup`, the seven `LineupCard`s (not the Player card screen) in the broadcast's order, with photo or crest, role head (Flex plays X, Coach 감독), C or V and a footer.
 - `RoleIcon.tsx`: the role icons: top, jungle, mid, bot, support, coach, flex.
 - `Shirt.tsx`: the plain shirt with a team code.
-- `roles.ts`: role names, the lineup order, and each slot's icon and tag.
+- `roles.ts`: role names, the lineup order, each slot's icon and tag; a player's role or coach (`PersonRole`), and the squad's nine places (`SquadSlot`, `BENCH_SLOTS`, `isBench`).
 - `BenchBar.tsx`: the bench bar, its slim tiles (`BenchTile`, which can be chosen) and the swap key (`BenchSwap`).
 - `PlayerPanel.tsx`: a tapped player's panel: shirt, name, meta, ✕, then the page's body. The body's pieces: `PanelSeries` (`Wed · v HLE`, its result, its games), `PanelGame` (a game, counted points boxed), `PanelSum` with `PanelSumLabel` (the sum), `PanelFoot` (`Full stats ›`).

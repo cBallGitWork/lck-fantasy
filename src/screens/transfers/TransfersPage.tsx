@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Deadline, formatEok, MainAction, Menu, OutlinedKey, PageFrame, PageHead, ViewToggle } from "../../parts";
-import { BenchBar, BenchTile, Lineup, RIFT_SLOTS, Rift, Tile, type RiftPoint, type RoleKey, type SlotKey } from "../../rift";
+import { BENCH_SLOTS, BenchBar, BenchTile, Lineup, RIFT_SLOTS, Rift, Tile, type RiftPoint, type RoleKey, type SlotKey, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed, costLabel } from "./Confirmed";
 import {
@@ -21,7 +21,6 @@ import {
   type ListPlayer,
   type Plan,
   type SquadPlayer,
-  type SquadSlot,
   type TransferRules,
 } from "./plan";
 import { ALL_TEAMS, PlayerList } from "./PlayerList";
@@ -61,7 +60,6 @@ export interface TransfersPageProps {
 
 const VIEWS: readonly View[] = ["Rift view", "Card view"];
 const SHOWS: readonly Show[] = ["Fixtures", "Price", "Owned"];
-const BENCH: readonly SquadSlot[] = ["bench1", "bench2"];
 /** Where each starter stands on Transfers' Rift (transfers.html): Points' places, the Flex a little left. */
 const TRANSFERS_SLOTS: Record<SlotKey, RiftPoint> = { ...RIFT_SLOTS, flex: [238, 468] };
 const STARTERS = Object.keys(TRANSFERS_SLOTS) as SlotKey[];
@@ -201,7 +199,7 @@ export function TransfersPage(props: TransfersPageProps) {
         />
       )}
       <BenchBar>
-        {BENCH.map((slot, i) => {
+        {BENCH_SLOTS.map((slot, i) => {
           const s = slotView(slot);
           return (
             <BenchTile

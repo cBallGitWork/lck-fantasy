@@ -3,9 +3,8 @@
 // are the Stats and Transfers pictures'. Only these four have lines until the backend (#36).
 
 import { STATS_PLAYERS, type TeamCode } from "../../fixtures/week3";
-import type { RoleKey } from "../../rift";
+import type { PersonRole } from "../../rift";
 
-export type CompareRole = RoleKey | "coach";
 
 /** A series already played: its week and day, the opponent, his points. */
 export interface PastSeries {
@@ -35,7 +34,7 @@ export interface ComparePlayer {
   name: string;
   hangul: string;
   team: TeamCode;
-  role: CompareRole;
+  role: PersonRole;
   games: number;
   /** Season points, his rank and how many he is ranked among (`2nd of 10 mids`). */
   season: { points: number; rank: number; among: number };
@@ -186,7 +185,7 @@ export const COMPARE_PLAYERS: Record<string, ComparePlayer> = Object.fromEntries
 export interface SearchRow {
   name: string;
   team: TeamCode;
-  role: CompareRole;
+  role: PersonRole;
   priceEok: number;
   points: number;
 }

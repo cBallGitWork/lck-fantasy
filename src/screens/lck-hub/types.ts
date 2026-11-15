@@ -1,7 +1,7 @@
 // What the LCK hub is fed: today from fixtures.ts, later from the backend (#36, #116).
 
 import type { Series, TeamCode } from "../../fixtures/week3";
-import type { RoleKey } from "../../rift";
+import type { PersonRole } from "../../rift";
 
 export const HUB_TABS = ["Fixtures", "Results", "Standings", "Teams"] as const;
 export type HubTab = (typeof HUB_TABS)[number];
@@ -49,7 +49,7 @@ export interface RosterMember {
   id: string;
   name: string;
   hangul: string;
-  role: RoleKey | "coach";
+  role: PersonRole;
   /** Absent until his price is set. */
   priceWon?: number;
 }

@@ -3,7 +3,7 @@
 
 import type { TeamCode } from "../../fixtures/week3";
 import type { Score } from "../../parts";
-import type { RoleKey } from "../../rift";
+import type { PersonRole, RoleKey } from "../../rift";
 
 export const TABS = ["Players", "Coaches"] as const;
 export type Tab = (typeof TABS)[number];
@@ -47,7 +47,7 @@ export interface StatsRow {
   id: string;
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   priceEok: number;
   /** The last move in 억: above 0 a rise, below a fall, 0 none. */
   moveEok: number;

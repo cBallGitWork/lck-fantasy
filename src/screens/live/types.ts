@@ -1,7 +1,7 @@
 // What the Live page takes. The fixture feeds it until the backend does (#33, #34, #36).
 import type { TeamCode } from "../../fixtures/week3";
 import type { Score } from "../../parts";
-import type { IconKey } from "../../rift";
+import type { IconKey, Mark } from "../../rift";
 
 /** One stream in the picker: admin data (spec/12). Twitch and YouTube only in the beta. */
 export interface Stream {
@@ -25,7 +25,7 @@ interface Pick {
   name: string;
   team: TeamCode;
   role: IconKey;
-  mark?: "C" | "V";
+  mark?: Mark;
   /** His week points, the Carry ×1.5 included. */
   points: number;
 }

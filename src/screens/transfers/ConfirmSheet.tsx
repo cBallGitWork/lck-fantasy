@@ -1,7 +1,7 @@
 import { formatEok, MainAction, Modal, Time } from "../../parts";
-import { ROLE_NAME } from "../../rift";
+import { ROLE_NAME, type SquadSlot } from "../../rift";
 import { costLabel } from "./Confirmed";
-import type { ListPlayer, SquadPlayer, SquadSlot } from "./plan";
+import type { ListPlayer, SquadPlayer } from "./plan";
 
 const SHEET_TITLE = "Confirm your transfers";
 

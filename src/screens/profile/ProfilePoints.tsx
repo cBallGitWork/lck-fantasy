@@ -1,17 +1,17 @@
 import { GoLink, Loading, Tag } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
-import { MARK_NAME, ROLE_NAME } from "../../rift";
+import { BENCH_SLOTS, isBench, LINEUP_ORDER, MARK_NAME, ROLE_NAME } from "../../rift";
 import type { PointsWeek, ProfilePick } from "./fixtures";
 import { NONE } from "./format";
 
 const BENCH = "Bench";
 
-const onBench = (pick: ProfilePick) => pick.slot === "bench1" || pick.slot === "bench2";
+const onBench = (pick: ProfilePick) => isBench(pick.slot);
 
 /** The slot as the table names it: `Top`, `Flex · Top`, `Bench 1 · Mid`. */
 export function slotLabel(pick: ProfilePick): string {
   const plays = pick.plays ? ` · ${ROLE_NAME[pick.plays]}` : "";
-  if (pick.slot === "bench1" || pick.slot === "bench2") return `${BENCH} ${pick.slot.slice(-1)}${plays}`;
+  if (isBench(pick.slot)) return `${BENCH} ${pick.slot.slice(-1)}${plays}`;
   return `${ROLE_NAME[pick.slot]}${plays}`;
 }
 
@@ -77,7 +77,7 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
           </tbody>
         </table>
       ) : (
-        <Loading rows={9} label={`Week ${week.week}'s team`} />
+        <Loading rows={LINEUP_ORDER.length + BENCH_SLOTS.length} label={`Week ${week.week}'s team`} />
       )}
     </section>
   );

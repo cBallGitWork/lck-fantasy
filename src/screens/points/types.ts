@@ -1,5 +1,5 @@
 import type { Score, SeriesRow, SeriesState, WeekNav } from "../../parts";
-import type { Mark, RoleKey, SlotKey } from "../../rift";
+import type { Mark, PersonRole, RoleKey, SlotKey } from "../../rift";
 
 /** One game a player played: its champion, won or lost (neither while live), its points, and whether it counts. */
 export interface PointsGame {
@@ -28,7 +28,7 @@ export interface PointsSeries {
 export interface PointsPlayer {
   name: string;
   team: string;
-  role: RoleKey | "coach";
+  role: PersonRole;
   /** The id his player or coach card is reached by. */
   cardId: string;
   mark?: Mark;

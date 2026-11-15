@@ -3,14 +3,14 @@
 // the player (STATS_PLAYERS); a dot marks the players in Baron Steal FC's squad (PICK_TEAM_SQUAD).
 
 import { PICK_TEAM_SQUAD, type TeamCode } from "../../fixtures/week3";
-import type { RoleKey } from "../../rift";
+import type { PersonRole } from "../../rift";
 
 /** One player's or coach's price move, in 억. */
 export interface PriceMove {
   id: string;
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   wasEok: number;
   nowEok: number;
   ownedPct: number;

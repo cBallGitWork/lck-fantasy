@@ -1,7 +1,7 @@
 // Compare's rules, as the picture and spec/12 (Compare) set them, kept apart from the drawing so the tests read them.
 
-import { LINEUP_ORDER, type RoleKey } from "../../rift";
-import type { CompareRole, SearchRow } from "./fixtures";
+import { LINEUP_ORDER, type PersonRole, type RoleKey } from "../../rift";
+import type { SearchRow } from "./fixtures";
 
 /** Which side holds the higher number; none when they are level. Higher is better for Season, Form and line points. */
 export type Side = "left" | "right" | null;
@@ -12,7 +12,7 @@ export function better(left: number, right: number): Side {
 }
 
 /** A role named as a group of players: the search's heads and the season rank (`2nd of 10 mids`). */
-export const ROLE_PLURAL: Record<CompareRole, string> = {
+export const ROLE_PLURAL: Record<PersonRole, string> = {
   top: "Tops",
   jng: "Junglers",
   mid: "Mids",
@@ -25,7 +25,7 @@ export const ROLE_PLURAL: Record<CompareRole, string> = {
 const PLAYER_ROLES = LINEUP_ORDER.filter((slot): slot is RoleKey => slot !== "flex" && slot !== "coach");
 
 export interface SearchGroup {
-  role: CompareRole;
+  role: PersonRole;
   rows: SearchRow[];
 }
 
@@ -33,8 +33,8 @@ export interface SearchGroup {
  * The second player's search: never the first player; a coach only against a coach. His role is
  * listed first, best season first; the other roles show once asked for (`wide`) or once a name is typed.
  */
-export function searchGroups(rows: readonly SearchRow[], first: { name: string; role: CompareRole }, query: string, wide: boolean): SearchGroup[] {
-  const roles: CompareRole[] = first.role === "coach" ? ["coach"] : [first.role, ...PLAYER_ROLES.filter((r) => r !== first.role)];
+export function searchGroups(rows: readonly SearchRow[], first: { name: string; role: PersonRole }, query: string, wide: boolean): SearchGroup[] {
+  const roles: PersonRole[] = first.role === "coach" ? ["coach"] : [first.role, ...PLAYER_ROLES.filter((r) => r !== first.role)];
   const typed = query.trim().toLowerCase();
   const shown = typed || wide ? roles : roles.slice(0, 1);
   return shown

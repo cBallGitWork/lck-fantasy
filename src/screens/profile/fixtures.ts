@@ -5,7 +5,7 @@
 import { seriesById } from "../../fixtures/series";
 import { WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
 import { score } from "../../parts";
-import type { RoleKey, SlotKey } from "../../rift";
+import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
 /** Whether you follow the manager; `self` is your own profile, which has no key. */
 export type FollowState = "following" | "follow" | "requested" | "self";
@@ -27,10 +27,10 @@ export interface ProfilePlayer {
 }
 
 export interface ProfilePick extends ProfilePlayer {
-  slot: SlotKey | "bench1" | "bench2";
+  slot: SquadSlot;
   /** The role he plays: the Flex's and the bench's, shown after the slot. */
   plays?: RoleKey;
-  mark?: "C" | "V";
+  mark?: Mark;
   /** The week's points, Carry's ×1.5 in; absent when he didn't play. */
   points?: number;
   /** The week's series he played, as his line shows them: `GEN 2–0 KT · Wed`. */

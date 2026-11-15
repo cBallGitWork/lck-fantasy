@@ -3,9 +3,11 @@ import { expect, test } from "vitest";
 import { PICK_TEAM_SQUAD } from "../fixtures/week3";
 import { html, text } from "../testing/render";
 import {
+  BENCH_SLOTS,
   BenchBar,
   BenchSwap,
   BenchTile,
+  isBench,
   Lineup,
   LineupCard,
   LINEUP_ORDER,
@@ -147,4 +149,10 @@ test("the bench bar holds slim tiles and the swap key; a bench tile can be chose
   const chosen = html(<BenchTile order={1} role="mid" name="Bdd" team="KT" selected onSelect={() => {}} />);
   expect(chosen).toContain("bench-tile--selected");
   expect(chosen).toContain('role="button"');
+});
+
+test("a squad is the seven starters and two bench places, and the bench is told apart", () => {
+  expect(BENCH_SLOTS).toEqual(["bench1", "bench2"]);
+  expect(LINEUP_ORDER.length + BENCH_SLOTS.length).toBe(9);
+  expect([isBench("bench2"), isBench("flex"), isBench(undefined)]).toEqual([true, false, false]);
 });

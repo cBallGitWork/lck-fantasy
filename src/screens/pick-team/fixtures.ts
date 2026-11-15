@@ -3,7 +3,8 @@
 // Siwoo's card figures are the picture's; the other players' are made up the same way.
 
 import { COMPETITION, MANAGER, PICK_TEAM_SQUAD, WEEK4_DEADLINE, WEEK4_SERIES, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
-import type { PickBuff, PickState, PickTeam, PlayerRole, SquadSlot } from "./model";
+import type { Mark, PersonRole, SquadSlot } from "../../rift";
+import type { PickBuff, PickState, PickTeam } from "./model";
 
 /** A place in a ranking and what it is out of: `1st of 10 mids`. */
 export interface Ranked {
@@ -16,7 +17,7 @@ export interface PickPlayer {
   id: string;
   name: string;
   team: TeamCode;
-  role: PlayerRole;
+  role: PersonRole;
   priceEok: number;
   /** His last price move in 억; absent before it first moves. */
   priceMove?: number;
@@ -98,7 +99,7 @@ export const PICK_TEAM_DATA: PickTeamData = {
   ],
 };
 
-const markOf = (mark: "C" | "V") => {
+const markOf = (mark: Mark) => {
   const p = PICK_TEAM_SQUAD.find((x) => x.mark === mark);
   if (!p) throw new Error(`No ${mark} in the Pick Team squad`);
   return idOf(p.name);

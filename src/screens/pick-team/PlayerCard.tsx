@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 import { cx, eok, LinkGo, PriceMove, Tag, Time } from "../../parts";
 import { cardGo } from "../../paths";
-import { PlayerPanel, ROLE_NAME } from "../../rift";
+import { isBench, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { opponent, seriesOf } from "../../fixtures/series";
 import { ranked, type ViewProps } from "./format";
-import { canSwap, isBench, slotOf } from "./model";
+import { canSwap, slotOf } from "./model";
 
 /** The tapped player's card: price and last move, news, form, owned and season with ranks, last 3 weeks, the week's series, his keys. */
 export function PlayerCard({ data, state, player: p, dispatch }: ViewProps & { player: PickPlayer }) {

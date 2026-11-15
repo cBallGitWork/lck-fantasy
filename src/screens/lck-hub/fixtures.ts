@@ -5,7 +5,7 @@
 
 import { COMPETITION, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
 import { eokToWon } from "../../parts";
-import type { RoleKey } from "../../rift";
+import type { PersonRole } from "../../rift";
 import type { LckHubData, Roster, RosterMember, StandingsRow, TeamRosters } from "./types";
 
 const row = (team: TeamCode, won: number, lost: number, setsWon: number, setsLost: number, last5: string): StandingsRow => ({
@@ -17,7 +17,7 @@ const row = (team: TeamCode, won: number, lost: number, setsWon: number, setsLos
   last5: [...last5].map((r) => (r === "W" ? "W" : "L")),
 });
 
-const ROLE_ORDER: readonly (RoleKey | "coach")[] = ["top", "jng", "mid", "bot", "sup", "coach"];
+const ROLE_ORDER: readonly PersonRole[] = ["top", "jng", "mid", "bot", "sup", "coach"];
 
 /** A roster in role order, Top to Support then the coach: game name, hangul, and price in 억 where set. */
 const roster = (name: string, league: string, people: [string, string][], pricesEok?: number[]): Roster => ({

@@ -8,7 +8,7 @@
 // Times show in the manager's zone (London, UTC+0 in January), then KST.
 
 import type { SeriesRow } from "../parts";
-import type { RoleKey, SlotKey } from "../rift";
+import type { Mark, PersonRole, SlotKey, SquadSlot } from "../rift";
 
 export const TEAMS = {
   T1: "T1",
@@ -110,8 +110,8 @@ export interface PointsPick {
   name: string;
   team: TeamCode;
   /** The role he plays: his slot's, save the Flex and the bench. */
-  role: RoleKey | "coach";
-  mark?: "C" | "V";
+  role: PersonRole;
+  mark?: Mark;
   /** Each series he played this week: its id and points per game. A live series' last game is live. */
   series: { id: string; games: number[]; coachResult?: number }[];
   birthday?: boolean;
@@ -144,13 +144,13 @@ export const POINTS_WEEK = { week: 3, average: 74, highest: 131 } as const;
 
 /** A squad member at the Pick Team picture's moment, with Week 4's price in 억 and form. */
 export interface PickTeamPick {
-  slot: SlotKey | "bench1" | "bench2";
+  slot: SquadSlot;
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   priceEok: number;
   form: number;
-  mark?: "C" | "V";
+  mark?: Mark;
   news?: string;
 }
 
@@ -171,7 +171,7 @@ export const PICK_TEAM_SQUAD: PickTeamPick[] = [
 export interface StatsPlayer {
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   priceEok: number;
   /** −1 a fall, 0 none, 1 a rise. */
   move: -1 | 0 | 1;
@@ -215,7 +215,7 @@ export interface PerfectPick {
   slot: SlotKey;
   name: string;
   team: TeamCode;
-  role: RoleKey | "coach";
+  role: PersonRole;
   points: number;
   /** Before ×1.5, for the Carry. */
   raw?: number;

@@ -22,3 +22,12 @@ These are the FPL player's, the LCK fan's and UX's findings on `s-final.png` and
 - Team colours: a thin team-colour edge on the scorebug, or stay monochrome?
 - Show each team's side (blue or red) per game: yes, or no?
 - A live view at game 2, 14:20, matching Points: draw it?
+
+## The PM's review (in after the rest)
+
+- Every number checks out against spec/05, Points and the hub.
+- The PM asks for the live view too (see the calls), and confirms fix 6 is needed.
+- Further calls for Craig:
+  - Team records beside the names: keep or drop? They have no spec line.
+  - K/D/A in each game cell: keep, or champion and points only, as spec/12 says literally?
+  - The dot on your players needs a spec line if it stays.

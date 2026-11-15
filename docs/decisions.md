@@ -349,6 +349,47 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - Per game: "first blood should be a count actually"; "and we have a toggle for count/per game count". Every line is a count, and the toggle divides them all.
 - The picture: "looks good", then "save".
 
+## Series design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/series/`.
+
+- Price changes is renamed **Patch update**, "more league like", in SPEC.md, spec/12 and the Stats picture.
+- "series seems basic": offered POG, a draft strip, kill score and gold, team colours and your points from the series. Claude recommended POG, the draft strip and your points, and Craig said "ok".
+- The panel's five calls: "As recommended". That gives a VOD link per game, no last-meeting line, a monochrome scorebug, sides on the draft strip and a live view.
+- The draft strip: "i dont think we need draft info overload". It was cut, and the sides went with it. A fresh panel reviewed the page again.
+- The second five calls: "As recommended". Your players counts the Carry, there is no series POG, records and K/D/A stay, there is no side tag, and a sat-out player and his sub are drawn.
+- The Your players total: "remove that youyr players line its fluff". It was cut.
+- The picture: "Save".
+
+## Compare design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/compare/`.
+
+- The panel's four calls: "As recommended". The last 3 series stay, Change stays, there are no buttons, and the series where the two meet is not marked.
+- "get rid of the fluff lines and get a ux guy in to review". This cut the transfers row, legal names, the games caption, the ranks except Season's, Bo3 and the title.
+- The player card's form rank and the coach card's season and form ranks are fixed to match Stats.
+- The picture: "Save".
+
+## Settings design round (15 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), [spec/09](../spec/09-onboarding.md) and [spec/08](../spec/08-leagues.md), the picture `docs/design/approved/settings/`.
+
+- "settings need to include gdrp concersn etc and anything else". Shown four calls with recommendations, he took them all: Download my data at once, no cookie banner, a 16+ tick at sign-up, and Privacy, Terms, a public-data line and erase-at-once at the foot.
+- "get the team to reivew, maybe get differen tparts into tabs": four tabs.
+- "your wording sucks@until week 4 scores. what does that means"; "you cant change fav team anyways during season"; "once your first gameweek starts". Both favourite team and country lock at the manager's first deadline.
+- "1 save team 2 your call 3 ok 4 your call 5 just text is fine no need for draw, do some basics and file". The account is made on Save team; Claude allowed any banner text, moderated; a deleted maker's private league passes to the earliest joiner, or goes if nobody else is in it; Claude kept the delete sheet's list of what goes; Privacy and Terms are plain text in `docs/legal/`, not drawn.
+
+## Patch update design round (15 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/patch-update/`.
+
+- "patch update, just shows the new prices, thats it really, occurs once a gameweek dealine had passed". The page is named Patch update; filters and the season view are left out.
+- "in your squad · 1억 = 100 million won, game money only please remove this fluff man people arent idiots": the footer line went.
+- "use dummy data": roster facts in the picture are made up, not checked.
+- "do a previous and new price": Was and Now columns.
+- "dotn say week 3 deadline, thats confusing, new price sfor gameweek 4 it should be"; "dont mention gameweej 5 thats fluff": titled Gameweek 4 prices, with only when they were set.
+- The picture: "Save it".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

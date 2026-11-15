@@ -102,11 +102,11 @@ const FP = V === "week";
 document.getElementById("under").src = FP ? "../points/points.html" : "../pick-team/pick.html";
 const $ = (id) => document.getElementById(id);
 
-$("hero").innerHTML = `<b>${FP ? 14 : 27}</b><span>Season · 3rd of 10 coaches</span>`;
+$("hero").innerHTML = `<b>${FP ? 14 : 27}</b><span>Season · ${FP ? "3rd" : "1st"} of 10 coaches</span>`;
 
 // No Carry, Vice-carry or swap: the coach is never Carry and has no bench (spec/01, spec/04).
 const acts = FP ? `<a>Compare ›</a>` : `<span>Transfer out</span><a>Compare ›</a>`;
-$("meta").innerHTML = `<span class="kv"><b>7.0억</b>▲0.5</span><span class="kv"><b>${FP ? "7.0" : "9.0"}</b>form · 2nd</span>
+$("meta").innerHTML = `<span class="kv"><b>7.0억</b>▲0.5</span><span class="kv"><b>${FP ? "7.0" : "9.0"}</b>form · ${FP ? "2nd" : "1st"}</span>
   <span class="kv"><b>22%</b>owned · 2nd</span><span class="kv">${FP ? "+204 / −58" : "+310 / −95"} this week</span>`;
 $("acts").innerHTML = acts;
 

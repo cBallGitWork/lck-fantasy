@@ -32,7 +32,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Each row also shows price and its last move, form, owned and points, as FPL's list does. Any
     column sorts. Your own players carry a dot. Academy players are listed, after everyone with
     games (Craig, 16 Nov 2026).
-  - It links to Price changes. The picture is `docs/design/approved/stats/`.
+  - It links to Patch update. The picture is `docs/design/approved/stats/`.
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.
   - Tabs: Fixtures, Results, Standings and Teams, each its own (Craig, 15 Nov 2026). Standings
@@ -44,8 +44,19 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Series page**: one series, its games and each player's lines in each game.
   - A page with its own link, opened from every series row anywhere (Craig, 16 Nov 2026).
   - One grid per team: its players down the side, the games as columns, as in the Points drawer.
-  - Each game shows its winner, length and champions only.
+    Each cell shows the champion, K/D/A and points; the best 2 are boxed and a dropped game is
+    greyed, as on Points (Craig, 16 Nov 2026).
+  - Each game shows its winner, length, a POG badge on its Player of the Game and a VOD link to
+    lolesports. No series POG, picks, bans or sides: "i dont think we need draft info overload"
+    (Craig, 16 Nov 2026).
+  - The scorebug shows each team's record as of now. The coach row shows the coach lines that
+    scored and the series +3 or −1. Your own players carry a mark; there is no total of your
+    players' points (Craig, 16 Nov 2026).
+  - While live: provisional points, a Not final tag, solo kills and steals at final
+    ([spec/11](11-live-points.md)).
+  - A player who sat out a game shows a dash there; a sub has his own row.
   - Before it starts: the time (yours and KST), the format, both rosters and Watch ›.
+  - The picture is `docs/design/approved/series/`.
 - **Player pop-up**: see [The player card](#the-player-card).
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the
   6th role", Craig, 13 Nov 2026). See [The coach card](#the-coach-card).
@@ -61,11 +72,17 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Reached from links on Points and Home.
   - Rift view or Card view, whichever is saved on Points. Your own players are marked
     (Craig, 15 Nov 2026).
-- **Price changes**: the week's rises and falls. Past moves only, no prediction.
+- **Patch update** (Craig, 15 Nov 2026; spec once called it Price changes): the new prices for a
+  gameweek, set once the deadline before it passes ("just shows the new prices, thats it really").
+  Past moves only, no prediction.
   - Reached from links on Stats and Transfers. ‹ Week › arrows go back through past weeks
     (Craig, 16 Nov 2026).
   - Rises and falls side by side. A rise is Korean red, a fall blue, on every screen that shows
     a price move (Craig, 16 Nov 2026).
+  - Each row: player, team and role, the price before and after, and owned. A dot marks your
+    own players. Titled by the gameweek the prices are for ("Gameweek 4 prices"), with when they
+    were set; no next move, no filters, no explainer lines (Craig, 15 Nov 2026). The picture is
+    `docs/design/approved/patch-update/`.
   - Before the first move: "No moves yet".
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).
@@ -150,6 +167,11 @@ F1 Fantasy, Sleeper and gol.gg).
     with any role; a coach only with a coach (Craig, 16 Nov 2026).
   - The better number in each row is marked; there is no overall verdict. The next 3 series show,
     as on the player card.
+  - Rows: Season with its rank, Form, Price, Owned, the last 3 and next 3 series, then each scoring
+    line's total, per game and points. Only Season, Form and line points are marked. No buttons, a
+    Change link on the second player, and no mark on a series where the two meet (Craig, 16 Nov
+    2026). No transfers row: "get rid of the fluff lines".
+  - The picture is `docs/design/approved/compare/`.
 
 ## Settings
 
@@ -158,18 +180,34 @@ Grilled 13 Nov 2026.
 - Team name, changeable any time, as in FPL.
 - The email address, from the Google or Discord account.
 - The hangul banner text ([spec/13](13-korean-touches.md), once it merges).
-- Favourite team and country: changeable until the manager's first gameweek scores, then shown
-  locked, with why ([spec/08](08-leagues.md)).
+- Favourite team and country: changeable until the manager's first gameweek starts, then shown
+  "Locked since your first gameweek" ([spec/08](08-leagues.md)).
 - Time zone: the browser's, or one the manager picks. Example: a 16:45 KST deadline shows as
   08:45 in London.
 - Light, dark, or follow the device.
 - Sign out, and delete the account and its data. A private league the manager made passes to
-  its next member (Craig, 16 Nov 2026).
-- Reached from the team name at the right of the top bar. One page, saved with a Save button.
+  its next member (Craig, 16 Nov 2026): the one who joined earliest; a league with no other
+  member is deleted (Craig, 15 Nov 2026).
+- Reached from the team name at the right of the top bar. Four tabs, Team, Display, Emails and
+  Account ("maybe get differen tparts into tabs", Craig, 15 Nov 2026), saved with one Save
+  button for every tab. The picture is `docs/design/approved/settings/`.
   The team name and the hangul banner are capped at 20 characters, as FPL's name is.
 - Emails, both opt-in and off by default: a deadline reminder 24 hours before, and a weekly
   recap once the gameweek is final (points, rank moves in each league, best player, any protest
   truck). No marketing. Off by default because Resend's free plan sends 100 emails a day.
+- Your data, as GDPR asks ("settings need to include gdrp concersn etc", Craig, 15 Nov 2026,
+  taking every recommendation):
+  - Download my data: a JSON file at once, of the team, squads, transfers, leagues, follows and
+    settings.
+  - A line saying what is public: team name, favourite team, country, banner, points.
+  - Delete erases at once; backups clear within 30 days, and the sheet says so. The sheet lists
+    what goes and who each private league passes to.
+  - Privacy and Terms links and a privacy contact email at the foot. Their text is
+    [docs/legal/](../docs/legal/), plain pages with no picture (Craig, 15 Nov 2026).
+  - No cookie banner: Flol keeps only essential cookies and browser storage (sign-in, the guest
+    squad, remembered views and theme), with no analytics or ads.
+  - The banner text is any text up to 20 characters, moderated like team names (spec/13); Latin
+    letters are allowed, as in 바론 스틸 FC (Claude's call on Craig's "your call").
 
 ## The coach card
 

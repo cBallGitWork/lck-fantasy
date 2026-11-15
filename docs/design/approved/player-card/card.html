@@ -108,7 +108,7 @@ $("hero").innerHTML = `<b>${FP ? 41 : 58}</b><span>Season · 2nd of 10 mids</spa
 
 // Meta line: price, form, owned with the week's transfers; buttons by where it opened (spec/12).
 const acts = FP ? `<a>Compare ›</a>` : `<span class="on">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><span>Transfer out</span><a>Compare ›</a>`;
-$("meta").innerHTML = `<span class="kv"><b>18.5억</b>▲0.5</span><span class="kv"><b>${FP ? "20.5" : "19.3"}</b>form · 1st</span>
+$("meta").innerHTML = `<span class="kv"><b>18.5억</b>▲0.5</span><span class="kv"><b>${FP ? "20.5" : "19.3"}</b>form · ${FP ? "1st" : "2nd"}</span>
   <span class="kv"><b>46%</b>owned · 1st</span><span class="kv">${FP ? "+842 / −126" : "+1,204 / −310"} this week</span>`;
 $("acts").innerHTML = acts;
 

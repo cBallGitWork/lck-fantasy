@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { autoLeagues, canChangeFavouriteTeam, joinProblems, mayAct } from "./membership";
+import { autoLeagues, canChangeFavouriteTeam, joinProblems, mayAct, startGameweekChoices } from "./membership";
 
 const FPL_LIKE = { privateLeagueCap: 25, privateLeagueSize: null }; // fixture values: the real ones are data
 
@@ -31,6 +31,12 @@ describe("joinProblems", () => {
   });
 });
 
+describe("startGameweekChoices", () => {
+  test("a league made in gameweek 4 counts from gameweek 4 by default, or a later one", () => {
+    expect(startGameweekChoices(4, 7)).toEqual([4, 5, 6, 7]);
+  });
+});
+
 describe("mayAct", () => {
   test("the maker can rename, remove a manager and delete", () => {
     for (const action of ["rename", "remove", "delete"] as const) {
@@ -41,5 +47,9 @@ describe("mayAct", () => {
 
   test("any other member can leave", () => {
     expect(mayAct("leave", "member", "maker")).toBe(true);
+  });
+
+  test("the maker can't leave without deleting the league", () => {
+    expect(mayAct("leave", "maker", "maker")).toBe(false);
   });
 });

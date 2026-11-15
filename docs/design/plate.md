@@ -31,7 +31,8 @@ tightened to a few.
 ## Type
 
 - Words in IBM Plex Sans KR, Korean included. Figures in IBM Plex Mono, so they line up.
-- Six sizes: 12, 14, 16, 20, 28, and 44 for the page's one key figure. Nothing under 12, except
+- Six sizes: 12, 14, 16, 20, 28, and 44 for the page's one key figure. A player's or coach's
+  card names him at 40/700, his hangul at 20, as a broadcast lower third (Craig, 15 Nov 2026). Nothing under 12, except
   a tag's 11.
 - Three weights: 400, 600, 700.
 - One page title, 28/700, with its hangul after it in 16/400 mid grey: `Leagues 리그`. On Points
@@ -50,6 +51,7 @@ tightened to a few.
 | `--paper` | #fff | panels and tables |
 | `--rise` | #c8102e | a price rise, Korean red |
 | `--fall` | #1f4fa8 | a price fall, Korean blue |
+| `--gold` | #d9bd7a | the hangul on your team's banner, and only there; its rule #b39550 |
 | `--stage` | #1b1b1b | Live's dark stage; its grey text is #999 (4.5:1) |
 
 - Grey until the look is chosen. Colour is spent on meaning only, never to decorate: red and
@@ -79,6 +81,10 @@ Each part is drawn one way on every screen.
 - **Table:** name far left (after its slot, where a table lists a team) with team after it, figures right-aligned, 40px rows, 12px heads
   in mid grey. No action column: what you can do to a row goes in its panel on the right. Two exceptions,
   each a page's one job: Transfers' `+`, and a row's `›` where the row opens something.
+- **The bench**, under the Rift or the cards: one compact bar, `Bench` then a slim tile per
+  bench player (order, role icon, name, team, then fixtures or points). Never a band of big shirts.
+- **Card view**: the 7 starters in one row, as the LCK broadcast's lineup (Top, Jungle, Mid, Bot,
+  Support, Flex, Coach), then the bench bar.
 - **Wide table** (Stats): the head and the name column stick; the table scrolls under them.
 - **Long names** end in `…` at their column's width; the full name shows on hover and in the panel.
 - **Marks:** C and V are round, and so are the live dot, your-player dot (8px, after the name),
@@ -88,6 +94,7 @@ Each part is drawn one way on every screen.
   inside. A card is 1056 wide; a sheet 544.
 - **Form:** label above its field, 14px; the field 40px tall, 1px `--line`, ink when focused;
   an error is one line in ink under the field with a 1px ink edge on the field.
+- **A buff** shows its name, one line on what it does (spec/06), how many are left, and Play.
 - **One main action** per screen, filled ink (`Save team`). Everything else is a link or
   an outlined key.
 - **Placeholders** (sponsor, photo) are dashed `--soft` boxes with one word.

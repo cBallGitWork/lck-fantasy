@@ -19,11 +19,12 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 ## Layout
 
 - **Top:** the team name and its hangul; beside it, Overall as a LoL tier: a shield, the tier and its hangul, the overall rank and move beneath, the sponsor's badge. Its states, not drawn: Unranked, a division tier, Master or Grandmaster, Challenger (its rank and move).
-- **Left, live:** the stream, muted, the series and **Live ›** over it; the stream picker under it (spec/12's list).
+- **Deadline, under the top:** a full-width bar, above the fold: Week 4 deadline, the countdown, your time and KST; on the side column's line, **Pick Team** (the one filled key), **Transfers** and free transfers.
+- **Left, live:** the stream, muted, 16:9 at 704 wide, the series and **Live ›** over it; the stream picker beside it (spec/12's list).
 - **Left, idle:** Week 4 lineup: the seven starters (five roles, Flex, Coach) with C and V; the next series on stream and when; **Pick Team ›**.
 - **Right, live:** your week (not final) with Average and Highest; your players in this series with live points; who is still to play; **Points ›**.
 - **Right, idle:** last week (final) with Average and Highest; star and flop; **Points ›**.
-- **Below:** in the main column, the deadline (countdown, your time and KST, Pick Team, Transfers, free transfers); Following (spec/14); in the side column, Leagues (each league's rank and move, Overall left out since the top shows it, **All leagues ›**).
+- **Below:** in the main column, Following (spec/14); in the side column, Leagues (each league's rank and move, Overall left out since the top shows it, **All leagues ›**).
 - **Bottom:** a sponsor banner and "All sponsors are made up." (spec/13).
 
 ## Still open

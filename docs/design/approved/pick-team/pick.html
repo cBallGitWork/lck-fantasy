@@ -69,34 +69,36 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .tile.sel .nm, .tile.sel .sr { outline: 2px solid var(--ink); outline-offset: 1px; }
 .tile.dim .nm { color: var(--mid); border-color: var(--line); } .tile.dim .sr { background: var(--mid); } .tile.dim .ri, .tile.dim .tag { border-color: var(--line); color: var(--mid); }
 .tile.fit .nm, .tile.fit .sr { outline: 2px dashed var(--ink); outline-offset: 2px; }
-.benchb { background: var(--fill); border: 1px solid var(--line); border-top: 0; padding: 16px 24px 24px; display: grid; grid-template-columns: 112px 200px 96px 200px 1fr; gap: 0 24px; align-items: start; }
-.benchb h3 { font-size: 14px; }
-.benchb .slot { position: relative; padding-top: 16px; }
-.benchb .slot .n { position: absolute; left: 0; top: 0; font-size: 12px; color: var(--mid); }
-.benchb .tile { position: relative; transform: none; left: 32px; top: 0; }
-.ord { border: 1px solid var(--ink); background: var(--paper); padding: 4px 12px; font-weight: 600; }
-.benchb .ord { align-self: center; justify-self: center; margin-top: 32px; }
+/* bench bar: one row under the pitch, or under the lineup in Card view */
+.benchb { height: 72px; display: flex; align-items: center; gap: 16px; padding: 0 16px; background: var(--paper); border: 1px solid var(--line); }
+.benchb h3 { font-size: 14px; font-weight: 600; width: 56px; }
+.bt2 { width: 280px; height: 48px; display: grid; grid-template-columns: 12px 20px 1fr auto; gap: 0 8px; align-items: center; padding: 0 12px; border: 1px solid var(--line); }
+.bt2 .n { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--mid); }
+.bt2 svg { width: 20px; height: 20px; }
+.bt2 .who { line-height: 1.3; white-space: nowrap; overflow: hidden; } .bt2 .who b { font-size: 14px; } .bt2 .who span, .bt2 .who small { font-size: 12px; color: var(--mid); }
+.bt2 .who small { display: block; font-family: "IBM Plex Mono", monospace; }
+.bt2.fit { outline: 2px dashed var(--ink); outline-offset: 2px; }
+.bt2.dim, .bt2.dim .who b { color: var(--mid); }
+.ord { border: 1px solid var(--ink); background: var(--paper); padding: 4px 8px; font-size: 12px; font-weight: 600; }
 
 /* cards */
+/* card view: the seven starters as the broadcast lineup */
 .cv { margin-top: 12px; }
-.lineup { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-.pc { background: var(--paper); border: 1px solid var(--ink); position: relative; display: flex; flex-direction: column; }
-.pc .rl { display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--mid); }
-.pc .rl svg { width: 16px; height: 16px; }
-.pc .por { height: 192px; margin: 8px; }
-.pc .nm { font-size: 20px; font-weight: 700; padding: 0 8px; }
+.lineup { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 8px; }
+.pc { background: var(--paper); border: 1px solid var(--ink); position: relative; display: flex; flex-direction: column; min-width: 0; }
+.pc .rl { height: 48px; display: flex; gap: 4px; align-items: center; padding: 4px 8px; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.3; }
+.pc .rl svg { width: 16px; height: 16px; flex: none; } .pc .rl span small { display: block; color: var(--mid); font-size: 12px; }
+.pc .por { position: relative; height: 176px; margin: 8px; }
+.pc .por.crest { border: 0; } .pc .por.crest i { width: 96px; height: 96px; border-radius: 50%; border: 1px dashed var(--soft); display: flex; align-items: center; justify-content: center; font-style: normal; }
+.pc .por .tag { position: absolute; left: 4px; bottom: 4px; background: var(--paper); color: var(--ink); }
+.pc .nm { font-size: 20px; font-weight: 700; padding: 0 8px; line-height: 1.2; }
 .pc .tm { font-size: 12px; color: var(--mid); padding: 0 8px 8px; }
-.pc .nx { border-top: 1px solid var(--line); padding: 8px; font-size: 12px; font-family: "IBM Plex Mono", monospace; }
-.pc .ft { border-top: 1px solid var(--line); display: flex; justify-content: space-between; padding: 4px 8px; font-size: 12px; color: var(--mid); font-family: "IBM Plex Mono", monospace; }
-.pc .mk { position: absolute; right: 8px; top: 40px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--paper); font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.pc .nx { border-top: 1px solid var(--line); padding: 8px; font-size: 12px; font-family: "IBM Plex Mono", monospace; white-space: nowrap; margin-top: auto; }
+.pc .ft { border-top: 1px solid var(--line); display: flex; justify-content: space-between; padding: 4px 8px; font-size: 12px; color: var(--mid); font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
+.pc .ft b { color: var(--ink); font-weight: 400; }
+.pc .mk { position: absolute; right: 4px; top: 4px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--paper); font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .pc .mk.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
 .pc.sel { outline: 2px solid var(--ink); }
-.pc .nw { font-size: 12px; padding: 4px 8px 0; color: var(--mid); }
-.row2 { display: grid; grid-template-columns: 1fr 1fr 24px 1fr 1fr; position: relative; gap: 8px; margin-top: 8px; }
-.row2 .pc .por { height: 112px; }
-.row2 .sep { border-left: 1px dashed var(--soft); margin-left: 12px; }
-.row2 > .ord { position: absolute; left: 748px; white-space: nowrap; top: 120px; transform: translateX(-50%); z-index: 3; padding: 4px 8px; }
-.pc.bench { background: var(--fill); border-color: var(--line); }
 
 /* side */
 .card { background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--ink); margin-bottom: 24px; }
@@ -111,13 +113,14 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .card .bt span.dim { background: var(--fill); border-color: var(--fill); color: var(--mid); font-weight: 400; }
 .card .bt span.pressed { background: var(--paper); }
 .card .bt a { display: flex; align-items: center; justify-content: center; min-height: 24px; }
-.buffs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.buff { border: 1px solid var(--ink); padding: 8px 12px; background: var(--paper); display: flex; justify-content: space-between; align-items: center; }
-.buff b { font-size: 14px; } .buff small { color: var(--mid); font-size: 12px; display: block; }
-.buff .go { border: 1px solid var(--ink); padding: 0 8px; font-size: 12px; font-weight: 600; }
-.buff.on { background: var(--ink); color: var(--paper); } .buff.on small { color: var(--line); } .buff.on .go { border-color: var(--paper); }
-.buff.off { border-color: var(--line); color: var(--mid); } .buff.off b { color: var(--mid); font-weight: 600; }
-.buff.off a { display: inline-flex; align-items: center; min-height: 24px; }
+.buffs { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 8px; }
+.buff { border: 1px solid var(--ink); padding: 8px 12px; background: var(--paper); display: flex; flex-direction: column; }
+.buff b { font-size: 14px; } .buff p { color: var(--mid); font-size: 12px; line-height: 1.3; margin-top: 4px; }
+.buff .ft2 { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; font-size: 12px; color: var(--mid); }
+.buff .go { border: 1px solid var(--ink); padding: 0 8px; font-size: 12px; font-weight: 600; color: var(--ink); min-height: 24px; display: inline-flex; align-items: center; }
+.buff a { display: inline-flex; align-items: center; min-height: 24px; color: var(--ink); }
+.buff.on { background: var(--ink); color: var(--paper); } .buff.on p, .buff.on .ft2 { color: var(--line); } .buff.on .go { border-color: var(--paper); color: var(--paper); }
+.buff.off { border-color: var(--fill); background: var(--fill); color: var(--mid); } .buff.off b { color: var(--mid); font-weight: 600; }
 .wk div { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--fill); align-items: center; }
 .wk .d { color: var(--mid); font-size: 12px; } .wk .t { text-align: right; font-family: "IBM Plex Mono", monospace; }
 .wk .t .kst { color: var(--mid); font-size: 12px; }
@@ -216,24 +219,30 @@ function rift() {
   const starters = ["top","jng","mid","bot","sup","flex","coach"].map((s) => {
     const w = document.createElement("div"); w.innerHTML = tile(by(s)); const t = w.firstElementChild;
     t.style.left = POS[s][0] + "px"; t.style.top = POS[s][1] + "px"; return t.outerHTML; }).join("");
-  const [b1, b2] = ["b1","b2"].map((s) => { const p = by(s); return `<div class="slot"><span class="n">${s[1]} · ${NAME[p.role]}</span>${tile(p)}</div>`; });
-  const bench = b1 + `<span class="ord">⇅ Swap</span>` + b2;
-  return `<div class="rift">${MAP}${starters}</div><div class="benchb"><h3>Bench</h3>${bench}</div>`;
+  return `<div class="rift">${MAP}${starters}</div>${bench()}`;
 }
 
-// card view
-function pc(p, cls = "") {
-  const role = p.slot === "flex" ? `Flex · plays ${NAME[p.role]}` : /^b\d/.test(p.slot) ? `${NAME[p.slot]} · ${NAME[p.role]}` : NAME[p.slot];
+// the bench bar, the same under Rift view and Card view
+function bt2(p) {
+  const cls = FIT.has(p.name) ? "fit" : SWAP ? "dim" : "";
+  const g = games(p.team).map((x) => `v ${x.opp}`).join(" · ");
+  return `<div class="bt2 ${cls}"><span class="n">${p.slot[1]}</span><svg><use href="#${ICON[p.role]}"/></svg>
+    <span class="who"><b>${p.name}</b> <span>${p.team}</span><small>${g}</small></span><span></span></div>`;
+}
+const bench = () => `<div class="benchb"><h3>Bench</h3>${bt2(by("b1"))}<span class="ord">⇅ Swap</span>${bt2(by("b2"))}</div>`;
+
+// card view: Top, Jungle, Mid, Bot, Support, Flex, Coach, as the LCK broadcast's lineup
+function pc(p) {
+  const role = p.slot === "flex" ? `Flex<small>plays ${NAME[p.role]}</small>` : NAME[p.slot];
   const nx = games(p.team).map((x) => `v ${x.opp}`).join(" · ");
-  return `<div class="pc ${cls} ${p.name === SEL ? "sel" : ""}"><div class="rl"><span>${role}</span><svg><use href="#${ICON[p.role || p.slot]}"/></svg></div>${p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}
-    ${p.news ? `<div class="nw"><span class="tag">Not starting</span> Wed</div>` : ""}<div class="por ph">${p.slot === "coach" ? "Crest" : "Photo"}</div><div class="nm">${p.name}</div><div class="tm">${p.team}</div>
-    <div class="nx">${nx}</div><div class="ft"><span>Form ${p.form}</span><span>${p.price}억</span></div></div>`;
+  const mk = p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : "";
+  const news = p.news ? `<span class="tag">Not starting</span>` : "";
+  const por = p.slot === "coach" ? `<div class="por ph crest"><i>Crest</i>${mk}</div>` : `<div class="por ph">Photo${mk}${news}</div>`;
+  return `<div class="pc ${p.name === SEL ? "sel" : ""}"><div class="rl"><svg><use href="#${ICON[p.role || p.slot]}"/></svg><span>${role}</span></div>
+    ${por}<div class="nm">${p.name}</div><div class="tm">${p.team}</div>
+    <div class="nx">${nx}</div><div class="ft"><span>Form <b>${p.form}</b></span><b>${p.price}억</b></div></div>`;
 }
-function cards() {
-  return `<div class="cv"><div class="lineup">${["top","jng","mid","bot","sup"].map((s) => pc(by(s))).join("")}</div>
-    <div class="row2"><div>${pc(by("flex"))}</div><div>${pc(by("coach"))}</div><div class="sep"></div><div>${pc(by("b1"), "bench")}</div><div>${pc(by("b2"), "bench")}</div><span class="ord">⇅ Swap</span></div>
-    </div>`;
-}
+const cards = () => `<div class="cv"><div class="lineup">${["top","jng","mid","bot","sup","flex","coach"].map((s) => pc(by(s))).join("")}</div>${bench()}</div>`;
 $("board").innerHTML = V === "cards" ? cards() : rift();
 
 // the tapped player's card (spec/12, The player card)
@@ -252,11 +261,11 @@ $("card").innerHTML = SWAP
      <div class="bt"><span class="pressed">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><a>Full card ›</a></div>`;
 
 // buffs (spec/06; spec/12: Bench Boost and Dual Carry cancel until the deadline)
-const bb = SWAP ? `<div class="buff on"><div><b>Bench Boost</b><small>on · unsaved</small></div><span class="go">Cancel</span></div>`
-               : `<div class="buff"><div><b>Bench Boost</b><small>1 left</small></div><span class="go">Play</span></div>`;
-const dc = SWAP ? `<div class="buff off"><div><b>Dual Carry</b><small>1 left</small></div></div>`
-               : `<div class="buff"><div><b>Dual Carry</b><small>Vice ×1.5 too<br>1 left</small></div><span class="go">Play</span></div>`;
-const tb = (n) => SWAP ? `<div class="buff off"><div><b>${n}</b><small>1 left</small></div></div>` : `<div class="buff off"><div><b>${n}</b><small>1 left</small></div><a>Transfers ›</a></div>`;
+const DESC = { "Bench Boost": "Your bench scores too", "Dual Carry": "Vice-carry ×1.5 too", Remake: "Unlimited transfers, kept", Limitless: "One week, no budget or team cap" };
+const buff = (n, cls, left, ctl) => `<div class="buff ${cls}"><b>${n}</b><p>${DESC[n]}</p><div class="ft2"><span>${left}</span>${ctl}</div></div>`;
+const bb = SWAP ? buff("Bench Boost", "on", "On · unsaved", `<span class="go">Cancel</span>`) : buff("Bench Boost", "", "1 left", `<span class="go">Play</span>`);
+const dc = buff("Dual Carry", SWAP ? "off" : "", "1 left", SWAP ? "" : `<span class="go">Play</span>`);
+const tb = (n) => buff(n, SWAP ? "off" : "", "1 left", SWAP ? "" : `<a>Transfers ›</a>`);
 $("buffs").innerHTML = bb + dc + tb("Remake") + tb("Limitless");
 
 const MINE = new Set(SQ.map((p) => p.team));

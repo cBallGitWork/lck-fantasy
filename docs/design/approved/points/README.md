@@ -6,7 +6,7 @@ Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in the shar
 
 | File | Shows |
 |---|---|
-| `1440.png`, `points.html` | Saturday, T1 v DK live: your team on the Rift, the bench, Faker's games open, your week, leagues, the week's series |
+| `1440.png`, `points.html` | Saturday, T1 v DK live: your team on the Rift, the bench bar, Faker's games open, your week, leagues, the week's series |
 
 ## Borrowed
 
@@ -18,7 +18,7 @@ Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in the shar
 ## Layout
 
 - **Header:** team name and hangul; ‹ week ›; your points, not final, Average, Highest ›; the live bar while a series is live, with Watch ›.
-- **Left:** Rift view | Card view (Rift first, then remembered); each starter's points and his series under the shirt; C and V; "Subbed in for Bdd" on an auto-sub; the bench under it.
+- **Left:** Rift view | Card view (Rift first, then remembered); each starter's points and his series under the shirt; C and V; "Subbed in for Bdd" on an auto-sub; under the pitch the bench bar, one row: order, role icon, name, team and the week's points, "Didn't play" and — for a bench player with no games (redrawn 15 Nov 2026 from the grey band of two shirts).
 - **Right:** the tapped player's games (closed until a tap), your week (Star, Flop, Killer), Leagues with moves and the points to the next tier, the week's series, the sponsor slot.
 
 ## Controls

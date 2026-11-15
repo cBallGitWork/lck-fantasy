@@ -6,7 +6,10 @@ import { SettingsPage } from "./SettingsPage";
 
 const DATA_FILE = "flol-data.json";
 
-/** Saves the manager's data as a JSON file at once. */
+/** Until the backend (#42) feeds an action, using it warns rather than doing nothing. */
+const notConnected = (action: string) => () => console.warn(`Settings: ${action} is not connected to the backend yet (#42)`);
+
+/** Saves the manager's data as a JSON file at once; until #42 it holds settings and account only. */
 function saveJson(data: unknown) {
   const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: "application/json" }));
   const link = document.createElement("a");
@@ -33,9 +36,9 @@ export function Settings({
   countries = COUNTRIES,
   deleteRows = DELETE_ROWS,
   firstTab = "Team",
-  onSave,
-  onSignOut = () => {},
-  onDeleteAccount = () => {},
+  onSave = notConnected("Save"),
+  onSignOut = notConnected("Sign out"),
+  onDeleteAccount = notConnected("Delete account"),
 }: {
   saved?: SettingsValues;
   draft?: SettingsValues;
@@ -67,7 +70,7 @@ export function Settings({
         onReset={() => setDraft(saved)}
         onSave={() => {
           setSaved(draft);
-          onSave?.(draft);
+          onSave(draft);
         }}
         account={account}
         locked={locked}

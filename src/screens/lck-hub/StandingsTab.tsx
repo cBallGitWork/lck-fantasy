@@ -4,11 +4,14 @@ import type { StandingsGroup, StandingsRow } from "./types";
 import { SectionTitle } from "./Week";
 
 const MINUS = "−";
+const NO_GAMES = "—";
 
 /** `+7`, `0`, `−1`. */
 export const signed = (n: number) => (n > 0 ? `+${n}` : n < 0 ? `${MINUS}${-n}` : "0");
 
-const winPct = (r: StandingsRow) => `${Math.round((r.won / (r.won + r.lost)) * 100)}%`;
+/** `67%`; a team yet to play shows a dash. */
+export const winPct = ({ won, lost }: Pick<StandingsRow, "won" | "lost">) =>
+  won + lost === 0 ? NO_GAMES : `${Math.round((won / (won + lost)) * 100)}%`;
 
 const columns = (group: StandingsGroup): Column<StandingsRow>[] => [
   { key: "rank", head: "", width: "row", cell: (r) => <span className="lck-hub__rank num">{group.rows.indexOf(r) + 1}</span> },

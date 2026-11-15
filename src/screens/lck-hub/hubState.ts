@@ -18,7 +18,7 @@ export type HubAction =
   | { type: "week"; tab: WeekTab; step: -1 | 1 }
   | { type: "team"; team: TeamCode };
 
-/** Each stage opens on its own weeks. */
+/** Each stage opens on its own weeks. `stage` comes from the page's own stage list, so `s` is always there; the fallback only keeps the types honest. */
 function atStage(data: LckHubData, stage: number) {
   const s = data.stages[stage];
   return { stage, fixturesWeek: s?.openFixtures ?? 0, resultsWeek: s?.openResults ?? 0 };
@@ -31,7 +31,7 @@ export function startHub(data: LckHubData, tab: HubTab = "Fixtures"): HubState {
   return { tab, team, ...atStage(data, 0) };
 }
 
-/** The weeks a tab steps through, in the chosen stage. */
+/** The weeks a tab steps through, in the chosen stage (always one of the page's own, as in `atStage`). */
 export function weeksOf(data: LckHubData, state: HubState, tab: WeekTab) {
   const stage = data.stages[state.stage];
   return (tab === "Fixtures" ? stage?.fixtures : stage?.results) ?? [];

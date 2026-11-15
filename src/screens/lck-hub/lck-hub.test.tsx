@@ -5,7 +5,7 @@ import { html, text } from "../../testing/render";
 import { LCK_HUB } from "./fixtures";
 import { nextHub, startHub, type HubAction } from "./hubState";
 import { LckHub } from "./LckHub";
-import { signed } from "./StandingsTab";
+import { signed, winPct } from "./StandingsTab";
 import type { HubTab, LckHubData } from "./types";
 
 const page = (tab: HubTab, data: LckHubData = LCK_HUB) => <LckHub data={data} account={MANAGER.team} tab={tab} />;
@@ -207,4 +207,8 @@ describe("controls", () => {
 
 test("a set difference is signed, zero bare", () => {
   expect([signed(7), signed(0), signed(-1)]).toEqual(["+7", "0", "−1"]);
+});
+
+test("Win % is rounded, and a dash before a team's first series", () => {
+  expect([winPct({ won: 2, lost: 1 }), winPct({ won: 0, lost: 0 })]).toEqual(["67%", "—"]);
 });

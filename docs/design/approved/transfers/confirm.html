@@ -1,132 +1,115 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Transfers · confirm</title>
-<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --hot: #1d1d1d; }
+<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
 .num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-i.ko { font-style: normal; color: var(--soft); font-size: 11px; margin-left: 4px; }
-nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
-nav.top a { color: var(--mid); text-decoration: none; }
-nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
-nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vertical-align: 2px; }
+a { color: var(--ink); text-decoration: none; }
+
+/* Top bar: the same on every screen. */
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
-.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
-.note { position: absolute; background: #fffbe0; border: 1px solid #d8cf8a; font-size: 11px; padding: 4px 7px; color: #5a5420; max-width: 220px; line-height: 1.3; z-index: 5; }
-.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; line-height: 16px; }
-.tag.prov { border-style: dashed; color: var(--mid); border-color: var(--mid); }
-.tag.live { background: var(--ink); color: #fff; }
-.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 10px; }
-.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 10px; }
-.gw { display: flex; align-items: center; gap: 16px; }
-.gw button { border: 1px solid var(--line); background: var(--paper); padding: 4px 10px; font: inherit; color: var(--mid); }
-.gw h1 { font-size: 26px; letter-spacing: -0.5px; }
-.cnt { text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
-.unc { color: var(--soft); text-decoration: line-through; }
-.lv { font-weight: 600; }
-.lv::after { content: "●"; font-size: 8px; vertical-align: 4px; margin-left: 1px; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+
+/* Parts */
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 4px; font: 400 11px/16px "IBM Plex Sans KR", sans-serif; }
+.tag.prov { border-style: dashed; }
+.tag.live { background: var(--ink); color: var(--paper); }
+.up::before { content: "▲ "; font-size: 12px; }
+.down::before { content: "▼ "; font-size: 12px; }
 .cake::after { content: " 🎂"; }
+.tog { display: inline-flex; font-size: 14px; }
+.tog span { padding: 4px 24px; border: 1px solid var(--line); background: var(--fill); color: var(--mid); }
+.tog span + span { margin-left: -1px; }
+.tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
 
-.page { display: grid; grid-template-columns: 1fr 400px; gap: 28px; padding: 22px 32px 48px; }
-.ph1 { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 14px; }
-.ph1 h1 { font-size: 26px; letter-spacing: -0.5px; }
-.ph1 .dl { font-size: 15px; margin-top: 4px; } .ph1 .dl span { color: var(--soft); } .ph1 .dl b.cd { margin-left: 10px; border: 1px solid var(--ink); padding: 1px 8px; font-family: "IBM Plex Mono", monospace; }
-.save { background: var(--ink); color: #fff; font-weight: 700; padding: 10px 26px; border: 0; font: inherit; font-weight: 700; }
-.ctl { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 13px; color: var(--mid); }
-.tog { display: inline-flex; border: 1px solid var(--line); background: var(--fill); padding: 3px; }
-.tog span { padding: 5px 24px; color: var(--mid); } .tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
-aside > section { border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 24px; }
-aside h2 { font-size: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; }
-aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
-.card { background: var(--paper); border: 1px solid var(--ink); margin-bottom: 24px; }
-.card header { display: flex; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); align-items: center; }
-.card header b { font-size: 19px; display: block; } .card header .x { margin-left: auto; color: var(--mid); align-self: flex-start; }
-.card .st { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
-.card .st div { padding: 8px 14px; } .card .st b { display: block; font-family: "IBM Plex Mono", monospace; font-size: 17px; } .card .st span { font-size: 11px; color: var(--mid); }
-.card .nx { padding: 10px 14px; font-size: 13px; border-bottom: 1px solid var(--line); }
-.card .nx div { display: flex; justify-content: space-between; padding: 3px 0; } .card .nx .k { color: var(--mid); }
-.card .bt { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
-.card .bt span { border: 1px solid var(--ink); text-align: center; padding: 7px 0; font-size: 13px; font-weight: 600; }
-.card .bt span.pri { background: var(--ink); color: #fff; } .card .bt span.dim { border-color: var(--line); color: var(--mid); font-weight: 400; }
-.buffs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.buff { border: 1px solid var(--ink); padding: 8px 10px; background: var(--paper); font-size: 13px; }
-.buff b { display: block; font-size: 14px; } .buff small { color: var(--mid); font-size: 11px; display: block; margin: 2px 0 6px; }
-.buff .go { display: inline-block; border: 1px solid var(--ink); padding: 0 10px; font-size: 12px; font-weight: 600; }
-.buff.off { border-color: var(--line); color: var(--mid); } .buff.off b { color: var(--mid); }
-.wk { font-size: 13px; }
-.wk div { display: grid; grid-template-columns: 34px 1fr auto; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--fill); align-items: center; }
-.wk .d { color: var(--mid); font-size: 12px; } .wk .t { font-size: 12px; text-align: right; font-family: "IBM Plex Mono", monospace; }
-.wk div.mine b.y { text-decoration: underline; text-underline-offset: 3px; }
-.ad { height: 100px; margin-bottom: 6px; } .adline { font-size: 11px; color: var(--soft); }
-.note2 { font-size: 12px; color: var(--mid); margin-top: 8px; }
+.rise { color: var(--rise); } .fall { color: var(--fall); }
 
-.rift { position: relative; width: 948px; height: 700px; }
-.rift svg.map { position: absolute; inset: 0; width: 948px; height: 700px; }
-.plist td.nx { font-size: 12px; line-height: 1.3; white-space: nowrap; }
-.tile { position: absolute; width: 132px; transform: translate(-50%, -50%); text-align: center; }
-.benchb .tile { position: relative; transform: none; }
-.tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto -2px; }
+/* Frame */
+.page { display: grid; grid-template-columns: 1fr 360px; gap: 32px; padding: 24px 32px 48px; }
+aside > section, aside > .done { border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 24px; }
+aside h2, .done h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+
+/* header */
+.ph1 { margin-bottom: 16px; }
+.ph1 h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+.ph1 h1 i { font-style: normal; color: var(--mid); font-size: 16px; font-weight: 400; margin-left: 8px; letter-spacing: 0; }
+.ph1 .dl { margin-top: 4px; } .ph1 .dl span { color: var(--mid); } .ph1 .dl b:not(.cd) { font-weight: 400; }
+.ph1 .dl b.cd { margin-left: 12px; border: 1px solid var(--ink); padding: 0 8px; font-family: "IBM Plex Mono", monospace; }
+.tstats { display: flex; gap: 24px; align-items: center; border: 1px solid var(--line); background: var(--paper); padding: 8px 16px; margin-bottom: 16px; font-size: 16px; color: var(--mid); }
+.tstats > div { display: flex; gap: 8px; align-items: baseline; }
+.tstats > div > span { order: -1; }
+.tstats > div > b { font-family: "IBM Plex Mono", monospace; color: var(--ink); white-space: nowrap; }
+.bz { margin-left: auto; display: flex; gap: 8px; }
+.buff2 { border: 1px solid var(--ink); padding: 4px 12px; font-size: 14px; font-weight: 600; color: var(--ink); }
+.save { background: var(--ink); color: var(--paper); border: 0; padding: 8px 24px; font: inherit; font-weight: 700; }
+.ctl { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.ctl .show { border: 1px solid var(--ink); padding: 4px 12px; background: var(--paper); }
+
+/* rift */
+.rift { position: relative; width: 100%; height: 560px; }
+.rift svg.map { position: absolute; inset: 0; width: 100%; height: 560px; }
+.tile { position: absolute; z-index: 2; width: 132px; transform: translate(-50%, -50%); text-align: center; }
+.tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto; }
 .tile .kit svg.shirt { width: 56px; height: 50px; }
-.tile .kit .code { position: absolute; left: 0; right: 0; top: 18px; font-size: 10px; font-weight: 700; }
-.tile .ri { position: absolute; left: -22px; top: -2px; width: 26px; height: 26px; background: var(--paper); border: 1px solid var(--ink); display: flex; align-items: center; justify-content: center; }
-.tile .ri svg { width: 18px; height: 18px; }
-.tile .mk { position: absolute; right: -16px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.tile .kit .code { position: absolute; left: 0; right: 0; top: 16px; font-size: 12px; font-weight: 700; }
+.tile .ri { position: absolute; left: -24px; top: 0; width: 28px; height: 28px; background: var(--paper); border: 1px solid var(--ink); display: flex; align-items: center; justify-content: center; }
+.tile .ri svg { width: 20px; height: 20px; }
+.tile .mk { position: absolute; right: -16px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .tile .mk.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
-.tile .nm { background: var(--paper); border: 1px solid var(--ink); font-weight: 700; font-size: 13px; padding: 2px 4px; }
-.tile .nx { background: var(--ink); color: #fff; font-size: 11px; padding: 2px 0; }
-.tile .sl { font-size: 10px; color: var(--mid); margin-top: 2px; background: var(--paper); display: inline-block; padding: 0 4px; }
-.tile .nw { position: absolute; right: -14px; top: 26px; width: 18px; height: 18px; background: var(--paper); border: 1px solid var(--ink); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.tile.sel .nm, .tile.sel .nx { outline: 3px solid var(--ink); }
-.benchb { background: var(--fill); border: 1px solid var(--line); border-top: 0; padding: 12px 24px 18px; display: flex; gap: 70px; align-items: flex-start; }
-.benchb h3 { font-size: 13px; width: 120px; } .benchb h3 i { font-style: normal; color: var(--soft); font-weight: 400; font-size: 11px; margin-left: 4px; }
-.benchb h3 small { display: block; font-weight: 400; color: var(--mid); font-size: 11px; margin-top: 4px; }
-.savebar { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; font-size: 13px; color: var(--mid); }
-.reset { margin-right: 16px; text-decoration: underline; color: var(--ink); }
-.benchb .ord { font-size: 12px; border: 1px solid var(--ink); padding: 2px 8px; margin-top: 8px; display: inline-block; color: var(--ink); background: var(--paper); }
-.tile.dim { opacity: .35; } .tile.ok .nm { outline: 3px dashed var(--ink); outline-offset: 2px; }
-.buff.on { background: var(--ink); color: #fff; } .buff.on small { color: #cfcfcf; } .buff.on .go { border-color: #fff; }
-.unsv { border: 1px dashed var(--ink); padding: 4px 10px; font-size: 13px; }
-.key { display: flex; gap: 14px; align-items: center; font-size: 12px; color: var(--mid); margin: 0 0 8px; }
-.key span:last-child { margin-left: auto; }
-.kc { display: inline-flex; width: 18px; height: 18px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; align-items: center; justify-content: center; margin-right: -8px; }
-.kc.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
-.ph1 .act { display: flex; align-items: center; gap: 14px; font-size: 13px; }
-.card .bt span.lbl { border: 0; text-align: left; font-weight: 700; padding-left: 0; }
-.buff .lft { float: right; font-size: 11px; color: var(--mid); }
-.buff.off a { color: var(--ink); text-decoration: underline; font-size: 12px; }
-.bprompt { font-size: 13px; color: var(--ink); font-weight: 600; margin-top: 8px; }
-.rift { height: 560px !important; } .rift svg.map { height: 560px !important; }
-.basebox { position: absolute; left: 14px; top: 386px; width: 304px; height: 164px; border: 1.5px dashed var(--ink); background: rgba(255,255,255,.55); }
-.basebox span { position: absolute; left: 8px; top: 4px; font-size: 11px; color: var(--mid); }
-.tile { z-index: 2; }
-.tstats { display: flex; gap: 28px; align-items: center; border: 1px solid var(--line); background: var(--paper); padding: 10px 16px; margin-bottom: 14px; }
-.tstats > div > b { display: block; font-family: "IBM Plex Mono", monospace; font-size: 20px; } .tstats > div > span { font-size: 12px; color: var(--mid); }
-.caps { display: flex; gap: 6px; align-items: center; font-size: 12px; } .caps span { border: 1px solid var(--line); padding: 1px 6px; } .caps .k { border: 0; color: var(--mid); } .caps .f { border-color: var(--ink); font-weight: 600; }
-.bz { margin-left: auto; display: flex; gap: 8px; } .buff2 { border: 1px solid var(--ink); padding: 4px 10px; font-size: 13px; font-weight: 600; } .buff2 small { font-weight: 400; color: var(--mid); margin-left: 4px; }
-.pl2 h2 { font-size: 15px; } .flt, .flt2 { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; font-size: 12px; }
-.flt span { border: 1px solid var(--line); padding: 3px 8px; background: var(--paper); } .flt span.on { background: var(--ink); color: #fff; border-color: var(--ink); }
-.flt2 span { border: 1px solid var(--line); padding: 4px 8px; background: var(--paper); color: var(--mid); } .flt2 .srch { flex: 1; }
-.plist { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--paper); }
-.plist th { text-align: left; font-weight: 500; color: var(--mid); font-size: 11px; padding: 5px 6px; border-bottom: 1px solid var(--line); }
-.plist td { padding: 6px; border-bottom: 1px solid var(--fill); } .plist td.n { font-family: "IBM Plex Mono", monospace; text-align: right; }
-.plist td svg { width: 14px; height: 14px; } .plist td small { color: var(--mid); display: block; font-size: 11px; }
-.plist tr.no td { color: var(--soft); } .plist tr.no td small { color: var(--soft); }
-.plist .add { border: 1px solid var(--ink); width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
-.plist tr.no .add { border-color: var(--line); color: var(--line); } .plist tr.pick td { background: var(--fill); } .plist tr.pick .add { background: var(--ink); color: #fff; }
-.confirm { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; border: 1.5px solid var(--ink); background: var(--paper); padding: 10px 14px; font-size: 14px; }
+.tile .nm { background: var(--paper); border: 1px solid var(--ink); font-weight: 700; font-size: 14px; padding: 0 4px; }
+.tile .pr { background: var(--ink); color: var(--paper); font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 4px 0; }
+.tile .tag { margin-top: 4px; background: var(--paper); }
+.tile.sel .nm, .tile.sel .pr { outline: 2px solid var(--ink); outline-offset: 1px; }
+/* bench bar: one row under the pitch */
+.benchb { height: 72px; display: flex; align-items: center; gap: 16px; padding: 0 16px; background: var(--paper); border: 1px solid var(--line); }
+.benchb h3 { font-size: 14px; font-weight: 600; width: 56px; }
+.bt2 { width: 280px; height: 48px; display: grid; grid-template-columns: 12px 20px 1fr; gap: 0 8px; align-items: center; padding: 0 12px; border: 1px solid var(--line); }
+.bt2 .n { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--mid); }
+.bt2 svg { width: 20px; height: 20px; }
+.bt2 .who { line-height: 1.3; white-space: nowrap; overflow: hidden; } .bt2 .who b { font-size: 14px; } .bt2 .who span, .bt2 .who small { font-size: 12px; color: var(--mid); }
+.bt2 .who small { display: block; font-family: "IBM Plex Mono", monospace; }
+.confirm { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; border: 1px solid var(--ink); background: var(--paper); padding: 8px 16px; }
 .confirm .out { text-decoration: line-through; color: var(--mid); }
-.tile .pr { background: var(--ink); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 12px; line-height: 1.35; padding: 2px 0; }
-.ctl .show { border: 1.5px solid var(--ink); padding: 5px 12px; font-size: 13px; color: var(--ink); background: var(--paper); }
-.tile.sold .kit, .tile.sold .nm, .tile.sold .sl { opacity: .35; } .tile.sold .pr { background: var(--paper); color: var(--ink); border: 1.5px dashed var(--ink); }
+.reset { margin-right: 16px; display: inline-flex; align-items: center; min-height: 24px; }
+
+/* player list */
+.flt, .flt2 { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; font-size: 12px; }
+.flt span { border: 1px solid var(--line); padding: 4px 8px; background: var(--paper); } .flt span.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.flt2 span { border: 1px solid var(--line); padding: 4px 8px; background: var(--paper); color: var(--mid); white-space: nowrap; } .flt2 .srch { flex: 1; }
+.plist { width: 100%; border-collapse: collapse; background: var(--paper); }
+.plist th { text-align: left; font-weight: 400; color: var(--mid); font-size: 12px; padding: 4px; border-bottom: 1px solid var(--line); }
+.plist th.n { text-align: right; }
+.plist td { height: 40px; padding: 4px; border-bottom: 1px solid var(--fill); } .plist td.n { font-family: "IBM Plex Mono", monospace; text-align: right; white-space: nowrap; }
+.plist td svg { width: 12px; height: 12px; } .plist td small { color: var(--mid); display: block; font-size: 12px; }
+.plist td.nmc { white-space: nowrap; max-width: 112px; overflow: hidden; text-overflow: ellipsis; }
+.plist td.nx { font-size: 12px; line-height: 1.3; white-space: nowrap; }
+.plist tr.no td, .plist tr.no td small { color: var(--mid); } .plist tr.no td b { font-weight: 400; }
+.plist .add { border: 1px solid var(--ink); width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+.plist tr.no .add { border-color: var(--fill); background: var(--fill); color: var(--mid); } .plist tr.pick td { background: var(--fill); } .plist tr.pick .add { background: var(--ink); color: var(--paper); }
+.ar { font-size: 12px; } .plist td.arw { width: 16px; padding: 4px 4px 4px 0; }
+
+/* confirmed this week */
+.done h3 { margin-bottom: 0; }
+.cf { display: grid; grid-template-columns: 72px 1fr 48px 56px; gap: 8px; align-items: center; padding: 8px 0; border-top: 1px solid var(--fill); }
+.cf .t { color: var(--mid); font-size: 12px; } .cf .c { font-family: "IBM Plex Mono", monospace; text-align: right; }
+.cf .u { justify-self: end; border: 1px solid var(--ink); padding: 0 8px; font-weight: 700; font-size: 12px; }
+.cf.old { color: var(--mid); } .cf.old b { font-weight: 400; }
+
+/* confirm sheet (confirm.html only) */
 .veil { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 10; }
-.sheet2 { position: absolute; left: 470px; top: 220px; width: 500px; background: var(--paper); border: 1.5px solid var(--ink); z-index: 11; padding: 20px 24px; }
-.sheet2 h3 { font-size: 20px; margin-bottom: 12px; } .sheet2 table { width: 100%; border-collapse: collapse; font-size: 14px; }
-.sheet2 td { padding: 8px 0; border-bottom: 1px solid var(--fill); vertical-align: top; } .sheet2 td.k { color: var(--mid); width: 80px; }
-.sheet2 small { color: var(--mid); } .sheet2 .sb { display: flex; justify-content: flex-end; gap: 16px; align-items: center; margin-top: 16px; } .sheet2 .sb span { text-decoration: underline; }
-.sheet2 p { font-size: 12px; color: var(--mid); margin-top: 10px; text-align: right; }
-.tstats { gap: 18px; } .tstats b, .caps span, .flt2 span { white-space: nowrap; } .tstats > div > span { display: block; max-width: 140px; } .bz { max-width: 150px; }
+.sheet2 { position: absolute; left: 448px; top: 220px; width: 544px; background: var(--paper); border: 1px solid var(--ink); z-index: 11; padding: 24px; }
+.sheet2 h3 { font-size: 20px; margin-bottom: 12px; } .sheet2 table { width: 100%; border-collapse: collapse; }
+.sheet2 td { height: 40px; border-bottom: 1px solid var(--fill); } .sheet2 td.k { color: var(--mid); width: 80px; }
+.sheet2 .sb { display: flex; justify-content: flex-end; gap: 16px; align-items: center; margin-top: 16px; } .sheet2 .sb span { display: inline-flex; align-items: center; min-height: 24px; }
+.sheet2 p { font-size: 12px; color: var(--mid); margin-top: 8px; text-align: right; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute">
   <defs>
@@ -142,12 +125,12 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
   </defs>
 </svg>
 
-<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a class="on">Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a class="on">Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
 <div class="page"><main>
-<div class="ph1"><div><h1>Transfers · LCK Cup Week 4</h1><div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">9h 45m</b></div></div></div>
+<div class="ph1"><div><h1>Transfers<i>이적</i></h1><div class="dl">LCK Cup Week 4 · Deadline <b>Wed 07:45</b>&nbsp; <span>16:45 KST</span><b class="cd">9h 45m</b></div></div></div>
 <div class="tstats">
   <div><b>0</b><span>Free transfers</span></div><div><b>−6</b><span>Pending hit</span></div><div><b>1.5억</b><span>Bank</span></div>
-  <div class="bz" style="max-width:none"><span class="buff2">Remake</span><span class="buff2">Limitless</span></div>
+  <div class="bz"><span class="buff2">Remake</span><span class="buff2">Limitless</span></div>
 </div>
 <div class="ctl"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span><span class="show">Show: Fixtures ▾</span></div>
 <div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
@@ -176,7 +159,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 <section class="pl2"><h2>Replacing Siwoo</h2>
 <div class="flt"><span class="on">All roles</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span></div>
 <div class="flt2"><span class="srch">Search a player</span><span>Sort: Points ▾</span><span>Team: All ▾</span></div>
-<table class="plist"><thead><tr><th></th><th>Player</th><th>Price</th><th>Pts</th><th>Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
+<table class="plist"><thead><tr><th></th><th>Player</th><th class="n">Price</th><th></th><th class="n">Pts</th><th class="n">Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
 </section>
 </aside>
 </div>
@@ -209,25 +192,28 @@ const IN = { name: "Kingen", team: "NS", slot: "flex", role: "top" };
 const POS = { top: [104, 70], jng: [280, 262], mid: [500, 260], coach: [92, 468], flex: [238, 468], sup: [650, 486], bot: [846, 486] };
 function tile(p) {
   const mk = p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : "";
-  const nw = p.news ? `<span class="nw">!</span>` : "";
+  const nw = "";
   const nx = p.slot === "coach" ? nextOf(p.team).join(" · ") : nextOf(p.team).join(" · ");
-  const sl = p.slot === "flex" ? `<div class="sl">Flex · plays ${SLOTNAME[p.role]}</div>` : p.slot === "coach" ? `<div class="sl">Coach 감독</div>` : p.news ? `<div class="sl">${p.news}</div>` : "";
+  const sl = p.slot === "flex" ? `<div class="tag">Flex · plays ${SLOTNAME[p.role]}</div>` : p.slot === "coach" ? `<div class="tag">Coach 감독</div>` : p.news ? `<div class="tag">Not starting</div>` : "";
   return `<div class="tile ${p.name === "Kingen" ? "sel" : ""}"><div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span><span class="ri"><svg><use href="#${iconOf(p)}"/></svg></span>${mk}${nw}</div>
-  <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div><div class="pr">${nextOf(p.team).map((x) => "vs " + x.split(" ")[1]).join(", ")}</div>${sl}</div>`;
+  <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div><div class="pr">${nextOf(p.team).map((x) => "v " + x.split(" ")[1]).join(" · ")}</div>${sl}</div>`;
 }
 PSQ.map((p) => p.name === "Siwoo" ? Object.assign({}, p, IN, { news: null, price: "6.5" }) : p).filter((p) => POS[p.slot]).forEach((p) => { const w = document.createElement("div"); w.innerHTML = tile(p); const t = w.firstElementChild; t.style.left = POS[p.slot][0] + "px"; t.style.top = POS[p.slot][1] + "px"; document.getElementById("rift").appendChild(t); });
-document.getElementById("bench").insertAdjacentHTML("beforeend", PSQ.filter((p) => /^b\d/.test(p.slot)).map((p, i) => `<div><div style="font-size:12px;color:var(--mid);margin-bottom:4px">${i + 1} · ${SLOTNAME[p.role]}</div>${tile(p)}</div>`).join(""));
+document.getElementById("bench").insertAdjacentHTML("beforeend", PSQ.filter((p) => /^b\d/.test(p.slot)).map((p, i) => `<div class="bt2"><span class="n">${i + 1}</span><svg><use href="#${iconOf(p)}"/></svg>
+  <span class="who"><b>${p.name}</b> <span>${p.team}</span><small>${nextOf(p.team).map((x) => "v " + x.split(" ")[1]).join(" · ")}</small></span></div>`).join(""));
 const PL = [
  ["mid","Chovy","GEN","17.5","61","41%",1],["sup","Keria","T1","12.0","52","47%",1],["bot","Aiming","DK","11.5","46","14%",2],
  ["mid","ShowMaker","DK","10.5","44","18%",2],["jng","Lucid","DK","9.0","41","11%",2],
  ["top","Kingen","NS","6.5","38","9%",0],["top","PerfecT","KT","7.0","36","4%",1],["top","DuDu","DNS","6.0","33","6%",0],
  ["bot","Hype","KRX","5.5","31","4%",0],["top","Clear","BFX","5.5","29","3%",0],["mid","Clozer","BRO","5.0","27","5%",0],
  ["sup","Pollu","BRO","4.5","26","2%",0]];
-const WHY = ["", "team full", "over 8.0억"];
-document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[6] > 0) - (b[6] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2]).map((x) => x.slice(2)).join("<br>")}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
+const WHY = ["", "Team full", "Over budget"];
+const ARW = { Chovy: "▲", Kingen: "▲", DuDu: "▼", Aiming: "▼", Hype: "▲", Clear: "▼", Lucid: "▲" };
+const arw = (n) => ARW[n] ? `<span class="ar ${ARW[n] === "▼" ? "fall" : "rise"}">${ARW[n]}</span>` : "";
+document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[6] > 0) - (b[6] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td class="nmc"><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="arw">${arw(r[1])}</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2])[0]}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
 const MINE = new Set();
-void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
+void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--mid)">${s[2]} KST</span></span></div>`).join("");
 </script><div class="veil"></div><div class="sheet2"><h3>Confirm your transfers</h3>
 <table><tr><td class="k">Out</td><td><b>Siwoo</b> DK · Flex · 7.5억</td></tr><tr><td class="k">In</td><td><b>Kingen</b> NS · Flex, plays Top · 6.5억</td></tr>
 <tr><td class="k">Cost</td><td>−6 · no free transfers left</td></tr><tr><td class="k">Bank</td><td>0.5억 → <b>1.5억</b></td></tr></table>
-<div class="sb"><span>Back</span><button class="save">Confirm</button></div><p>Deadline Wed 07:45 your time · 16:45 KST</p></div></body></html>
+<div class="sb"><span>Back</span><button class="save">Confirm</button></div><p>Deadline <b style="color:var(--ink);font-weight:400">Wed 07:45</b>&nbsp; 16:45 KST</p></div></body></html>

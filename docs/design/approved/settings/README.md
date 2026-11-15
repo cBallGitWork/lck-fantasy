@@ -27,7 +27,7 @@ The manager's team, display, emails and account, in four tabs (spec/12, Settings
 - **Team name** (top bar, with ▾): opens Settings and Sign out.
 - **Tabs**: Team | Display | Emails | Account. A tab with unsaved changes carries a dot (Team •).
 - **Team name, Hangul banner**: text, 20 characters each, with a counter. The banner is optional; its preview redraws as you type.
-- **Favourite team, Country**: plain text with "Locked since your first gameweek" once its deadline has passed; before then, dropdowns.
+- **Favourite team, Country**: plain text with the tag `Locked` once the first deadline has passed; before then, dropdowns.
 - **Time zone**: Browser (the zone it reports) or one picked from a list; the next deadline shows in it and in KST.
 - **Theme**: Device | Light | Dark.
 - **Deadline reminder, Weekly recap**: On | Off each, both Off for a new manager. The address they go to is shown.

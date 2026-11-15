@@ -1,8 +1,8 @@
 # Transfers
 
-Where a manager sells and buys players. Reached from **Transfers** in the top bar. Drawn at 1440 in the same frame as Points and Pick Team: the squad on the left, the bench under it, the player list on the right.
+Where a manager sells and buys players. Reached from **Transfers** in the top bar. Drawn at 1440 in the same frame as Points and Pick Team: the squad on the left, the bench bar under it (one row: order, role icon, name, team, the two fixtures; redrawn 15 Nov 2026), the player list on the right.
 
-**Approved:** Craig, 13 Nov 2026. He asked for players who are too dear to be greyed but still listed ("we need to see those players"), then said "Yes save". Later that day he cut Form, asked for both of the week's series under each player and in Next, a toggle for what shows under a player, no explainer sentences, and the transfer buffs at the top as FPL's, the others on Pick Team. On 14 Nov he asked for fresh eyes on the whole page and less obvious explaining text; the redraw adds Undo, price arrows and −6 hits, and he said "yes save". Names, teams and numbers are a made-up LCK Cup Week 4, not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type.
+**Approved:** Craig, 13 Nov 2026. He asked for players who are too dear to be greyed but still listed ("we need to see those players"), then said "Yes save". Later that day he cut Form, asked for both of the week's series under each player and in Next, a toggle for what shows under a player, no explainer sentences, and the transfer buffs at the top as FPL's, the others on Pick Team. On 14 Nov he asked for fresh eyes on the whole page and less obvious explaining text; the redraw adds Undo, price arrows and −6 hits, and he said "yes save". Names, teams and numbers are a made-up LCK Cup Week 4, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn.
 
 | File | Shows |
 |---|---|
@@ -19,7 +19,7 @@ Where a manager sells and buys players. Reached from **Transfers** in the top ba
 ## Controls
 
 - **Rift view | Card view**: the same choice as Pick Team. Not in the spec yet; in [to-grill](../../../to-grill.md).
-- **Show ▾**: what sits under each player: Fixtures (the default: one row, both of the week's opponents, as "vs T1, vs GEN"), Price or Owned.
+- **Show ▾**: what sits under each player: Fixtures (the default: one row, both of the week's opponents, as "v T1 · v GEN"), Price or Owned.
 - **A player on the squad**: sells him; the list filters to his slot (his role, or any role for the Flex) and what the bank allows. Any of the nine, coach included, can be sold.
 - **A row's +**: buys that player into the empty slot. A greyed row opens his card but can't be bought.
 - **Top strip**: free transfers left, the pending hit (−6 each), the bank.

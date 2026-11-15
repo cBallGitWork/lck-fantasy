@@ -1,53 +1,60 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Stats</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Stats</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-/* type scale: 28 page title · 20 figures and team codes · 14 body · 12 labels (the nav is shared) */
+/* drawn to docs/design/plate.md: type 28 title · 16 hangul · 14 body · 12 labels; spacing 4 to 48 */
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
 .mono { font-family: "IBM Plex Mono", monospace; }
-nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
-nav.top a { color: var(--mid); }
-nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
-.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top .me { display: flex; align-items: center; color: var(--ink); font-size: 14px; font-weight: 600; }
+nav.top .me::after { content: "▾"; font-size: 12px; font-weight: 400; margin-left: 4px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
 
 .page { padding: 24px 32px 48px; }
-.head { display: flex; align-items: baseline; gap: 14px; }
-.head h1 { font-size: 28px; letter-spacing: -.5px; }
-.tabs { display: flex; margin: 18px 0 0; border-bottom: 2px solid var(--ink); }
-.tabs span { padding: 10px 22px; font-weight: 600; color: var(--mid); } .tabs span.on { background: var(--ink); color: #fff; }
+.head { display: flex; align-items: baseline; gap: 16px; }
+.head h1 { font-size: 28px; font-weight: 700; } .head h1 i { font-style: normal; font-size: 16px; font-weight: 400; color: var(--mid); margin-left: 8px; }
+.head a { text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; min-height: 24px; }
+.tabs { display: flex; gap: 24px; margin: 16px 0 0; border-bottom: 1px solid var(--line); }
+.tabs span { padding: 12px 0 8px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
 /* controls in one row, FPL's: role, team, max price, span, totals or per game, search */
-.ctl { display: flex; align-items: center; gap: 10px; margin: 16px 0 14px; }
-.roles, .seg { display: flex; } .roles span, .seg span { border: 1px solid var(--line); margin-left: -1px; background: var(--paper); padding: 6px 12px; color: var(--mid); display: flex; align-items: center; gap: 6px; } .roles span:first-child, .seg span:first-child { margin-left: 0; }
-.roles span.on, .seg span.on { background: var(--ink); border-color: var(--ink); color: #fff; } .roles svg { width: 13px; height: 13px; }
-.sel { border: 1px solid var(--line); background: var(--paper); padding: 6px 12px; color: var(--ink); } .sel small { color: var(--mid); font-size: 12px; margin-right: 6px; }
-.find { width: 200px; border: 1px solid var(--line); background: var(--paper); padding: 6px 12px; color: var(--mid); }
+.ctl { display: flex; align-items: center; gap: 8px; margin: 16px 0 12px; }
+/* view toggles: butted keys on --fill, the chosen one on --paper */
+.roles, .seg { display: flex; border: 1px solid var(--line); background: var(--fill); }
+.roles span, .seg span { padding: 8px 12px; color: var(--mid); display: flex; align-items: center; gap: 8px; border-left: 1px solid var(--line); } .roles span:first-child, .seg span:first-child { border-left: 0; }
+.roles span.on, .seg span.on { background: var(--paper); color: var(--ink); font-weight: 600; } .roles svg { width: 12px; height: 12px; }
+.sel { border: 1px solid var(--line); background: var(--paper); padding: 8px 12px; color: var(--ink); } .sel small { color: var(--mid); font-size: 12px; margin-right: 8px; }
+.find { width: 200px; border: 1px solid var(--line); background: var(--paper); padding: 8px 12px; color: var(--mid); }
 table { width: 100%; border-collapse: collapse; background: var(--paper); table-layout: fixed; }
-th { text-align: right; font-size: 12px; font-weight: 500; color: var(--mid); padding: 10px 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; } th.l { text-align: left; }
-th.s { color: var(--ink); font-weight: 700; } th.s::after { content: " ▼"; font-size: 12px; } th.o::after { content: " ▿"; color: var(--soft); }
+th { text-align: right; font-size: 12px; font-weight: 600; color: var(--mid); padding: 12px 8px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; } th.l { text-align: left; }
+th.s { color: var(--ink); font-weight: 700; } th.s::after { content: " ▼"; font-size: 12px; }
 th.grp, td.grp { border-left: 1px solid var(--line); }
-td { text-align: right; padding: 0 10px; height: 44px; border-top: 1px solid var(--fill); font-family: "IBM Plex Mono", monospace; } td.l { text-align: left; font-family: inherit; }
+td { text-align: right; padding: 0 8px; height: 40px; border-top: 1px solid var(--fill); font-family: "IBM Plex Mono", monospace; } td.l { text-align: left; font-family: inherit; }
 td.rk { color: var(--mid); text-align: left; }
 td.rl { padding-right: 0; } td.rl svg { width: 14px; height: 14px; vertical-align: -2px; }
-td.nm b { font-weight: 600; } td.nm small { color: var(--mid); font-size: 12px; margin-left: 6px; font-family: "IBM Plex Mono", monospace; }
-td.mv { padding-left: 0; text-align: left; font-size: 12px; } .up { color: #c8102e; } .dn { color: #1f4fa8; }
-td.s { font-weight: 600; background: #f4f4f2; }
+td.nm b { font-weight: 600; } td.nm small { color: var(--mid); font-size: 12px; margin-left: 8px; font-family: "IBM Plex Mono", monospace; }
+td.mv { padding-left: 0; text-align: left; font-size: 12px; } .up { color: var(--rise); } .dn { color: var(--fall); }
+td.s { font-weight: 600; background: var(--bg); }
 td.z { color: var(--mid); }
-i.me { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); margin: 0 0 2px 8px; }
-.foot { display: flex; justify-content: space-between; align-items: center; color: var(--mid); margin-top: 12px; } .pg { display: flex; } .pg span { min-width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); margin-left: -1px; background: var(--paper); color: var(--ink); font-family: "IBM Plex Mono", monospace; } .pg span.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+i.me { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); margin-left: 8px; vertical-align: middle; }
+.foot { display: flex; justify-content: space-between; align-items: center; color: var(--mid); margin-top: 12px; } .pg { display: flex; } .pg span { min-width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); margin-left: -1px; background: var(--paper); color: var(--ink); font-family: "IBM Plex Mono", monospace; } .pg span.on { background: var(--fill); font-weight: 700; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
-  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
-  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
-  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#cfcfcf"/></symbol>
   <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
   <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
   <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
 </defs></svg>
-<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a class="on">Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a class="on">Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span>
+  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><span class="me">Baron Steal FC</span></nav>
 <div class="page">
-  <div class="head"><h1>Stats</h1><span style="flex:1"></span><a>Patch update ›</a></div>
+  <div class="head"><h1>Stats<i>통계</i></h1><span style="flex:1"></span><a>Patch update ›</a></div>
   <div class="tabs" id="tabs"></div>
   <div class="ctl" id="ctl"></div>
   <table id="tb"></table>

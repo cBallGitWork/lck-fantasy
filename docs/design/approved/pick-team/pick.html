@@ -1,111 +1,130 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Pick Team</title>
-<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
+<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
-.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
-nav.top a { color: var(--mid); }
-nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
-nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vertical-align: 2px; }
+.num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+a { color: var(--ink); text-decoration: none; }
+
+/* Top bar: the same on every screen. */
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
-.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
-.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; line-height: 16px; }
-.page { display: grid; grid-template-columns: 1fr 400px; gap: 28px; padding: 24px 32px 48px; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+
+/* Parts */
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 4px; font: 400 11px/16px "IBM Plex Sans KR", sans-serif; }
+.tag.prov { border-style: dashed; }
+.tag.live { background: var(--ink); color: var(--paper); }
+.up::before { content: "▲ "; font-size: 12px; }
+.down::before { content: "▼ "; font-size: 12px; }
+.cake::after { content: " 🎂"; }
+.tog { display: inline-flex; font-size: 14px; }
+.tog span { padding: 4px 24px; border: 1px solid var(--line); background: var(--fill); color: var(--mid); }
+.tog span + span { margin-left: -1px; }
+.tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
+
+.rise { color: var(--rise); }
+
+/* Frame */
+.page { display: grid; grid-template-columns: 1fr 360px; gap: 32px; padding: 24px 32px 48px; }
+aside > section { border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 24px; }
+aside h2 { font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 
 /* header */
-.hd { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; }
-.hd h1 { font-size: 26px; letter-spacing: -0.5px; }
-.hd .dl { font-size: 15px; margin-top: 4px; } .hd .dl span { color: var(--soft); }
-.hd .dl b.cd { margin-left: 10px; border: 1px solid var(--ink); padding: 1px 8px; font-family: "IBM Plex Mono", monospace; }
-.act { display: flex; gap: 22px; align-items: center; font-size: 14px; margin-top: 14px; padding: 10px 14px; background: var(--paper); border: 1px solid var(--ink); }
-.act .chg { flex: 1; }
+.hd { margin-bottom: 16px; }
+.hd h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+.hd h1 i { font-style: normal; color: var(--mid); font-size: 16px; font-weight: 400; margin-left: 8px; letter-spacing: 0; }
+.hd .dl { margin-top: 4px; } .hd .dl span { color: var(--mid); }
+.hd .dl b.cd { margin-left: 12px; border: 1px solid var(--ink); padding: 0 8px; font-family: "IBM Plex Mono", monospace; }
+.act { display: flex; gap: 24px; align-items: center; margin-top: 16px; padding: 8px 16px; background: var(--paper); border: 1px solid var(--ink); }
 .act .chg { color: var(--mid); } .act .chg b { color: var(--ink); }
-.act a { color: var(--ink); text-decoration: underline; }
-.save { background: var(--ink); color: #fff; padding: 10px 26px; font-weight: 700; }
-.save.off { opacity: .35; }
-.ctl { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0; }
-.tog { display: inline-flex; border: 1px solid var(--line); background: var(--fill); padding: 3px; font-size: 13px; }
-.tog span { padding: 5px 24px; color: var(--mid); } .tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
+.act .dl2 { flex: 1; text-align: right; color: var(--mid); } .act .dl2 b { color: var(--ink); font-weight: 400; margin-right: 8px; }
+.act .dl2 .cd { margin-left: 12px; border: 1px solid var(--ink); padding: 0 8px; font-family: "IBM Plex Mono", monospace; color: var(--ink); font-weight: 600; }
+.act a { display: inline-flex; align-items: center; min-height: 24px; }
+.save { background: var(--ink); color: var(--paper); padding: 8px 24px; font-weight: 700; }
+.save.off { background: var(--fill); color: var(--mid); }
 
 /* rift */
-.rift { position: relative; width: 948px; height: 560px; }
-.rift svg.map { position: absolute; inset: 0; width: 948px; height: 560px; }
+.rift { position: relative; width: 100%; height: 560px; }
+.rift svg.map { position: absolute; inset: 0; width: 100%; height: 560px; }
 .tile { position: absolute; width: 132px; transform: translate(-50%, -50%); text-align: center; z-index: 2; }
-.tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto -2px; }
+.tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto; }
 .tile .kit svg.shirt { width: 56px; height: 50px; }
-.tile .kit .code { position: absolute; left: 0; right: 0; top: 18px; font-size: 10px; font-weight: 700; }
-.tile .ri { position: absolute; left: -20px; top: -2px; width: 28px; height: 28px; background: var(--paper); border: 1px solid var(--ink); display: flex; align-items: center; justify-content: center; }
+.tile .kit .code { position: absolute; left: 0; right: 0; top: 16px; font-size: 12px; font-weight: 700; }
+.tile .ri { position: absolute; left: -24px; top: 0; width: 28px; height: 28px; background: var(--paper); border: 1px solid var(--ink); display: flex; align-items: center; justify-content: center; }
 .tile .ri svg { width: 20px; height: 20px; }
-.tile .mark { position: absolute; right: -14px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.tile .mark { position: absolute; right: -16px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .tile .mark.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
-.tile .flag { position: absolute; right: -12px; bottom: 2px; width: 18px; height: 18px; background: var(--ink); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.tile .nm { background: var(--paper); border: 1px solid var(--ink); font-weight: 700; font-size: 13px; padding: 2px 4px; }
-.tile .sr { background: var(--ink); color: #fff; font-family: "IBM Plex Mono", monospace; font-size: 11px; padding: 3px 3px; white-space: nowrap; }
-.tile .sub { margin-top: 3px; font-size: 10px; line-height: 14px; background: var(--paper); border: 1px solid var(--line); color: var(--mid); display: inline-block; padding: 0 5px; }
+.tile .nm { background: var(--paper); border: 1px solid var(--ink); font-weight: 700; font-size: 14px; padding: 0 4px; }
+.tile .sr { background: var(--ink); color: var(--paper); font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 4px; white-space: nowrap; }
+.tile .tag { margin-top: 4px; background: var(--paper); }
 .tile.sel .nm, .tile.sel .sr { outline: 2px solid var(--ink); outline-offset: 1px; }
-.tile.dim { opacity: .6; }
+.tile.dim .nm { color: var(--mid); border-color: var(--line); } .tile.dim .sr { background: var(--mid); } .tile.dim .ri, .tile.dim .tag { border-color: var(--line); color: var(--mid); }
 .tile.fit .nm, .tile.fit .sr { outline: 2px dashed var(--ink); outline-offset: 2px; }
-.benchb { background: var(--fill); border: 1px solid var(--line); border-top: 0; padding: 12px 24px 18px; display: grid; grid-template-columns: 110px 200px 40px 200px 1fr; gap: 0 20px; align-items: start; }
-.benchb h3 { font-size: 13px; padding-top: 2px; }
-.benchb .slot { position: relative; padding-top: 18px; }
-.benchb .slot .n { position: absolute; left: 0; top: 0; font-size: 12px; color: var(--mid); }
-.benchb .tile { position: relative; transform: none; left: 30px; top: 0; }
-.benchb .ord { align-self: center; justify-self: center; margin-top: 30px; border: 1px solid var(--ink); background: var(--paper); padding: 3px 10px; font-size: 13px; font-weight: 600; }
+/* bench bar: one row under the pitch, or under the lineup in Card view */
+.benchb { height: 72px; display: flex; align-items: center; gap: 16px; padding: 0 16px; background: var(--paper); border: 1px solid var(--line); }
+.benchb h3 { font-size: 14px; font-weight: 600; width: 56px; }
+.bt2 { width: 280px; height: 48px; display: grid; grid-template-columns: 12px 20px 1fr auto; gap: 0 8px; align-items: center; padding: 0 12px; border: 1px solid var(--line); }
+.bt2 .n { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--mid); }
+.bt2 svg { width: 20px; height: 20px; }
+.bt2 .who { line-height: 1.3; white-space: nowrap; overflow: hidden; } .bt2 .who b { font-size: 14px; } .bt2 .who span, .bt2 .who small { font-size: 12px; color: var(--mid); }
+.bt2 .who small { display: block; font-family: "IBM Plex Mono", monospace; }
+.bt2.fit { outline: 2px dashed var(--ink); outline-offset: 2px; }
+.bt2.dim, .bt2.dim .who b { color: var(--mid); }
+.ord { border: 1px solid var(--ink); background: var(--paper); padding: 4px 8px; font-size: 12px; font-weight: 600; }
 
 /* cards */
+/* card view: the seven starters as the broadcast lineup */
 .cv { margin-top: 12px; }
-.lineup { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
-.pc { background: var(--paper); border: 1px solid var(--ink); position: relative; display: flex; flex-direction: column; }
-.pc .rl { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px; border-bottom: 1px solid var(--line); font-size: 12px; color: var(--mid); }
-.pc .rl svg { width: 16px; height: 16px; }
-.pc .por { height: 190px; margin: 10px; }
-.pc .nm { font-size: 20px; font-weight: 700; padding: 0 10px; }
-.pc .tm { font-size: 13px; color: var(--mid); padding: 0 10px 8px; }
-.pc .nx { border-top: 1px solid var(--line); padding: 7px 10px; font-size: 12px; font-family: "IBM Plex Mono", monospace; }
-.pc .ft { border-top: 1px solid var(--line); display: flex; justify-content: space-between; padding: 6px 10px; font-size: 12px; color: var(--mid); font-family: "IBM Plex Mono", monospace; }
-.pc .mk { position: absolute; right: 8px; top: 40px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.pc .mk.v { background: var(--paper); color: var(--ink); border: 1.5px solid var(--ink); }
-.pc.sel { outline: 3px solid var(--ink); }
-.pc .nw { background: var(--ink); color: #fff; font-size: 11px; padding: 3px 10px; }
-.row2 { display: grid; grid-template-columns: 1fr 1fr 24px 1fr 1fr; position: relative; gap: 10px; margin-top: 10px; }
-.row2 .pc .por { height: 110px; }
-.row2 .sep { border-left: 1px dashed var(--soft); margin-left: 11px; }
-.pc.bench { background: var(--fill); border-color: var(--soft); }
-.cvb { display: flex; justify-content: flex-end; margin-top: 8px; }
-.cvb .ord { border: 1px solid var(--ink); background: var(--paper); padding: 3px 10px; font-size: 13px; font-weight: 600; }
+.lineup { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 8px; }
+.pc { background: var(--paper); border: 1px solid var(--ink); position: relative; display: flex; flex-direction: column; min-width: 0; }
+.pc .rl { height: 48px; display: flex; gap: 4px; align-items: center; padding: 4px 8px; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.3; }
+.pc .rl svg { width: 16px; height: 16px; flex: none; } .pc .rl span small { display: block; color: var(--mid); font-size: 12px; }
+.pc .por { position: relative; height: 176px; margin: 8px; }
+.pc .por.crest { border: 0; } .pc .por.crest i { width: 96px; height: 96px; border-radius: 50%; border: 1px dashed var(--soft); display: flex; align-items: center; justify-content: center; font-style: normal; }
+.pc .por .tag { position: absolute; left: 4px; bottom: 4px; background: var(--paper); color: var(--ink); }
+.pc .nm { font-size: 20px; font-weight: 700; padding: 0 8px; line-height: 1.2; }
+.pc .tm { font-size: 12px; color: var(--mid); padding: 0 8px 8px; }
+.pc .nx { border-top: 1px solid var(--line); padding: 8px; font-size: 12px; font-family: "IBM Plex Mono", monospace; white-space: nowrap; margin-top: auto; }
+.pc .ft { border-top: 1px solid var(--line); display: flex; justify-content: space-between; padding: 4px 8px; font-size: 12px; color: var(--mid); font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
+.pc .ft b { color: var(--ink); font-weight: 400; }
+.pc .mk { position: absolute; right: 4px; top: 4px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--paper); font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.pc .mk.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
+.pc.sel { outline: 2px solid var(--ink); }
 
 /* side */
-aside > section { border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 24px; }
-aside h2 { font-size: 14px; margin-bottom: 8px; display: flex; justify-content: space-between; }
-aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
-.card { background: var(--paper); border: 1px solid var(--ink); margin-bottom: 24px; }
-.card header { display: flex; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); align-items: center; }
-.card header b { font-size: 19px; display: block; } .card header .x { margin-left: auto; color: var(--mid); align-self: flex-start; }
-.card .nw { background: var(--ink); color: #fff; font-size: 13px; padding: 6px 14px; }
-.card .st { display: grid; grid-template-columns: repeat(3, 1fr); border-bottom: 1px solid var(--line); }
-.card .st div { padding: 8px 14px; } .card .st b { display: block; font-family: "IBM Plex Mono", monospace; font-size: 17px; } .card .st span { font-size: 11px; color: var(--mid); }
-.card .nx { padding: 8px 14px; font-size: 13px; border-bottom: 1px solid var(--line); }
-.card .nx div { display: flex; justify-content: space-between; padding: 3px 0; } .card .nx .k { color: var(--mid); }
-.card .bt { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
-.card .bt span { border: 1px solid var(--ink); text-align: center; padding: 7px 0; font-size: 13px; font-weight: 600; }
-.card .bt span.pri { background: var(--ink); color: #fff; } .card .bt span.dim { border-color: var(--line); color: var(--mid); font-weight: 400; }
-.card .bt span.pressed { background: var(--fill); border-color: var(--mid); }
-.buffs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.buff { border: 1px solid var(--ink); padding: 8px 10px; background: var(--paper); font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
-.buff b { font-size: 14px; } .buff small { color: var(--mid); font-size: 11px; display: block; }
-.buff .go { border: 1px solid var(--ink); padding: 1px 10px; font-size: 12px; font-weight: 600; }
-.buff.on { background: var(--ink); color: #fff; } .buff.on small { color: #cfcfcf; } .buff.on .go { border-color: #fff; }
-.buff.off { border-color: var(--line); color: var(--mid); } .buff.off b { color: var(--mid); font-weight: 600; }
-.buff.off a { color: var(--ink); text-decoration: underline; font-size: 12px; }
-.wk { font-size: 13px; }
-.wk div { display: grid; grid-template-columns: 34px 1fr auto; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--fill); align-items: center; }
-.wk .d { color: var(--mid); font-size: 12px; } .wk .t { font-size: 12px; text-align: right; font-family: "IBM Plex Mono", monospace; }
-.wk b.y { text-decoration: underline; text-underline-offset: 3px; }
-.ad { height: 100px; margin-bottom: 6px; } .adline { font-size: 11px; color: var(--soft); }
+.card { background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--ink); margin-bottom: 24px; }
+.card header { display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); align-items: center; }
+.card header b { font-size: 20px; display: block; line-height: 1.2; } .card header .s { color: var(--mid); }
+.card header .x { margin-left: auto; color: var(--mid); align-self: flex-start; }
+.card .nw { padding: 8px 16px 0; color: var(--mid); }
+.card .nx { padding: 8px 16px; border-bottom: 1px solid var(--line); }
+.card .nx div { display: flex; justify-content: space-between; padding: 4px 0; } .card .nx .k { color: var(--mid); }
+.card .bt { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 16px; }
+.card .bt span { border: 1px solid var(--ink); text-align: center; padding: 8px 0; font-weight: 600; }
+.card .bt span.dim { background: var(--fill); border-color: var(--fill); color: var(--mid); font-weight: 400; }
+.card .bt span.pressed { background: var(--paper); }
+.card .bt a { display: flex; align-items: center; justify-content: center; min-height: 24px; }
+.buffs { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 8px; }
+.buff { border: 1px solid var(--ink); padding: 8px 12px; background: var(--paper); display: flex; flex-direction: column; }
+.buff b { font-size: 14px; } .buff p { color: var(--mid); font-size: 12px; line-height: 1.3; margin-top: 4px; }
+.buff .ft2 { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; font-size: 12px; color: var(--mid); }
+.buff .go { border: 1px solid var(--ink); padding: 0 8px; font-size: 12px; font-weight: 600; color: var(--ink); min-height: 24px; display: inline-flex; align-items: center; }
+.buff a { display: inline-flex; align-items: center; min-height: 24px; color: var(--ink); }
+.buff.on { background: var(--ink); color: var(--paper); } .buff.on p, .buff.on .ft2 { color: var(--line); } .buff.on .go { border-color: var(--paper); color: var(--paper); }
+.buff.off { border-color: var(--fill); background: var(--fill); color: var(--mid); } .buff.off b { color: var(--mid); font-weight: 600; }
+.wk div { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--fill); align-items: center; }
+.wk .d { color: var(--mid); font-size: 12px; } .wk .t { text-align: right; font-family: "IBM Plex Mono", monospace; }
+.wk .t .kst { color: var(--mid); font-size: 12px; }
+.ad { height: 112px; } .adline { font-size: 12px; color: var(--mid); margin-top: 8px; }
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute"><defs>
@@ -119,20 +138,20 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 </defs></svg>
 
 <nav class="top"><b class="word">Flol</b><a>Home</a><a class="on">Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span>
-  <span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
 <div class="page">
 <main>
-  <div class="hd"><div><h1>Pick Team · LCK Cup Week 4</h1>
-      <div class="dl">Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">9h 45m</b></div></div></div>
+  <div class="hd"><div><h1>Pick Team<i>팀 선택</i></h1>
+      <div class="dl">LCK Cup Week 4</div></div></div>
   <div class="ctl"><span class="tog" id="tog"></span></div>
   <div id="board"></div>
   <div class="act" id="act"></div>
 </main>
 <aside>
-  <section class="card" id="card" style="border-top:1px solid var(--ink);padding-top:0"></section>
+  <section class="card" id="card"></section>
   <section><h2>Buffs</h2><div class="buffs" id="buffs"></div></section>
   <section><h2>This week's series <span>your time · KST</span></h2><div class="wk" id="week"></div></section>
-  <div class="ad ph">sponsor banner</div><div class="adline">All sponsors are made up.</div>
+  <div class="ad ph">Sponsor</div><div class="adline">All sponsors are made up.</div>
 </aside>
 </div>
 <script>
@@ -166,23 +185,24 @@ const by = (s) => SQ.find((p) => p.slot === s);
 const games = (t) => W4.filter((s) => s[3] === t || s[4] === t).map((s) => ({ opp: s[3] === t ? s[4] : s[3], day: s[0], time: s[1] }));
 const $ = (id) => document.getElementById(id);
 const SWAP = V === "swap";
+const DL = `<span class="dl2">Deadline <b>Wed 07:45</b>16:45 KST<span class="cd">9h 45m</span></span>`;
 const SEL = SWAP ? "Siwoo" : "Faker";
 const FIT = SWAP ? new Set(["Bdd", "Cuzz"]) : new Set(); // the Flex takes any role (spec/01)
 
 // header
 $("act").innerHTML = SWAP
-  ? `<span class="chg"><b>1 change</b> · Bench Boost on</span><a>Reset</a><span class="save">Save team</span>`
-  : `<span class="chg">No changes</span><span class="save off">Save team</span>`;
+  ? `<span class="chg"><b>1 change</b> · Bench Boost on</span><a>Reset</a>${DL}<span class="save">Save team</span>`
+  : `<span class="chg">No changes</span>${DL}<span class="save off">Save team</span>`;
 $("tog").innerHTML = V === "cards" ? `<span>Rift view</span><span class="on">Card view</span>` : `<span class="on">Rift view</span><span>Card view</span>`;
 
 // rift view
 function tile(p) {
   const cls = p.name === SEL ? "sel" : FIT.has(p.name) ? "fit" : SWAP ? "dim" : "";
-  const g = games(p.team).map((x) => `vs ${x.opp}`).join(", ");
-  const sub = p.slot === "flex" ? `<div class="sub">Flex · plays Top</div>` : p.slot === "coach" ? `<div class="sub">Coach 감독</div>` : "";
+  const g = games(p.team).map((x) => `v ${x.opp}`).join(" · ");
+  const sub = p.slot === "flex" ? `<div class="tag">Flex · plays Top</div>` : p.slot === "coach" ? `<div class="tag">Coach 감독</div>` : "";
   return `<div class="tile ${cls}"><div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span>
-    <span class="ri"><svg><use href="#${ICON[p.role || p.slot]}"/></svg></span>${p.mark ? `<span class="mark ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}${p.news ? `<span class="flag">!</span>` : ""}</div>
-    <div class="nm">${p.name}</div><div class="sr">${g}</div>${sub}</div>`;
+    <span class="ri"><svg><use href="#${ICON[p.role || p.slot]}"/></svg></span>${p.mark ? `<span class="mark ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}</div>
+    <div class="nm">${p.name}</div><div class="sr">${g}</div>${p.news ? `<div class="tag">Not starting</div><br>` : ""}${sub}</div>`;
 }
 const POS = { top: [104, 70], jng: [312, 262], mid: [532, 262], coach: [124, 468], flex: [282, 468], sup: [682, 486], bot: [878, 486] };
 const MAP = `<svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
@@ -199,49 +219,57 @@ function rift() {
   const starters = ["top","jng","mid","bot","sup","flex","coach"].map((s) => {
     const w = document.createElement("div"); w.innerHTML = tile(by(s)); const t = w.firstElementChild;
     t.style.left = POS[s][0] + "px"; t.style.top = POS[s][1] + "px"; return t.outerHTML; }).join("");
-  const [b1, b2] = ["b1","b2"].map((s) => { const p = by(s); return `<div class="slot"><span class="n">${s[1]} · ${NAME[p.role]}</span>${tile(p)}</div>`; });
-  const bench = b1 + `<span class="ord">⇅</span>` + b2;
-  return `<div class="rift">${MAP}${starters}</div><div class="benchb"><h3>Bench</h3>${bench}</div>`;
+  return `<div class="rift">${MAP}${starters}</div>${bench()}`;
 }
 
-// card view
-function pc(p, cls = "") {
-  const role = p.slot === "flex" ? `Flex · plays ${NAME[p.role]}` : /^b\d/.test(p.slot) ? `${NAME[p.slot]} · ${NAME[p.role]}` : NAME[p.slot];
-  const nx = games(p.team).map((x) => `vs ${x.opp}`).join(", ");
-  return `<div class="pc ${cls} ${p.name === SEL ? "sel" : ""}"><div class="rl"><span>${role}</span><svg><use href="#${ICON[p.role || p.slot]}"/></svg></div>${p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}
-    ${p.news ? `<div class="nw">! ${p.news}</div>` : ""}<div class="por ph">${p.slot === "coach" ? "team crest" : "player photo"}</div><div class="nm">${p.name}</div><div class="tm">${p.team}</div>
-    <div class="nx">${nx}</div><div class="ft"><span>Form ${p.form}</span><span>${p.price}억</span></div></div>`;
+// the bench bar, the same under Rift view and Card view
+function bt2(p) {
+  const cls = FIT.has(p.name) ? "fit" : SWAP ? "dim" : "";
+  const g = games(p.team).map((x) => `v ${x.opp}`).join(" · ");
+  return `<div class="bt2 ${cls}"><span class="n">${p.slot[1]}</span><svg><use href="#${ICON[p.role]}"/></svg>
+    <span class="who"><b>${p.name}</b> <span>${p.team}</span><small>${g}</small></span><span></span></div>`;
 }
-function cards() {
-  return `<div class="cv"><div class="lineup">${["top","jng","mid","bot","sup"].map((s) => pc(by(s))).join("")}</div>
-    <div class="row2"><div>${pc(by("flex"))}</div><div>${pc(by("coach"))}</div><div class="sep"></div><div>${pc(by("b1"), "bench")}</div><div>${pc(by("b2"), "bench")}</div><span class="ord" style="position:absolute;left:707px;top:120px;border:1px solid var(--ink);background:var(--paper);padding:3px 8px;font-size:13px;font-weight:600;z-index:3">⇅</span></div>
-    </div>`;
+const bench = () => `<div class="benchb"><h3>Bench</h3>${bt2(by("b1"))}<span class="ord">⇅ Swap</span>${bt2(by("b2"))}</div>`;
+
+// card view: Top, Jungle, Mid, Bot, Support, Flex, Coach, as the LCK broadcast's lineup
+function pc(p) {
+  const role = p.slot === "flex" ? `Flex<small>plays ${NAME[p.role]}</small>` : NAME[p.slot];
+  const nx = games(p.team).map((x) => `v ${x.opp}`).join(" · ");
+  const mk = p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : "";
+  const news = p.news ? `<span class="tag">Not starting</span>` : "";
+  const por = p.slot === "coach" ? `<div class="por ph crest"><i>Crest</i>${mk}</div>` : `<div class="por ph">Photo${mk}${news}</div>`;
+  return `<div class="pc ${p.name === SEL ? "sel" : ""}"><div class="rl"><svg><use href="#${ICON[p.role || p.slot]}"/></svg><span>${role}</span></div>
+    ${por}<div class="nm">${p.name}</div><div class="tm">${p.team}</div>
+    <div class="nx">${nx}</div><div class="ft"><span>Form <b>${p.form}</b></span><b>${p.price}억</b></div></div>`;
 }
+const cards = () => `<div class="cv"><div class="lineup">${["top","jng","mid","bot","sup","flex","coach"].map((s) => pc(by(s))).join("")}</div>${bench()}</div>`;
 $("board").innerHTML = V === "cards" ? cards() : rift();
 
 // the tapped player's card (spec/12, The player card)
-const nx = (p) => games(p.team).map((x) => `<div><span class="k">${x.day} ${x.time}</span><span>vs ${x.opp} · Bo3</span></div>`).join("");
+const LOC = Object.fromEntries(W4.map((s) => [s[0] + s[1], s[2]]));
+const nx = (p) => games(p.team).map((x) => `<div><span>${x.day} ${x.time} <span class="k">${LOC[x.day + x.time]} KST</span></span><span>v ${x.opp} · Bo3</span></div>`).join("");
 const row = (k, v) => `<div><span class="k">${k}</span><span>${v}</span></div>`;
 $("card").innerHTML = SWAP
-  ? `<header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Siwoo</b><span style="color:var(--mid)">DK · Flex · plays Top · 7.5억</span></div><span class="x">✕</span></header>
-     <div class="nw">! Not starting Wed</div>
+  ? `<header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Siwoo</b><span class="s">DK · Flex · plays Top · 7.5억</span></div><span class="x">✕</span></header>
+     <div class="nw"><span class="tag">Not starting</span> Wed</div>
      <div class="nx">${row("Form", "<b class=num>7.7</b> · 7th of 10 tops")}${row("Owned", "<b class=num>6%</b> · 9th")}${row("Season", "<b class=num>23</b> · 8th")}</div>
      <div class="nx">${row("Last 3 weeks", "<span class=num>6 · 9 · 8</span>")}</div><div class="nx">${nx(by("flex"))}</div>
-     <div class="bt"><span class="dim">Make Carry</span><span class="dim">Make Vice-carry</span><span>Cancel swap</span><span class="dim">Full card ›</span></div>`
-  : `<header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Faker</b><span style="color:var(--mid)">T1 · Mid · 18.5억 ▲0.5</span></div><span class="x">✕</span></header>
+     <div class="bt"><span class="dim">Make Carry</span><span class="dim">Make Vice-carry</span><span>Cancel swap</span><a>Full card ›</a></div>`
+  : `<header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Faker</b><span class="s">T1 · Mid · 18.5억 <span class="rise">▲0.5</span></span></div><span class="x">✕</span></header>
      <div class="nx">${row("Form", "<b class=num>19.3</b> · 1st of 10 mids")}${row("Owned", "<b class=num>46%</b> · 1st")}${row("Season", "<b class=num>58</b> · 2nd")}</div>
      <div class="nx">${row("Last 3 weeks", "<span class=num>19 · 22 · 17</span>")}</div><div class="nx">${nx(by("mid"))}</div>
-     <div class="bt"><span class="pressed">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><span class="dim">Full card ›</span></div>`;
+     <div class="bt"><span class="pressed">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><a>Full card ›</a></div>`;
 
 // buffs (spec/06; spec/12: Bench Boost and Dual Carry cancel until the deadline)
-const bb = SWAP ? `<div class="buff on"><div><b>Bench Boost</b><small>on · unsaved</small></div><span class="go">Cancel</span></div>`
-               : `<div class="buff"><div><b>Bench Boost</b><small>1 left</small></div><span class="go">Play</span></div>`;
-const dc = SWAP ? `<div class="buff off"><div><b>Dual Carry</b><small>1 left</small></div></div>`
-               : `<div class="buff"><div><b>Dual Carry</b><small>Vice ×1.5 too · 1 left</small></div><span class="go">Play</span></div>`;
-const tb = (n) => SWAP ? `<div class="buff off"><div><b>${n}</b><small>1 left</small></div></div>` : `<div class="buff off"><div><b>${n}</b><small>1 left</small></div><a>Transfers ›</a></div>`;
+const DESC = { "Bench Boost": "Your bench scores too", "Dual Carry": "Vice-carry ×1.5 too", Remake: "Unlimited transfers, kept", Limitless: "One week, no budget or team cap" };
+const buff = (n, cls, left, ctl) => `<div class="buff ${cls}"><b>${n}</b><p>${DESC[n]}</p><div class="ft2"><span>${left}</span>${ctl}</div></div>`;
+const bb = SWAP ? buff("Bench Boost", "on", "On · unsaved", `<span class="go">Cancel</span>`) : buff("Bench Boost", "", "1 left", `<span class="go">Play</span>`);
+const dc = buff("Dual Carry", SWAP ? "off" : "", "1 left", SWAP ? "" : `<span class="go">Play</span>`);
+const tb = (n) => buff(n, SWAP ? "off" : "", "1 left", SWAP ? "" : `<a>Transfers ›</a>`);
 $("buffs").innerHTML = bb + dc + tb("Remake") + tb("Limitless");
 
 const MINE = new Set(SQ.map((p) => p.team));
-$("week").innerHTML = W4.map((s) => `<div><span class="d">${s[0]}</span><span><b>${s[3]}</b> v <b>${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--soft)">${s[2]} KST</span></span></div>`).join("");
+$("week").innerHTML = W4.map((s) => `<div><span class="d">${s[0]}</span><span><b>${s[3]}</b> v <b>${s[4]}</b></span><span class="t">${s[1]} <span class="kst">${s[2]} KST</span></span></div>`).join("");
 </script>
+<script>if (location.search.includes("visitor")) document.querySelector("nav.top a.me").textContent = "Sign in";</script>
 </body></html>

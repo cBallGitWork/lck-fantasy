@@ -1,88 +1,79 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Leagues · A8 · Leave</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --hot: #1d1d1d; }
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Leagues · A8 · Leave</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
-.num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-i.ko { font-style: normal; color: var(--soft); font-size: 11px; margin-left: 4px; }
-nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
-nav.top a { color: var(--mid); text-decoration: none; }
-nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
-nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vertical-align: 2px; }
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
-.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
-.note { position: absolute; background: #fffbe0; border: 1px solid #d8cf8a; font-size: 11px; padding: 4px 7px; color: #5a5420; max-width: 220px; line-height: 1.3; z-index: 5; }
-.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; line-height: 16px; }
-.tag.prov { border-style: dashed; color: var(--mid); border-color: var(--mid); }
-.tag.live { background: var(--ink); color: #fff; }
-.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 10px; }
-.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 10px; }
-.gw { display: flex; align-items: center; gap: 16px; }
-.gw button { border: 1px solid var(--line); background: var(--paper); padding: 4px 10px; font: inherit; color: var(--mid); }
-.gw h1 { font-size: 26px; letter-spacing: -0.5px; }
-.cnt { text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
-.unc { color: var(--soft); text-decoration: line-through; }
-.lv { font-weight: 600; }
-.lv::after { content: "●"; font-size: 8px; vertical-align: 4px; margin-left: 1px; }
-.cake::after { content: " 🎂"; }
-
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top .me { display: flex; align-items: center; color: var(--ink); font-size: 14px; font-weight: 600; }
+nav.top .me::after { content: "▾"; font-size: 12px; font-weight: 400; margin-left: 4px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 12px; }
+.down { color: var(--ink); } .down::before { content: "▼ "; font-size: 12px; }
 
 .page { padding: 24px 32px 48px; }
-h1 { font-size: 26px; letter-spacing: -.5px; }
-.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--line); margin: 14px 0 0; font-size: 14px; }
-.tabs span { padding: 8px 16px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; } .tabs span.off { color: var(--soft); }
-.seg { display: inline-flex; border: 1px solid var(--ink); font-size: 13px; } .seg span { padding: 5px 14px; } .seg span.on { background: var(--ink); color: #fff; font-weight: 700; }
+h1 { font-size: 28px; font-weight: 700; }
+h1 i { font-style: normal; font-size: 16px; font-weight: 400; color: var(--mid); margin-left: 8px; }
+.tabs { display: flex; border-bottom: 1px solid var(--line); margin: 16px 0 0; font-size: 14px; align-items: center; }
+.tabs span { padding: 8px 16px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
+.seg { display: inline-flex; border: 1px solid var(--line); background: var(--fill); padding: 4px; font-size: 14px; } .seg span { padding: 4px 16px; color: var(--mid); } .seg span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
 table.st { width: 100%; border-collapse: collapse; background: var(--paper); font-size: 14px; }
-table.st th { text-align: left; font-weight: 500; color: var(--mid); font-size: 12px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+table.st th { text-align: left; font-weight: 400; color: var(--mid); font-size: 12px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
 table.st th.n, table.st td.n { text-align: right; font-family: "IBM Plex Mono", monospace; }
-table.st td { padding: 9px 10px; border-bottom: 1px solid var(--fill); } table.st td small { display: block; color: var(--mid); font-size: 12px; }
-table.st td.rk { font-family: "IBM Plex Mono", monospace; font-weight: 600; width: 64px; } table.st td.mv { width: 70px; font-size: 12px; font-family: "IBM Plex Mono", monospace; }
+table.st td { height: 40px; padding: 0 12px; border-bottom: 1px solid var(--fill); white-space: nowrap; }
+table.st td small { color: var(--mid); font-size: 12px; margin-left: 8px; }
+table.st td.rk { font-family: "IBM Plex Mono", monospace; font-weight: 600; width: 64px; } table.st td.mv { width: 72px; font-size: 12px; font-family: "IBM Plex Mono", monospace; }
+table.st td.nil { color: var(--mid); }
 table.st tr.me td { background: var(--fill); font-weight: 700; } table.st tr.me td small { font-weight: 400; }
-table.st tr.gap td { text-align: center; color: var(--soft); padding: 4px; }
-.btn { border: 1.5px solid var(--ink); padding: 8px 16px; font-weight: 700; background: var(--paper); font-size: 14px; display: inline-block; } .btn.dark { background: var(--ink); color: #fff; }
-.idea { display: inline-block; background: #fffbe0; border: 1px solid #d8cf8a; color: #5a5420; font-size: 11px; padding: 2px 7px; font-weight: 400; }
-.made { color: var(--soft); font-size: 11px; margin-top: 6px; }
-table.st td.go { color: var(--mid); width: 24px; text-align: right; }
-table.st td.cy { font-size: 13px; width: 150px; }
-.pager { display: flex; gap: 6px; justify-content: flex-end; margin-top: 10px; font-size: 13px; } .pager span { border: 1px solid var(--line); padding: 3px 9px; background: var(--paper); } .pager span.on { border-color: var(--ink); font-weight: 700; }
+table.st tr.gap td { height: auto; text-align: center; color: var(--mid); padding: 4px; }
+table.st td.go { width: 48px; text-align: right; padding: 0 8px 0 0; } table.st td.go a { display: inline-flex; width: 24px; height: 24px; align-items: center; justify-content: center; color: var(--ink); font-size: 16px; }
+table.st td.cy { width: 152px; }
+.btn { border: 1px solid var(--ink); padding: 8px 16px; font-weight: 700; background: var(--paper); font-size: 14px; display: inline-block; } .btn.dark { background: var(--ink); color: #fff; }
+.pager { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; font-size: 14px; } .pager span { border: 1px solid var(--line); padding: 4px 8px; background: var(--paper); } .pager span.on { border-color: var(--ink); font-weight: 700; }
 
-.grid { display: grid; grid-template-columns: 400px 1fr; gap: 32px; margin-top: 18px; }
-.lst h2 { font-size: 13px; color: var(--mid); font-weight: 500; margin: 18px 0 6px; } .lst h2:first-child { margin-top: 0; }
-.lst a.r { display: grid; grid-template-columns: 1fr auto 64px; gap: 8px; align-items: baseline; padding: 10px 12px; background: var(--paper); border-bottom: 1px solid var(--fill); font-size: 15px; }
-.lst a.r b { font-family: "IBM Plex Mono", monospace; } .lst a.r small { grid-column: 1; color: var(--soft); font-size: 12px; margin-top: -6px; }
+.grid { display: grid; grid-template-columns: 360px 1fr; gap: 32px; margin-top: 24px; }
+.lst h2 { font-size: 14px; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 8px; margin: 24px 0 8px; } .lst h2:first-child { margin-top: 0; }
+.lst a.r { display: grid; grid-template-columns: 1fr auto 64px; gap: 0 8px; align-items: baseline; padding: 8px 12px; background: var(--paper); border-bottom: 1px solid var(--fill); font-size: 14px; }
+.lst a.r b { font-family: "IBM Plex Mono", monospace; } .lst a.r small { grid-column: 1; color: var(--mid); font-size: 12px; }
 .lst a.r .m { font-family: "IBM Plex Mono", monospace; font-size: 12px; text-align: right; }
-.lst a.r.on { border-left: 3px solid var(--ink); background: var(--paper); font-weight: 700; }
+.lst a.r.on { box-shadow: inset 2px 0 0 var(--ink); background: var(--fill); font-weight: 700; } .lst a.r.on small { font-weight: 400; }
 .lst .acts { display: flex; gap: 8px; margin-top: 16px; }
-.hd { display: flex; align-items: center; gap: 14px; } .hd .sp { flex: 1; } .hd small { color: var(--mid); }
-.code { font-family: "IBM Plex Mono", monospace; border: 1px dashed var(--ink); padding: 3px 8px; font-size: 13px; }
-.chase { display:inline-block; border:1px solid var(--ink); font-size:11px; padding:0 5px; margin-left:8px; font-weight:400; }
-.menu { position: absolute; right: 32px; top: 176px; width: 220px; background: var(--paper); border: 1.5px solid var(--ink); z-index: 4; font-size: 14px; }
-.menu a { display: block; padding: 10px 14px; border-bottom: 1px solid var(--fill); } .menu a:last-child { border-bottom: 0; }
-.menu a.bad { border-top: 1.5px solid var(--ink); } .menu small { display: block; color: var(--mid); font-size: 12px; padding: 8px 14px; border-top: 1px solid var(--line); }
-.dim { position: absolute; left: 0; top: 0; width: 1440px; height: 1000px; background: rgba(29,29,29,.45); z-index: 6; }
-.sheet { position: absolute; left: 470px; top: 150px; width: 500px; background: var(--paper); border-top: 4px solid var(--ink); z-index: 7; padding: 24px 28px 28px; }
-.sheet h2 { font-size: 22px; letter-spacing: -.3px; margin-bottom: 18px; display: flex; justify-content: space-between; } .sheet h2 span { font-weight: 400; color: var(--mid); font-size: 18px; }
-.sheet label { display: block; font-size: 13px; color: var(--mid); margin: 14px 0 6px; }
-.sheet .in { border: 1.5px solid var(--ink); padding: 10px 12px; font-size: 15px; display: flex; justify-content: space-between; }
-.sheet .in.mono { font-family: "IBM Plex Mono", monospace; letter-spacing: 1px; } .sheet .in .soft { color: var(--soft); }
+.hd { display: flex; align-items: center; gap: 12px; } .hd .sp { flex: 1; } .hd small { color: var(--mid); font-size: 14px; }
+.hd h2 { font-size: 20px; font-weight: 700; }
+.code { font-family: "IBM Plex Mono", monospace; border: 1px solid var(--line); background: var(--paper); padding: 4px 8px; font-size: 14px; }
+.chase { display: inline-block; border: 1px solid var(--ink); font-size: 11px; line-height: 16px; padding: 0 4px; margin-left: 8px; font-weight: 600; }
+.menu { position: absolute; right: 32px; top: 182px; width: 220px; background: var(--paper); border: 1px solid var(--ink); z-index: 4; font-size: 14px; }
+.menu a { display: block; padding: 12px 16px; border-bottom: 1px solid var(--fill); } .menu a:last-child { border-bottom: 0; }
+.menu a.bad { border-top: 1px solid var(--ink); }
+.dim { position: fixed; left: 0; top: 0; width: 1440px; height: 100vh; background: rgba(29,29,29,.45); z-index: 6; }
+.sheet { position: absolute; left: 448px; top: 152px; width: 544px; background: var(--paper); border-top: 2px solid var(--ink); z-index: 7; padding: 24px 32px 32px; }
+.sheet h2 { font-size: 20px; font-weight: 700; margin-bottom: 16px; }
+.sheet .x { position: absolute; right: 16px; top: 16px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.sheet label { display: block; font-size: 14px; color: var(--ink); margin: 16px 0 8px; }
+.sheet .in { border: 1px solid var(--ink); height: 40px; align-items: center; padding: 0 12px; font-size: 16px; display: flex; justify-content: space-between; }
+.sheet .in.mono { font-family: "IBM Plex Mono", monospace; letter-spacing: 1px; } .sheet .in .soft { color: var(--mid); font-size: 14px; }
 .sheet a.back { align-self: center; text-decoration: underline; text-underline-offset: 3px; margin-right: 8px; }
-.sheet .row { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; }
-.sheet .or { text-align: center; color: var(--soft); font-size: 12px; margin: 14px 0 0; }
-.sheet .done { border: 1px dashed var(--ink); padding: 14px; margin-top: 18px; display: flex; align-items: center; gap: 12px; }
-.sheet .done b { font-family: "IBM Plex Mono", monospace; font-size: 22px; letter-spacing: 1px; flex: 1; }
+.sheet .row { display: flex; gap: 8px; margin-top: 24px; justify-content: flex-end; }
+.sheet .sub { color: var(--mid); font-size: 14px; }
+.sheet .done { border: 1px solid var(--line); padding: 16px; margin-top: 16px; display: flex; align-items: center; gap: 8px; }
+.sheet .done b { font-family: "IBM Plex Mono", monospace; font-size: 20px; letter-spacing: 1px; flex: 1; }
 .sheet .count { color: var(--mid); font-size: 12px; margin-top: 16px; }
-body { position: relative; }
-</style></head><body><nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a class="on">Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
-<div class="page"><h1>Leagues</h1>
+body { position: relative; }.made { padding: 0 32px 24px; font-size: 12px; color: var(--mid); }
+</style></head><body><nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a class="on">Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><span class="me">Baron Steal FC</span></nav>
+<div class="page"><h1>Leagues<i>리그</i></h1>
 <div class="grid"><div class="lst">
 <h2>General</h2><a class="r "><span>Overall</span><b>48,211</b><span class="m up">6,904</span><small>of 212,480</small></a><a class="r "><span>United Kingdom</span><b>1,402</b><span class="m up">233</span><small>of 9,377</small></a><a class="r "><span>T1 supporters</span><b>3,118</b><span class="m up">510</span><small>of 41,902</small></a>
 <h2>Private</h2><a class="r "><span>Pub League</span><b>2nd</b><span class="m up">1</span><small>12 managers</small></a><a class="r on"><span>Flol Discord</span><b>14th</b><span class="m down">2</span><small>86 managers</small></a>
 <div class="acts"><span class="btn dark">Create a league</span><span class="btn">Join a league</span></div>
 
 </div>
-<div><div class="hd"><h1>Flol Discord</h1><small>scoring from Week 3</small><span class="sp"></span><span class="code">FLOL-22XB</span><span class="btn">Copy link</span><span class="btn">Leave</span></div>
+<div><div class="hd"><h2>Flol Discord</h2><small>Scoring from Week 3</small><span class="sp"></span><span class="code">FLOL-22XB</span><span class="btn">Copy link</span><span class="btn">Leave</span></div>
 <div class="tabs"><span class="on">Season</span><span>Split 1</span><span>Split 2</span></div>
-<table class="st"><tr><th>Rank</th><th></th><th>Team · Manager</th><th>Carry</th><th class="n">Week 14</th><th class="n">Total</th><th></th></tr><tr class=""><td class="rk">1</td><td class="mv up">2</td><td>Canyon Diff<small>Hye-jin Lim</small></td><td class="cy">Canyon</td><td class="n">104</td><td class="n">1,402</td><td class="go">›</td></tr><tr class=""><td class="rk">2</td><td class="mv down">1</td><td>Smash Mouth Kiin<small>Leo Grant</small></td><td class="cy">Kiin</td><td class="n">88</td><td class="n">1,377</td><td class="go">›</td></tr><tr class=""><td class="rk">3</td><td class="mv" style="color:var(--soft)">–</td><td>Ward Hoarders<small>Ama Owusu</small></td><td class="cy">Keria</td><td class="n">91</td><td class="n">1,360</td><td class="go">›</td></tr><tr class=""><td class="rk">4</td><td class="mv up">1</td><td>Lehends Never Die<small>Rui Tan</small></td><td class="cy">Faker</td><td class="n">79</td><td class="n">1,341</td><td class="go">›</td></tr><tr class=""><td class="rk">5</td><td class="mv down">2</td><td>T1 Til I Die<small>Nadia Khan</small></td><td class="cy">Faker</td><td class="n">70</td><td class="n">1,330</td><td class="go">›</td></tr><tr class="gap"><td colspan="7">⋯</td></tr><tr class=""><td class="rk">12</td><td class="mv up">3</td><td>Bdd Wolf<small>Owen Shaw</small></td><td class="cy">Bdd</td><td class="n">81</td><td class="n">1,214</td><td class="go">›</td></tr><tr class=""><td class="rk">13</td><td class="mv" style="color:var(--soft)">–</td><td>Siwoo Sweep<small>Mei Lin</small></td><td class="cy">Chovy</td><td class="n">64</td><td class="n">1,209</td><td class="go">›</td></tr><tr class="me"><td class="rk">14</td><td class="mv down">2</td><td>Baron Steal FC <span class="chase">11 pts to 13th</span><small>Craig</small></td><td class="cy">Faker</td><td class="n">98</td><td class="n">1,198</td><td class="go">›</td></tr><tr class=""><td class="rk">15</td><td class="mv up">1</td><td>Oner Way Ticket<small>Sean Doyle</small></td><td class="cy">Oner</td><td class="n">77</td><td class="n">1,190</td><td class="go">›</td></tr><tr class=""><td class="rk">16</td><td class="mv down">1</td><td>Clid Was Here<small>Ines Silva</small></td><td class="cy">Viper</td><td class="n">52</td><td class="n">1,186</td><td class="go">›</td></tr></table><div class="pager"><span class="on">1</span><span>2</span><span>Find me</span></div></div></div><div class="dim"></div><div class="sheet"><h2>Leave Flol Discord?</h2>
-<div style="font-size:15px">14th of 86</div>
-<div class="row"><a class="back">Back</a><span class="btn dark">Leave</span></div></div><div class="made" style="margin-top:28px">All sponsors are made up.</div></div></body></html>
+<table class="st"><tr><th>Rank</th><th></th><th>Team · Manager</th><th>Carry</th><th class="n">Week 14</th><th class="n">Total</th><th></th></tr><tr class=""><td class="rk">1</td><td class="mv up">2</td><td>Canyon Diff<small>Hye-jin Lim</small></td><td class="cy">Canyon</td><td class="n">104</td><td class="n">1,402</td><td class="go"><a>›</a></td></tr><tr class=""><td class="rk">2</td><td class="mv down">1</td><td>Smash Mouth Kiin<small>Leo Grant</small></td><td class="cy">Kiin</td><td class="n">88</td><td class="n">1,377</td><td class="go"><a>›</a></td></tr><tr class=""><td class="rk">3</td><td class="mv nil">—</td><td>Ward Hoarders<small>Ama Owusu</small></td><td class="cy">Keria</td><td class="n">91</td><td class="n">1,360</td><td class="go"><a>›</a></td></tr><tr class=""><td class="rk">4</td><td class="mv up">1</td><td>Lehends Never Die<small>Rui Tan</small></td><td class="cy">Faker</td><td class="n">79</td><td class="n">1,341</td><td class="go"><a>›</a></td></tr><tr class=""><td class="rk">5</td><td class="mv down">2</td><td>T1 Til I Die<small>Nadia Khan</small></td><td class="cy">Faker</td><td class="n">70</td><td class="n">1,330</td><td class="go"><a>›</a></td></tr><tr class="gap"><td colspan="7">⋯</td></tr><tr class=""><td class="rk">12</td><td class="mv up">3</td><td>Bdd Wolf<small>Owen Shaw</small></td><td class="cy">Bdd</td><td class="n">81</td><td class="n">1,214</td><td class="go"><a>›</a></td></tr><tr class=""><td class="rk">13</td><td class="mv nil">—</td><td>Siwoo Sweep<small>Mei Lin</small></td><td class="cy">Chovy</td><td class="n">64</td><td class="n">1,209</td><td class="go"><a>›</a></td></tr><tr class="me"><td class="rk">14</td><td class="mv down">2</td><td>Baron Steal FC<small>Craig</small><span class="chase">11 pts to 13th</span></td><td class="cy">Faker</td><td class="n">98</td><td class="n">1,198</td><td class="go"><a>›</a></td></tr><tr class=""><td class="rk">15</td><td class="mv up">1</td><td>Oner Way Ticket<small>Sean Doyle</small></td><td class="cy">Oner</td><td class="n">77</td><td class="n">1,190</td><td class="go"><a>›</a></td></tr><tr class=""><td class="rk">16</td><td class="mv down">1</td><td>Clid Was Here<small>Ines Silva</small></td><td class="cy">Viper</td><td class="n">52</td><td class="n">1,186</td><td class="go"><a>›</a></td></tr></table><div class="pager"><span class="on">1</span><span>2</span><span>Find me</span></div></div></div><div class="dim"></div><div class="sheet"><a class="x">✕</a><h2>Leave Flol Discord?</h2>
+<div style="font-size:14px">14th of 86</div>
+<div class="row"><a class="back">Back</a><span class="btn dark">Leave</span></div></div></div><div class="made">All sponsors are made up.</div>
+</body></html>

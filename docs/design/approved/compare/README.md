@@ -18,14 +18,14 @@ Compare: two players side by side (spec/12, The player card, Compare). It opens 
 
 ## Layout
 
-- **Header**: each player's portrait, role and team tag, and name with its Hangul, facing each other across a "v". Change sits under the second player.
-- **Top table**: Season in 32 mono with its rank ("2nd of 10 mids"), then Form, Price, Owned, Last 3 (points and opponent) and Next 3 (the first in ink).
+- **Header**: each player's portrait, role and team tag, and name with its Hangul, facing each other across a "v". Change › sits under the second player.
+- **Top table**: Season in 28 mono with its rank ("2nd of 10 mids"), then Form, Price, Owned, Last 3 (points and opponent) and Next 3 (the first in ink).
 - **Lines**: each scoring line with total, per game and points on both sides. The two sides mirror each other, so each side's points sit next to the line's name. Coaches show the coach lines and series won and lost, with no per-game figure on the series rows.
 - **Marks**: the higher of Season, Form and each line's points is bold. Price and Owned are never marked, and there is no overall verdict.
 
 ## Controls
 
-- **Change**: reopens the search for the second player.
+- **Change ›**: reopens the search for the second player.
 - **The search**: his role is listed first, then All mids · Other roles ›. A coach is listed only against a coach.
 - **✕**: closes back to the card.
 

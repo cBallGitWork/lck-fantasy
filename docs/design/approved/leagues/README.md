@@ -2,7 +2,7 @@
 
 Every league a manager is in, and one league's table. Reached from **Leagues** in the top bar, and **All leagues ›** on Home and Points. Drawn at 1440 in the shared frame.
 
-**Approved:** Craig, 14 Nov 2026. In the first round (13 Nov) he picked the list and table (A) "and some of the elements of B": Overall's top rows, a gap, your neighbourhood, Legend, Rise and All in Split 2, and a pager with Find me; he liked the Carry column and said yes to the chase tag. On 14 Nov he took every recommendation on the panel's calls, then "Yes, save it". Names, teams and numbers are a made-up Split 2 Week 14, not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type.
+**Approved:** Craig, 14 Nov 2026. In the first round (13 Nov) he picked the list and table (A) "and some of the elements of B": Overall's top rows, a gap, your neighbourhood, Legend, Rise and All in Split 2, and a pager with Find me; he liked the Carry column and said yes to the chase tag. On 14 Nov he took every recommendation on the panel's calls, then "Yes, save it". Names, teams and numbers are a made-up Split 2 Week 14, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn.
 
 | File | Shows |
 |---|---|

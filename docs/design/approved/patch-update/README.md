@@ -6,7 +6,7 @@ The new prices for a gameweek, set once the deadline before it passes (spec/12, 
 
 | File | Shows |
 |---|---|
-| `1440.png`, `patch.html` | Gameweek 4 prices, seen in Week 4 |
+| `1440.png`, `patch.html` | Week 4 prices, seen in Week 4 |
 
 ## Borrowed
 
@@ -16,14 +16,14 @@ The new prices for a gameweek, set once the deadline before it passes (spec/12, 
 
 ## Controls
 
-- **‹ ›**: the gameweek before or after; no › past the latest prices.
+- **‹ ›**: the week before or after; no › past the latest prices (drawn in `--line`).
 - **A name**: opens the player or coach card.
 - **How prices move ›**: the Help page's formula (spec/02).
 
 ## Layout
 
-- **Head**: Patch update, ‹ Gameweek 4 prices ›, and when they were set, your time and KST.
-- **Rises** (left) and **Falls** (right): player, team and role; Was; Now with ▲ or ▼; Owned. Coaches are listed by the same rule. A dot after the team marks your own players.
+- **Head**: Patch update, ‹ Week 4 prices ›, when they were set (your time, then KST), and **How prices move ›**.
+- **Rises** (left) and **Falls** (right), each half the width: player, team and role; Was; ▲ or ▼ in its own column; Now; Owned. Coaches are listed by the same rule. A dot after the name marks your own players.
 - Before the first move, the lists read "No moves yet".
 
 ## Placeholders

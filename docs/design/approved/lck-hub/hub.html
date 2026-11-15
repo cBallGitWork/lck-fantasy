@@ -1,90 +1,85 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>LCK hub</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>LCK hub</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
 :root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-/* type scale: 28 page title · 20 figures and team codes · 14 body · 12 labels (the nav is shared) */
+/* type scale (plate.md): 28 page title · 20 team codes and scores · 16 hangul · 14 body · 12 labels */
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
 .mono { font-family: "IBM Plex Mono", monospace; }
-nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
-nav.top a { color: var(--mid); }
-nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
+/* Top bar: the same on every screen (as Points). */
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
-.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.tag { display: inline-block; border: 1px solid var(--ink); color: var(--ink); padding: 0 4px; font: 400 11px/16px "IBM Plex Sans KR", sans-serif; vertical-align: 1px; }
+.tag.prov { border-style: dashed; }
+.tag.live { background: var(--ink); color: var(--paper); }
 
 .page { padding: 24px 32px 48px; }
-.head { display: flex; align-items: baseline; gap: 14px; }
-.head h1 { font-size: 28px; letter-spacing: -.5px; } .head h1 i { font-style: normal; font-weight: 500; color: var(--mid); margin-left: 10px; }
-.tabs { display: flex; gap: 0; margin: 18px 0 0; border-bottom: 2px solid var(--ink); }
-.tabs span { padding: 10px 22px; font-weight: 600; color: var(--mid); } .tabs span.on { background: var(--ink); color: #fff; }
-.stages { display: flex; border-bottom: 1px solid var(--line); margin: 6px 0 24px; }
-.stages span { padding: 10px 0; margin-right: 28px; color: var(--mid); } .stages span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
+.head { display: flex; align-items: baseline; gap: 12px; }
+.head .dl { display: flex; gap: 8px; align-items: baseline; } .head .dl .k { color: var(--mid); margin-right: 8px; }
+.head h1 { font-size: 28px; font-weight: 700; letter-spacing: -.5px; } .head h1 i { font-style: normal; font-size: 16px; font-weight: 400; color: var(--mid); margin-left: 8px; letter-spacing: 0; }
+.tabs { display: flex; gap: 24px; margin: 16px 0 0; border-bottom: 1px solid var(--line); }
+.tabs span { padding: 12px 0; font-weight: 600; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; } .tabs span.on { color: var(--ink); border-bottom-color: var(--ink); }
+/* the stage filter is a view toggle: butted keys on --fill, the chosen one on --paper */
+.stages { display: flex; margin: 16px 0 24px; }
+.stages span, .pick span { padding: 4px 24px; border: 1px solid var(--line); background: var(--fill); color: var(--mid); } .stages span + span, .pick span + span { margin-left: -1px; } .stages span.on, .pick span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
 
-h2 { font-size: 14px; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 8px; display: flex; align-items: baseline; gap: 12px; }
+h2 { font-size: 14px; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 8px; display: flex; align-items: baseline; gap: 12px; }
 h2 .sp { flex: 1; } h2 small { font-size: 12px; font-weight: 400; color: var(--mid); }
-.wrap { display: grid; grid-template-columns: 1fr 340px; gap: 32px; margin-top: 4px; }
+.wrap { display: grid; grid-template-columns: 1fr 360px; gap: 32px; }
 
 /* fixtures: one gameweek, by day; blue side left, red right, as the broadcast */
-.gw { display: flex; align-items: center; gap: 10px; font-weight: 700; } .gw span { border: 1px solid var(--line); background: var(--paper); padding: 2px 9px; color: var(--mid); font-weight: 400; }
-.day { display: grid; grid-template-columns: 90px 1fr; border-top: 1px solid var(--line); }
-.day > b { padding: 14px 0; font-size: 14px; } .day > b small { display: block; color: var(--mid); font-weight: 400; font-size: 12px; }
-.sr { display: grid; grid-template-columns: 64px 64px 110px 36px 110px 1fr 20px; align-items: center; height: 48px; border-bottom: 1px solid var(--fill); background: var(--paper); padding: 0 14px; }
+.gw { display: flex; align-items: center; gap: 4px; font-weight: 700; } .gw span { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; font-size: 16px; color: var(--ink); font-weight: 400; } .gw span.off { color: var(--line); }
+.day { display: grid; grid-template-columns: 88px 1fr; border-top: 1px solid var(--line); }
+.day > b { padding: 12px 0; font-size: 14px; } .day > b small { display: block; color: var(--mid); font-weight: 400; font-size: 12px; }
+.sr { display: grid; grid-template-columns: 64px 64px 112px 32px 96px 24px 1fr; align-items: center; height: 48px; border-bottom: 1px solid var(--fill); background: var(--paper); padding: 0 16px; }
 .sr:last-child { border-bottom: 0; }
 .sr .t { font-family: "IBM Plex Mono", monospace; } .sr .k { font-family: "IBM Plex Mono", monospace; color: var(--mid); }
-.cols { display: grid; grid-template-columns: 90px 64px 64px; padding: 0 0 4px; font-size: 12px; color: var(--mid); } .cols span:first-child { grid-column: 2; padding-left: 14px; }
-.sr .a { text-align: right; } .sr .a b, .sr .b b { font: 600 20px "IBM Plex Mono", monospace; } .sr .a small, .sr .b small { font-size: 12px; color: var(--mid); margin: 0 8px; }
+.cols { display: grid; grid-template-columns: 88px 64px 64px; padding: 0 0 4px; font-size: 12px; color: var(--mid); } .cols span:first-child { grid-column: 2; padding-left: 16px; }
+.sr .a { text-align: right; } .sr .a b, .sr .b b { font: 600 20px "IBM Plex Mono", monospace; } .sr .a small, .sr .b small { font: 12px "IBM Plex Mono", monospace; color: var(--mid); margin: 0 8px; }
 .sr .v { text-align: center; color: var(--mid); }
-.sr .f { text-align: right; color: var(--mid); }
-.sr.mine { box-shadow: inset 3px 0 0 var(--ink); }
-.sr.rs { grid-template-columns: 0 0 140px 80px 140px 1fr 20px; } .sr .sc { text-align: center; font: 600 20px "IBM Plex Mono", monospace; } .sr b.lo { color: var(--mid); font-weight: 400; }
+.sr .f { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; font-size: 16px; color: var(--ink); }
+.sr.rs { grid-template-columns: 0 0 140px 80px 64px 24px 1fr; } .sr .sc { text-align: center; font: 600 20px "IBM Plex Mono", monospace; } .sr b.lo { color: var(--ink); font-weight: 400; }
 
 /* news: Sheep Esports' LCK headlines, each a plain link out */
-.news { padding-top: 0; } .news a { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--fill); color: var(--ink); text-decoration: none; }
-.news a .ph { height: 64px; font-size: 12px; } .news a.more { display: inline-block; }
-.news a b { font-weight: 500; display: block; } .news a small { color: var(--mid); font-size: 12px; }
-.more { display: inline-block; margin-top: 10px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.news a { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--fill); color: var(--ink); text-decoration: none; }
+.news a .ph { height: 64px; }
+.news a b { font-weight: 600; display: block; } .news a small { color: var(--mid); font-size: 12px; }
+.news a.more { display: inline-flex; align-items: center; min-height: 24px; border: 0; margin-top: 12px; padding: 0; font-weight: 600; }
 
-/* standings: the two groups side by side */
+/* standings: one table per group */
 .groups { display: grid; grid-template-columns: 1fr; gap: 32px; }
-.groups td.tm { width: 230px; } .groups td.n, .groups th { width: 72px; } .groups td.fm { width: 160px; }
+.groups td.tm { width: 232px; } .groups td.n, .groups th { width: 72px; } .groups td.fm { width: 160px; }
 table { width: 100%; border-collapse: collapse; background: var(--paper); }
-th { text-align: right; font-size: 12px; font-weight: 500; color: var(--mid); padding: 8px 14px 6px; } th.l { text-align: left; }
-td { text-align: right; padding: 0 14px; height: 44px; border-top: 1px solid var(--fill); } td.l { text-align: left; }
+th { text-align: right; font-size: 12px; font-weight: 400; color: var(--mid); padding: 8px 16px; } th.l { text-align: left; }
+td { text-align: right; padding: 0 16px; height: 40px; border-top: 1px solid var(--fill); } td.l { text-align: left; }
 td.n { font-family: "IBM Plex Mono", monospace; } td.rk { width: 40px; color: var(--mid); font-family: "IBM Plex Mono", monospace; text-align: left; }
 td.tm b { font: 600 20px "IBM Plex Mono", monospace; margin-right: 8px; } td.tm small { color: var(--mid); font-size: 12px; }
-td.fm span { display: inline-block; width: 14px; font: 600 14px "IBM Plex Mono", monospace; text-align: center; }
-td.fm span.w { color: var(--ink); } td.fm span.l { color: var(--soft); font-weight: 400; }
+td.fm span { display: inline-block; width: 16px; font: 600 14px "IBM Plex Mono", monospace; text-align: center; }
+td.fm span.w { color: var(--ink); } td.fm span.l { color: var(--mid); font-weight: 400; }
 
-/* Teams tab: a team picker, then name plates in role order, coach set apart */
-.pick { display: flex; gap: 6px; margin: 18px 0 24px; } .pick span { border: 1px solid var(--line); background: var(--paper); padding: 6px 14px; font: 600 14px "IBM Plex Mono", monospace; color: var(--mid); } .pick span.on { background: var(--ink); border-color: var(--ink); color: #fff; }
-.plates { display: grid; grid-template-columns: repeat(5, 1fr) 16px 1fr; gap: 10px; }
-.plates .pp:nth-child(6) { grid-column: 7; }
-.pp { background: var(--paper); border-top: 3px solid var(--ink); padding: 14px 16px 16px; }
-.pp .rl { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--mid); margin-bottom: 10px; } .pp .rl svg { width: 13px; height: 13px; }
-.pp b { display: block; font-size: 20px; font-weight: 700; } .pp small { color: var(--mid); font-size: 12px; }
-.pp .ph { height: 120px; margin-bottom: 10px; }
+/* Teams tab: a team picker, then the LCK roster beside its academy roster, role order, coach last */
+.pick { display: flex; margin: 16px 0 24px; } .pick span { padding: 4px 16px; font-family: "IBM Plex Mono", monospace; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-table.rt td { height: 48px; } table.rt td.rl { width: 110px; color: var(--mid); font-size: 12px; } table.rt td.rl svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 6px; }
-table.rt b { font-size: 14px; font-weight: 600; } table.rt small { color: var(--mid); font-size: 12px; margin-left: 4px; } table.rt td.na { color: var(--soft); }
+table.rt td.rl { width: 112px; color: var(--mid); font-size: 12px; } table.rt td.rl svg { width: 12px; height: 12px; vertical-align: -1px; margin-right: 8px; }
+table.rt b { font-size: 14px; font-weight: 600; } table.rt small { color: var(--mid); font-size: 12px; margin-left: 4px; } table.rt td.na { color: var(--mid); }
 table.rt tr.co td { border-top: 1px solid var(--line); }
-/* rosters: one row a team, role order, coach last */
-.ros { margin-top: 36px; }
-.ros td { text-align: left; height: 54px; } .ros td.tm { width: 190px; }
-.ros td small { display: block; color: var(--mid); font-size: 12px; line-height: 1.2; }
-.ros td.pl { line-height: 1.2; }
-.ros th { text-align: left; } .ros th:last-child, .ros td:last-child { border-left: 1px solid var(--line); } .ros th svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 5px; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
-  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
-  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
-  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#cfcfcf"/></symbol>
   <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
   <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
   <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
 </defs></svg>
-<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a class="on">LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a class="on">LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
 <div class="page">
-  <div class="head"><h1>LCK Cup 2027<i>LCK 컵</i></h1><span style="flex:1"></span><span>Week 4 deadline <b>Wed 07:45</b></span></div>
+  <div class="head"><h1>LCK Cup 2027<i>LCK 컵</i></h1><span style="flex:1"></span><span class="dl">Deadline <b class="mono">Wed 07:45</b> <span class="k">16:45 KST</span> <b class="mono">9h 45m</b></span></div>
   <div class="tabs" id="tabs"></div>
   <div class="stages" id="stages"><span class="on">Groups</span><span>Play-In</span><span>Playoffs</span></div>
   <div class="wrap"><div><section id="fx"></section><section id="res"></section><div class="groups" id="groups"></div><div id="teams"></div></div>
@@ -107,7 +102,7 @@ const W4 = [["Wed", "20 Jan", [["08:00", "17:00", "HLE", "DK"], ["10:30", "19:30
   ["Sun", "24 Jan", [["08:00", "17:00", "BRO", "BFX"], ["10:30", "19:30", "KRX", "DNS"]]]];
 $("fx").innerHTML = `<h2><span class="gw"><span>‹</span>Week 4<span>›</span></span><small>20–24 Jan · Bo3</small></h2><div class="cols"><span>Yours</span><span>KST</span></div>`
   + W4.map(([d, dt, ss]) => `<div class="day"><b>${d}<small>${dt}</small></b><div>${ss.map(([t, k, a, b]) =>
-    `<div class="sr"><span class="t">${t}</span><span class="k">${k}</span><span class="a"><small>${rec(a)}</small><b>${a}</b></span><span class="v">v</span><span class="b"><b>${b}</b><small>${rec(b)}</small></span><span></span><span class="f">›</span></div>`).join("")}</div></div>`).join("");
+    `<div class="sr"><span class="t">${t}</span><span class="k">${k}</span><span class="a"><small>${rec(a)}</small><b>${a}</b></span><span class="v">v</span><span class="b"><b>${b}</b><small>${rec(b)}</small></span><span class="f">›</span><span></span></div>`).join("")}</div></div>`).join("");
 
 // Results: one gameweek's series with their scores; Week 3, as the Points picture (Sun's two made up).
 const W3 = [["Wed", "13 Jan", [["T1", 2, 1, "HLE"], ["GEN", 2, 0, "KT"]]], ["Thu", "14 Jan", [["DK", 2, 0, "NS"], ["BRO", 1, 2, "DNS"]]],
@@ -115,13 +110,13 @@ const W3 = [["Wed", "13 Jan", [["T1", 2, 1, "HLE"], ["GEN", 2, 0, "KT"]]], ["Thu
   ["Sun", "17 Jan", [["KRX", 2, 1, "BRO"], ["BFX", 0, 2, "DNS"]]]];
 $("res").innerHTML = `<h2><span class="gw"><span>‹</span>Week 3<span>›</span></span><small>13–17 Jan · Bo3</small></h2>`
   + W3.map(([d, dt, ss]) => `<div class="day"><b>${d}<small>${dt}</small></b><div>${ss.map(([a, sa, sb, b]) =>
-    `<div class="sr rs"><span></span><span></span><span class="a"><b class="${sa > sb ? "" : "lo"}">${a}</b></span><span class="sc">${sa}–${sb}</span><span class="b"><b class="${sb > sa ? "" : "lo"}">${b}</b></span><span></span><span class="f">›</span></div>`).join("")}</div></div>`).join("");
+    `<div class="sr rs"><span></span><span></span><span class="a"><b class="${sa > sb ? "" : "lo"}">${a}</b></span><span class="sc">${sa}–${sb}</span><span class="b"><b class="${sb > sa ? "" : "lo"}">${b}</b></span><span class="f">›</span><span></span></div>`).join("")}</div></div>`).join("");
 
 // News: Sheep Esports' LCK articles, headlines only, each a link out (Craig, 14 Nov 2026). Headlines are made up.
 const NEWS = [["T1 win five in a row after their opening loss to GEN", "Mon 18 Jan"], ["Kiin: \"We know where we lost the GEN series\"", "Mon 18 Jan"],
   ["BNK FEARX bench their jungler for Week 4", "Sun 17 Jan"], ["DK's Siwoo leads every top laner in solo kills", "Sun 17 Jan"], ["Week 4 preview: T1 v GEN on Saturday", "Fri 15 Jan"]];
 $("news").innerHTML = `<h2>News<span class="sp"></span><small>Sheep Esports</small></h2>`
-  + NEWS.map(([h, d]) => `<a><span class="ph">thumbnail</span><span><b>${h}</b><small>${d} ↗</small></span></a>`).join("") + `<a class="more" style="border:0;display:inline-block">More on Sheep Esports ↗</a>`;
+  + NEWS.map(([h, d]) => `<a><span class="ph">thumbnail</span><span><b>${h}</b><small>${d} ↗</small></span></a>`).join("") + `<a class="more">More on Sheep Esports ↗</a>`;
 
 // Standings: each group's rank, series won and lost, set difference, last 5 (spec/12: standings).
 const FORM = { T1: "WWWWW", GEN: "LWWWW", HLE: "WWWLL", DK: "WLWWL", KT: "LWLLW", DNS: "LWLWW", NS: "WWLLL", KRX: "LWLWW", BRO: "WLLLL", BFX: "LWLLL" };
@@ -161,7 +156,7 @@ const t1 = RO.find(([t]) => t === "T1");
 const ACPR = ["5.0억", "5.0억", "5.5억", "5.0억", "5.0억"];
 const PR = ["12.5억", "14.0억", "18.5억", "15.0억", "14.5억", "7.0억"];
 const ros = (title, lg, ps, pr) => `<section><h2>${title}<small>${lg}</small></h2><table class="rt">${ps.map(([g, k], i) =>
-  `<tr class="${i === 5 ? "co" : ""}"><td class="l rl"><svg><use href="#${RH[i][0]}"/></svg>${RH[i][1]}</td><td class="l"><b>${g}</b> <small>${k}</small></td><td class="n ${pr && pr[i] !== "–" ? "" : "na"}">${pr ? pr[i] : "–"}</td></tr>`).join("")}</table></section>`;
+  `<tr class="${i === 5 ? "co" : ""}"><td class="l rl"><svg><use href="#${RH[i][0]}"/></svg>${RH[i][1]}</td><td class="l"><b>${g}</b> <small>${k}</small></td><td class="n ${pr && pr[i] !== "—" ? "" : "na"}">${pr ? pr[i] : "—"}</td></tr>`).join("")}</table></section>`;
 $("teams").innerHTML = `<div class="pick">${RO.map(([t]) => `<span class="${t === "T1" ? "on" : ""}">${t}</span>`).join("")}</div>
   <div class="two">${ros("T1", "LCK", t1.slice(1), PR)}${ros(ACAD.T1[0], "LCK CL", ACAD.T1[1].slice(0, 5), ACPR)}</div>`;
 </script></body></html>

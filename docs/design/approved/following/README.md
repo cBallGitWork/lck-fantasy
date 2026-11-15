@@ -2,7 +2,7 @@
 
 The feed of managers you follow, your requests, trucks, follows and followers. Reached from **Following ›** on Home's Following card; not in the top bar. Drawn at 1440 in the shared frame.
 
-**Approved:** Craig, 14 Nov 2026. In the round he picked a follow request from the profile only, one timeline newest first, and a following cap held as data; on trucking past weeks, "live or previous week (if next gameweek hasnt started)"; then "Yes, save it". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-14-following/](../../proposals/2026-11-14-following/) (`build.py`, `brief.md`).
+**Approved:** Craig, 14 Nov 2026. In the round he picked a follow request from the profile only, one timeline newest first, and a following cap held as data; on trucking past weeks, "live or previous week (if next gameweek hasnt started)"; then "Yes, save it". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn. The source is [docs/design/proposals/2026-11-14-following/](../../proposals/2026-11-14-following/) (`build.py`, `brief.md`).
 
 | File | Shows |
 |---|---|
@@ -17,15 +17,15 @@ The feed of managers you follow, your requests, trucks, follows and followers. R
 
 ## Layout
 
-- **Left, the feed:** one timeline, newest first, under a header per gameweek ("not final" on the live one). Each row: the manager and team; a series with its points and players in role order, a Big Carry tagged on its series row; or a deadline with the buff, transfers, −6s and each swap's score so far. Times show your time and KST.
+- **Left, the feed:** one timeline, newest first, under a header per gameweek (a Not final tag on the live one). Each row: the manager and team; a series with its points and players in role order, a Big Carry tagged on its series row; or a deadline with the buff, transfers, −6s and each swap's score so far. Times show your time and KST.
 - **Right:** Requests (Accept, Decline); Trucks this week, each with its sender, a sponsor truck with its sponsor; Following with "3 of 50"; Followers.
 
 ## Controls
 
-- **Truck** on a row: opens the picker. One truck per manager a gameweek: once sent, every row of that manager reads "☕ Coffee sent" or "Protest sent". Rows of the live week, or last week's until the next starts, have it.
+- **Truck ›** on a row: opens the picker. One truck per manager a gameweek: once sent, every row of that manager reads "Coffee sent" or "Protest sent". Rows of the live week, or last week's until the next starts, have it.
 - **The picker:** Coffee 커피차 | Protest 시위 트럭; the lines that fit the receiver's week, filled with their numbers; a preview of the picked line; Cancel, Send truck.
 - **Accept, Decline** on a request.
-- **Unfollow** on a manager you follow; **Remove · Block** on a follower.
+- **Unfollow** on a manager you follow; **Remove** and **Block** on a follower, Block last and apart.
 - A manager's name opens their profile.
 
 ## Not drawn

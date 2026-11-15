@@ -27,6 +27,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   a priority", Craig, 13 Nov 2026).
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.
+  - Tabs: Fixtures, Results, Standings and Teams, each its own (Craig, 15 Nov 2026). Standings
+    show W, L, sets won and lost, +/−, Win % and the last 5.
+  - Teams shows each team's LCK roster beside its academy (LCK CL) roster.
+  - Sheep Esports' latest LCK headlines sit beside the tabs, each with a thumbnail, linking out.
+    They come from Sheep's LCK tag page (Craig, 15 Nov 2026).
+  - The picture is `docs/design/approved/lck-hub/`.
 - **Series page**: one series, its games and each player's lines in each game.
 - **Player pop-up**: see [The player card](#the-player-card).
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the

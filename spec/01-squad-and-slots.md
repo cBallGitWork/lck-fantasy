@@ -43,3 +43,12 @@ FPL's rule, with role in place of formation:
 - The coach counts toward the cap on players from one team ([spec/10](10-season-and-gameweeks.md)
   makes the cap's value a stage setting). Example: with a cap of 2, T1's coach and Faker fill T1.
 - If a team changes head coach mid-season, the pick stays and shows the new coach.
+
+## Academy players
+
+- Each team's academy (LCK CL) players are in the pool from the start, like FPL's reserves
+  (Craig, 15 Nov 2026). They score when subbed into an LCK game ("in the pool as they get
+  subbed in"). They are priced like any player.
+- They count toward the cap as their LCK team. Example: with a cap of 2, Faker and T1's academy
+  mid fill T1.
+- There is no academy coach: the coach slot is the team.

@@ -1,0 +1,244 @@
+/* The full player card, drawn to docs/design/approved/player-card/ and the plate's values. */
+
+.player-card__quiet {
+  color: var(--mid);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+}
+.player-card__figure {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  color: var(--text);
+  margin-right: var(--s-2);
+}
+.player-card__right {
+  text-align: right;
+}
+
+/* The news line: a filled bar over the card, the ✕ inside it. */
+.player-card__news {
+  display: flex;
+  align-items: center;
+  height: var(--m-card-head);
+  padding: 0 var(--s-5);
+  background: var(--ink);
+  color: var(--on-ink);
+  font-weight: var(--w-semi);
+}
+[role="dialog"]:has(.player-card__news) > [aria-label="Close"] {
+  color: var(--on-ink);
+}
+
+/* The lower third: portrait, role and team, name and hangul, legal name; the season's points and the keys. */
+.player-card__head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--s-5);
+  align-items: end;
+  padding: var(--s-6) var(--s-5) var(--s-4);
+}
+.player-card__portrait {
+  display: block;
+  width: calc(var(--s-7) + var(--s-6));
+  height: calc(var(--s-7) + var(--s-6));
+}
+.player-card__name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  font-size: var(--size-card);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.player-card__hangul {
+  font-size: var(--size-head);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.player-card__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-4);
+  align-self: stretch;
+}
+.player-card__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: var(--s-6);
+}
+.player-card__hero b {
+  font-size: var(--size-key);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-tight);
+}
+.player-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  white-space: nowrap;
+}
+
+/* The meta line: price and move, form, owned, the week's transfers. */
+.player-card__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+  padding: 0 var(--s-5) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+
+/* The main column beside the Season panel. */
+.player-card__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-side);
+}
+.player-card__main {
+  padding: 0 var(--s-5) var(--s-5);
+}
+.player-card__tab {
+  padding-top: var(--s-4);
+}
+
+/* The series strip: the last 3, a 2px rule, the next 3. */
+.player-card__strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) var(--m-rule-heavy) repeat(3, minmax(0, 1fr));
+  padding: var(--s-4) 0;
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.player-card__strip-cell {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--s-3);
+}
+.player-card__strip-cell .player-card__figure {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+  line-height: var(--lh-snug);
+}
+.player-card__now {
+  background: var(--ink);
+}
+.player-card__next {
+  font-size: var(--size-head);
+  line-height: var(--lh-snug);
+  color: var(--mid);
+}
+.player-card__next--first {
+  color: var(--text);
+  font-weight: var(--w-semi);
+}
+
+/* A section's head inside a tab: 12/600, a 2px rule above all but the first. */
+.player-card__section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin: var(--s-5) 0 var(--s-2);
+  padding-top: var(--s-2);
+  border-top: var(--m-rule-heavy) solid var(--ink);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+}
+.player-card__tab > div > :first-child > .player-card__section,
+.player-card__tab > div > .player-card__section:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.player-card__section b {
+  font-size: var(--size-body);
+}
+
+/* This week's games: G, champion, K/D/A, points; a game that doesn't count struck through. */
+.player-card__games {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.player-card__games td {
+  height: var(--m-row);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--fill);
+}
+.player-card__games td:first-child {
+  width: 8%;
+}
+.player-card__games td:nth-child(3) {
+  width: 22%;
+}
+.player-card__games td:nth-child(4) {
+  width: 10%;
+}
+.player-card__points {
+  font-weight: var(--w-semi);
+}
+.player-card__dropped .player-card__points {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+  text-decoration: line-through;
+}
+.player-card__total td {
+  height: var(--m-card-head);
+  border-top: var(--m-rule-heavy) solid var(--ink);
+  font-weight: var(--w-semi);
+}
+.player-card__total td:first-child {
+  width: auto;
+}
+.player-card__total .player-card__points {
+  font-size: var(--size-head);
+}
+
+/* Fixtures and History: each week's first row ruled above. */
+.player-card__fixtures tr:has(.player-card__week-start) td,
+.player-card__history tr:has(.player-card__week-start) td {
+  border-top: var(--m-rule) solid var(--line);
+}
+.player-card__fixtures col:first-child {
+  width: 15%;
+}
+.player-card__fixtures col:nth-child(n + 3) {
+  width: 20%;
+}
+.player-card__history col:first-child,
+.player-card__history col:nth-child(3),
+.player-card__history col:nth-child(7) {
+  width: 12%;
+}
+.player-card__history col:nth-child(4) {
+  width: 20%;
+}
+.player-card__history col:nth-child(5) {
+  width: 15%;
+}
+.player-card__history col:nth-child(6) {
+  width: 10%;
+}
+.player-card__champions {
+  width: 65%;
+}
+
+/* The Season panel, on every tab. */
+.player-card__rail {
+  padding: var(--s-4) var(--s-5) var(--s-5);
+  border-left: var(--m-rule) solid var(--line);
+}
+.player-card__rail-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding: var(--s-2) 0;
+  border-top: var(--m-rule-heavy) solid var(--ink);
+  font-size: var(--size-body);
+  font-weight: var(--w-semi);
+}
+.player-card__rail col:nth-child(n + 2) {
+  width: 22%;
+}

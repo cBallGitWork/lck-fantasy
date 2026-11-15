@@ -31,3 +31,12 @@ These are the FPL player's, the LCK fan's and UX's findings on `s-final.png` and
   - Team records beside the names: keep or drop? They have no spec line.
   - K/D/A in each game cell: keep, or champion and points only, as spec/12 says literally?
   - The dot on your players needs a spec line if it stays.
+
+## Craig, 16 Nov 2026
+
+- "series seems basic". Offered a POG badge, a picks-and-bans strip, kill score and gold, team colours, and "your points from this series"; Claude recommended 1, 2 and 5. Craig: "ok".
+- Next round adds:
+  - **POG**: a Player of the Game badge on each game's POG cell, plus the series POG;
+  - **Draft strip**: one row per game, picks and bans with the blue and red side;
+  - **Your points**: one line at the top, the sum of your players in this series (e.g. "Your players: 21").
+- These need spec/12 lines on save. They widen the earlier "winner, length and champions only".

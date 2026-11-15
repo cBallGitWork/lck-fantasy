@@ -349,6 +349,17 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - Per game: "first blood should be a count actually"; "and we have a toggle for count/per game count". Every line is a count, and the toggle divides them all.
 - The picture: "looks good", then "save".
 
+## Patch update design round (15 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/patch-update/`.
+
+- "patch update, just shows the new prices, thats it really, occurs once a gameweek dealine had passed". The page is named Patch update; filters and the season view are left out.
+- "in your squad · 1억 = 100 million won, game money only please remove this fluff man people arent idiots": the footer line went.
+- "use dummy data": roster facts in the picture are made up, not checked.
+- "do a previous and new price": Was and Now columns.
+- "dotn say week 3 deadline, thats confusing, new price sfor gameweek 4 it should be"; "dont mention gameweej 5 thats fluff": titled Gameweek 4 prices, with only when they were set.
+- The picture: "Save it".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

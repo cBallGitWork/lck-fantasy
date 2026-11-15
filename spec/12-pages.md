@@ -32,7 +32,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Each row also shows price and its last move, form, owned and points, as FPL's list does. Any
     column sorts. Your own players carry a dot. Academy players are listed, after everyone with
     games (Craig, 16 Nov 2026).
-  - It links to Price changes. The picture is `docs/design/approved/stats/`.
+  - It links to Patch update. The picture is `docs/design/approved/stats/`.
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.
   - Tabs: Fixtures, Results, Standings and Teams, each its own (Craig, 15 Nov 2026). Standings
@@ -59,11 +59,17 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and ignores both.
   - It builds live, with a Not final tag until the week is final.
   - Reached from links on Points and Home.
-- **Price changes**: the week's rises and falls. Past moves only, no prediction.
+- **Patch update** (Craig, 15 Nov 2026; spec once called it Price changes): the new prices for a
+  gameweek, set once the deadline before it passes ("just shows the new prices, thats it really").
+  Past moves only, no prediction.
   - Reached from links on Stats and Transfers. ‹ Week › arrows go back through past weeks
     (Craig, 16 Nov 2026).
   - Rises and falls side by side. A rise is Korean red, a fall blue, on every screen that shows
     a price move (Craig, 16 Nov 2026).
+  - Each row: player, team and role, the price before and after, and owned. A dot marks your
+    own players. Titled by the gameweek the prices are for ("Gameweek 4 prices"), with when they
+    were set; no next move, no filters, no explainer lines (Craig, 15 Nov 2026). The picture is
+    `docs/design/approved/patch-update/`.
   - Before the first move: "No moves yet".
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).

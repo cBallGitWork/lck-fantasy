@@ -12,10 +12,10 @@ questions are in [docs/to-grill.md](../docs/to-grill.md).
   their favourite team's supporter league, as FPL does.
 - The favourite team is required at sign-up: one of the competition's teams. Example: pick T1
   and you join the T1 league.
-- A manager can change their favourite team any time until their first gameweek scores; after
-  that it is fixed (Craig, 13 Nov 2026).
-  Since no points have counted by then, a change only moves the manager to the new team's
-  league; nothing carries over.
+- A manager can change their favourite team until their first gameweek starts (its deadline);
+  after that it is fixed for the season ("you cant change fav team anyways during season",
+  "once your first gameweek starts", Craig, 15 Nov 2026). Since no points have counted by then,
+  a change only moves the manager to the new team's league; nothing carries over.
 - The country is set at sign-up and fixed on the same rule ([spec/09](09-onboarding.md)).
 
 ## Tables

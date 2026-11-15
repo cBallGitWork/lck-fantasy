@@ -48,5 +48,5 @@ The full player card. It opens from **Full card ›** on a page's short card, or
 | News line | no issue yet; written by an admin |
 | Past seasons before LCK 2025 | no issue yet; as many years as the data allows |
 | Portrait | no issue; the rights are unsettled |
-| Compare | not drawn |
+| Compare | drawn in [compare/](../compare/) |
 | The coach card | drawn in [coach-card/](../coach-card/) |

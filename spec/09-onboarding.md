@@ -26,8 +26,12 @@ Copies UCL Fantasy: the first page is one where you can just pick a team, with n
 - Sign-up then asks three things: team name, favourite team and country.
   The favourite team and country place the manager in their supporter and country leagues
   ([spec/08](08-leagues.md)).
-- Country is filled in from where the visitor is. Like the favourite team, it can change until
-  the manager's first gameweek scores; after that it is fixed.
+- Country is filled in from where the visitor is; the favourite team has no default. Both can
+  change until the manager's first gameweek starts, then are fixed (Craig, 15 Nov 2026). The
+  sheet says when: "Both lock when your first gameweek starts: Wed 07:45."
+- One tick: "I'm 16 or over and accept the Terms and Privacy", unticked. Save team stays off
+  until it is ticked and a team picked, and the account is made on Save team, not at the Google
+  or Discord step (Craig, 15 Nov 2026). The account keeps when they agreed and to which version.
 - Team names are as in FPL: free text, need not be unique, with a length cap, and offensive names
   can be removed. Example: two managers can both be called Faker's Chair.
 

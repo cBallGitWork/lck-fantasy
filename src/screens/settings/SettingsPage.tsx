@@ -7,6 +7,7 @@ import {
   changedFields,
   changeLine,
   dirtyTabs,
+  hoursBefore,
   TABS,
   THEMES,
   timeIn,
@@ -35,6 +36,8 @@ export interface SettingsProps {
   locked: boolean;
   /** The next deadline, as an instant. */
   deadlineAt: string;
+  /** How many hours before a deadline the reminder email goes. */
+  reminderHours: number;
   browserZone: string;
   zones: string[];
   countries: string[];
@@ -164,10 +167,10 @@ function OnOffRow({ label, when, on, onChoose }: { label: string; when: string; 
 }
 
 /** Emails: the deadline reminder and the weekly recap, and the address they go to. */
-export function EmailsTab({ draft, onChange, account }: SettingsProps) {
+export function EmailsTab({ draft, onChange, account, reminderHours }: SettingsProps) {
   return (
     <section>
-      <OnOffRow label="Deadline reminder" when="24 hours before" on={draft.deadlineReminder} onChoose={(deadlineReminder) => onChange({ deadlineReminder })} />
+      <OnOffRow label="Deadline reminder" when={hoursBefore(reminderHours)} on={draft.deadlineReminder} onChoose={(deadlineReminder) => onChange({ deadlineReminder })} />
       <OnOffRow label="Weekly recap" when="Once the week is final" on={draft.weeklyRecap} onChoose={(weeklyRecap) => onChange({ weeklyRecap })} />
       <p className="settings__sub settings__sent-to">Sent to {account.email}</p>
     </section>

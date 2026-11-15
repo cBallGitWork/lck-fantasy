@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { DeleteSheet } from "./DeleteSheet";
-import { ACCOUNT, BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, DRAFT, LOCKED, SAVED, ZONES } from "./fixtures";
+import { ACCOUNT, BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, DRAFT, LOCKED, REMINDER_HOURS, SAVED, ZONES } from "./fixtures";
 import type { Account, DeleteRow, SettingsTab, SettingsValues } from "./settings";
 import { SettingsPage } from "./SettingsPage";
 
@@ -31,6 +31,7 @@ export function Settings({
   account = ACCOUNT,
   locked = LOCKED,
   deadlineAt = DEADLINE_AT,
+  reminderHours = REMINDER_HOURS,
   browserZone = Intl.DateTimeFormat().resolvedOptions().timeZone || BROWSER_ZONE,
   zones = ZONES,
   countries = COUNTRIES,
@@ -45,6 +46,7 @@ export function Settings({
   account?: Account;
   locked?: boolean;
   deadlineAt?: string;
+  reminderHours?: number;
   browserZone?: string;
   zones?: string[];
   countries?: string[];
@@ -75,6 +77,7 @@ export function Settings({
         account={account}
         locked={locked}
         deadlineAt={deadlineAt}
+        reminderHours={reminderHours}
         browserZone={browserZone}
         zones={zones}
         countries={countries}

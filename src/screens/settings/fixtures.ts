@@ -1,5 +1,6 @@
 // The Settings picture's made-up data (docs/design/approved/settings/): Baron Steal FC on Week 4's
 // Tuesday, before the deadline, with one unsaved change to the hangul banner. Not roster data.
+// Both emails are off, as spec/12 sets them by default.
 
 import { MANAGER } from "../../fixtures/week3";
 import { BROWSER, type Account, type DeleteRow, type SettingsValues } from "./settings";
@@ -13,7 +14,7 @@ export const SAVED: SettingsValues = {
   country: "United Kingdom",
   timeZone: BROWSER,
   theme: "Device",
-  deadlineReminder: true,
+  deadlineReminder: false,
   weeklyRecap: false,
 };
 
@@ -21,6 +22,9 @@ export const SAVED: SettingsValues = {
 export const DRAFT: SettingsValues = { ...SAVED, banner: MANAGER.hangul };
 
 export const ACCOUNT: Account = { email: "barons.steal.fc@gmail.com", provider: "Google" };
+
+/** How long before a deadline the reminder email goes: a value Craig may tune, per competition. */
+export const REMINDER_HOURS = 24;
 
 /** Week 4's deadline as an instant: Wed 20 Jan 2027, 16:45 KST. */
 export const DEADLINE_AT = "2027-01-20T07:45:00Z";

@@ -98,5 +98,8 @@ export function timeIn(instant: string, zone: string): { local: string; kst: str
   return { local: clock(instant, zone, true), kst: clock(instant, KST_ZONE, false) };
 }
 
+/** The reminder's lead time as the Emails tab shows it: `24 hours before`. */
+export const hoursBefore = (hours: number) => `${hours} hour${hours === 1 ? "" : "s"} before`;
+
 /** Save team is offered once a favourite team is picked and the 16+ box ticked (spec/09). */
 export const canSaveTeam = (favouriteTeam: TeamCode | null, ticked: boolean) => favouriteTeam !== null && ticked;

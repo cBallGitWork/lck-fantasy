@@ -2,9 +2,9 @@
 import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { DeleteSheet } from "./DeleteSheet";
-import { BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, SAVED, SIGN_UP, SQUAD_SIZE } from "./fixtures";
+import { BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, REMINDER_HOURS, SAVED, SIGN_UP, SQUAD_SIZE } from "./fixtures";
 import { Settings } from "./index";
-import { canSaveTeam, capName, changedFields, changeLine, counter, dirtyTabs, timeIn, type SettingsTab } from "./settings";
+import { canSaveTeam, capName, changedFields, changeLine, counter, dirtyTabs, hoursBefore, timeIn, type SettingsTab } from "./settings";
 import { SignUpStepOne, SignUpStepTwo } from "./SignUp";
 
 const noop = () => {};
@@ -65,10 +65,19 @@ describe("Settings, each tab as its picture draws it", () => {
     expect(out).toMatch(/aria-pressed="true">Device</);
   });
 
-  test("Emails: reminder on, recap off, and the address they go to", () => {
+  test("Emails: both off by default (spec/12), the reminder's lead time, and the address they go to", () => {
     const out = text(<Settings firstTab="Emails" browserZone={BROWSER_ZONE} />);
-    expectInOrder(out, ["Deadline reminder", "24 hours before", "OnOff", "Weekly recap", "Once the week is final", "OnOff", "Sent to barons.steal.fc@gmail.com", ...SAVE_BAR, ...FOOT]);
-    expectInOrder(settingsOn("Emails"), ['aria-pressed="true">On<', 'aria-pressed="true">Off<']);
+    expectInOrder(out, ["Deadline reminder", hoursBefore(REMINDER_HOURS), "OnOff", "Weekly recap", "Once the week is final", "OnOff", "Sent to barons.steal.fc@gmail.com", ...SAVE_BAR, ...FOOT]);
+    expect([SAVED.deadlineReminder, SAVED.weeklyRecap]).toEqual([false, false]);
+    const markup = settingsOn("Emails");
+    expectInOrder(markup, ['aria-pressed="true">Off<', 'aria-pressed="true">Off<']);
+    expect(markup).not.toContain('aria-pressed="true">On<');
+  });
+
+  test("Emails: the reminder's lead time comes from data, not the page", () => {
+    expect(hoursBefore(24)).toBe("24 hours before");
+    expect(hoursBefore(1)).toBe("1 hour before");
+    expect(text(<Settings firstTab="Emails" browserZone={BROWSER_ZONE} reminderHours={12} />)).toContain("12 hours before");
   });
 
   test("Account: email and Sign out, what is public, Download my data, Delete account, and no save bar", () => {

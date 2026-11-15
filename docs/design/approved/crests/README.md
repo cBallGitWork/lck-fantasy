@@ -18,7 +18,7 @@ Flol's crest for each of the ten LCK teams, each leaning into one thing fans kno
 | GEN | The tiger, TigerNation (Craig: more tiger) | A |
 | HLE | The little chick, 롤칰 | A |
 | KT | Never get excited about KT: a star that fizzles (Craig) | A |
-| DK | Caedrel's team: a heart (Craig) | B |
+| DK | The Dpboong, the fans' car (Craig) | A |
 | NS | Ramyun noodles (Craig: more noodles) | A |
 | BFX | The Bank Derby: a piggy bank | A |
 | DNS | The mad dogs, 물어! | B |

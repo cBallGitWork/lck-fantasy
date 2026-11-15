@@ -177,7 +177,7 @@ export const SERIES_VIEWS = {
   next: { state: "next", series: HLE_DK_NEXT },
 } as const satisfies Record<string, SeriesView>;
 
-/** The series a link opens, at the LCK hub's moment (Week 4, Tuesday). */
+/** The series a link opens, at the LCK hub's moment (Week 4, Tuesday). None is live then, so the live view gets a link with the live feed (#34). */
 export const SERIES_BY_ID: Record<string, SeriesView> = Object.fromEntries(
   [SERIES_VIEWS.final, SERIES_VIEWS.final21, SERIES_VIEWS.next].map((v) => [v.series.id, v]),
 );

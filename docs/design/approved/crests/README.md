@@ -1,22 +1,31 @@
 # Crests
 
-Flol's own crest for each of the ten LCK teams: a shape, the team's colours, its code and a mark from a fan meme. It fills the photo slot on the lineup card and the player card, and sits beside a name in a table row. No team's logo is copied: [docs/research/lck-team-logos-and-memes.md](../../../research/lck-team-logos-and-memes.md) describes each real logo and what ours avoids.
+Flol's crest for each of the ten LCK teams, each leaning into one thing fans know the team for. It fills the photo slot on the lineup card and the player card, and sits beside a name in a table row. The pages use these for now; we come back to the team logos after the reskin.
 
-**Approved:** Craig, 15 Nov 2026, "Yes, open it". He asked for a story mark per team, then for a meme per team ("like t1 truck, nongshim noodles"). Colours are from [docs/research/lck-visual-research.md](../../../research/lck-visual-research.md).
+**Approved:** Craig, 15 Nov 2026: "loveit we can use these on pages for now", with T1's bold version. They came from a blind round: one describer briefed two designers per team from [docs/research/lck-team-logos-and-memes.md](../../../research/lck-team-logos-and-memes.md) (the logo, what the team is about, a meme, the fans, the colours). Neither designer saw the logo. Round two leaned into one thing per team, Craig's notes for T1, NS, BRO, KT and DK, Claude's picks for the rest.
 
 | File | Shows |
 |---|---|
-| `1440.png`, `crests.html` | The ten crests at 72, 56, 40 and 24; the marks alone; the crest in the photo slot and in a table row |
+| `1440.png`, `crests.html` | The ten picks at 120, 56, 40 and 24 |
+| `round1.png` | Round one: each brief and both designers' crests |
+| `round2.png` | Round two: each crest leaning into one thing, round one beside it |
 
-## Rules
+## The picks
 
-- **Shape per team:** roundel (T1, DNS), seal 도장 (GEN, KT, DK, KRX), shield (HLE, BRO), hexagon (NS, BFX). The three reds (T1, KT, NS) and two blues (DNS, KRX) differ by shape.
-- **Mark from 40 up**, above the code. Under 40 the mark drops; under 32 the code drops too, since the row beside it names the team.
-- **Marks:** T1 a truck, GEN tiger stripes, HLE a chick (롤칰), KT a bolt (Telecom War), DK a car (딮붕이), NS a ramyun bowl, BFX a piggy bank (Bank Derby), DNS a bone (Mad Dogs), BRO a gift (Morgan's gift penta), KRX a heart (중꺾마).
-- **No mean memes** on a crest.
-- Team facts and colours are data per competition; a renamed team gets a new code and keeps its shape unless it clashes.
+| Team | Leans into | Designer |
+|---|---|---|
+| T1 | The fans' LED protest truck (Craig) | A, bold |
+| GEN | The tiger, TigerNation (Craig: more tiger) | A |
+| HLE | The little chick, 롤칰 | A |
+| KT | Never get excited about KT: a star that fizzles (Craig) | A |
+| DK | Caedrel's team: a heart (Craig) | B |
+| NS | Ramyun noodles (Craig: more noodles) | A |
+| BFX | The Bank Derby: a piggy bank | A |
+| DNS | The mad dogs, 물어! | B |
+| BRO | A bro fist, OK BRO (Craig) | B |
+| KRX | The heart that never breaks, 중꺾마 | A |
 
 ## Still open
 
+- **For later:** T1's truck screen shows a T1 close to the real lettering, and KT keeps a leaning R with a star. Both stay for now; they are the first to change when we come back after the reskin.
 - Whether crests show before the teams or Riot answer the permission email ([lck-visual-research.md](../../../research/lck-visual-research.md), Rights).
-- HLE's black band sits close to the swoosh on Hanwha's real logo.

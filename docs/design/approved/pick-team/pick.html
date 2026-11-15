@@ -15,6 +15,7 @@ nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--i
 nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
 nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
 .ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
 
 /* Parts */
@@ -22,7 +23,7 @@ nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--
 .tag.prov { border-style: dashed; }
 .tag.live { background: var(--ink); color: var(--paper); }
 .up::before { content: "▲ "; font-size: 12px; }
-.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 12px; }
+.down::before { content: "▼ "; font-size: 12px; }
 .cake::after { content: " 🎂"; }
 .tog { display: inline-flex; font-size: 14px; }
 .tog span { padding: 4px 24px; border: 1px solid var(--line); background: var(--fill); color: var(--mid); }
@@ -44,10 +45,12 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .hd .dl { margin-top: 4px; } .hd .dl span { color: var(--mid); }
 .hd .dl b.cd { margin-left: 12px; border: 1px solid var(--ink); padding: 0 8px; font-family: "IBM Plex Mono", monospace; }
 .act { display: flex; gap: 24px; align-items: center; margin-top: 16px; padding: 8px 16px; background: var(--paper); border: 1px solid var(--ink); }
-.act .chg { flex: 1; color: var(--mid); } .act .chg b { color: var(--ink); }
-.act a { text-decoration: underline; }
+.act .chg { color: var(--mid); } .act .chg b { color: var(--ink); }
+.act .dl2 { flex: 1; text-align: right; color: var(--mid); } .act .dl2 b { color: var(--ink); font-weight: 400; margin-right: 8px; }
+.act .dl2 .cd { margin-left: 12px; border: 1px solid var(--ink); padding: 0 8px; font-family: "IBM Plex Mono", monospace; color: var(--ink); font-weight: 600; }
+.act a { display: inline-flex; align-items: center; min-height: 24px; }
 .save { background: var(--ink); color: var(--paper); padding: 8px 24px; font-weight: 700; }
-.save.off { background: var(--line); color: var(--mid); }
+.save.off { background: var(--fill); color: var(--mid); }
 
 /* rift */
 .rift { position: relative; width: 100%; height: 560px; }
@@ -60,14 +63,13 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .tile .ri svg { width: 20px; height: 20px; }
 .tile .mark { position: absolute; right: -16px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .tile .mark.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
-.tile .flag { position: absolute; right: -12px; bottom: 0; width: 20px; height: 20px; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .tile .nm { background: var(--paper); border: 1px solid var(--ink); font-weight: 700; font-size: 14px; padding: 0 4px; }
 .tile .sr { background: var(--ink); color: var(--paper); font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 4px; white-space: nowrap; }
 .tile .tag { margin-top: 4px; background: var(--paper); }
 .tile.sel .nm, .tile.sel .sr { outline: 2px solid var(--ink); outline-offset: 1px; }
-.tile.dim { opacity: .6; }
+.tile.dim .nm { color: var(--mid); border-color: var(--line); } .tile.dim .sr { background: var(--mid); } .tile.dim .ri, .tile.dim .tag { border-color: var(--line); color: var(--mid); }
 .tile.fit .nm, .tile.fit .sr { outline: 2px dashed var(--ink); outline-offset: 2px; }
-.benchb { background: var(--fill); border: 1px solid var(--line); border-top: 0; padding: 16px 24px 24px; display: grid; grid-template-columns: 112px 200px 48px 200px 1fr; gap: 0 24px; align-items: start; }
+.benchb { background: var(--fill); border: 1px solid var(--line); border-top: 0; padding: 16px 24px 24px; display: grid; grid-template-columns: 112px 200px 96px 200px 1fr; gap: 0 24px; align-items: start; }
 .benchb h3 { font-size: 14px; }
 .benchb .slot { position: relative; padding-top: 16px; }
 .benchb .slot .n { position: absolute; left: 0; top: 0; font-size: 12px; color: var(--mid); }
@@ -89,11 +91,11 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .pc .mk { position: absolute; right: 8px; top: 40px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--paper); font-weight: 700; display: flex; align-items: center; justify-content: center; }
 .pc .mk.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
 .pc.sel { outline: 2px solid var(--ink); }
-.pc .nw { background: var(--ink); color: var(--paper); font-size: 12px; padding: 4px 8px; }
+.pc .nw { font-size: 12px; padding: 4px 8px 0; color: var(--mid); }
 .row2 { display: grid; grid-template-columns: 1fr 1fr 24px 1fr 1fr; position: relative; gap: 8px; margin-top: 8px; }
 .row2 .pc .por { height: 112px; }
 .row2 .sep { border-left: 1px dashed var(--soft); margin-left: 12px; }
-.row2 > .ord { position: absolute; left: 748px; top: 120px; transform: translateX(-50%); z-index: 3; padding: 4px 8px; }
+.row2 > .ord { position: absolute; left: 748px; white-space: nowrap; top: 120px; transform: translateX(-50%); z-index: 3; padding: 4px 8px; }
 .pc.bench { background: var(--fill); border-color: var(--line); }
 
 /* side */
@@ -101,20 +103,21 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .card header { display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); align-items: center; }
 .card header b { font-size: 20px; display: block; line-height: 1.2; } .card header .s { color: var(--mid); }
 .card header .x { margin-left: auto; color: var(--mid); align-self: flex-start; }
-.card .nw { background: var(--ink); color: var(--paper); padding: 8px 16px; }
+.card .nw { padding: 8px 16px 0; color: var(--mid); }
 .card .nx { padding: 8px 16px; border-bottom: 1px solid var(--line); }
 .card .nx div { display: flex; justify-content: space-between; padding: 4px 0; } .card .nx .k { color: var(--mid); }
 .card .bt { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 16px; }
 .card .bt span { border: 1px solid var(--ink); text-align: center; padding: 8px 0; font-weight: 600; }
-.card .bt span.dim { border-color: var(--line); color: var(--mid); font-weight: 400; }
-.card .bt span.pressed { background: var(--fill); border-color: var(--mid); }
+.card .bt span.dim { background: var(--fill); border-color: var(--fill); color: var(--mid); font-weight: 400; }
+.card .bt span.pressed { background: var(--paper); }
+.card .bt a { display: flex; align-items: center; justify-content: center; min-height: 24px; }
 .buffs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .buff { border: 1px solid var(--ink); padding: 8px 12px; background: var(--paper); display: flex; justify-content: space-between; align-items: center; }
 .buff b { font-size: 14px; } .buff small { color: var(--mid); font-size: 12px; display: block; }
 .buff .go { border: 1px solid var(--ink); padding: 0 8px; font-size: 12px; font-weight: 600; }
 .buff.on { background: var(--ink); color: var(--paper); } .buff.on small { color: var(--line); } .buff.on .go { border-color: var(--paper); }
 .buff.off { border-color: var(--line); color: var(--mid); } .buff.off b { color: var(--mid); font-weight: 600; }
-.buff.off a { text-decoration: underline; font-size: 12px; }
+.buff.off a { display: inline-flex; align-items: center; min-height: 24px; }
 .wk div { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--fill); align-items: center; }
 .wk .d { color: var(--mid); font-size: 12px; } .wk .t { text-align: right; font-family: "IBM Plex Mono", monospace; }
 .wk .t .kst { color: var(--mid); font-size: 12px; }
@@ -132,11 +135,11 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 </defs></svg>
 
 <nav class="top"><b class="word">Flol</b><a>Home</a><a class="on">Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span>
-  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span></nav>
+  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
 <div class="page">
 <main>
   <div class="hd"><div><h1>Pick Team<i>팀 선택</i></h1>
-      <div class="dl">LCK Cup Week 4 · Deadline <b>Wed 07:45</b> your time <span>· 16:45 KST</span><b class="cd">9h 45m</b></div></div></div>
+      <div class="dl">LCK Cup Week 4</div></div></div>
   <div class="ctl"><span class="tog" id="tog"></span></div>
   <div id="board"></div>
   <div class="act" id="act"></div>
@@ -179,23 +182,24 @@ const by = (s) => SQ.find((p) => p.slot === s);
 const games = (t) => W4.filter((s) => s[3] === t || s[4] === t).map((s) => ({ opp: s[3] === t ? s[4] : s[3], day: s[0], time: s[1] }));
 const $ = (id) => document.getElementById(id);
 const SWAP = V === "swap";
+const DL = `<span class="dl2">Deadline <b>Wed 07:45</b>16:45 KST<span class="cd">9h 45m</span></span>`;
 const SEL = SWAP ? "Siwoo" : "Faker";
 const FIT = SWAP ? new Set(["Bdd", "Cuzz"]) : new Set(); // the Flex takes any role (spec/01)
 
 // header
 $("act").innerHTML = SWAP
-  ? `<span class="chg"><b>1 change</b> · Bench Boost on</span><a>Reset</a><span class="save">Save team</span>`
-  : `<span class="chg">No changes</span><span class="save off">Save team</span>`;
+  ? `<span class="chg"><b>1 change</b> · Bench Boost on</span><a>Reset</a>${DL}<span class="save">Save team</span>`
+  : `<span class="chg">No changes</span>${DL}<span class="save off">Save team</span>`;
 $("tog").innerHTML = V === "cards" ? `<span>Rift view</span><span class="on">Card view</span>` : `<span class="on">Rift view</span><span>Card view</span>`;
 
 // rift view
 function tile(p) {
   const cls = p.name === SEL ? "sel" : FIT.has(p.name) ? "fit" : SWAP ? "dim" : "";
-  const g = games(p.team).map((x) => `vs ${x.opp}`).join(", ");
+  const g = games(p.team).map((x) => `v ${x.opp}`).join(" · ");
   const sub = p.slot === "flex" ? `<div class="tag">Flex · plays Top</div>` : p.slot === "coach" ? `<div class="tag">Coach 감독</div>` : "";
   return `<div class="tile ${cls}"><div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span>
-    <span class="ri"><svg><use href="#${ICON[p.role || p.slot]}"/></svg></span>${p.mark ? `<span class="mark ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}${p.news ? `<span class="flag">!</span>` : ""}</div>
-    <div class="nm">${p.name}</div><div class="sr">${g}</div>${sub}</div>`;
+    <span class="ri"><svg><use href="#${ICON[p.role || p.slot]}"/></svg></span>${p.mark ? `<span class="mark ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}</div>
+    <div class="nm">${p.name}</div><div class="sr">${g}</div>${p.news ? `<div class="tag">Not starting</div><br>` : ""}${sub}</div>`;
 }
 const POS = { top: [104, 70], jng: [312, 262], mid: [532, 262], coach: [124, 468], flex: [282, 468], sup: [682, 486], bot: [878, 486] };
 const MAP = `<svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
@@ -213,38 +217,39 @@ function rift() {
     const w = document.createElement("div"); w.innerHTML = tile(by(s)); const t = w.firstElementChild;
     t.style.left = POS[s][0] + "px"; t.style.top = POS[s][1] + "px"; return t.outerHTML; }).join("");
   const [b1, b2] = ["b1","b2"].map((s) => { const p = by(s); return `<div class="slot"><span class="n">${s[1]} · ${NAME[p.role]}</span>${tile(p)}</div>`; });
-  const bench = b1 + `<span class="ord">⇅</span>` + b2;
+  const bench = b1 + `<span class="ord">⇅ Swap</span>` + b2;
   return `<div class="rift">${MAP}${starters}</div><div class="benchb"><h3>Bench</h3>${bench}</div>`;
 }
 
 // card view
 function pc(p, cls = "") {
   const role = p.slot === "flex" ? `Flex · plays ${NAME[p.role]}` : /^b\d/.test(p.slot) ? `${NAME[p.slot]} · ${NAME[p.role]}` : NAME[p.slot];
-  const nx = games(p.team).map((x) => `vs ${x.opp}`).join(", ");
+  const nx = games(p.team).map((x) => `v ${x.opp}`).join(" · ");
   return `<div class="pc ${cls} ${p.name === SEL ? "sel" : ""}"><div class="rl"><span>${role}</span><svg><use href="#${ICON[p.role || p.slot]}"/></svg></div>${p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}
-    ${p.news ? `<div class="nw">! ${p.news}</div>` : ""}<div class="por ph">${p.slot === "coach" ? "Crest" : "Photo"}</div><div class="nm">${p.name}</div><div class="tm">${p.team}</div>
+    ${p.news ? `<div class="nw"><span class="tag">Not starting</span> Wed</div>` : ""}<div class="por ph">${p.slot === "coach" ? "Crest" : "Photo"}</div><div class="nm">${p.name}</div><div class="tm">${p.team}</div>
     <div class="nx">${nx}</div><div class="ft"><span>Form ${p.form}</span><span>${p.price}억</span></div></div>`;
 }
 function cards() {
   return `<div class="cv"><div class="lineup">${["top","jng","mid","bot","sup"].map((s) => pc(by(s))).join("")}</div>
-    <div class="row2"><div>${pc(by("flex"))}</div><div>${pc(by("coach"))}</div><div class="sep"></div><div>${pc(by("b1"), "bench")}</div><div>${pc(by("b2"), "bench")}</div><span class="ord">⇅</span></div>
+    <div class="row2"><div>${pc(by("flex"))}</div><div>${pc(by("coach"))}</div><div class="sep"></div><div>${pc(by("b1"), "bench")}</div><div>${pc(by("b2"), "bench")}</div><span class="ord">⇅ Swap</span></div>
     </div>`;
 }
 $("board").innerHTML = V === "cards" ? cards() : rift();
 
 // the tapped player's card (spec/12, The player card)
-const nx = (p) => games(p.team).map((x) => `<div><span class="k">${x.day} ${x.time}</span><span>vs ${x.opp} · Bo3</span></div>`).join("");
+const LOC = Object.fromEntries(W4.map((s) => [s[0] + s[1], s[2]]));
+const nx = (p) => games(p.team).map((x) => `<div><span>${x.day} ${x.time} <span class="k">${LOC[x.day + x.time]} KST</span></span><span>v ${x.opp} · Bo3</span></div>`).join("");
 const row = (k, v) => `<div><span class="k">${k}</span><span>${v}</span></div>`;
 $("card").innerHTML = SWAP
   ? `<header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Siwoo</b><span class="s">DK · Flex · plays Top · 7.5억</span></div><span class="x">✕</span></header>
-     <div class="nw">! Not starting Wed</div>
+     <div class="nw"><span class="tag">Not starting</span> Wed</div>
      <div class="nx">${row("Form", "<b class=num>7.7</b> · 7th of 10 tops")}${row("Owned", "<b class=num>6%</b> · 9th")}${row("Season", "<b class=num>23</b> · 8th")}</div>
      <div class="nx">${row("Last 3 weeks", "<span class=num>6 · 9 · 8</span>")}</div><div class="nx">${nx(by("flex"))}</div>
-     <div class="bt"><span class="dim">Make Carry</span><span class="dim">Make Vice-carry</span><span>Cancel swap</span><span class="dim">Full card ›</span></div>`
+     <div class="bt"><span class="dim">Make Carry</span><span class="dim">Make Vice-carry</span><span>Cancel swap</span><a>Full card ›</a></div>`
   : `<header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Faker</b><span class="s">T1 · Mid · 18.5억 <span class="rise">▲0.5</span></span></div><span class="x">✕</span></header>
      <div class="nx">${row("Form", "<b class=num>19.3</b> · 1st of 10 mids")}${row("Owned", "<b class=num>46%</b> · 1st")}${row("Season", "<b class=num>58</b> · 2nd")}</div>
      <div class="nx">${row("Last 3 weeks", "<span class=num>19 · 22 · 17</span>")}</div><div class="nx">${nx(by("mid"))}</div>
-     <div class="bt"><span class="pressed">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><span class="dim">Full card ›</span></div>`;
+     <div class="bt"><span class="pressed">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><a>Full card ›</a></div>`;
 
 // buffs (spec/06; spec/12: Bench Boost and Dual Carry cancel until the deadline)
 const bb = SWAP ? `<div class="buff on"><div><b>Bench Boost</b><small>on · unsaved</small></div><span class="go">Cancel</span></div>`
@@ -257,4 +262,5 @@ $("buffs").innerHTML = bb + dc + tb("Remake") + tb("Limitless");
 const MINE = new Set(SQ.map((p) => p.team));
 $("week").innerHTML = W4.map((s) => `<div><span class="d">${s[0]}</span><span><b>${s[3]}</b> v <b>${s[4]}</b></span><span class="t">${s[1]} <span class="kst">${s[2]} KST</span></span></div>`).join("");
 </script>
+<script>if (location.search.includes("visitor")) document.querySelector("nav.top a.me").textContent = "Sign in";</script>
 </body></html>

@@ -21,7 +21,7 @@ The full player card. It opens from **Full card ›** on a page's short card, or
 
 - **Header**: portrait, role and team, name and hangul, legal name. On the right is one big number, the season's points with rank. It shows Season on every tab.
 - **Meta line**: price and last move, form with rank, owned with rank, and the week's transfers in and out.
-- **Series strip**: the last 3 series with his points (● while live), then the next 3, the first in black.
+- **Series strip**: the last 3 series with his points (a `Live` tag while live), then the next 3, the first in black.
 - **Tabs**:
   - This week: each series with its points in its header, each game with champion, result, K/D/A and points. A game that doesn't count has its points struck through. The week's total shows with the Carry ×1.5.
   - Fixtures: the next series, each week's number once, your time and KST.

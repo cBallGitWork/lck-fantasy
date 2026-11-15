@@ -6,7 +6,7 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 
 | File | Shows |
 |---|---|
-| `1440.png`, `live.html` | A series live: the stream with its picker, your week beside it |
+| `1440.png`, `live.html` | A series live, Points' moment (Saturday, T1 v DK game 2): the stream with its picker, your week beside it |
 | `1440-idle.png`, `idle.html` | Nothing live: your Week 4 lineup on a broadcast stage, last week's points |
 
 ## Borrowed
@@ -18,21 +18,20 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 
 ## Layout
 
-- **Top:** the team name and its hangul; beside it, Overall as a LoL tier: a shield, the tier and its hangul, the overall rank and move beneath, the sponsor's badge. The idle file's foot shows every state: Unranked, a division tier, Master or Grandmaster, Challenger (its rank and move).
+- **Top:** the team name and its hangul; beside it, Overall as a LoL tier: a shield, the tier and its hangul, the overall rank and move beneath, the sponsor's badge. Its states, not drawn: Unranked, a division tier, Master or Grandmaster, Challenger (its rank and move).
 - **Left, live:** the stream, muted, the series and **Live ›** over it; the stream picker under it (spec/12's list).
 - **Left, idle:** Week 4 lineup: the seven starters (five roles, Flex, Coach) with C and V; the next series on stream and when; **Pick Team ›**.
 - **Right, live:** your week (not final) with Average and Highest; your players in this series with live points; who is still to play; **Points ›**.
 - **Right, idle:** last week (final) with Average and Highest; star and flop; **Points ›**.
-- **Below, three cards:** the deadline (countdown, your time and KST, Pick Team, Transfers, free transfers); Following (spec/14); Leagues (each league's rank and move, Overall left out since the top shows it, **All leagues ›**).
+- **Below:** in the main column, the deadline (countdown, your time and KST, Pick Team, Transfers, free transfers); Following (spec/14); in the side column, Leagues (each league's rank and move, Overall left out since the top shows it, **All leagues ›**).
 - **Bottom:** a sponsor banner and "All sponsors are made up." (spec/13).
-- The nav's Live dot shows only while a series is live.
 
 ## Still open
 
 - Overall as a tier is specced in [spec/08](../../../../spec/08-leagues.md#overall-tiers) (14 Nov 2026); the top three tiers at beta size are a late call there.
 
 - The stream on Home, the lineup when idle, and star and flop are specced in [spec/12](../../../../spec/12-pages.md#home) (14 Nov 2026). Star and flop now use effective ownership, so the drawn pair is a placeholder.
-- **Following** is specced in [spec/14](../../../../spec/14-following.md) (14 Nov 2026). The drawn card's items and its "Fun idea · to grill" tag are placeholders.
+- **Following** is specced in [spec/14](../../../../spec/14-following.md) (14 Nov 2026). The drawn card's items are placeholders.
 
 ## Placeholders
 

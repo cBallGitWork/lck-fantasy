@@ -22,10 +22,10 @@ The feed of managers you follow, your requests, trucks, follows and followers. R
 
 ## Controls
 
-- **Truck** on a row: opens the picker. One truck per manager a gameweek: once sent, every row of that manager reads "☕ Coffee sent" or "Protest sent". Rows of the live week, or last week's until the next starts, have it.
+- **Truck ›** on a row: opens the picker. One truck per manager a gameweek: once sent, every row of that manager reads "Coffee sent" or "Protest sent". Rows of the live week, or last week's until the next starts, have it.
 - **The picker:** Coffee 커피차 | Protest 시위 트럭; the lines that fit the receiver's week, filled with their numbers; a preview of the picked line; Cancel, Send truck.
 - **Accept, Decline** on a request.
-- **Unfollow** on a manager you follow; **Remove · Block** on a follower.
+- **Unfollow** on a manager you follow; **Remove** and **Block** on a follower, Block last and apart.
 - A manager's name opens their profile.
 
 ## Not drawn

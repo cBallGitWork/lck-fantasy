@@ -19,7 +19,7 @@ Where a manager sells and buys players. Reached from **Transfers** in the top ba
 ## Controls
 
 - **Rift view | Card view**: the same choice as Pick Team. Not in the spec yet; in [to-grill](../../../to-grill.md).
-- **Show ▾**: what sits under each player: Fixtures (the default: one row, both of the week's opponents, as "vs T1, vs GEN"), Price or Owned.
+- **Show ▾**: what sits under each player: Fixtures (the default: one row, both of the week's opponents, as "v T1 · v GEN"), Price or Owned.
 - **A player on the squad**: sells him; the list filters to his slot (his role, or any role for the Flex) and what the bank allows. Any of the nine, coach included, can be sold.
 - **A row's +**: buys that player into the empty slot. A greyed row opens his card but can't be bought.
 - **Top strip**: free transfers left, the pending hit (−6 each), the bank.

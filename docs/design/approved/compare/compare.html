@@ -11,7 +11,8 @@ iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; bord
 
 /* drawn to docs/design/plate.md, as the player card: 28 names and Season · 20 mono figures · 16 hangul · 14 body · 12 labels */
 .sheet { position: absolute; left: 192px; top: 32px; width: 1056px; background: var(--paper); border: 1px solid var(--ink); }
-.x { position: absolute; right: 16px; top: 12px; font-size: 16px; color: var(--mid); }
+.x { position: absolute; right: 12px; top: 8px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--ink); }
+a { color: var(--ink); min-height: 24px; display: inline-flex; align-items: center; }
 
 /* the two lower-thirds, facing each other as the broadcast's head-to-head */
 .vs { display: grid; grid-template-columns: 1fr 72px 1fr; align-items: end; padding: 48px 24px 16px; border-bottom: 1px solid var(--line); }
@@ -41,7 +42,7 @@ tr.big td { height: 64px; font-size: 28px; } tr.big td.lab { font-size: 14px; }
 .strip span.first em { color: var(--ink); font-weight: 700; }
 tr.str td { height: 60px; }
 .find { border: 1px solid var(--ink); height: 40px; display: flex; align-items: center; padding: 0 12px; font-size: 14px; color: var(--mid); margin-bottom: 8px; }
-.pick td { height: 40px; } .pick td.nm { font: 600 14px "IBM Plex Sans KR"; } .pick td.tm { font: 12px "IBM Plex Sans KR"; color: var(--mid); } .pick .hd { font: 600 12px "IBM Plex Sans KR"; color: var(--mid); padding: 12px 0 4px; } .pick .more { font: 600 14px "IBM Plex Sans KR"; display: block; margin-top: 12px; }
+.pick td { height: 40px; } .pick td.nm { font: 600 14px "IBM Plex Sans KR"; } .pick td.tm { font: 12px "IBM Plex Sans KR"; color: var(--mid); } .pick .hd { font: 600 12px "IBM Plex Sans KR"; color: var(--mid); padding: 12px 0 4px; } .pick .more { font: 600 14px "IBM Plex Sans KR"; display: flex; margin-top: 12px; }
 </style></head>
 <body>
 <iframe class="under" id="under"></iframe><div class="dim"></div>
@@ -61,8 +62,8 @@ const $ = (id) => document.getElementById(id);
 const P = {
   Faker: { chip: "Mid · T1", hangul: "이상혁", legal: "Lee Sang-hyeok", of: "mids", games: 15,
     season: [58, "2nd"], form: ["19.3", "2nd"], price: "18.5억 ▲0.5", owned: ["46%", "1st"], tx: "+1,204 / −310",
-    last: [["W2 · Fri", "BFX", 10], ["W3 · Wed", "HLE", 12], ["W3 · Sat", "DK", 5]], next: [["W4 · Wed", "KT"], ["W4 · Sat", "GEN"], ["W5 · Thu", "BRO"]],
-    lines: [["Kills", 74, 22], ["Assists", 87, 16], ["Deaths", 25, -4], ["Gold lead at 15", 9, 9], ["Solo kills", 5, 5], ["First bloods", 3, 3], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 2, 2]] },
+    last: [["W2 · Fri", "BFX", 10], ["W3 · Wed", "HLE", 12], ["W3 · Sat", "DK", 10]], next: [["W4 · Wed", "KT"], ["W4 · Sat", "GEN"], ["W5 · Thu", "BRO"]],
+    lines: [["Kills", 73, 22], ["Assists", 86, 16], ["Deaths", 26, -4], ["Gold lead at 15", 9, 9], ["Solo kills", 5, 5], ["First bloods", 3, 3], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 2, 2]] },
   Chovy: { chip: "Mid · GEN", hangul: "정지훈", legal: "Jeong Ji-hoon", of: "mids", games: 16,
     season: [61, "1st"], form: ["20.3", "1st"], price: "17.5억 ▲0.5", owned: ["41%", "2nd"], tx: "+980 / −402",
     last: [["W2 · Sat", "BRO", 11], ["W3 · Wed", "KT", 9], ["W3 · Sat", "HLE", 8]], next: [["W4 · Thu", "BRO"], ["W4 · Sat", "T1"], ["W5 · Wed", "DNS"]],
@@ -70,7 +71,7 @@ const P = {
   // Coaches: the coach card's kkOma; Ryu from Stats (26 = 5 series won × 3 − 1 lost + 12 from the lines).
   kkOma: { chip: "Coach · T1", hangul: "김정균", legal: "Kim Jeong-gyun", of: "coaches", games: 15, coach: true,
     season: [27, "1st"], form: ["9.0", "1st"], price: "7.0억 ▲0.5", owned: ["22%", "1st"], tx: "+310 / −95",
-    last: [["W2 · Fri", "BFX", 4], ["W3 · Wed", "HLE", 8], ["W3 · Sat", "DK", 5]], next: [["W4 · Wed", "KT"], ["W4 · Sat", "GEN"], ["W5 · Thu", "BRO"]],
+    last: [["W2 · Fri", "BFX", 4], ["W3 · Wed", "HLE", 8], ["W3 · Sat", "DK", 8]], next: [["W4 · Wed", "KT"], ["W4 · Sat", "GEN"], ["W5 · Thu", "BRO"]],
     lines: [["First tower", 8, 6], ["Most drakes", 7, 5], ["Most barons", 3, 2], ["Most elders", 1, 0], ["Quick win", 0, 0], ["Series won", 5, 15], ["Series lost", 1, -1]] },
   Ryu: { chip: "Coach · GEN", hangul: "류상욱", legal: "Ryu Sang-wook", of: "coaches", games: 16, coach: true,
     season: [26, "2nd"], form: ["8.7", "2nd"], price: "7.0억", owned: ["21%", "2nd"], tx: "+188 / −120",

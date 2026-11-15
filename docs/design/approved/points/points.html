@@ -6,6 +6,8 @@
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
 .num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
 a { color: var(--ink); text-decoration: none; }
+a.go { display: inline-flex; align-items: center; min-height: 24px; }
+.me-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); margin-left: 4px; vertical-align: 1px; }
 
 /* Top bar: the same on every screen. */
 nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
@@ -15,14 +17,15 @@ nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--i
 nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
 nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
 .ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
 
 /* Parts */
 .tag { display: inline-block; border: 1px solid var(--ink); padding: 0 4px; font: 400 11px/16px "IBM Plex Sans KR", sans-serif; }
 .tag.prov { border-style: dashed; }
 .tag.live { background: var(--ink); color: var(--paper); }
-.up::before { content: "▲ "; font-size: 12px; }
-.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 12px; }
+.up::before { content: "▲"; font-size: 12px; }
+.down::before { content: "▼"; font-size: 12px; }
 .cake::after { content: " 🎂"; }
 .tog { display: inline-flex; font-size: 14px; }
 .tog span { padding: 4px 24px; border: 1px solid var(--line); background: var(--fill); color: var(--mid); }
@@ -39,13 +42,14 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .mhd { margin-bottom: 16px; }
 .mhd .tn { font-size: 28px; font-weight: 700; line-height: 1.2; }
 .mhd .tn i { font-style: normal; color: var(--mid); font-size: 16px; font-weight: 400; margin-left: 8px; }
-.mhd .wkn { display: flex; gap: 24px; align-items: center; font-size: 20px; font-weight: 600; margin: 4px 0 12px; }
-.mhd .wkn span { color: var(--mid); font-weight: 400; } .mhd .wkn span.off { color: var(--line); }
+.mhd .wkn { display: flex; gap: 8px; align-items: center; font-size: 20px; font-weight: 600; margin: 4px 0 12px; }
+.mhd .wkn a.arr { display: inline-flex; width: 24px; height: 24px; align-items: center; justify-content: center; font-size: 16px; font-weight: 400; }
+.mhd .wkn a.arr.off { color: var(--line); }
 .line1 { display: flex; align-items: baseline; gap: 12px; }
 .line1 > b { font: 700 44px "IBM Plex Mono", monospace; line-height: 1; }
-.line1 .av { color: var(--mid); font-size: 16px; } .line1 .av b { color: var(--ink); font-family: "IBM Plex Mono", monospace; }
+.line1 .av { color: var(--mid); font-size: 16px; display: flex; gap: 12px; align-items: baseline; } .line1 .av b { color: var(--ink); font-family: "IBM Plex Mono", monospace; }
+.line1 .av a { color: var(--mid); } .line1 .av a i { font-style: normal; color: var(--ink); margin-left: 4px; }
 .livebar { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding: 8px 16px; border: 1px solid var(--ink); background: var(--paper); }
-.livebar a { text-decoration: underline; }
 .ctl2 { margin-top: 16px; }
 
 /* Rift */
@@ -65,6 +69,8 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .tile .sr { background: var(--paper); border: 1px solid var(--line); border-top: 0; font-size: 12px; padding: 0 4px; color: var(--mid); }
 .tile.sel .nm, .tile.sel .sr { outline: 2px solid var(--ink); }
 .tile .tag { margin-top: 4px; background: var(--paper); }
+.tile .sr .tag { margin: 0 0 0 4px; line-height: 14px; }
+.tile .sr .tag.live { background: var(--ink); }
 
 /* Bench */
 .benchb { background: var(--fill); border: 1px solid var(--line); border-top: 0; padding: 16px 24px 24px; display: flex; flex-wrap: wrap; gap: 16px 48px; align-items: start; }
@@ -86,7 +92,7 @@ aside .pl header .x { margin-left: auto; color: var(--mid); align-self: flex-sta
 .g { display: grid; grid-template-columns: 32px 1fr 48px; gap: 8px; padding: 4px 0; align-items: center; }
 .g .r { color: var(--mid); font-size: 12px; } .g .p { text-align: right; font-family: "IBM Plex Mono", monospace; font-weight: 600; }
 .g.drop { color: var(--mid); } .g.drop .p { font-weight: 400; } .g .box { border: 1px solid var(--ink); padding: 0 4px; }
-.g.live .p::after { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); margin-left: 4px; vertical-align: 1px; }
+.g .tag.live { margin-left: 8px; }
 .pl .sum { padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
 .pl .sum .k { font-size: 12px; color: var(--mid); }
 .pl .sum b { font-family: "IBM Plex Mono", monospace; font-size: 20px; }
@@ -99,8 +105,9 @@ aside .pl header .x { margin-left: auto; color: var(--mid); align-self: flex-sta
 /* Leagues */
 .rk { display: grid; grid-template-columns: 1fr auto 72px; gap: 4px 12px; align-items: center; }
 .rk .r { text-align: right; font-weight: 600; }
-.rk .m { text-align: right; font-size: 12px; }
-.note2 { font-size: 12px; color: var(--mid); margin-top: 8px; } .note2 b, .note2 a { color: var(--ink); }
+.rk .m { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; }
+.note2 { font-size: 12px; color: var(--mid); margin-top: 8px; } .note2 b { color: var(--ink); }
+.more { font-size: 14px; }
 
 /* Series */
 .wk div { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--fill); align-items: center; }
@@ -126,13 +133,13 @@ aside .pl header .x { margin-left: auto; color: var(--mid); align-self: flex-sta
 </svg>
 
 <nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a class="on">Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span>
-  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span></nav>
+  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
 <div class="page">
 <main>
   <div class="mhd"><div class="tn">Baron Steal FC<i>바론 스틸 FC</i></div>
-    <div class="wkn"><span>‹</span>LCK Cup · Week 3<span class="off">›</span></div>
-    <div class="line1"><b id="total"></b><span class="tag prov">Not final</span><span class="av">Average <b>74</b> · Highest <b>131</b> ›</span></div>
-    <div class="livebar"><span class="tag live">Live</span><b>T1 v DK, game 2</b><a>Watch ›</a></div>
+    <div class="wkn"><a class="arr">‹</a>LCK Cup · Week 3<a class="arr off">›</a></div>
+    <div class="line1"><b id="total"></b><span class="tag prov">Not final</span><span class="av"><span>Average <b>74</b></span><a class="go">Highest&nbsp;<b>131</b><i>›</i></a></span></div>
+    <div class="livebar"><span class="tag live">Live</span><b>T1 v DK, game 2</b><a class="go">Watch ›</a></div>
     </div>
   <div class="ctl2"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span></div><div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
         <rect x="0" y="0" width="680" height="680" fill="#ededeb"/>
@@ -163,17 +170,17 @@ aside .pl header .x { margin-left: auto; color: var(--mid); align-self: flex-sta
       <div class="g"><span class="r">G3</span><span>Galio · W</span><span class="p"><span class="box">7</span></span></div></div>
     <div class="ser"><h4>Sat · v DK <span>1–0 · game 2 live</span></h4>
       <div class="g"><span class="r">G1</span><span>Orianna · W</span><span class="p"><span class="box">4</span></span></div>
-      <div class="g live"><span class="r">G2</span><span>Sylas · 14:20</span><span class="p"><span class="box">1</span></span></div></div>
+      <div class="g live"><span class="r">G2</span><span>Sylas · 14:20<span class="tag live">Live</span></span><span class="p"><span class="box">1</span></span></div></div>
     <div class="sum"><span><span class="k">Your Carry</span><br>12 + 5 = 17 × 1.5<br><span class="k">Average Carry 19</span></span><b>25</b></div>
-    <div class="ft"><a>Full stats ›</a></div></section>
+    <div class="ft"><a class="go">Full stats ›</a></div></section>
   <section><h2>Your week</h2>
-    <div class="sfk"><div><span class="k">Star</span><b>Faker</b><span>25 · owned by 46%</span></div>
-    <div><span class="k">Flop</span><b>Siwoo</b><span>8 · owned by 6%</span></div>
+    <div class="sfk"><div><span class="k">Star</span><b>Faker<i class="me-dot"></i></b><span>25 · owned by 46%</span></div>
+    <div><span class="k">Flop</span><b>Siwoo<i class="me-dot"></i></b><span>8 · owned by 6%</span></div>
     <div><span class="k">Killer</span><b>Chovy</b><span>15 · not owned · 41%</span></div></div>
     </section>
   
   <section><h2>Leagues</h2><div class="rk" id="ranks"></div>
-    <div class="note2"><b>≈6 pts</b> to Diamond IV · Week rank 21,880 · 1 transfer <a>All leagues ›</a></div></section>
+    <div class="note2"><b>≈6 pts</b> to Diamond IV</div><div class="more"><a class="go">All leagues ›</a></div></section>
   <section><h2>This week's series <span>your time · KST</span></h2><div class="wk" id="week"></div></section>
   <div class="ad ph">Sponsor</div><div class="adline">All sponsors are made up.</div>
 </aside>
@@ -280,13 +287,13 @@ const $ = (id) => document.getElementById(id);
 const POS = { top: [104, 70], jng: [280, 262], mid: [500, 260], coach: [92, 468], flex: [252, 468], sup: [650, 486], bot: [846, 486] };
 const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
 function line(p) {
-  return p.series.map((x) => `v ${opp(p, x[0])} ${x[2] === null ? seriesPts(x) + " so far" : seriesPts(x)}${SERIES[x[0]].state === "live" ? "●" : ""}`).join(" · ");
+  return p.series.map((x) => `v ${opp(p, x[0])} ${seriesPts(x)}${SERIES[x[0]].state === "live" ? '<span class="tag live">Live</span>' : ""}`).join(" · ");
 }
 function tile(p, cls = "") {
   const icon = p.slot === "bench" ? ICON[p.role] : p.slot === "flex" ? ICON[p.role] : ICON[p.slot];
   const pts = p.subOut ? "–" : p.slot === "bench" ? weekPts(p) : scored(p);
   const small = p.mark === "C" ? "<small>17×1.5</small>" : "";
-  const tag = p.subIn ? `<div class="tag">↑ Subbed in for ${p.subIn}</div>` : p.subOut ? "" : p.slot === "flex" ? "" : "";
+  const tag = p.subIn ? `<div class="tag">Subbed in for ${p.subIn}</div>` : p.subOut ? "" : p.slot === "flex" ? "" : "";
   return `<div class="tile ${cls}">
     <div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span>
       <span class="ri"><svg><use href="#${icon}"/></svg></span>${p.mark ? `<span class="mark ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : ""}</div>

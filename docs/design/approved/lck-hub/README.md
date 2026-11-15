@@ -14,17 +14,17 @@ The LCK's own fixtures, results, standings and team rosters, with Sheep Esports'
 ## Borrowed
 
 - **FPL's Fixtures & Results**: one week at a time, with its deadline.
-- **lolesports.com**: the stage tabs (Groups, Play-In, Playoffs) under the page's tabs.
+- **lolesports.com**: the stages (Groups, Play-In, Playoffs) under the page's tabs, as a view toggle.
 - **Korean press**: 바론 그룹 and 장로 그룹, sets won and lost, and the role order top, jungle, mid, bot, support, coach.
 
 ## Layout
 
 - **Head**: the competition in English and Korean, and the week's deadline at the right on every tab.
-- **Tabs**: Fixtures, Results, Standings, Teams. The stage tabs sit under them, except on Teams.
+- **Tabs**: Fixtures, Results, Standings, Teams. The stage toggle sits under them, except on Teams.
 - **Fixtures**: the week by day; each series with its time (yours and KST) and each team's record. Bo3 shows once, in the header.
-- **Results**: the last week by day; the winner bold, the loser grey.
+- **Results**: the last week by day; the winner bold, the loser in plain weight. Each row's › follows the score; the whole row is the link.
 - **Standings**: one table per group: W, L, sets won, sets lost, +/−, Win % and Last 5 (oldest first).
-- **Teams**: a team picker, then the LCK roster beside its academy (LCK CL) roster, role order, each player with his price. The LCK coach is last; there is no academy coach.
+- **Teams**: a team picker (a view toggle), then the LCK roster beside its academy (LCK CL) roster, role order, each player with his price. The LCK coach is last; there is no academy coach.
 - **News**: Sheep Esports' latest LCK headlines, each with a thumbnail and date, linking out; then **More on Sheep Esports ↗**.
 
 ## Controls

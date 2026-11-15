@@ -21,9 +21,9 @@ Where a manager sets his starters, bench order, Carry and Vice-carry, and plays 
 - **Rift view | Card view**: Rift on the first visit, then remembered (spec/12).
 - **A player**: opens his card on the right: price and last move, form, owned and season with ranks, last 3 weeks, this week's series, and Make Carry (or ✓ Carry), Make Vice-carry, Swap with bench, Full card ›. The coach's card has no Carry or swap buttons (spec/01, spec/04).
 - **Swap with bench**: the bench players who fit (own role, or any role for the Flex, spec/01) are outlined and the rest dimmed; tap one to swap in, or Cancel swap.
-- **⇅** between the bench slots: swaps bench 1 and 2.
+- **⇅ Swap** between the bench slots: swaps bench 1 and 2.
 - **Buffs**: Bench Boost and Dual Carry show Play, then Cancel until the deadline; once one is chosen the others grey (one a week, spec/06). Remake and Limitless link to Transfers.
-- **Bar under the pitch**: what changed, Reset, Save team. Save is disabled with no changes; swaps, Carry, Vice-carry and buffs take effect only on Save (spec/12).
+- **Bar under the pitch**: what changed, Reset, the deadline and its countdown, Save team. Save is disabled with no changes; swaps, Carry, Vice-carry and buffs take effect only on Save (spec/12).
 
 ## Placeholders
 

@@ -1,7 +1,8 @@
 # Plate: the design standard
 
 **Contents:** [Frame](#frame) · [Spacing](#spacing) · [Type](#type) · [Colour](#colour) · [Parts](#parts) ·
-[Words](#words) · [Korean feel](#korean-feel) · [Never](#never) · [Accessibility](#accessibility)
+[States](#states) · [Words](#words) · [Korean feel](#korean-feel) · [Never](#never) ·
+[The phone](#the-phone) · [Accessibility](#accessibility)
 
 Every screen is drawn to this file. An approved picture in [approved/](approved/README.md) settles a
 screen's layout (what sits where); this file settles how it is drawn (frame, spacing, type, colour,
@@ -66,19 +67,45 @@ Each part is drawn one way on every screen.
 - **View toggle:** butted keys on `--fill`, the chosen one on `--paper`: `Rift view | Card view`.
 - **Tabs** (a page's or a card's sections): words in a row, the chosen one ink with a 2px
   underline.
-- **A link** ends with `›` and names where it goes: `Full stats ›`. A link leaving Flol ends
-  with `↗`.
+- **Top bar**, the same on every screen: `Flol`, Home, Pick Team, Transfers, Points, Leagues, Stats,
+  LCK, `● Live` (its dot always shown); at the right `presented by [Sponsor]` and the account menu
+  `Baron Steal FC ▾`, or `Sign in` for a visitor.
+- **A link** ends with `›`, in ink, and names where it goes: `Full stats ›`. Not underlined, save
+  a link inside a sentence. A link leaving Flol ends with `↗`.
+- **Deadline**, one way everywhere: `Deadline Wed 07:45  16:45 KST` and the countdown `9h 45m`.
+- **Times:** your time first, then KST in mid grey: `Sat 22:00  07:00 KST`. A column of times
+  has a head.
+- **Your player:** an 8px round ink dot after the name. **May not start:** the tag `Not starting`.
 - **Table:** name far left (after its slot, where a table lists a team) with team after it, figures right-aligned, 40px rows, 12px heads
   in mid grey. No action column: what you can do to a row goes in its panel on the right. Two exceptions,
   each a page's one job: Transfers' `+`, and a row's `›` where the row opens something.
+- **Wide table** (Stats): the head and the name column stick; the table scrolls under them.
+- **Long names** end in `…` at their column's width; the full name shows on hover and in the panel.
 - **Marks:** C and V are round, and so are the live dot, your-player dot (8px, after the name),
   a crest and a radio button. Everything else is square, radius 0.
 - **Your players** are marked by that dot, on every screen.
+- **Modal** (a card, a sheet): a dimmed page behind, `✕` top right, Esc closes, focus stays
+  inside. A card is 1056 wide; a sheet 544.
+- **Form:** label above its field, 14px; the field 40px tall, 1px `--line`, ink when focused;
+  an error is one line in ink under the field with a 1px ink edge on the field.
 - **One main action** per screen, filled ink (`Save team`). Everything else is a link or
   an outlined key.
 - **Placeholders** (sponsor, photo) are dashed `--soft` boxes with one word.
 - **A page that shows a sponsor** ends with `All sponsors are made up.`, 12px mid grey
   (spec/13).
+
+## States
+
+Every screen part is drawn for each state it can be in.
+
+- **Hover:** a row gets `--fill`; a link or key its 1px ink underline or edge.
+- **Focus:** a 2px ink ring, always shown.
+- **Disabled:** text `--mid` on `--fill`, no edge, with the reason beside it (`No changes`).
+- **Loading:** the layout drawn with `--fill` bars where figures go; no spinners.
+- **Empty:** a title and at most one short line (`No moves yet`).
+- **Error:** a title and one line, and `Try again ›` where trying again can help.
+- **Motion:** 150 to 250ms, ease-out; a changed live figure fades in. With reduced motion, nothing
+  moves.
 
 ## Words
 
@@ -90,7 +117,11 @@ Each part is drawn one way on every screen.
 - An empty state is a title and at most one short line.
 - Absence is `—`, never `0`.
 - Money as `₩18.5억`. Times in the viewer's own time, as `Sat 22:00`.
-- One name per thing on every screen: Carry, never Captain; Patch update, never Price changes.
+- One name per thing on every screen: Carry, never Captain; Patch update, never Price changes;
+  `Week 4`, never Gameweek.
+- No emoji, save the birthday cake (spec/13).
+- One made-up dataset: where two pictures show the same finished series, they show the same
+  numbers.
 
 ## Korean feel
 
@@ -107,6 +138,10 @@ Each part is drawn one way on every screen.
 4. A landing page's furniture: a hero band, a centred marketing line, space used as decoration.
 5. Two names, two sizes or two styles for one thing.
 6. A second filled button on a screen.
+
+## The phone
+
+Not drawn yet. It gets its own round: one column, the side column below the main, targets 44px.
 
 ## Accessibility
 

@@ -11,8 +11,8 @@ iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; bord
 
 /* drawn to docs/design/plate.md: 44 mono hero · 28 name · 20 mono figures · 16 hangul · 14 body · 12 labels */
 .card { position: absolute; left: 192px; top: 48px; width: 1056px; background: var(--paper); border: 1px solid var(--ink); }
-.x { position: absolute; right: 16px; top: 12px; font-size: 16px; color: var(--mid); z-index: 1; }
-.x.on-bar { color: #fff; top: 8px; }
+.x { position: absolute; right: 12px; top: 8px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--ink); z-index: 1; }
+.x.on-bar { color: #fff; top: 4px; }
 .news { background: var(--ink); color: #fff; padding: 8px 24px; font-size: 14px; }
 
 /* band 1: the lower-third */
@@ -33,8 +33,10 @@ iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; bord
 .lt { min-height: 132px; }
 .acts { display: flex; gap: 8px; align-items: center; white-space: nowrap; }
 .acts span { height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid var(--line); font-size: 14px; }
-.acts span.on { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 600; }
-.acts a { font-size: 14px; margin-left: 8px; }
+.acts span.on { border-color: var(--ink); font-weight: 600; }
+.acts a { font-size: 14px; margin-left: 8px; color: var(--ink); min-height: 24px; display: inline-flex; align-items: center; }
+.weeks .tag { vertical-align: middle; margin-left: 4px; }
+.mine { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); margin-left: 8px; vertical-align: middle; }
 
 /* body: left (weeks, tabs, content) + right rail (season) */
 .body { display: grid; grid-template-columns: 1fr 360px; }
@@ -96,23 +98,24 @@ h4 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 // ?v=history (default): from Pick Team, Week 4, Tuesday, before the deadline.
 // ?v=week: from Points, Week 3 Saturday, T1 v DK game 2 live.
 // ?v=roster: the Roster tab, from Pick Team.
-// A series scores the best 2 games, +3 a series won, −1 a series lost. Week totals 6, 8, 13; form 9.0 as Pick Team.
+// A series scores the best 2 games, +3 a series won, −1 a series lost. Week totals 3, 8, 16; form 9.0 as Pick Team.
+// Sat v DK as series/1440.png: G1 2, G2 3, series won +3 = 8.
 const V = new URLSearchParams(location.search).get("v") || "history";
 const FP = V === "week";
 document.getElementById("under").src = FP ? "../points/points.html" : "../pick-team/pick.html";
 const $ = (id) => document.getElementById(id);
 
-$("hero").innerHTML = `<b>${FP ? 14 : 27}</b><span>Season · ${FP ? "3rd" : "1st"} of 10 coaches</span>`;
+$("hero").innerHTML = `<b>${FP ? 11 : 27}</b><span>Season · ${FP ? "3rd" : "1st"} of 10 coaches</span>`;
 
 // No Carry, Vice-carry or swap: the coach is never Carry and has no bench (spec/01, spec/04).
 const acts = FP ? `<a>Compare ›</a>` : `<span>Transfer out</span><a>Compare ›</a>`;
-$("meta").innerHTML = `<span class="kv"><b>7.0억</b><span class="up">▲0.5</span></span><span class="kv"><b>${FP ? "7.0" : "9.0"}</b>form · ${FP ? "2nd" : "1st"}</span>
+$("meta").innerHTML = `<span class="kv"><b>7.0억</b><span class="up">▲0.5</span></span><span class="kv"><b>${FP ? "5.5" : "9.0"}</b>form · ${FP ? "2nd" : "1st"}</span>
   <span class="kv"><b>22%</b>owned · 2nd</span><span class="kv">${FP ? "+204 / −58" : "+310 / −95"} this week</span>`;
 $("acts").innerHTML = acts;
 
 const PAST = FP
-  ? [["W2 · Fri", "v BFX", "4"], ["W3 · Wed", "v HLE", "8"], ["W3 · Sat", "v DK", "2 ●"]]
-  : [["W2 · Fri", "v BFX", "4"], ["W3 · Wed", "v HLE", "8"], ["W3 · Sat", "v DK", "5"]];
+  ? [["W2 · Fri", "v BFX", "4"], ["W3 · Wed", "v HLE", "8"], ["W3 · Sat", "v DK", `2<span class="tag live">Live</span>`]]
+  : [["W2 · Fri", "v BFX", "4"], ["W3 · Wed", "v HLE", "8"], ["W3 · Sat", "v DK", "8"]];
 const NEXT = [["W4 · Wed · Bo3", "v KT"], ["W4 · Sat · Bo3", "v GEN"], ["W5 · Thu · Bo3", "v BRO"]];
 $("weeks").innerHTML = PAST.map(([w, o, p]) => `<div class="c"><span class="w">${w}</span><b>${p}</b><span class="o">${o}</span></div>`).join("")
   + `<div class="now"></div>` + NEXT.map(([w, o], i) => `<div class="c n ${i === 0 ? "first" : ""}"><span class="w">${w}</span><span class="o">${o}</span></div>`).join("");
@@ -123,18 +126,18 @@ const ON = { week: "This week", roster: "Roster" }[V] || "History";
 $("tabs").innerHTML = TABS.map((t) => `<span class="${t === ON ? "on" : ""}">${t}</span>`).join("");
 
 // This week: each game, the lines it scored, points; the best 2 count; then the series result (spec/05).
-const G = (n, res, lines, p, keep, live) => `<tr class="${keep ? "" : "drop"}"><td class="l g2">G${n}</td><td class="l">${res ? `<span class=res>${res}</span>` : ""}</td><td class="l g2">${lines}</td><td class="p">${p}${live ? " ●" : ""}</td></tr>`;
+const G = (n, res, lines, p, keep, live) => `<tr class="${keep ? "" : "drop"}"><td class="l g2">G${n}</td><td class="l">${res ? `<span class=res>${res}</span>` : ""}</td><td class="l g2">${lines}</td><td class="p">${p}</td></tr>`;
 const S = (label, p) => `<tr><td class="l g2" colspan="3">${label}</td><td class="p">${p}</td></tr>`;
 const WEEK = `<h4><span style="color:var(--ink);font-size:12px">Wed · v HLE &nbsp;<span class="g2" style="font-weight:400">W 2–1 · <span class="tag">Final</span></span></span><b>8</b></h4><table class="k">
   ${G(1, "W", "First tower · Most drakes", 2, true)}${G(2, "L", "—", 0, false)}${G(3, "W", "First tower · Most drakes · Most barons", 3, true)}${S("Series won", "+3")}</table>
-  <h4><span style="color:var(--ink);font-size:12px">Sat · v DK &nbsp;<span class="g2" style="font-weight:400">1–0 · <span class="tag live">G2 live</span></span></span><b>2 ●</b></h4><table class="k">
+  <h4><span style="color:var(--ink);font-size:12px">Sat · v DK &nbsp;<span class="g2" style="font-weight:400">1–0 · <span class="tag live">G2 live</span></span></span><b>2</b></h4><table class="k">
   ${G(1, "W", "First tower · Most drakes", 2, true)}${G(2, "", "14:20", 0, true, true)}${S("Series · +3 if won, −1 if lost", "—")}
   <tr class="tot"><td class="l" colspan="3">Week 3</td><td class="p">10</td></tr></table>`;
 
 // History: each series' points; the week's price and total once (spec/12). No K/D/A for a team.
-const SR = [[3, "Sat", "W 2–0 DK", 2, "7.0억", 5], [3, "Wed", "W 2–1 HLE", 3, "7.0억", 8],
+const SR = [[3, "Sat", "W 2–0 DK", 2, "7.0억", 8], [3, "Wed", "W 2–1 HLE", 3, "7.0억", 8],
   [2, "Fri", "W 2–1 BFX", 3, "6.5억", 4], [2, "Wed", "W 2–0 DNS", 2, "6.5억", 4],
-  [1, "Sat", "W 2–0 NS", 2, "6.5억", 6], [1, "Wed", "L 1–2 GEN", 3, "6.5억", 0]];
+  [1, "Sat", "W 2–0 NS", 2, "6.5억", 3], [1, "Wed", "L 1–2 GEN", 3, "6.5억", 0]];
 const WPTS = SR.reduce((m, x) => ({ ...m, [x[0]]: (m[x[0]] || 0) + x[5] }), {});
 const COLS = `<colgroup><col class="c1"><col><col class="c3"><col class="c5"><col class="c6"><col class="c7"></colgroup>`;
 const HIST = `<h4>LCK Cup 2027</h4><table class="h">${COLS}<tr><th class="l">Week</th><th class="l">Series</th><th>Games</th><th>Price</th><th>Pts</th><th>Week</th></tr>
@@ -146,13 +149,13 @@ const HIST = `<h4>LCK Cup 2027</h4><table class="h">${COLS}<tr><th class="l">Wee
 // Roster: the team's players and prices (spec/12 The coach card). Faker's numbers match his card.
 const RO = [["Top", "Doran", "12.5억", 38, "12%"], ["Jungle", "Oner", "14.0억", 44, "21%"], ["Mid", "Faker", "18.5억", 58, "46%"], ["Bot", "Peyz", "15.0억", 47, "30%"], ["Support", "Keria", "14.5억", 41, "25%"]];
 const ROSTER = `<table class="ch" style="width:560px"><tr><th class="l">Role</th><th class="l">Player</th><th>Price</th><th>Season</th><th>Owned</th></tr>
-  ${RO.map(([r, n, pr, p, o]) => `<tr><td class="l g2">${r}</td><td class="l">${n}${n === "Faker" ? ` <span class="tag">In your team</span>` : ""}</td><td class="n">${pr}</td><td class="p">${p}</td><td class="n g2">${o}</td></tr>`).join("")}</table>`;
+  ${RO.map(([r, n, pr, p, o]) => `<tr><td class="l g2">${r}</td><td class="l">${n}${n === "Faker" ? `<span class="mine"></span>` : ""}</td><td class="n">${pr}</td><td class="p">${p}</td><td class="n g2">${o}</td></tr>`).join("")}</table>`;
 
 $("main").innerHTML = { week: WEEK, roster: ROSTER }[V] || HIST;
 
 // Season: the coach's lines (spec/05). Total over every game; Pts only the counted games, plus the series points.
 const LINES = FP
-  ? [["First tower", 5, 3], ["Most drakes", 3, 2], ["Most barons", 1, 1], ["Most elders", 0, 0], ["Quick win", 0, 0], ["Series won", 3, 9], ["Series lost", 1, -1]]
+  ? [["First tower", 3, 1], ["Most drakes", 2, 1], ["Most barons", 1, 1], ["Most elders", 0, 0], ["Quick win", 0, 0], ["Series won", 3, 9], ["Series lost", 1, -1]]
   : [["First tower", 8, 6], ["Most drakes", 7, 5], ["Most barons", 3, 2], ["Most elders", 1, 0], ["Quick win", 0, 0], ["Series won", 5, 15], ["Series lost", 1, -1]];
 const GAMES = FP ? 10 : 15;
 const SERIESROW = (l) => l.startsWith("Series");

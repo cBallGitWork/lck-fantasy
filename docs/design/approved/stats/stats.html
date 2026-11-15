@@ -11,12 +11,14 @@ nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--i
 nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
 nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top .me { display: flex; align-items: center; color: var(--ink); font-size: 14px; font-weight: 600; }
+nav.top .me::after { content: "▾"; font-size: 12px; font-weight: 400; margin-left: 4px; }
 .ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
 
 .page { padding: 24px 32px 48px; }
 .head { display: flex; align-items: baseline; gap: 16px; }
 .head h1 { font-size: 28px; font-weight: 700; } .head h1 i { font-style: normal; font-size: 16px; font-weight: 400; color: var(--mid); margin-left: 8px; }
-.head a { text-decoration: none; color: var(--ink); }
+.head a { text-decoration: none; color: var(--ink); display: inline-flex; align-items: center; min-height: 24px; }
 .tabs { display: flex; gap: 24px; margin: 16px 0 0; border-bottom: 1px solid var(--line); }
 .tabs span { padding: 12px 0 8px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
 /* controls in one row, FPL's: role, team, max price, span, totals or per game, search */
@@ -29,7 +31,7 @@ nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--
 .find { width: 200px; border: 1px solid var(--line); background: var(--paper); padding: 8px 12px; color: var(--mid); }
 table { width: 100%; border-collapse: collapse; background: var(--paper); table-layout: fixed; }
 th { text-align: right; font-size: 12px; font-weight: 600; color: var(--mid); padding: 12px 8px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; } th.l { text-align: left; }
-th.s { color: var(--ink); font-weight: 700; } th.s::after { content: " ▼"; font-size: 12px; } th.o::after { content: " ▿"; color: var(--mid); }
+th.s { color: var(--ink); font-weight: 700; } th.s::after { content: " ▼"; font-size: 12px; }
 th.grp, td.grp { border-left: 1px solid var(--line); }
 td { text-align: right; padding: 0 8px; height: 40px; border-top: 1px solid var(--fill); font-family: "IBM Plex Mono", monospace; } td.l { text-align: left; font-family: inherit; }
 td.rk { color: var(--mid); text-align: left; }
@@ -38,19 +40,19 @@ td.nm b { font-weight: 600; } td.nm small { color: var(--mid); font-size: 12px; 
 td.mv { padding-left: 0; text-align: left; font-size: 12px; } .up { color: var(--rise); } .dn { color: var(--fall); }
 td.s { font-weight: 600; background: var(--bg); }
 td.z { color: var(--mid); }
-i.me { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); margin-left: 8px; vertical-align: middle; }
+i.me { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); margin-left: 8px; vertical-align: middle; }
 .foot { display: flex; justify-content: space-between; align-items: center; color: var(--mid); margin-top: 12px; } .pg { display: flex; } .pg span { min-width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); margin-left: -1px; background: var(--paper); color: var(--ink); font-family: "IBM Plex Mono", monospace; } .pg span.on { background: var(--fill); font-weight: 700; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
-  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
-  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
-  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#cfcfcf"/></symbol>
   <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
   <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
   <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
 </defs></svg>
 <nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a class="on">Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span>
-  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span></nav>
+  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><span class="me">Baron Steal FC</span></nav>
 <div class="page">
   <div class="head"><h1>Stats<i>통계</i></h1><span style="flex:1"></span><a>Patch update ›</a></div>
   <div class="tabs" id="tabs"></div>

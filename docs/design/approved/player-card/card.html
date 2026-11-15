@@ -11,8 +11,8 @@ iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; bord
 
 /* drawn to docs/design/plate.md: 44 mono hero · 28 name · 20 mono figures · 16 hangul · 14 body · 12 labels */
 .card { position: absolute; left: 192px; top: 48px; width: 1056px; background: var(--paper); border: 1px solid var(--ink); }
-.x { position: absolute; right: 16px; top: 12px; font-size: 16px; color: var(--mid); z-index: 1; }
-.x.on-bar { color: #fff; top: 8px; }
+.x { position: absolute; right: 12px; top: 8px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: var(--ink); z-index: 1; }
+.x.on-bar { color: #fff; top: 4px; }
 .news { background: var(--ink); color: #fff; padding: 8px 24px; font-size: 14px; }
 
 /* band 1: the lower-third */
@@ -33,8 +33,9 @@ iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; bord
 .lt { min-height: 132px; }
 .acts { display: flex; gap: 8px; align-items: center; white-space: nowrap; }
 .acts span { height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid var(--line); font-size: 14px; }
-.acts span.on { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 600; }
-.acts a { font-size: 14px; margin-left: 8px; }
+.acts span.on { border-color: var(--ink); font-weight: 600; }
+.acts a { font-size: 14px; margin-left: 8px; color: var(--ink); min-height: 24px; display: inline-flex; align-items: center; }
+.weeks .tag { vertical-align: middle; margin-left: 4px; }
 
 /* body: left (weeks, tabs, content) + right rail (season) */
 .body { display: grid; grid-template-columns: 1fr 360px; }
@@ -104,18 +105,18 @@ const $ = (id) => document.getElementById(id);
 if (V === "fixtures") { $("news").innerHTML = `<div class="news">! Rested for Wednesday's series</div>`; document.querySelector(".x").classList.add("on-bar"); }
 
 // The hero: season points with rank (spec/12 Header).
-$("hero").innerHTML = `<b>${FP ? 41 : 58}</b><span>Season · 2nd of 10 mids</span>`;
+$("hero").innerHTML = `<b>${FP ? 36 : 58}</b><span>Season · 2nd of 10 mids</span>`;
 
 // Meta line: price, form, owned with the week's transfers; buttons by where it opened (spec/12).
 const acts = FP ? `<a>Compare ›</a>` : `<span class="on">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><span>Transfer out</span><a>Compare ›</a>`;
-$("meta").innerHTML = `<span class="kv"><b>18.5억</b><span class="up">▲0.5</span></span><span class="kv"><b>${FP ? "20.5" : "19.3"}</b>form · ${FP ? "1st" : "2nd"}</span>
+$("meta").innerHTML = `<span class="kv"><b>18.5억</b><span class="up">▲0.5</span></span><span class="kv"><b>${FP ? "18.0" : "19.3"}</b>form · ${FP ? "1st" : "2nd"}</span>
   <span class="kv"><b>46%</b>owned · 1st</span><span class="kv">${FP ? "+842 / −126" : "+1,204 / −310"} this week</span>`;
 $("acts").innerHTML = acts;
 
 // One run of series (Craig, 14 Nov 2026: by series, not by week): the last 3 with his points, the next 3 (spec/12 Front).
 const PAST = FP
-  ? [["W2 · Fri", "v BFX", "10"], ["W3 · Wed", "v HLE", "12"], ["W3 · Sat", "v DK", "5 ●"]]
-  : [["W2 · Fri", "v BFX", "10"], ["W3 · Wed", "v HLE", "12"], ["W3 · Sat", "v DK", "5"]];
+  ? [["W2 · Fri", "v BFX", "10"], ["W3 · Wed", "v HLE", "12"], ["W3 · Sat", "v DK", `5<span class="tag live">Live</span>`]]
+  : [["W2 · Fri", "v BFX", "10"], ["W3 · Wed", "v HLE", "12"], ["W3 · Sat", "v DK", "10"]];
 const NEXT = [["W4 · Wed · Bo3", "v KT"], ["W4 · Sat · Bo3", "v GEN"], ["W5 · Thu · Bo3", "v BRO"]];
 $("weeks").innerHTML = PAST.map(([w, o, p]) => `<div class="c"><span class="w">${w}</span><b>${p}</b><span class="o">${o}</span></div>`).join("")
   + `<div class="now"></div>` + NEXT.map(([w, o], i) => `<div class="c n ${i === 0 ? "first" : ""}"><span class="w">${w}</span><span class="o">${o}</span></div>`).join("");
@@ -125,10 +126,10 @@ const ON = { week: "This week", champs: "Champions", fixtures: "Fixtures" }[V] |
 $("tabs").innerHTML = TABS.map((t) => `<span class="${t === ON ? "on" : ""}">${t}</span>`).join("");
 
 // This week: each series and game, champion, K/D/A, points; the 2 that count in bold, the rest grey (spec/12, spec/05).
-const G = (n, champ, kda, p, keep, live) => `<tr class="${keep ? "" : "drop"}"><td class="l g2">G${n}</td><td class="l">${champ.replace(/ · (\w)$/, " <span class=res>· $1</span>")}</td><td class="n">${kda}</td><td class="p">${p}${live ? " ●" : ""}</td></tr>`;
+const G = (n, champ, kda, p, keep, live) => `<tr class="${keep ? "" : "drop"}"><td class="l g2">G${n}</td><td class="l">${champ.replace(/ · (\w)$/, " <span class=res>· $1</span>")}</td><td class="n">${kda}</td><td class="p">${p}</td></tr>`;
 const WEEK = `<h4><span style="color:var(--ink);font-size:12px">Wed · v HLE &nbsp;<span class="g2" style="font-weight:400">W 2–1 · <span class="tag">Final</span></span></span><b>12</b></h4><table class="g">
   ${G(1, "Azir · W", "6/1/7", 5, true)}${G(2, "Taliyah · L", "3/2/5", 2, false)}${G(3, "Galio · W", "9/0/8", 7, true)}</table>
-  <h4><span style="color:var(--ink);font-size:12px">Sat · v DK &nbsp;<span class="g2" style="font-weight:400">1–0 · <span class="tag live">G2 live</span></span></span><b>5 ●</b></h4><table class="g">
+  <h4><span style="color:var(--ink);font-size:12px">Sat · v DK &nbsp;<span class="g2" style="font-weight:400">1–0 · <span class="tag live">G2 live</span></span></span><b>5</b></h4><table class="g">
   ${G(1, "Orianna · W", "5/1/9", 4, true)}${G(2, "Sylas · 14:20", "3/0/2", 1, true, true)}
   <tr class="tot"><td class="l" colspan="2">Week 3</td><td class="n g2">17 × 1.5 Carry</td><td class="p">25</td></tr></table>`;
 
@@ -138,10 +139,11 @@ const KST = { "08:00": "17:00", "10:30": "19:30" };
 const FIXT = `<table><tr><th class="l">Week</th><th class="l">Series</th><th>Your time</th><th>KST</th></tr>
   ${FX.map(([w, d, t, o], i) => `<tr${i > 0 && FX[i - 1][0] !== w ? ' class="wk1"' : ""}><td class="l g2">${i > 0 && FX[i - 1][0] === w ? "" : w}</td><td class="l">${d} · <b>T1 v ${o}</b> · Bo3</td><td class="n">${t}</td><td class="n g2">${KST[t]}</td></tr>`).join("")}</table>`;
 
-// History: each gameweek's points and price, then past LCK seasons scored by Flol (Craig, 14 Nov 2026).
-const SR = [[3, "Sat", "W 2–0 DK", 2, "8/1/13", "18.5억", 5], [3, "Wed", "W 2–1 HLE", 3, "18/3/20", "18.5억", 12],
+// Sat v DK as series/1440.png: Orianna 5/1/9 for 4, Sylas 7/0/6 for 6. Season stays 58 (Pick Team, Stats, Compare).
+// History: each week's points and price, then past LCK seasons scored by Flol (Craig, 14 Nov 2026).
+const SR = [[3, "Sat", "W 2–0 DK", 2, "12/1/15", "18.5억", 10], [3, "Wed", "W 2–1 HLE", 3, "18/3/20", "18.5억", 12],
   [2, "Fri", "W 2–1 BFX", 3, "13/6/14", "18.0억", 10], [2, "Wed", "W 2–0 DNS", 2, "14/4/16", "18.0억", 12],
-  [1, "Sat", "W 2–0 NS", 2, "9/3/11", "17.5억", 11], [1, "Wed", "L 1–2 GEN", 3, "12/8/13", "17.5억", 8]];
+  [1, "Sat", "W 2–0 NS", 2, "9/3/11", "17.5억", 11], [1, "Wed", "L 1–2 GEN", 3, "7/9/10", "17.5억", 3]];
 const WPTS = SR.reduce((m, x) => ({ ...m, [x[0]]: (m[x[0]] || 0) + x[6] }), {});
 const COLS = `<colgroup><col class="c1"><col><col class="c3"><col class="c4"><col class="c5"><col class="c6"><col class="c7"></colgroup>`;
 const HIST = `<h4>LCK Cup 2027</h4><table class="h">${COLS}<tr><th class="l">Week</th><th class="l">Series</th><th>Games</th><th>K / D / A</th><th>Price</th><th>Pts</th><th>Week</th></tr>
@@ -162,8 +164,8 @@ $("main").innerHTML = { week: WEEK, champs: CHAMPS, fixtures: FIXT }[V] || HIST;
 // Total and per game cover every game; Pts only the games that counted (best 2 a series).
 // On the Points view the season is Weeks 1 and 2; Week 3 joins when final.
 const LINES = FP
-  ? [["Kills", 48, 16], ["Assists", 54, 10], ["Deaths", 21, -3], ["Gold lead at 15", 6, 6], ["Solo kills", 4, 4], ["First bloods", 2, 2], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 1, 1]]
-  : [["Kills", 74, 22], ["Assists", 87, 16], ["Deaths", 25, -4], ["Gold lead at 15", 9, 9], ["Solo kills", 5, 5], ["First bloods", 3, 3], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 2, 2]];
+  ? [["Kills", 43, 13], ["Assists", 51, 9], ["Deaths", 22, -3], ["Gold lead at 15", 5, 5], ["Solo kills", 4, 4], ["First bloods", 2, 2], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 1, 1]]
+  : [["Kills", 73, 22], ["Assists", 86, 16], ["Deaths", 26, -4], ["Gold lead at 15", 9, 9], ["Solo kills", 5, 5], ["First bloods", 3, 3], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 2, 2]];
 const GAMES = FP ? 10 : 15, TOT = LINES.reduce((s, x) => s + x[2], 0);
 $("rail").innerHTML = `<div class="tot"><span>Season</span><i>${GAMES} games</i></div><table><tr><th class="l"></th><th>Total</th><th>Per game</th><th>Pts</th></tr>
   ${LINES.map(([l, t, p]) => `<tr><td class="l">${l}</td><td class="n">${t}</td><td class="pg">${(t / GAMES).toFixed(1)}</td><td class="p">${p > 0 ? "+" + p : p}</td></tr>`).join("")}</table>`;

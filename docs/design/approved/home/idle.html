@@ -1,5 +1,5 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><title>Home · Not live</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; --stage: #1b1b1b; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
 .num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
@@ -13,6 +13,7 @@ nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--i
 nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
 nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
 .ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
 
 /* Parts */
@@ -20,8 +21,9 @@ nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--
 .tag.prov { border-style: dashed; }
 .tag.live { background: var(--ink); color: var(--paper); }
 .up::before { content: "▲ "; font-size: 12px; }
-.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 12px; }
-.more { display: inline-block; margin-top: 8px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.down::before { content: "▼ "; font-size: 12px; }
+td.m { position: relative; } td.m.up::before, td.m.down::before { content: "▲"; position: absolute; left: 24px; } td.m.down::before { content: "▼"; }
+.more { display: inline-flex; align-items: center; min-height: 24px; margin-top: 8px; }
 .btn { border: 1px solid var(--ink); padding: 8px 16px; font-weight: 700; background: var(--paper); }
 .btn.dark { background: var(--ink); color: var(--paper); }
 
@@ -40,16 +42,16 @@ nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--
 .hero { display: grid; grid-template-columns: 1fr 360px; gap: 32px; }
 
 /* Stream */
-.screen { position: relative; width: 100%; height: 552px; background: #2a2a2a; color: #fff; overflow: hidden; }
-.screen .ph2 { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #888; }
-.screen .ov { position: absolute; left: 0; right: 0; top: 0; display: flex; gap: 12px; align-items: center; padding: 12px 16px; background: rgba(0,0,0,.55); font-size: 16px; }
-.screen .ov .tag.live { background: #fff; color: var(--ink); border-color: #fff; } .screen .ov small { color: #bbb; font-size: 12px; }
+.screen { position: relative; width: 100%; height: 552px; background: var(--stage); color: #fff; overflow: hidden; }
+.screen .ph2 { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #999; }
+.screen .ov { position: absolute; left: 0; right: 0; top: 0; display: flex; gap: 12px; align-items: center; padding: 12px 16px; background: var(--ink); font-size: 16px; }
+.screen .ov .tag.live { background: #fff; color: var(--ink); border-color: #fff; } .screen .ov small { color: #999; font-size: 12px; }
 .screen .ov a { color: #fff; font-weight: 700; }
-.pick { display: flex; gap: 8px; margin-top: 8px; } .pick span { border: 1px solid var(--line); background: var(--paper); padding: 4px 12px; color: var(--mid); } .pick span.on { border-color: var(--ink); color: var(--ink); font-weight: 600; } .pick span.off { border-style: dashed; }
+.pick { display: flex; gap: 8px; margin-top: 8px; } .pick span { border: 1px solid var(--line); background: var(--paper); padding: 4px 12px; color: var(--mid); } .pick span.on { border-color: var(--ink); color: var(--ink); font-weight: 600; } .pick span.off { border-style: dashed; } .pick small { font-size: 12px; color: var(--mid); margin-left: 4px; }
 
 /* Lineup stage (idle) */
-.stage { position: absolute; inset: 0; background: #262626; }
-.stage::before { content: ""; position: absolute; left: -40px; right: -40px; bottom: 0; height: 152px; background: #363636; transform: skewY(-4deg); transform-origin: left; }
+.stage { position: absolute; inset: 0; background: var(--stage); }
+.stage::before { content: ""; position: absolute; left: -40px; right: -40px; bottom: 0; height: 152px; background: var(--mid); transform: skewY(-4deg); transform-origin: left; }
 .stage .p { position: absolute; bottom: 64px; width: 124px; text-align: center; }
 .stage .p svg.sh { width: 84px; height: 75px; display: block; margin: 0 auto; }
 .stage .p .tm { position: absolute; top: 24px; left: 0; right: 0; font: 600 12px "IBM Plex Mono", monospace; color: var(--ink); }
@@ -57,33 +59,30 @@ nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--
 .stage .pl b, .stage .pl span { display: block; transform: skewX(12deg); } .stage .pl b { font-size: 16px; } .stage .pl span { font-size: 12px; color: var(--mid); }
 .stage .mk { position: absolute; top: -8px; right: 12px; background: #fff; color: var(--ink); border: 1px solid var(--ink); border-radius: 50%; width: 24px; height: 24px; font: 700 12px/22px "IBM Plex Sans KR"; }
 .stage .cap { position: absolute; left: 24px; top: 16px; } .stage .cap b { font-size: 20px; display: block; }
-.stage .pt { position: absolute; right: 24px; top: 24px; color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
-.stage .nx2 { position: absolute; left: 24px; top: 96px; } .stage .nx2 span { display: block; color: #bbb; } .stage .nx2 b { display: block; font-size: 28px; letter-spacing: -.5px; line-height: 1.2; } .stage .nx2 b.c { display: inline; font-size: 14px; color: #fff; font-family: "IBM Plex Mono", monospace; letter-spacing: 0; }
+.stage .pt { position: absolute; right: 24px; top: 16px; color: #fff; display: inline-flex; align-items: center; min-height: 24px; }
+.stage .nx2 { position: absolute; left: 24px; top: 96px; } .stage .nx2 span { display: block; color: #999; } .stage .nx2 b { display: block; font-size: 28px; letter-spacing: -.5px; line-height: 1.2; } .stage .nx2 b.c { display: inline; font-size: 14px; color: #fff; font-family: "IBM Plex Mono", monospace; letter-spacing: 0; }
 
 /* Right column and the three below */
 .side, .band > section { border-top: 2px solid var(--ink); padding-top: 8px; }
 .side h2, .band h2 { font-size: 14px; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; } .side h2 span:not(.tag), .band h2 span:not(.tag) { font-weight: 400; color: var(--mid); font-size: 12px; }
 .side h2 + h2, table.pl + h2 { margin-top: 16px; }
 .tot { display: flex; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
-.tot .big { font-family: "IBM Plex Mono", monospace; font-size: 44px; font-weight: 700; line-height: 1; } .tot .sm { color: var(--mid); font-size: 16px; } .tot .sm b { font-family: "IBM Plex Mono", monospace; color: var(--ink); margin-left: 4px; }
+.tot .big { font-family: "IBM Plex Mono", monospace; font-size: 44px; font-weight: 700; line-height: 1; } .tot .sm { color: var(--mid); font-size: 16px; } .tot a.hi { color: var(--mid); display: inline-flex; align-items: baseline; min-height: 24px; } .tot a.hi i { font-style: normal; color: var(--ink); margin-left: 4px; }
+.mkc { display: inline-flex; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; align-items: center; justify-content: center; margin-left: 4px; vertical-align: 1px; }
+.tot .sm b { font-family: "IBM Plex Mono", monospace; color: var(--ink); margin-left: 4px; }
 table.pl { width: 100%; border-collapse: collapse; } table.pl td { height: 40px; border-bottom: 1px solid var(--fill); } table.pl td.n { text-align: right; font-family: "IBM Plex Mono", monospace; font-weight: 600; } table.pl td.s { color: var(--mid); font-size: 12px; }
 table.pl svg { width: 12px; height: 12px; vertical-align: -1px; margin-right: 8px; }
-.band { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 24px; }
+.band { display: grid; grid-template-columns: 1fr 1fr 360px; gap: 32px; margin-top: 24px; }
 .cd { font-family: "IBM Plex Mono", monospace; font-size: 28px; font-weight: 700; line-height: 1.2; } .cd small { font-size: 16px; color: var(--mid); font-weight: 400; margin: 0 8px 0 4px; }
-.when { color: var(--mid); margin: 4px 0 16px; font-size: 12px; } .when b { color: var(--ink); }
+.when { color: var(--mid); margin: 4px 0 16px; } .when b { color: var(--ink); font-weight: 400; margin-right: 8px; }
 .acts { display: flex; gap: 8px; align-items: center; } .ftl { margin-left: auto; } .ftl b { font-family: "IBM Plex Mono", monospace; font-size: 16px; }
 .fd { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--fill); }
-.fd small { display: block; color: var(--mid); font-size: 12px; } .fd .tk { border: 1px solid var(--line); padding: 0 8px; font-size: 12px; filter: grayscale(1); }
+.fd small { display: block; color: var(--mid); font-size: 12px; } .fd .tk { display: inline-flex; align-items: center; min-height: 24px; }
 .fd.in { grid-template-columns: 152px 1fr; }
 .led2 { background: var(--ink); color: #fff; font: 600 12px/1.2 "IBM Plex Mono", monospace; padding: 8px; height: 40px; display: flex; align-items: center; text-transform: uppercase; background-image: radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1.4px); background-size: 4px 4px; }
 table.lg { width: 100%; border-collapse: collapse; } table.lg td { height: 40px; border-bottom: 1px solid var(--fill); } table.lg td.n { font-family: "IBM Plex Mono", monospace; text-align: right; } table.lg td.m { text-align: right; width: 72px; font-size: 12px; font-family: "IBM Plex Mono", monospace; } table.lg tr.hd td { height: auto; padding-bottom: 4px; color: var(--mid); font-size: 12px; font-family: inherit; }
 .adrow { margin-top: 24px; } .adrow .ph { height: 96px; } .made { color: var(--mid); font-size: 12px; margin-top: 8px; }
 
-/* Every state of the tier (idle file only) */
-.board { margin-top: 32px; border-top: 1px dashed var(--soft); padding-top: 16px; }
-.board h3 { font-size: 16px; margin-bottom: 12px; }
-.board .st { color: var(--mid); font-size: 12px; margin-bottom: 4px; display: block; }
-.board .top2 { margin: 0 0 16px; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute">
   <defs>
@@ -98,25 +97,25 @@ table.lg { width: 100%; border-collapse: collapse; } table.lg td { height: 40px;
     <symbol id="shirt" viewBox="0 0 56 50"><path d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z" fill="#fff" stroke="#1d1d1d" stroke-width="1.6"/><path d="M18 2 Q28 9 38 2" fill="none" stroke="#1d1d1d" stroke-width="1.6"/></symbol>
   </defs>
 </svg>
-<nav class="top"><b class="word">Flol</b><a class="on">Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span></nav>
+<nav class="top"><b class="word">Flol</b><a class="on">Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
 
 <div class="page">
 <div class="top2"><h1>Baron Steal FC</h1><i>바론 스틸 FC</i><div class="rankc"><svg viewBox="0 0 40 46"><path d="M20 4 L35 9 V24 C35 33 28 39 20 42 C12 39 5 33 5 24 V9 Z" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 15 H35" stroke="#fff" stroke-width="1" opacity=".45"/><text x="20" y="31" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="12" fill="#fff">I</text></svg><div><div class="tn">Emerald I<i>에메랄드 1</i></div><div class="rt"><b>48,211</b><span class="up">6,904</span></div></div><span class="ph">Badge</span></div><span class="sp"></span></div>
-<div class="hero"><div><div class="screen"><div class="stage"><div class="cap"><b>Week 4 lineup</b></div><a class="pt">Pick Team ›</a><div class="p" style="left:22px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">HLE</span><div class="pl"><b>Zeus</b><span>Top</span></div></div><div class="p" style="left:155px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">GEN</span><div class="pl"><b>Canyon</b><span>Jungle</span></div></div><div class="p" style="left:288px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">T1</span><span class=mk>C</span><div class="pl"><b>Faker</b><span>Mid</span></div></div><div class="p" style="left:421px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">GEN</span><span class=mk>V</span><div class="pl"><b>Ruler</b><span>Bot</span></div></div><div class="p" style="left:554px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">HLE</span><div class="pl"><b>Delight</b><span>Support</span></div></div><div class="p" style="left:687px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">NS</span><div class="pl"><b>Kingen</b><span>Flex · Top</span></div></div><div class="p" style="left:820px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">T1</span><div class="pl"><b>kkOma</b><span>Coach</span></div></div>
-<div class="nx2"><span>Next on stream</span><b>GEN vs HLE</b><span>Wed 17:00 KST · in <b class="c">1d 21h</b></span></div></div></div></div><aside class="side"><h2>Week 3 <span class="tag">Final</span></h2>
-<div class="tot"><span class="big">98</span><span class="sm">Average<b>74</b></span><span class="sm">Highest<b>131</b></span></div>
+<div class="hero"><div><div class="screen"><div class="stage"><div class="cap"><b>Week 4 lineup</b></div><a class="pt">Pick Team ›</a><div class="p" style="left:22px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">HLE</span><div class="pl"><b>Zeus</b><span>Top</span></div></div><div class="p" style="left:155px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">GEN</span><div class="pl"><b>Canyon</b><span>Jungle</span></div></div><div class="p" style="left:288px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">T1</span><span class=mk>C</span><div class="pl"><b>Faker</b><span>Mid</span></div></div><div class="p" style="left:421px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">GEN</span><span class=mk>V</span><div class="pl"><b>Ruler</b><span>Bot</span></div></div><div class="p" style="left:554px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">HLE</span><div class="pl"><b>Delight</b><span>Support</span></div></div><div class="p" style="left:687px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">DK</span><div class="pl"><b>Siwoo</b><span>Flex · Top</span></div></div><div class="p" style="left:820px"><svg class="sh" viewBox="0 0 56 50"><use href="#shirt"/></svg><span class="tm">T1</span><div class="pl"><b>kkOma</b><span>Coach</span></div></div>
+<div class="nx2"><span>Next on stream</span><b>HLE v DK</b><span><span style="display:inline;color:#fff">Wed 08:00</span>&nbsp; 17:00 KST · in <b class="c">1d 21h</b></span></div></div></div></div><aside class="side"><h2>Week 3 <span class="tag">Final</span></h2>
+<div class="tot"><span class="big">109</span><span class="sm">Average<b>79</b></span><a class="sm hi">Highest<b>136</b><i>›</i></a></div>
 <h2>Star and flop</h2>
-<table class="pl"><tr><td><svg><use href="#i-bot"/></svg>Ruler <span class="s">GEN</span></td><td class="s">star</td><td class="n">18</td></tr>
+<table class="pl"><tr><td><svg><use href="#i-mid"/></svg>Faker <span class="s">T1</span></td><td class="s">star</td><td class="n">22</td></tr>
 <tr><td><svg><use href="#i-sup"/></svg>Delight <span class="s">HLE</span></td><td class="s">flop</td><td class="n">9</td></tr></table>
 <a class="more">Points ›</a></aside></div>
 <div class="band">
 <section><h2>Week 4 deadline <span>LCK Cup</span></h2><div class="cd">1<small>d</small>20<small>h</small>45<small>m</small></div>
-<div class="when"><b>Wed 07:45</b> your time · 16:45 KST</div>
+<div class="when">Deadline <b>Wed 07:45</b>16:45 KST</div>
 <div class="acts"><span class="btn dark">Pick Team</span><span class="btn">Transfers</span><span class="ftl"><b>1</b> free transfer</span></div></section>
-<section><h2>Following <span class="tag prov">Fun idea · to grill</span></h2>
-<div class="fd"><div><b>Minji</b> · GEN vs HLE<small>34 pts</small></div><span class="tk">🚚</span></div>
-<div class="fd"><div><b>Dan</b> · Carry Faker<small>41 pts in T1 vs KT</small></div><span class="tk">🚚</span></div>
-<div class="fd"><div><b>Jae</b> · KRX vs BRO<small>9 pts</small></div><span class="tk">🚚</span></div>
+<section><h2>Following</h2>
+<div class="fd"><div><b>Minji</b> · GEN v HLE<small>20 pts</small></div><a class="tk">Truck ›</a></div>
+<div class="fd"><div><b>Dan</b> · Carry Faker<small>34 pts in T1 v HLE</small></div><a class="tk">Truck ›</a></div>
+<div class="fd"><div><b>Jae</b> · NS v KRX<small>9 pts</small></div><a class="tk">Truck ›</a></div>
 <div class="fd in"><div class="led2" style="height:40px">SELL YOUR BOT LANER</div><div><b>Truck from Minji</b><small>Week 3</small></div></div>
 <a class="more">Following ›</a></section>
 <section><h2>Leagues</h2><table class="lg"><tr class="hd"><td>League</td><td class="n">Rank</td><td class="m">Move</td></tr>
@@ -124,4 +123,4 @@ table.lg { width: 100%; border-collapse: collapse; } table.lg td { height: 40px;
 <tr><td>Pub League</td><td class="n">2nd</td><td class="m up">1</td></tr><tr><td>Flol Discord</td><td class="n">14th</td><td class="m down">2</td></tr></table><a class="more">All leagues ›</a></section>
 </div>
 <div class="adrow"><div class="ph">Sponsor</div><div class="made">All sponsors are made up.</div></div>
-<div class="board"><h3>The tier by the team name: every state</h3><div style="margin-bottom:16px"><span class="st">Before Week 1 final</span><div class="top2"><h1>Baron Steal FC</h1><i>바론 스틸 FC</i><div class="rankc"><svg viewBox="0 0 40 46"><path d="M20 4 L35 9 V24 C35 33 28 39 20 42 C12 39 5 33 5 24 V9 Z" fill="#fff" stroke="#6b6b6b" stroke-width="1.6"/><text x="20" y="31" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="12" fill="#6b6b6b">–</text></svg><div><div class="tn" style="color:var(--mid)">Unranked</div></div><span class="ph">Badge</span></div></div></div><div style="margin-bottom:16px"><span class="st">A division tier</span><div class="top2"><h1>Baron Steal FC</h1><i>바론 스틸 FC</i><div class="rankc"><svg viewBox="0 0 40 46"><path d="M20 4 L35 9 V24 C35 33 28 39 20 42 C12 39 5 33 5 24 V9 Z" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 15 H35" stroke="#fff" stroke-width="1" opacity=".45"/><text x="20" y="31" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="12" fill="#fff">I</text></svg><div><div class="tn">Emerald I<i>에메랄드 1</i></div><div class="rt"><b>48,211</b><span class="up">6,904</span></div></div><span class="ph">Badge</span></div></div></div><div style="margin-bottom:16px"><span class="st">Master and Grandmaster</span><div class="top2"><h1>Baron Steal FC</h1><i>바론 스틸 FC</i><div class="rankc"><svg viewBox="0 0 40 46"><path d="M20 1 L38 7 V24 C38 35 30 42 20 45 C10 42 2 35 2 24 V7 Z" fill="none" stroke="#1d1d1d" stroke-width="1.2"/><path d="M20 4 L35 9 V24 C35 33 28 39 20 42 C12 39 5 33 5 24 V9 Z" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 15 H35" stroke="#fff" stroke-width="1" opacity=".45"/><text x="20" y="31" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="12" fill="#fff">M</text></svg><div><div class="tn">Master<i>마스터</i></div><div class="rt"><b>612</b><span class="up">88</span></div></div><span class="ph">Badge</span></div></div></div><div style="margin-bottom:16px"><span class="st">Challenger</span><div class="top2"><h1>Baron Steal FC</h1><i>바론 스틸 FC</i><div class="rankc"><svg viewBox="0 0 40 46"><path d="M20 1 L38 7 V24 C38 35 30 42 20 45 C10 42 2 35 2 24 V7 Z" fill="none" stroke="#1d1d1d" stroke-width="1.2"/><path d="M20 4 L35 9 V24 C35 33 28 39 20 42 C12 39 5 33 5 24 V9 Z" fill="#1d1d1d" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 15 H35" stroke="#fff" stroke-width="1" opacity=".45"/><text x="20" y="31" text-anchor="middle" font-family="IBM Plex Mono" font-weight="600" font-size="12" fill="#fff">C</text></svg><div><div class="tn">Challenger<i>챌린저</i></div><div class="rt"><b>4th</b><span class="up">2</span></div></div><span class="ph">Badge</span></div></div></div></div></div></body></html>
+</div></body></html>

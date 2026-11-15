@@ -5,7 +5,7 @@
 
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { fromSide, seriesById } from "../../fixtures/series";
-import { CARRY_MULTIPLIER, COMPETITION, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, COMPETITION, livePointsOf, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
 import { count, ordinal } from "../../parts";
 import { PATHS } from "../../paths";
 import type { SlotKey } from "../../rift";
@@ -89,7 +89,7 @@ function playerOf(pick: PointsPick): PointsPlayer {
 }
 
 /** The Carry's week as the picture shows it: 17 before ×1.5, 25 after, the average Carry 19. */
-const CARRY = { multiplier: CARRY_MULTIPLIER, points: 25, average: 19 } as const;
+const CARRY = { multiplier: CARRY_MULTIPLIER, points: livePointsOf(playerId("Faker")), average: 19 } as const;
 
 function starterOf(pick: PointsPick, slot: SlotKey): PointsStarter {
   const player = playerOf(pick);

@@ -6,7 +6,9 @@
 import {
   BEST_OF,
   CARRY_MULTIPLIER,
+  livePointsOf,
   PICK_TEAM_SQUAD,
+  playerId,
   POINTS_SQUAD,
   STATS_PLAYERS,
   WEEK3_SERIES_AT_POINTS,
@@ -80,7 +82,7 @@ const WEEK3_AT_POINTS: CardWeek = {
     };
   }),
   carry: CARRY_MULTIPLIER,
-  total: 25,
+  total: livePointsOf(playerId(NAME)),
 };
 
 const FAKER = { name: NAME, hangul: hangulOf(NAME), legalName: "Lee Sang-hyeok", role: "mid", team: TEAM } as const;

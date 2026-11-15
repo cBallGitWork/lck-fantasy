@@ -4,7 +4,9 @@
 import {
   BEST_OF,
   COMPETITION,
+  livePointsOf,
   MANAGER,
+  MY_WEEK3,
   PICK_TEAM_SQUAD,
   POINTS_WEEK,
   WEEK3_FINAL,
@@ -55,11 +57,11 @@ export const HOME_LIVE: HomeLiveData = {
     { id: "lck-ja-youtube", name: "LCK · 日本語", platform: "YouTube", live: true },
   ],
   pickedStream: "lck-en-twitch",
-  week: { label: "Your week", final: false, points: 94, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
+  week: { label: "Your week", final: false, points: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
   inSeries: [
-    { role: "mid", name: "Faker", team: "T1", mark: "C", stat: "G2 · 3/0/2", points: 25 },
-    { role: "top", name: "Siwoo", team: "DK", stat: "G2 · 0/1/1", points: 8 },
-    { role: "coach", name: "kkOma", team: "T1", stat: "G2", points: 10 },
+    { role: "mid", name: "Faker", team: "T1", mark: "C", stat: "G2 · 3/0/2", points: livePointsOf("faker") },
+    { role: "top", name: "Siwoo", team: "DK", stat: "G2 · 0/1/1", points: livePointsOf("siwoo") },
+    { role: "coach", name: "kkOma", team: "T1", stat: "G2", points: livePointsOf("kkoma") },
   ],
   stillToPlay: [],
 };
@@ -80,7 +82,7 @@ export const HOME_IDLE: HomeIdleData = {
   lineupWeek: 4,
   lineup,
   next: { home: next.home, away: next.away, day: next.day, local: next.local, kst: next.kst, startsIn: { days: 1, hours: 21 } },
-  week: { label: "Week 3", final: true, points: 109, ...WEEK3_FINAL },
+  week: { label: "Week 3", final: true, points: MY_WEEK3.finalTotal, ...WEEK3_FINAL },
   star: { role: "mid", name: "Faker", team: "T1", points: 22 },
   flop: { role: "sup", name: "Delight", team: "HLE", points: 9 },
 };

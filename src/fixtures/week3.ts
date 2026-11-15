@@ -156,6 +156,9 @@ export const POINTS_SQUAD: PointsPick[] = [
 /** The Points picture's head: Average and Highest beside the total. */
 export const POINTS_WEEK = { week: 3, average: 74, highest: 131 } as const;
 
+/** Week 3's Average and Highest once final (Home, Live, Perfect game, Profile). */
+export const WEEK3_FINAL = { average: 79, highest: 136 } as const;
+
 /** A squad member at the Pick Team picture's moment, with Week 4's price in 억 and form. */
 export interface PickTeamPick {
   slot: SquadSlot;

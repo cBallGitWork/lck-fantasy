@@ -7,6 +7,7 @@ import {
   MANAGER,
   PICK_TEAM_SQUAD,
   POINTS_WEEK,
+  WEEK3_FINAL,
   WEEK3_SERIES_AT_POINTS,
   WEEK4_DEADLINE,
   WEEK4_SERIES,
@@ -83,7 +84,7 @@ export const HOME_IDLE: HomeIdleData = {
   lineupWeek: 4,
   lineup,
   next: { home: next.home, away: next.away, day: next.day, local: next.local, kst: next.kst, startsIn: { days: 1, hours: 21 } },
-  week: { label: "Week 3", final: true, points: 109, average: 79, highest: 136 },
+  week: { label: "Week 3", final: true, points: 109, ...WEEK3_FINAL },
   star: { role: "mid", name: "Faker", team: "T1", points: 22 },
   flop: { role: "sup", name: "Delight", team: "HLE", points: 9 },
 };

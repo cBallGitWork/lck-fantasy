@@ -7,6 +7,7 @@ import {
   playerId,
   POINTS_SQUAD,
   POINTS_WEEK,
+  WEEK3_FINAL,
   WEEK3_SERIES_AT_POINTS,
   WEEK3_SERIES_FINAL,
   type PointsPick,
@@ -114,7 +115,7 @@ export const LIVE_IDLE: Omit<LiveIdleProps, "picker"> = {
   },
   last: { ...bug(LAST_SERIES), day: "Saturday", format: FORMAT, stage: STAGE },
   panel: {
-    week: { total: 109, average: 79, highest: 136, notFinal: false },
+    week: { total: 109, ...WEEK3_FINAL, notFinal: false },
     series: { home: LAST_SERIES.home, away: LAST_SERIES.away, score: LAST_SERIES.score },
     players: finalPlayers,
     rest: rest("idle"),

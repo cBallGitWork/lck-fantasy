@@ -4,7 +4,7 @@
 
 import { MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
-import { playerId, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
+import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
 import { score } from "../../parts";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
@@ -149,8 +149,7 @@ export const PROFILE: ProfileData = {
     {
       week: 3,
       points: 93,
-      average: 79,
-      highest: 136,
+      ...WEEK3_FINAL,
       final: false,
       buff: "Limitless",
       team: WEEK3_TEAM,

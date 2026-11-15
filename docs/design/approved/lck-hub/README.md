@@ -42,5 +42,5 @@ The LCK's own fixtures, results, standings and team rosters, with Sheep Esports'
 |---|---|
 | Fixtures, results, standings, rosters | #36 |
 | Prices in 억 (academy prices made up) | #22 |
-| Sheep headlines and thumbnails, from its LCK tag page; ask Sheep's permission before launch | no issue yet |
+| Sheep headlines and thumbnails, from its LCK tag page | #116, Sheep's permission |
 | The Play-In and Playoffs stages | spec/10; data per competition |

@@ -332,7 +332,7 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md) and [spec/01-squad-
 - Sheep Esports on the page: "we part their articles on the page"; "news can have a thumbail"; fetched "using a tag, shold be simple".
 - Tabs: "needs a full league tab, fixtures in its own tab, results in its own tab etc".
 - Teams: "teams needs to be its own tab"; academy rosters "as they would be in the game too".
-- Academy players: "its like reservecs in fpl, the full squad is in the game"; "yes they are all part of the team for the cap"; "a coach is essentially the team, not put academy coach in".
+- Academy players: "in the pool as they get subbed in"; "its like reservecs in fpl, the full squad is in the game"; "yes they are all part of the team for the cap"; "a coach is essentially the team, not put academy coach in"; on their prices, "dont worry about prices".
 - The picture: "save".
 
 ## Open

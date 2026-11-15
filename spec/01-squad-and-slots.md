@@ -47,7 +47,8 @@ FPL's rule, with role in place of formation:
 ## Academy players
 
 - Each team's academy (LCK CL) players are in the pool from the start, like FPL's reserves
-  (Craig, 15 Nov 2026). They score only in the LCK games they play.
+  (Craig, 15 Nov 2026). They score when subbed into an LCK game ("in the pool as they get
+  subbed in"). They are priced like any player.
 - They count toward the cap as their LCK team. Example: with a cap of 2, Faker and T1's academy
   mid fill T1.
 - There is no academy coach: the coach slot is the team.

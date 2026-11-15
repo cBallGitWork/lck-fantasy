@@ -4,7 +4,7 @@
 
 ## How to use
 
-Each screen's brief, in `2026-11-16-<screen>/brief.md`, lists every detail no spec line settles, under "Not settled by the spec", with an example and a recommendation from FPL. That makes 73 questions in all. Below, for each screen, are the five that block drawing, ready for one grill batch. The rest can wait until the picture raises them. None of this is the product until Craig answers.
+Each screen's brief, in `2026-11-16-<screen>/brief.md`, lists every detail no spec line settles, under "Not settled by the spec", with an example and a recommendation from FPL. That makes 73 questions in all. Below, for each screen, are the five that block drawing, ready for one grill batch. The rest can wait until the picture raises them. Craig took every recommendation below on 16 Nov 2026 ("Recs for all"); they are now in spec/12. The rest wait in each brief.
 
 ## Perfect game
 

@@ -25,6 +25,14 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Leagues** ([spec/08](08-leagues.md)).
 - **Stats**: every stat Flol holds, the scoring lines first ("Whatever stats we have with scoring
   a priority", Craig, 13 Nov 2026).
+  - A Players | Coaches switch. Each line shows its count (14 kills, not +5); the points from
+    each line are on the player card. Season totals, with a Totals | Per game toggle that divides
+    every line by games; the season by default, one gameweek as an option. Filters: role, team,
+    max price and a name search (Craig, 16 Nov 2026).
+  - Each row also shows price and its last move, form, owned and points, as FPL's list does. Any
+    column sorts. Your own players carry a dot. Academy players are listed, after everyone with
+    games (Craig, 16 Nov 2026).
+  - It links to Price changes. The picture is `docs/design/approved/stats/`.
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.
   - Tabs: Fixtures, Results, Standings and Teams, each its own (Craig, 15 Nov 2026). Standings
@@ -34,6 +42,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     They come from Sheep's LCK tag page (Craig, 15 Nov 2026).
   - The picture is `docs/design/approved/lck-hub/`.
 - **Series page**: one series, its games and each player's lines in each game.
+  - A page with its own link, opened from every series row anywhere (Craig, 16 Nov 2026).
+  - One grid per team: its players down the side, the games as columns, as in the Points drawer.
+  - Each game shows its winner, length and champions only.
+  - Before it starts: the time (yours and KST), the format, both rosters and Watch ›.
 - **Player pop-up**: see [The player card](#the-player-card).
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the
   6th role", Craig, 13 Nov 2026). See [The coach card](#the-coach-card).
@@ -43,7 +55,16 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   (Craig, 14 Nov 2026). Its layout is the approved picture (`docs/design/approved/profile/`).
 - **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
+  - The 7 starter slots, with one of them as Carry; the Carry's ×1.5 counts in its total. The cap
+    applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and ignores both.
+  - It builds live, with a Not final tag until the week is final.
+  - Reached from links on Points and Home.
 - **Price changes**: the week's rises and falls. Past moves only, no prediction.
+  - Reached from links on Stats and Transfers. ‹ Week › arrows go back through past weeks
+    (Craig, 16 Nov 2026).
+  - Rises and falls side by side. A rise is Korean red, a fall blue, on every screen that shows
+    a price move (Craig, 16 Nov 2026).
+  - Before the first move: "No moves yet".
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).
   - A picker chooses the stream. The list is admin data (name, language, platform, channel): the
@@ -123,6 +144,10 @@ F1 Fantasy, Sleeper and gol.gg).
   substitute.
 - **Compare**, in the beta: two players side by side, with header stats, form, scoring lines and
   next series.
+  - A sheet over the card. The second player comes from a search, his role listed first. Any role
+    with any role; a coach only with a coach (Craig, 16 Nov 2026).
+  - The better number in each row is marked; there is no overall verdict. The next 3 series show,
+    as on the player card.
 
 ## Settings
 
@@ -136,7 +161,10 @@ Grilled 13 Nov 2026.
 - Time zone: the browser's, or one the manager picks. Example: a 16:45 KST deadline shows as
   08:45 in London.
 - Light, dark, or follow the device.
-- Sign out, and delete the account and its data.
+- Sign out, and delete the account and its data. A private league the manager made passes to
+  its next member (Craig, 16 Nov 2026).
+- Reached from the team name at the right of the top bar. One page, saved with a Save button.
+  The team name and the hangul banner are capped at 20 characters, as FPL's name is.
 - Emails, both opt-in and off by default: a deadline reminder 24 hours before, and a weekly
   recap once the gameweek is final (points, rank moves in each league, best player, any protest
   truck). No marketing. Off by default because Resend's free plan sends 100 emails a day.

@@ -335,6 +335,20 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md) and [spec/01-squad-
 - Academy players: "in the pool as they get subbed in"; "its like reservecs in fpl, the full squad is in the game"; "yes they are all part of the team for the cap"; "a coach is essentially the team, not put academy coach in"; on their prices, "dont worry about prices".
 - The picture: "save".
 
+## Six screens grill (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md). The questions and recommendations are in `docs/design/proposals/2026-11-16-open-questions.md`, five a screen, for Stats, Compare, the Series page, Perfect game, Price changes and Settings.
+
+- Shown the Series page's five with recommendations: "Recs for all". Taken as every recommendation in the list, all six screens.
+
+## Stats design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/stats/`.
+
+- The panel's calls, with Claude's picks: "yes". They keep price, form, owned and points in the list, mark your own players with a dot, list academy players last, and show a rise in red and a fall in blue everywhere.
+- Per game: "first blood should be a count actually"; "and we have a toggle for count/per game count". Every line is a count, and the toggle divides them all.
+- The picture: "looks good", then "save".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

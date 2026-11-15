@@ -81,7 +81,7 @@ const isMarkable = (team: PickTeam, id: string) => {
 /** Whether a starter can go to the bench: any but the coach. */
 export const canSwap = isMarkable;
 
-/** The Carry and Vice-carry stay on the field: whoever comes on takes the mark of whoever goes off (a question for Craig). */
+/** The Carry and Vice-carry stay on the field: whoever comes on takes the mark of whoever goes off (spec/04). */
 const passMark = (mark: string, out: string, inId: string) => (mark === out ? inId : mark);
 
 /** How many things the draft changes from the saved team: each swap, the bench order, each mark moved, the buff. */

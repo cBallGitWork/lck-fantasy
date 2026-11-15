@@ -1,0 +1,75 @@
+/* Perfect game (docs/design/approved/perfect-game/perfect.html). Every value is a token. */
+.perfect-game__toggle {
+  margin-top: var(--s-4);
+}
+.perfect-game__cards {
+  margin-top: var(--s-3);
+}
+.perfect-game__card-series {
+  display: block;
+  color: var(--mid);
+}
+.perfect-game__card-points {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+
+/* The tapped starter's games */
+.perfect-game__series {
+  padding: var(--s-2) var(--s-4) var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.perfect-game__series-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--s-1);
+  font-size: var(--size-body);
+}
+.perfect-game__series-head span {
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.perfect-game__game {
+  display: grid;
+  grid-template-columns: var(--s-6) 1fr var(--s-7);
+  gap: var(--s-2);
+  padding: var(--s-1) 0;
+  align-items: center;
+}
+.perfect-game__game-no {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.perfect-game__game-points {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.perfect-game__game--drop {
+  color: var(--mid);
+}
+.perfect-game__game--drop .perfect-game__game-points {
+  font-weight: var(--w-regular);
+}
+.perfect-game__box {
+  border: var(--m-rule) solid var(--ink);
+  padding: 0 var(--s-1);
+}
+.perfect-game__sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.perfect-game__sum-key {
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.perfect-game__sum b {
+  font-size: var(--size-head);
+}
+.perfect-game__panel-foot {
+  padding: var(--s-2) var(--s-4) var(--s-3);
+  font-size: var(--size-small);
+  text-align: right;
+}

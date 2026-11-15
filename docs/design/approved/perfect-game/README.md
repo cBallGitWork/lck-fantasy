@@ -2,12 +2,12 @@
 
 The gameweek's best team: the 7 starter slots, one of them the Carry, under the team cap (spec/12). Reached from **Highest ›** on Points and from **Star and flop** on Home. Drawn at 1440 in the shared frame.
 
-**Approved:** Craig, 15 Nov 2026: "Yes, save". Before that he settled three things: the view is the one saved on Points ("we use that preference here"), your own players are marked, and both links (Points and Home). Names, teams and numbers are a made-up LCK Cup Week 3, final, that agree with Points; they are not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-16-perfect-game/](../../proposals/2026-11-16-perfect-game/) (`perfect.html`, `brief.md`).
+**Approved:** Craig, 15 Nov 2026: "Yes, save". Before that he settled three things: the view is the one saved on Points ("we use that preference here"), your own players are marked, and both links (Points and Home). Names, teams and numbers are a made-up LCK Cup Week 3, final, that agree with Points; they are not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn. The source is [docs/design/proposals/2026-11-16-perfect-game/](../../proposals/2026-11-16-perfect-game/) (`perfect.html`, `brief.md`).
 
 | File | Shows |
 |---|---|
 | `1440.png`, `perfect.html#rift` | Rift view: the seven on the Rift, Faker as Carry and tapped |
-| `1440-card.png`, `perfect.html#card` | Card view: one row per slot |
+| `1440-card.png`, `perfect.html#card` | Card view: the seven as the broadcast lineup, Faker as Carry |
 
 ## Borrowed
 
@@ -17,8 +17,8 @@ The gameweek's best team: the 7 starter slots, one of them the Carry, under the 
 
 ## Layout
 
-- **Header:** Perfect game and hangul; ‹ week ›; the total, final or Not final, Cap 2; Highest, Average, Your points ›.
-- **Left:** Rift view | Card view; each player's points and series; C on the Carry with its ×1.5; Yours on each player you own; Flex shows the role it plays; Coach 감독.
+- **Header:** Perfect game and hangul; ‹ week ›; the total, Final or Not final, Cap 2; Average, Highest, Your points ›.
+- **Left:** Rift view | Card view (Card view is the broadcast lineup, no bench: redrawn 15 Nov 2026 from a table); each player's points and series; C on the Carry with its ×1.5; the dot after each player you own; Flex shows the role it plays; Coach 감독.
 - **Right:** the tapped player's games, the week's series, the sponsor slot.
 
 ## Controls

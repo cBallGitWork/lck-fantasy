@@ -1,11 +1,7 @@
-import { MANAGER } from "../../fixtures/week3";
-import { PageFrame, PageHead } from "../../parts";
+import { PICK_TEAM_DATA, PICK_TEAM_STATES } from "./fixtures";
+import { PickTeamPage } from "./PickTeam";
 
-/** A placeholder until its own issue builds it to docs/design/approved/pick-team/. */
+/** Pick Team (docs/design/approved/pick-team/), on its made-up data until the backend feeds it. */
 export function PickTeamScreen() {
-  return (
-    <PageFrame screen="pick-team" active="pickTeam" account={MANAGER.team}>
-      <PageHead title={"Pick Team"} hangul={"팀 선택"} />
-    </PageFrame>
-  );
+  return <PickTeamPage data={PICK_TEAM_DATA} initial={PICK_TEAM_STATES.rift} />;
 }

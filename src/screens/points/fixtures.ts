@@ -3,8 +3,10 @@
 // (series and games #36, live points #34, final points and ranks #33). The champions and each game's
 // winner are made up, to fit the week's scores.
 
+import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { CARRY_MULTIPLIER, COMPETITION, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
+import { count, ordinal } from "../../parts";
 import { PATHS } from "../../paths";
 import type { SlotKey } from "../../rift";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter } from "./types";
@@ -124,11 +126,8 @@ export const POINTS_FIXTURE: PointsData = {
     { label: "Killer", name: "Chovy", points: 15, ownedPct: 41, mine: false },
   ],
   leagues: [
-    { name: "Overall · Emerald I", rank: "48,211", move: 6904 },
-    { name: "United Kingdom", rank: "1,402", move: 233 },
-    { name: "T1 supporters", rank: "3,118", move: 510 },
-    { name: "Pub League", rank: "2nd", move: 1 },
-    { name: "Flol Discord", rank: "14th", move: -2 },
+    { name: `Overall · ${MY_OVERALL.tier}`, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
+    ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),
   ],
   nextTier: { points: 6, tier: "Diamond IV" },
   series: WEEK3_SERIES_AT_POINTS,

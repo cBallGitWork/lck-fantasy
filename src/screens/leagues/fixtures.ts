@@ -3,6 +3,7 @@
 // is week3.ts's. The backend feeds each of these once it is wired (#38).
 
 import { MANAGERS } from "../../fixtures/managers";
+import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { MANAGER } from "../../fixtures/week3";
 import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, StandingRow } from "./types";
 
@@ -21,11 +22,8 @@ export const COMPETITION: CompetitionTabs = {
 export const OPEN_LEAGUE_ID = "pub-league";
 
 export const LEAGUE_LIST: LeagueSummary[] = [
-  { id: "overall", name: "Overall", kind: "general", rank: 48211, move: 6904, size: 212480 },
-  { id: "united-kingdom", name: "United Kingdom", kind: "general", rank: 1402, move: 233, size: 9377 },
-  { id: "t1-supporters", name: "T1 supporters", kind: "general", rank: 3118, move: 510, size: 41902 },
-  { id: "pub-league", name: "Pub League", kind: "private", rank: 2, move: 1, size: 12 },
-  { id: "flol-discord", name: "Flol Discord", kind: "private", rank: 14, move: -2, size: 86 },
+  { id: "overall", name: "Overall", kind: "general", rank: MY_OVERALL.rank, move: MY_OVERALL.move, size: MY_OVERALL.size },
+  ...MY_LEAGUES.map(({ id, name, kind, rank, move, size }): LeagueSummary => ({ id, name, kind: kind === "private" ? "private" : "general", rank, move, size })),
 ];
 
 type Line = [rank: number, move: number | null, team: string, manager: string, carry: string, week: number, total: number, split?: number];

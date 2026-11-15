@@ -4,6 +4,7 @@ import { MANAGER, WEEK3_SERIES_AT_POINTS, WEEK4_DEADLINE } from "../fixtures/wee
 import { html, text } from "../testing/render";
 import {
   BuffCard,
+  Crest,
   Deadline,
   Empty,
   ErrorState,
@@ -207,6 +208,14 @@ test("a placeholder is one word; the sponsor note is the spec's line", () => {
   expect(text(<Placeholder word="Sponsor" />)).toBe("Sponsor");
   expect(html(<Placeholder word="Photo" width="cardPhoto" />)).toContain("width:var(--m-card-photo)");
   expect(text(<SponsorNote />)).toBe("All sponsors are made up.");
+});
+
+test("every LCK team has its crest; a team without one shows its code in a dashed box", () => {
+  for (const team of ["T1", "GEN", "HLE", "KT", "DK", "NS", "BFX", "DNS", "BRO", "KRX"]) {
+    expect(html(<Crest team={team} />)).toMatch(new RegExp(`<img[^>]+src="[^"]+"[^>]+alt="${team} crest"`));
+  }
+  expect(html(<Crest team="T1" size="cardHead" />)).toContain("width:var(--m-card-head)");
+  expect(text(<Crest team="XYZ" />)).toBe("XYZ");
 });
 
 test("the series list shows scores with their state, and times for the next", () => {

@@ -22,6 +22,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
 - `MainAction.tsx`: the screen's one filled key; disabled with its reason.
 - `OutlinedKey.tsx`: any other key; disabled with its reason.
+- `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `Placeholder.tsx`: a dashed box with one word (sponsor, photo).
 - `SponsorNote.tsx`: `All sponsors are made up.`
 - `money.ts`: an amount in 억, and the note for overseas players (spec/02).

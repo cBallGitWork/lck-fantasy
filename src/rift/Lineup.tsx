@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, MeDot, Placeholder, selectable, Tag } from "../parts";
+import { Crest, cx, MeDot, Placeholder, selectable, Tag } from "../parts";
 import "./Lineup.css";
 import { RoleIcon } from "./RoleIcon";
 import type { RoleKey, SlotKey } from "./roles";
@@ -53,7 +53,7 @@ export function LineupCard(p: LineupCardProps) {
       <RoleHead slot={p.slot} plays={p.plays} />
       {p.slot === "coach" ? (
         <div className="pcard__photo pcard__photo--crest">
-          <span className="pcard__crest">Crest</span>
+          <Crest team={p.team} />
           {mark}
         </div>
       ) : (

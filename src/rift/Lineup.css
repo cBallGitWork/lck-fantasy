@@ -47,17 +47,6 @@
   align-items: center;
   justify-content: center;
 }
-.pcard__crest {
-  width: var(--m-crest);
-  height: var(--m-crest);
-  border-radius: 50%;
-  border: var(--m-rule) dashed var(--soft);
-  color: var(--mid);
-  font-size: var(--size-small);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 .pcard__news {
   position: absolute;
   left: var(--s-1);

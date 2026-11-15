@@ -12,6 +12,7 @@ import {
   WEEK4_SERIES,
   type Series,
 } from "../../fixtures/week3";
+import { MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
 import { isBench } from "../../rift";
 import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./types";
@@ -26,10 +27,10 @@ const SHARED: Omit<HomeShared, "countdown"> = {
   deadline: { week: 4, competition: COMPETITION, local: WEEK4_DEADLINE.local, kst: WEEK4_DEADLINE.kst },
   freeTransfers: 1,
   following: [
-    { kind: "series", id: "minji-w3-sat-1", manager: "Minji", series: matchup(atPoints("w3-sat-1")), points: 20 },
-    { kind: "carry", id: "dan-w3-wed-1", manager: "Dan", player: "Faker", series: matchup(atPoints("w3-wed-1")), points: 34 },
-    { kind: "series", id: "jae-w3-fri-2", manager: "Jae", series: matchup(atPoints("w3-fri-2")), points: 9 },
-    { kind: "truck", id: "truck-minji-w3", line: "Sell your bot laner", from: "Minji", week: 3 },
+    { kind: "series", id: "minji-w3-sat-1", manager: MANAGERS.minji.first, series: matchup(atPoints("w3-sat-1")), points: 20 },
+    { kind: "carry", id: "dan-w3-wed-1", manager: MANAGERS.dan.first, player: "Faker", series: matchup(atPoints("w3-wed-1")), points: 34 },
+    { kind: "series", id: "jae-w3-fri-2", manager: MANAGERS.jae.first, series: matchup(atPoints("w3-fri-2")), points: 9 },
+    { kind: "truck", id: "truck-minji-w3", line: "Sell your bot laner", from: MANAGERS.minji.first, week: 3 },
   ],
   leagues: [
     { id: "uk", name: "United Kingdom", kind: "country", rank: 1402, move: 233 },

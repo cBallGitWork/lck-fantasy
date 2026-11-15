@@ -25,7 +25,10 @@ Flol's crest for each of the ten LCK teams, each leaning into one thing fans kno
 | BRO | A bro fist, OK BRO (Craig) | B |
 | KRX | The heart that never breaks, 중꺾마 | A |
 
+## Rights
+
+Crests show now, before the teams or Riot answer the permission email (Craig, 15 Nov 2026: "yes crests show earlier"). They are our own drawings, no copied logo; [lck-visual-research.md](../../../research/lck-visual-research.md), Rights, has the background.
+
 ## Still open
 
 - **For later:** T1's truck screen shows a T1 close to the real lettering, KT keeps a leaning R with a star, and BFX's fox head sits near FEARX's own. Both stay for now; they are the first to change when we come back after the reskin.
-- Whether crests show before the teams or Riot answer the permission email ([lck-visual-research.md](../../../research/lck-visual-research.md), Rights).

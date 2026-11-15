@@ -34,8 +34,9 @@ product's set, because it is proven on these services.
 | TypeScript, ESLint | strict types and lint, both in `npm run verify` |
 | Papa Parse | reads Oracle's Elixir's daily CSV, quoted fields included, with errors reported, not skipped (#36) |
 
-`convex/_generated/` is written by `npx convex dev`, which needs a Convex deployment. Until Craig
-creates one, the rules are pure functions and need none.
+`convex/_generated/` is normally written by `npx convex dev`, which needs a Convex deployment. Until
+Craig creates one, it is written by hand (#36), and `npx convex dev` will overwrite it. The rules are
+pure functions; Convex functions run in memory under `convex-test`.
 
 ## Data
 

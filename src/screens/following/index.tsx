@@ -32,7 +32,10 @@ export function FollowingPage({ data: initial }: { data: FollowingData }) {
         onTruck={(id) => choose(id, "coffee")}
         onAccept={(id) => setData((d) => accept(d, id))}
         onDecline={(id) => setData((d) => decline(d, id))}
-        onUnfollow={(id) => setData((d) => unfollow(d, id))}
+        onUnfollow={(id) => {
+          setData((d) => unfollow(d, id));
+          setPicking((p) => (p?.managerId === id ? null : p));
+        }}
         onRemove={(id) => setData((d) => removeFollower(d, id))}
         onBlock={(id) => setData((d) => removeFollower(d, id))}
       />

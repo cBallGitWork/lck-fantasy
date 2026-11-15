@@ -32,7 +32,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Each row also shows price and its last move, form, owned and points, as FPL's list does. Any
     column sorts. Your own players carry a dot. Academy players are listed, after everyone with
     games (Craig, 16 Nov 2026).
-  - It links to Price changes. The picture is `docs/design/approved/stats/`.
+  - It links to Patch update. The picture is `docs/design/approved/stats/`.
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.
   - Tabs: Fixtures, Results, Standings and Teams, each its own (Craig, 15 Nov 2026). Standings
@@ -44,8 +44,19 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Series page**: one series, its games and each player's lines in each game.
   - A page with its own link, opened from every series row anywhere (Craig, 16 Nov 2026).
   - One grid per team: its players down the side, the games as columns, as in the Points drawer.
-  - Each game shows its winner, length and champions only.
+    Each cell shows the champion, K/D/A and points; the best 2 are boxed and a dropped game is
+    greyed, as on Points (Craig, 16 Nov 2026).
+  - Each game shows its winner, length, a POG badge on its Player of the Game and a VOD link to
+    lolesports. No series POG, picks, bans or sides: "i dont think we need draft info overload"
+    (Craig, 16 Nov 2026).
+  - The scorebug shows each team's record as of now. The coach row shows the coach lines that
+    scored and the series +3 or −1. Your own players carry a mark; there is no total of your
+    players' points (Craig, 16 Nov 2026).
+  - While live: provisional points, a Not final tag, solo kills and steals at final
+    ([spec/11](11-live-points.md)).
+  - A player who sat out a game shows a dash there; a sub has his own row.
   - Before it starts: the time (yours and KST), the format, both rosters and Watch ›.
+  - The picture is `docs/design/approved/series/`.
 - **Player pop-up**: see [The player card](#the-player-card).
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the
   6th role", Craig, 13 Nov 2026). See [The coach card](#the-coach-card).
@@ -59,7 +70,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and ignores both.
   - It builds live, with a Not final tag until the week is final.
   - Reached from links on Points and Home.
-- **Price changes**: the week's rises and falls. Past moves only, no prediction.
+- **Patch update**, named as LoL's patches (Craig, 16 Nov 2026; it was Price changes): the week's rises and falls. Past moves only, no prediction.
   - Reached from links on Stats and Transfers. ‹ Week › arrows go back through past weeks
     (Craig, 16 Nov 2026).
   - Rises and falls side by side. A rise is Korean red, a fall blue, on every screen that shows

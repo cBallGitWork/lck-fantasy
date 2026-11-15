@@ -1,7 +1,7 @@
 // Perfect game's own made-up data: Week 3, final, seen on Week 4's Tuesday (perfect.html).
 // The seven and their points are the shared PERFECT_GAME; this adds what only this page shows.
 
-import { CARRY_MULTIPLIER, COMPETITION, PERFECT_GAME, WEEK3_SERIES_FINAL } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, COMPETITION, PERFECT_GAME, TEAM_CAP, WEEK3_SERIES_FINAL } from "../../fixtures/week3";
 import type { PerfectGameData, PerfectPlayer, PlayerSeries } from "./types";
 
 /** Each starter's series this week, and his games where the picture draws them (Faker's). */
@@ -46,7 +46,7 @@ export const PERFECT_PLAYERS: PerfectPlayer[] = PERFECT_GAME.map((pick) => {
 export const PERFECT_WEEK3: PerfectGameData = {
   week: `${COMPETITION} · Week 3`,
   final: true,
-  cap: 2,
+  cap: TEAM_CAP,
   carryTimes: CARRY_MULTIPLIER,
   average: 79,
   highest: 136,

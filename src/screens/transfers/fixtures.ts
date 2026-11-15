@@ -3,7 +3,7 @@
 // (src/fixtures/week3.ts); the list's players and the week's confirms are the picture's own.
 
 import { opponent, seriesOf } from "../../fixtures/series";
-import { COMPETITION, MANAGER, PICK_TEAM_SQUAD, playerId, STATS_PLAYERS, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
+import { COMPETITION, HIT_POINTS, MANAGER, PICK_TEAM_SQUAD, playerId, STATS_PLAYERS, TEAM_CAP, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
 import { eokToWon } from "../../parts";
 import type { Confirm, Fixture, ListPlayer, Plan, SquadPlayer, TransferRules } from "./plan";
 import type { TransfersPageProps } from "./TransfersPage";
@@ -65,11 +65,11 @@ export const PLAYERS: ListPlayer[] = [
   ),
 ];
 
-export const RULES: TransferRules = { freeTransfers: 0, hitPoints: 6, teamCap: 2, bank: eokToWon(0.5) };
+export const RULES: TransferRules = { freeTransfers: 0, hitPoints: HIT_POINTS, teamCap: TEAM_CAP, bank: eokToWon(0.5) };
 
 /** The week's confirms, newest first. */
 export const CONFIRMS: Confirm[] = [
-  { id: "c2", local: "Tue 21:10", kst: "06:10", moves: [{ out: "Kiin", in: "Zeus" }], hit: 6 },
+  { id: "c2", local: "Tue 21:10", kst: "06:10", moves: [{ out: "Kiin", in: "Zeus" }], hit: HIT_POINTS },
   {
     id: "c1",
     local: "Mon 18:02",

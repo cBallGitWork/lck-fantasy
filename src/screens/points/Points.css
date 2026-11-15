@@ -54,7 +54,7 @@
 }
 .points__rank {
   display: grid;
-  grid-template-columns: 1fr auto calc(var(--s-7) + var(--s-5));
+  grid-template-columns: 1fr auto var(--m-col-figure);
   gap: var(--s-3);
   align-items: center;
 }

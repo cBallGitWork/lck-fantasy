@@ -2,7 +2,7 @@
 // Names, teams and numbers are examples, not roster data. Truck lines are the unapproved drafts
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
 import { seriesById } from "../../fixtures/series";
-import { BEST_OF, CARRY_MULTIPLIER, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
+import { BEST_OF, CARRY_MULTIPLIER, HIT_POINTS, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
 import type { FollowingData, Manager, SeriesItem } from "./feed";
 
 const MINJI: Manager = { id: "minji", name: "Minji Park", team: "Chovy Was Right There" };
@@ -94,7 +94,7 @@ export const FOLLOWING: FollowingData = {
           id: "f5",
           manager: DAN,
           transfers: 2,
-          hit: 6,
+          hit: HIT_POINTS,
           swaps: [
             { out: "Lucid", in: "Oner", soFar: 0 },
             { out: "Chovy", in: "Faker", soFar: 24 },

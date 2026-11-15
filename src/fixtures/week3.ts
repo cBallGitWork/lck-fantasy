@@ -27,9 +27,14 @@ export type TeamCode = keyof typeof TEAMS;
 
 export const COMPETITION = "LCK Cup";
 
-/** The competition's values the pictures share: the Carry's multiplier, each series' length, the four buffs (spec/06). */
+/**
+ * The competition's values the pictures share: the Carry's multiplier, each series' length, the
+ * most players from one team, the points a transfer over the free ones costs, the four buffs (spec/06).
+ */
 export const CARRY_MULTIPLIER = 1.5;
 export const BEST_OF = 3;
+export const TEAM_CAP = 2;
+export const HIT_POINTS = 6;
 export const BUFFS = ["Bench Boost", "Dual Carry", "Remake", "Limitless"] as const;
 export type BuffName = (typeof BUFFS)[number];
 
@@ -111,7 +116,7 @@ export const WEEK4_SERIES: Series[] = [
 export const WEEK3_DEADLINE = { day: "Wed", date: "13 Jan", time: "07:45", kst: "16:45" } as const;
 
 /** Week 4's deadline, 15 minutes before its first series (pick.html). */
-export const WEEK4_DEADLINE = { local: "Wed 07:45", kst: "16:45", countdown: "9h 45m" } as const;
+export const WEEK4_DEADLINE = { local: "Wed 07:45", kst: "16:45", countdown: "9h 45m", at: "2027-01-20T07:45:00Z" } as const;
 
 /** A squad member at the Points picture's moment, with his points game by game. */
 export interface PointsPick {

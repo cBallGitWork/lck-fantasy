@@ -1,11 +1,21 @@
 // kkOma's card on the made-up LCK Cup (docs/design/approved/coach-card/coach.html), at the two
 // moments the picture draws: from Pick Team (Week 4, Tuesday) and from Points (Week 3 Saturday,
 // T1 v DK game 2 live). This week's series and points come from the shared Week 3 (week3.ts).
+import { hangulOf, ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
 import { fromSide, opponent, seriesById, seriesOf } from "../../fixtures/series";
 import { POINTS_SQUAD, WEEK3_SERIES_AT_POINTS, WEEK4_SERIES } from "../../fixtures/week3";
-import type { CoachCardData, CoachWeek, FixtureRow, SeasonLine, StripNext, StripPast, WeekGame, WeekSeries } from "./types";
+import type { RoleKey } from "../../rift";
+import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, StripNext, StripPast, WeekGame, WeekSeries } from "./types";
 
-const HEAD = { team: "T1", name: "kkOma", hangul: "김정균", legal: "Kim Jeong-gyun" } as const;
+const HEAD = { team: "T1", name: "kkOma", hangul: hangulOf("kkOma"), legal: "Kim Jeong-gyun" } as const;
+
+/** T1's player in roster place `i`, name and price from the shared roster, with the card's own season figures. */
+function t1Player(role: RoleKey, i: number, figures: Pick<RosterRow, "points" | "ownedPct" | "mine">): RosterRow {
+  const name = ROSTERS.T1[i]?.[0];
+  const priceEok = T1_PRICES_EOK[i];
+  if (name === undefined || priceEok === undefined) throw new Error(`T1 has no rostered player ${i}`);
+  return { role, name, priceEok, ...figures };
+}
 
 /** The series line's points (spec/05), held per competition. */
 const SERIES_WON = 3;
@@ -124,11 +134,11 @@ export const FROM_PICK_TEAM: CoachCardData = {
     ],
   },
   roster: [
-    { role: "top", name: "Doran", priceEok: 12.5, points: 38, ownedPct: 12 },
-    { role: "jng", name: "Oner", priceEok: 14.0, points: 44, ownedPct: 21 },
-    { role: "mid", name: "Faker", priceEok: 18.5, points: 58, ownedPct: 46, mine: true },
-    { role: "bot", name: "Peyz", priceEok: 15.0, points: 47, ownedPct: 30 },
-    { role: "sup", name: "Keria", priceEok: 14.5, points: 41, ownedPct: 25 },
+    t1Player("top", 0, { points: 38, ownedPct: 12 }),
+    t1Player("jng", 1, { points: 44, ownedPct: 21 }),
+    t1Player("mid", 2, { points: 58, ownedPct: 46, mine: true }),
+    t1Player("bot", 3, { points: 47, ownedPct: 30 }),
+    t1Player("sup", 4, { points: 41, ownedPct: 25 }),
   ],
 };
 

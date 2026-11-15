@@ -13,6 +13,7 @@ import {
   WEEK4_SERIES,
   type TeamCode,
 } from "../../fixtures/week3";
+import { hangulOf } from "../../fixtures/rosters";
 import { fromSide, opponent, seriesById, seriesOf } from "../../fixtures/series";
 import type { CardGame, CardWeek, FixtureRow, NextSeries, PlayerCardData, WeekSeries } from "./card";
 
@@ -82,7 +83,7 @@ const WEEK3_AT_POINTS: CardWeek = {
   total: 25,
 };
 
-const FAKER = { name: NAME, hangul: "이상혁", legalName: "Lee Sang-hyeok", role: "mid", team: TEAM } as const;
+const FAKER = { name: NAME, hangul: hangulOf(NAME), legalName: "Lee Sang-hyeok", role: "mid", team: TEAM } as const;
 
 /** Opened from Pick Team, Week 4 Tuesday: the History, Fixtures and Champions pictures. */
 export const CARD_FROM_PICK_TEAM: PlayerCardData = {

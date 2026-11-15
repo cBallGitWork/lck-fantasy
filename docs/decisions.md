@@ -379,6 +379,17 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), [spec/09](../spec/
 - "your wording sucks@until week 4 scores. what does that means"; "you cant change fav team anyways during season"; "once your first gameweek starts". Both favourite team and country lock at the manager's first deadline.
 - "1 save team 2 your call 3 ok 4 your call 5 just text is fine no need for draw, do some basics and file". The account is made on Save team; Claude allowed any banner text, moderated; a deleted maker's private league passes to the earliest joiner, or goes if nobody else is in it; Claude kept the delete sheet's list of what goes; Privacy and Terms are plain text in `docs/legal/`, not drawn.
 
+## Patch update design round (15 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/patch-update/`.
+
+- "patch update, just shows the new prices, thats it really, occurs once a gameweek dealine had passed". The page is named Patch update; filters and the season view are left out.
+- "in your squad · 1억 = 100 million won, game money only please remove this fluff man people arent idiots": the footer line went.
+- "use dummy data": roster facts in the picture are made up, not checked.
+- "do a previous and new price": Was and Now columns.
+- "dotn say week 3 deadline, thats confusing, new price sfor gameweek 4 it should be"; "dont mention gameweej 5 thats fluff": titled Gameweek 4 prices, with only when they were set.
+- The picture: "Save it".
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

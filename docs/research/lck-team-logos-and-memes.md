@@ -169,6 +169,7 @@ Sources: <https://kt-sports.co.kr/sports/site/esports/rolster/bi.do>, <https://k
 
 ### Memes
 
+- **Never get excited about KT** (Craig, 15 Nov 2026; the one fans know best). The moment fans get their hopes up, KT fail. *Icon:* hype that fizzles, a drooping party popper.
 - **Telecom War (통신사 더비 / 통신사 대전 / 이통사 전쟁)** (sourced). Any T1 v KT match is called the Telecom War because rival mobile carriers back both teams: SK Telecom backs T1 and KT backs KT Rolster. It is the LCK's oldest rivalry. It peaked at the 2025 Worlds final in Chengdu on 9 Nov 2025, KT's first Worlds final, which T1 won 3-2 for a third title in a row. *Icon:* two old flip phones facing each other with a lightning bolt between them.
   Sources: <https://www.sheepesports.com/articles/lol-what-is-the-telecom-war/en>, <https://bo3.gg/lol/articles/what-is-the-telecom-war-in-lol>, <https://www.sheepesports.com/articles/lol-worlds-2025-t1-claim-their-sixth-title-after-winning-the-greatest-telecom-war-in-history/en>, <https://spilled.gg/t1-defeats-kt-rolster-3-2-win-3rd-straight-world-championship-faker-claims-6th-world-title>, <https://v.daum.net/v/20251103165227403>
 - **Bdd's log roll (비디디의 통나무 롤, 'Bdd carrying KT on his back')** (well known, one source). KT's play was often brushed off as mid laner Bdd carrying the team alone. On 15 Sep 2025, after KT's playoff upset of Gen.G, a GameMeca meme cartoon used the Korean phrase 비디디의 통나무 롤 (Bdd's log roll) and flipped it: this time every player did his job, jungler Cuzz above all. It praises Bdd but gently digs at his teammates. Only this one source uses the log wording. *Icon:* a player carrying a big log on his back.
@@ -204,6 +205,7 @@ Sources: <https://en.wikipedia.org/wiki/Dplus_KIA>, <https://upload.wikimedia.or
 
 ### Memes
 
+- **Caedrel's team** (Craig, 15 Nov 2026). DK is a fan favourite of Caedrel, the LoL streamer and caster, who roots for them openly. *Icon:* a fan's heart; never his face.
 - **Dpboong, the fans' car (딮붕이 / 담붕이)** (sourced). DK fans call themselves 딮붕이 (earlier 담붕이, from the DAMWON name). On 17 January 2024 the sponsor Kia showed a car it had made with DK fans and named it after them. It fits DK because the team carries Kia's name. *Icon:* a small cartoon car in DK colours.
   Sources: <https://www.eyesmag.com/posts/156008/dplus-kia-dpboong- (dated 17 Jan 2024; confirms a car Kia made with DK fans, named Dpboong)>, <https://namu.wiki/w/Dplus%20Kia/%EB%A6%AC%EA%B7%B8%20%EC%98%A4%EB%B8%8C%20%EB%A0%88%EC%A0%84%EB%93%9C (search snippet only, for the fan name; Namu Wiki refused the fetch)>
 - **Nuguri the raccoon (너구리), 'Angry Nuguri'** (sourced). Nuguri, DAMWON's top laner when they won Worlds 2020, means raccoon dog in Korean. In August 2020 he said he chose the name in a hurry after searching Naver, because the raccoon photos were cute. In April 2020 he named Angry Nuguri as his pick of the fans' raccoon nicknames. This is DAMWON-era lore: he has not played for DK in recent seasons. *Icon:* a cross-faced raccoon head.

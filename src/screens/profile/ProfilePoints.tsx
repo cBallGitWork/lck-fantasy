@@ -1,8 +1,7 @@
-import { GoLink, Loading, Tag } from "../../parts";
+import { GoLink, Loading, NONE, Tag } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { BENCH_SLOTS, isBench, LINEUP_ORDER, MARK_NAME, ROLE_NAME } from "../../rift";
 import type { PointsWeek, ProfilePick } from "./fixtures";
-import { NONE } from "./format";
 
 const BENCH = "Bench";
 

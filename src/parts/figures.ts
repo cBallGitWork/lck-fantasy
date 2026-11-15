@@ -34,5 +34,29 @@ export const outcome = (won: boolean) => (won ? "W" : "L");
 /** A finished series from the first side: `W 2–1`, `L 1–2`. */
 export const result = (s: Score) => `${outcome(s[0] > s[1])} ${score(s)}`;
 
-/** A figure per game, to one decimal: `4.9`. */
-export const perGame = (total: number, games: number) => (total / games).toFixed(1);
+/** A figure to one decimal: form, an average. `9.0`. */
+export const oneDecimal = (n: number) => n.toFixed(1);
+
+/** A figure per game as a number, 0 where there are no games; for sorting. */
+export const perGameValue = (total: number, games: number) => (games === 0 ? 0 : total / games);
+
+/** A figure per game, to one decimal: `4.9`; `0.0` with no games. */
+export const perGame = (total: number, games: number) => oneDecimal(perGameValue(total, games));
+
+/** A per cent: owned, a win rate. `46%`. */
+export const pct = (n: number) => `${n}%`;
+
+/** Absence: a figure or a line there is none of (plate.md, Words). */
+export const NONE = "—";
+
+/** A series' length: `Bo3`. */
+export const bestOf = (n: number) => `Bo${n}`;
+
+/** A place, alone or among so many: `2nd`, `2nd of 10 mids`. */
+export const placeOf = (place: number, of?: string) => (of === undefined ? ordinal(place) : `${ordinal(place)} of ${of}`);
+
+/** The Carry's sum on a tile: `22×1.5`. */
+export const carrySum = (raw: number, times: number) => `${raw}×${times}`;
+
+/** The Carry's working in a games panel: `8 + 9 = 17 × 1.5`. */
+export const carryWorking = (points: readonly number[], raw: number, times: number) => `${points.join(" + ")} = ${raw} × ${times}`;

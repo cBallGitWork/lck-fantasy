@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, eok, Modal, ordinal, perGame, Placeholder, signed, Tag } from "../../parts";
+import { cx, eok, Modal, oneDecimal, pct, perGame, Placeholder, placeOf, PriceMove, signed, Tag } from "../../parts";
 import { ROLE_NAME } from "../../rift";
 import { better, ROLE_PLURAL, type Side } from "./rules";
 import type { ComparePlayer, NextSeries, PastSeries } from "./fixtures";
@@ -58,7 +58,7 @@ function Price({ player }: { player: ComparePlayer }) {
   return (
     <>
       {eok(player.priceEok)}
-      {player.riseEok !== undefined && <span className="rise compare__move">{player.riseEok.toFixed(1)}</span>}
+      {player.riseEok !== undefined && <PriceMove eok={player.riseEok} className="compare__move" />}
     </>
   );
 }
@@ -69,7 +69,7 @@ function Season({ player }: { player: ComparePlayer }) {
     <>
       {points}
       <small className="compare__rank">
-        {ordinal(rank)} of {among} {ROLE_PLURAL[player.role].toLowerCase()}
+        {placeOf(rank, `${among} ${ROLE_PLURAL[player.role].toLowerCase()}`)}
       </small>
     </>
   );
@@ -119,9 +119,9 @@ export function HeadToHead({ left, right }: { left: ComparePlayer; right: Compar
         </colgroup>
         <tbody>
           <Row label="Season" kind="big" left={<Season player={left} />} right={<Season player={right} />} mark={better(left.season.points, right.season.points)} />
-          <Row label="Form" left={left.form.toFixed(1)} right={right.form.toFixed(1)} mark={better(left.form, right.form)} />
+          <Row label="Form" left={oneDecimal(left.form)} right={oneDecimal(right.form)} mark={better(left.form, right.form)} />
           <Row label="Price" left={<Price player={left} />} right={<Price player={right} />} />
-          <Row label="Owned" left={`${left.ownedPct}%`} right={`${right.ownedPct}%`} />
+          <Row label="Owned" left={pct(left.ownedPct)} right={pct(right.ownedPct)} />
           <Row label="Last 3" kind="strip" left={<Past series={left.last3} />} right={<Past series={right.last3} />} />
           <Row label="Next 3" kind="strip" left={<Next series={left.next3} />} right={<Next series={right.next3} />} />
         </tbody>

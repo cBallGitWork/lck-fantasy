@@ -1,4 +1,4 @@
-import { cx, GoLink, LinkGo, MeDot, outcome, SectionHead, Tag } from "../../parts";
+import { cx, GoLink, LinkGo, MeDot, NONE, outcome, SectionHead, Tag } from "../../parts";
 import { cardGo, type Go } from "../../paths";
 import { RoleIcon, ROLE_NAME, type IconKey } from "../../rift";
 import type { CoachLine, Game, Person, PlayerLine, Roster, TeamSheet } from "./types";
@@ -89,7 +89,7 @@ function CoachRow({ coach }: { coach: CoachLine }) {
       {coach.games.map((game, i) => (
         <td key={i} className={cx(!game.counts && "series__dropped")}>
           <div className="series__game">
-            <span className={game.lines.length > 0 ? "series__coach-lines" : "series__none"}>{game.lines.join(" · ") || "—"}</span>
+            <span className={game.lines.length > 0 ? "series__coach-lines" : "series__none"}>{game.lines.join(" · ") || NONE}</span>
             <Points points={game.points} counts={game.counts} />
           </div>
         </td>

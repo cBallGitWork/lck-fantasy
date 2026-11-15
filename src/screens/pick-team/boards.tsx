@@ -1,4 +1,4 @@
-import { eok, Tag } from "../../parts";
+import { eok, oneDecimal, Tag } from "../../parts";
 import { BENCH_SLOTS, BenchBar, BenchSwap, BenchTile, Lineup, RIFT_SLOTS_PICK, Rift, Tile, type LineupCardProps, type RoleKey } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
@@ -56,7 +56,7 @@ export function CardBoard(props: ViewProps) {
     footer: (
       <>
         <span>
-          Form <b>{p.form.toFixed(1)}</b>
+          Form <b>{oneDecimal(p.form)}</b>
         </span>
         <b>{eok(p.priceEok)}</b>
       </>

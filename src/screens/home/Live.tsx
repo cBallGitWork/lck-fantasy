@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cx, LinkGo, Menu, SideSection, Tag } from "../../parts";
+import { bestOf, cx, LinkGo, Menu, score, SideSection, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { HomeFrame, type HomeActions } from "./Home";
 import "./live.css";
@@ -18,10 +18,10 @@ function StreamScreen({ series, stream }: { series: LiveSeries; stream: Stream |
       <div className="home__screen-bar">
         <Tag kind="live">Live</Tag>
         <b>
-          {series.home} {series.score[0]}–{series.score[1]} {series.away}
+          {series.home} {score(series.score)} {series.away}
         </b>
         <small className="home__screen-small">
-          Game {series.game} · Bo{series.bestOf} · {series.label}
+          Game {series.game} · {bestOf(series.bestOf)} · {series.label}
         </small>
         <span className="home__screen-space" />
         <LinkGo go={{ to: PATHS.live }}>Live</LinkGo>

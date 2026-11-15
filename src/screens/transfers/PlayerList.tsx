@@ -1,4 +1,4 @@
-import { cx, Empty, formatEok, GoLink, Menu, SideSection } from "../../parts";
+import { cx, Empty, formatEok, GoLink, Menu, pct, SideSection } from "../../parts";
 import { ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import { listRows, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type Row, type SortKey, type SquadPlayer, type TransferRules } from "./plan";
 
@@ -119,7 +119,7 @@ function ListRow({ row, next, picked, canBuy, onBuy }: { row: Row; next?: Fixtur
       <td className="transfers__num num">{formatEok(p.price)}</td>
       <td className="transfers__move">{p.move !== 0 && <span className={p.move > 0 ? "rise" : "fall"} title={p.move > 0 ? "Price rose" : "Price fell"} />}</td>
       <td className="transfers__num num">{p.points}</td>
-      <td className="transfers__num num">{p.ownedPct}%</td>
+      <td className="transfers__num num">{pct(p.ownedPct)}</td>
       <td className="transfers__next">{next && `v ${next.against} ${next.day}`}</td>
       <td>
         {canBuy && (

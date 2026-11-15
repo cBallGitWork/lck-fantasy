@@ -3,7 +3,8 @@
 // T1 v DK game 2 live). This week's series and points come from the shared Week 3 (week3.ts).
 import { hangulOf, ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
 import { fromSide, opponent, seriesById, seriesOf } from "../../fixtures/series";
-import { POINTS_SQUAD, WEEK3_SERIES_AT_POINTS, WEEK4_SERIES } from "../../fixtures/week3";
+import { BEST_OF, POINTS_SQUAD, WEEK3_SERIES_AT_POINTS, WEEK4_SERIES } from "../../fixtures/week3";
+import { bestOf } from "../../parts";
 import type { RoleKey } from "../../rift";
 import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, StripNext, StripPast, WeekGame, WeekSeries } from "./types";
 
@@ -20,11 +21,12 @@ function t1Player(role: RoleKey, i: number, figures: Pick<RosterRow, "points" | 
 /** The series line's points (spec/05), held per competition. */
 const SERIES_WON = 3;
 const SERIES_LOST = -1;
+const FORMAT = bestOf(BEST_OF);
 
 const NEXT: StripNext[] = [
-  { week: 4, day: "Wed", opponent: "KT", format: "Bo3" },
-  { week: 4, day: "Sat", opponent: "GEN", format: "Bo3" },
-  { week: 5, day: "Thu", opponent: "BRO", format: "Bo3" },
+  { week: 4, day: "Wed", opponent: "KT", format: FORMAT },
+  { week: 4, day: "Sat", opponent: "GEN", format: FORMAT },
+  { week: 5, day: "Thu", opponent: "BRO", format: FORMAT },
 ];
 
 const PAST_BEFORE_SAT: StripPast[] = [
@@ -37,15 +39,15 @@ const T1_WEEK4: FixtureRow[] = seriesOf(WEEK4_SERIES, "T1").map((s) => ({
   week: 4,
   day: s.day,
   opponent: opponent(s, "T1"),
-  format: "Bo3",
+  format: FORMAT,
   local: s.local,
   kst: s.kst,
 }));
 const LATER: FixtureRow[] = [
-  { week: 5, day: "Thu", opponent: "BRO", format: "Bo3", local: "08:00", kst: "17:00" },
-  { week: 5, day: "Sun", opponent: "KRX", format: "Bo3", local: "10:30", kst: "19:30" },
-  { week: 6, day: "Wed", opponent: "DK", format: "Bo3", local: "08:00", kst: "17:00" },
-  { week: 6, day: "Sat", opponent: "HLE", format: "Bo3", local: "10:30", kst: "19:30" },
+  { week: 5, day: "Thu", opponent: "BRO", format: FORMAT, local: "08:00", kst: "17:00" },
+  { week: 5, day: "Sun", opponent: "KRX", format: FORMAT, local: "10:30", kst: "19:30" },
+  { week: 6, day: "Wed", opponent: "DK", format: FORMAT, local: "08:00", kst: "17:00" },
+  { week: 6, day: "Sat", opponent: "HLE", format: FORMAT, local: "10:30", kst: "19:30" },
 ];
 const FIXTURES = [...T1_WEEK4, ...LATER];
 

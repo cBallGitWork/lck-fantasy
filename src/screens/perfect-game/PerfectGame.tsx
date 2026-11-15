@@ -1,5 +1,5 @@
 import { MANAGER } from "../../fixtures/week3";
-import { PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle, type WeekNav } from "../../parts";
+import { carrySum, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle, type WeekNav } from "../../parts";
 import { PATHS } from "../../paths";
 import { Lineup, Rift, RIFT_SLOTS, type RoleKey, Tile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
@@ -9,7 +9,7 @@ import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectPlayer, type Perfec
 /** The role a Flex plays; the others play their slot. */
 const plays = (p: PerfectPlayer): RoleKey | undefined => (p.slot === "flex" && p.role !== "coach" ? p.role : undefined);
 
-const carrySum = (p: PerfectPlayer, times: number) => (p.carry ? `${p.raw}×${times}` : undefined);
+const carried = (p: PerfectPlayer, times: number) => (p.carry && p.raw !== undefined ? carrySum(p.raw, times) : undefined);
 
 /** Rift view: the seven on the Rift, each with his points and series, C on the Carry. */
 export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGameData } & Selection) {
@@ -26,7 +26,7 @@ export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGam
           mark={p.carry ? "C" : undefined}
           me={p.mine}
           points={p.points}
-          carrySum={carrySum(p, game.carryTimes)}
+          carrySum={carried(p, game.carryTimes)}
           line={p.line}
           selected={selected === p.slot}
           onSelect={onSelect && (() => onSelect(p.slot))}
@@ -55,7 +55,7 @@ export function PerfectGameCards({ game, selected, onSelect }: { game: PerfectGa
           )),
           footer: (
             <>
-              <span>{carrySum(p, game.carryTimes)}</span>
+              <span>{carried(p, game.carryTimes)}</span>
               <b className="perfect-game__card-points">{p.points}</b>
             </>
           ),

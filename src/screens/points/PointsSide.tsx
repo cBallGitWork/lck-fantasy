@@ -1,8 +1,8 @@
-import { LinkGo, MeDot, SideSection } from "../../parts";
+import { LinkGo, MeDot, pct, RankMove, SideSection } from "../../parts";
 import { PATHS } from "../../paths";
 import type { PointsData, WeekPick } from "./types";
 
-const owned = (p: WeekPick) => (p.mine ? `${p.points} · owned by ${p.ownedPct}%` : `${p.points} · not owned · ${p.ownedPct}%`);
+const owned = (p: WeekPick) => (p.mine ? `${p.points} · owned by ${pct(p.ownedPct)}` : `${p.points} · not owned · ${pct(p.ownedPct)}`);
 
 /** Your Star, Flop and Killer, each with his points and who owns him. */
 export function YourWeek({ picks }: { picks: WeekPick[] }) {
@@ -31,7 +31,7 @@ export function Leagues({ leagues, nextTier }: Pick<PointsData, "leagues" | "nex
           <div key={l.name} className="points__rank">
             <span>{l.name}</span>
             <b className="points__rank-place num">{l.rank}</b>
-            <span className={l.move >= 0 ? "rank-up" : "rank-down"}>{Math.abs(l.move).toLocaleString("en-GB")}</span>
+            <RankMove move={l.move} />
           </div>
         ))}
       </div>

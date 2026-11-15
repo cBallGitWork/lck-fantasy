@@ -2,7 +2,7 @@
 // in what order, and on which page. Pure, so the page and its tests share them.
 
 import type { TeamCode } from "../../fixtures/week3";
-import type { Score } from "../../parts";
+import { perGameValue, type Score } from "../../parts";
 import type { PersonRole, RoleKey } from "../../rift";
 
 export const TABS = ["Players", "Coaches"] as const;
@@ -109,12 +109,9 @@ export function nextView(view: StatsView, change: Partial<StatsView>): StatsView
 /** The rows a page holds. */
 export const PAGE_SIZE = 20;
 
-/** A count over a row's games; 0 for a player with none. */
-export const perGame = (count: number, games: number) => (games === 0 ? 0 : count / games);
-
 /** Points and the lines divide by games under Per game; price, form, owned and games never do. */
 export function sortValue(row: StatsRow, key: SortKey, figures: Figures): number {
-  const divide = (n: number) => (figures === "Per game" ? perGame(n, row.games) : n);
+  const divide = (n: number) => (figures === "Per game" ? perGameValue(n, row.games) : n);
   switch (key) {
     case "priceEok":
     case "form":

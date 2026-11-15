@@ -2,14 +2,16 @@
 // shared LCK Cup Week 3. Points, best 2 and coach lines are the picture's figures as drawn, not
 // worked out here: the backend scores them (#30, #34).
 
-import { COMPETITION, MY_PLAYERS, playerId, TEAMS, WEEK3_SERIES_FINAL, WEEK4_SERIES, type Series, type TeamCode } from "../../fixtures/week3";
+import { BEST_OF, COMPETITION, MY_PLAYERS, playerId, TEAMS, WEEK3_SERIES_FINAL, WEEK4_SERIES, type Series, type TeamCode } from "../../fixtures/week3";
 import { ROSTERS, hangulOf } from "../../fixtures/rosters";
+import { seriesById } from "../../fixtures/series";
+import { bestOf } from "../../parts";
 import type { RoleKey } from "../../rift";
 import type { CoachCell, GameCell, NextSeries, PlayedSeries, PlayerLine, Roster, SeriesView, SeriesWhen } from "./types";
 
 /** The roster's five, in the order ROSTERS holds them. */
 const ROLES: readonly RoleKey[] = ["top", "jng", "mid", "bot", "sup"];
-const FORMAT = "Bo3";
+const FORMAT = bestOf(BEST_OF);
 /** Where VOD links go until #36 fetches each game's own (spec/12). */
 const VOD = "https://lolesports.com/vods";
 
@@ -19,8 +21,7 @@ const person = (name: string, hangul = hangulOf(name)) => ({ id: playerId(name),
 const side = (code: TeamCode, record: string) => ({ code, name: TEAMS[code], record });
 
 function when(list: Series[], id: string, week: number): SeriesWhen {
-  const s = list.find((x) => x.id === id);
-  if (!s) throw new Error(`No series ${id} in the Week 3 fixtures`);
+  const s = seriesById(list, id);
   return { format: FORMAT, competition: COMPETITION, week, day: s.day, date: s.date, local: s.local, kst: s.kst };
 }
 

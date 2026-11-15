@@ -1,11 +1,10 @@
 import type { TeamCode } from "../../fixtures/week3";
-import { cx, formatEok, GoLink, ViewToggle } from "../../parts";
+import { cx, formatEok, GoLink, NONE, ViewToggle } from "../../parts";
 import { cardGo } from "../../paths";
 import { RoleIcon, ROLE_NAME } from "../../rift";
 import type { Roster, TeamRosters } from "./types";
 import { SectionTitle } from "./Week";
 
-const NO_PRICE = "—";
 
 function RosterTable({ roster }: { roster: Roster }) {
   return (
@@ -28,7 +27,7 @@ function RosterTable({ roster }: { roster: Roster }) {
                 </GoLink>
               </td>
               <td className={cx("lck-hub__price", "num", m.priceWon === undefined && "lck-hub__price--none")}>
-                {m.priceWon === undefined ? NO_PRICE : formatEok(m.priceWon)}
+                {m.priceWon === undefined ? NONE : formatEok(m.priceWon)}
               </td>
             </tr>
           ))}

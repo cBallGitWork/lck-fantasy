@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { eok, inOut, LinkGo, ordinal, OutlinedKey, Placeholder, PriceMove, Tabs, Tag } from "../../parts";
+import { eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
@@ -64,7 +64,7 @@ export function PlayerCard({
           <p className="player-card__hero">
             <b className="num">{card.season.points}</b>
             <span className="player-card__quiet">
-              Season · {ordinal(card.season.place)} of {card.season.field}
+              Season · {placeOf(card.season.place, card.season.field)}
             </span>
           </p>
           <div className="player-card__actions">
@@ -79,10 +79,10 @@ export function PlayerCard({
           <PriceMove eok={card.priceMove} />
         </span>
         <span className="player-card__quiet">
-          <b className="player-card__figure num">{card.form.toFixed(1)}</b>form · {ordinal(card.formPlace)}
+          <b className="player-card__figure num">{oneDecimal(card.form)}</b>form · {ordinal(card.formPlace)}
         </span>
         <span className="player-card__quiet">
-          <b className="player-card__figure num">{card.ownedPct}%</b>owned · {ordinal(card.ownedPlace)}
+          <b className="player-card__figure num">{pct(card.ownedPct)}</b>owned · {ordinal(card.ownedPlace)}
         </span>
         <span className="player-card__quiet">{inOut(card.transfersIn, card.transfersOut)} this week</span>
       </div>

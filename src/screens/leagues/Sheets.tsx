@@ -1,7 +1,7 @@
 // The league forms as the pictures draw them (docs/design/approved/leagues/): each a sheet over the
 // Leagues page. Each is fed by props; the screen (index.tsx) holds the leagues.
 import { useId, useState, type ReactNode } from "react";
-import { count, Field, GoLink, MainAction, Modal, ordinal, OutlinedKey } from "../../parts";
+import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf } from "../../parts";
 import { PATHS } from "../../paths";
 import { capReason, privateCountLine } from "./forms";
 import type { PrivateLeague, ScoringWeek, ScoringWeeks } from "./types";
@@ -139,7 +139,7 @@ export function LeaveSheet({ name, rank, size, onLeave, onClose }: { name: strin
   return (
     <Modal kind="sheet" title={`Leave ${name}?`} onClose={onClose}>
       <p>
-        {ordinal(rank)} of {count(size)}
+        {placeOf(rank, count(size))}
       </p>
       <SheetKeys onBack={onClose}>
         <MainAction onClick={onLeave}>Leave</MainAction>

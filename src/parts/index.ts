@@ -11,7 +11,26 @@ export { MainAction } from "./MainAction";
 export { MeDot } from "./MeDot";
 export { Menu, type MenuItem } from "./Menu";
 export { Modal, wrapFocus } from "./Modal";
-export { count, inOut, MINUS, ordinal, outcome, perGame, result, score, signed, type Score } from "./figures";
+export {
+  bestOf,
+  carrySum,
+  carryWorking,
+  count,
+  inOut,
+  MINUS,
+  NONE,
+  oneDecimal,
+  ordinal,
+  outcome,
+  pct,
+  perGame,
+  perGameValue,
+  placeOf,
+  result,
+  score,
+  signed,
+  type Score,
+} from "./figures";
 export { EOK_NOTE, eok, eokToWon, formatEok, WON_PER_EOK } from "./money";
 export { PriceMove, RankMove } from "./Move";
 export { OutlinedKey } from "./OutlinedKey";

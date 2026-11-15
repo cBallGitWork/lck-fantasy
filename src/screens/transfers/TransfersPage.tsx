@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { againstLine } from "../../fixtures/series";
 import type { BuffName } from "../../fixtures/week3";
-import { Deadline, formatEok, MainAction, Menu, OutlinedKey, PageFrame, PageHead, ViewToggle } from "../../parts";
+import { Deadline, formatEok, MainAction, Menu, OutlinedKey, PageFrame, PageHead, pct, ViewToggle } from "../../parts";
 import { BENCH_SLOTS, BenchBar, BenchTile, Lineup, RIFT_SLOTS, Rift, Tile, type RiftPoint, type RoleKey, type SlotKey, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed, costLabel } from "./Confirmed";
@@ -70,8 +71,8 @@ type Standing = SquadPlayer | ListPlayer;
 /** What sits under a player, by Show: his fixtures (`v DNS · v HLE`), price or owned. */
 export function under(show: Show, p: Standing, fixtures: Record<string, Fixture[]>): string {
   if (show === "Price") return formatEok(p.price);
-  if (show === "Owned") return `${p.ownedPct}%`;
-  return (fixtures[p.team] ?? []).map((f) => `v ${f.against}`).join(" · ");
+  if (show === "Owned") return pct(p.ownedPct);
+  return againstLine((fixtures[p.team] ?? []).map((f) => f.against));
 }
 
 const playsOf = (slot: SquadSlot, p: Standing): RoleKey | undefined => (slot === "flex" && p.role !== "coach" ? p.role : undefined);

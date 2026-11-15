@@ -2,6 +2,7 @@
 // Points picture's moment. Every week figure is the picture's own: the backend computes them later
 // (#33, #34), so nothing here scores.
 import {
+  BEST_OF,
   COMPETITION,
   playerId,
   POINTS_SQUAD,
@@ -12,6 +13,7 @@ import {
   type Series,
 } from "../../fixtures/week3";
 import { seriesById } from "../../fixtures/series";
+import { bestOf } from "../../parts";
 import type { LiveDownProps, LiveIdleProps, LiveNowProps, PanelPlayer, RestPlayer, Stream } from "./types";
 
 /** The streams list: admin data (spec/12). The first is the official English stream it opens on. */
@@ -30,7 +32,7 @@ export const IDLE_STREAMS: Stream[] = LIVE_STREAMS.map((s) => ({ ...s, live: fal
 export const DEFAULT_STREAM = LIVE_STREAMS[0]!.id;
 
 const STAGE = `${COMPETITION} Week ${POINTS_WEEK.week}`;
-const FORMAT = "Bo3";
+const FORMAT = bestOf(BEST_OF);
 
 const LIVE_SERIES = seriesById(WEEK3_SERIES_AT_POINTS, "w3-sat-2");
 const LAST_SERIES = seriesById(WEEK3_SERIES_FINAL, "w3-sat-2");

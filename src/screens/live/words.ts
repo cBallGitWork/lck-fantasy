@@ -18,7 +18,6 @@ export const WORDS = {
   more: "More ▾",
   downTitle: "Live points down",
   downNote: "Final points follow",
-  noPoints: "—",
   won: "won",
   versus: "v",
   hours: "h",
@@ -26,5 +25,4 @@ export const WORDS = {
 } as const;
 
 export const dot = " · ";
-export const dash = "–";
 

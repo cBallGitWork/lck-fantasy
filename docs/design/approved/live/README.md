@@ -18,8 +18,8 @@ The Live page: a stream beside the manager's live points (spec/12, Live). It is 
 
 ## Layout
 
-- **Type**: five sizes only: 120 the countdown, 60 the total and the next series, 20 every points figure and the score, 14 body, 12 labels and the C and V marks. The nav, its live dot included, is shared.
-- **Stage** (dark): the stream at 1040 × 585, the scorebug under it, then the picker.
+- **Type**: plate.md's sizes: 44 the total and the countdown, 28 the next series, 20 every points figure and the score, 14 body, 12 labels and the C and V marks, 11 tags. The nav, its live dot included, is shared.
+- **Stage** (dark): the stream at 984 × 554 (16:9, beside the 360 right column), the scorebug under it, then the picker.
 - **Picker**: one chip per stream, showing name, language and platform. The one you're watching is filled; streams that are not live are dashed and greyed. **More ▾** opens the full list, with each stream's channel.
 - **Points panel**, no captions:
   - your week, with a Not final tag, Average and Highest;

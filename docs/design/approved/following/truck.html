@@ -1,65 +1,56 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Following · truck</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --hot: #1d1d1d; }
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Following · truck</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
+/* type scale (plate.md): 28 page title · 20 points · 16 hangul and week heads · 14 body · 12 labels · 11 tags */
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
 .num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-i.ko { font-style: normal; color: var(--soft); font-size: 11px; margin-left: 4px; }
-nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
-nav.top a { color: var(--mid); text-decoration: none; }
-nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
-nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vertical-align: 2px; }
+/* Top bar: the same on every screen (as Points). */
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
-.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
-.note { position: absolute; background: #fffbe0; border: 1px solid #d8cf8a; font-size: 11px; padding: 4px 7px; color: #5a5420; max-width: 220px; line-height: 1.3; z-index: 5; }
-.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; line-height: 16px; }
-.tag.prov { border-style: dashed; color: var(--mid); border-color: var(--mid); }
-.tag.live { background: var(--ink); color: #fff; }
-.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 10px; }
-.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 10px; }
-.gw { display: flex; align-items: center; gap: 16px; }
-.gw button { border: 1px solid var(--line); background: var(--paper); padding: 4px 10px; font: inherit; color: var(--mid); }
-.gw h1 { font-size: 26px; letter-spacing: -0.5px; }
-.cnt { text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
-.unc { color: var(--soft); text-decoration: line-through; }
-.lv { font-weight: 600; }
-.lv::after { content: "●"; font-size: 8px; vertical-align: 4px; margin-left: 1px; }
-.cake::after { content: " 🎂"; }
-
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.tag { display: inline-block; border: 1px solid var(--ink); color: var(--ink); padding: 0 4px; font: 400 11px/16px "IBM Plex Sans KR", sans-serif; vertical-align: 1px; }
+.tag.prov { border-style: dashed; }
+.tag.live { background: var(--ink); color: var(--paper); }
 
 .page { padding: 24px 32px 48px; }
-h1 { font-size: 26px; letter-spacing: -.5px; } h1 small { font-size: 14px; color: var(--mid); font-weight: 400; margin-left: 10px; letter-spacing: 0; }
-.grid { display: grid; grid-template-columns: 1fr 440px; gap: 36px; margin-top: 18px; }
-.wk { display: flex; align-items: baseline; gap: 10px; margin: 22px 0 6px; font-size: 15px; font-weight: 700; } .wk:first-child { margin-top: 0; }
-.it { display: grid; grid-template-columns: 190px 1fr 120px; gap: 16px; align-items: start; background: var(--paper); padding: 12px 16px; border-bottom: 1px solid var(--fill); }
+h1 { font-size: 28px; font-weight: 700; letter-spacing: -.5px; } h1 i { font-style: normal; font-size: 16px; color: var(--mid); font-weight: 400; margin-left: 8px; letter-spacing: 0; }
+.grid { display: grid; grid-template-columns: 1fr 360px; gap: 32px; margin-top: 24px; }
+.wk { display: flex; align-items: baseline; gap: 8px; margin: 24px 0 8px; font-size: 16px; font-weight: 700; } .wk:first-child { margin-top: 0; }
+.it { display: grid; grid-template-columns: 192px 1fr 128px; gap: 16px; align-items: start; background: var(--paper); padding: 12px 16px; border-bottom: 1px solid var(--fill); }
 .it .who b { display: block; font-size: 14px; } .it .who small { color: var(--mid); font-size: 12px; display: block; }
-.it .what { font-size: 14px; } .it .what small { display: block; color: var(--mid); font-size: 12px; margin-top: 2px; }
-.it .pts { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 18px; margin-right: 6px; }
-.it .when { color: var(--soft); font-size: 12px; display: block; margin-top: 3px; }
-.bo { color: var(--mid); font-size: 12px; } .sf { color: var(--mid); font-size: 12px; margin-left: 6px; } .sw span:nth-child(2n) { font-weight: 600; }
-.sw { font-family: "IBM Plex Mono", monospace; font-size: 13px; display: grid; grid-template-columns: 180px 40px; gap: 2px 10px; margin-top: 4px; } .sw span:nth-child(2n) { text-align: right; }
-.tb { justify-self: end; border: 1.5px solid var(--ink); padding: 4px 12px; font-weight: 700; font-size: 13px; background: var(--paper); }
+.it .what { font-size: 14px; } .it .what small { display: block; color: var(--mid); font-size: 12px; margin-top: 4px; }
+.it .pts { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 20px; margin-right: 8px; }
+.it .when { color: var(--mid); font-size: 12px; display: block; margin-top: 4px; }
+.bo { color: var(--mid); font-size: 12px; } .sf { color: var(--mid); font-size: 12px; margin-left: 8px; }
+.sw { font-family: "IBM Plex Mono", monospace; font-size: 12px; display: grid; grid-template-columns: 180px 40px; gap: 4px 8px; margin-top: 4px; } .sw span:nth-child(2n) { text-align: right; font-weight: 600; }
+.tb { justify-self: end; border: 1px solid var(--ink); padding: 4px 12px; font-weight: 600; font-size: 14px; background: var(--paper); }
 .tb.sent { border: 0; font-weight: 400; color: var(--mid); padding-right: 0; }
-.side h2 { font-size: 15px; display: flex; justify-content: space-between; align-items: baseline; margin: 26px 0 8px; } .side h2:first-child { margin-top: 0; } .side h2 span { font-weight: 400; color: var(--mid); font-size: 13px; }
-.rq { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; background: var(--paper); padding: 10px 14px; border-bottom: 1px solid var(--fill); font-size: 14px; } .rq small { display: block; color: var(--mid); font-size: 12px; }
-.btn { border: 1.5px solid var(--ink); padding: 5px 12px; font-weight: 700; background: var(--paper); font-size: 13px; display: inline-block; } .btn.dark { background: var(--ink); color: #fff; } .lnk { color: var(--mid); font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
-.led { background: #111; color: #fff; font: 600 13px/1.3 "IBM Plex Mono", monospace; padding: 10px 12px; min-height: 44px; display: flex; align-items: center; background-image: radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1.4px); background-size: 4px 4px; }
-.trk { background: var(--paper); margin-bottom: 10px; } .trk .by { display: flex; justify-content: space-between; padding: 6px 12px; font-size: 12px; color: var(--mid); } .trk .by b { color: var(--ink); }
-.ppl { background: var(--paper); } .ppl div { display: grid; grid-template-columns: 1fr 0 auto; gap: 8px; align-items: baseline; padding: 8px 14px; border-bottom: 1px solid var(--fill); font-size: 14px; } .ppl small { color: var(--mid); font-size: 12px; } .ppl .n { font-family: "IBM Plex Mono", monospace; text-align: right; } .ppl .x { color: var(--mid); text-align: right; }
-.made { color: var(--soft); font-size: 11px; margin-top: 28px; }
+/* right column: titled sections, each under a 2px ink rule */
+.side h2 { font-size: 14px; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; border-top: 2px solid var(--ink); padding-top: 8px; margin: 24px 0 8px; } .side h2:first-child { margin-top: 0; } .side h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
+.rq { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; background: var(--paper); padding: 8px 16px; border-bottom: 1px solid var(--fill); font-size: 14px; } .rq small { display: block; color: var(--mid); font-size: 12px; }
+.btn { border: 1px solid var(--ink); padding: 4px 12px; font-weight: 600; background: var(--paper); font-size: 14px; display: inline-block; } .btn.dark { background: var(--ink); color: #fff; }
+.lnk { color: var(--mid); font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.led { text-transform: uppercase; background: #111; color: #fff; font: 600 14px/1.4 "IBM Plex Mono", monospace; padding: 8px 12px; min-height: 48px; display: flex; align-items: center; background-image: radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1.4px); background-size: 4px 4px; }
+.trk { background: var(--paper); margin-bottom: 8px; } .trk .by { display: flex; justify-content: space-between; padding: 8px 12px; font-size: 12px; color: var(--mid); } .trk .by b { color: var(--ink); }
+.ppl { background: var(--paper); } .ppl div { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: baseline; padding: 8px 16px; border-bottom: 1px solid var(--fill); font-size: 14px; } .ppl small { color: var(--mid); font-size: 12px; } .ppl .x { text-align: right; }
 
 .shade { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 10; }
-.modal { position: absolute; top: 120px; left: 50%; transform: translateX(-50%); width: 620px; background: var(--paper); z-index: 11; padding: 22px 24px; }
-.modal h2 { font-size: 20px; } .modal h2 small { display: block; font-size: 13px; color: var(--mid); font-weight: 400; margin-top: 2px; }
-.seg { display: inline-flex; border: 1px solid var(--ink); font-size: 14px; margin: 16px 0 12px; } .seg span { padding: 6px 18px; } .seg span.on { background: var(--ink); color: #fff; font-weight: 700; }
-.ln { display: grid; grid-template-columns: 18px 1fr; gap: 10px; padding: 9px 4px; border-bottom: 1px solid var(--fill); font: 500 13px/1.35 "IBM Plex Mono", monospace; } .ln i { font-style: normal; width: 14px; height: 14px; border: 1.5px solid var(--ink); border-radius: 50%; margin-top: 1px; } .ln.on i { background: radial-gradient(circle, var(--ink) 4px, transparent 4.5px); } .ln.on { font-weight: 700; }
-.ln small { display: block; font: 400 11px "IBM Plex Sans KR", sans-serif; color: var(--mid); }
-.prev { margin: 16px 0 6px; } .prev .led { font-size: 16px; min-height: 72px; }
-.foot { display: flex; align-items: center; gap: 14px; margin-top: 16px; } .foot .sp { flex: 1; } .foot small { color: var(--mid); }
-</style></head><body><nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
-<div class="page"><h1>Following</h1><div class="grid"><div>
-<div class="wk">Week 3 <span class="tag prov">not final</span></div>
+.modal { position: absolute; top: 120px; left: 50%; transform: translateX(-50%); width: 620px; background: var(--paper); z-index: 11; padding: 24px; }
+.modal h2 { font-size: 20px; font-weight: 700; } .modal h2 small { display: block; font-size: 14px; color: var(--mid); font-weight: 400; margin-top: 4px; }
+/* the view toggle: two butted keys, the chosen one on paper */
+.seg { display: inline-flex; border: 1px solid var(--line); background: var(--fill); padding: 4px; font-size: 14px; margin: 16px 0 12px; } .seg span { padding: 4px 16px; color: var(--mid); } .seg span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
+.ln { display: grid; grid-template-columns: 16px 1fr; gap: 12px; padding: 8px 4px; border-bottom: 1px solid var(--fill); font: 400 14px/1.4 "IBM Plex Mono", monospace; } .ln i { font-style: normal; width: 16px; height: 16px; border: 1px solid var(--ink); border-radius: 50%; margin-top: 2px; } .ln.on i { background: var(--ink); box-shadow: inset 0 0 0 3px var(--paper); } .ln.on { font-weight: 600; }
+.prev { margin: 16px 0 8px; } .prev .led { font-size: 16px; min-height: 72px; }
+.foot { display: flex; align-items: center; gap: 16px; margin-top: 16px; } .foot .sp { flex: 1; } .foot small { color: var(--mid); font-size: 12px; }
+.made { padding: 0 32px 24px; font-size: 12px; color: var(--mid); }
+</style></head><body><nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span></nav>
+<div class="page"><h1>Following<i>팔로잉</i></h1><div class="grid"><div>
+<div class="wk">Week 3 <span class="tag prov">Not final</span></div>
 <div class="it"><div class="who"><b>Minji Park</b><small>Chovy Was Right There</small></div><div class="what"><span class="pts">34</span>GEN 2–1 HLE <span class="bo">Bo3</span><small>Kiin 9 · Canyon 7 · Chovy 18</small><span class="when">Ended 10:40 · 19:40 KST</span></div><span class="tb">Truck</span></div>
 <div class="it"><div class="who"><b>Dan Okafor</b><small>Peanut Butter Gank</small></div><div class="what"><span class="pts">58</span>T1 2–0 KT <span class="bo">Bo3</span> <span class="tag">Big Carry</span><small>Oner 11 · Faker 42 (28 × 1.5) · Keria 5</small><span class="when">Ended 08:10 · 17:10 KST</span></div><span class="tb sent">☕ Coffee sent</span></div>
 <div class="it"><div class="who"><b>Jae Kim</b><small>Deft Tomorrow</small></div><div class="what"><span class="pts">9</span>KRX 0–2 BRO <span class="bo">Bo3</span><small>Rich 4 · Clozer 2 (Carry) · Peter 3</small><span class="when">Ended Wed 10:30 · 19:30 KST</span></div><span class="tb">Truck</span></div>
@@ -73,15 +64,16 @@ h1 { font-size: 26px; letter-spacing: -.5px; } h1 small { font-size: 14px; color
 <div class="it"><div class="who"><b>Minji Park</b><small>Chovy Was Right There</small></div><div class="what"><span class="pts">21</span>GEN 2–0 DNF <span class="bo">Bo3</span><small>Chovy 21</small><span class="when">Ended Sun 08:20 · 17:20 KST</span></div><span></span></div>
 </div><div class="side">
 <h2>Requests <span>2</span></h2>
-<div class="rq"><span>Ella Wong<small>Ruler of None</small></span><span class="btn dark">Accept</span><span class="btn">Decline</span></div>
-<div class="rq"><span>Joe Grant<small>BeryL Backup Plan</small></span><span class="btn dark">Accept</span><span class="btn">Decline</span></div>
+<div class="rq"><span>Ella Wong<small>Ruler of None</small></span><span class="btn">Accept</span><span class="btn">Decline</span></div>
+<div class="rq"><span>Joe Grant<small>BeryL Backup Plan</small></span><span class="btn">Accept</span><span class="btn">Decline</span></div>
 <h2>Trucks · Week 3</h2><div class="trk"><div class="led">CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!</div><div class="by"><span>Coffee from <b>Minji Park</b></span><span></span></div></div><div class="trk"><div class="led">THIS TRUCK WAS FUNDED BY YOUR −6.</div><div class="by"><span>Protest from <b>Dan Okafor</b></span><span></span></div></div><div class="trk"><div class="led">WINNER WINNER, GANK CHICKEN. 98 PTS.</div><div class="by"><span>Sponsor truck, <b>Pub League top</b></span><span>갱 치킨 Gank Chicken</span></div></div>
-<h2>Following <span>3 of 50</span></h2><div class="ppl"><div><span>Minji Park<br><small>Chovy Was Right There</small></span><span></span><span class="x lnk">Unfollow</span></div><div><span>Dan Okafor<br><small>Peanut Butter Gank</small></span><span></span><span class="x lnk">Unfollow</span></div><div><span>Jae Kim<br><small>Deft Tomorrow</small></span><span></span><span class="x lnk">Unfollow</span></div></div>
-<h2>Followers <span>5</span></h2><div class="ppl"><div><span>Minji Park<br><small>Chovy Was Right There</small></span><span></span><span class="x lnk">Remove · Block</span></div><div><span>Dan Okafor<br><small>Peanut Butter Gank</small></span><span></span><span class="x lnk">Remove · Block</span></div><div><span>Tom Reid<br><small>Kiin Bean</small></span><span></span><span class="x lnk">Remove · Block</span></div><div><span>Sam Hill<br><small>Guma Gang</small></span><span></span><span class="x lnk">Remove · Block</span></div><div><span>Priya Shah<br><small>Zeus Juice</small></span><span></span><span class="x lnk">Remove · Block</span></div></div>
+<h2>Following <span>3 of 50</span></h2><div class="ppl"><div><span>Minji Park<br><small>Chovy Was Right There</small></span><span class="x lnk">Unfollow</span></div><div><span>Dan Okafor<br><small>Peanut Butter Gank</small></span><span class="x lnk">Unfollow</span></div><div><span>Jae Kim<br><small>Deft Tomorrow</small></span><span class="x lnk">Unfollow</span></div></div>
+<h2>Followers <span>5</span></h2><div class="ppl"><div><span>Minji Park<br><small>Chovy Was Right There</small></span><span class="x lnk">Remove · Block</span></div><div><span>Dan Okafor<br><small>Peanut Butter Gank</small></span><span class="x lnk">Remove · Block</span></div><div><span>Tom Reid<br><small>Kiin Bean</small></span><span class="x lnk">Remove · Block</span></div><div><span>Sam Hill<br><small>Guma Gang</small></span><span class="x lnk">Remove · Block</span></div><div><span>Priya Shah<br><small>Zeus Juice</small></span><span class="x lnk">Remove · Block</span></div></div>
 </div></div><div class="shade"></div><div class="modal">
 <h2>Truck Jae Kim<small>Deft Tomorrow · Week 3 · 31 pts so far, no transfers</small></h2>
 <div class="seg"><span>☕ Coffee 커피차</span><span class="on">Protest 시위 트럭</span></div>
 <div class="ln on"><i></i><span>MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS.</span></div><div class="ln "><i></i><span>NO TRANSFER AGAIN. IS ANYONE AT HEADQUARTERS?</span></div><div class="ln "><i></i><span>SET AND FORGET IS NOT A PHILOSOPHY. IT'S A NAP.</span></div><div class="ln "><i></i><span>31 POINTS. WE ARE NOT ANGRY. WE ARE GUTTED.</span></div><div class="ln "><i></i><span>THE TEMPLATE WAS RIGHT THERE, MATE.</span></div>
 <div class="prev"><div class="led">MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS.</div></div>
 <div class="foot"><small>One truck to Jae a week.</small><span class="sp"></span><span class="lnk">Cancel</span><span class="btn dark">Send truck</span></div>
-</div><div class="made">All sponsors are made up.</div></div></body></html>
+</div></div><div class="made">All sponsors are made up.</div>
+</body></html>

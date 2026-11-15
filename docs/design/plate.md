@@ -15,8 +15,8 @@ tightened to a few.
 ## Frame
 
 - Drawn 1440 wide. Top bar, then the page: 32px each side, 24px above, 48px below.
-- Two columns: the main column, and a right column 360px wide, 32px apart. Every screen uses
-  these widths.
+- Two columns: the main column, and a side column 360px wide, 32px apart. The side column is on
+  the right, save Leagues, whose list of leagues is on the left.
 - The right column is a stack of titled sections. Each opens with a 2px ink rule and a 14px
   title, its count or state after the title in mid grey. A tapped player's panel goes at the top.
 - The first row of a screen's main table or picture shows above the fold at 1440 × 900.
@@ -33,7 +33,8 @@ tightened to a few.
 - Six sizes: 12, 14, 16, 20, 28, and 44 for the page's one key figure. Nothing under 12, except
   a tag's 11.
 - Three weights: 400, 600, 700.
-- One page title, 28/700, with its hangul after it in 16/400 mid grey: `Points 포인트`.
+- One page title, 28/700, with its hangul after it in 16/400 mid grey: `Leagues 리그`. On Points
+  and Home the title is your team's name: `Baron Steal FC 바론 스틸 FC`.
 
 ## Colour
 
@@ -48,9 +49,10 @@ tightened to a few.
 | `--paper` | #fff | panels and tables |
 | `--rise` | #c8102e | a price rise, Korean red |
 | `--fall` | #1f4fa8 | a price fall, Korean blue |
+| `--stage` | #1b1b1b | Live's dark stage; its grey text is #999 (4.5:1) |
 
-- Grey until the look is chosen. Colour is spent on meaning only (a rise, a fall, live), never
-  to decorate.
+- Grey until the look is chosen. Colour is spent on meaning only, never to decorate: red and
+  blue are prices only; a rank's move stays ink.
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
 
 ## Parts
@@ -61,16 +63,22 @@ Each part is drawn one way on every screen.
   figures beside it, in mid grey with the figure in ink (`Average 79  Highest 136 ›`).
 - **Tag:** a square box, 1px rule, 11px, sentence case: `Live`, `Not final`, `Final`, `Cap 2`.
   `Live` is filled ink. `Not final` is dashed.
-- **View toggle:** two butted keys, the chosen one on `--paper`: `Rift view | Card view`.
+- **View toggle:** butted keys on `--fill`, the chosen one on `--paper`: `Rift view | Card view`.
+- **Tabs** (a page's or a card's sections): words in a row, the chosen one ink with a 2px
+  underline.
 - **A link** ends with `›` and names where it goes: `Full stats ›`. A link leaving Flol ends
   with `↗`.
-- **Table:** name far left with team after it, figures right-aligned, 40px rows, 12px heads
-  in mid grey. No action column: what you can do to a row goes in its panel on the right.
-- **Marks:** C and V are round, and so are a live dot and a crest. Everything else is square,
-  radius 0.
+- **Table:** name far left (after its slot, where a table lists a team) with team after it, figures right-aligned, 40px rows, 12px heads
+  in mid grey. No action column: what you can do to a row goes in its panel on the right. Two exceptions,
+  each a page's one job: Transfers' `+`, and a row's `›` where the row opens something.
+- **Marks:** C and V are round, and so are the live dot, your-player dot (8px, after the name),
+  a crest and a radio button. Everything else is square, radius 0.
+- **Your players** are marked by that dot, on every screen.
 - **One main action** per screen, filled ink (`Save team`). Everything else is a link or
   an outlined key.
 - **Placeholders** (sponsor, photo) are dashed `--soft` boxes with one word.
+- **A page that shows a sponsor** ends with `All sponsors are made up.`, 12px mid grey
+  (spec/13).
 
 ## Words
 
@@ -93,7 +101,8 @@ Each part is drawn one way on every screen.
 ## Never
 
 1. A row of stat tiles, a card around every section, or small capitals over big numbers.
-2. Pills, rounded corners, tinted badges, gradients, glow or soft shadows.
+2. Pills, rounded corners, tinted badges, gradients, glow or soft shadows. A truck's LED
+   panel is a picture: dotted, in capitals, the same on every screen.
 3. Keys and legends: the heads and marks carry it.
 4. A landing page's furniture: a hero band, a centred marketing line, space used as decoration.
 5. Two names, two sizes or two styles for one thing.

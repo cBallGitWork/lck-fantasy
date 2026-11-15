@@ -2,7 +2,7 @@
 
 Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in the shared frame.
 
-**Approved:** Craig, 14 Nov 2026. A start was approved on 13 Nov ("Seems ok as a start?", after "Riff on the left, Bench underneath, Widget/info on right"; PR #47, never merged). On 14 Nov it was brought up to the spec with fresh eyes and less explaining text, Craig picked what stays, and said "File and merge". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-14-points/](../../proposals/2026-11-14-points/) (`points.html`, `brief.md`).
+**Approved:** Craig, 14 Nov 2026. A start was approved on 13 Nov ("Seems ok as a start?", after "Riff on the left, Bench underneath, Widget/info on right"; PR #47, never merged). On 14 Nov it was brought up to the spec with fresh eyes and less explaining text, Craig picked what stays, and said "File and merge". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn. The source is [docs/design/proposals/2026-11-14-points/](../../proposals/2026-11-14-points/) (`points.html`, `brief.md`).
 
 | File | Shows |
 |---|---|

@@ -1,56 +1,46 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Minji Park · History</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --hot: #1d1d1d; }
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Minji Park · History</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
-.num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-i.ko { font-style: normal; color: var(--soft); font-size: 11px; margin-left: 4px; }
-nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
-nav.top a { color: var(--mid); text-decoration: none; }
-nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
-nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vertical-align: 2px; }
+a { color: var(--ink); text-decoration: none; }
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
-.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
-.note { position: absolute; background: #fffbe0; border: 1px solid #d8cf8a; font-size: 11px; padding: 4px 7px; color: #5a5420; max-width: 220px; line-height: 1.3; z-index: 5; }
-.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; line-height: 16px; }
-.tag.prov { border-style: dashed; color: var(--mid); border-color: var(--mid); }
-.tag.live { background: var(--ink); color: #fff; }
-.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 10px; }
-.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 10px; }
-.gw { display: flex; align-items: center; gap: 16px; }
-.gw button { border: 1px solid var(--line); background: var(--paper); padding: 4px 10px; font: inherit; color: var(--mid); }
-.gw h1 { font-size: 26px; letter-spacing: -0.5px; }
-.cnt { text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
-.unc { color: var(--soft); text-decoration: line-through; }
-.lv { font-weight: 600; }
-.lv::after { content: "●"; font-size: 8px; vertical-align: 4px; margin-left: 1px; }
-.cake::after { content: " 🎂"; }
-
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 4px; font-size: 11px; line-height: 16px; }
+.tag.prov { border-style: dashed; }
+.up { color: var(--ink); } .up::before { content: "▲ "; font-size: 12px; }
+.down { color: var(--mid); } .down::before { content: "▼ "; font-size: 12px; }
 
 .page { padding: 24px 32px 48px; }
-.ban { display: flex; align-items: center; gap: 22px; background: #111; border-bottom: 4px solid #b39550; color: #fff; padding: 16px 24px; }
-.ban .hg { font-size: 30px; font-weight: 700; letter-spacing: -.5px; color: #d9bd7a; } .ban .en b { color: #fff; font-size: 18px; display: block; } .ban .en { color: #aaa; font-size: 13px; }
-.ban .sp { flex: 1; } .ban .fol { border: 1.5px solid #fff; padding: 6px 14px; font-weight: 700; font-size: 13px; }
+.ban { display: flex; align-items: center; gap: 24px; background: #111; border-bottom: 4px solid #b39550; color: #fff; padding: 16px 24px; }
+.ban .hg { font-size: 28px; font-weight: 700; letter-spacing: -.5px; color: #d9bd7a; } .ban .en b { color: #fff; font-size: 16px; display: block; } .ban .en { color: #aaa; font-size: 12px; }
+.ban .sp { flex: 1; } .ban .fol { border: 1px solid #fff; padding: 8px 16px; font-weight: 700; font-size: 14px; }
 .tabs { display: flex; border-bottom: 1px solid var(--line); margin: 16px 0 0; font-size: 14px; } .tabs span { padding: 8px 16px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
-.grid { display: grid; grid-template-columns: 1fr 360px; gap: 36px; margin-top: 18px; }
-.gwn { display: flex; align-items: baseline; gap: 14px; margin-bottom: 12px; } .gwn h2 { font-size: 22px; } .gwn button { border: 1px solid var(--line); background: var(--paper); padding: 3px 10px; font: inherit; color: var(--mid); }
-.gwn .pts { font: 600 22px "IBM Plex Mono", monospace; margin-left: 10px; } .gwn .av { color: var(--mid); font-size: 13px; } .gwn .av b { color: var(--ink); font-family: "IBM Plex Mono", monospace; }
+.grid { display: grid; grid-template-columns: 1fr 360px; gap: 32px; margin-top: 24px; }
+.gwn { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; } .gwn h2 { font-size: 20px; } .gwn button { border: 1px solid var(--line); background: var(--paper); padding: 4px 8px; font: inherit; color: var(--mid); }
+.gwn .pts { font: 600 28px "IBM Plex Mono", monospace; margin-left: 8px; } .gwn .av { color: var(--mid); font-size: 14px; } .gwn .av b { color: var(--ink); font-family: "IBM Plex Mono", monospace; }
 table.t { width: 100%; border-collapse: collapse; background: var(--paper); font-size: 14px; }
-table.t th { text-align: left; font-weight: 500; color: var(--mid); font-size: 12px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-table.t td { padding: 8px 10px; border-bottom: 1px solid var(--fill); } table.t .n { text-align: right; font-family: "IBM Plex Mono", monospace; }
-table.t td small { color: var(--mid); font-size: 12px; } table.t tr.sub td { background: var(--bg); color: var(--mid); font-size: 12px; padding: 6px 10px; } table.t tr.sub td b { color: var(--ink); }
-table.t td.go { color: var(--mid); width: 20px; text-align: right; }
-.mk { display: inline-block; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 10px; text-align: center; line-height: 16px; margin-left: 6px; vertical-align: 1px; } .mk.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); line-height: 14px; }
-.side h3 { font-size: 15px; margin: 22px 0 8px; display: flex; justify-content: space-between; } .side h3:first-child { margin-top: 0; } .side h3 span { font-weight: 400; color: var(--mid); font-size: 13px; }
-.kv { background: var(--paper); } .kv div { display: flex; justify-content: space-between; padding: 8px 14px; border-bottom: 1px solid var(--fill); } .kv b { font-family: "IBM Plex Mono", monospace; }
-.led { background: #111; color: #fff; font: 600 12px/1.3 "IBM Plex Mono", monospace; padding: 10px 12px; min-height: 44px; display: flex; align-items: center; background-image: radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1.4px); background-size: 4px 4px; }
-.trk { background: var(--paper); margin-bottom: 8px; } .trk .by { padding: 5px 12px; font-size: 12px; color: var(--mid); } .trk .by b { color: var(--ink); }
-.left { color: var(--mid); font-size: 13px; margin-top: 14px; } .left b { color: var(--ink); font-weight: 500; }
-.made { color: var(--soft); font-size: 11px; margin-top: 28px; }
+table.t th { text-align: left; font-weight: 400; color: var(--mid); font-size: 12px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+table.t td { height: 40px; padding: 0 12px; border-bottom: 1px solid var(--fill); } table.t .n { text-align: right; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+table.t td small { color: var(--mid); font-size: 12px; } table.t tr.sub td { height: auto; background: var(--bg); color: var(--mid); font-size: 12px; padding: 8px 12px; } table.t tr.sub td b { color: var(--ink); }
+table.t th.n, table.t tr.sub td.n { font-family: inherit; } table.t th { white-space: nowrap; }
+table.t td.go { color: var(--mid); width: 24px; text-align: right; }
+.mk { display: inline-block; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 12px; font-weight: 700; text-align: center; line-height: 20px; margin-left: 8px; } .mk.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); line-height: 18px; }
+.side h3 { font-size: 14px; border-top: 2px solid var(--ink); padding-top: 8px; margin: 24px 0 8px; display: flex; justify-content: space-between; align-items: baseline; } .side h3:first-child { margin-top: 0; } .side h3 span { font-weight: 400; color: var(--mid); font-size: 12px; }
+.kv { background: var(--paper); } .kv div { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid var(--fill); } .kv b { font-family: "IBM Plex Mono", monospace; }
+.led { text-transform: uppercase; background: #111; color: #fff; font: 600 12px/1.3 "IBM Plex Mono", monospace; padding: 12px; min-height: 44px; display: flex; align-items: center; background-image: radial-gradient(circle, rgba(255,255,255,.14) 1px, transparent 1.4px); background-size: 4px 4px; }
+.trk { background: var(--paper); margin-bottom: 8px; } .trk .by { padding: 4px 12px; font-size: 12px; color: var(--mid); } .trk .by b { color: var(--ink); }
+.left { color: var(--mid); font-size: 14px; margin-top: 16px; } .left b { color: var(--ink); font-weight: 600; }
 .mv { font-size: 12px; }
-</style></head><body><nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+.made { padding: 0 32px 24px; font-size: 12px; color: var(--mid); }
+</style></head><body><nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span></nav>
 <div class="page"><div class="ban"><span class="hg">쵸비는 바로 거기 있었다</span><span class="en"><b>Chovy Was Right There</b>Minji Park</span><span class="sp"></span><span class="fol">Following ✓</span></div><div class="tabs"><span class="">Points</span><span class="on">History</span><span class="">Transfers</span></div><div class="grid"><div>
-<table class="t"><tr><th>Week</th><th class="n">Pts</th><th class="n">Total</th><th class="n">Week rank</th><th class="n">Overall</th><th>Move</th><th class="n">Transfers</th><th class="n">Hits</th><th class="n">Bank</th><th class="n">Value</th><th>Buff</th><th></th></tr><tr><td>Week 3</td><td class="n">62</td><td class="n">219</td><td class="n">–</td><td class="n">21,804</td><td class="mv up">3,112</td><td class="n">5</td><td class="n">0</td><td class="n">0.5억</td><td class="n">100.9억</td><td>Limitless</td><td class="go">›</td></tr><tr><td>Week 2</td><td class="n">98</td><td class="n">157</td><td class="n">4,211</td><td class="n">24,916</td><td class="mv up">9,870</td><td class="n">1</td><td class="n">0</td><td class="n">1.0억</td><td class="n">100.6억</td><td></td><td class="go">›</td></tr><tr><td>Week 1</td><td class="n">59</td><td class="n">59</td><td class="n">34,786</td><td class="n">34,786</td><td class="mv "></td><td class="n">–</td><td class="n">–</td><td class="n">2.5억</td><td class="n">100.0억</td><td></td><td class="go">›</td></tr></table>
+<table class="t"><tr><th>Week</th><th class="n">Pts</th><th class="n">Total</th><th class="n">Week rank</th><th class="n">Overall</th><th class="n">Move</th><th class="n">Transfers</th><th class="n">Hits</th><th class="n">Bank</th><th class="n">Value</th><th>Buff</th><th></th></tr><tr><td>Week 3</td><td class="n">62</td><td class="n">219</td><td class="n">—</td><td class="n">21,804</td><td class="n mv up">3,112</td><td class="n">5</td><td class="n">0</td><td class="n">0.5억</td><td class="n">100.9억</td><td>Limitless</td><td class="go">›</td></tr><tr><td>Week 2</td><td class="n">98</td><td class="n">157</td><td class="n">4,211</td><td class="n">24,916</td><td class="n mv up">9,870</td><td class="n">1</td><td class="n">0</td><td class="n">1.0억</td><td class="n">100.6억</td><td>—</td><td class="go">›</td></tr><tr><td>Week 1</td><td class="n">59</td><td class="n">59</td><td class="n">34,786</td><td class="n">34,786</td><td class="n mv">—</td><td class="n">—</td><td class="n">—</td><td class="n">2.5억</td><td class="n">100.0억</td><td>—</td><td class="go">›</td></tr></table>
 <div class="left">Buffs left: <b>Remake · Bench Boost · Dual Carry</b></div>
-</div><div class="side"><h3>Leagues</h3><div class="kv"><div><span>Overall</span><span><b>21,804</b> <span class="mv up">3,112</span></span></div><div><span>South Korea</span><span><b>2,310</b> <span class="mv up">402</span></span></div><div><span>GEN supporters</span><span><b>1,977</b> <span class="mv up">288</span></span></div><div><span>Pub League</span><span><b>3rd</b> <span class="mv down">1</span></span></div></div></div></div><div class="made">All sponsors are made up.</div></div></body></html>
+</div><div class="side"><h3>Leagues</h3><div class="kv"><div><span>Overall</span><span><b>21,804</b> <span class="mv up">3,112</span></span></div><div><span>South Korea</span><span><b>2,310</b> <span class="mv up">402</span></span></div><div><span>GEN supporters</span><span><b>1,977</b> <span class="mv up">288</span></span></div><div><span>Pub League</span><span><b>3rd</b> <span class="mv down">1</span></span></div></div></div></div></div><div class="made">All sponsors are made up.</div>
+</body></html>

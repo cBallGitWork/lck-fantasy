@@ -2,7 +2,7 @@
 
 Where a manager sets his starters, bench order, Carry and Vice-carry, and plays Bench Boost or Dual Carry. Reached from **Pick Team** in the top bar. Drawn at 1440 in the same frame as Points and Transfers: the squad on the left, the bench under it, the player card and widgets on the right.
 
-**Approved:** Craig, 14 Nov 2026. A first picture was approved on 13 Nov ("We could do both", naming Rift view and Card view; PR #48, never merged). On 14 Nov it was redrawn in the frame of Points and Transfers with less explaining text; Craig put Save in a bar under the pitch, kept the tall photos in Card view, kept all 10 series and kept role icons alone, then said "Yes, save". Names, teams and numbers are a made-up LCK Cup Week 4 at the same moment as the Transfers picture, not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-14-pick-team/](../../proposals/2026-11-14-pick-team/) (`pick.html`, `brief.md`).
+**Approved:** Craig, 14 Nov 2026. A first picture was approved on 13 Nov ("We could do both", naming Rift view and Card view; PR #48, never merged). On 14 Nov it was redrawn in the frame of Points and Transfers with less explaining text; Craig put Save in a bar under the pitch, kept the tall photos in Card view, kept all 10 series and kept role icons alone, then said "Yes, save". Names, teams and numbers are a made-up LCK Cup Week 4 at the same moment as the Transfers picture, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn. The source is [docs/design/proposals/2026-11-14-pick-team/](../../proposals/2026-11-14-pick-team/) (`pick.html`, `brief.md`).
 
 | File | Shows |
 |---|---|

@@ -1,139 +1,116 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Settings</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Settings</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { width: 1440px; min-height: 1000px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; position: relative; }
 .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
-nav.top a { color: var(--mid); text-decoration: none; }
+a { color: var(--ink); text-decoration: none; }
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
 nav.top .sp { flex: 1; }
-nav.top .me { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
-nav.top .me::after { content: " ▾"; font-size: 10px; font-weight: 400; }
-.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
-.btn { border: 1.5px solid var(--ink); padding: 8px 16px; font-weight: 700; background: var(--paper); font-size: 14px; display: inline-block; } .btn.dark { background: var(--ink); color: #fff; }
-.seg { display: inline-flex; border: 1px solid var(--ink); font-size: 13px; } .seg span { padding: 6px 16px; } .seg span.on { background: var(--ink); color: #fff; font-weight: 700; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.tag { display: inline-block; border: 1px solid var(--ink); color: var(--ink); padding: 0 4px; font-size: 11px; font-weight: 600; line-height: 16px; vertical-align: 1px; }
+.tag.live { background: var(--ink); color: #fff; }
+.tag.nf { border-style: dashed; }
+nav.top .me { display: flex; align-items: center; color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
+nav.top .me::after { content: "▾"; font-size: 12px; font-weight: 400; margin-left: 4px; }
+.btn { border: 1px solid var(--ink); padding: 8px 16px; font-weight: 700; background: var(--paper); font-size: 14px; display: inline-block; } .btn.dark { background: var(--ink); color: #fff; }
+.btn.off { background: var(--fill); border-color: var(--line); color: var(--mid); }
+.seg, .onoff { display: inline-flex; background: var(--fill); border: 1px solid var(--line); font-size: 14px; flex: none; }
+.seg span, .onoff span { padding: 4px 16px; color: var(--mid); } .seg span.on, .onoff span.on { background: var(--paper); color: var(--ink); font-weight: 700; outline: 1px solid var(--ink); }
+.ln { text-decoration: underline; text-underline-offset: 3px; }
 
 .page { padding: 24px 32px 48px; }
-.hd { display: flex; align-items: baseline; gap: 16px; } .hd h1 { font-size: 26px; letter-spacing: -.5px; } .hd .sp { flex: 1; } .hd small { color: var(--mid); font-size: 13px; }
-.cols { display: grid; grid-template-columns: 760px 1fr; gap: 48px; margin-top: 18px; }
-section { background: var(--paper); border-top: 2px solid var(--ink); padding: 4px 24px 18px; margin-bottom: 20px; }
-section h2 { font-size: 13px; color: var(--mid); font-weight: 500; padding: 10px 0 2px; }
-.f { display: grid; grid-template-columns: 170px 1fr; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--fill); }
+.hd { display: flex; align-items: baseline; gap: 16px; } .hd h1 { font-size: 28px; font-weight: 700; letter-spacing: -.5px; } .hd h1 i { font-style: normal; color: var(--mid); font-size: 16px; font-weight: 400; margin-left: 8px; }
+.tabs { display: flex; border-bottom: 1px solid var(--line); margin: 16px 0 0; font-size: 14px; }
+.tabs span { padding: 8px 16px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
+.tabs span.dirty::after { content: " •"; }
+.one { width: 960px; margin-top: 24px; }
+section { padding: 4px 0 8px; margin-bottom: 24px; }
+.f { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--fill); }
 .f:last-child { border-bottom: 0; }
-.f > label { color: var(--mid); font-size: 13px; }
-.in { border: 1.5px solid var(--ink); padding: 9px 12px; font-size: 15px; display: flex; justify-content: space-between; align-items: center; background: var(--paper); }
-.in .c { font-family: "IBM Plex Mono", monospace; color: var(--soft); font-size: 12px; }
-.in.sel::after { content: "▾"; color: var(--mid); font-size: 11px; }
+.f > label { color: var(--mid); font-size: 14px; align-self: start; padding-top: 8px; }
+.f > label small { display: block; color: var(--mid); font-size: 12px; }
+.in { border: 1px solid var(--ink); padding: 8px 12px; font-size: 14px; display: flex; justify-content: space-between; align-items: center; background: var(--paper); }
+.in .c { font-family: "IBM Plex Mono", monospace; color: var(--mid); font-size: 12px; }
+.in.sel::after { content: "▾"; color: var(--mid); font-size: 12px; }
 .in.ro { border-color: var(--line); color: var(--mid); }
-.lock { display: flex; align-items: center; gap: 14px; }
-.lock b { font-weight: 500; font-size: 15px; }
-.lock small { color: #555; font-size: 13px; }
+.in .ph0 { color: var(--mid); }
+.lock { display: flex; align-items: center; gap: 12px; }
+.lock b { font-weight: 600; font-size: 14px; }
+.lock small { color: var(--mid); font-size: 12px; }
 .lock small::before { content: "🔒 "; }
-.sub { color: var(--mid); font-size: 12px; margin-top: 6px; }
-.prov { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border: 1px solid var(--line); font-size: 11px; font-weight: 700; margin-right: 8px; background: #fff; }
-.tg { display: flex; align-items: center; justify-content: space-between; }
-.tg small { display: block; color: var(--mid); font-size: 12px; }
-.sw { width: 44px; height: 24px; border: 1.5px solid var(--ink); position: relative; background: var(--paper); flex: none; }
-.sw::after { content: ""; position: absolute; top: 3px; left: 3px; width: 15px; height: 15px; background: var(--soft); }
-.sw.on { background: var(--ink); } .sw.on::after { left: 22px; background: #fff; }
-.ln { text-decoration: underline; text-underline-offset: 3px; }
-.data p { font-size: 13px; color: var(--mid); }
-.foot { display: flex; align-items: center; gap: 20px; margin-top: 6px; padding: 0 2px; font-size: 13px; color: var(--mid); }
-.foot .sp { flex: 1; }
-.foot .del { color: var(--ink); }
-
-/* right column: the banner preview and the save */
-.side { position: sticky; top: 0; }
-.side h3 { font-size: 13px; color: var(--mid); font-weight: 500; margin-bottom: 6px; }
-.ban { display: flex; align-items: center; gap: 22px; background: #111; border-bottom: 4px solid #e2012d; color: #fff; padding: 16px 24px; }
-.ban .hg { font-size: 30px; font-weight: 700; letter-spacing: -.5px; color: #fff; }
-.ban .en b { color: #fff; font-size: 18px; display: block; }
-.ban .en { color: #aaa; font-size: 13px; }
-.savebar { margin-top: 24px; background: var(--paper); border: 1.5px solid var(--ink); padding: 16px 18px; display: flex; align-items: center; gap: 12px; }
-.savebar span { flex: 1; font-size: 13px; }
-.savebar a { text-decoration: underline; text-underline-offset: 3px; }
-.dl { margin-top: 14px; }
+.sub { color: var(--mid); font-size: 12px; margin-top: 8px; }
+.prov { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border: 1px solid var(--line); font-size: 12px; font-weight: 700; margin-right: 8px; background: var(--paper); }
+.tg { display: flex; align-items: center; gap: 16px; } .tg > span:first-child { flex: 1; }
+.acts { display: flex; gap: 24px; align-items: center; }
+.ban { display: flex; align-items: center; gap: 24px; background: #111; border-bottom: 4px solid #e2012d; color: #fff; margin-top: 12px; padding: 12px 16px; width: 100%; }
+.ban .hg { font-size: 20px; font-weight: 700; letter-spacing: -.5px; color: #fff; }
+.ban .en b { color: #fff; font-size: 16px; display: block; }
+.ban .en { color: #aaa; font-size: 12px; }
+.savebar { width: 960px; margin-top: 4px; background: var(--paper); border: 1px solid var(--ink); padding: 12px 16px; display: flex; align-items: center; gap: 16px; }
+.savebar span.t { flex: 1; font-size: 14px; }
+.foot { display: flex; align-items: center; gap: 24px; margin-top: 24px; font-size: 12px; color: var(--mid); }
+.phm { color: var(--mid); border: 1px dashed var(--soft); padding: 0 8px; font-size: 12px; }
+.danger { margin-top: 24px; border-top: 1px solid var(--line); padding-top: 16px; }
 
 /* sheets */
 .dim { position: fixed; inset: 0; background: rgba(29,29,29,.45); z-index: 6; }
-.sheet { position: absolute; left: 450px; top: 120px; width: 540px; background: var(--paper); border-top: 4px solid var(--ink); z-index: 7; padding: 24px 28px 28px; }
-.sheet h2 { font-size: 22px; letter-spacing: -.3px; margin-bottom: 6px; display: flex; justify-content: space-between; } .sheet h2 span { font-weight: 400; color: var(--mid); font-size: 18px; }
-.sheet .lead { color: var(--mid); font-size: 13px; margin-bottom: 14px; }
+.sheet { position: absolute; left: 448px; top: 120px; width: 544px; background: var(--paper); border-top: 4px solid var(--ink); z-index: 7; padding: 24px 32px 32px; }
+.sheet h2 { font-size: 20px; letter-spacing: -.3px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+.sheet .step { font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 400; color: var(--mid); }
+.sheet .lead { color: var(--mid); font-size: 14px; margin-bottom: 16px; }
 .sheet ul { list-style: none; border-top: 1px solid var(--line); }
-.sheet li { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--fill); font-size: 14px; }
-.sheet li b { font-weight: 500; } .sheet li span { color: var(--mid); font-size: 13px; }
-.sheet .row { display: flex; gap: 10px; margin-top: 22px; justify-content: flex-end; align-items: center; }
+.sheet li { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--fill); font-size: 14px; }
+.sheet li b { font-weight: 600; } .sheet li span { color: var(--mid); font-size: 12px; }
+.sheet .row { display: flex; gap: 12px; margin-top: 24px; justify-content: flex-end; align-items: center; }
 .sheet a.back { text-decoration: underline; text-underline-offset: 3px; margin-right: 8px; }
-.sheet .warn { font-size: 12px; color: var(--mid); margin-top: 14px; }
-.sheet label { display: block; font-size: 13px; color: var(--mid); margin: 14px 0 6px; }
-.sheet .pv { display: flex; gap: 10px; flex-direction: column; margin-top: 8px; }
-.sheet .pv .btn { display: flex; align-items: center; gap: 12px; padding: 12px 16px; font-size: 15px; }
-.sheet .pv .btn .prov { width: 22px; height: 22px; font-size: 13px; margin: 0; }
-.sheet .tick { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; font-size: 13px; }
-.sheet .tick .bx { width: 18px; height: 18px; border: 1.5px solid var(--ink); background: var(--ink); color: #fff; font-size: 12px; display: flex; align-items: center; justify-content: center; flex: none; }
-.sheet .two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-.sheet .step { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--soft); }
+.sheet .warn { font-size: 12px; color: var(--mid); margin-top: 16px; }
+.sheet label { display: block; font-size: 14px; color: var(--mid); margin: 16px 0 8px; }
+.sheet .pv { display: flex; gap: 8px; flex-direction: column; margin-top: 8px; }
+.sheet .pv .btn { display: flex; align-items: center; gap: 12px; padding: 12px 16px; font-size: 16px; }
+.sheet .pv .btn .prov { width: 24px; height: 24px; margin: 0; }
+.sheet .tick { display: flex; gap: 8px; align-items: flex-start; margin-top: 16px; font-size: 14px; }
+.sheet .tick .bx { width: 20px; height: 20px; border: 1px solid var(--ink); background: var(--paper); flex: none; }
+.sheet .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .behind { position: absolute; left: 0; top: 0; width: 1440px; height: 1000px; border: 0; z-index: 1; }
 .view { display: none; } body.v-settings .s, body.v-display .vd, body.v-emails .ve, body.v-account .va, body.v-delete .va, body.v-delete .d, body.v-signup1 .u1, body.v-signup2 .u2 { display: block; }
-
-.cols { grid-template-columns: 1fr 1fr; gap: 56px; }
-section { background: none; border-top: 2px solid var(--ink); padding: 4px 0 8px; margin-bottom: 28px; }
-.f { grid-template-columns: 150px 1fr; }
-.ban { margin-top: 10px; padding: 12px 18px; } .ban .hg { font-size: 24px; } .ban .en b { font-size: 15px; }
-.onoff { display: inline-flex; border: 1px solid var(--ink); font-size: 12px; flex: none; } .onoff span { padding: 4px 10px; } .onoff span.on { background: var(--ink); color: #fff; font-weight: 700; }
-.tg { justify-content: flex-start; gap: 18px; } .tg > span:first-child { flex: 1; }
-.acts { display: flex; gap: 22px; align-items: center; } .acts .ln { color: var(--mid); font-size: 13px; }
-.savebar { margin: 4px 0 0; position: static; border: 1.5px solid var(--ink); background: var(--paper); padding: 12px 16px; display: flex; align-items: center; gap: 18px; }
-.savebar span { flex: none; } .savebar span.t { flex: 1; font-size: 14px; }
-.foot { margin-top: 22px; }
-.phm { color: var(--soft); border: 1px dashed var(--soft); padding: 1px 6px; font-size: 12px; }
-.btn.off { background: var(--fill); border-color: var(--line); color: var(--soft); }
-.sheet .tick .bx.no { background: var(--paper); }
-
-.tabs { display: flex; border-bottom: 1px solid var(--line); margin: 14px 0 0; font-size: 14px; }
-.tabs span { padding: 8px 18px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
-.one { width: 960px; margin-top: 22px; }
-.one section { border-top: 0; }
-.one .ban { width: 100%; }
-.page .savebar { width: 960px; }
-.tabs span.dirty::after { content: " •"; }
-.sub { font-size: 13px; color: #555; }
-.f > label { align-self: start; padding-top: 10px; }
-.danger { margin-top: 26px; border-top: 1px solid var(--line); padding-top: 14px; }
 </style></head><body>
 
 <!-- Settings (also behind the Delete sheet) -->
 <div class="view s">
-<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span><span class="me">Baron Steal FC</span></nav>
-<div class="page"><div class="hd"><h1>Settings</h1></div><div class="tabs"><span class="on dirty">Team</span><span class="">Display</span><span class="">Emails</span><span class="">Account</span></div><div class="one"><section>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><span class="me">Baron Steal FC</span></nav>
+<div class="page"><div class="hd"><h1>Settings<i>설정</i></h1></div><div class="tabs"><span class="on dirty">Team</span><span class="">Display</span><span class="">Emails</span><span class="">Account</span></div><div class="one"><section>
 <div class="f"><label>Team name</label><div class="in">Baron Steal FC <span class="c">14/20</span></div></div>
-<div class="f"><label>Hangul banner<br><span style="color:var(--soft);font-size:12px">Optional</span></label><div><div class="in">바론 스틸 FC <span class="c">7/20</span></div>
+<div class="f"><label>Hangul banner<small>Optional</small></label><div><div class="in">바론 스틸 FC <span class="c">7/20</span></div>
 <div class="ban"><span class="hg">바론 스틸 FC</span><span class="en"><b>Baron Steal FC</b>T1 · United Kingdom</span></div></div></div>
 <div class="f"><label>Favourite team</label><div class="lock"><b>T1</b><small>Locked since your first gameweek</small></div></div>
 <div class="f"><label>Country</label><div class="lock"><b>United Kingdom</b><small>Locked since your first gameweek</small></div></div>
-</section></div><div class="savebar"><span class="t">1 change: hangul banner</span><span class="ln">Reset</span><span class="btn dark">Save</span></div><div class="foot"><span class="ln">Privacy</span><span class="ln">Terms</span><span class="phm">privacy email</span></div></div></div>
+</section></div><div class="savebar"><span class="t">1 change: hangul banner</span><span class="ln">Reset</span><span class="btn dark">Save</span></div><div class="foot"><span class="ln">Privacy ›</span><span class="ln">Terms ›</span><span class="phm">privacy email</span></div></div></div>
 <div class="view vd">
-<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span><span class="me">Baron Steal FC</span></nav>
-<div class="page"><div class="hd"><h1>Settings</h1></div><div class="tabs"><span class="dirty">Team</span><span class="on">Display</span><span class="">Emails</span><span class="">Account</span></div><div class="one"><section>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><span class="me">Baron Steal FC</span></nav>
+<div class="page"><div class="hd"><h1>Settings<i>설정</i></h1></div><div class="tabs"><span class="dirty">Team</span><span class="on">Display</span><span class="">Emails</span><span class="">Account</span></div><div class="one"><section>
 <div class="f"><label>Time zone</label><div><div class="in sel"><span>Browser · Europe/London</span></div><div class="sub">Next deadline: Wed 07:45 · 16:45 KST</div></div></div>
 <div class="f"><label>Theme</label><div><span class="seg"><span class="on">Device</span><span>Light</span><span>Dark</span></span></div></div>
-</section></div><div class="savebar"><span class="t">1 change: hangul banner</span><span class="ln">Reset</span><span class="btn dark">Save</span></div><div class="foot"><span class="ln">Privacy</span><span class="ln">Terms</span><span class="phm">privacy email</span></div></div></div>
+</section></div><div class="savebar"><span class="t">1 change: hangul banner</span><span class="ln">Reset</span><span class="btn dark">Save</span></div><div class="foot"><span class="ln">Privacy ›</span><span class="ln">Terms ›</span><span class="phm">privacy email</span></div></div></div>
 <div class="view ve">
-<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span><span class="me">Baron Steal FC</span></nav>
-<div class="page"><div class="hd"><h1>Settings</h1></div><div class="tabs"><span class="dirty">Team</span><span class="">Display</span><span class="on">Emails</span><span class="">Account</span></div><div class="one"><section>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><span class="me">Baron Steal FC</span></nav>
+<div class="page"><div class="hd"><h1>Settings<i>설정</i></h1></div><div class="tabs"><span class="dirty">Team</span><span class="">Display</span><span class="on">Emails</span><span class="">Account</span></div><div class="one"><section>
 <div class="f"><label>Deadline reminder</label><div class="tg"><span>24 hours before</span><span class="onoff"><span class="on">On</span><span>Off</span></span></div></div>
 <div class="f"><label>Weekly recap</label><div class="tg"><span>Once the week is final</span><span class="onoff"><span>On</span><span class="on">Off</span></span></div></div>
-<div class="sub" style="padding-top:10px">Sent to barons.steal.fc@gmail.com</div>
-</section></div><div class="savebar"><span class="t">1 change: hangul banner</span><span class="ln">Reset</span><span class="btn dark">Save</span></div><div class="foot"><span class="ln">Privacy</span><span class="ln">Terms</span><span class="phm">privacy email</span></div></div></div>
+<div class="sub" style="padding-top:8px">Sent to barons.steal.fc@gmail.com</div>
+</section></div><div class="savebar"><span class="t">1 change: hangul banner</span><span class="ln">Reset</span><span class="btn dark">Save</span></div><div class="foot"><span class="ln">Privacy ›</span><span class="ln">Terms ›</span><span class="phm">privacy email</span></div></div></div>
 <div class="view va">
-<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span><span class="me">Baron Steal FC</span></nav>
-<div class="page"><div class="hd"><h1>Settings</h1></div><div class="tabs"><span class="dirty">Team</span><span class="">Display</span><span class="">Emails</span><span class="on">Account</span></div><div class="one"><section>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><span class="me">Baron Steal FC</span></nav>
+<div class="page"><div class="hd"><h1>Settings<i>설정</i></h1></div><div class="tabs"><span class="dirty">Team</span><span class="">Display</span><span class="">Emails</span><span class="on">Account</span></div><div class="one"><section>
 <div class="f"><label>Email</label><div class="acts"><div class="in ro" style="flex:1"><span><span class="prov">G</span>barons.steal.fc@gmail.com</span><span class="c">from Google</span></div><span class="btn">Sign out</span></div></div>
 <div class="f"><label>Public</label><p class="sub" style="margin:0;font-size:14px;color:var(--ink)">Team name, favourite team, country, banner, points</p></div>
 <div class="f"><label>Your data</label><div><span class="btn">Download my data</span></div></div>
 </section>
-<div class="danger"><span class="btn">Delete account</span></div></div><div class="foot"><span class="ln">Privacy</span><span class="ln">Terms</span><span class="phm">privacy email</span></div></div></div>
+<div class="danger"><span class="btn">Delete account</span></div></div><div class="foot"><span class="ln">Privacy ›</span><span class="ln">Terms ›</span><span class="phm">privacy email</span></div></div></div>
 
 <!-- Delete sheet -->
 <div class="view d"><div class="dim"></div>
@@ -155,7 +132,7 @@ section { background: none; border-top: 2px solid var(--ink); padding: 4px 0 8px
 <div class="sheet"><h2>Save your team <span class="step">1 of 2</span></h2>
 <p class="lead">Your squad of 9 is kept while you sign up.</p>
 <div class="pv"><span class="btn"><span class="prov">G</span>Continue with Google</span><span class="btn"><span class="prov">D</span>Continue with Discord</span></div>
-<p class="warn">No password is stored. <span class="ln">Privacy</span> · <span class="ln">Terms</span></p>
+<p class="warn">No password is stored. <span class="ln">Privacy ›</span> · <span class="ln">Terms ›</span></p>
 </div></div>
 
 <!-- Sign-up, step 2 -->
@@ -163,7 +140,7 @@ section { background: none; border-top: 2px solid var(--ink); padding: 4px 0 8px
 <div class="sheet"><h2>Your team <span class="step">2 of 2</span></h2>
 <label>Team name</label><div class="in">Baron Steal FC <span class="c">14/20</span></div>
 <div class="two">
-<div><label>Favourite team</label><div class="in sel"><span style="color:var(--soft)">Choose a team</span></div></div>
+<div><label>Favourite team</label><div class="in sel"><span class="ph0">Choose a team</span></div></div>
 <div><label>Country</label><div class="in sel"><span>United Kingdom</span></div></div>
 </div>
 <div class="sub">Both lock when your first gameweek starts: Wed 07:45.</div>

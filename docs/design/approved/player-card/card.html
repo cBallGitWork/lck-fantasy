@@ -1,49 +1,49 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Player card</title>
-<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
+<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { width: 1440px; min-height: 1000px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; position: relative; }
 iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; border: 0; }
 .dim { position: absolute; inset: 0; background: rgba(29,29,29,.55); }
-.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 11px; }
-.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; font-weight: 600; line-height: 16px; color: var(--ink); }
+.ph { background: var(--paper); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 4px; font-size: 11px; font-weight: 600; line-height: 16px; color: var(--ink); } .tag.live { background: var(--ink); color: var(--paper); } .up { color: var(--rise); }
 
-/* type scale: 40 name · 48 mono hero · 20 mono tier-2 · 14 body · 12 labels */
-.card { position: absolute; left: 220px; top: 44px; width: 1000px; background: var(--paper); border: 1px solid var(--ink); }
-.x { position: absolute; right: 18px; top: 10px; font-size: 16px; color: var(--mid); z-index: 1; }
-.x.on-bar { color: #fff; top: 7px; }
-.news { background: var(--ink); color: #fff; padding: 7px 24px; font-size: 13px; }
+/* drawn to docs/design/plate.md: 44 mono hero · 28 name · 20 mono figures · 16 hangul · 14 body · 12 labels */
+.card { position: absolute; left: 192px; top: 48px; width: 1056px; background: var(--paper); border: 1px solid var(--ink); }
+.x { position: absolute; right: 16px; top: 12px; font-size: 16px; color: var(--mid); z-index: 1; }
+.x.on-bar { color: #fff; top: 8px; }
+.news { background: var(--ink); color: #fff; padding: 8px 24px; font-size: 14px; }
 
 /* band 1: the lower-third */
-.lt { display: grid; grid-template-columns: 80px 1fr auto; gap: 20px; padding: 28px 24px 16px; align-items: end; }
+.lt { display: grid; grid-template-columns: 80px 1fr auto; gap: 24px; padding: 32px 24px 16px; align-items: end; }
 .por { width: 80px; height: 80px; }
-.who .chip { display: inline-block; background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; padding: 2px 8px; margin-bottom: 6px; }
-.who h1 { font-size: 40px; letter-spacing: -1px; line-height: 1; display: flex; align-items: baseline; gap: 12px; }
-.who h1 i { font-style: normal; font-size: 40px; font-weight: 500; color: var(--mid); letter-spacing: 0; }
-.who .legal { font-size: 12px; color: var(--mid); margin-top: 6px; }
-.hero { text-align: right; padding-right: 28px; }
-.hero b { font: 600 48px "IBM Plex Mono", monospace; line-height: 1; display: block; }
-.hero span { font-size: 12px; color: var(--mid); font-weight: 500; }
+.who .tag { margin-bottom: 8px; }
+.who h1 { font-size: 28px; font-weight: 700; line-height: 1.2; display: flex; align-items: baseline; gap: 8px; }
+.who h1 i { font-style: normal; font-size: 16px; font-weight: 400; color: var(--mid); }
+.who .legal { font-size: 12px; color: var(--mid); margin-top: 4px; }
+.hero { text-align: right; padding-right: 32px; }
+.hero b { font: 600 44px "IBM Plex Mono", monospace; line-height: 1; display: block; }
+.hero span { font-size: 12px; color: var(--mid); }
 
 /* band 2: meta + actions */
 .meta { display: flex; align-items: center; gap: 24px; padding: 0 24px 16px; border-bottom: 1px solid var(--line); }
-.meta .kv { font-size: 13px; color: var(--mid); } .meta .kv b { font: 600 20px "IBM Plex Mono", monospace; color: var(--ink); margin-right: 6px; }
-.side { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 14px; align-self: stretch; }
+.meta .kv { font-size: 12px; color: var(--mid); } .meta .kv b { font: 600 20px "IBM Plex Mono", monospace; color: var(--ink); margin-right: 8px; }
+.side { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 16px; align-self: stretch; }
 .lt { min-height: 132px; }
-.acts { display: flex; gap: 6px; align-items: center; white-space: nowrap; }
-.acts span { height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid var(--line); font-size: 13px; }
+.acts { display: flex; gap: 8px; align-items: center; white-space: nowrap; }
+.acts span { height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid var(--line); font-size: 14px; }
 .acts span.on { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 600; }
-.acts a { font-size: 13px; text-decoration: underline; margin-left: 8px; }
+.acts a { font-size: 14px; margin-left: 8px; }
 
 /* body: left (weeks, tabs, content) + right rail (season) */
-.body { display: grid; grid-template-columns: 1fr 300px; }
+.body { display: grid; grid-template-columns: 1fr 360px; }
 .left { padding: 0 24px 24px; } #main { min-height: 400px; }
 .rail { border-left: 1px solid var(--line); padding: 16px 24px 24px; }
 
-.weeks { display: grid; grid-template-columns: repeat(3, 1fr) 2px repeat(3, 1fr); padding: 14px 0; border-bottom: 1px solid var(--line); }
-.weeks .c { padding: 0 10px; }
-.weeks .w { font-size: 12px; color: var(--mid); font-weight: 500; display: block; }
+.weeks { display: grid; grid-template-columns: repeat(3, 1fr) 2px repeat(3, 1fr); padding: 16px 0; border-bottom: 1px solid var(--line); }
+.weeks .c { padding: 0 12px; }
+.weeks .w { font-size: 12px; color: var(--mid); display: block; }
 .weeks b { font: 600 20px "IBM Plex Mono", monospace; display: block; line-height: 1.2; }
 .weeks .o { font-size: 12px; color: var(--mid); }
 .weeks .n .o { color: var(--mid); font: 400 20px "IBM Plex Mono", monospace; display: block; line-height: 1.2; }
@@ -51,31 +51,31 @@ iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; bord
 .weeks .now { background: var(--ink); }
 
 .tabs { display: flex; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
-.tabs span { padding: 12px 0 10px; margin-right: 26px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
+.tabs span { padding: 12px 0 8px; margin-right: 24px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
 
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 #main table.g { table-layout: fixed; } #main table.g td:nth-child(1) { width: 50px; } #main table.g td:nth-child(3) { width: 140px; } #main table.g td:nth-child(4) { width: 60px; }
-th { text-align: right; font-weight: 500; color: var(--mid); font-size: 12px; padding: 0 6px 6px; }
-td { text-align: right; padding: 0 6px; height: 36px; border-top: 1px solid var(--fill); }
+th { text-align: right; font-weight: 600; color: var(--mid); font-size: 12px; padding: 0 8px 8px; }
+td { text-align: right; padding: 0 8px; height: 40px; border-top: 1px solid var(--fill); }
 th.l, td.l { text-align: left; }
 td.n { font-family: "IBM Plex Mono", monospace; }
 td.p { font: 600 14px "IBM Plex Mono", monospace; }
-tr.drop td.p { color: var(--soft); font-weight: 400; text-decoration: line-through; }
-.res { color: var(--soft); }
+tr.drop td.p { color: var(--mid); font-weight: 400; text-decoration: line-through; }
+.res { color: var(--mid); }
 tr.tot td { border-top: 2px solid var(--ink); font-weight: 600; height: 48px; } tr.tot td.p { font-size: 20px; }
 tr.wk1 td { border-top: 1px solid var(--line); }
 .g2 { color: var(--mid); }
-h4 { font-size: 12px; font-weight: 600; letter-spacing: .04em; border-top: 2px solid var(--ink); padding-top: 8px; margin: 24px 0 6px; display: flex; justify-content: space-between; align-items: baseline; }
-h4 b { font: 600 14px "IBM Plex Mono", monospace; letter-spacing: 0; }
+h4 { font-size: 12px; font-weight: 600; border-top: 2px solid var(--ink); padding-top: 8px; margin: 24px 0 8px; display: flex; justify-content: space-between; align-items: baseline; }
+h4 b { font: 600 14px "IBM Plex Mono", monospace; }
 #main table.h { table-layout: fixed; } col.c1 { width: 70px; } col.c3 { width: 70px; } col.c4 { width: 120px; } col.c5 { width: 90px; } col.c6 { width: 60px; } col.c7 { width: 70px; }
 #main table.ch { width: 420px; }
 h4:first-child { margin-top: 0; border-top: 0; padding-top: 0; }
 h4 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 
-.rail .tot { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--ink); padding-bottom: 8px; margin-bottom: 4px; }
+.rail .tot { display: flex; gap: 8px; align-items: baseline; border-top: 2px solid var(--ink); padding: 8px 0 8px; }
 .rail .tot span { font-size: 14px; font-weight: 600; } .rail .tot i { font-style: normal; font-size: 12px; color: var(--mid); }
-.rail table td { height: 36px; font-size: 13px; }
-.rail td.pg { color: var(--soft); font-family: "IBM Plex Mono", monospace; }
+.rail table td { height: 40px; font-size: 14px; }
+.rail td.pg { color: var(--mid); font-family: "IBM Plex Mono", monospace; }
 </style></head>
 <body>
 <iframe class="under" id="under"></iframe><div class="dim"></div>
@@ -83,7 +83,7 @@ h4 span { font-weight: 400; color: var(--mid); font-size: 12px; }
   <span class="x">✕</span>
   <div id="news"></div>
   <div class="lt"><div class="por ph">portrait</div>
-    <div class="who"><span class="chip">Mid · T1</span><h1>Faker<i>이상혁</i></h1><div class="legal">Lee Sang-hyeok</div></div>
+    <div class="who"><span class="tag">Mid · T1</span><h1>Faker<i>이상혁</i></h1><div class="legal">Lee Sang-hyeok</div></div>
     <div class="side"><div class="hero" id="hero"></div><div class="acts" id="acts"></div></div></div>
   <div class="meta" id="meta"></div>
   <div class="body"><div class="left"><div class="weeks" id="weeks"></div><div class="tabs" id="tabs"></div><div id="main"></div></div>
@@ -108,7 +108,7 @@ $("hero").innerHTML = `<b>${FP ? 41 : 58}</b><span>Season · 2nd of 10 mids</spa
 
 // Meta line: price, form, owned with the week's transfers; buttons by where it opened (spec/12).
 const acts = FP ? `<a>Compare ›</a>` : `<span class="on">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><span>Transfer out</span><a>Compare ›</a>`;
-$("meta").innerHTML = `<span class="kv"><b>18.5억</b>▲0.5</span><span class="kv"><b>${FP ? "20.5" : "19.3"}</b>form · ${FP ? "1st" : "2nd"}</span>
+$("meta").innerHTML = `<span class="kv"><b>18.5억</b><span class="up">▲0.5</span></span><span class="kv"><b>${FP ? "20.5" : "19.3"}</b>form · ${FP ? "1st" : "2nd"}</span>
   <span class="kv"><b>46%</b>owned · 1st</span><span class="kv">${FP ? "+842 / −126" : "+1,204 / −310"} this week</span>`;
 $("acts").innerHTML = acts;
 
@@ -126,9 +126,9 @@ $("tabs").innerHTML = TABS.map((t) => `<span class="${t === ON ? "on" : ""}">${t
 
 // This week: each series and game, champion, K/D/A, points; the 2 that count in bold, the rest grey (spec/12, spec/05).
 const G = (n, champ, kda, p, keep, live) => `<tr class="${keep ? "" : "drop"}"><td class="l g2">G${n}</td><td class="l">${champ.replace(/ · (\w)$/, " <span class=res>· $1</span>")}</td><td class="n">${kda}</td><td class="p">${p}${live ? " ●" : ""}</td></tr>`;
-const WEEK = `<h4><span style="color:var(--ink);font-size:12px">Wed · v HLE &nbsp;<span class="g2" style="font-weight:400">W 2–1 · final</span></span><b>12</b></h4><table class="g">
+const WEEK = `<h4><span style="color:var(--ink);font-size:12px">Wed · v HLE &nbsp;<span class="g2" style="font-weight:400">W 2–1 · <span class="tag">Final</span></span></span><b>12</b></h4><table class="g">
   ${G(1, "Azir · W", "6/1/7", 5, true)}${G(2, "Taliyah · L", "3/2/5", 2, false)}${G(3, "Galio · W", "9/0/8", 7, true)}</table>
-  <h4><span style="color:var(--ink);font-size:12px">Sat · v DK &nbsp;<span class="g2" style="font-weight:400">1–0 · <span class="tag">G2 live</span></span></span><b>5 ●</b></h4><table class="g">
+  <h4><span style="color:var(--ink);font-size:12px">Sat · v DK &nbsp;<span class="g2" style="font-weight:400">1–0 · <span class="tag live">G2 live</span></span></span><b>5 ●</b></h4><table class="g">
   ${G(1, "Orianna · W", "5/1/9", 4, true)}${G(2, "Sylas · 14:20", "3/0/2", 1, true, true)}
   <tr class="tot"><td class="l" colspan="2">Week 3</td><td class="n g2">17 × 1.5 Carry</td><td class="p">25</td></tr></table>`;
 

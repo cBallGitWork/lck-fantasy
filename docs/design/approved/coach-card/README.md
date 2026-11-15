@@ -12,7 +12,7 @@ The full card for the coach slot. It opens from **Full card ›** on the coach's
 
 ## What differs from the player card
 
-- **Header**: a Coach · team chip, a team crest in place of the portrait, and the head coach's name, hangul and legal name. The coach slot is the team; the head coach is its face (spec/01).
+- **Header**: a Coach · team tag, a team crest in place of the portrait, and the head coach's name, hangul and legal name. The coach slot is the team; the head coach is its face (spec/01).
 - **Buttons**: from Pick Team, Transfer out and Compare › only. There is no Carry, Vice-carry or swap, because a coach is never Carry and has no bench (spec/01, spec/04). From Points, Compare › only.
 - **This week**: each game with W or L, the coach lines it scored and its points, with the best 2 counting. Then the series line: +3 won, −1 lost. While a series is live that line reads "+3 if won, −1 if lost".
 - **History**: no K/D/A. Past seasons are the team's, scored by Flol.

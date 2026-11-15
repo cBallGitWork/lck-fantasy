@@ -2,7 +2,7 @@
 
 The signed-in start page, at 1440. A manager reaches it from **Home** in the top bar or the Flol wordmark, and lands on it after sign-in. It has two states: a series live, and nothing live.
 
-**Approved:** Craig, 13 Nov 2026. He said Home looked "too similar to points and transfers" and "should probably have the live stream viewer"; on the redraw, "In think so", then yes to the muted stream, the lineup when nothing is live, and star and flop, then "Yes" to saving. Overall as a LoL tier, redrawn 14 Nov 2026: Craig asked for "the rank with shield" at the top by Baron Steal FC, no total of managers, and no repeat of it in Leagues; then "Yes, C". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. No `plate.md` yet: this binds layout, content and order, not colour or type.
+**Approved:** Craig, 13 Nov 2026. He said Home looked "too similar to points and transfers" and "should probably have the live stream viewer"; on the redraw, "In think so", then yes to the muted stream, the lineup when nothing is live, and star and flop, then "Yes" to saving. Overall as a LoL tier, redrawn 14 Nov 2026: Craig asked for "the rank with shield" at the top by Baron Steal FC, no total of managers, and no repeat of it in Leagues; then "Yes, C". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn.
 
 | File | Shows |
 |---|---|
@@ -18,7 +18,7 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 
 ## Layout
 
-- **Top:** the team name and its hangul; beside it, Overall as a LoL tier: a shield, the tier and its hangul, the overall rank and move beneath, the sponsor's badge. The idle file's foot shows every state: Unranked, a division tier, Master or Grandmaster, Challenger (its rank, a green arrow).
+- **Top:** the team name and its hangul; beside it, Overall as a LoL tier: a shield, the tier and its hangul, the overall rank and move beneath, the sponsor's badge. The idle file's foot shows every state: Unranked, a division tier, Master or Grandmaster, Challenger (its rank and move).
 - **Left, live:** the stream, muted, the series and **Live ›** over it; the stream picker under it (spec/12's list).
 - **Left, idle:** Week 4 lineup: the seven starters (five roles, Flex, Coach) with C and V; the next series on stream and when; **Pick Team ›**.
 - **Right, live:** your week (not final) with Average and Highest; your players in this series with live points; who is still to play; **Points ›**.

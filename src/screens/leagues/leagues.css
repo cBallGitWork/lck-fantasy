@@ -1,0 +1,206 @@
+/* Leagues (docs/design/approved/leagues/): the list left, the open league's table right. */
+.leagues {
+  display: grid;
+  grid-template-columns: var(--m-side) minmax(0, 1fr);
+  gap: var(--s-6);
+  margin-top: var(--s-2);
+}
+
+/* The list of your leagues. */
+.leagues__list-title {
+  font-size: var(--size-body);
+  font-weight: var(--w-bold);
+  border-top: var(--m-rule-heavy) solid var(--ink);
+  padding-top: var(--s-2);
+  margin: var(--s-5) 0 var(--s-2);
+}
+.leagues__list section:first-child .leagues__list-title {
+  margin-top: 0;
+}
+.leagues__list-row {
+  display: grid;
+  grid-template-columns: 1fr auto calc(var(--s-6) * 2);
+  gap: 0 var(--s-2);
+  align-items: baseline;
+  padding: var(--s-2) var(--s-3);
+  background: var(--paper);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.leagues__list-row:hover {
+  background: var(--fill);
+}
+.leagues__list-row small {
+  grid-column: 1;
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.leagues__list-move {
+  text-align: right;
+}
+.leagues__list-row--on {
+  box-shadow: inset var(--m-rule-heavy) 0 0 var(--ink);
+  background: var(--fill);
+  font-weight: var(--w-bold);
+}
+.leagues__list-row--on small {
+  font-weight: var(--w-regular);
+}
+.leagues__list-actions {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+
+/* The open league's head. */
+.leagues__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.leagues__name-head {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.leagues__sub {
+  color: var(--mid);
+  font-size: var(--size-body);
+}
+.leagues__spacer {
+  flex: 1;
+}
+.leagues__code {
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  padding: var(--s-1) var(--s-2);
+}
+.leagues__rename {
+  font: inherit;
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+}
+/* Admin ▾, drawn as an outlined key. */
+.leagues__admin {
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+}
+.leagues__tabs-line {
+  position: relative;
+}
+.leagues__sponsor {
+  position: absolute;
+  right: 0;
+  bottom: var(--s-1);
+}
+
+/* The table. */
+.leagues__table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--paper);
+}
+.leagues__table th {
+  text-align: left;
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+  padding: var(--s-2) var(--s-3);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.leagues__table td {
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  border-bottom: var(--m-rule) solid var(--fill);
+  white-space: nowrap;
+}
+.leagues__table tbody tr:hover td {
+  background: var(--fill);
+}
+.leagues__table .leagues__figure {
+  text-align: right;
+}
+.leagues__rank-col {
+  width: calc(var(--s-6) * 2);
+}
+.leagues__move-col {
+  width: calc(var(--s-7) + var(--s-5));
+}
+.leagues__carry-col {
+  width: calc(var(--s-7) * 3 + var(--s-2));
+}
+.leagues__go-col {
+  width: var(--m-go-col);
+}
+.leagues__rank {
+  font-weight: var(--w-semi);
+}
+.leagues__nil {
+  color: var(--mid);
+  font-family: var(--font-mono);
+  font-size: var(--size-small);
+}
+.leagues__name small {
+  color: var(--mid);
+  font-size: var(--size-small);
+  margin-left: var(--s-2);
+}
+.leagues__chase {
+  margin-left: var(--s-2);
+}
+.leagues__table .leagues__mine td {
+  background: var(--fill);
+  font-weight: var(--w-bold);
+}
+.leagues__mine small {
+  font-weight: var(--w-regular);
+}
+.leagues__table .leagues__gap td {
+  height: auto;
+  padding: var(--s-1);
+  text-align: center;
+  color: var(--mid);
+}
+.leagues__table td.leagues__go {
+  padding: 0 var(--s-2) 0 0;
+  text-align: right;
+}
+.leagues__go a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--m-target);
+  min-height: var(--m-target);
+  font-size: var(--size-lead);
+}
+
+/* The pager. */
+.leagues__pager {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+.leagues__page {
+  font: inherit;
+  color: var(--text);
+  padding: var(--s-1) var(--s-2);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  cursor: pointer;
+}
+.leagues__page:hover,
+.leagues__page--on {
+  border-color: var(--ink);
+}
+.leagues__page--on {
+  font-weight: var(--w-bold);
+}
+.leagues__page--gap {
+  cursor: default;
+}

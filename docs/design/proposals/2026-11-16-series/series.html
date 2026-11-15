@@ -32,6 +32,7 @@ td { padding: 0 10px; height: 52px; border-top: 1px solid var(--fill); vertical-
 td.rl { color: var(--mid); font-size: 12px; } td.rl svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 6px; }
 td.pl { white-space: nowrap; } td.pl b { font-weight: 600; } td.pl small { color: var(--mid); font-size: 12px; margin-left: 6px; }
 /* your players: a small square (Points keeps ● for live) */
+.cm { display: inline-flex; width: 15px; height: 15px; border-radius: 50%; background: var(--ink); color: #fff; font: 700 9px "IBM Plex Sans KR"; align-items: center; justify-content: center; margin-left: 6px; vertical-align: 1px; }
 i.me { display: inline-block; width: 6px; height: 6px; background: var(--ink); margin: 0 0 2px 6px; }
 .gm { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .gm > span:first-child { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; } .gm small { display: block; color: var(--mid); font: 12px "IBM Plex Mono", monospace; }
@@ -68,11 +69,11 @@ const V = new URLSearchParams(location.search).get("v") || "final";
 // quadra +1, penta +2; +1 a steal. Per game: [champion, K, D, A, gold lead, solo kills, first blood, multikill, steals]
 // Coach per game: [first tower, most drakes, baron, elder, quick win]; +3 a series win, −1 a loss.
 // Opened at the hub's moment (Week 4, Tuesday 22:00 London). Your players are Baron Steal FC's, from the Points picture.
-const MINE = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"];
+const MINE = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"], CARRY = "Faker"; // the Carry scores ×1.5, rounded down (spec/04)
 const S = {
   // T1 v DK, Week 3, Sat 16 Jan, T1 2–0 (the hub's Results). Faker G1 Orianna 5/1/9 for 4, Siwoo G1 2, kkOma G1 2 (Points).
   final: { a: "T1", b: "DK", time: ["10:30", "19:30"],
-    games: [{ w: "T1", len: "31:42", blue: "T1", pog: "Faker" }, { w: "T1", len: "27:10", blue: "DK", pog: "Faker" }], pog: "Faker",
+    games: [{ w: "T1", len: "31:42", blue: "T1", pog: "Faker" }, { w: "T1", len: "27:10", blue: "DK", pog: "Faker" }],
     T1: { name: "T1", rec: "5–1", coach: ["kkOma", "김정균", [[1, 1, 0, 0, 0], [1, 1, 1, 0, 0]]],
       p: [["top", "Doran", "최현준", [["K'Sante", 2, 1, 7, 1, 0, 0, 0, 0], ["Rumble", 3, 0, 6, 1, 0, 0, 0, 0]]],
           ["jng", "Oner", "문현준", [["Viego", 3, 2, 9, 1, 0, 0, 0, 0], ["Xin Zhao", 2, 2, 8, 1, 0, 0, 0, 1]]],
@@ -87,7 +88,7 @@ const S = {
           ["sup", "BeryL", "조건희", [["Braum", 0, 5, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 3, 4, 0, 0, 0, 0, 0]]]] } },
   // GEN v HLE, Week 3, Sat 16 Jan, GEN 2–1 (the hub's Results). Zeus 2 5 0, Canyon 2 3 4, Ruler 3 1 4, Delight 1 2 2 (Points).
   f21: { a: "GEN", b: "HLE", time: ["08:00", "17:00"],
-    games: [{ w: "GEN", len: "29:05", blue: "GEN", pog: "Chovy" }, { w: "HLE", len: "34:48", blue: "HLE", pog: "Zeus" }, { w: "GEN", len: "26:31", blue: "GEN", pog: "Canyon" }], pog: "Canyon",
+    games: [{ w: "GEN", len: "29:05", blue: "GEN", pog: "Chovy" }, { w: "HLE", len: "34:48", blue: "HLE", pog: "Zeus" }, { w: "GEN", len: "26:31", blue: "GEN", pog: "Canyon" }],
     GEN: { name: "Gen.G", rec: "5–1", coach: ["Ryu", "류상욱", [[1, 1, 1, 0, 0], [0, 0, 0, 0, 0], [1, 1, 1, 0, 0]]],
       p: [["top", "Kiin", "김기인", [["Rumble", 3, 1, 5, 1, 0, 0, 0, 0], ["Jax", 0, 4, 2, 0, 0, 0, 0, 0], ["K'Sante", 2, 2, 7, 0, 0, 0, 0, 0]]],
           ["jng", "Canyon", "김건부", [["Vi", 2, 2, 9, 1, 0, 0, 0, 0], ["Lee Sin", 3, 3, 3, 1, 0, 1, 0, 1], ["Xin Zhao", 4, 1, 10, 1, 0, 0, 0, 0]]],
@@ -97,14 +98,16 @@ const S = {
     HLE: { name: "Hanwha Life", rec: "4–2", coach: ["Homme", "윤성영", [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0], [0, 1, 0, 0, 0]]],
       p: [["top", "Zeus", "최우제", [["Gnar", 2, 3, 2, 1, 1, 0, 0, 0], ["K'Sante", 4, 1, 6, 1, 1, 0, 0, 0], ["Renekton", 2, 4, 2, 0, 0, 0, 0, 0]]],
           ["jng", "Kanavi", "서진혁", [["Xin Zhao", 1, 4, 3, 0, 0, 0, 0, 0], ["Viego", 4, 2, 8, 1, 0, 0, 0, 0], ["Maokai", 1, 6, 3, 0, 0, 0, 0, 0]]],
-          ["mid", "Zeka", "김건우", [["Taliyah", 2, 3, 2, 0, 0, 0, 0, 0], ["Ahri", 5, 1, 7, 1, 0, 0, 0, 0], ["Azir", 2, 4, 3, 0, 0, 0, 0, 0]]],
+          ["mid", "Zeka", "김건우", [["Taliyah", 2, 3, 2, 0, 0, 0, 0, 0], ["Ahri", 5, 1, 7, 1, 0, 0, 0, 0], null]],
+          // a made-up academy mid, subbed in for G3 (spec/01 lines 49–51)
+          ["mid", "Kael", "김태율", [null, null, ["Azir", 2, 4, 3, 0, 0, 0, 0, 0]], "sub"],
           ["bot", "Gumayusi", "이민형", [["Ezreal", 1, 3, 3, 0, 0, 0, 0, 0], ["Varus", 5, 1, 6, 1, 0, 0, 0, 0], ["Zeri", 2, 4, 2, 0, 0, 0, 0, 0]]],
           ["sup", "Delight", "유환중", [["Nautilus", 0, 3, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 2, 14, 0, 0, 0, 0, 0], ["Leona", 0, 3, 10, 0, 0, 0, 0, 0]]]] } },
 };
 // Live: the same series at the Points moment (Sat 21:10 KST): T1 1–0, game 2 at 14:20. Faker G2 1, Siwoo G2 1, kkOma G2 0 (Points).
 // A live game has no gold lead (at 15:00), deathless, solo kills or steals yet: they come at final (spec/11). G2 so far: [champion, K, D, A, first blood]
 S.live = JSON.parse(JSON.stringify(S.final));
-S.live.games[1] = { live: "14:20", blue: "DK" }; S.live.pog = null;
+S.live.games[1] = { live: "14:20", blue: "DK" };
 const G2 = { T1: [["Rumble", 1, 0, 1, 0], ["Xin Zhao", 1, 0, 2, 0], ["Sylas", 3, 0, 2, 0], ["Varus", 1, 0, 3, 0], ["Nautilus", 0, 1, 4, 0]],
   DK: [["Gnar", 1, 0, 1, 1], ["Maokai", 0, 2, 1, 0], ["Azir", 0, 2, 1, 0], ["Zeri", 0, 1, 0, 0], ["Alistar", 0, 1, 2, 0]] };
 for (const c of ["T1", "DK"]) S.live[c].p.forEach((p, j) => { const [ch, k, d, a, fb] = G2[c][j]; p[3][1] = [ch, k, d, a, 0, 0, fb, 0, 0, true]; });
@@ -113,14 +116,16 @@ S.live.T1.coach[2][1] = [0, 0, 0, 0, 0];
 S.live.T1.rec = "4–1"; S.live.DK.rec = "3–2";
 const RH = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support" };
 const cap = (x) => Math.max(-3, Math.min(3, x));
-function pts(role, [, k, d, a, gold, solo, fb, multi, steal, live]) {
+function pts(role, g) {
+  if (!g) return null; // did not play this game
+  const [, k, d, a, gold, solo, fb, multi, steal, live] = g;
   const kd = role === "top" || role === "sup" ? 2 : 3;
   return cap(Math.floor(k / kd)) + cap(Math.floor(a / 5)) - cap(Math.floor(d / (role === "sup" ? 4 : 3))) + gold + solo + fb + (d === 0 && !live ? 1 : 0) + multi + steal;
 }
 const sum = (xs) => xs.reduce((s, x) => s + x, 0);
 // best 2 games: the indexes that count (the earlier game wins a tie, as on Points)
-const best2 = (xs) => xs.map((x, i) => [x, i]).sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, 2).map((x) => x[1]);
-const me = (n) => (MINE.includes(n) ? '<i class="me"></i>' : "");
+const best2 = (xs) => xs.map((x, i) => [x, i]).filter(([x]) => x !== null).sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, 2).map((x) => x[1]);
+const me = (n) => (MINE.includes(n) ? '<i class="me"></i>' : "") + (n === CARRY ? '<span class="cm">C</span>' : "");
 const pog = (s, i, n) => (s.games[i].pog === n ? '<span class="pog">POG</span>' : "");
 const cell = (s, i, n, label, sub, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}<small>${sub}</small></span><span class="p">${pog(s, i, n)}${counted ? `<span class="box">${p}</span>` : p}</span></div></td>`;
 const L = ["1st tower", "Drakes", "Baron", "Elder", "Quick win"];
@@ -128,15 +133,15 @@ function team(s, code) {
   const t = s[code], won = s.games.map((g) => g.w === code), n = s.games.length, over = s.games.every((g) => g.w);
   const head = `<colgroup><col style="width:88px"><col style="width:${n > 2 ? 150 : 170}px">${s.games.map(() => "<col>").join("")}<col style="width:60px"></colgroup>
     <tr><th></th><th></th>${s.games.map((g, i) => `<th>G${i + 1} ${g.live ? `<b>● ${g.live}</b>` : `<b>${g.w === code ? "W" : "L"}</b> · ${g.len} · <a class="vod">VOD ›</a>`}</th>`).join("")}<th class="n">Series</th></tr>`;
-  const rows = t.p.map(([rl, nm, k, gs]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps);
-    return `<tr><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}</td><td class="pl"><b>${nm}</b><small>${k}</small>${me(nm)}</td>
-      ${gs.map((g, i) => cell(s, i, nm, g[0], `${g[1]}/${g[2]}/${g[3]}`, ps[i], c.includes(i))).join("")}<td class="tot">${sum(c.map((i) => ps[i]))}</td></tr>`; }).join("");
+  const rows = t.p.map(([rl, nm, k, gs, sub]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps);
+    return `<tr><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}${sub ? " · sub" : ""}</td><td class="pl"><b>${nm}</b><small>${k}</small>${me(nm)}</td>
+      ${gs.map((g, i) => (g ? cell(s, i, nm, g[0], `${g[1]}/${g[2]}/${g[3]}`, ps[i], c.includes(i)) : '<td><span class="none">–</span></td>')).join("")}<td class="tot">${sum(c.map((i) => ps[i]))}</td></tr>`; }).join("");
   const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = !over ? 0 : won.filter(Boolean).length === 2 ? 3 : -1;
   const coach = `<tr class="co"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b><small>${ck}</small>${me(cn)}</td>
     ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? L[j] : "")).filter(Boolean).join(" · ") || "–"}</span>`, "", cp[i], c.includes(i))).join("")}
     <td class="tot">${sum(c.map((i) => cp[i])) + sw}<small>${sw > 0 ? "W +3" : sw < 0 ? "L −1" : "&nbsp;"}</small></td></tr>`;
   return { html: `<section><h2>${t.name}</h2><table>${head}${rows}${coach}</table></section>`,
-    mine: sum(t.p.filter(([, nm]) => MINE.includes(nm)).map(([rl, , , gs]) => { const ps = gs.map((g) => pts(rl, g)); return sum(best2(ps).map((i) => ps[i])); }))
+    mine: sum(t.p.filter(([, nm]) => MINE.includes(nm)).map(([rl, nm, , gs]) => { const ps = gs.map((g) => pts(rl, g)), x = sum(best2(ps).map((i) => ps[i])); return nm === CARRY ? Math.floor(x * 1.5) : x; }))
       + (MINE.includes(cn) ? sum(c.map((i) => cp[i])) + sw : 0) };
 }
 // Before it starts: Week 4's HLE v DK, Wednesday 20 Jan, opened at the hub's moment.
@@ -153,7 +158,7 @@ if (V === "next") {
   const rec = (c) => (s[c].name === c ? s[c].rec : `${s[c].name} · ${s[c].rec}`);
   $("bug").innerHTML = `<div class="tm ${!live && wa < wb ? "lo" : ""}"><b>${s.a}</b><small>${rec(s.a)}</small></div><div class="sc">${wa}–${wb}</div><div class="tm b ${!live && wb < wa ? "lo" : ""}"><small>${s[s.b].rec}${s[s.b].name === s.b ? "" : ` · ${s[s.b].name}`}</small><b>${s.b}</b></div>`;
   $("meta").innerHTML = `${live ? '<span class="tag">Live</span><span class="tag nf">Not final</span><span>Solo kills, steals at final</span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b> · ${s.time[1]} KST</span>${live ? "<a>Watch ›</a>" : ""}<span class="sp"></span>
-    ${s.pog ? `<span class="fig">Series POG <b style="font:600 14px 'IBM Plex Sans KR'">${s.pog}</b></span>` : ""}<span class="fig"><i class="me" style="margin:0 6px 2px 0"></i>Your players<b>${A.mine + B.mine}</b></span>`;
+    <span class="fig"><i class="me" style="margin:0 6px 2px 0"></i>Your players<b>${A.mine + B.mine}</b></span>`;
   $("two").innerHTML = A.html + B.html;
 }
 </script></body></html>

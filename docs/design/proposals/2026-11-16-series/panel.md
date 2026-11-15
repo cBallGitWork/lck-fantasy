@@ -63,3 +63,12 @@ These are the FPL player's, the LCK fan's and UX's findings on `s-final.png` and
   - kills no longer fall from live to final: Siwoo's G2 is 1/0/1 live with first blood and 1/2/3 at final, so his total is 4 and Your players is 22;
   - records are as of opening: T1 4–1 and DK 3–2 while live.
 - Not taken: the PM's Aiming G1 (3/3/2 scores 0, correct as drawn); UX unboxing the live game (Points boxes it).
+
+## Round 4 (16 Nov 2026)
+
+Craig on the round 3 calls, "As recommended":
+- Your players counts the Carry ×1.5, rounded down, as Points does; the Carry wears Points' C. T1 v DK reads 27, live 12.
+- No series POG; POG stays per game.
+- Team records and K/D/A in each cell stay; spec/12 needs both lines on save.
+- No blue or red side.
+- A sat-out player is drawn: Zeka misses G3 of GEN 2–1 HLE (a dash), and a made-up academy mid, Kael, has his own "Mid · sub" row.

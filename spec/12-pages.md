@@ -172,18 +172,34 @@ Grilled 13 Nov 2026.
 - Team name, changeable any time, as in FPL.
 - The email address, from the Google or Discord account.
 - The hangul banner text ([spec/13](13-korean-touches.md), once it merges).
-- Favourite team and country: changeable until the manager's first gameweek scores, then shown
-  locked, with why ([spec/08](08-leagues.md)).
+- Favourite team and country: changeable until the manager's first gameweek starts, then shown
+  "Locked since your first gameweek" ([spec/08](08-leagues.md)).
 - Time zone: the browser's, or one the manager picks. Example: a 16:45 KST deadline shows as
   08:45 in London.
 - Light, dark, or follow the device.
 - Sign out, and delete the account and its data. A private league the manager made passes to
-  its next member (Craig, 16 Nov 2026).
-- Reached from the team name at the right of the top bar. One page, saved with a Save button.
+  its next member (Craig, 16 Nov 2026): the one who joined earliest; a league with no other
+  member is deleted (Craig, 15 Nov 2026).
+- Reached from the team name at the right of the top bar. Four tabs, Team, Display, Emails and
+  Account ("maybe get differen tparts into tabs", Craig, 15 Nov 2026), saved with one Save
+  button for every tab. The picture is `docs/design/approved/settings/`.
   The team name and the hangul banner are capped at 20 characters, as FPL's name is.
 - Emails, both opt-in and off by default: a deadline reminder 24 hours before, and a weekly
   recap once the gameweek is final (points, rank moves in each league, best player, any protest
   truck). No marketing. Off by default because Resend's free plan sends 100 emails a day.
+- Your data, as GDPR asks ("settings need to include gdrp concersn etc", Craig, 15 Nov 2026,
+  taking every recommendation):
+  - Download my data: a JSON file at once, of the team, squads, transfers, leagues, follows and
+    settings.
+  - A line saying what is public: team name, favourite team, country, banner, points.
+  - Delete erases at once; backups clear within 30 days, and the sheet says so. The sheet lists
+    what goes and who each private league passes to.
+  - Privacy and Terms links and a privacy contact email at the foot. Their text is
+    [docs/legal/](../docs/legal/), plain pages with no picture (Craig, 15 Nov 2026).
+  - No cookie banner: Flol keeps only essential cookies and browser storage (sign-in, the guest
+    squad, remembered views and theme), with no analytics or ads.
+  - The banner text is any text up to 20 characters, moderated like team names (spec/13); Latin
+    letters are allowed, as in 바론 스틸 FC (Claude's call on Craig's "your call").
 
 ## The coach card
 

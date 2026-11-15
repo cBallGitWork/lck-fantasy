@@ -370,6 +370,15 @@ Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/
 - The player card's form rank and the coach card's season and form ranks are fixed to match Stats.
 - The picture: "Save".
 
+## Settings design round (15 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), [spec/09](../spec/09-onboarding.md) and [spec/08](../spec/08-leagues.md), the picture `docs/design/approved/settings/`.
+
+- "settings need to include gdrp concersn etc and anything else". Shown four calls with recommendations, he took them all: Download my data at once, no cookie banner, a 16+ tick at sign-up, and Privacy, Terms, a public-data line and erase-at-once at the foot.
+- "get the team to reivew, maybe get differen tparts into tabs": four tabs.
+- "your wording sucks@until week 4 scores. what does that means"; "you cant change fav team anyways during season"; "once your first gameweek starts". Both favourite team and country lock at the manager's first deadline.
+- "1 save team 2 your call 3 ok 4 your call 5 just text is fine no need for draw, do some basics and file". The account is made on Save team; Claude allowed any banner text, moderated; a deleted maker's private league passes to the earliest joiner, or goes if nobody else is in it; Claude kept the delete sheet's list of what goes; Privacy and Terms are plain text in `docs/legal/`, not drawn.
+
 ## Open
 
 - How the achievements cap and rank: a separate column, and base points decide ties?

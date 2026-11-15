@@ -89,7 +89,7 @@ test("Card view shows the seven in broadcast order, with photo, crest, C and V, 
   expect(order).toEqual([...order].sort((a, b) => a - b));
   expect(out).toContain("Flexplays Top");
   expect(out).toContain("Coach감독");
-  expect(out).toContain("Crest");
+  expect(html(<Lineup cards={cards} />)).toContain('alt="T1 crest"');
   expect(out).toContain("Photo");
   expect(out).toContain("Not starting");
   expect(out).toContain("Form 19.3");

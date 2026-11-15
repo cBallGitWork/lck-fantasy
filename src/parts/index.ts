@@ -1,5 +1,6 @@
 // The shared parts. They never import src/rift: the Rift builds on the parts, not the other way.
 export { BuffCard } from "./BuffCard";
+export { Crest } from "./Crest";
 export { cx } from "./cx";
 export { Deadline } from "./Deadline";
 export { Field } from "./Field";

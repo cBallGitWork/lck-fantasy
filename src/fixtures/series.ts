@@ -1,6 +1,7 @@
 // Finding a team's series in the made-up weeks, and reading one from a team's side.
 import type { Score } from "../parts";
-import type { Series, TeamCode } from "./week3";
+import type { TeamCode } from "./competition";
+import type { Series } from "./weeks";
 
 /** A series by its id; a missing one is a broken fixture. */
 export function seriesById(list: readonly Series[], id: string): Series {

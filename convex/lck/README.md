@@ -4,4 +4,4 @@ The real world: competitions, seasons, stages, teams, players, contracts, series
 
 - `series.ts`: games grouped into series, and when a series turns final (spec/11, Final).
 
-Storing these needs a Convex deployment and isn't built yet.
+`convex/feeds/load.ts` stores teams, players, series, games and lineups (`convex/schema.ts`).

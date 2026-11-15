@@ -1,5 +1,8 @@
 import type { ReactNode } from "react";
+import type { Go } from "../paths";
+import { measureVar, type MeasureKey } from "../theme/tokens";
 import { cx } from "./cx";
+import { GoLink } from "./GoLink";
 import "./Table.css";
 
 export interface Column<R> {
@@ -9,11 +12,18 @@ export interface Column<R> {
   cell: (row: R) => ReactNode;
   /** Figures are right-aligned, in mono. */
   figure?: boolean;
-  /** A width in px; the other columns share what is left. */
-  width?: number;
+  /** A width from the theme's measures; the other columns share what is left. */
+  width?: MeasureKey;
   /** A long name ends in `…` at the column's width; this is its full text, shown on hover. */
   fullText?: (row: R) => string;
+  /** The column the table is sorted by: its head in ink, with ▼. */
+  sorted?: boolean;
+  /** Starts a group of columns, with a 1px rule on its left (Stats). */
+  group?: boolean;
 }
+
+/** A row that opens something ends with `›`: a link (`go`) or a key (`onOpen`), named for screen readers. */
+export type RowOpen<R> = { name: (row: R) => string } & ({ go: (row: R) => Go } | { onOpen: (row: R) => void });
 
 /**
  * A table: name far left, figures right-aligned, 40px rows, 12px heads in mid grey. For the wide
@@ -25,7 +35,7 @@ export function Table<R>({
   rows,
   rowKey,
   selected,
-  onRow,
+  open,
   stickyHead,
   stickyFirst,
   label,
@@ -33,9 +43,9 @@ export function Table<R>({
   columns: Column<R>[];
   rows: R[];
   rowKey: (row: R) => string;
-  /** The row drawn on `--fill`, such as yours in a league. */
+  /** The row drawn bold on `--fill`, such as yours in a league. */
   selected?: (row: R) => boolean;
-  onRow?: (row: R) => void;
+  open?: RowOpen<R>;
   stickyHead?: boolean;
   stickyFirst?: boolean;
   label?: string;
@@ -44,37 +54,62 @@ export function Table<R>({
     <table className={cx("table", stickyHead && "table--sticky-head", stickyFirst && "table--sticky-first")} aria-label={label}>
       <colgroup>
         {columns.map((c) => (
-          <col key={c.key} style={c.width === undefined ? undefined : { width: c.width }} />
+          <col key={c.key} style={c.width === undefined ? undefined : { width: measureVar(c.width) }} />
         ))}
+        {open && <col className="table__go-col" />}
       </colgroup>
       <thead>
         <tr>
           {columns.map((c) => (
-            <th key={c.key} scope="col" className={cx(c.figure && "table__figure")}>
+            <th
+              key={c.key}
+              scope="col"
+              className={cx(c.figure && "table__figure", c.group && "table__group", c.sorted && "table__sorted")}
+              aria-sort={c.sorted ? "descending" : undefined}
+            >
               {c.head}
             </th>
           ))}
+          {open && <th scope="col" aria-label="Open" />}
         </tr>
       </thead>
       <tbody>
         {rows.map((row) => (
-          <tr
-            key={rowKey(row)}
-            className={cx(selected?.(row) && "table__row--selected", onRow && "table__row--opens")}
-            onClick={onRow && (() => onRow(row))}
-          >
+          <tr key={rowKey(row)} className={cx(selected?.(row) && "table__row--selected")}>
             {columns.map((c) => {
               const full = c.fullText?.(row);
               return (
-                <td key={c.key} className={cx(c.figure && "table__figure num", full !== undefined && "table__truncate")} title={full}>
+                <td
+                  key={c.key}
+                  className={cx(c.figure && "table__figure num", c.group && "table__group", full !== undefined && "table__truncate")}
+                  title={full}
+                >
                   {c.cell(row)}
                 </td>
               );
             })}
+            {open && (
+              <td className="table__go">
+                <OpenRow open={open} row={row} />
+              </td>
+            )}
           </tr>
         ))}
       </tbody>
     </table>
   );
   return stickyHead || stickyFirst ? <div className="table__scroll">{table}</div> : table;
+}
+
+function OpenRow<R>({ open, row }: { open: RowOpen<R>; row: R }) {
+  const label = `Open ${open.name(row)}`;
+  return "go" in open ? (
+    <GoLink go={open.go(row)} label={label}>
+      ›
+    </GoLink>
+  ) : (
+    <button type="button" aria-label={label} onClick={() => open.onOpen(row)}>
+      ›
+    </button>
+  );
 }

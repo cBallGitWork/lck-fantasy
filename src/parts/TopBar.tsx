@@ -1,5 +1,6 @@
-import { measure } from "../theme/tokens";
 import { PATHS } from "../paths";
+import { GoLink } from "./GoLink";
+import { Menu, type MenuItem } from "./Menu";
 import { cx } from "./cx";
 import { Placeholder } from "./Placeholder";
 import "./TopBar.css";
@@ -21,34 +22,45 @@ export type TopBarItem = (typeof TOP_BAR_ITEMS)[number][0];
  * The same on every screen: Flol, the eight items (Live's dot always shown), `presented by` the
  * sponsor, then the account menu, or `Sign in` for a visitor (`account` null).
  */
-export function TopBar({ active, account }: { active?: TopBarItem; account: string | null }) {
+export function TopBar({
+  active,
+  account,
+  accountMenu,
+}: {
+  active?: TopBarItem;
+  account: string | null;
+  /** The account menu's items. Until a picture settles them, the team name links to Settings. */
+  accountMenu?: MenuItem[];
+}) {
   return (
     <nav className="top-bar" aria-label="Flol">
-      <a className="top-bar__word" href={PATHS.home}>
+      <GoLink className="top-bar__word" go={{ to: PATHS.home }}>
         Flol
-      </a>
+      </GoLink>
       {TOP_BAR_ITEMS.map(([key, label]) => (
-        <a
+        <GoLink
           key={key}
-          href={PATHS[key]}
+          go={{ to: PATHS[key] }}
           className={cx("top-bar__item", key === active && "top-bar__item--on", key === "live" && "top-bar__item--live")}
-          aria-current={key === active ? "page" : undefined}
+          current={key === active}
         >
           {label}
-        </a>
+        </GoLink>
       ))}
       <span className="top-bar__space" />
       <span className="top-bar__presented">
-        presented by <Placeholder word="Sponsor" width={measure.sponsorTopW} height={measure.target} />
+        presented by <Placeholder word="Sponsor" width="sponsorTopW" height="target" />
       </span>
       {account === null ? (
-        <a className="top-bar__me" href={PATHS.pickTeam}>
+        <GoLink className="top-bar__me" go={{ to: PATHS.pickTeam }}>
           Sign in
-        </a>
+        </GoLink>
+      ) : accountMenu ? (
+        <Menu label={`${account} ▾`} items={accountMenu} className="top-bar__me" />
       ) : (
-        <a className="top-bar__me" href={PATHS.settings}>
+        <GoLink className="top-bar__me" go={{ to: PATHS.settings }}>
           {account} ▾
-        </a>
+        </GoLink>
       )}
     </nav>
   );

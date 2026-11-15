@@ -8,7 +8,7 @@
   border: var(--m-rule) solid var(--line);
 }
 .bench-bar__title {
-  width: var(--m-shirt-w);
+  width: var(--m-bench-title-w);
   font-size: var(--size-body);
   font-weight: var(--w-semi);
 }
@@ -27,7 +27,7 @@
   color: var(--mid);
 }
 .bench-tile__who {
-  line-height: 1.3;
+  line-height: var(--lh-mid);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -47,10 +47,18 @@
 }
 .bench-tile--out,
 .bench-tile--out b,
-.bench-tile--out .bench-tile__points,
-.bench-tile--dim b {
+.bench-tile--out .bench-tile__points {
   color: var(--mid);
   font-weight: var(--w-regular);
+}
+.bench-tile--dim b {
+  color: var(--mid);
+}
+.bench-tile[role="button"] {
+  cursor: pointer;
+}
+.bench-tile--selected {
+  outline: var(--m-rule-heavy) solid var(--ink);
 }
 .bench-tile--fit {
   outline: var(--m-rule-heavy) dashed var(--ink);

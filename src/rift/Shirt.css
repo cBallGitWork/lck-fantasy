@@ -6,8 +6,8 @@
   flex: none;
 }
 .shirt--small {
-  width: calc(var(--m-shirt-w) * 5 / 7);
-  height: calc(var(--m-shirt-h) * 5 / 7);
+  width: var(--m-shirt-small-w);
+  height: var(--m-shirt-small-h);
 }
 .shirt__svg {
   display: block;
@@ -17,12 +17,12 @@
 .shirt__body {
   fill: var(--paper);
   stroke: var(--ink);
-  stroke-width: 1.6;
+  stroke-width: var(--stroke-shirt);
 }
 .shirt__collar {
   fill: none;
   stroke: var(--ink);
-  stroke-width: 1.6;
+  stroke-width: var(--stroke-shirt);
 }
 .shirt__code {
   position: absolute;

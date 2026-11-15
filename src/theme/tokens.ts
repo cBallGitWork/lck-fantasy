@@ -6,6 +6,8 @@
 // ground, gold accent, cream text, a blue-teal second accent, Korean red rises and blue falls.
 // The plate's role names stay; each maps to a themed value.
 
+const kebab = (name: string) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
+
 export const color = {
   /** The page. */
   bg: "#010A13",
@@ -72,6 +74,9 @@ export const size = {
 
 export const weight = { regular: 400, semi: 600, bold: 700 } as const;
 
+/** Line heights, as multiples of the type size. */
+export const lineHeight = { tight: 1, snug: 1.2, mid: 1.3, body: 1.4 } as const;
+
 /** The one spacing scale, in px. No other gap, padding or margin. */
 export const space = { 1: 4, 2: 8, 3: 12, 4: 16, 5: 24, 6: 32, 7: 48 } as const;
 
@@ -95,8 +100,15 @@ export const measure = {
   markCard: 28,
   roleBox: 28,
   roleIcon: 20,
+  /** The role icon on a lineup card's head. */
+  roleIconSmall: 16,
   shirtW: 56,
   shirtH: 50,
+  /** The shirt in a player's panel. */
+  shirtSmallW: 40,
+  shirtSmallH: 36,
+  /** The Rift fills the main column: 984 wide at 1440. Tiles stand at fractions of it. */
+  riftW: 984,
   riftH: 560,
   tileW: 148,
   /** Pick Team's tiles, which carry no points bar. */
@@ -104,6 +116,16 @@ export const measure = {
   benchH: 72,
   benchTileW: 280,
   benchTileH: 48,
+  /** `Bench`, before the bench tiles. */
+  benchTitleW: 56,
+  /** A tag's line. */
+  tagLine: 16,
+  /** A tag inside a tile's series line, so the line keeps its height. */
+  tagLineTight: 14,
+  /** A table's last column, holding a row's `›`. */
+  goCol: 48,
+  /** A menu's list (the Admin menu, the account menu). */
+  menuW: 220,
   cardHead: 48,
   cardPhoto: 176,
   crest: 96,
@@ -113,7 +135,13 @@ export const measure = {
 
 export const motion = { fast: "150ms", slow: "250ms" } as const;
 
-const kebab = (name: string) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
+/** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
+export const stroke = { shirt: 1.6, dash: 3 } as const;
+
+export type MeasureKey = keyof typeof measure;
+
+/** A measure as CSS, for the few sizes a part takes as a prop. */
+export const measureVar = (key: MeasureKey) => `var(--m-${kebab(key)})`;
 
 /** Every token as a CSS custom property name and value, in the order they are declared. */
 export function themeVars(): [string, string][] {
@@ -124,7 +152,9 @@ export function themeVars(): [string, string][] {
     ...Object.entries(weight).map(([k, v]): [string, string] => [`--w-${k}`, String(v)]),
     ...Object.entries(space).map(([k, v]): [string, string] => [`--s-${k}`, `${v}px`]),
     ...Object.entries(measure).map(([k, v]): [string, string] => [`--m-${kebab(k)}`, `${v}px`]),
+    ...Object.entries(lineHeight).map(([k, v]): [string, string] => [`--lh-${k}`, String(v)]),
     ...Object.entries(motion).map(([k, v]): [string, string] => [`--motion-${k}`, v]),
+    ...Object.entries(stroke).map(([k, v]): [string, string] => [`--stroke-${k}`, String(v)]),
   ];
 }
 

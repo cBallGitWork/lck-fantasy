@@ -7,9 +7,8 @@
 // - Pick Team (pick.html) and Stats (stats.html): Week 4, Tuesday 22:00 London, before the deadline.
 // Times show in the manager's zone (London, UTC+0 in January), then KST.
 
-export type Role = "top" | "jng" | "mid" | "bot" | "sup";
-/** A lineup slot: the five roles, the Flex (any role) and the Coach. */
-export type Slot = Role | "flex" | "coach";
+import type { SeriesRow } from "../parts";
+import type { RoleKey, SlotKey } from "../rift";
 
 export const TEAMS = {
   T1: "T1",
@@ -35,25 +34,16 @@ export const MANAGER = {
   name: "Sam Lee",
 } as const;
 
-export type SeriesState = "final" | "notFinal" | "live" | "next";
-
-export interface Series {
-  id: string;
-  day: string;
-  date: string;
-  /** The manager's time (London), then KST. */
-  local: string;
-  kst: string;
+/** A series as the pictures show it: a list's row, with its date, and while live its game and clock. */
+export type Series = SeriesRow & {
   home: TeamCode;
   away: TeamCode;
-  /** Games won, home then away; absent until it starts. */
-  score?: [number, number];
-  state: SeriesState;
+  date: string;
   /** The game being played, while live. */
   liveGame?: number;
   /** The live game's clock. */
   clock?: string;
-}
+};
 
 const EARLY = { local: "08:00", kst: "17:00" } as const;
 const LATE = { local: "10:30", kst: "19:30" } as const;
@@ -116,11 +106,11 @@ export const WEEK4_DEADLINE = { local: "Wed 07:45", kst: "16:45", countdown: "9h
 
 /** A squad member at the Points picture's moment, with his points game by game. */
 export interface PointsPick {
-  slot: Slot | "bench";
+  slot: SlotKey | "bench";
   name: string;
   team: TeamCode;
   /** The role he plays: his slot's, save the Flex and the bench. */
-  role: Role | "coach";
+  role: RoleKey | "coach";
   mark?: "C" | "V";
   /** Each series he played this week: its id and points per game. A live series' last game is live. */
   series: { id: string; games: number[]; coachResult?: number }[];
@@ -154,10 +144,10 @@ export const POINTS_WEEK = { week: 3, average: 74, highest: 131 } as const;
 
 /** A squad member at the Pick Team picture's moment, with Week 4's price in 억 and form. */
 export interface PickTeamPick {
-  slot: Slot | "bench1" | "bench2";
+  slot: SlotKey | "bench1" | "bench2";
   name: string;
   team: TeamCode;
-  role: Role | "coach";
+  role: RoleKey | "coach";
   priceEok: number;
   form: number;
   mark?: "C" | "V";
@@ -181,7 +171,7 @@ export const PICK_TEAM_SQUAD: PickTeamPick[] = [
 export interface StatsPlayer {
   name: string;
   team: TeamCode;
-  role: Role | "coach";
+  role: RoleKey | "coach";
   priceEok: number;
   /** −1 a fall, 0 none, 1 a rise. */
   move: -1 | 0 | 1;
@@ -222,10 +212,10 @@ export const STATS_PLAYERS: StatsPlayer[] = [
 
 /** A starter in the Perfect game picture: Week 3's best team, final. */
 export interface PerfectPick {
-  slot: Slot;
+  slot: SlotKey;
   name: string;
   team: TeamCode;
-  role: Role | "coach";
+  role: RoleKey | "coach";
   points: number;
   /** Before ×1.5, for the Carry. */
   raw?: number;

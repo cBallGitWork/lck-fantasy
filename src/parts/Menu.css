@@ -1,0 +1,40 @@
+.menu {
+  position: relative;
+  display: flex;
+}
+.menu__key {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.menu__list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 4;
+  width: var(--m-menu-w);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+  font-size: var(--size-body);
+  font-weight: var(--w-regular);
+}
+.menu__item {
+  display: block;
+  width: 100%;
+  padding: var(--s-3) var(--s-4);
+  font: inherit;
+  color: var(--text);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+  cursor: pointer;
+}
+.menu__item:last-child {
+  border-bottom: 0;
+}
+.menu__item--apart {
+  border-top: var(--m-rule) solid var(--ink);
+}

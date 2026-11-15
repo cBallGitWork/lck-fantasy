@@ -1,6 +1,9 @@
 import type { SlotKey } from "./roles";
 
-/** A tile's centre on the Rift, in px from the Rift's top left (the main column is 984 wide at 1440). */
+/**
+ * A tile's centre on the Rift, in the pictures' px from its top left (984 × 560, the main column at
+ * 1440). A tile stands at the same share of the Rift at any width.
+ */
 export type RiftPoint = readonly [x: number, y: number];
 
 /** Where each starter stands on Points and Perfect game (points.html, perfect.html). */

@@ -1,4 +1,7 @@
-export { Lineup, PlayerCard, type PlayerCardProps } from "./Lineup";
+// The Rift view and Card view. They build on src/parts (through its index); parts never import these.
+export { BenchBar, BenchSwap, BenchTile } from "./BenchBar";
+export { Lineup, LineupCard, type LineupCardProps } from "./Lineup";
+export { PlayerPanel } from "./PlayerPanel";
 export { RiftMap } from "./RiftMap";
 export { RoleIcon } from "./RoleIcon";
 export { COACH_HANGUL, LINEUP_ORDER, ROLE_NAME, slotIcon, slotTag, type IconKey, type RoleKey, type SlotKey } from "./roles";

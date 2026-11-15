@@ -67,8 +67,8 @@ Each folder has a README saying what goes in it.
 | `src/` | The app's entry (`main.tsx`), its routes (`router.tsx`) and every screen's path (`paths.ts`). |
 | `src/theme/` | Every colour, font, size, gap and width, as tokens; nothing else holds a colour. |
 | `src/fixtures/` | Made-up data the screens are built on until the backend wires real data. |
-| `src/screens/` | One folder per screen in the site map (`docs/design/site-map.md`), named as it is there. |
-| `src/rift/` | The Rift view: the map, the lanes, the shirts and the role icons. |
+| `src/screens/` | One folder per screen in the site map (`docs/design/site-map.html`), named as it is there. |
+| `src/rift/` | The Rift view and Card view: the map, the tiles, the shirts, the role icons, the bench bar. Builds on `src/parts`; parts never import it. |
 | `src/parts/` | Parts shared by two or more screens: tables, the player row, buttons. |
 | `data/` | Seed data held per competition and season: teams, kit colours, stages. Data, never constants in code. |
 | `tests/` | Tests that cross features: a replayed gameweek, the signed-out pick to sign-up path. |
@@ -84,4 +84,5 @@ The rules:
 - `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`, `achievements`). The game reads the real world; it never writes it.
 - Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
 - A screen imports from `src/parts`, `src/rift`, `src/theme` and `src/fixtures`, never from another screen.
+- A screen's CSS classes start with its folder's name (`.points__side`); a test fails on any other.
 - Before adding a helper or a fixture, search for its home and reuse it.

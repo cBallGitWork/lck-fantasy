@@ -1,6 +1,14 @@
 # src/screens
 
-One folder per screen in the site map (`docs/design/site-map.md`), named as it is there, each with the approved picture in `docs/design/approved/<name>/`. Each `index.tsx` is the screen's route (`src/router.tsx`), a placeholder until its own issue builds it. A screen imports from `src/parts`, `src/rift` and `src/fixtures`, never from another screen.
+One folder per screen in the site map (`docs/design/site-map.html`), named as it is there, each with the approved picture in `docs/design/approved/<name>/`. Each `index.tsx` is the screen's route (`src/router.tsx`), a placeholder until its own issue builds it.
+
+So each screen's issue touches only its own folder:
+
+- A screen imports from `src/parts`, `src/rift`, `src/theme` and `src/fixtures`, never from another screen.
+- Its page is a `PageFrame` with `screen` set to its folder's name; `src/router.test.tsx` checks only that.
+- Every class in its CSS starts with its folder's name: `.points`, `.points__side`, `.points--live` (`screens.test.ts`).
+- Its own tests and its own made-up data live in its folder; data two screens share goes in `src/fixtures/`.
+- Links go through `GoLink`, `LinkGo` or the parts' `go` props, typed by `src/paths.ts`.
 
 - `home/`: Home, your team's name as its title.
 - `pick-team/`: Pick Team.

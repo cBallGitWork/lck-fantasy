@@ -68,7 +68,7 @@
   color: var(--on-ink);
   font-size: var(--size-head);
   font-weight: var(--w-semi);
-  line-height: 1.4;
+  line-height: var(--lh-body);
 }
 .tile__points small {
   font-size: var(--size-small);
@@ -91,8 +91,12 @@
   padding: var(--s-1);
   white-space: nowrap;
 }
+.tile .tag {
+  background: var(--paper);
+}
 .tile__line .tag {
   margin: 0 0 0 var(--s-1);
+  line-height: var(--m-tag-line-tight);
 }
 .tile > .tag {
   margin-top: var(--s-1);

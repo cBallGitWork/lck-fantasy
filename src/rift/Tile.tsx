@@ -1,8 +1,7 @@
-import type { KeyboardEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
+import { cx, MeDot, selectable, Tag } from "../parts";
+import { measure } from "../theme/tokens";
 import { RiftMap } from "./RiftMap";
-import { MeDot } from "../parts/MeDot";
-import { Tag } from "../parts/Tag";
-import { cx } from "../parts/cx";
 import { RoleIcon } from "./RoleIcon";
 import { Shirt } from "./Shirt";
 import type { RoleKey, SlotKey } from "./roles";
@@ -40,6 +39,9 @@ export interface TileProps {
   onSelect?: () => void;
 }
 
+/** A point on the 984 × 560 Rift as a share of it, so the tiles stay on their lanes at any width. */
+const share = (px: number, of: number) => `${(px / of) * 100}%`;
+
 /** One starter on the Rift: shirt, team code, role icon, C or V, name, points, series line, tags. */
 export function Tile(p: TileProps) {
   const slotLabel = slotTag(p.slot, p.plays);
@@ -47,16 +49,8 @@ export function Tile(p: TileProps) {
   return (
     <div
       className={cx("tile", !hasPoints && "tile--narrow", p.selected && "tile--selected", p.state && `tile--${p.state}`)}
-      style={{ left: p.at[0], top: p.at[1] }}
-      {...(p.onSelect && {
-        role: "button",
-        tabIndex: 0,
-        "aria-pressed": p.selected ?? false,
-        onClick: p.onSelect,
-        onKeyDown: (e: KeyboardEvent) => {
-          if (e.key === "Enter" || e.key === " ") p.onSelect?.();
-        },
-      })}
+      style={{ left: share(p.at[0], measure.riftW), top: share(p.at[1], measure.riftH) }}
+      {...selectable(p.onSelect, p.selected)}
     >
       <div className="tile__kit">
         <Shirt team={p.team} />
@@ -69,7 +63,7 @@ export function Tile(p: TileProps) {
           </span>
         )}
       </div>
-      <div className="tile__name">
+      <div className="tile__name" title={p.name}>
         {p.name}
         {p.me && <MeDot />}
         {p.birthday && " 🎂"}

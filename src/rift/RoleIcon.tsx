@@ -1,3 +1,4 @@
+import { cx } from "../parts";
 import "./RoleIcon.css";
 import type { IconKey } from "./roles";
 import { ROLE_NAME } from "./roles";
@@ -48,7 +49,7 @@ function Paths({ role }: { role: IconKey }) {
 /** A role's icon, 16 units square, drawn at the size its box gives it. */
 export function RoleIcon({ role, className }: { role: IconKey; className?: string }) {
   return (
-    <svg className={["role-icon", className].filter(Boolean).join(" ")} viewBox="0 0 16 16" role="img" aria-label={ROLE_NAME[role]}>
+    <svg className={cx("role-icon", className)} viewBox="0 0 16 16" role="img" aria-label={ROLE_NAME[role]}>
       <Paths role={role} />
     </svg>
   );

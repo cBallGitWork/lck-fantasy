@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { RoleIcon } from "../rift/RoleIcon";
-import type { IconKey } from "../rift/roles";
+import { cx, selectable } from "../parts";
 import "./BenchBar.css";
-import { cx } from "./cx";
+import { RoleIcon } from "./RoleIcon";
+import type { IconKey } from "./roles";
 
 /** The bench, under the Rift or the cards: one compact bar, `Bench` then a slim tile per player. */
 export function BenchBar({ children }: { children: ReactNode }) {
@@ -24,6 +24,8 @@ export function BenchTile({
   line,
   points,
   state,
+  selected,
+  onSelect,
 }: {
   order: number;
   role: IconKey;
@@ -36,13 +38,16 @@ export function BenchTile({
   points?: ReactNode;
   /** `out` didn't play; `dim` while another is moved; `fit` where a move could go. */
   state?: "out" | "dim" | "fit";
+  /** Chosen to swap or move (Pick Team). */
+  selected?: boolean;
+  onSelect?: () => void;
 }) {
   return (
-    <div className={cx("bench-tile", state && `bench-tile--${state}`)}>
+    <div className={cx("bench-tile", state && `bench-tile--${state}`, selected && "bench-tile--selected")} {...selectable(onSelect, selected)}>
       <span className="bench-tile__order num">{order}</span>
       <RoleIcon role={role} />
       <span className="bench-tile__who">
-        <b>{name}</b>{" "}
+        <b title={name}>{name}</b>{" "}
         <span>
           {team}
           {detail && ` · ${detail}`}

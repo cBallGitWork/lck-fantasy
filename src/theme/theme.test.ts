@@ -1,11 +1,11 @@
 // @vitest-environment node
 import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join, relative } from "node:path";
+import { join, relative, sep } from "node:path";
 import { expect, test } from "vitest";
 import { color, themeCss, themeVars } from "./tokens";
 
 const SRC = join(import.meta.dirname, "..");
-const THEME = import.meta.dirname;
+const THEME = import.meta.dirname + sep;
 
 function files(dir: string): string[] {
   return readdirSync(dir).flatMap((name) => {
@@ -14,14 +14,60 @@ function files(dir: string): string[] {
   });
 }
 
-const COLOUR_LITERAL = /#(?:[0-9a-f]{8}|[0-9a-f]{6}|[0-9a-f]{3,4})\b|\brgba?\(|\bhsla?\(/i;
+const CODE = /\.(m?[jt]sx?|css)$/;
+/** Every source file under src/, and those outside src/theme/, which may hold no colour or size. */
+const SOURCES = files(SRC).filter((path) => CODE.test(path) && !/\.test\.[jt]sx?$/.test(path));
+const OUTSIDE_THEME = SOURCES.filter((path) => !path.startsWith(THEME));
+
+/** Code with its comments taken out, so a comment may say `40px` or cite issue #135. */
+const uncomment = (source: string) => source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'`])\/\/.*$/gm, "$1");
+const code = (path: string) => uncomment(readFileSync(path, "utf8"));
+
+const NAMED = ["white", "black", "red", "blue", "green", "gray", "grey", "gold", "navy", "teal", "silver", "orange", "yellow", "purple", "pink", "brown"];
+const COLOUR_LITERAL = new RegExp(
+  [
+    // A hex colour as a CSS value or inside a string.
+    String.raw`(?:["'\x60:\s(,])#(?:[0-9a-f]{3,4}|[0-9a-f]{6}|[0-9a-f]{8})\b`,
+    String.raw`\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color-mix|color)\(`,
+    // A named colour as a CSS value.
+    String.raw`:\s*(?:[^;{}]*\s)?(?:${NAMED.join("|")})\s*[;}!]`,
+  ].join("|"),
+  "i",
+);
+
+const offenders = (pattern: RegExp) => OUTSIDE_THEME.filter((path) => pattern.test(code(path))).map((path) => relative(SRC, path));
 
 test("nothing outside src/theme/ holds a colour", () => {
-  const offenders = files(SRC)
-    .filter((path) => !path.startsWith(THEME) && /\.(tsx?|css)$/.test(path))
-    .filter((path) => COLOUR_LITERAL.test(readFileSync(path, "utf8")))
-    .map((path) => relative(SRC, path));
-  expect(offenders).toEqual([]);
+  expect(offenders(COLOUR_LITERAL)).toEqual([]);
+});
+
+test("the colour check catches hex, functions and names, but not an issue number", () => {
+  const hasColour = (source: string) => COLOUR_LITERAL.test(uncomment(source));
+  for (const bad of ["a { color: #fff; }", 'const c = "#C89B3C";', "a { color: oklch(0.7 0.1 80); }", "a { background: white; }", "a { color: color-mix(in srgb, red, blue); }"]) {
+    expect(hasColour(bad)).toBe(true);
+  }
+  for (const fine of ["// Built for issue #133.", "/* #135 */", "a { color: var(--ink); }", "a { background: transparent; }", "a { color: currentColor; }", ".gold-rule { border: 0; }"]) {
+    expect(hasColour(fine)).toBe(false);
+  }
+});
+
+// A size in px, or a line height written as a bare number, outside the theme. SVG geometry in a
+// viewBox's own units (`strokeWidth="44"`) is drawing, not a size, and is allowed.
+const SIZE_LITERAL = /\b\d+(?:\.\d+)?px\b|line-height:\s*[\d.]+\s*[;}]|\/\s*[\d.]+\s+var\(--font/;
+
+test("nothing outside src/theme/ holds a size", () => {
+  expect(offenders(SIZE_LITERAL)).toEqual([]);
+  expect("a { width: 64px; }").toMatch(SIZE_LITERAL);
+  expect("a { line-height: 1.3; }").toMatch(SIZE_LITERAL);
+  expect("a { line-height: var(--lh-mid); }").not.toMatch(SIZE_LITERAL);
+});
+
+test("every var(--name) the app uses is a token", () => {
+  const tokens = new Set(themeVars().map(([name]) => name));
+  const unknown = SOURCES.flatMap((path) =>
+    [...code(path).matchAll(/var\((--[\w-]+)\s*[,)]/g)].map((m) => m[1] as string).filter((name) => !tokens.has(name)).map((name) => `${relative(SRC, path)}: ${name}`),
+  );
+  expect(unknown).toEqual([]);
 });
 
 function luminance(hex: string): number {

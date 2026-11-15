@@ -1,17 +1,23 @@
+import type { Go } from "../paths";
+import { GoLink } from "./GoLink";
 import "./SeriesList.css";
 import { Tag } from "./Tag";
 import { Time } from "./Time";
+
+export type SeriesState = "final" | "notFinal" | "live" | "next";
 
 /** One series as a list shows it. */
 export interface SeriesRow {
   id: string;
   day: string;
+  /** The manager's time, then KST. */
   local: string;
   kst: string;
   home: string;
   away: string;
+  /** Games won, home then away; absent until it starts. */
   score?: readonly [number, number];
-  state: "final" | "notFinal" | "live" | "next";
+  state: SeriesState;
 }
 
 function Result({ s }: { s: SeriesRow }) {
@@ -33,7 +39,7 @@ function Result({ s }: { s: SeriesRow }) {
 }
 
 /** The week's series, one row each: day, `T1 v DK`, then the score and its state, or the time. */
-export function SeriesList({ series, href }: { series: readonly SeriesRow[]; href?: (s: SeriesRow) => string }) {
+export function SeriesList({ series, go }: { series: readonly SeriesRow[]; go?: (s: SeriesRow) => Go }) {
   return (
     <div className="series-list">
       {series.map((s) => {
@@ -45,7 +51,7 @@ export function SeriesList({ series, href }: { series: readonly SeriesRow[]; hre
         return (
           <div key={s.id} className="series-list__row">
             <span className="series-list__day">{s.day}</span>
-            <span>{href ? <a href={href(s)}>{teams}</a> : teams}</span>
+            <span>{go ? <GoLink go={go(s)}>{teams}</GoLink> : teams}</span>
             <span className="series-list__result num">
               <Result s={s} />
             </span>

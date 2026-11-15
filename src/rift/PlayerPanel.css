@@ -14,7 +14,7 @@
 .player-panel__name {
   display: block;
   font-size: var(--size-head);
-  line-height: 1.2;
+  line-height: var(--lh-snug);
 }
 .player-panel__meta {
   color: var(--mid);

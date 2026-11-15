@@ -1,11 +1,23 @@
 // @vitest-environment node
-import { renderToStaticMarkup } from "react-dom/server";
 import { expect, test } from "vitest";
 import { PICK_TEAM_SQUAD } from "../fixtures/week3";
-import { Lineup, LINEUP_ORDER, RIFT_SLOTS, RIFT_SLOTS_PICK, Rift, RiftMap, RoleIcon, Tile, type SlotKey } from ".";
-
-const html = (node: React.ReactNode) => renderToStaticMarkup(<>{node}</>);
-const text = (node: React.ReactNode) => html(node).replace(/<[^>]+>/g, "");
+import { html, text } from "../testing/render";
+import {
+  BenchBar,
+  BenchSwap,
+  BenchTile,
+  Lineup,
+  LineupCard,
+  LINEUP_ORDER,
+  PlayerPanel,
+  RIFT_SLOTS,
+  RIFT_SLOTS_PICK,
+  Rift,
+  RiftMap,
+  RoleIcon,
+  Tile,
+  type SlotKey,
+} from ".";
 
 test("the map draws the river, three lanes, two bases and ten towers", () => {
   const out = html(<RiftMap />);
@@ -34,7 +46,18 @@ test("a Points tile shows team, role, C, name, your dot, points with ×1.5, line
   expect(out).toContain("25<small>17×1.5</small>");
   expect(out).toContain("v HLE 12 · v DK 5");
   expect(out).toContain("tile--selected");
-  expect(out).toContain("left:500px;top:260px");
+  // 500 of 984 across, 260 of 560 down: the same share of the Rift at any width.
+  expect(out).toMatch(/left:50\.81\d*%;top:46\.42\d*%/);
+  expect(out).toContain('title="Faker"');
+});
+
+test("a tile or a lineup card that can be chosen is a key the keyboard reaches", () => {
+  const tile = html(<Tile slot="mid" name="Faker" team="T1" at={RIFT_SLOTS.mid} onSelect={() => {}} />);
+  expect(tile).toContain('role="button"');
+  expect(tile).toContain('tabindex="0"');
+  const card = html(<LineupCard slot="mid" name="Faker" team="T1" onSelect={() => {}} selected />);
+  expect(card).toContain('aria-pressed="true"');
+  expect(card).toContain('tabindex="0"');
 });
 
 test("a Flex tile shows the role he plays, a Coach tile its hangul", () => {
@@ -71,4 +94,30 @@ test("Card view shows the seven in broadcast order, with photo, crest, C and V, 
   expect(out).toContain("Not starting");
   expect(out).toContain("Form 19.3");
   expect(html(<Lineup cards={cards} />)).toContain('title="Vice-carry">V');
+});
+
+test("the player panel shows name, meta, ✕ and its body", () => {
+  const out = text(
+    <PlayerPanel name="Faker" meta="T1 · Mid · Carry">
+      <p>Full stats</p>
+    </PlayerPanel>,
+  );
+  expect(out).toContain("Faker");
+  expect(out).toContain("T1 · Mid · Carry");
+  expect(out).toContain("✕");
+  expect(out).toContain("Full stats");
+});
+
+test("the bench bar holds slim tiles and the swap key; a bench tile can be chosen", () => {
+  const out = text(
+    <BenchBar>
+      <BenchTile order={1} role="mid" name="Bdd" team="KT" detail="Didn't play" points="—" state="out" />
+      <BenchSwap />
+      <BenchTile order={2} role="jng" name="Cuzz" team="KT" line="v DK · v T1" />
+    </BenchBar>,
+  );
+  expect(out).toBe("Bench1Bdd KT · Didn't play—⇅ Swap2Cuzz KTv DK · v T1");
+  const chosen = html(<BenchTile order={1} role="mid" name="Bdd" team="KT" selected onSelect={() => {}} />);
+  expect(chosen).toContain("bench-tile--selected");
+  expect(chosen).toContain('role="button"');
 });

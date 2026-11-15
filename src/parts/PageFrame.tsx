@@ -8,12 +8,15 @@ import { TopBar, type TopBarItem } from "./TopBar";
  * The side column is on the right, save Leagues (`sideFirst`).
  */
 export function PageFrame({
+  screen,
   active,
   account,
   side,
   sideFirst,
   children,
 }: {
+  /** The screen's folder name (`src/screens/<screen>`), marked on the page for tests. */
+  screen: string;
   active?: TopBarItem;
   /** The account menu's team name; null for a visitor. */
   account: string | null;
@@ -24,7 +27,7 @@ export function PageFrame({
   return (
     <>
       <TopBar active={active} account={account} />
-      <div className={cx("page-frame", side !== undefined && "page-frame--two", sideFirst && "page-frame--side-first")}>
+      <div className={cx("page-frame", side !== undefined && "page-frame--two", sideFirst && "page-frame--side-first")} data-screen={screen}>
         <main className="page-frame__main">{children}</main>
         {side !== undefined && <aside className="page-frame__side">{side}</aside>}
       </div>

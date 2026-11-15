@@ -9,7 +9,7 @@
 body {
   background: var(--bg);
   color: var(--text);
-  font: var(--w-regular) var(--size-body) / 1.4 var(--font-sans);
+  font: var(--w-regular) var(--size-body) / var(--lh-body) var(--font-sans);
 }
 a {
   color: var(--text);
@@ -33,6 +33,19 @@ a {
 .fall::before {
   content: "▼";
   font-size: var(--size-small);
+}
+/* A rank's move stays ink: red and blue are for prices only. ▲ or ▼, a space, then the places. */
+.rank-up,
+.rank-down {
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: var(--size-small);
+}
+.rank-up::before {
+  content: "▲ ";
+}
+.rank-down::before {
+  content: "▼ ";
 }
 :focus-visible {
   outline: var(--m-rule-heavy) solid var(--teal);

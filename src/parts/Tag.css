@@ -2,7 +2,7 @@
   display: inline-block;
   border: var(--m-rule) solid var(--ink);
   padding: 0 var(--s-1);
-  font: var(--w-regular) var(--size-tag) / var(--s-4) var(--font-sans);
+  font: var(--w-regular) var(--size-tag) / var(--m-tag-line) var(--font-sans);
   color: var(--text);
   white-space: nowrap;
 }

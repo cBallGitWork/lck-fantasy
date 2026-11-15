@@ -4,6 +4,15 @@ import "./Modal.css";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
+/** Where Tab moves focus to keep it inside: the first after the last, the last before the first; else nowhere. */
+export function wrapFocus<T>(inside: readonly T[], active: T | null, back: boolean): T | undefined {
+  const first = inside[0];
+  const last = inside[inside.length - 1];
+  if (back && active === first) return last;
+  if (!back && active === last) return first;
+  return undefined;
+}
+
 /**
  * A card (1056 wide) or a sheet (544) over a dimmed page: ✕ top right, Esc closes, focus stays
  * inside until it closes, then returns to where it was.
@@ -21,26 +30,26 @@ export function Modal({
   children: ReactNode;
 }) {
   const box = useRef<HTMLDivElement>(null);
+  // A page may pass a new onClose each render. The focus effect runs once per opening and reads
+  // the latest onClose from here, so typing in a field inside never throws focus to the first one.
+  const close = useRef(onClose);
+  useEffect(() => {
+    close.current = onClose;
+  });
   useEffect(() => {
     const before = document.activeElement as HTMLElement | null;
     box.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        onClose();
+        close.current();
         return;
       }
       if (e.key !== "Tab" || !box.current) return;
-      const inside = [...box.current.querySelectorAll<HTMLElement>(FOCUSABLE)];
-      const first = inside[0];
-      const last = inside[inside.length - 1];
-      if (!first || !last) return;
-      if (e.shiftKey && document.activeElement === first) {
+      const next = wrapFocus([...box.current.querySelectorAll<HTMLElement>(FOCUSABLE)], document.activeElement as HTMLElement | null, e.shiftKey);
+      if (next) {
         e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
+        next.focus();
       }
     };
     document.addEventListener("keydown", onKey);
@@ -48,7 +57,7 @@ export function Modal({
       document.removeEventListener("keydown", onKey);
       before?.focus();
     };
-  }, [onClose]);
+  }, []);
   return (
     <div className="modal">
       <div className="modal__dim" onClick={onClose} />

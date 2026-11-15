@@ -1,8 +1,5 @@
 import type { ReactNode } from "react";
-import { MeDot } from "../parts/MeDot";
-import { Placeholder } from "../parts/Placeholder";
-import { Tag } from "../parts/Tag";
-import { cx } from "../parts/cx";
+import { cx, MeDot, Placeholder, selectable, Tag } from "../parts";
 import "./Lineup.css";
 import { RoleIcon } from "./RoleIcon";
 import type { RoleKey, SlotKey } from "./roles";
@@ -10,7 +7,7 @@ import { COACH_HANGUL, LINEUP_ORDER, ROLE_NAME, slotIcon } from "./roles";
 import type { Mark } from "./Tile";
 import { MARK_NAME } from "./Tile";
 
-export interface PlayerCardProps {
+export interface LineupCardProps {
   slot: SlotKey;
   /** The role a Flex plays. */
   plays?: RoleKey;
@@ -41,8 +38,8 @@ function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
   );
 }
 
-/** One starter's card in Card view: role head, photo (a crest for the Coach), name, team, next, footer. */
-export function PlayerCard(p: PlayerCardProps) {
+/** One starter's card in Card view (not the Player card screen): role head, photo (a crest for the Coach), name, team, next, footer. */
+export function LineupCard(p: LineupCardProps) {
   const mark = p.mark && (
     <span className={cx("pcard__mark", p.mark === "V" && "pcard__mark--v")} title={MARK_NAME[p.mark]}>
       {p.mark}
@@ -51,7 +48,7 @@ export function PlayerCard(p: PlayerCardProps) {
   return (
     <div
       className={cx("pcard", p.selected && "pcard--selected")}
-      {...(p.onSelect && { role: "button", tabIndex: 0, "aria-pressed": p.selected ?? false, onClick: p.onSelect })}
+      {...selectable(p.onSelect, p.selected)}
     >
       <RoleHead slot={p.slot} plays={p.plays} />
       {p.slot === "coach" ? (
@@ -70,7 +67,7 @@ export function PlayerCard(p: PlayerCardProps) {
           )}
         </div>
       )}
-      <div className="pcard__name">
+      <div className="pcard__name" title={p.name}>
         {p.name}
         {p.me && <MeDot />}
       </div>
@@ -82,13 +79,13 @@ export function PlayerCard(p: PlayerCardProps) {
 }
 
 /** Card view: the seven starters in one row, in the LCK broadcast's order. */
-export function Lineup({ cards }: { cards: PlayerCardProps[] }) {
+export function Lineup({ cards }: { cards: LineupCardProps[] }) {
   const bySlot = new Map(cards.map((c) => [c.slot, c]));
   return (
     <div className="lineup">
       {LINEUP_ORDER.map((slot) => {
         const card = bySlot.get(slot);
-        return card ? <PlayerCard key={slot} {...card} /> : null;
+        return card ? <LineupCard key={slot} {...card} /> : null;
       })}
     </div>
   );

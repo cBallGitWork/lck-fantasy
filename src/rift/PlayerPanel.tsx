@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Shirt } from "../rift/Shirt";
+import { Shirt } from "./Shirt";
 import "./PlayerPanel.css";
 
 /**

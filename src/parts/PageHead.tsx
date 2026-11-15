@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
+import type { Go } from "../paths";
 import { cx } from "./cx";
+import { GoLink } from "./GoLink";
 import { LinkGo } from "./LinkGo";
 import "./PageHead.css";
 
@@ -7,14 +9,14 @@ export interface HeadFigure {
   label: string;
   value: ReactNode;
   /** Where the figure leads (`Highest 131 ›`). */
-  href?: string;
+  go?: Go;
 }
 
 export interface WeekNav {
   label: string;
   /** The week before and after; absent where there is none. */
-  prevHref?: string;
-  nextHref?: string;
+  prev?: Go;
+  next?: Go;
 }
 
 /**
@@ -35,7 +37,7 @@ export function PageHead({
   title: string;
   hangul?: string;
   /** A link on the title's line (`Patch update ›`). */
-  link?: { label: string; href: string };
+  link?: { label: string; go: Go };
   week?: WeekNav;
   /** A plain line under the title, where there are no week arrows (`LCK Cup Week 4`). */
   sub?: ReactNode;
@@ -58,15 +60,15 @@ export function PageHead({
             </span>
           )}
         </h1>
-        {link && <LinkGo href={link.href}>{link.label}</LinkGo>}
+        {link && <LinkGo go={link.go}>{link.label}</LinkGo>}
       </div>
       {week && (
         <div className="page-head__week">
-          <WeekArrow href={week.prevHref} label="Week before">
+          <WeekArrow go={week.prev} label="Week before">
             ‹
           </WeekArrow>
           {week.label}
-          <WeekArrow href={week.nextHref} label="Week after">
+          <WeekArrow go={week.next} label="Week after">
             ›
           </WeekArrow>
         </div>
@@ -84,11 +86,11 @@ export function PageHead({
                     {f.label} <b className="num">{f.value}</b>
                   </>
                 );
-                return f.href ? (
-                  <a key={f.label} className="page-head__fig page-head__fig--link" href={f.href}>
+                return f.go ? (
+                  <GoLink key={f.label} className="page-head__fig page-head__fig--link" go={f.go}>
                     {body}
                     <i>›</i>
-                  </a>
+                  </GoLink>
                 ) : (
                   <span key={f.label} className="page-head__fig">
                     {body}
@@ -104,11 +106,11 @@ export function PageHead({
   );
 }
 
-function WeekArrow({ href, label, children }: { href?: string; label: string; children: string }) {
-  return href ? (
-    <a className="page-head__arrow" href={href} aria-label={label}>
+function WeekArrow({ go, label, children }: { go?: Go; label: string; children: string }) {
+  return go ? (
+    <GoLink className="page-head__arrow" go={go} label={label}>
       {children}
-    </a>
+    </GoLink>
   ) : (
     <span className={cx("page-head__arrow", "page-head__arrow--off")} aria-hidden="true">
       {children}

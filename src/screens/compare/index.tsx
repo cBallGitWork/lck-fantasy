@@ -4,7 +4,7 @@ import { PageFrame, PageHead } from "../../parts";
 /** A placeholder until its own issue builds it to docs/design/approved/compare/. */
 export function CompareScreen() {
   return (
-    <PageFrame account={MANAGER.team}>
+    <PageFrame screen="compare" account={MANAGER.team}>
       <PageHead title={"Compare"} hangul={"비교"} />
     </PageFrame>
   );

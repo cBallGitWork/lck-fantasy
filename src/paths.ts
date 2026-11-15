@@ -1,4 +1,4 @@
-// Every screen's path, in one home: the router and the top bar both read it.
+// Every screen's path, in one home: the router, the top bar and every link read it.
 
 export const PATHS = {
   home: "/",
@@ -23,11 +23,20 @@ export const PATHS = {
 
 export type ScreenKey = keyof typeof PATHS;
 
-/** A path with its `$params` filled in. */
-export function pathTo(key: ScreenKey, params: Record<string, string> = {}): string {
-  return PATHS[key].replace(/\$(\w+)/g, (_, name: string) => {
-    const value = params[name];
-    if (value === undefined) throw new Error(`pathTo(${key}) needs ${name}`);
-    return encodeURIComponent(value);
-  });
+/** The `$params` a path names: `"/series/$seriesId"` gives `"seriesId"`. */
+type ParamName<P extends string> = P extends `${string}$${infer Name}/${infer Rest}`
+  ? Name | ParamName<Rest>
+  : P extends `${string}$${infer Name}`
+    ? Name
+    : never;
+
+type GoTo<P extends string> = [ParamName<P>] extends [never] ? { to: P; params?: never } : { to: P; params: Record<ParamName<P>, string> };
+
+/** Where a link goes inside Flol: a screen's path and every param it names, checked by the typecheck. */
+export type Go = { [K in ScreenKey]: GoTo<(typeof PATHS)[K]> }[ScreenKey];
+
+/** A link's path with its `$params` filled in. */
+export function pathTo(go: Go): string {
+  const params: Record<string, string> = go.params ?? {};
+  return go.to.replace(/\$(\w+)/g, (_, name: string) => encodeURIComponent(params[name] ?? ""));
 }

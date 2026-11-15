@@ -10,4 +10,4 @@ The Rift view and Card view: the map, the tiles, the shirts, the role icons, the
 - `Shirt.tsx`: the plain shirt with a team code.
 - `roles.ts`: role names, the lineup order, and each slot's icon and tag.
 - `BenchBar.tsx`: the bench bar, its slim tiles (`BenchTile`, which can be chosen) and the swap key (`BenchSwap`).
-- `PlayerPanel.tsx`: a tapped player's panel: shirt, name, meta, ✕, then the page's body.
+- `PlayerPanel.tsx`: a tapped player's panel: shirt, name, meta, ✕, then the page's body. The body's pieces: `PanelSeries` (`Wed · v HLE`, its result, its games), `PanelGame` (a game, counted points boxed), `PanelSum` with `PanelSumLabel` (the sum), `PanelFoot` (`Full stats ›`).

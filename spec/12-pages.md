@@ -148,6 +148,11 @@ F1 Fantasy, Sleeper and gol.gg).
     with any role; a coach only with a coach (Craig, 16 Nov 2026).
   - The better number in each row is marked; there is no overall verdict. The next 3 series show,
     as on the player card.
+  - Rows: Season with its rank, Form, Price, Owned, the last 3 and next 3 series, then each scoring
+    line's total, per game and points. Only Season, Form and line points are marked. No buttons, a
+    Change link on the second player, and no mark on a series where the two meet (Craig, 16 Nov
+    2026). No transfers row: "get rid of the fluff lines".
+  - The picture is `docs/design/approved/compare/`.
 
 ## Settings
 

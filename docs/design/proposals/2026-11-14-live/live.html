@@ -11,9 +11,10 @@ nav.top a.live::before { content: "●"; font-size: 9px; margin-right: 4px; vert
 nav.top .sp { flex: 1; }
 .presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
 .ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
-.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; font-weight: 600; line-height: 16px; }
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 12px; font-weight: 600; line-height: 16px; }
 .tag.prov { border-style: dashed; color: var(--mid); border-color: var(--mid); font-weight: 400; }
 
+/* type scale: 120 countdown · 60 hero · 20 tier-2 · 14 body · 12 labels (the nav is shared) */
 /* the stage: stream and your points, Twitch theatre with your points where chat would be */
 .stage { background: var(--stage); padding: 20px 32px 24px; display: grid; grid-template-columns: 1040px 1fr; gap: 24px; }
 .screen { position: relative; width: 1040px; height: 585px; background: var(--stage2); overflow: hidden; }
@@ -23,36 +24,36 @@ nav.top .sp { flex: 1; }
 .bug .sb { display: flex; align-items: stretch; }
 .bug .tm { background: #fff; color: var(--ink); font: 700 20px "IBM Plex Sans KR"; padding: 0 18px; display: flex; align-items: center; gap: 8px; }
 .bug .tm small { font: 400 12px "IBM Plex Sans KR"; color: var(--mid); }
-.bug .sc { background: #000; font: 600 26px "IBM Plex Mono", monospace; padding: 0 16px; display: flex; align-items: center; letter-spacing: 2px; }
-.bug .gm { padding: 0 18px; display: flex; flex-direction: column; justify-content: center; font-size: 13px; color: #bbb; } .bug .gm b { color: #fff; font: 600 16px "IBM Plex Mono", monospace; }
-.bug .lv { align-self: center; border: 1px solid #fff; color: #fff; font-size: 11px; font-weight: 700; padding: 1px 6px; margin-right: 10px; }
+.bug .sc { background: #000; font: 600 20px "IBM Plex Mono", monospace; padding: 0 16px; display: flex; align-items: center; letter-spacing: 2px; }
+.bug .gm { padding: 0 18px; display: flex; flex-direction: column; justify-content: center; font-size: 12px; color: #bbb; } .bug .gm b { color: #fff; font: 600 14px "IBM Plex Mono", monospace; }
+.bug .lv { align-self: center; border: 1px solid #fff; color: #fff; font-size: 12px; font-weight: 700; padding: 1px 6px; margin-right: 10px; }
 
 .side { background: var(--paper); padding: 16px 18px; align-self: start; display: flex; flex-direction: column; }
 .side h2 { font-size: 14px; display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; } .side h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .tot { display: flex; align-items: baseline; gap: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--ink); margin-bottom: 14px; }
-.tot .big { font: 600 60px/0.9 "IBM Plex Mono", monospace; } .tot .sm { color: var(--mid); font-size: 12px; } .tot .sm b { font: 600 18px "IBM Plex Mono", monospace; color: var(--ink); margin-left: 3px; display: block; }
+.tot .big { font: 600 60px/0.9 "IBM Plex Mono", monospace; } .tot .sm { color: var(--mid); font-size: 12px; } .tot .sm b { font: 600 20px "IBM Plex Mono", monospace; color: var(--ink); margin-left: 3px; display: block; }
 .row { display: grid; grid-template-columns: 18px 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--fill); }
 .row svg { width: 14px; height: 14px; }
 .row .nm { font-weight: 600; } .row .nm small { font-weight: 400; color: var(--mid); font-size: 12px; margin-left: 4px; }
 .row .gl { display: block; color: var(--mid); font-size: 12px; font-family: "IBM Plex Mono", monospace; }
 .row .p { font: 600 20px "IBM Plex Mono", monospace; text-align: right; }
-.mk { display: inline-block; width: 17px; height: 17px; border: 1.5px solid var(--ink); border-radius: 50%; font: 700 10px/14px "IBM Plex Sans KR"; text-align: center; margin-left: 5px; vertical-align: 1px; }
+.mk { display: inline-block; width: 19px; height: 19px; border: 1.5px solid var(--ink); border-radius: 50%; font: 700 12px/16px "IBM Plex Sans KR"; text-align: center; margin-left: 5px; vertical-align: 1px; }
 .mk.c { background: var(--ink); color: #fff; }
 .sec2 { margin-top: 16px; }
-.rest { display: grid; grid-template-columns: 1fr auto; padding: 6px 0; border-bottom: 1px solid var(--fill); font-size: 13px; } .rest b { font-family: "IBM Plex Mono", monospace; }
+.rest { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--fill); font-size: 14px; } .rest b { font: 600 20px "IBM Plex Mono", monospace; }
 .rest small { color: var(--mid); }
 .spx { height: 14px; }
-.more { font-weight: 600; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
-.down { background: var(--ink); color: #fff; padding: 10px 12px; font-size: 13px; margin-bottom: 12px; } .down b { display: block; font-size: 14px; }
+.more { font-weight: 600; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+.down { background: var(--ink); color: #fff; padding: 10px 12px; font-size: 12px; margin-bottom: 12px; } .down b { display: block; font-size: 14px; }
 
 /* the picker: Home's chips */
-.pick { display: flex; gap: 6px; margin-top: 12px; font-size: 13px; flex-wrap: wrap; } .pick span { border: 1px solid #555; color: #ddd; padding: 5px 10px; } .pick span small { color: #999; margin-left: 4px; } .pick span.on { border-color: #fff; background: #fff; color: var(--ink); font-weight: 600; } .pick span.on small { color: var(--mid); } .pick span.off { color: #777; border-style: dashed; } .pick span.off small { color: #666; }
+.pick { display: flex; gap: 5px; margin-top: 12px; font-size: 14px; flex-wrap: wrap; } .pick span { border: 1px solid #555; color: #ddd; padding: 5px 8px; } .pick span small { font-size: 12px; color: #999; margin-left: 4px; } .pick span.on { border-color: #fff; background: #fff; color: var(--ink); font-weight: 600; } .pick span.on small { color: var(--mid); } .pick span.off { color: #777; border-style: dashed; } .pick span.off small { color: #666; }
 
 /* nothing live */
 .idle { position: absolute; inset: 0; background: var(--stage2); color: #fff; padding: 64px 72px; }
-.idle span { color: #bbb; font-size: 15px; display: block; }
-.idle .vs { font: 700 64px/1.1 "IBM Plex Sans KR"; letter-spacing: -1.5px; margin: 8px 0 4px; } .idle .vs i { font-style: normal; color: #8a8a8a; font-weight: 400; margin: 0 14px; }
-.idle .cd { font: 600 120px "IBM Plex Mono", monospace; letter-spacing: -2px; margin-top: 36px; } .idle .cd small { font-size: 24px; color: #8a8a8a; margin: 0 14px 0 4px; font-weight: 400; }
+.idle span { color: #bbb; font-size: 14px; display: block; }
+.idle .vs { font: 700 60px/1.1 "IBM Plex Sans KR"; letter-spacing: -1.5px; margin: 8px 0 4px; } .idle .vs i { font-style: normal; color: #8a8a8a; font-weight: 400; margin: 0 14px; }
+.idle .cd { font: 600 120px "IBM Plex Mono", monospace; letter-spacing: -2px; margin-top: 36px; } .idle .cd small { font-size: 20px; color: #8a8a8a; margin: 0 14px 0 4px; font-weight: 400; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
   <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>

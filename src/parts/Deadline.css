@@ -1,0 +1,18 @@
+.deadline {
+  color: var(--mid);
+  white-space: nowrap;
+}
+.deadline b {
+  color: var(--text);
+  font-weight: var(--w-regular);
+  margin: 0 var(--s-1);
+}
+.deadline__kst {
+  color: var(--mid);
+}
+.deadline b.deadline__count {
+  margin-left: var(--s-3);
+  border: var(--m-rule) solid var(--ink);
+  padding: 0 var(--s-2);
+  font-weight: var(--w-semi);
+}

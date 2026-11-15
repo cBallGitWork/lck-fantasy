@@ -1,0 +1,22 @@
+.view-toggle {
+  display: inline-flex;
+}
+.view-toggle__key {
+  font: inherit;
+  padding: var(--s-1) var(--s-5);
+  border: var(--m-rule) solid var(--line);
+  background: var(--fill);
+  color: var(--mid);
+  cursor: pointer;
+}
+.view-toggle__key + .view-toggle__key {
+  margin-left: calc(var(--m-rule) * -1);
+}
+.view-toggle__key--on {
+  background: var(--paper);
+  color: var(--text);
+  font-weight: var(--w-semi);
+}
+.view-toggle__key:hover {
+  border-color: var(--ink);
+}

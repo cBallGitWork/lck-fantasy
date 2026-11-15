@@ -1,0 +1,28 @@
+.rift-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.rift-map__ground {
+  fill: var(--map-ground);
+}
+.rift-map__river {
+  fill: var(--map-river);
+}
+.rift-map__lane {
+  fill: none;
+  stroke: var(--map-lane);
+  stroke-linejoin: round;
+}
+.rift-map__base {
+  fill: var(--map-base);
+}
+.rift-map__tower {
+  fill: var(--map-tower);
+}
+.rift-map__pit {
+  fill: none;
+  stroke: var(--map-tower);
+  stroke-dasharray: 3 3;
+}

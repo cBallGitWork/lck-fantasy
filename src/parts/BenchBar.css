@@ -1,0 +1,68 @@
+.bench-bar {
+  height: var(--m-bench-h);
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: 0 var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+}
+.bench-bar__title {
+  width: var(--m-shirt-w);
+  font-size: var(--size-body);
+  font-weight: var(--w-semi);
+}
+.bench-tile {
+  width: var(--m-bench-tile-w);
+  height: var(--m-bench-tile-h);
+  display: grid;
+  grid-template-columns: var(--s-3) var(--m-role-icon) 1fr auto;
+  gap: 0 var(--s-2);
+  align-items: center;
+  padding: 0 var(--s-3);
+  border: var(--m-rule) solid var(--line);
+}
+.bench-tile__order {
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.bench-tile__who {
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bench-tile__who > span,
+.bench-tile__who small {
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.bench-tile__who small {
+  display: block;
+  font-family: var(--font-mono);
+}
+.bench-tile__points {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+.bench-tile--out,
+.bench-tile--out b,
+.bench-tile--out .bench-tile__points,
+.bench-tile--dim b {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}
+.bench-tile--fit {
+  outline: var(--m-rule-heavy) dashed var(--ink);
+  outline-offset: var(--m-rule-heavy);
+}
+.bench-swap {
+  font: inherit;
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+  padding: var(--s-1) var(--s-2);
+  cursor: pointer;
+}

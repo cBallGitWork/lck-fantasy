@@ -1,0 +1,46 @@
+/* The page's base, drawn from the tokens (tokens.ts). Every value is a token. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: var(--w-regular) var(--size-body) / 1.4 var(--font-sans);
+}
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+/* A price's move: never colour alone, so a rise has ▲ and a fall ▼. */
+.rise {
+  color: var(--rise);
+}
+.fall {
+  color: var(--fall);
+}
+.rise::before {
+  content: "▲";
+  font-size: var(--size-small);
+}
+.fall::before {
+  content: "▼";
+  font-size: var(--size-small);
+}
+:focus-visible {
+  outline: var(--m-rule-heavy) solid var(--teal);
+  outline-offset: var(--m-rule-heavy);
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

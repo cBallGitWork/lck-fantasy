@@ -64,7 +64,9 @@ Each folder has a README saying what goes in it.
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
-| `src/` | The app's entry (`main.tsx`) and its routes (`router.tsx`). |
+| `src/` | The app's entry (`main.tsx`), its routes (`router.tsx`) and every screen's path (`paths.ts`). |
+| `src/theme/` | Every colour, font, size, gap and width, as tokens; nothing else holds a colour. |
+| `src/fixtures/` | Made-up data the screens are built on until the backend wires real data. |
 | `src/screens/` | One folder per screen in the site map (`docs/design/site-map.md`), named as it is there. |
 | `src/rift/` | The Rift view: the map, the lanes, the shirts and the role icons. |
 | `src/parts/` | Parts shared by two or more screens: tables, the player row, buttons. |
@@ -81,5 +83,5 @@ The rules:
 - A feature's server code, its tests and its fixtures sit in its one `convex/` folder.
 - `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`, `achievements`). The game reads the real world; it never writes it.
 - Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
-- A screen imports from `src/parts` and `src/rift`, never from another screen.
+- A screen imports from `src/parts`, `src/rift`, `src/theme` and `src/fixtures`, never from another screen.
 - Before adding a helper or a fixture, search for its home and reuse it.

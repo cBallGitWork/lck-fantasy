@@ -1,0 +1,42 @@
+.field {
+  margin-top: var(--s-4);
+}
+.field__label {
+  display: block;
+  font-size: var(--size-body);
+  margin-bottom: var(--s-2);
+}
+.field__box {
+  display: flex;
+  align-items: center;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+}
+.field__box:focus-within {
+  border-color: var(--ink);
+}
+.field__box--error {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 var(--m-rule) var(--ink);
+}
+.field__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  font: inherit;
+  font-size: var(--size-lead);
+  color: var(--text);
+  background: none;
+  border: 0;
+  outline: none;
+}
+.field__aside {
+  color: var(--mid);
+  font-size: var(--size-body);
+}
+.field__error {
+  margin-top: var(--s-1);
+  font-size: var(--size-body);
+}

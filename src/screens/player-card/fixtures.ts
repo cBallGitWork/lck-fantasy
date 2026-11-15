@@ -9,9 +9,9 @@ import {
   STATS_PLAYERS,
   WEEK3_SERIES_AT_POINTS,
   WEEK4_SERIES,
-  type Series,
   type TeamCode,
 } from "../../fixtures/week3";
+import { fromSide, opponent, seriesById, seriesOf } from "../../fixtures/series";
 import type { CardGame, CardWeek, FixtureRow, NextSeries, PlayerCardData, WeekSeries } from "./card";
 
 const NAME = "Faker";
@@ -27,20 +27,13 @@ const AT_PICK_TEAM = find(PICK_TEAM_SQUAD);
 const IN_STATS = find(STATS_PLAYERS);
 const AT_POINTS = find(POINTS_SQUAD);
 
-const seriesAtPoints = (id: string): Series => {
-  const found = WEEK3_SERIES_AT_POINTS.find((s) => s.id === id);
-  if (!found) throw new Error(`Series ${id} is missing from the shared Week 3 fixture`);
-  return found;
-};
+const seriesAtPoints = (id: string) => seriesById(WEEK3_SERIES_AT_POINTS, id);
 
-/** T1's opponent in a shared series. */
-const opponentIn = (s: Series): TeamCode => (s.home === TEAM ? s.away : s.home);
-
-const T1_WEEK4 = WEEK4_SERIES.filter((s) => s.home === TEAM || s.away === TEAM);
+const T1_WEEK4 = seriesOf(WEEK4_SERIES, TEAM);
 
 /** T1's next series: Week 4's from the shared fixture, then Weeks 5 and 6. */
 const FIXTURES: FixtureRow[] = [
-  ...T1_WEEK4.map((s) => ({ id: s.id, week: 4, day: s.day, opponent: opponentIn(s), bestOf: BEST_OF, local: s.local, kst: s.kst })),
+  ...T1_WEEK4.map((s) => ({ id: s.id, week: 4, day: s.day, opponent: opponent(s, TEAM), bestOf: BEST_OF, local: s.local, kst: s.kst })),
   { id: "w5-thu-2", week: 5, day: "Thu", opponent: "BRO", bestOf: BEST_OF, local: "08:00", kst: "17:00" },
   { id: "w5-sun-2", week: 5, day: "Sun", opponent: "KRX", bestOf: BEST_OF, local: "10:30", kst: "19:30" },
   { id: "w6-wed-1", week: 6, day: "Wed", opponent: "DK", bestOf: BEST_OF, local: "08:00", kst: "17:00" },
@@ -72,13 +65,13 @@ const WEEK3_AT_POINTS: CardWeek = {
   week: 3,
   series: AT_POINTS.series.map(({ id, games }): WeekSeries => {
     const s = seriesAtPoints(id);
-    if (!s.score) throw new Error(`Series ${id} has no score in the shared Week 3 fixture`);
-    const [home, away] = s.score;
+    const side = fromSide(s, TEAM);
+    if (!side.score) throw new Error(`Series ${id} has no score in the shared Week 3 fixture`);
     return {
       id,
       day: s.day,
-      opponent: opponentIn(s),
-      score: s.home === TEAM ? [home, away] : [away, home],
+      opponent: side.opponent,
+      score: side.score,
       state: s.state === "live" ? "live" : "final",
       liveGame: s.liveGame,
       games: games.map((points, i) => ({ ...gameAtPoints(id, i), points })),

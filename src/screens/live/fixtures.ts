@@ -10,6 +10,7 @@ import {
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
+import { seriesById } from "../../fixtures/series";
 import type { LiveDownProps, LiveIdleProps, LiveNowProps, PanelPlayer, RestPlayer, Stream } from "./types";
 
 /** The streams list: admin data (spec/12). The first is the official English stream it opens on. */
@@ -30,14 +31,9 @@ export const DEFAULT_STREAM = LIVE_STREAMS[0]!.id;
 const STAGE = `${COMPETITION} Week ${POINTS_WEEK.week}`;
 const FORMAT = "Bo3";
 
-const find = (list: Series[], id: string) => {
-  const series = list.find((s) => s.id === id);
-  if (!series) throw new Error(`No series ${id} in Week 3`);
-  return series;
-};
-const LIVE_SERIES = find(WEEK3_SERIES_AT_POINTS, "w3-sat-2");
-const LAST_SERIES = find(WEEK3_SERIES_FINAL, "w3-sat-2");
-const NEXT_SERIES = find(WEEK3_SERIES_AT_POINTS, "w3-sun-1");
+const LIVE_SERIES = seriesById(WEEK3_SERIES_AT_POINTS, "w3-sat-2");
+const LAST_SERIES = seriesById(WEEK3_SERIES_FINAL, "w3-sat-2");
+const NEXT_SERIES = seriesById(WEEK3_SERIES_AT_POINTS, "w3-sun-1");
 
 const starters = POINTS_SQUAD.filter((p) => p.slot !== "bench");
 const playsIn = (p: PointsPick) => p.series.some((s) => s.id === LIVE_SERIES.id);

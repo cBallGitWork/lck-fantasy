@@ -2,7 +2,7 @@
 import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { CARD_FROM_PICK_TEAM, CARD_FROM_POINTS, CARD_WITH_NEWS } from "./fixtures";
-import { ordinal, signed, transfers } from "./format";
+import { inOut as transfers, ordinal, signed } from "../../parts";
 import { PlayerCardPage } from ".";
 import { weekStarts } from "./WeekCell";
 

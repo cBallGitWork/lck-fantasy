@@ -1,8 +1,8 @@
 import { GoLink, Loading, Tag } from "../../parts";
-import { PATHS } from "../../paths";
+import { cardGo, PATHS } from "../../paths";
 import { MARK_NAME, ROLE_NAME } from "../../rift";
 import type { PointsWeek, ProfilePick } from "./fixtures";
-import { cardGo, NONE } from "./format";
+import { NONE } from "./format";
 
 const BENCH = "Bench";
 
@@ -90,7 +90,7 @@ function PickRow({ pick }: { pick: ProfilePick }) {
         <small>{slotLabel(pick)}</small>
       </td>
       <td>
-        <GoLink className="profile__name" go={cardGo(pick, pick.slot === "coach")}>
+        <GoLink className="profile__name" go={cardGo(pick.id, pick.slot === "coach")}>
           {pick.name}
         </GoLink>
         {pick.mark && (

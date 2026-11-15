@@ -1,14 +1,11 @@
 import type { ReactNode } from "react";
-import { cx, LinkGo, Tag, Time } from "../../parts";
-import { PATHS, type Go } from "../../paths";
+import { cx, eok, LinkGo, PriceMove, Tag, Time } from "../../parts";
+import { cardGo } from "../../paths";
 import { PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PickPlayer } from "./fixtures";
-import { eok, opponent, ranked, seriesOf, type ViewProps } from "./format";
+import { opponent, seriesOf } from "../../fixtures/series";
+import { ranked, type ViewProps } from "./format";
 import { canSwap, isBench, slotOf } from "./model";
-
-/** Where a player's Full card › goes: the coach's card for the coach. */
-const fullCard = (p: PickPlayer): Go =>
-  p.role === "coach" ? { to: PATHS.coachCard, params: { coachId: p.id } } : { to: PATHS.playerCard, params: { playerId: p.id } };
 
 /** The tapped player's card: price and last move, news, form, owned and season with ranks, last 3 weeks, the week's series, his keys. */
 export function PlayerCard({ data, state, player: p, dispatch }: ViewProps & { player: PickPlayer }) {
@@ -21,7 +18,7 @@ export function PlayerCard({ data, state, player: p, dispatch }: ViewProps & { p
       meta={
         <>
           {p.team} · {role} · {eok(p.priceEok)}{" "}
-          {move !== undefined && move !== 0 && <span className={move > 0 ? "rise" : "fall"}>{Math.abs(move).toFixed(1)}</span>}
+          {move !== undefined && <PriceMove eok={move} />}
         </>
       }
       onClose={() => dispatch({ type: "close" })}
@@ -78,7 +75,7 @@ function Row({ k, children }: { k: string; children: ReactNode }) {
  * Full card ›. The coach, and a bench player, have only Full card.
  */
 function CardKeys({ state, player: p, starter, dispatch }: Omit<ViewProps, "data"> & { player: PickPlayer; starter: boolean }) {
-  const full = <LinkGo go={fullCard(p)}>Full card</LinkGo>;
+  const full = <LinkGo go={cardGo(p.id, p.role === "coach")}>Full card</LinkGo>;
   if (p.role === "coach" || !starter) return <div className="pick-team__keys">{full}</div>;
   const { carry, vice } = state.draft;
   const marksOff = state.swapping !== undefined;

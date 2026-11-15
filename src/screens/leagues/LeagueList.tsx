@@ -1,6 +1,5 @@
-import { cx, GoLink, MainAction, OutlinedKey } from "../../parts";
+import { count, cx, GoLink, MainAction, ordinal, OutlinedKey } from "../../parts";
 import { PATHS } from "../../paths";
-import { figure, ordinal } from "./format";
 import { Move } from "./Standings";
 import type { LeagueSummary } from "./types";
 
@@ -29,11 +28,11 @@ export function LeagueList({ leagues, openId, onCreate, onJoin }: { leagues: Lea
                 current={league.id === openId}
               >
                 <span>{league.name}</span>
-                <b className="num">{kind === "private" ? ordinal(league.rank) : figure(league.rank)}</b>
+                <b className="num">{kind === "private" ? ordinal(league.rank) : count(league.rank)}</b>
                 <span className="leagues__list-move">
                   <Move move={league.move} />
                 </span>
-                <small>{kind === "private" ? `${figure(league.size)} managers` : `of ${figure(league.size)}`}</small>
+                <small>{kind === "private" ? `${count(league.size)} managers` : `of ${count(league.size)}`}</small>
               </GoLink>
             ))}
         </section>

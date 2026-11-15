@@ -2,6 +2,7 @@
 // in what order, and on which page. Pure, so the page and its tests share them.
 
 import type { TeamCode } from "../../fixtures/week3";
+import type { Score } from "../../parts";
 import type { RoleKey } from "../../rift";
 
 export const TABS = ["Players", "Coaches"] as const;
@@ -59,7 +60,7 @@ export interface StatsRow {
   /** Each line's count, by its key. */
   lines: Readonly<Record<string, number>>;
   /** A coach's series won and lost. */
-  series?: readonly [number, number];
+  series?: Score;
 }
 
 /** The columns that sort, besides the lines. */

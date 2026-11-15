@@ -1,7 +1,8 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
+import { signed } from "../../parts";
 import { html, text } from "../../testing/render";
-import { accept, decline, movesSummary, playersLine, receiverLine, removeFollower, sendTruck, signed, unfollow, type DeadlineItem } from "./feed";
+import { accept, decline, movesSummary, playersLine, receiverLine, removeFollower, sendTruck, unfollow, type DeadlineItem } from "./feed";
 import { FOLLOWING, PICKER_AS_DRAWN } from "./fixtures";
 import { FollowingScreen } from ".";
 import { FollowingView } from "./FollowingView";

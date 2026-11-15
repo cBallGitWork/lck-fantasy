@@ -3,6 +3,7 @@
 // The rest of the LCK's starters and a few academy players are made up here so the pages and
 // filters have something to work on; so is each week's share of the season, for Span.
 
+import { fromSide, seriesOf } from "../../fixtures/series";
 import { PICK_TEAM_SQUAD, STATS_PLAYERS, WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
 import type { RoleKey } from "../../rift";
 import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
@@ -186,12 +187,9 @@ function week3Results(team: TeamCode) {
   let games = 0;
   let won = 0;
   let lost = 0;
-  for (const s of WEEK3_SERIES_FINAL) {
-    if (s.home !== team && s.away !== team) continue;
-    const [h, a] = s.score ?? [0, 0];
-    const mine = s.home === team ? h : a;
-    const theirs = s.home === team ? a : h;
-    games += h + a;
+  for (const s of seriesOf(WEEK3_SERIES_FINAL, team)) {
+    const [mine, theirs] = fromSide(s, team).score ?? [0, 0];
+    games += mine + theirs;
     if (mine > theirs) won += 1;
     else lost += 1;
   }

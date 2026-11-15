@@ -1,7 +1,7 @@
-import { Tag } from "../../parts";
+import { eok, Tag } from "../../parts";
 import { BenchBar, BenchSwap, BenchTile, Lineup, RIFT_SLOTS_PICK, Rift, Tile, type LineupCardProps, type RoleKey } from "../../rift";
 import type { PickPlayer } from "./fixtures";
-import { eok, fixtureLine, markOf, type ViewProps } from "./format";
+import { fixtureLine, markOf, type ViewProps } from "./format";
 import { BENCH_SLOTS, fitIds, STARTER_SLOTS } from "./model";
 
 /** The role a Flex plays; the coach plays none. */

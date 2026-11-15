@@ -1,12 +1,8 @@
 import { cx, GoLink, LinkGo, Tag } from "../../parts";
-import { PATHS, type Go } from "../../paths";
+import { cardGo, PATHS } from "../../paths";
 import { RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
 import { dash, dot, WORDS } from "./words";
-
-/** A player's card, or a coach's. */
-const cardGo = (p: RestPlayer): Go =>
-  p.role === "coach" ? { to: PATHS.coachCard, params: { coachId: p.id } } : { to: PATHS.playerCard, params: { playerId: p.id } };
 
 function Mark({ mark }: { mark?: "C" | "V" }) {
   return mark ? <span className={cx("live__mark", mark === "C" && "live__mark--c")}>{mark}</span> : null;
@@ -27,7 +23,7 @@ function GameLine({ player }: { player: PanelPlayer }) {
 
 function PlayerRow({ player }: { player: PanelPlayer }) {
   return (
-    <GoLink go={cardGo(player)} className="live__row">
+    <GoLink go={cardGo(player.id, player.role === "coach")} className="live__row">
       <RoleIcon role={player.role} className="live__row-icon" />
       <span>
         <span className="live__name">
@@ -44,7 +40,7 @@ function PlayerRow({ player }: { player: PanelPlayer }) {
 
 function RestRow({ player }: { player: RestPlayer }) {
   return (
-    <GoLink go={cardGo(player)} className="live__rest">
+    <GoLink go={cardGo(player.id, player.role === "coach")} className="live__rest">
       <span className="live__rest-name">
         <RoleIcon role={player.role} className="live__rest-icon" />
         {player.name}

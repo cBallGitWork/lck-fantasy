@@ -11,15 +11,10 @@ import {
   WEEK4_SERIES,
   type Series,
 } from "../../fixtures/week3";
+import { seriesById } from "../../fixtures/series";
 import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./types";
 
-function series(list: Series[], id: string): Series {
-  const found = list.find((s) => s.id === id);
-  if (!found) throw new Error(`No series ${id} in Week 3's fixtures`);
-  return found;
-}
-
-const atPoints = (id: string) => series(WEEK3_SERIES_AT_POINTS, id);
+const atPoints = (id: string) => seriesById(WEEK3_SERIES_AT_POINTS, id);
 const matchup = (s: Series) => `${s.home} v ${s.away}`;
 
 const SHARED: Omit<HomeShared, "countdown"> = {
@@ -75,7 +70,7 @@ const lineup: LineupStarter[] = PICK_TEAM_SQUAD.flatMap((p) =>
     : [{ slot: p.slot, name: p.name, team: p.team, plays: p.slot === "flex" && p.role !== "coach" ? p.role : undefined, mark: p.mark }],
 );
 
-const next = series(WEEK4_SERIES, "w4-wed-1");
+const next = seriesById(WEEK4_SERIES, "w4-wed-1");
 
 /** Home with nothing live, Week 4 to come (idle.html). */
 export const HOME_IDLE: HomeIdleData = {

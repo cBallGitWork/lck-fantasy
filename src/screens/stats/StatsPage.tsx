@@ -1,7 +1,7 @@
 import type { ChangeEvent, ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
-import { cx, formatEok, GoLink, MeDot, PageFrame, PageHead, Table, Tabs, ViewToggle, WON_PER_EOK, type Column } from "../../parts";
-import { PATHS, type Go } from "../../paths";
+import { cx, eok, GoLink, MeDot, PageFrame, PageHead, PriceMove, score, Table, Tabs, ViewToggle, type Column } from "../../parts";
+import { cardGo, PATHS } from "../../paths";
 import { ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import {
   ALL,
@@ -146,11 +146,6 @@ function Select({
   );
 }
 
-const eok = (priceEok: number) => formatEok(priceEok * WON_PER_EOK);
-
-const cardOf = (r: StatsRow): Go =>
-  r.role === "coach" ? { to: PATHS.coachCard, params: { coachId: r.id } } : { to: PATHS.playerCard, params: { playerId: r.id } };
-
 /** A count as the toggle shows it: as it is, or over games to one decimal. Zero in mid grey. */
 function Count({ n, games, figures }: { n: number; games: number; figures: Figures }) {
   return <span className={cx(n === 0 && "stats__zero")}>{figures === "Per game" ? perGame(n, games).toFixed(1) : n}</span>;
@@ -160,7 +155,7 @@ function Move({ moveEok }: { moveEok: number }) {
   if (moveEok === 0) return null;
   return (
     <span className="stats__move">
-      <span className={moveEok > 0 ? "rise" : "fall"}>{Math.abs(moveEok).toFixed(1)}</span>
+      <PriceMove eok={moveEok} />
     </span>
   );
 }
@@ -202,7 +197,7 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
 const seriesColumn: Column<Ranked> = {
   key: "series",
   head: "Series",
-  cell: (r) => (r.series ? `${r.series[0]}–${r.series[1]}` : ""),
+  cell: (r) => (r.series ? score(r.series) : ""),
   figure: true,
 };
 
@@ -212,7 +207,7 @@ function Lead({ row }: { row: Ranked }) {
     <span className="stats__lead">
       <span className="stats__rank num">{row.rank}</span>
       <RoleIcon role={row.role} className="stats__lead-icon" />
-      <GoLink go={cardOf(row)} className="stats__name">
+      <GoLink go={cardGo(row.id, row.role === "coach")} className="stats__name">
         {row.name}
       </GoLink>
       <small className="stats__team num">{row.team}</small>

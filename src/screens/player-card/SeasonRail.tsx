@@ -1,6 +1,5 @@
-import { Table } from "../../parts";
+import { perGame, signed, Table } from "../../parts";
 import type { PlayerCardData } from "./card";
-import { perGame, signed } from "./format";
 
 /** The Season panel, on every tab: each scoring line's total, per game and points. */
 export function SeasonRail({ season }: { season: PlayerCardData["season"] }) {

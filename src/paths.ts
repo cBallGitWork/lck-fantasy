@@ -40,3 +40,8 @@ export function pathTo(go: Go): string {
   const params: Record<string, string> = go.params ?? {};
   return go.to.replace(/\$(\w+)/g, (_, name: string) => encodeURIComponent(params[name] ?? ""));
 }
+
+/** A player's card, or the coach's card for a coach. */
+export function cardGo(id: string, coach: boolean): Go {
+  return coach ? { to: PATHS.coachCard, params: { coachId: id } } : { to: PATHS.playerCard, params: { playerId: id } };
+}

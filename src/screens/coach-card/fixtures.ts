@@ -1,7 +1,8 @@
 // kkOma's card on the made-up LCK Cup (docs/design/approved/coach-card/coach.html), at the two
 // moments the picture draws: from Pick Team (Week 4, Tuesday) and from Points (Week 3 Saturday,
 // T1 v DK game 2 live). This week's series and points come from the shared Week 3 (week3.ts).
-import { POINTS_SQUAD, WEEK3_SERIES_AT_POINTS, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
+import { fromSide, opponent, seriesById, seriesOf } from "../../fixtures/series";
+import { POINTS_SQUAD, WEEK3_SERIES_AT_POINTS, WEEK4_SERIES } from "../../fixtures/week3";
 import type { CoachCardData, CoachWeek, FixtureRow, SeasonLine, StripNext, StripPast, WeekGame, WeekSeries } from "./types";
 
 const HEAD = { team: "T1", name: "kkOma", hangul: "김정균", legal: "Kim Jeong-gyun" } as const;
@@ -22,10 +23,10 @@ const PAST_BEFORE_SAT: StripPast[] = [
 ];
 
 /** T1's next series, as the player card's Fixtures draws them (Week 4's from week3.ts). */
-const T1_WEEK4: FixtureRow[] = WEEK4_SERIES.filter((s) => s.home === "T1" || s.away === "T1").map((s) => ({
+const T1_WEEK4: FixtureRow[] = seriesOf(WEEK4_SERIES, "T1").map((s) => ({
   week: 4,
   day: s.day,
-  opponent: (s.home === "T1" ? s.away : s.home) as TeamCode,
+  opponent: opponent(s, "T1"),
   format: "Bo3",
   local: s.local,
   kst: s.kst,
@@ -54,15 +55,15 @@ const COACH = POINTS_SQUAD.find((p) => p.slot === "coach");
 if (!COACH?.series) throw new Error("Week 3's Points squad has no coach with series");
 
 function weekSeries(id: string, games: number[], coachResult?: number): WeekSeries {
-  const s = WEEK3_SERIES_AT_POINTS.find((x) => x.id === id);
-  if (!s?.score) throw new Error(`Week 3 has no series ${id} with a score`);
-  const home = s.home === HEAD.team;
+  const s = seriesById(WEEK3_SERIES_AT_POINTS, id);
+  const side = fromSide(s, HEAD.team);
+  if (!side.score) throw new Error(`Week 3 has no series ${id} with a score`);
   const live = s.state === "live";
   return {
     id,
     day: s.day,
-    opponent: home ? s.away : s.home,
-    score: home ? s.score : [s.score[1], s.score[0]],
+    opponent: side.opponent,
+    score: side.score,
     state: live ? "live" : "final",
     liveGame: s.liveGame,
     games: games.map((points, i) => ({

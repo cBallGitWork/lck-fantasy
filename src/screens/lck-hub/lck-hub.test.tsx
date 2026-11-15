@@ -5,7 +5,8 @@ import { html, text } from "../../testing/render";
 import { LCK_HUB } from "./fixtures";
 import { nextHub, startHub, type HubAction } from "./hubState";
 import { LckHub } from "./LckHub";
-import { signed, winPct } from "./StandingsTab";
+import { signed } from "../../parts";
+import { winPct } from "./StandingsTab";
 import type { HubTab, LckHubData } from "./types";
 
 const page = (tab: HubTab, data: LckHubData = LCK_HUB) => <LckHub data={data} account={MANAGER.team} tab={tab} />;

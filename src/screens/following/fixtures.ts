@@ -1,6 +1,7 @@
 // The Following picture's made-up LCK Cup Week 3 (docs/design/approved/following/), mid-week.
 // Names, teams and numbers are examples, not roster data. Truck lines are the unapproved drafts
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
+import { seriesById } from "../../fixtures/series";
 import { WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
 import type { FollowingData, Manager, SeriesItem } from "./feed";
 
@@ -15,8 +16,8 @@ const PRIYA: Manager = { id: "priya", name: "Priya Shah", team: "Zeus Juice" };
 
 /** A Week 3 series' teams and score, as the shared fixture holds them. */
 function week3(seriesId: string): Pick<SeriesItem, "home" | "away" | "score" | "bestOf"> {
-  const s = WEEK3_SERIES_AT_POINTS.find((one) => one.id === seriesId);
-  if (!s?.score) throw new Error(`No Week 3 series ${seriesId} with a score.`);
+  const s = seriesById(WEEK3_SERIES_AT_POINTS, seriesId);
+  if (!s.score) throw new Error(`No Week 3 series ${seriesId} with a score.`);
   return { home: s.home, away: s.away, score: s.score, bestOf: 3 };
 }
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { cx, selectable } from "../../parts";
-import { eok, ROLE_PLURAL, searchGroups } from "./rules";
+import { cx, eok, selectable } from "../../parts";
+import { ROLE_PLURAL, searchGroups } from "./rules";
 import type { ComparePlayer, SearchRow } from "./fixtures";
 
 const FIND = "Find a player";

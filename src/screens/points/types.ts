@@ -1,4 +1,4 @@
-import type { SeriesRow, SeriesState, WeekNav } from "../../parts";
+import type { Score, SeriesRow, SeriesState, WeekNav } from "../../parts";
 import type { Mark, RoleKey, SlotKey } from "../../rift";
 
 /** One game a player played: its champion, won or lost (neither while live), its points, and whether it counts. */
@@ -18,7 +18,7 @@ export interface PointsSeries {
   day: string;
   opponent: string;
   /** Games won, his team's first. */
-  score: readonly [number, number];
+  score: Score;
   state: SeriesState;
   liveGame?: number;
   points: number;

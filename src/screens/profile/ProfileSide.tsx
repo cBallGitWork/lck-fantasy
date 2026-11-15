@@ -1,7 +1,7 @@
-import { GoLink, SideSection } from "../../parts";
+import { GoLink, ordinal, SideSection } from "../../parts";
 import { PATHS } from "../../paths";
 import type { LeagueRow, Truck } from "./fixtures";
-import { count, ordinal } from "./format";
+import { count } from "./format";
 import { Move } from "./ProfileHistory";
 
 const TRUCK_KIND: Record<Truck["kind"], string> = { coffee: "Coffee", protest: "Protest" };

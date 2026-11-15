@@ -1,11 +1,10 @@
 import { useState, type ReactNode } from "react";
-import { LinkGo, OutlinedKey, Placeholder, Tabs, Tag } from "../../parts";
+import { eok, inOut, LinkGo, ordinal, OutlinedKey, Placeholder, PriceMove, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
 import { Champions } from "./Champions";
 import { FixturesTab } from "./FixturesTab";
-import { eok, ordinal, oneDecimal, transfers } from "./format";
 import { History } from "./History";
 import { SeasonRail } from "./SeasonRail";
 import { SeriesStrip } from "./SeriesStrip";
@@ -77,15 +76,15 @@ export function PlayerCard({
       <div className="player-card__meta">
         <span className="player-card__quiet">
           <b className="player-card__figure num">{eok(card.priceEok)}</b>
-          {card.priceMove !== 0 && <span className={card.priceMove > 0 ? "rise" : "fall"}>{oneDecimal(Math.abs(card.priceMove))}</span>}
+          <PriceMove eok={card.priceMove} />
         </span>
         <span className="player-card__quiet">
-          <b className="player-card__figure num">{oneDecimal(card.form)}</b>form · {ordinal(card.formPlace)}
+          <b className="player-card__figure num">{card.form.toFixed(1)}</b>form · {ordinal(card.formPlace)}
         </span>
         <span className="player-card__quiet">
           <b className="player-card__figure num">{card.ownedPct}%</b>owned · {ordinal(card.ownedPlace)}
         </span>
-        <span className="player-card__quiet">{transfers(card.transfersIn, card.transfersOut)} this week</span>
+        <span className="player-card__quiet">{inOut(card.transfersIn, card.transfersOut)} this week</span>
       </div>
       <div className="player-card__body">
         <div className="player-card__main">

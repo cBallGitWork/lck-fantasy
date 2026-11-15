@@ -1,5 +1,4 @@
-import { cx } from "../../parts";
-import { figure } from "./format";
+import { count, cx } from "../../parts";
 
 /** Pages shown before `⋯` and the last page, as the picture's `1 2 3 ⋯ 1,063`. */
 const LEADING_PAGES = 3;
@@ -9,7 +8,7 @@ export function Pager({ pages, page, onPage, onFindMe }: { pages: number; page: 
   const leading = Array.from({ length: Math.min(pages, LEADING_PAGES) }, (_, i) => i + 1);
   const key = (n: number) => (
     <button key={n} type="button" className={cx("leagues__page", n === page && "leagues__page--on")} aria-pressed={n === page} onClick={() => onPage(n)}>
-      {figure(n)}
+      {count(n)}
     </button>
   );
   return (

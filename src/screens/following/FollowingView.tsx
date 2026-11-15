@@ -1,9 +1,8 @@
-import { GoLink, OutlinedKey, PageFrame, PageHead, SideSection, SponsorNote, Tag, Time } from "../../parts";
+import { GoLink, OutlinedKey, PageFrame, PageHead, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
 import {
   movesSummary,
   playersLine,
-  signed,
   SWAPS_SHOWN,
   TRUCK_WORD,
   type DeadlineItem,

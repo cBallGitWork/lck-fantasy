@@ -1,6 +1,6 @@
-import { Table, type Column } from "../../parts";
+import { eok, RankMove, Table, type Column } from "../../parts";
 import type { HistoryRow } from "./fixtures";
-import { count, eok, NONE } from "./format";
+import { count, NONE } from "./format";
 
 const COLUMNS: Column<HistoryRow>[] = [
   { key: "week", head: "Week", cell: (r) => `Week ${r.week}` },
@@ -19,7 +19,7 @@ const COLUMNS: Column<HistoryRow>[] = [
 /** A rank's move, in ink with ▲ or ▼; `—` when there is none. */
 export function Move({ places }: { places: number | undefined }) {
   if (!places) return <>{NONE}</>;
-  return <span className={places > 0 ? "rank-up" : "rank-down"}>{count(Math.abs(places))}</span>;
+  return <RankMove move={places} />;
 }
 
 /** History: each week's points, total, ranks, transfers, hits, bank, value and buff; then the buffs left. */

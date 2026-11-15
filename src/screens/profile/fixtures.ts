@@ -2,7 +2,9 @@
 // LCK Cup Week 3 on the Sunday before its last two series, so Week 3 is not final. Her series are
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
+import { seriesById } from "../../fixtures/series";
 import { WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
+import { score } from "../../parts";
 import type { RoleKey, SlotKey } from "../../rift";
 
 /** Whether you follow the manager; `self` is your own profile, which has no key. */
@@ -116,9 +118,9 @@ const player = (name: string, team: TeamCode): ProfilePlayer => ({ id: name.toLo
 
 /** A series as a player's line shows it: `GEN 2–0 KT · Wed`. */
 function seriesLine(id: string): string {
-  const s = WEEK3_SERIES_FINAL.find((one) => one.id === id);
-  if (!s?.score) throw new Error(`No final Week 3 series ${id}`);
-  return `${s.home} ${s.score[0]}–${s.score[1]} ${s.away} · ${s.day}`;
+  const s = seriesById(WEEK3_SERIES_FINAL, id);
+  if (!s.score) throw new Error(`No final Week 3 series ${id}`);
+  return `${s.home} ${score(s.score)} ${s.away} · ${s.day}`;
 }
 
 const lines = (...ids: string[]) => ids.map(seriesLine);

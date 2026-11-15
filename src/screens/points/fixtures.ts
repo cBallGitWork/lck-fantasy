@@ -3,6 +3,7 @@
 // (series and games #36, live points #34, final points and ranks #33). The champions and each game's
 // winner are made up, to fit the week's scores.
 
+import { fromSide, seriesById } from "../../fixtures/series";
 import { COMPETITION, MANAGER, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
 import { PATHS } from "../../paths";
 import type { SlotKey } from "../../rift";
@@ -41,9 +42,9 @@ function countedGames(games: number[]): Set<number> {
 }
 
 function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champions: string[] = []): PointsSeries {
-  const row = WEEK3_SERIES_AT_POINTS.find((s) => s.id === played.id);
-  if (!row?.score) throw new Error(`No played series ${played.id} in Week 3`);
-  const home = row.home === pick.team;
+  const row = seriesById(WEEK3_SERIES_AT_POINTS, played.id);
+  const side = fromSide(row, pick.team);
+  if (!side.score) throw new Error(`No played series ${played.id} in Week 3`);
   const counted = countedGames(played.games);
   const games = played.games.map((points, index) => {
     const live = row.state === "live" && index + 1 === row.liveGame;
@@ -61,8 +62,8 @@ function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champi
   return {
     id: row.id,
     day: row.day,
-    opponent: home ? row.away : row.home,
-    score: home ? row.score : [row.score[1], row.score[0]],
+    opponent: side.opponent,
+    score: side.score,
     state: row.state,
     liveGame: row.liveGame,
     points: gamePoints + (played.coachResult ?? 0),

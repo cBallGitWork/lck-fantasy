@@ -1,17 +1,14 @@
 import { MANAGER } from "../../fixtures/week3";
-import { cx, Empty, formatEok, GoLink, LinkGo, MeDot, PageFrame, PageHead, Table, Time, WON_PER_EOK, type Column } from "../../parts";
-import { PATHS, type Go } from "../../paths";
+import { cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, Table, Time, type Column } from "../../parts";
+import { cardGo, type Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { PriceMove, PriceWeek } from "./fixtures";
 import "./PatchUpdate.css";
 
 export const NO_MOVES = "No moves yet";
 
-const eok = (value: number) => formatEok(value * WON_PER_EOK);
-
 /** A name opens the player's card, or the coach's. */
-export const cardOf = (row: PriceMove): Go =>
-  row.role === "coach" ? { to: PATHS.coachCard, params: { coachId: row.id } } : { to: PATHS.playerCard, params: { playerId: row.id } };
+export const cardOf = (row: PriceMove) => cardGo(row.id, row.role === "coach");
 
 const COLUMNS: Column<PriceMove>[] = [
   {

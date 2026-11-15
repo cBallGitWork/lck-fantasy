@@ -1,9 +1,8 @@
 import type { ReactNode } from "react";
-import { Crest, Empty, LinkGo, OutlinedKey, SideSection, Table, Tabs, Tag } from "../../parts";
+import { count, Crest, Empty, eok, inOut, LinkGo, ordinal, OutlinedKey, perGame, PriceMove, SideSection, signed, Table, Tabs, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CoachFixtures, CoachHistoryTab, CoachRoster, CoachThisWeek } from "./CoachTabs";
-import { count, eok, inOut, ordinal, signed } from "./format";
 import { COACH_TABS, type CoachCardData, type CoachFrom, type CoachSeason, type CoachTab, type SeasonLine, type StripNext, type StripPast } from "./types";
 
 /**
@@ -101,12 +100,6 @@ function Figure({ figure, children }: { figure: string; children: ReactNode }) {
   );
 }
 
-/** The last price move: ▲ in red, ▼ in blue (base.css), nothing when it held. */
-function PriceMove({ eok }: { eok: number }) {
-  if (eok === 0) return null;
-  return <span className={eok > 0 ? "rise" : "fall"}>{Math.abs(eok).toFixed(1)}</span>;
-}
-
 /** The last series with points, a rule, then the next series, the first in ink. */
 function Strip({ past, next }: { past: StripPast[]; next: StripNext[] }) {
   return (
@@ -147,7 +140,7 @@ function SeasonPanel({ season }: { season: CoachSeason }) {
         columns={[
           { key: "line", head: "", cell: (l) => l.name },
           { key: "total", head: "Total", figure: true, cell: (l) => l.total },
-          { key: "per", head: "Per game", figure: true, cell: (l) => (l.series ? "" : <span className="coach-card__soft">{(l.total / season.games).toFixed(1)}</span>) },
+          { key: "per", head: "Per game", figure: true, cell: (l) => (l.series ? "" : <span className="coach-card__soft">{perGame(l.total, season.games)}</span>) },
           { key: "pts", head: "Pts", figure: true, cell: (l) => <b>{signed(l.points)}</b> },
         ]}
       />

@@ -1,6 +1,5 @@
-import { Table } from "../../parts";
+import { eok, perGame, result, Table } from "../../parts";
 import type { CardHistory, HistoryRow } from "./card";
-import { eok, perGame, result } from "./format";
 import { WeekCell, weekStarts } from "./WeekCell";
 
 /** History: each series with games, K/D/A and points, each week's price and total once; then past LCK seasons scored by Flol. */

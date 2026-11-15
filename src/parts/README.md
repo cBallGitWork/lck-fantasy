@@ -25,7 +25,9 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `Placeholder.tsx`: a dashed box with one word (sponsor, photo).
 - `SponsorNote.tsx`: `All sponsors are made up.`
-- `money.ts`: an amount in 억, and the note for overseas players (spec/02).
+- `money.ts`: an amount in 억 (`eok` for a price held in 억, `eokToWon`), and the note for overseas players (spec/02).
+- `figures.ts`: counts, places (`2nd`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`) and per-game figures, written one way everywhere.
+- `Move.tsx`: `PriceMove` (▲ 0.5) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
 - `GoLink.tsx`: a link inside Flol through the router, typed by `src/paths.ts` (`Go`).
 - `selectable.ts`: makes a tile or card a key: click, Enter or Space.
 - `cx.ts`: joins class names.

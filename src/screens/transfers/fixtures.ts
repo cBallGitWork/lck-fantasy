@@ -2,12 +2,12 @@
 // Siwoo sold and Kingen bought into the Flex at −6. Built on the shared made-up week
 // (src/fixtures/week3.ts); the list's players and the week's confirms are the picture's own.
 
+import { opponent, seriesOf } from "../../fixtures/series";
 import { COMPETITION, MANAGER, PICK_TEAM_SQUAD, STATS_PLAYERS, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
-import { WON_PER_EOK } from "../../parts";
+import { eokToWon } from "../../parts";
 import type { Confirm, Fixture, ListPlayer, Plan, SquadPlayer, TransferRules } from "./plan";
 import type { TransfersPageProps } from "./TransfersPage";
 
-const won = (eok: number) => Math.round(eok * WON_PER_EOK);
 const idOf = (name: string) => name.toLowerCase();
 
 const TEAMS_PLAYING = [...new Set(WEEK4_SERIES.flatMap((s) => [s.home, s.away]))];
@@ -16,7 +16,7 @@ const TEAMS_PLAYING = [...new Set(WEEK4_SERIES.flatMap((s) => [s.home, s.away]))
 const FIXTURES: Record<string, Fixture[]> = Object.fromEntries(
   TEAMS_PLAYING.map((team) => [
     team,
-    WEEK4_SERIES.filter((s) => s.home === team || s.away === team).map((s) => ({ against: s.home === team ? s.away : s.home, day: s.day })),
+    seriesOf(WEEK4_SERIES, team).map((s) => ({ against: opponent(s, team), day: s.day })),
   ]),
 );
 
@@ -31,7 +31,7 @@ export const SQUAD: SquadPlayer[] = PICK_TEAM_SQUAD.map((p) => ({
   name: p.name,
   team: p.team,
   role: p.role,
-  price: won(p.priceEok),
+  price: eokToWon(p.priceEok),
   ownedPct: ownedOf(p.name),
   mark: p.mark,
 }));
@@ -41,7 +41,7 @@ const player = (role: ListPlayer["role"], name: string, team: TeamCode, priceEok
   name,
   team,
   role,
-  price: won(priceEok),
+  price: eokToWon(priceEok),
   move,
   points,
   ownedPct,
@@ -66,7 +66,7 @@ export const PLAYERS: ListPlayer[] = [
   ),
 ];
 
-export const RULES: TransferRules = { freeTransfers: 0, hitPoints: 6, teamCap: 2, bank: won(0.5) };
+export const RULES: TransferRules = { freeTransfers: 0, hitPoints: 6, teamCap: 2, bank: eokToWon(0.5) };
 
 /** The week's confirms, newest first. */
 export const CONFIRMS: Confirm[] = [

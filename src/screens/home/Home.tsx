@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import { MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SponsorNote, Time } from "../../parts";
+import { count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SponsorNote, Time } from "../../parts";
 import { Following, Leagues } from "./band";
-import { Move, withCommas } from "./format";
+import { Move } from "./format";
 import "./home.css";
 import type { Countdown, FeedItem, HomeShared, OverallTier } from "./types";
 
@@ -41,7 +41,7 @@ function HomeHead({ team, hangul, overall }: { team: string; hangul: string; ove
             </span>
           </div>
           <div className="home__tier-rank">
-            <b className="num">{withCommas(overall.rank)}</b>
+            <b className="num">{count(overall.rank)}</b>
             <Move move={overall.move} />
           </div>
         </div>

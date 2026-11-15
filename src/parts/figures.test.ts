@@ -1,0 +1,30 @@
+import { expect, test } from "vitest";
+import { count, eok, eokToWon, inOut, MINUS, ordinal, outcome, perGame, result, score, signed } from ".";
+
+test("a count marks its thousands", () => {
+  expect([0, 999, 1204, 48211].map(count)).toEqual(["0", "999", "1,204", "48,211"]);
+});
+
+test("a place takes st, nd, rd or th, the teens th, and marks its thousands", () => {
+  expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 101, 111, 1402].map(ordinal)).toEqual([
+    "1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd", "101st", "111th", "1,402nd",
+  ]);
+});
+
+test("signed points carry + or the minus sign, zero bare", () => {
+  expect([6, 0, -1].map(signed)).toEqual(["+6", "0", "−1"]);
+  expect(MINUS).toBe("−");
+  expect(inOut(1204, 310)).toBe("+1,204 / −310");
+});
+
+test("a score, its result and a per-game figure", () => {
+  expect(score([2, 1])).toBe("2–1");
+  expect([outcome(true), outcome(false)]).toEqual(["W", "L"]);
+  expect([result([2, 1]), result([1, 2])]).toEqual(["W 2–1", "L 1–2"]);
+  expect(perGame(49, 10)).toBe("4.9");
+});
+
+test("a price held in 억 reads as money and as won", () => {
+  expect(eok(18.5)).toBe("18.5억");
+  expect(eokToWon(7.5)).toBe(750_000_000);
+});

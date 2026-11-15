@@ -1,6 +1,7 @@
 // What a player card shows, as props: the backend feeds these once it is wired (#36, #22, #23, #20, #19).
 
 import type { TeamCode } from "../../fixtures/week3";
+import type { Score } from "../../parts";
 import type { RoleKey } from "../../rift";
 
 export const CARD_TABS = ["This week", "Fixtures", "History", "Champions"] as const;
@@ -42,7 +43,7 @@ export interface WeekSeries {
   id: string;
   day: string;
   opponent: TeamCode;
-  score: [number, number];
+  score: Score;
   state: "final" | "live";
   /** The game being played, while live. */
   liveGame?: number;
@@ -74,7 +75,7 @@ export interface HistoryRow {
   week: number;
   day: string;
   opponent: TeamCode;
-  score: [number, number];
+  score: Score;
   games: number;
   kda: string;
   priceEok: number;

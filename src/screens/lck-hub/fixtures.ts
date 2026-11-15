@@ -4,11 +4,9 @@
 // Esports' front page until #116 brings its LCK tag page.
 
 import { COMPETITION, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
-import { WON_PER_EOK } from "../../parts";
+import { eokToWon } from "../../parts";
 import type { RoleKey } from "../../rift";
 import type { LckHubData, Roster, RosterMember, StandingsRow, TeamRosters } from "./types";
-
-const eokToWon = (eok: number) => eok * WON_PER_EOK;
 
 const row = (team: TeamCode, won: number, lost: number, setsWon: number, setsLost: number, last5: string): StandingsRow => ({
   team,

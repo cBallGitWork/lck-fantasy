@@ -2,7 +2,7 @@
 import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { HOME_IDLE, HOME_LIVE } from "./fixtures";
-import { place } from "./format";
+import { ordinal as place } from "../../parts";
 import { Home } from "./index";
 
 /** Fails unless each piece appears in `out`, in this order. */

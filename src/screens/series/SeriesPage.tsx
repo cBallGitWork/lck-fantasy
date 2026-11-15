@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, GoLink, LinkGo, PageFrame, Tag, Time } from "../../parts";
+import { cx, GoLink, LinkGo, PageFrame, score, Tag, Time } from "../../parts";
 import { PATHS } from "../../paths";
 import "./series.css";
 import { gameWon, RosterList, TeamGrid } from "./TeamGrid";
@@ -54,7 +54,7 @@ function Played({ series, live, account }: { series: PlayedSeries; live: boolean
   const loser = live || h === a ? undefined : h < a ? "home" : "away";
   return (
     <Frame account={account}>
-      <Scorebug home={home} away={away} middle={`${h}–${a}`} loser={loser} />
+      <Scorebug home={home} away={away} middle={score([h, a])} loser={loser} />
       <Meta when={when} watch={live}>
         {live ? (
           <>

@@ -1,7 +1,6 @@
 import { TEAMS } from "../../fixtures/week3";
-import { cx, NONE, pct, signed, Table, type Column } from "../../parts";
+import { cx, NONE, pct, SectionHead, signed, Table, type Column } from "../../parts";
 import type { StandingsGroup, StandingsRow } from "./types";
-import { SectionTitle } from "./Week";
 
 
 /** `67%`; a team yet to play shows a dash. */
@@ -44,7 +43,7 @@ export function Standings({ groups }: { groups: StandingsGroup[] }) {
     <div className="lck-hub__groups">
       {groups.map((g) => (
         <section key={g.name}>
-          <SectionTitle note={<span lang="ko">{g.hangul}</span>}>{g.name}</SectionTitle>
+          <SectionHead className="lck-hub__title" note={<span lang="ko">{g.hangul}</span>}>{g.name}</SectionHead>
           <div className="lck-hub__standings">
             <Table columns={columns(g)} rows={g.rows} rowKey={(r) => r.team} label={g.name} />
           </div>

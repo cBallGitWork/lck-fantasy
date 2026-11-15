@@ -1,26 +1,16 @@
 import type { ReactNode } from "react";
 import type { Series } from "../../fixtures/week3";
-import { bestOf as bestOfLabel, WeekArrow } from "../../parts";
+import { bestOf as bestOfLabel, SectionHead, WeekArrow } from "../../parts";
 import { PATHS } from "../../paths";
 import type { HubWeek } from "./types";
 
 /** Every series row opens its Series page. */
 export const seriesGo = (s: Series) => ({ to: PATHS.series, params: { seriesId: s.id } });
 
-/** A main-column section's title: a 2px rule, the title, then its note in mid grey. */
-export function SectionTitle({ children, note }: { children: ReactNode; note?: ReactNode }) {
-  return (
-    <h2 className="lck-hub__title">
-      {children}
-      {note !== undefined && <small className="lck-hub__note">{note}</small>}
-    </h2>
-  );
-}
-
 /** `‹ Week 4 ›  20–24 Jan · Bo3`: an arrow is off where there is no week that way. */
 export function WeekTitle({ week, bestOf, onPrev, onNext }: { week: HubWeek; bestOf: number; onPrev?: () => void; onNext?: () => void }) {
   return (
-    <SectionTitle note={`${week.dates} · ${bestOfLabel(bestOf)}`}>
+    <SectionHead className="lck-hub__title" note={`${week.dates} · ${bestOfLabel(bestOf)}`}>
       <span className="lck-hub__week">
         <WeekArrow label="Week before" onStep={onPrev} button>
           ‹
@@ -30,7 +20,7 @@ export function WeekTitle({ week, bestOf, onPrev, onNext }: { week: HubWeek; bes
           ›
         </WeekArrow>
       </span>
-    </SectionTitle>
+    </SectionHead>
   );
 }
 

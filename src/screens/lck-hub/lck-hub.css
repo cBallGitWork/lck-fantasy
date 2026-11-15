@@ -13,21 +13,9 @@
 .lck-hub__picker {
   margin: var(--s-4) 0 var(--s-5);
 }
-/* A main-column section's title, as a side section's: 2px rule, 14px, its note after it. */
+/* A main-column section's head (SectionHead), its note a little further off. */
 .lck-hub__title {
-  display: flex;
-  align-items: baseline;
   gap: var(--s-3);
-  border-top: var(--m-rule-heavy) solid var(--ink);
-  padding-top: var(--s-2);
-  margin-bottom: var(--s-2);
-  font-size: var(--size-body);
-  font-weight: var(--w-bold);
-}
-.lck-hub__note {
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  color: var(--mid);
 }
 .lck-hub__week {
   display: flex;

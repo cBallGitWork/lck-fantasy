@@ -1,4 +1,4 @@
-import { count, cx, GoLink, MainAction, ordinal, OutlinedKey } from "../../parts";
+import { count, cx, GoLink, MainAction, ordinal, OutlinedKey, SectionHead } from "../../parts";
 import { PATHS } from "../../paths";
 import { Move } from "./Standings";
 import type { LeagueSummary } from "./types";
@@ -17,7 +17,7 @@ export function LeagueList({ leagues, openId, onCreate, onJoin }: { leagues: Lea
     <nav className="leagues__list" aria-label="Your leagues">
       {SECTIONS.map(([kind, title]) => (
         <section key={kind}>
-          <h2 className="leagues__list-title">{title}</h2>
+          <SectionHead className="leagues__list-title">{title}</SectionHead>
           {leagues
             .filter((league) => league.kind === kind)
             .map((league) => (

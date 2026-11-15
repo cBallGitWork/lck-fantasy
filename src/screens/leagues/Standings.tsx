@@ -21,7 +21,7 @@ export function Move({ move }: { move: number | null }) {
 export function Standings({ table, week, carryShown }: { table: StandingsData; week: number; carryShown: boolean }) {
   const columns = ALWAYS_SHOWN_COLUMNS + (carryShown ? 1 : 0) + (table.splitColumn ? 1 : 0);
   return (
-    <table className="leagues__table">
+    <table className="table leagues__table">
       <thead>
         <tr>
           <th className="leagues__rank-col">Rank</th>

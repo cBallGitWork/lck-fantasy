@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import type { Go } from "../paths";
-import { cx } from "./cx";
 import { GoLink } from "./GoLink";
 import { LinkGo } from "./LinkGo";
 import "./PageHead.css";
+import { WeekArrow } from "./WeekArrow";
 
 export interface HeadFigure {
   label: string;
@@ -103,17 +103,5 @@ export function PageHead({
       )}
       {children}
     </header>
-  );
-}
-
-function WeekArrow({ go, label, children }: { go?: Go; label: string; children: string }) {
-  return go ? (
-    <GoLink className="page-head__arrow" go={go} label={label}>
-      {children}
-    </GoLink>
-  ) : (
-    <span className={cx("page-head__arrow", "page-head__arrow--off")} aria-hidden="true">
-      {children}
-    </span>
   );
 }

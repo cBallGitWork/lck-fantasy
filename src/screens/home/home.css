@@ -24,7 +24,7 @@
   stroke: var(--ink);
   stroke-width: var(--stroke-shirt);
 }
-.home__shield-rule {
+.home__shield-band {
   stroke: var(--on-ink);
   stroke-width: var(--m-rule);
   opacity: 0.45;
@@ -117,9 +117,6 @@
 
 /* The main and side columns, twice: the state's own, then Following and Leagues. */
 .home__row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--m-side);
-  gap: var(--s-6);
   align-items: start;
 }
 .home__row--band {

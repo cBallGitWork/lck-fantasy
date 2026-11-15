@@ -9,7 +9,7 @@ import { signed } from "./format";
 export function ProfileTransfers({ weeks }: { weeks: TransferWeek[] }) {
   return (
     <section className="profile__transfers">
-      <table className="profile__table">
+      <table className="table profile__table">
         <colgroup>
           <col className="profile__col-swap-slot" />
           <col className="profile__col-out" />

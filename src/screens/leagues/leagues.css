@@ -1,8 +1,5 @@
 /* Leagues (docs/design/approved/leagues/): the list left, the open league's table right. */
 .leagues {
-  display: grid;
-  grid-template-columns: var(--m-side) minmax(0, 1fr);
-  gap: var(--s-6);
   margin-top: var(--s-2);
 }
 
@@ -99,28 +96,12 @@
   bottom: var(--s-1);
 }
 
-/* The table. */
-.leagues__table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--paper);
+/* The table: the Table part's (`.table`), save that its columns size to their content and its heads wrap. */
+.leagues .leagues__table {
+  table-layout: auto;
 }
-.leagues__table th {
-  text-align: left;
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  color: var(--mid);
-  padding: var(--s-2) var(--s-3);
-  border-bottom: var(--m-rule) solid var(--line);
-}
-.leagues__table td {
-  height: var(--m-row);
-  padding: 0 var(--s-3);
-  border-bottom: var(--m-rule) solid var(--fill);
-  white-space: nowrap;
-}
-.leagues__table tbody tr:hover td {
-  background: var(--fill);
+.leagues .leagues__table th {
+  white-space: normal;
 }
 .leagues__table .leagues__figure {
   text-align: right;

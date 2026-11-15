@@ -13,13 +13,6 @@
 .lck-hub__picker {
   margin: var(--s-4) 0 var(--s-5);
 }
-/* Head, tabs and stage run the page's width; the main column and the news sit under them. */
-.lck-hub__body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--m-side);
-  gap: var(--s-6);
-}
-
 /* A main-column section's title, as a side section's: 2px rule, 14px, its note after it. */
 .lck-hub__title {
   display: flex;
@@ -40,24 +33,6 @@
   display: flex;
   align-items: center;
   gap: var(--s-1);
-}
-.lck-hub__arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--m-target);
-  height: var(--m-target);
-  font: inherit;
-  font-size: var(--size-lead);
-  font-weight: var(--w-regular);
-  color: var(--text);
-  background: none;
-  border: 0;
-  cursor: pointer;
-}
-.lck-hub__arrow--off {
-  color: var(--line);
-  cursor: default;
 }
 
 /* Fixtures and Results: one week by day, a day's series on paper. */

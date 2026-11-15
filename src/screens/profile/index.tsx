@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
-import { OutlinedKey, PageFrame, SponsorNote, Tabs } from "../../parts";
+import { Columns, OutlinedKey, PageFrame, SponsorNote, Tabs } from "../../parts";
 import { PROFILE, type FollowState, type ProfileData, type ProfileManager } from "./fixtures";
 import "./profile.css";
 import { ProfileHistory } from "./ProfileHistory";
@@ -60,7 +60,7 @@ export function Profile({
     <PageFrame screen="profile" account={account}>
       <Banner manager={data.manager} follow={follow} onFollow={pressFollow} />
       <Tabs tabs={PROFILE_TABS} chosen={tab} onChoose={setTab} label="Profile" />
-      <div className="profile__grid">
+      <Columns className="profile__grid">
         <div className="profile__main">
           {tab === "Points" && <ProfilePoints week={week} hasPrev={hasWeek(weekNo - 1)} hasNext={hasWeek(weekNo + 1)} onWeek={setWeekNo} />}
           {tab === "History" && <ProfileHistory rows={data.history} buffsLeft={data.buffsLeft} onOpenWeek={openWeek} />}
@@ -69,7 +69,7 @@ export function Profile({
         <aside className="profile__side">
           <ProfileSide leagues={data.leagues} trucks={tab === "Points" ? { week: week.week, list: week.trucks } : undefined} />
         </aside>
-      </div>
+      </Columns>
       <SponsorNote />
     </PageFrame>
   );

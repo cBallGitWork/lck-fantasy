@@ -1,4 +1,4 @@
-import { cx, GoLink, LinkGo, MeDot, outcome, Tag } from "../../parts";
+import { cx, GoLink, LinkGo, MeDot, outcome, SectionHead, Tag } from "../../parts";
 import { cardGo, type Go } from "../../paths";
 import { RoleIcon, ROLE_NAME, type IconKey } from "../../rift";
 import type { CoachLine, Game, Person, PlayerLine, Roster, TeamSheet } from "./types";
@@ -106,7 +106,7 @@ function CoachRow({ coach }: { coach: CoachLine }) {
 export function TeamGrid({ team, games }: { team: TeamSheet; games: Game[] }) {
   return (
     <section className="series__team">
-      <h2 className="series__team-head">{team.name}</h2>
+      <SectionHead>{team.name}</SectionHead>
       <table className={cx("series__grid", games.length > 2 && "series__grid--three")}>
         <colgroup>
           <col className="series__col-role" />
@@ -143,10 +143,7 @@ export function TeamGrid({ team, games }: { team: TeamSheet; games: Game[] }) {
 export function RosterList({ team }: { team: Roster }) {
   return (
     <section className="series__team">
-      <h2 className="series__team-head">
-        {team.code}
-        <small>{team.name}</small>
-      </h2>
+      <SectionHead note={team.name}>{team.code}</SectionHead>
       <table className="series__roster">
         <colgroup>
           <col className="series__col-roster-role" />

@@ -2,9 +2,6 @@
    The picture's own widths (192 and 128 for the feed's columns, 180 and 40 for a swap) are
    written from the spacing scale, since only this folder may change. */
 .following__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--m-side);
-  gap: var(--s-6);
   margin-top: var(--s-5);
 }
 

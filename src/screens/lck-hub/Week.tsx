@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Series } from "../../fixtures/week3";
-import { cx } from "../../parts";
+import { WeekArrow } from "../../parts";
 import { PATHS } from "../../paths";
 import type { HubWeek } from "./types";
 
@@ -17,24 +17,16 @@ export function SectionTitle({ children, note }: { children: ReactNode; note?: R
   );
 }
 
-function WeekArrow({ label, onStep, children }: { label: string; onStep?: () => void; children: string }) {
-  return (
-    <button type="button" className={cx("lck-hub__arrow", !onStep && "lck-hub__arrow--off")} aria-label={label} disabled={!onStep} onClick={onStep}>
-      {children}
-    </button>
-  );
-}
-
 /** `‹ Week 4 ›  20–24 Jan · Bo3`: an arrow is off where there is no week that way. */
 export function WeekTitle({ week, bestOf, onPrev, onNext }: { week: HubWeek; bestOf: number; onPrev?: () => void; onNext?: () => void }) {
   return (
     <SectionTitle note={`${week.dates} · Bo${bestOf}`}>
       <span className="lck-hub__week">
-        <WeekArrow label="Week before" onStep={onPrev}>
+        <WeekArrow label="Week before" onStep={onPrev} button>
           ‹
         </WeekArrow>
         {week.label}
-        <WeekArrow label="Week after" onStep={onNext}>
+        <WeekArrow label="Week after" onStep={onNext} button>
           ›
         </WeekArrow>
       </span>

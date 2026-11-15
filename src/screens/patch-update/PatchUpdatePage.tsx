@@ -1,5 +1,5 @@
 import { MANAGER } from "../../fixtures/week3";
-import { cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, Table, Time, type Column } from "../../parts";
+import { cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, Table, Time, WeekArrow, type Column } from "../../parts";
 import { cardGo, type Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { PriceMove, PriceWeek } from "./fixtures";
@@ -46,18 +46,6 @@ function MoveList({ kind, title, rows }: { kind: "rise" | "fall"; title: string;
       <h2 className="patch-update__list-title">{title}</h2>
       {rows.length === 0 ? <Empty title={NO_MOVES} /> : <Table columns={COLUMNS} rows={rows} rowKey={(row) => row.id} label={title} />}
     </section>
-  );
-}
-
-function WeekArrow({ onStep, label, children }: { onStep?: () => void; label: string; children: string }) {
-  return onStep ? (
-    <button type="button" className="patch-update__arrow" aria-label={label} onClick={onStep}>
-      {children}
-    </button>
-  ) : (
-    <span className={cx("patch-update__arrow", "patch-update__arrow--off")} aria-hidden="true">
-      {children}
-    </span>
   );
 }
 

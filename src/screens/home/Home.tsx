@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SponsorNote, Time } from "../../parts";
+import { Columns, count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SponsorNote, TierShield, Time } from "../../parts";
 import { Following, Leagues } from "./band";
 import { Move } from "./format";
 import "./home.css";
@@ -13,26 +13,13 @@ export interface HomeActions {
   onTruck?: (item: FeedItem) => void;
 }
 
-/** The shield with the division on it (spec/08): Flol's own shape, not Riot's art. */
-function Shield({ division }: { division: string }) {
-  return (
-    <svg className="home__shield" viewBox="0 0 40 46" aria-hidden="true">
-      <path className="home__shield-body" d="M20 4 L35 9 V24 C35 33 28 39 20 42 C12 39 5 33 5 24 V9 Z" />
-      <path className="home__shield-rule" d="M5 15 H35" />
-      <text className="home__shield-division" x="20" y="31" textAnchor="middle">
-        {division}
-      </text>
-    </svg>
-  );
-}
-
 /** The team name and hangul; beside it, Overall as a tier, its rank and move, the sponsor's badge. */
 function HomeHead({ team, hangul, overall }: { team: string; hangul: string; overall: OverallTier }) {
   return (
     <div className="home__head">
       <PageHead title={team} hangul={hangul} />
       <div className="home__tier">
-        <Shield division={overall.division} />
+        <TierShield className="home__shield" division={overall.division} />
         <div>
           <div className="home__tier-name">
             {overall.tier}
@@ -110,14 +97,14 @@ export function HomeFrame({
     <PageFrame screen="home" active="home" account={data.team}>
       <HomeHead team={data.team} hangul={data.hangul} overall={data.overall} />
       <DeadlineBar data={data} actions={actions} />
-      <div className="home__row">
+      <Columns className="home__row">
         <div className="home__main">{hero}</div>
         <aside className="home__side">{side}</aside>
-      </div>
-      <div className="home__row home__row--band">
+      </Columns>
+      <Columns className="home__row home__row--band">
         <Following items={data.following} onTruck={actions.onTruck} />
         <Leagues leagues={data.leagues} />
-      </div>
+      </Columns>
       <div className="home__sponsor">
         <Placeholder word="Sponsor" fill />
       </div>

@@ -47,7 +47,7 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
         {week.buff && <Tag>{week.buff}</Tag>}
       </div>
       {week.team ? (
-        <table className="profile__table">
+        <table className="table profile__table">
           <colgroup>
             <col className="profile__col-slot" />
             <col className="profile__col-player" />

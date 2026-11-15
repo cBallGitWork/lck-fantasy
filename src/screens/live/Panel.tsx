@@ -1,4 +1,4 @@
-import { cx, GoLink, LinkGo, Tag } from "../../parts";
+import { cx, GoLink, LinkGo, SectionHead, Tag } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
@@ -63,10 +63,10 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
           {WORDS.downNote}
         </div>
       )}
-      <h2 className="live__head">
+      <SectionHead>
         {WORDS.yourWeek}
         {week.notFinal && <Tag kind="notFinal">{WORDS.notFinal}</Tag>}
-      </h2>
+      </SectionHead>
       <div className="live__total">
         <span className="live__key num">{week.total}</span>
         <span className="live__avg">
@@ -77,13 +77,13 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
           <span className="live__go">›</span>
         </span>
       </div>
-      <h2 className="live__head">
+      <SectionHead>
         {series.home} {series.score ? series.score.join(dash) : WORDS.versus} {series.away}
-      </h2>
+      </SectionHead>
       {panel.players.map((p) => (
         <PlayerRow key={p.id} player={p} />
       ))}
-      <h2 className="live__head live__head--apart">{WORDS.rest}</h2>
+      <SectionHead className="live__apart">{WORDS.rest}</SectionHead>
       {panel.rest.map((p) => (
         <RestRow key={p.id} player={p} />
       ))}

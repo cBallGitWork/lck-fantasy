@@ -5,7 +5,7 @@ import { describe, expect, test } from "vitest";
 import { MANAGER } from "../../fixtures/week3";
 import { makeRouter } from "../../router";
 import { html, text } from "../../testing/render";
-import { COMPETITION, LEAGUES } from "./fixtures";
+import { COMPETITION, LEAGUE_NAME_MAX, LEAGUES } from "./fixtures";
 import { chaseText, ordinal } from "./format";
 import { adminItems, LeagueTable, type LeagueActions, type TableProps } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
@@ -44,7 +44,7 @@ async function renderRoute(path: string) {
 
 describe("a league you made (league.html)", () => {
   const league = privateLeague("pub-league");
-  const out = text(<LeagueTable league={league} actions={ACTIONS} {...tableProps(league)} />);
+  const out = text(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />);
 
   test("heads with the name, scoring week, code, Copy link and Admin, then the tabs and table head", () => {
     expectInOrder(out, ["Pub League", "Scoring from Week 1", "PUB-7K2Q", "Copy link", "Admin ▾", "Season", "Split 1", "Split 2", "Rank", "Team · Manager", "Carry", "Week 14", "Total"]);
@@ -53,7 +53,7 @@ describe("a league you made (league.html)", () => {
 
   test("lists all 12 rows in rank order, your row with its chase tag", () => {
     expectInOrder(out, ["1—Kiin BeanTom ReidChovy611,214", `21${MANAGER.team}${MANAGER.name}16 pts to 1stFaker981,198`, "Chovy Was Right There", "Gank PlankRuth AdeFaker551,019"]);
-    expect(html(<LeagueTable league={league} actions={ACTIONS} {...tableProps(league)} />)).toMatch(/class="leagues__mine"[^]*Baron Steal FC/);
+    expect(html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />)).toMatch(/class="leagues__mine"[^]*Baron Steal FC/);
   });
 
   test("has no pager on a one-page table", () => {
@@ -69,7 +69,7 @@ describe("a league you made (league.html)", () => {
 
 describe("a league you're a member of (member.html)", () => {
   const league = privateLeague("flol-discord");
-  const out = text(<LeagueTable league={league} actions={ACTIONS} {...tableProps(league)} />);
+  const out = text(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />);
 
   test("has Leave in place of Admin", () => {
     expectInOrder(out, ["Flol Discord", "Scoring from Week 3", "FLOL-22XB", "Copy link", "Leave", "Season"]);

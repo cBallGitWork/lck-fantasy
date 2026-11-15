@@ -8,4 +8,4 @@ export const NONE = "—";
 export const count = (n: number | undefined) => (n === undefined ? NONE : figure(n));
 
 /** Points gained, signed: `+4`, `−1`; `+0` when none. */
-export const signed = (n: number) => (n < 0 ? `${MINUS}${Math.abs(n)}` : `+${n}`);
+export const gained = (n: number) => (n < 0 ? `${MINUS}${Math.abs(n)}` : `+${n}`);

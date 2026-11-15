@@ -3,7 +3,7 @@ import { eok, GoLink, Time } from "../../parts";
 import { cardGo } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { Transfer, TransferWeek } from "./fixtures";
-import { signed } from "./format";
+import { gained } from "./format";
 
 /** Transfers: each week's swaps by slot, out → in with team and price, the week's cost and points gained. */
 export function ProfileTransfers({ weeks }: { weeks: TransferWeek[] }) {
@@ -75,7 +75,7 @@ function SwapRow({ swap }: { swap: Transfer }) {
         </small>
       </td>
       <td />
-      <td className="profile__figure num">{signed(swap.gained)}</td>
+      <td className="profile__figure num">{gained(swap.gained)}</td>
     </tr>
   );
 }

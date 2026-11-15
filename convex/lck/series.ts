@@ -21,17 +21,21 @@ export interface Series<G extends SeriesGame> {
 
 const MS_PER_SECOND = 1000;
 
+/** The same two teams, either way round: a series is a pair's games. */
+export function pairKey(teamIds: readonly [string, string]): string {
+  return [...teamIds].sort().join(" v ");
+}
+
 /** Games grouped into series, in start order: game 1 opens a series for its two teams, and each
  *  later game joins the pair's open series. A game out of sequence (the file has game 2 but no
  *  game 1, as DK v Gen.G on 1 Aug 2026) is returned in `unplaced`, for an admin to see, rather
  *  than stop the rest of the day's games loading. */
 export function groupSeries<G extends SeriesGame>(games: readonly G[]): { series: Series<G>[]; unplaced: G[] } {
-  const pairKey = (game: SeriesGame) => [...game.teamIds].sort().join(" v ");
   const open = new Map<string, G[]>();
   const all: G[][] = [];
   const unplaced: G[] = [];
   for (const game of [...games].sort((a, b) => a.startedAt - b.startedAt)) {
-    const key = pairKey(game);
+    const key = pairKey(game.teamIds);
     const current = open.get(key);
     if (game.gameNumber === 1) {
       const fresh = [game];

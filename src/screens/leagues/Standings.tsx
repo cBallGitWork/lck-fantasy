@@ -4,7 +4,7 @@ import { PATHS } from "../../paths";
 import { chaseText, figure } from "./format";
 import type { StandingRow, Standings as StandingsData } from "./types";
 
-/** Rank, move, team, week, total and `›`; Carry and Split 2 come and go. */
+/** Rank, move, team, week, total and `›`; Carry and the split come and go. */
 const ALWAYS_SHOWN_COLUMNS = 6;
 
 /** A rank's move: ▲ or ▼ in ink and the places, or `—` when it held. */
@@ -15,7 +15,7 @@ export function Move({ move }: { move: number | null }) {
 
 /**
  * A league's table: rank, move, team and manager (your row on fill, with its chase tag), Carry once
- * the deadline has passed, the week's points, Split 2 on Legend and Rise, the total, and `›` to the
+ * the deadline has passed, the week's points, the split's on a group's table, the total, and `›` to the
  * manager's team. Runs of rows have a `⋯` between them: the top rows, then the rows round yours.
  */
 export function Standings({ table, week, carryShown }: { table: StandingsData; week: number; carryShown: boolean }) {
@@ -29,7 +29,7 @@ export function Standings({ table, week, carryShown }: { table: StandingsData; w
           <th>Team · Manager</th>
           {carryShown && <th className="leagues__carry-col">Carry</th>}
           <th className="leagues__figure">Week {week}</th>
-          {table.splitColumn && <th className="leagues__figure">Split 2</th>}
+          {table.splitColumn && <th className="leagues__figure">{table.splitColumn}</th>}
           <th className="leagues__figure">Total</th>
           <th className="leagues__go-col" aria-label="Open" />
         </tr>
@@ -43,7 +43,7 @@ export function Standings({ table, week, carryShown }: { table: StandingsData; w
               </tr>
             )}
             {run.map((row) => (
-              <Row key={row.rank} row={row} carryShown={carryShown} splitColumn={table.splitColumn} />
+              <Row key={row.rank} row={row} carryShown={carryShown} splitColumn={!!table.splitColumn} />
             ))}
           </Fragment>
         ))}

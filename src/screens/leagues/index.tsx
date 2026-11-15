@@ -2,7 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { PATHS, pathTo } from "../../paths";
-import { LEAGUE_LIST, LEAGUES, OPEN_LEAGUE_ID } from "./fixtures";
+import { COMPETITION, LEAGUE_LIST, LEAGUES, OPEN_LEAGUE_ID } from "./fixtures";
 import { LeagueList } from "./LeagueList";
 import { LeaguesPage } from "./LeaguesPage";
 import { LeagueTable, type LeagueActions } from "./LeagueTable";
@@ -31,12 +31,13 @@ export function LeaguesScreen() {
   const named = renamed(league);
   const tab = tabs[league.id] ?? league.openTab;
   const table = {
+    competition: COMPETITION,
     tab,
     onTab: (next: TableTab) => {
       setTabs({ ...tabs, [league.id]: next });
       setPage(FIRST_PAGE);
     },
-    table: page === FIRST_PAGE ? league.tables[tableKey(tab, group)] : undefined,
+    table: page === FIRST_PAGE ? league.tables[tableKey(COMPETITION, tab, group)] : undefined,
     page,
     onPage: setPage,
     onFindMe: () => setPage(FIRST_PAGE),

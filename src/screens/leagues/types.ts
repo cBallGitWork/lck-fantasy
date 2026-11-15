@@ -1,17 +1,22 @@
 // What the Leagues page is fed: the backend's shapes (convex/leagues/tables.ts), as props.
 
-export const TABLE_TABS = ["Season", "Split 1", "Split 2"] as const;
-export type TableTab = (typeof TABLE_TABS)[number];
+/** A table's tab: the whole season or a split, as the competition names them. */
+export type TableTab = string;
 
-/** Overall's groups in Split 2 (spec/08, Legend and Rise). */
-export const OVERALL_GROUPS = ["Legend", "Rise", "All"] as const;
-export type OverallGroup = (typeof OVERALL_GROUPS)[number];
+/** One of Overall's groups on its grouped tab (spec/08). */
+export type OverallGroup = string;
 
-/** The whole season's tab, which names no split. */
-export const SEASON_TAB: TableTab = "Season";
-
-/** The tab that splits Overall into its groups. */
-export const GROUPED_TAB: TableTab = "Split 2";
+/** The competition's tabs and Overall's groups: competition data, fed in as props, never held here. */
+export interface CompetitionTabs {
+  /** Every table's tabs, in order. */
+  tabs: readonly TableTab[];
+  /** The whole season's tab, which names no split. */
+  seasonTab: TableTab;
+  /** The tab that splits Overall into its groups. */
+  groupedTab: TableTab;
+  /** Overall's groups on the grouped tab. */
+  groups: readonly OverallGroup[];
+}
 
 /** The chase tag on your own row: points to the rank above, or the lead when 1st (`chaseTag`). */
 export type ChaseTag = { kind: "chasing"; points: number; rank: number } | { kind: "clear"; points: number };
@@ -39,7 +44,7 @@ export interface StandingRow {
   carry: string;
   week: number;
   total: number;
-  /** Split 2 points, beside season points on Legend and Rise. */
+  /** The grouped split's points, beside season points on a group's table. */
   split?: number;
   mine: boolean;
   chase: ChaseTag | null;
@@ -49,8 +54,8 @@ export interface StandingRow {
 export interface Standings {
   runs: StandingRow[][];
   pages: number;
-  /** A Split 2 column beside Total (Legend and Rise). */
-  splitColumn?: boolean;
+  /** The split's column beside Total on a group's table, headed with the split's name. */
+  splitColumn?: TableTab;
 }
 
 interface LeagueBase {
@@ -70,5 +75,5 @@ export type LeagueView =
   | (LeagueBase & { kind: "overall"; season: string; openGroup: OverallGroup })
   | (LeagueBase & { kind: "general" });
 
-/** Where a table sits in `LeagueView.tables`. */
-export const tableKey = (tab: TableTab, group?: OverallGroup) => (group && tab === GROUPED_TAB ? `${tab}/${group}` : tab);
+/** Where a table sits in `LeagueView.tables`: by tab, and by group on the grouped tab. */
+export const tableKey = (tabs: CompetitionTabs, tab: TableTab, group?: OverallGroup) => (group && tab === tabs.groupedTab ? `${tab}/${group}` : tab);

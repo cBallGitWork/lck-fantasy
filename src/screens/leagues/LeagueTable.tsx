@@ -2,10 +2,12 @@ import { useRef, useState, type ReactNode } from "react";
 import { Empty, Menu, OutlinedKey, Tabs, type MenuItem } from "../../parts";
 import { Pager } from "./Pager";
 import { Standings } from "./Standings";
-import { TABLE_TABS, type LeagueView, type Standings as StandingsData, type TableTab } from "./types";
+import type { CompetitionTabs, LeagueView, Standings as StandingsData, TableTab } from "./types";
 
 /** The table shown, and turning its tabs and pages. */
 export interface TableProps {
+  /** The competition's tabs and Overall's groups. */
+  competition: CompetitionTabs;
   tab: TableTab;
   onTab: (tab: TableTab) => void;
   /** The table on this tab and page; absent when there is none yet. */
@@ -37,7 +39,7 @@ export function LeagueHead({ name, sub, children }: { name: ReactNode; sub?: str
 }
 
 /** The table, and its pager where it holds more than one page. */
-export function TableBody({ league, table, page, onPage, onFindMe }: { league: LeagueView } & Omit<TableProps, "tab" | "onTab">) {
+export function TableBody({ league, table, page, onPage, onFindMe }: { league: LeagueView } & Omit<TableProps, "competition" | "tab" | "onTab">) {
   if (!table) return <Empty title="No table yet" />;
   return (
     <>
@@ -79,7 +81,7 @@ export function LeagueTable({ league, actions, ...table }: { league: Exclude<Lea
       ) : (
         <LeagueHead name={name} />
       )}
-      <Tabs tabs={TABLE_TABS} chosen={table.tab} onChoose={table.onTab} label="Table" />
+      <Tabs tabs={table.competition.tabs} chosen={table.tab} onChoose={table.onTab} label="Table" />
       <TableBody league={league} {...table} />
     </section>
   );

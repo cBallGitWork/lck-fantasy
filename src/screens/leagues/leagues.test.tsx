@@ -5,7 +5,7 @@ import { describe, expect, test } from "vitest";
 import { MANAGER } from "../../fixtures/week3";
 import { makeRouter } from "../../router";
 import { html, text } from "../../testing/render";
-import { LEAGUES } from "./fixtures";
+import { COMPETITION, LEAGUES } from "./fixtures";
 import { chaseText, ordinal } from "./format";
 import { adminItems, LeagueTable, type LeagueActions, type TableProps } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
@@ -17,7 +17,7 @@ const ACTIONS: LeagueActions = { onCopyLink: none, onRename: none, onRemoveManag
 /** A league's table props on its opening tab, from the fixture. */
 function tableProps(league: LeagueView): TableProps {
   const group = league.kind === "overall" ? league.openGroup : undefined;
-  return { tab: league.openTab, onTab: none, table: league.tables[tableKey(league.openTab, group)], page: 1, onPage: none, onFindMe: none };
+  return { competition: COMPETITION, tab: league.openTab, onTab: none, table: league.tables[tableKey(COMPETITION, league.openTab, group)], page: 1, onPage: none, onFindMe: none };
 }
 
 function privateLeague(id: string) {

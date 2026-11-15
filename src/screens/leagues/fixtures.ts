@@ -3,10 +3,18 @@
 // is week3.ts's. The backend feeds each of these once it is wired (#38).
 
 import { MANAGER } from "../../fixtures/week3";
-import type { LeagueSummary, LeagueView, StandingRow } from "./types";
+import type { CompetitionTabs, LeagueSummary, LeagueView, StandingRow } from "./types";
 
 const SEASON = "LCK 2027";
 const WEEK = 14;
+
+/** The season's tabs and Overall's groups, as the competition's data will hold them. */
+export const COMPETITION: CompetitionTabs = {
+  tabs: ["Season", "Split 1", "Split 2"],
+  seasonTab: "Season",
+  groupedTab: "Split 2",
+  groups: ["Legend", "Rise", "All"],
+};
 
 /** The league a bare /leagues opens, as the picture does. */
 export const OPEN_LEAGUE_ID = "pub-league";
@@ -115,7 +123,7 @@ const OVERALL: LeagueView = {
   tables: {
     "Split 2/Legend": {
       pages: 1063,
-      splitColumn: true,
+      splitColumn: COMPETITION.groupedTab,
       runs: [
         rows([
           [1, null, "Unkillable FC", "Ha-eun Seo", "Faker", 112, 1642, 402],

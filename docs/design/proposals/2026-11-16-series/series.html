@@ -27,7 +27,7 @@ nav.top .sp { flex: 1; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
 h2 { font-size: 14px; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 8px; display: flex; gap: 10px; align-items: baseline; } h2 small { color: var(--mid); font-weight: 400; font-size: 12px; }
 table { width: 100%; border-collapse: collapse; background: var(--paper); table-layout: fixed; }
-th { font-size: 12px; font-weight: 500; color: var(--mid); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; } th.n { text-align: right; } th b { color: var(--ink); font-weight: 600; }
+th { font-size: 12px; font-weight: 500; color: var(--mid); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; } th.n { text-align: right; } th b { color: var(--ink); font-weight: 600; } th a.vod { color: var(--ink); font-weight: 600; }
 td { padding: 0 10px; height: 52px; border-top: 1px solid var(--fill); vertical-align: middle; }
 td.rl { color: var(--mid); font-size: 12px; } td.rl svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 6px; }
 td.pl { white-space: nowrap; } td.pl b { font-weight: 600; } td.pl small { color: var(--mid); font-size: 12px; margin-left: 6px; }
@@ -35,24 +35,15 @@ td.pl { white-space: nowrap; } td.pl b { font-weight: 600; } td.pl small { color
 i.me { display: inline-block; width: 6px; height: 6px; background: var(--ink); margin: 0 0 2px 6px; }
 .gm { display: flex; justify-content: space-between; align-items: center; gap: 6px; }
 .gm > span:first-child { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; } .gm small { display: block; color: var(--mid); font: 12px "IBM Plex Mono", monospace; }
-.gm .p { flex: none; font: 600 14px "IBM Plex Mono", monospace; min-width: 28px; text-align: center; display: flex; align-items: center; gap: 6px; }
+.gm .p { flex: none; font: 600 14px "IBM Plex Mono", monospace; min-width: 28px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 2px; }
 .gm .p .box { border: 1.5px solid var(--ink); padding: 0 5px; }
 td.drop .gm, td.drop .gm small { color: var(--soft); } td.drop .gm .p { font-weight: 400; }
-.pog { font: 600 10px "IBM Plex Sans KR"; color: var(--ink); border: 1px solid var(--ink); padding: 0 3px; margin-left: 6px; vertical-align: 1px; }
+.pog { font: 600 10px "IBM Plex Sans KR"; color: var(--ink); border: 1px solid var(--ink); padding: 0 3px; line-height: 12px; }
 td.tot { text-align: right; font: 600 20px "IBM Plex Mono", monospace; border-left: 1px solid var(--line); }
 td.tot small { display: block; font: 12px "IBM Plex Mono", monospace; color: var(--mid); }
 tr.co td { border-top: 1px solid var(--line); }
 .gm > span:first-child .co-l { display: block; white-space: normal; font-size: 12px; line-height: 1.3; }
 .none { color: var(--mid); }
-/* the draft: one row per game, blue side left, red side right */
-.draft { margin-top: 32px; }
-.dr { display: grid; grid-template-columns: 124px 1fr 1fr; background: var(--paper); border-top: 1px solid var(--fill); }
-.dr:first-of-type { border-top: 0; }
-.dr .g { padding: 10px 12px; font: 600 14px "IBM Plex Mono", monospace; } .dr .g small { display: block; font: 12px "IBM Plex Mono", monospace; color: var(--mid); } .dr .g a { font: 600 12px "IBM Plex Sans KR"; color: var(--ink); }
-.side { padding: 10px 12px; display: grid; grid-template-columns: 96px 1fr; row-gap: 2px; }
-.side.red { border-left: 1px solid var(--line); }
-.side .who { grid-row: span 2; font-weight: 700; } .side .who small { display: block; font: 400 12px "IBM Plex Sans KR"; color: var(--mid); }
-.side .pk { display: grid; grid-template-columns: repeat(5, 1fr); } .side .bn { color: var(--mid); font-size: 12px; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
   <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
@@ -68,7 +59,6 @@ tr.co td { border-top: 1px solid var(--line); }
   <div class="bug" id="bug"></div>
   <div class="meta" id="meta"></div>
   <div class="two" id="two"></div>
-  <div id="draft"></div>
 </div>
 <script>
 const $ = (id) => document.getElementById(id);
@@ -88,15 +78,13 @@ const S = {
           ["jng", "Oner", "문현준", [["Viego", 3, 2, 9, 1, 0, 0, 0, 0], ["Xin Zhao", 2, 2, 8, 1, 0, 0, 0, 1]]],
           ["mid", "Faker", "이상혁", [["Orianna", 5, 1, 9, 1, 0, 1, 0, 0], ["Sylas", 7, 0, 6, 1, 1, 0, 0, 0]]],
           ["bot", "Peyz", "김수환", [["Kalista", 6, 1, 5, 1, 0, 0, 0, 0], ["Varus", 5, 0, 7, 1, 0, 0, 0, 0]]],
-          ["sup", "Keria", "류민석", [["Rell", 0, 3, 12, 0, 0, 0, 0, 0], ["Nautilus", 1, 2, 13, 1, 0, 0, 0, 0]]]],
-      bans: [["Ziggs", "Corki", "Skarner", "Yone", "Poppy"], ["Jax", "Taliyah", "Kai'Sa", "Vi", "Ashe"]] },
+          ["sup", "Keria", "류민석", [["Rell", 0, 3, 12, 0, 0, 0, 0, 0], ["Nautilus", 1, 2, 13, 1, 0, 0, 0, 0]]]] },
     DK: { name: "Dplus KIA", rec: "3–3", coach: ["cvMax", "김대호", [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]],
-      p: [["top", "Siwoo", "전시우", [["Jax", 2, 3, 2, 1, 1, 0, 0, 0], ["Gnar", 1, 2, 3, 1, 0, 0, 0, 0]]],
+      p: [["top", "Siwoo", "전시우", [["Jax", 2, 3, 2, 1, 1, 0, 0, 0], ["Gnar", 1, 2, 3, 1, 0, 1, 0, 0]]],
           ["jng", "Lucid", "최용혁", [["Sejuani", 1, 3, 4, 0, 0, 0, 0, 0], ["Maokai", 0, 5, 2, 0, 0, 0, 0, 0]]],
           ["mid", "ShowMaker", "허수", [["Taliyah", 2, 2, 3, 0, 0, 0, 0, 0], ["Azir", 1, 4, 2, 0, 0, 0, 0, 0]]],
           ["bot", "Aiming", "김하람", [["Ezreal", 3, 3, 2, 0, 0, 0, 0, 0], ["Zeri", 2, 4, 1, 0, 0, 0, 0, 0]]],
-          ["sup", "BeryL", "조건희", [["Braum", 0, 5, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 3, 4, 0, 0, 0, 0, 0]]]],
-      bans: [["Ahri", "Kalista", "Rell", "Renekton", "Lee Sin"], ["Orianna", "K'Sante", "Viego", "Leona", "Sion"]] } },
+          ["sup", "BeryL", "조건희", [["Braum", 0, 5, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 3, 4, 0, 0, 0, 0, 0]]]] } },
   // GEN v HLE, Week 3, Sat 16 Jan, GEN 2–1 (the hub's Results). Zeus 2 5 0, Canyon 2 3 4, Ruler 3 1 4, Delight 1 2 2 (Points).
   f21: { a: "GEN", b: "HLE", time: ["08:00", "17:00"],
     games: [{ w: "GEN", len: "29:05", blue: "GEN", pog: "Chovy" }, { w: "HLE", len: "34:48", blue: "HLE", pog: "Zeus" }, { w: "GEN", len: "26:31", blue: "GEN", pog: "Canyon" }], pog: "Canyon",
@@ -105,24 +93,24 @@ const S = {
           ["jng", "Canyon", "김건부", [["Vi", 2, 2, 9, 1, 0, 0, 0, 0], ["Lee Sin", 3, 3, 3, 1, 0, 1, 0, 1], ["Xin Zhao", 4, 1, 10, 1, 0, 0, 0, 0]]],
           ["mid", "Chovy", "정지훈", [["Azir", 4, 0, 6, 1, 0, 0, 0, 0], ["Orianna", 1, 4, 3, 0, 0, 0, 0, 0], ["Sylas", 7, 1, 5, 1, 0, 0, 0, 0]]],
           ["bot", "Ruler", "박재혁", [["Kai'Sa", 6, 1, 4, 1, 0, 0, 0, 0], ["Jinx", 3, 2, 2, 0, 0, 0, 0, 0], ["Kalista", 7, 1, 5, 1, 0, 0, 0, 0]]],
-          ["sup", "Duro", "주민규", [["Rell", 1, 2, 12, 0, 0, 0, 0, 0], ["Braum", 0, 5, 5, 0, 0, 0, 0, 0], ["Rakan", 1, 2, 15, 0, 0, 0, 0, 0]]]],
-      bans: [["Ahri", "Varus", "Poppy", "Skarner", "Ziggs"], ["Corki", "Viego", "Gnar", "Ezreal", "Leona"], ["K'Sante", "Ahri", "Varus", "Viego", "Alistar"]] },
+          ["sup", "Duro", "주민규", [["Rell", 1, 2, 12, 0, 0, 0, 0, 0], ["Braum", 0, 5, 5, 0, 0, 0, 0, 0], ["Rakan", 1, 2, 15, 0, 0, 0, 0, 0]]]] },
     HLE: { name: "Hanwha Life", rec: "4–2", coach: ["Homme", "윤성영", [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0], [0, 1, 0, 0, 0]]],
       p: [["top", "Zeus", "최우제", [["Gnar", 2, 3, 2, 1, 1, 0, 0, 0], ["K'Sante", 4, 1, 6, 1, 1, 0, 0, 0], ["Renekton", 2, 4, 2, 0, 0, 0, 0, 0]]],
           ["jng", "Kanavi", "서진혁", [["Xin Zhao", 1, 4, 3, 0, 0, 0, 0, 0], ["Viego", 4, 2, 8, 1, 0, 0, 0, 0], ["Maokai", 1, 6, 3, 0, 0, 0, 0, 0]]],
           ["mid", "Zeka", "김건우", [["Taliyah", 2, 3, 2, 0, 0, 0, 0, 0], ["Ahri", 5, 1, 7, 1, 0, 0, 0, 0], ["Azir", 2, 4, 3, 0, 0, 0, 0, 0]]],
           ["bot", "Gumayusi", "이민형", [["Ezreal", 1, 3, 3, 0, 0, 0, 0, 0], ["Varus", 5, 1, 6, 1, 0, 0, 0, 0], ["Zeri", 2, 4, 2, 0, 0, 0, 0, 0]]],
-          ["sup", "Delight", "유환중", [["Nautilus", 0, 3, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 2, 14, 0, 0, 0, 0, 0], ["Leona", 0, 3, 10, 0, 0, 0, 0, 0]]]],
-      bans: [["Kalista", "Sylas", "Rakan", "Corki", "Jax"], ["Kai'Sa", "Azir", "Rell", "Sejuani", "Rumble"], ["Lee Sin", "Jinx", "Rell", "Taliyah", "Gnar"]] } },
+          ["sup", "Delight", "유환중", [["Nautilus", 0, 3, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 2, 14, 0, 0, 0, 0, 0], ["Leona", 0, 3, 10, 0, 0, 0, 0, 0]]]] } },
 };
 // Live: the same series at the Points moment (Sat 21:10 KST): T1 1–0, game 2 at 14:20. Faker G2 1, Siwoo G2 1, kkOma G2 0 (Points).
 // A live game has no gold lead (at 15:00), deathless, solo kills or steals yet: they come at final (spec/11). G2 so far: [champion, K, D, A, first blood]
 S.live = JSON.parse(JSON.stringify(S.final));
 S.live.games[1] = { live: "14:20", blue: "DK" }; S.live.pog = null;
-const G2 = { T1: [["Rumble", 1, 0, 1, 0], ["Xin Zhao", 1, 1, 2, 1], ["Sylas", 3, 0, 2, 0], ["Varus", 2, 0, 3, 0], ["Nautilus", 0, 1, 4, 0]],
-  DK: [["Gnar", 2, 1, 1, 0], ["Maokai", 0, 2, 1, 0], ["Azir", 0, 2, 1, 0], ["Zeri", 0, 1, 0, 0], ["Alistar", 0, 1, 2, 0]] };
+const G2 = { T1: [["Rumble", 1, 0, 1, 0], ["Xin Zhao", 1, 0, 2, 0], ["Sylas", 3, 0, 2, 0], ["Varus", 1, 0, 3, 0], ["Nautilus", 0, 1, 4, 0]],
+  DK: [["Gnar", 1, 0, 1, 1], ["Maokai", 0, 2, 1, 0], ["Azir", 0, 2, 1, 0], ["Zeri", 0, 1, 0, 0], ["Alistar", 0, 1, 2, 0]] };
 for (const c of ["T1", "DK"]) S.live[c].p.forEach((p, j) => { const [ch, k, d, a, fb] = G2[c][j]; p[3][1] = [ch, k, d, a, 0, 0, fb, 0, 0, true]; });
 S.live.T1.coach[2][1] = [0, 0, 0, 0, 0];
+// Records are as of the moment the page is opened: before this series while it is live.
+S.live.T1.rec = "4–1"; S.live.DK.rec = "3–2";
 const RH = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support" };
 const cap = (x) => Math.max(-3, Math.min(3, x));
 function pts(role, [, k, d, a, gold, solo, fb, multi, steal, live]) {
@@ -134,29 +122,22 @@ const sum = (xs) => xs.reduce((s, x) => s + x, 0);
 const best2 = (xs) => xs.map((x, i) => [x, i]).sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, 2).map((x) => x[1]);
 const me = (n) => (MINE.includes(n) ? '<i class="me"></i>' : "");
 const pog = (s, i, n) => (s.games[i].pog === n ? '<span class="pog">POG</span>' : "");
-const cell = (s, i, n, label, sub, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}<small>${sub}${pog(s, i, n)}</small></span><span class="p">${counted ? `<span class="box">${p}</span>` : p}</span></div></td>`;
-const L = ["Tower", "Drakes", "Baron", "Elder", "Quick"];
+const cell = (s, i, n, label, sub, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}<small>${sub}</small></span><span class="p">${pog(s, i, n)}${counted ? `<span class="box">${p}</span>` : p}</span></div></td>`;
+const L = ["1st tower", "Drakes", "Baron", "Elder", "Quick win"];
 function team(s, code) {
   const t = s[code], won = s.games.map((g) => g.w === code), n = s.games.length, over = s.games.every((g) => g.w);
   const head = `<colgroup><col style="width:88px"><col style="width:${n > 2 ? 150 : 170}px">${s.games.map(() => "<col>").join("")}<col style="width:60px"></colgroup>
-    <tr><th></th><th></th>${s.games.map((g, i) => `<th>G${i + 1} ${g.live ? `<b>● ${g.live}</b>` : `<b>${g.w === code ? "W" : "L"}</b> · ${g.len}`}</th>`).join("")}<th class="n">Series</th></tr>`;
+    <tr><th></th><th></th>${s.games.map((g, i) => `<th>G${i + 1} ${g.live ? `<b>● ${g.live}</b>` : `<b>${g.w === code ? "W" : "L"}</b> · ${g.len} · <a class="vod">VOD ›</a>`}</th>`).join("")}<th class="n">Series</th></tr>`;
   const rows = t.p.map(([rl, nm, k, gs]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps);
     return `<tr><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}</td><td class="pl"><b>${nm}</b><small>${k}</small>${me(nm)}</td>
       ${gs.map((g, i) => cell(s, i, nm, g[0], `${g[1]}/${g[2]}/${g[3]}`, ps[i], c.includes(i))).join("")}<td class="tot">${sum(c.map((i) => ps[i]))}</td></tr>`; }).join("");
   const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = !over ? 0 : won.filter(Boolean).length === 2 ? 3 : -1;
   const coach = `<tr class="co"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b><small>${ck}</small>${me(cn)}</td>
     ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? L[j] : "")).filter(Boolean).join(" · ") || "–"}</span>`, "", cp[i], c.includes(i))).join("")}
-    <td class="tot">${sum(c.map((i) => cp[i])) + sw}<small>${sw > 0 ? "+3" : sw < 0 ? "−1" : "&nbsp;"}</small></td></tr>`;
+    <td class="tot">${sum(c.map((i) => cp[i])) + sw}<small>${sw > 0 ? "W +3" : sw < 0 ? "L −1" : "&nbsp;"}</small></td></tr>`;
   return { html: `<section><h2>${t.name}</h2><table>${head}${rows}${coach}</table></section>`,
     mine: sum(t.p.filter(([, nm]) => MINE.includes(nm)).map(([rl, , , gs]) => { const ps = gs.map((g) => pts(rl, g)); return sum(best2(ps).map((i) => ps[i])); }))
       + (MINE.includes(cn) ? sum(c.map((i) => cp[i])) + sw : 0) };
-}
-function draft(s) {
-  const side = (code, i, cls) => { const t = s[code], g = s.games[i], won = g.w === code;
-    return `<div class="side ${cls}"><div class="who">${code} <span style="font-weight:400;color:var(--mid)">${g.live ? "" : won ? "W" : "L"}</span><small>${cls === "blue" ? "Blue" : "Red"}</small></div>
-      <div class="pk">${t.p.map((p) => `<span>${p[3][i][0]}</span>`).join("")}</div><div class="bn">Bans · ${t.bans[i].join(" · ")}</div></div>`; };
-  return `<section class="draft"><h2>Draft</h2>${s.games.map((g, i) => { const red = g.blue === s.a ? s.b : s.a;
-    return `<div class="dr"><div class="g">G${i + 1}${g.live ? `<small>● ${g.live}</small>` : `<small>${g.len} · <a>VOD ›</a></small>`}</div>${side(g.blue, i, "blue")}${side(red, i, "red")}</div>`; }).join("")}</section>`;
 }
 // Before it starts: Week 4's HLE v DK, Wednesday 20 Jan, opened at the hub's moment.
 const NEXT = { HLE: [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "김건우"], ["Gumayusi", "이민형"], ["Delight", "유환중"], ["Homme", "윤성영"]],
@@ -171,9 +152,8 @@ if (V === "next") {
   const s = S[V], A = team(s, s.a), B = team(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.filter((g) => g.w === s.b).length, live = s.games.some((g) => g.live);
   const rec = (c) => (s[c].name === c ? s[c].rec : `${s[c].name} · ${s[c].rec}`);
   $("bug").innerHTML = `<div class="tm ${!live && wa < wb ? "lo" : ""}"><b>${s.a}</b><small>${rec(s.a)}</small></div><div class="sc">${wa}–${wb}</div><div class="tm b ${!live && wb < wa ? "lo" : ""}"><small>${s[s.b].rec}${s[s.b].name === s.b ? "" : ` · ${s[s.b].name}`}</small><b>${s.b}</b></div>`;
-  $("meta").innerHTML = `${live ? '<span class="tag">Live</span><span class="tag nf">Not final</span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b> · ${s.time[1]} KST</span>${live ? "<a>Watch ›</a>" : ""}<span class="sp"></span>
-    ${s.pog ? `<span class="fig">Series POG <b style="font:600 14px 'IBM Plex Sans KR'">${s.pog}</b></span>` : ""}<span class="fig">Your players<b>${A.mine + B.mine}</b></span>`;
+  $("meta").innerHTML = `${live ? '<span class="tag">Live</span><span class="tag nf">Not final</span><span>Solo kills, steals at final</span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b> · ${s.time[1]} KST</span>${live ? "<a>Watch ›</a>" : ""}<span class="sp"></span>
+    ${s.pog ? `<span class="fig">Series POG <b style="font:600 14px 'IBM Plex Sans KR'">${s.pog}</b></span>` : ""}<span class="fig"><i class="me" style="margin:0 6px 2px 0"></i>Your players<b>${A.mine + B.mine}</b></span>`;
   $("two").innerHTML = A.html + B.html;
-  $("draft").innerHTML = draft(s);
 }
 </script></body></html>

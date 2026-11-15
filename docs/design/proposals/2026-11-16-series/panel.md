@@ -51,3 +51,15 @@ These are the FPL player's, the LCK fan's and UX's findings on `s-final.png` and
   - each game's side shows on the draft strip;
   - a live view drawn: T1 1–0 DK, G2 at 14:20, Live and Not final, Watch ›.
 - The live view keeps Live's numbers (Faker G1 4, G2 1; Siwoo 2, 1; kkOma 2, 0). Live's sidebar shows Siwoo's G2 as 0/1/1, which can't score 1 by spec/05; the Series page uses 2/1/1.
+
+## Round 3 (16 Nov 2026)
+
+- Craig: "i dont think we need draft info overload". The draft strip is cut, and the VOD link moved to each game's header. The side per game went with the strip.
+- A fresh panel of all four reviewers. Fixed:
+  - POG stacks above the points box, so it is no longer clipped;
+  - the coach reads "1st tower", "Quick win", and the series line reads "W +3" or "L −1";
+  - "Solo kills, steals at final" shows on the live view;
+  - ■ before Your players keys the mark;
+  - kills no longer fall from live to final: Siwoo's G2 is 1/0/1 live with first blood and 1/2/3 at final, so his total is 4 and Your players is 22;
+  - records are as of opening: T1 4–1 and DK 3–2 while live.
+- Not taken: the PM's Aiming G1 (3/3/2 scores 0, correct as drawn); UX unboxing the live game (Points boxes it).

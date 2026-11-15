@@ -2,7 +2,7 @@
 // Week 3 deadline, as Week 4's prices. Prices and owned agree with the Stats picture where it lists
 // the player (STATS_PLAYERS); a dot marks the players in Baron Steal FC's squad (PICK_TEAM_SQUAD).
 
-import { PICK_TEAM_SQUAD, type TeamCode } from "../../fixtures/week3";
+import { MY_PLAYERS, playerId, WEEK3_DEADLINE, type TeamCode } from "../../fixtures/week3";
 import type { PersonRole } from "../../rift";
 
 /** One player's or coach's price move, in 억. */
@@ -27,23 +27,21 @@ export interface PriceWeek {
   falls: PriceMove[];
 }
 
-const MY_SQUAD = new Set(PICK_TEAM_SQUAD.map((pick) => pick.name));
-
 const move = (name: string, team: TeamCode, role: PriceMove["role"], wasEok: number, nowEok: number, ownedPct: number): PriceMove => ({
-  id: name.toLowerCase(),
+  id: playerId(name),
   name,
   team,
   role,
   wasEok,
   nowEok,
   ownedPct,
-  mine: MY_SQUAD.has(name),
+  mine: MY_PLAYERS.has(name),
 });
 
 /** Week 4's prices, set at the Week 3 deadline (patch.html). */
 export const WEEK4_PRICES: PriceWeek = {
   week: 4,
-  set: { local: "Wed 13 Jan 07:45", kst: "16:45" },
+  set: { local: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.date} ${WEEK3_DEADLINE.time}`, kst: WEEK3_DEADLINE.kst },
   rises: [
     move("Faker", "T1", "mid", 18.0, 18.5, 46),
     move("Chovy", "GEN", "mid", 17.0, 17.5, 41),

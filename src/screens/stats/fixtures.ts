@@ -4,7 +4,7 @@
 // filters have something to work on; so is each week's share of the season, for Span.
 
 import { fromSide, seriesOf } from "../../fixtures/series";
-import { PICK_TEAM_SQUAD, STATS_PLAYERS, WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
+import { MY_PLAYERS, playerId, STATS_PLAYERS, WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
 import type { RoleKey } from "../../rift";
 import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
 
@@ -110,13 +110,9 @@ const ACADEMY: [RoleKey, string, TeamCode, number][] = [
   ["jng", "Sylvie", "HLE", 4.0],
 ];
 
-/** Baron Steal FC's squad, as on Pick Team: their rows carry the dot. */
-const MINE = new Set(PICK_TEAM_SQUAD.map((p) => p.name));
-
 const byKeys = (keys: readonly { key: string }[], counts: readonly number[]) =>
   Object.fromEntries(keys.map((l, i) => [l.key, counts[i] ?? 0]));
 
-const idOf = (name: string) => name.toLowerCase();
 
 /** Form, the last 4 weeks' average, is points ÷ 3 until Week 4 is final. */
 const formOf = (points: number) => Math.round((points / 3) * 10) / 10;
@@ -131,7 +127,7 @@ function row(
   points: number,
 ): StatsRow {
   return {
-    id: idOf(name),
+    id: playerId(name),
     name,
     team,
     role,
@@ -141,7 +137,7 @@ function row(
     ownedPct,
     points,
     games: GAMES[team],
-    mine: MINE.has(name),
+    mine: MY_PLAYERS.has(name),
     lines: {},
   };
 }

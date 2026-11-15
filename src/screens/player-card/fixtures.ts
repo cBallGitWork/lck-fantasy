@@ -4,6 +4,8 @@
 // - from Points: Week 3, Saturday, T1 v DK game 2 live (This week).
 
 import {
+  BEST_OF,
+  CARRY_MULTIPLIER,
   PICK_TEAM_SQUAD,
   POINTS_SQUAD,
   STATS_PLAYERS,
@@ -16,7 +18,6 @@ import type { CardGame, CardWeek, FixtureRow, NextSeries, PlayerCardData, WeekSe
 
 const NAME = "Faker";
 const TEAM: TeamCode = "T1";
-const BEST_OF = 3;
 
 const find = <T extends { name: string }>(list: readonly T[]): T => {
   const found = list.find((p) => p.name === NAME);
@@ -77,7 +78,7 @@ const WEEK3_AT_POINTS: CardWeek = {
       games: games.map((points, i) => ({ ...gameAtPoints(id, i), points })),
     };
   }),
-  carry: 1.5,
+  carry: CARRY_MULTIPLIER,
   total: 25,
 };
 

@@ -3,7 +3,7 @@
 // placeholder; the academy and its prices are made up. Headlines are made up and link to Sheep
 // Esports' front page until #116 brings its LCK tag page.
 
-import { COMPETITION, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
+import { BEST_OF, COMPETITION, playerId, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
 import { eokToWon } from "../../parts";
 import type { PersonRole } from "../../rift";
 import type { LckHubData, Roster, RosterMember, StandingsRow, TeamRosters } from "./types";
@@ -25,7 +25,7 @@ const roster = (name: string, league: string, people: [string, string][], prices
   league,
   members: people.map(([game, hangul], i): RosterMember => {
     const eok = pricesEok?.[i];
-    return { id: game.toLowerCase(), name: game, hangul, role: ROLE_ORDER[i] ?? "coach", ...(eok === undefined ? {} : { priceWon: eokToWon(eok) }) };
+    return { id: playerId(game), name: game, hangul, role: ROLE_ORDER[i] ?? "coach", ...(eok === undefined ? {} : { priceWon: eokToWon(eok) }) };
   }),
 });
 
@@ -44,7 +44,7 @@ const SHEEP = "https://www.sheepesports.com/";
 export const LCK_HUB: LckHubData = {
   title: `${COMPETITION} 2027`,
   hangul: "LCK 컵",
-  bestOf: 3,
+  bestOf: BEST_OF,
   deadline: WEEK4_DEADLINE,
   stages: [
     {

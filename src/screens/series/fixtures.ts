@@ -2,7 +2,7 @@
 // shared LCK Cup Week 3. Points, best 2 and coach lines are the picture's figures as drawn, not
 // worked out here: the backend scores them (#30, #34).
 
-import { COMPETITION, POINTS_SQUAD, TEAMS, WEEK3_SERIES_FINAL, WEEK4_SERIES, type Series, type TeamCode } from "../../fixtures/week3";
+import { COMPETITION, MY_PLAYERS, playerId, TEAMS, WEEK3_SERIES_FINAL, WEEK4_SERIES, type Series, type TeamCode } from "../../fixtures/week3";
 import type { RoleKey } from "../../rift";
 import type { CoachCell, GameCell, NextSeries, PlayedSeries, PlayerLine, Roster, SeriesView, SeriesWhen } from "./types";
 
@@ -10,9 +10,8 @@ const FORMAT = "Bo3";
 /** Where VOD links go until #36 fetches each game's own (spec/12). */
 const VOD = "https://lolesports.com/vods";
 
-const MINE = new Set(POINTS_SQUAD.map((p) => p.name));
 
-const person = (name: string, hangul: string) => ({ id: name.toLowerCase(), name, hangul, mine: MINE.has(name) || undefined });
+const person = (name: string, hangul: string) => ({ id: playerId(name), name, hangul, mine: MY_PLAYERS.has(name) || undefined });
 
 const side = (code: TeamCode, record: string) => ({ code, name: TEAMS[code], record });
 

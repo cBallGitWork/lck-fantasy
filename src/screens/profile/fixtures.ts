@@ -3,7 +3,7 @@
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
 import { seriesById } from "../../fixtures/series";
-import { WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
+import { playerId, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
 import { score } from "../../parts";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
@@ -52,7 +52,7 @@ export interface PointsWeek {
   highest?: number;
   final: boolean;
   /** The buff played that week. */
-  buff?: string;
+  buff?: BuffName;
   /** Her team that week; absent until the backend feeds it. */
   team?: ProfilePick[];
   trucks: Truck[];
@@ -71,7 +71,7 @@ export interface HistoryRow {
   hits?: number;
   bankEok: number;
   valueEok: number;
-  buff?: string;
+  buff?: BuffName;
 }
 
 export interface Transfer {
@@ -109,12 +109,12 @@ export interface ProfileData {
   currentWeek: number;
   weeks: PointsWeek[];
   history: HistoryRow[];
-  buffsLeft: string[];
+  buffsLeft: BuffName[];
   transfers: TransferWeek[];
   leagues: LeagueRow[];
 }
 
-const player = (name: string, team: TeamCode): ProfilePlayer => ({ id: name.toLowerCase(), name, team });
+const player = (name: string, team: TeamCode): ProfilePlayer => ({ id: playerId(name), name, team });
 
 /** A series as a player's line shows it: `GEN 2–0 KT · Wed`. */
 function seriesLine(id: string): string {

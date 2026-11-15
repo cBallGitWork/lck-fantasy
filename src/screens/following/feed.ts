@@ -1,6 +1,6 @@
 // What the Following page shows, as plain data and plain functions, so each control is tested
 // without a browser. The backend feeds `FollowingData` later (#89, #90); the page takes it as props.
-import type { TeamCode } from "../../fixtures/week3";
+import type { BuffName, TeamCode } from "../../fixtures/week3";
 import { MINUS, type Score } from "../../parts";
 
 export interface Manager {
@@ -51,7 +51,7 @@ export interface DeadlineItem {
   kind: "deadline";
   id: string;
   manager: Manager;
-  buff?: string;
+  buff?: BuffName;
   transfers: number;
   /** Points taken for extra transfers (6 shows as −6). */
   hit?: number;

@@ -2,6 +2,7 @@
 // built on the shared Week 3 (src/fixtures/week3.ts). Every name and number is an example.
 
 import {
+  BEST_OF,
   COMPETITION,
   MANAGER,
   PICK_TEAM_SQUAD,
@@ -46,7 +47,7 @@ export const HOME_LIVE: HomeLiveData = {
   ...SHARED,
   state: "live",
   countdown: { days: 3, hours: 20, minutes: 15 },
-  series: { home: live.home, away: live.away, score: live.score, game: live.liveGame, bestOf: 3, label: `${COMPETITION} Week 3` },
+  series: { home: live.home, away: live.away, score: live.score, game: live.liveGame, bestOf: BEST_OF, label: `${COMPETITION} Week 3` },
   streams: [
     { id: "lck-en-twitch", name: "LCK · English", platform: "Twitch", live: true },
     { id: "lck-en-youtube", name: "LCK · English", platform: "YouTube", live: true },

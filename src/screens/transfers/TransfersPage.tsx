@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { BuffName } from "../../fixtures/week3";
 import { Deadline, formatEok, MainAction, Menu, OutlinedKey, PageFrame, PageHead, ViewToggle } from "../../parts";
 import { BENCH_SLOTS, BenchBar, BenchTile, Lineup, RIFT_SLOTS, Rift, Tile, type RiftPoint, type RoleKey, type SlotKey, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
@@ -46,7 +47,7 @@ export interface TransfersPageProps {
   /** The teams the Team filter offers. */
   teams: string[];
   /** The transfer buffs the manager can still play. */
-  buffs: string[];
+  buffs: BuffName[];
   initialPlan?: Plan;
   /** The manager's last choice; Rift view on his first visit (spec/12). */
   view?: View;
@@ -55,7 +56,7 @@ export interface TransfersPageProps {
   reviewing?: boolean;
   onConfirm?: (transfers: { slot: SquadSlot; out: string; in: string }[]) => void;
   onUndo?: (confirmId: string) => void;
-  onBuff?: (buff: string) => void;
+  onBuff?: (buff: BuffName) => void;
 }
 
 const VIEWS: readonly View[] = ["Rift view", "Card view"];

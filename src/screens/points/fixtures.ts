@@ -4,7 +4,7 @@
 // winner are made up, to fit the week's scores.
 
 import { fromSide, seriesById } from "../../fixtures/series";
-import { COMPETITION, MANAGER, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, COMPETITION, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
 import { PATHS } from "../../paths";
 import type { SlotKey } from "../../rift";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter } from "./types";
@@ -71,16 +71,13 @@ function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champi
   };
 }
 
-/** The id a player's or coach's card is reached by. */
-const cardId = (name: string) => name.toLowerCase();
-
 function playerOf(pick: PointsPick): PointsPlayer {
   const series = pick.series.map((played, i) => seriesOf(pick, played, CHAMPIONS[pick.name]?.[i]));
   return {
     name: pick.name,
     team: pick.team,
     role: pick.role,
-    cardId: cardId(pick.name),
+    cardId: playerId(pick.name),
     mark: pick.mark,
     birthday: pick.birthday,
     subbedInFor: pick.subbedInFor,
@@ -90,7 +87,7 @@ function playerOf(pick: PointsPick): PointsPlayer {
 }
 
 /** The Carry's week as the picture shows it: 17 before ×1.5, 25 after, the average Carry 19. */
-const CARRY = { multiplier: 1.5, points: 25, average: 19 } as const;
+const CARRY = { multiplier: CARRY_MULTIPLIER, points: 25, average: 19 } as const;
 
 function starterOf(pick: PointsPick, slot: SlotKey): PointsStarter {
   const player = playerOf(pick);

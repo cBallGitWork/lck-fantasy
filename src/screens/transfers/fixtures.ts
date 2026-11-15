@@ -3,12 +3,11 @@
 // (src/fixtures/week3.ts); the list's players and the week's confirms are the picture's own.
 
 import { opponent, seriesOf } from "../../fixtures/series";
-import { COMPETITION, MANAGER, PICK_TEAM_SQUAD, STATS_PLAYERS, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
+import { COMPETITION, MANAGER, PICK_TEAM_SQUAD, playerId, STATS_PLAYERS, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
 import { eokToWon } from "../../parts";
 import type { Confirm, Fixture, ListPlayer, Plan, SquadPlayer, TransferRules } from "./plan";
 import type { TransfersPageProps } from "./TransfersPage";
 
-const idOf = (name: string) => name.toLowerCase();
 
 const TEAMS_PLAYING = [...new Set(WEEK4_SERIES.flatMap((s) => [s.home, s.away]))];
 
@@ -27,7 +26,7 @@ const ownedOf = (name: string) => STATS_PLAYERS.find((p) => p.name === name)?.ow
 /** Baron Steal FC before this week's unconfirmed changes (pick.html's squad and prices). */
 export const SQUAD: SquadPlayer[] = PICK_TEAM_SQUAD.map((p) => ({
   slot: p.slot,
-  id: idOf(p.name),
+  id: playerId(p.name),
   name: p.name,
   team: p.team,
   role: p.role,
@@ -37,7 +36,7 @@ export const SQUAD: SquadPlayer[] = PICK_TEAM_SQUAD.map((p) => ({
 }));
 
 const player = (role: ListPlayer["role"], name: string, team: TeamCode, priceEok: number, points: number, ownedPct: number, move: ListPlayer["move"] = 0): ListPlayer => ({
-  id: idOf(name),
+  id: playerId(name),
   name,
   team,
   role,

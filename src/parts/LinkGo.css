@@ -1,0 +1,13 @@
+.link-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0 var(--s-1);
+  min-height: var(--m-target);
+  color: var(--text);
+  white-space: pre;
+}
+.link-go:hover {
+  text-decoration: underline;
+  text-decoration-thickness: var(--m-rule);
+  text-underline-offset: var(--s-1);
+}

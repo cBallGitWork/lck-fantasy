@@ -1,0 +1,32 @@
+.state-loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.state-loading__bar {
+  display: block;
+  height: var(--m-target);
+  background: var(--fill);
+}
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-1);
+  padding: var(--s-5) 0;
+}
+.state__title {
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+}
+.state__line {
+  color: var(--mid);
+}
+.state__retry {
+  font: inherit;
+  color: var(--ink);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}

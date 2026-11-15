@@ -1,0 +1,252 @@
+/* Transfers (docs/design/approved/transfers/). Every value is a token. */
+
+/* The top strip: free transfers, the pending hit, the bank, then the transfer buffs. */
+.transfers__strip {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  margin-bottom: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  font-size: var(--size-lead);
+  color: var(--mid);
+}
+.transfers__figure b {
+  margin-left: var(--s-2);
+  color: var(--text);
+  white-space: nowrap;
+}
+.transfers__buffs {
+  display: flex;
+  gap: var(--s-2);
+  margin-left: auto;
+  font-size: var(--size-body);
+}
+
+.transfers__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-3);
+}
+.transfers__show {
+  padding: var(--s-1) var(--s-3);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+}
+
+/* The changes so far, Reset, and Review and confirm. */
+.transfers__changes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+}
+.transfers__out {
+  color: var(--mid);
+}
+.transfers__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  white-space: nowrap;
+}
+.transfers__reset,
+.transfers__back,
+.transfers__undo,
+.transfers__chip,
+.transfers__add {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.transfers__reset,
+.transfers__back {
+  min-height: var(--m-target);
+}
+
+/* The list's filters: role chips, then search, sort and team. */
+.transfers__roles,
+.transfers__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  margin-bottom: var(--s-2);
+  font-size: var(--size-small);
+}
+.transfers__chip,
+.transfers__search,
+.transfers__tool {
+  padding: var(--s-1) var(--s-2);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  font-size: var(--size-small);
+}
+.transfers__chip--on {
+  background: var(--ink);
+  color: var(--on-ink);
+  border-color: var(--ink);
+}
+.transfers__search {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+}
+.transfers__search::placeholder,
+.transfers__tool {
+  color: var(--mid);
+  white-space: nowrap;
+}
+
+/* The player list. */
+.transfers__list {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--paper);
+}
+.transfers__list th {
+  padding: var(--s-1);
+  text-align: left;
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.transfers__list td {
+  height: var(--m-row);
+  padding: var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.transfers__list .transfers__num {
+  text-align: right;
+  white-space: nowrap;
+}
+.transfers__list svg {
+  width: var(--size-small);
+  height: var(--size-small);
+}
+.transfers__name {
+  max-width: calc(var(--s-7) * 2 + var(--s-4));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.transfers__name b {
+  font-weight: var(--w-bold);
+}
+.transfers__why {
+  display: block;
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.transfers__move {
+  font-size: var(--size-small);
+}
+.transfers__next {
+  font-size: var(--size-small);
+  line-height: var(--lh-mid);
+  white-space: nowrap;
+}
+.transfers__add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-target);
+  height: var(--m-target);
+  border: var(--m-rule) solid var(--ink);
+  font-weight: var(--w-bold);
+}
+.transfers__add:disabled {
+  background: var(--fill);
+  border-color: var(--fill);
+  color: var(--mid);
+  cursor: default;
+}
+.transfers__row--off td,
+.transfers__row--off a {
+  color: var(--mid);
+}
+.transfers__row--off b {
+  font-weight: var(--w-regular);
+}
+.transfers__row--picked td {
+  background: var(--fill);
+}
+.transfers__row--picked .transfers__add {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+/* This week's confirms. */
+.transfers__confirm {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-5)) 1fr var(--s-7) calc(var(--s-7) + var(--s-2));
+  gap: var(--s-2);
+  align-items: center;
+  padding: var(--s-2) 0;
+  border-top: var(--m-rule) solid var(--fill);
+}
+.transfers__when {
+  font-size: var(--size-small);
+}
+.transfers__when small {
+  display: block;
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.transfers__cost {
+  text-align: right;
+}
+.transfers__confirm > :last-child {
+  justify-self: end;
+}
+.transfers__undo {
+  padding: 0 var(--s-2);
+  border: var(--m-rule) solid var(--ink);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}
+.transfers__confirm--old {
+  color: var(--mid);
+}
+.transfers__confirm--old b {
+  font-weight: var(--w-regular);
+}
+
+/* The confirm sheet. */
+.transfers__sheet {
+  width: 100%;
+  border-collapse: collapse;
+}
+.transfers__sheet th,
+.transfers__sheet td {
+  height: var(--m-row);
+  border-bottom: var(--m-rule) solid var(--fill);
+  text-align: left;
+}
+.transfers__sheet th {
+  width: calc(var(--s-7) + var(--s-6));
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.transfers__sheet-keys {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.transfers__sheet-deadline {
+  margin-top: var(--s-2);
+  text-align: right;
+  font-size: var(--size-small);
+  color: var(--mid);
+}

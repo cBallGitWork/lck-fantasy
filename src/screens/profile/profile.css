@@ -1,0 +1,217 @@
+/* A manager's profile (docs/design/approved/profile/). Every value is a token. */
+
+/* The hangul banner: the team in hangul and English, the manager, the follow key. */
+.profile__banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-4) var(--s-5);
+  background: var(--stage);
+  border-bottom: var(--s-1) solid var(--gold-rule);
+}
+.profile__hangul {
+  color: var(--gold);
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.profile__team {
+  color: var(--stage-text);
+  font-size: var(--size-small);
+}
+.profile__team b {
+  display: block;
+  color: var(--text);
+  font-size: var(--size-lead);
+}
+.profile__follow {
+  margin-left: auto;
+}
+
+.profile__grid {
+  margin: var(--s-5) 0 var(--s-7);
+}
+
+/* Points' head: ‹ Week 3 ›, the points, Average and Highest, the tags. */
+.profile__week {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+.profile__week-name {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.profile__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-target);
+  height: var(--m-target);
+  font: inherit;
+  font-size: var(--size-lead);
+  color: var(--ink);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.profile__arrow--off {
+  color: var(--line);
+  cursor: default;
+}
+.profile__week-points {
+  margin-left: var(--s-2);
+  font-size: var(--size-title);
+  font-weight: var(--w-semi);
+}
+.profile__week-fig {
+  color: var(--mid);
+}
+.profile__week-fig b {
+  color: var(--text);
+}
+
+/* Points' and Transfers' tables: the Table part's look, with a sub-row for the bench or a week. */
+.profile__table td small {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.profile__table .profile__figure {
+  text-align: right;
+}
+.profile__table .profile__sub td {
+  height: auto;
+  padding: var(--s-2) var(--s-3);
+  background: var(--bg);
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.profile__table .profile__sub td b {
+  color: var(--text);
+}
+.profile__series + .profile__series {
+  margin-left: var(--s-4);
+}
+.profile__name {
+  font-weight: var(--w-bold);
+}
+/* The picture's columns, as shares of the 984 main column. */
+.profile__col-slot {
+  width: 15.25%;
+}
+.profile__col-player {
+  width: 23.4%;
+}
+.profile__col-pts {
+  width: 6.1%;
+}
+.profile__col-swap-slot,
+.profile__col-gained {
+  width: 9.15%;
+}
+.profile__col-out {
+  width: 24.4%;
+}
+.profile__col-arrow {
+  width: 3.05%;
+}
+.profile__col-in {
+  width: 26.4%;
+}
+
+/* C and V: round, C filled, V outlined. */
+.profile__mark {
+  display: inline-block;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  margin-left: var(--s-2);
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  line-height: var(--m-mark);
+  text-align: center;
+}
+.profile__mark--v {
+  background: var(--paper);
+  color: var(--text);
+  border: var(--m-rule) solid var(--ink);
+  line-height: calc(var(--m-mark) - var(--m-rule-heavy));
+}
+
+.profile__left {
+  margin-top: var(--s-4);
+  color: var(--mid);
+}
+.profile__left b {
+  color: var(--text);
+  font-weight: var(--w-semi);
+}
+
+/* The side column: leagues, then trucks. */
+.profile__leagues {
+  list-style: none;
+  background: var(--paper);
+}
+.profile__league {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-2) var(--s-3);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.profile__league:hover {
+  background: var(--fill);
+}
+.profile__league-name {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.profile__league-name b {
+  font-weight: var(--w-semi);
+}
+.profile__tier {
+  display: block;
+  width: var(--m-mark);
+}
+.profile__tier-body {
+  fill: var(--ink);
+}
+.profile__tier-band {
+  stroke: var(--on-ink);
+  opacity: 0.45;
+}
+.profile__tier-division {
+  fill: var(--on-ink);
+  font-family: var(--font-mono);
+  font-weight: var(--w-semi);
+  font-size: var(--size-body);
+}
+.profile__truck {
+  margin-bottom: var(--s-2);
+  background: var(--paper);
+}
+/* A truck's LED panel: dotted, in capitals, the same on every screen (plate.md, Never). */
+.profile__led {
+  display: flex;
+  align-items: center;
+  min-height: calc(var(--s-6) + var(--s-3));
+  padding: var(--s-3);
+  background-color: var(--stage);
+  background-image: radial-gradient(circle, var(--soft) var(--m-rule), transparent var(--m-rule-heavy));
+  background-size: var(--s-1) var(--s-1);
+  color: var(--text);
+  font: var(--w-semi) var(--size-small) / var(--lh-mid) var(--font-mono);
+  text-transform: uppercase;
+}
+.profile__truck-by {
+  padding: var(--s-1) var(--s-3);
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.profile__truck-by b {
+  color: var(--text);
+}

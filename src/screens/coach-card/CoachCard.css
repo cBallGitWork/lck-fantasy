@@ -1,0 +1,159 @@
+/* The coach card (docs/design/approved/coach-card/): a lower third, the meta line, then the body. */
+.coach-card__news {
+  background: var(--ink);
+  color: var(--on-ink);
+  padding: var(--s-2) var(--s-5);
+  font-weight: var(--w-semi);
+}
+
+/* The lower third: crest, who, and on the right the season's points over the actions. */
+.coach-card__head {
+  display: grid;
+  grid-template-columns: var(--m-crest) minmax(0, 1fr) auto;
+  gap: var(--s-5);
+  align-items: end;
+  padding: var(--s-6) var(--s-5) var(--s-4);
+}
+.coach-card__name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  font-size: var(--size-card);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.coach-card__hangul {
+  font-size: var(--size-head);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.coach-card__legal {
+  margin-top: var(--s-1);
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.coach-card__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-4);
+  align-self: stretch;
+}
+.coach-card__hero {
+  text-align: right;
+  padding-right: var(--s-6);
+}
+.coach-card__hero-figure {
+  display: block;
+  font-size: var(--size-key);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-tight);
+}
+.coach-card__hero-label {
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.coach-card__acts {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  white-space: nowrap;
+}
+
+/* The meta line: price and move, form, owned, the week's transfers. */
+.coach-card__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+  padding: 0 var(--s-5) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.coach-card__kv {
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.coach-card__kv-figure {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  color: var(--text);
+  margin-right: var(--s-2);
+}
+
+/* The body: the strip, tabs and tab on the left, the Season panel in the 360 rail. */
+.coach-card__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-side);
+}
+.coach-card__left {
+  padding: 0 var(--s-5) var(--s-5);
+}
+.coach-card__main {
+  padding-top: var(--s-4);
+}
+.coach-card__rail {
+  border-left: var(--m-rule) solid var(--line);
+  padding: var(--s-4) var(--s-5) var(--s-5);
+}
+
+/* A block's head: a series in This week, a table's title in History. */
+.coach-card__block {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: var(--s-5) 0 var(--s-2);
+  padding-top: var(--s-2);
+  border-top: var(--m-rule-heavy) solid var(--ink);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+}
+.coach-card__block:first-child,
+.coach-card__block--first {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.coach-card__soft {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}
+
+/* This week's games: G, result, lines, points; a game that doesn't count struck through. */
+.coach-card__games {
+  width: 100%;
+  border-collapse: collapse;
+}
+.coach-card__games td {
+  height: var(--m-row);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--fill);
+}
+.coach-card__games .coach-card__g {
+  width: var(--m-go-col);
+}
+.coach-card__pts {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.coach-card__drop .coach-card__pts {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+  text-decoration: line-through;
+}
+.coach-card__total td {
+  height: var(--m-card-head);
+  border-top: var(--m-rule-heavy) solid var(--ink);
+  font-weight: var(--w-semi);
+}
+.coach-card__total .coach-card__pts {
+  font-size: var(--size-head);
+}
+
+/* History's Series column takes the room; Roster stays narrower, as drawn. */
+.coach-card__history col:nth-child(2) {
+  width: 40%;
+}
+.coach-card__roster {
+  max-width: var(--m-modal-sheet);
+}

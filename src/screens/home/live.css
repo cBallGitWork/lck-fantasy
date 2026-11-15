@@ -1,0 +1,84 @@
+/* Home while a series is live (live.html). Every value is a token. */
+
+/* Live: the stream at 16:9, 704 of the main column's 984; its picker beside it. */
+.home__tv {
+  display: grid;
+  grid-template-columns: 11fr 4fr;
+  gap: var(--s-5);
+  align-items: start;
+}
+.home__screen {
+  position: relative;
+  aspect-ratio: var(--ratio-stream);
+  overflow: hidden;
+  background: var(--stage);
+  color: var(--text);
+}
+.home__screen-bar {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  font-size: var(--size-lead);
+}
+.home__screen-small {
+  font-size: var(--size-small);
+  color: var(--stage-text);
+}
+.home__screen-space {
+  flex: 1;
+}
+.home__screen-video {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--stage-text);
+}
+.home__picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.home__picker > span {
+  display: block;
+}
+.home__stream {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--s-6);
+  padding: 0 var(--s-3);
+  font: inherit;
+  text-align: left;
+  color: var(--mid);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  cursor: pointer;
+}
+.home__stream--on {
+  color: var(--text);
+  font-weight: var(--w-semi);
+  border-color: var(--ink);
+}
+.home__stream--off {
+  border-style: dashed;
+  cursor: default;
+}
+.home__stream--more {
+  justify-content: flex-start;
+}
+.home__stream-platform {
+  margin-left: var(--s-1);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}

@@ -1,0 +1,157 @@
+// @vitest-environment node
+import { describe, expect, test } from "vitest";
+import { MANAGER } from "../../fixtures/week3";
+import { html, text } from "../../testing/render";
+import { SERIES_BY_ID, SERIES_VIEWS } from "./fixtures";
+import { SeriesFinal, SeriesLive, SeriesNext } from "./SeriesPage";
+
+const account = MANAGER.team;
+
+/** Each of `parts` appears in `out`, in this order. */
+function expectInOrder(out: string, parts: string[]) {
+  let from = 0;
+  for (const part of parts) {
+    const at = out.indexOf(part, from);
+    expect(at, `"${part}" after position ${from}`).toBeGreaterThanOrEqual(0);
+    from = at + part.length;
+  }
+}
+
+/** The rows of the n-th table, as text. */
+const rows = (out: string, n: number) =>
+  (out.split("<table")[n + 1] ?? "")
+    .split("</table>")[0]!
+    .split("<tr")
+    .slice(1)
+    .map((row) => `<tr${row}`.replace(/<[^>]+>/g, "").replace(/&#x27;/g, "'"));
+
+/** Whether the name's row carries your-player dot. */
+const dotted = (out: string, name: string) => ((out.split(`>${name}</b>`)[1] ?? "").split("</tr>")[0] ?? "").includes("me-dot");
+
+describe("final, 2–0 (1440.png)", () => {
+  const view = <SeriesFinal series={SERIES_VIEWS.final.series} account={account} />;
+  const out = html(view);
+  const words = text(view);
+
+  test("is the series screen, under LCK", () => {
+    expect(out).toContain('data-screen="series"');
+    expect(out).toMatch(/aria-current="page"[^>]*>LCK/);
+    expect(out).toContain('href="/lck"');
+  });
+
+  test("shows the back link, scorebug, the final line, then both grids, in order", () => {
+    expectInOrder(words, [
+      "‹ LCK",
+      "T1",
+      "5–1",
+      "2–0",
+      "3–3 · Dplus KIA",
+      "DK",
+      "Final",
+      "Bo3 · LCK Cup · Week 3 · Sat 16 Jan",
+      "10:30",
+      "19:30 KST",
+      "T1",
+      "G1 W · 31:42 · VOD ↗",
+      "G2 W · 27:10 · VOD ↗",
+      "Series",
+      "Dplus KIA",
+      "G1 L · 31:42 · VOD ↗",
+    ]);
+    expect(words).not.toContain("Watch");
+  });
+
+  test("drops the loser's code to plain weight", () => {
+    expect(out).toMatch(/series__bug-team series__bug-team--away series__bug-team--lost/);
+  });
+
+  test("each player in role order with his games, POG and best-2 total, then the coach", () => {
+    expect(rows(out, 0).slice(1)).toEqual([
+      "TopDoran최현준K'Sante2/1/73Rumble3/0/647",
+      "JungleOner문현준Viego3/2/93Xin Zhao2/2/836",
+      "MidFaker이상혁Orianna5/1/9POG4Sylas7/0/6POG610",
+      "BotPeyz김수환Kalista6/1/54Varus5/0/748",
+      "SupportKeria류민석Rell0/3/122Nautilus1/2/1335",
+      "CoachkkOma김정균1st tower · Drakes21st tower · Drakes · Baron38W +3",
+    ]);
+    expect(rows(out, 1).at(-1)).toBe("CoachcvMax김대호—0—0-1L −1");
+  });
+
+  test("dots your players and links each to his card", () => {
+    expect(dotted(out, "Faker")).toBe(true);
+    expect(dotted(out, "kkOma")).toBe(true);
+    expect(dotted(out, "Doran")).toBe(false);
+    expect(out).toContain('href="/player/faker"');
+    expect(out).toContain('href="/coach/kkoma"');
+  });
+
+  test("boxes every game of a two-game series", () => {
+    expect(out).not.toContain("series__dropped");
+  });
+});
+
+describe("final, 2–1 (1440-21.png)", () => {
+  const view = <SeriesFinal series={SERIES_VIEWS.final21.series} account={account} />;
+  const out = html(view);
+
+  test("names the teams in the scorebug and the three games", () => {
+    expectInOrder(text(view), ["GEN", "Gen.G · 5–1", "2–1", "4–2 · Hanwha Life", "HLE", "Final", "08:00", "17:00 KST", "Gen.G", "G1 W · 29:05", "G2 L · 34:48", "G3 W · 26:31", "Hanwha Life", "G1 L", "G2 W", "G3 L"]);
+  });
+
+  test("greys and unboxes a dropped game", () => {
+    const kiin = (out.split("Kiin")[1] ?? "").split("</tr>")[0]!;
+    expect(kiin).toMatch(/<td class="series__dropped">.*Jax.*>-1<\/span>/);
+    expect(kiin).toContain('class="series__box">3<');
+  });
+
+  test("shows a dash where a player sat out, and the sub on his own row", () => {
+    expect(rows(out, 1).slice(1)).toEqual([
+      "TopZeus최우제Gnar2/3/22K'Sante4/1/6POG5Renekton2/4/207",
+      "JungleKanavi서진혁Xin Zhao1/4/3-1Viego4/2/83Maokai1/6/3-22",
+      "MidZeka김건우Taliyah2/3/2-1Ahri5/1/73—2",
+      "Mid · subKael김태율——Azir2/4/3-1-1",
+      "BotGumayusi이민형Ezreal1/3/3-1Varus5/1/63Zeri2/4/2-12",
+      "SupportDelight유환중Nautilus0/3/51Alistar0/2/142Leona0/3/1024",
+      "CoachHomme윤성영—01st tower · Drakes · Baron3Drakes13L −1",
+    ]);
+  });
+});
+
+describe("live (1440-live.png)", () => {
+  const view = <SeriesLive series={SERIES_VIEWS.live.series} account={account} />;
+  const out = html(view);
+
+  test("shows the score so far, Live and Not final, and Watch ›", () => {
+    expectInOrder(text(view), ["T1", "4–1", "1–0", "3–2 · Dplus KIA", "DK", "Live", "Not final", "Solo kills, steals at final", "Bo3 · LCK Cup · Week 3 · Sat 16 Jan", "10:30", "19:30 KST", "Watch ›", "G1 W · 31:42 · VOD ↗", "G2 Live 14:20", "Series"]);
+    expect(out).toContain('href="/live"');
+  });
+
+  test("drops neither team's code while live, and adds no series result", () => {
+    expect(out).not.toContain("series__bug-team--lost");
+    expect(text(view)).not.toMatch(/W \+3|L −1/);
+  });
+
+  test("shows the live game's lines", () => {
+    expect(rows(out, 1)[1]).toBe("TopSiwoo전시우Jax2/3/22Gnar1/0/113");
+  });
+});
+
+describe("before it starts (1440-next.png)", () => {
+  const view = <SeriesNext series={SERIES_VIEWS.next.series} account={account} />;
+  const out = html(view);
+
+  test("shows v, the format tag, the day and time, Watch ›, then both rosters", () => {
+    expectInOrder(text(view), ["HLE", "Hanwha Life · 4–2", "v", "3–3 · Dplus KIA", "DK", "Bo3", "LCK Cup · Week 4 · Wed 20 Jan", "08:00", "17:00 KST", "Watch ›", "HLEHanwha Life", "DKDplus KIA"]);
+  });
+
+  test("lists each roster in role order, coach last", () => {
+    expect(rows(out, 0)).toEqual(["TopZeus최우제", "JungleKanavi서진혁", "MidZeka김건우", "BotGumayusi이민형", "SupportDelight유환중", "CoachHomme윤성영"]);
+    expect(rows(out, 1).at(-1)).toBe("CoachcvMax김대호");
+    expect(dotted(out, "Delight")).toBe(true);
+  });
+});
+
+test("each series a link opens is in the fixture, at the hub's moment", () => {
+  expect(Object.keys(SERIES_BY_ID).sort()).toEqual(["w3-sat-1", "w3-sat-2", "w4-wed-1"]);
+  expect(SERIES_BY_ID["w3-sat-2"]?.state).toBe("final");
+});

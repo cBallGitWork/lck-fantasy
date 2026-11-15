@@ -17,3 +17,5 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   ([spec/05](05-scoring.md)) and is data, never code.
 - If the Carry plays no game in the gameweek, the Vice-carry takes the multiplier. If neither
   plays, nobody does.
+- Benching the Carry or the Vice-carry passes the mark to the player who comes on: Faker (Carry)
+  goes off for Bdd, so Bdd is the Carry (Craig, 15 Nov 2026).

@@ -1,0 +1,35 @@
+.shirt {
+  position: relative;
+  display: block;
+  width: var(--m-shirt-w);
+  height: var(--m-shirt-h);
+  flex: none;
+}
+.shirt--small {
+  width: var(--m-shirt-small-w);
+  height: var(--m-shirt-small-h);
+}
+.shirt__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.shirt__body {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: var(--stroke-shirt);
+}
+.shirt__collar {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: var(--stroke-shirt);
+}
+.shirt__code {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--s-4);
+  text-align: center;
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}

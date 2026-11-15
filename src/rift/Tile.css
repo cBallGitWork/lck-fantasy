@@ -1,0 +1,125 @@
+.rift {
+  position: relative;
+  width: 100%;
+  height: var(--m-rift-h);
+}
+.tile {
+  position: absolute;
+  z-index: 2;
+  width: var(--m-tile-w);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.tile--narrow {
+  width: var(--m-tile-w-narrow);
+}
+.tile[role="button"] {
+  cursor: pointer;
+}
+.tile__kit {
+  position: relative;
+  width: var(--m-shirt-w);
+  height: var(--m-shirt-h);
+  margin: 0 auto;
+}
+.tile__role {
+  position: absolute;
+  left: calc(var(--s-5) * -1);
+  top: 0;
+  width: var(--m-role-box);
+  height: var(--m-role-box);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+}
+.tile__mark {
+  position: absolute;
+  right: calc(var(--s-4) * -1);
+  top: 0;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}
+.tile__mark--v {
+  background: var(--paper);
+  color: var(--ink);
+  border: var(--m-rule) solid var(--ink);
+}
+.tile__name {
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+  font-weight: var(--w-bold);
+  padding: 0 var(--s-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tile__points {
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-body);
+}
+.tile__points small {
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  margin-left: var(--s-1);
+}
+.tile__line {
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  border-top: 0;
+  font-size: var(--size-small);
+  padding: 0 var(--s-1);
+  color: var(--mid);
+}
+.tile__line--fixtures {
+  background: var(--ink);
+  color: var(--on-ink);
+  border: 0;
+  font-family: var(--font-mono);
+  padding: var(--s-1);
+  white-space: nowrap;
+}
+.tile .tag {
+  background: var(--paper);
+}
+.tile__line .tag {
+  margin: 0 0 0 var(--s-1);
+  line-height: var(--m-tag-line-tight);
+}
+.tile > .tag {
+  margin-top: var(--s-1);
+}
+.tile--selected .tile__name,
+.tile--selected .tile__line {
+  outline: var(--m-rule-heavy) solid var(--ink);
+}
+.tile--fit .tile__name,
+.tile--fit .tile__line {
+  outline: var(--m-rule-heavy) dashed var(--ink);
+  outline-offset: var(--m-rule-heavy);
+}
+.tile--dim .tile__name {
+  color: var(--mid);
+  border-color: var(--line);
+}
+.tile--dim .tile__line--fixtures {
+  background: var(--fill);
+  color: var(--mid);
+}
+.tile--dim .tile__role,
+.tile--dim .tag {
+  border-color: var(--line);
+  color: var(--mid);
+}

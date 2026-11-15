@@ -1,0 +1,23 @@
+.outlined-key {
+  font: inherit;
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-4);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+  cursor: pointer;
+}
+.outlined-key:disabled {
+  color: var(--mid);
+  background: var(--fill);
+  border-color: var(--line);
+  cursor: default;
+}
+.outlined-key__off {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.outlined-key__reason {
+  color: var(--mid);
+}

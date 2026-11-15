@@ -87,8 +87,8 @@ Each part is drawn one way on every screen.
   Support, Flex, Coach), then the bench bar.
 - **Wide table** (Stats): the head and the name column stick; the table scrolls under them.
 - **Long names** end in `…` at their column's width; the full name shows on hover and in the panel.
-- **Marks:** C and V are round, and so are the live dot, your-player dot (8px, after the name),
-  a crest and a radio button. Everything else is square, radius 0.
+- **Marks:** C and V are round, and so are the live dot, your-player dot (8px, after the name)
+  and a radio button. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0.
 - **Your players** are marked by that dot, on every screen.
 - **Modal** (a card, a sheet): a dimmed page behind, `✕` top right, Esc closes, focus stays
   inside. A card is 1056 wide; a sheet 544.

@@ -50,6 +50,16 @@ Trucks are the feed's reaction, after LCK fans' LED trucks
   arrow, top of the league, or any week), and a weight for how often it comes up. A manager picks
   from the lines that fit the receiver's week. An admin adds lines, and Craig approves each
   before it goes live.
+- What the triggers mean (Craig, 15 Nov 2026). Every number is data:
+  - **Which week:** a line fits the receiver's last final gameweek, and the truck parks for the
+    current one. Before the first week is final, only any-week lines show.
+  - **Carry blank:** a Carry on 2 or fewer after the ×1.5, as FPL counts a blank. **A dear
+    player's flop:** the receiver's dearest starter on 2 or fewer; `{price}` is his price.
+  - **High and low score:** the global top 10% and bottom 10% of the gameweek.
+  - **Top and bottom of the league:** first or last in a private league the sender and receiver
+    are both in; `{league}` names it. If they share none, these lines don't show.
+  - **Green and red arrow:** the gameweek's move in overall rank. **Buff wasted:** played, and
+    the week ends below the global average; otherwise **buff played**.
 - Lines fill in the receiver's own numbers. Example: WE DID NOT PAY ₩12억 FOR A BENCH WARMER.
 - A protest line never names a real player; it mocks the manager's own picks, in the trucks'
   formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CARRY PICK. Coffee lines may cheer

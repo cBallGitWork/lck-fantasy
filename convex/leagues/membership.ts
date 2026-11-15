@@ -37,6 +37,14 @@ export function joinProblems(privateLeaguesIn: number, members: number, settings
   return problems;
 }
 
+/** The gameweeks a new private league can count from: this one or a later one, this one first as
+ *  the default (spec/08, Private leagues). */
+export function startGameweekChoices(current: number, lastOfSeason: number): number[] {
+  const choices: number[] = [];
+  for (let gameweek = current; gameweek <= lastOfSeason; gameweek++) choices.push(gameweek);
+  return choices;
+}
+
 export type PrivateLeagueAction = "rename" | "remove" | "delete" | "leave";
 
 /** The maker can rename, remove a manager and delete; any other member can leave. The maker can't

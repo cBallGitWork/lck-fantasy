@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { leagueTable, legendAndRise, rankMovement, type LeagueMember } from "./tables";
+import { carryShown, chaseTag, leagueTable, legendAndRise, legendRiseTable, rankMovement, type LeagueMember } from "./tables";
 
 // Fixture calendar: Split 1 is gameweeks 1–4 (Road to MSI is gameweek 4), Split 2 is 5–6.
 const SEASON = { first: 1, last: 6 };
@@ -51,6 +51,47 @@ describe("rankMovement", () => {
     const before = leagueTable(members, SEASON, 1, 1);
     const after = leagueTable([...members, member("c", [0, 1])], SEASON, 1, 2);
     expect(rankMovement(before, after)).toEqual(new Map([["b", 1], ["a", -1], ["c", null]]));
+  });
+});
+
+describe("legendRiseTable", () => {
+  test("on the Split 2 tab the total is season points, with Split 2's beside it", () => {
+    const members = [member("a", [30, 0, 0, 0, 1, 1]), member("b", [20, 0, 0, 0, 5, 5])];
+    expect(legendRiseTable(members, SEASON, SPLIT_2, 6).map((r) => [r.entryId, r.total, r.splitTotal])).toEqual([
+      ["a", 32, 2],
+      ["b", 30, 10],
+    ]);
+  });
+});
+
+describe("chaseTag", () => {
+  const table = leagueTable([member("a", [50]), member("b", [34]), member("c", [34], 1), member("d", [10])], SEASON, 1, 1);
+
+  test("the points to the rank above: 16 pts to 1st", () => {
+    expect(chaseTag(table, "b")).toEqual({ kind: "chasing", points: 16, rank: 1 });
+    expect(chaseTag(table, "d")).toEqual({ kind: "chasing", points: 24, rank: 3 });
+  });
+
+  test("1st shows the lead over 2nd: +16 clear", () => {
+    expect(chaseTag(table, "a")).toEqual({ kind: "clear", points: 16 });
+  });
+
+  test("nothing when level", () => {
+    expect(chaseTag(table, "c")).toBeNull();
+    const tiedTop = leagueTable([member("a", [20]), member("b", [20])], SEASON, 1, 1);
+    expect(chaseTag(tiedTop, "a")).toBeNull();
+    expect(chaseTag(tiedTop, "b")).toBeNull();
+  });
+
+  test("a manager not in the table throws", () => {
+    expect(() => chaseTag(table, "z")).toThrow("z is not in this table.");
+  });
+});
+
+describe("carryShown", () => {
+  test("hidden until the gameweek's deadline, then shown", () => {
+    expect(carryShown(1_000, 999)).toBe(false);
+    expect(carryShown(1_000, 1_000)).toBe(true);
   });
 });
 

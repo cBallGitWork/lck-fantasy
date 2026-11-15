@@ -3,7 +3,7 @@
 // is week3.ts's. The backend feeds each of these once it is wired (#38).
 
 import { MANAGER } from "../../fixtures/week3";
-import type { CompetitionTabs, LeagueSummary, LeagueView, StandingRow } from "./types";
+import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, StandingRow } from "./types";
 
 const SEASON = "LCK 2027";
 const WEEK = 14;
@@ -154,3 +154,33 @@ export const LEAGUES: Record<string, LeagueView> = {
   "pub-league": PUB_LEAGUE,
   "flol-discord": FLOL_DISCORD,
 };
+
+/** How many private leagues a manager can be in (spec/08). Data, per competition. */
+export const PRIVATE_LEAGUE_CAP = 25;
+
+/** The longest league name, as the Create sheet counts it (create.html, `11 / 30`). */
+export const LEAGUE_NAME_MAX = 30;
+
+/** This week on, this week first: scoring can start no earlier (spec/08). Later weeks' days are made up. */
+export const SCORING_WEEKS: ScoringWeeks = [
+  { week: WEEK, starts: "Wed 10 Feb" },
+  { week: WEEK + 1, starts: "Wed 17 Feb" },
+  { week: WEEK + 2, starts: "Wed 24 Feb" },
+];
+
+/** The league the Create picture makes, and the code it is given (create.html, created.html). */
+export const NEW_LEAGUE = { name: "Office Rift", code: "OFF-9R3D" } as const;
+
+/** How a new or joined league's table opens: this week, Season, no rows yet. */
+export const NEW_TABLE: NewTable = { week: WEEK, carryShown: true, openTab: COMPETITION.seasonTab };
+
+/** A league the Join picture's code finds (join.html). Its rank and size are made up. */
+export const JOINABLE: PrivateEntry[] = [
+  {
+    summary: { id: "gank-squad", name: "Gank Squad", kind: "private", rank: 9, move: null, size: 9 },
+    view: { kind: "private", id: "gank-squad", name: "Gank Squad", code: "GANK-4TQ1", scoringFrom: 2, role: "member", ...NEW_TABLE, tables: {} },
+  },
+];
+
+/** Made up: the pictures draw no wrong code. */
+export const NO_SUCH_CODE = "No league has that code";

@@ -75,5 +75,25 @@ export type LeagueView =
   | (LeagueBase & { kind: "overall"; season: string; openGroup: OverallGroup })
   | (LeagueBase & { kind: "general" });
 
+export type PrivateLeague = Extract<LeagueView, { kind: "private" }>;
+
+/** A private league as both halves of the page hold it: its line in the list and its table. */
+export interface PrivateEntry {
+  summary: LeagueSummary;
+  view: PrivateLeague;
+}
+
+/** How a league made or joined here opens: its week, Carry, and its first tab. */
+export type NewTable = Pick<LeagueBase, "week" | "carryShown" | "openTab">;
+
+/** A week a new league's scoring can start from, with its first day (`Week 14 · Wed 10 Feb`). */
+export interface ScoringWeek {
+  week: number;
+  starts: string;
+}
+
+/** This week, then each later one: never empty. */
+export type ScoringWeeks = [ScoringWeek, ...ScoringWeek[]];
+
 /** Where a table sits in `LeagueView.tables`: by tab, and by group on the grouped tab. */
 export const tableKey = (tabs: CompetitionTabs, tab: TableTab, group?: OverallGroup) => (group && tab === tabs.groupedTab ? `${tab}/${group}` : tab);

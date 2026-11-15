@@ -14,7 +14,7 @@ So each screen's issue touches only its own folder:
 - `pick-team/`: Pick Team.
 - `transfers/`: Transfers.
 - `points/`: Points, your team's name as its title.
-- `leagues/`: Leagues and one league's table (`/leagues/$leagueId`).
+- `leagues/`: Leagues and one league's table (`/leagues/$leagueId`), with the league forms as sheets over it.
 - `stats/`: Stats.
 - `live/`: Live.
 - `series/`: one series (`/series/$seriesId`).

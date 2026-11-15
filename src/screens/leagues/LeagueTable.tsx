@@ -53,11 +53,17 @@ export function TableBody({ league, table, page, onPage, onFindMe }: { league: L
  * A league that isn't Overall: name and when its scoring starts; for a private league its code,
  * Copy link, and Admin ▾ for the maker or Leave for a member; Season, Split 1 and Split 2; the table.
  */
-export function LeagueTable({ league, actions, ...table }: { league: Exclude<LeagueView, { kind: "overall" }>; actions: LeagueActions } & TableProps) {
+export function LeagueTable({
+  league,
+  nameMax,
+  actions,
+  ...table
+}: { league: Exclude<LeagueView, { kind: "overall" }>; /** The longest name Rename takes. */ nameMax: number; actions: LeagueActions } & TableProps) {
   const [renaming, setRenaming] = useState(false);
   const name = renaming ? (
     <RenameField
       name={league.name}
+      maxLength={nameMax}
       onDone={(next) => {
         setRenaming(false);
         if (next) actions.onRename(next);
@@ -95,7 +101,7 @@ export const adminItems = (actions: LeagueActions, onRename: () => void): MenuIt
 ];
 
 /** Rename, in place: Enter keeps the new name, Esc keeps the old. A blank name keeps the old. */
-function RenameField({ name, onDone }: { name: string; onDone: (name: string | null) => void }) {
+function RenameField({ name, maxLength, onDone }: { name: string; maxLength: number; onDone: (name: string | null) => void }) {
   const [value, setValue] = useState(name);
   const done = useRef(false);
   const finish = (keep: boolean) => {
@@ -109,6 +115,7 @@ function RenameField({ name, onDone }: { name: string; onDone: (name: string | n
       className="leagues__rename"
       aria-label="League name"
       value={value}
+      maxLength={maxLength}
       autoFocus
       onChange={(e) => setValue(e.target.value)}
       onBlur={() => finish(true)}

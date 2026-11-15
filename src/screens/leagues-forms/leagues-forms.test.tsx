@@ -51,6 +51,17 @@ describe("each sheet holds its picture's content in order", () => {
     expect(empty).toMatch(/<button[^>]*disabled=""[^>]*>Create<\/button>/);
   });
 
+  test("spec/08: at the cap, Create and Join refuse and say why", () => {
+    const create = html(
+      <CreateSheet weeks={SCORING_WEEKS} nameMax={30} privateCount={25} privateCap={25} initialName="Full" onCreate={none} onClose={none} />,
+    );
+    expect(create).toContain("25 leagues already");
+    expect(create).toMatch(/<button[^>]*disabled=""[^>]*>Create<\/button>/);
+    const join = html(<JoinSheet privateCount={25} privateCap={25} initialCode="GANK-4TQ1" onJoin={none} onClose={none} />);
+    expect(join).toContain("25 leagues already");
+    expect(join).toMatch(/<button[^>]*disabled=""[^>]*>Join<\/button>/);
+  });
+
   test("created.html: the name, its first week, the code with Copy code and Copy link, then Open league", () => {
     const league = makeLeague(NEW_LEAGUE.name, 4, NEW_LEAGUE.code);
     const sheet = <CreatedSheet league={league} onCopyCode={none} onCopyLink={none} onClose={none} />;

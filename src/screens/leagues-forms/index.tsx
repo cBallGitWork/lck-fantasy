@@ -13,14 +13,19 @@ import {
   type PrivateLeague,
   type ScoringWeeks,
 } from "./fixtures";
-import { findByCode, makeLeague, renameLeague, withoutLeague, type OpenForm } from "./leagueForms";
+import { capReason, findByCode, makeLeague, renameLeague, withoutLeague, type OpenForm } from "./leagueForms";
 import "./leagues-forms.css";
 import { AdminMenu, CreatedSheet, CreateSheet, DeleteSheet, JoinSheet, LeaveSheet } from "./Sheets";
 
 /** A league's link, as Copy link gives it. */
 const leagueLink = (league: PrivateLeague) => `${window.location.origin}${pathTo({ to: PATHS.league, params: { leagueId: league.id } })}`;
 
-const copyText = (words: string) => void navigator.clipboard.writeText(words);
+/** Copies to the clipboard; a refused or missing clipboard is logged, never dropped. */
+const copyText = (words: string) => {
+  Promise.resolve()
+    .then(() => navigator.clipboard.writeText(words))
+    .catch((error: unknown) => console.error("Couldn't copy", error));
+};
 
 /** A league's header where the forms open from: name, first week, code, Copy link, then Admin or Leave. */
 function LeagueHead({
@@ -110,10 +115,13 @@ export function LeaguesFormsScreen({
   const join = (codeOrLink: string) => {
     const found = findByCode(joinable, codeOrLink);
     if (!found) return setJoinError(NO_SUCH_CODE);
-    setLeagues([...withoutLeague(leagues, found.id), found]);
+    const already = leagues.some((league) => league.id === found.id);
+    if (!already && capReason(leagues.length, PRIVATE_LEAGUE_CAP)) return;
+    if (!already) setLeagues([...leagues, found]);
     close();
   };
   const create = (name: string, scoringFrom: number) => {
+    if (capReason(leagues.length, PRIVATE_LEAGUE_CAP)) return;
     const league = makeLeague(name, scoringFrom, newCode);
     setLeagues([...leagues, league]);
     setForm({ kind: "created", league });

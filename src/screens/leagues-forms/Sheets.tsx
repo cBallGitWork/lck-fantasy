@@ -4,7 +4,7 @@ import { useId, useState, type ReactNode } from "react";
 import { Field, GoLink, MainAction, Menu, Modal, OutlinedKey } from "../../parts";
 import { PATHS } from "../../paths";
 import type { PrivateLeague, ScoringWeek, ScoringWeeks } from "./fixtures";
-import { ordinal, privateCountLine } from "./leagueForms";
+import { capReason, ordinal, privateCountLine } from "./leagueForms";
 
 /** Back, a text link in every sheet (as in the Transfers confirm), then the sheet's main action. */
 function SheetKeys({ onBack, children }: { onBack: () => void; children: ReactNode }) {
@@ -62,7 +62,7 @@ export function CreateSheet({
         </select>
       </div>
       <SheetKeys onBack={onClose}>
-        <MainAction disabledReason={trimmed === "" ? "No name" : undefined} onClick={() => onCreate(trimmed, week)}>
+        <MainAction disabledReason={capReason(privateCount, privateCap) ?? (trimmed === "" ? "No name" : undefined)} onClick={() => onCreate(trimmed, week)}>
           Create
         </MainAction>
       </SheetKeys>
@@ -124,7 +124,7 @@ export function JoinSheet({
         <Field label="Code or link" value={code} error={error} onChange={(e) => setCode(e.target.value)} />
       </div>
       <SheetKeys onBack={onClose}>
-        <MainAction disabledReason={code.trim() === "" ? "No code" : undefined} onClick={() => onJoin(code)}>
+        <MainAction disabledReason={capReason(privateCount, privateCap) ?? (code.trim() === "" ? "No code" : undefined)} onClick={() => onJoin(code)}>
           Join
         </MainAction>
       </SheetKeys>

@@ -21,6 +21,9 @@ export function ordinal(rank: number): string {
 /** `Private leagues: 2 of 25`. */
 export const privateCountLine = (count: number, cap: number) => `Private leagues: ${count} of ${cap}`;
 
+/** Why a manager at the cap can't create or join another (spec/08); nothing below it. */
+export const capReason = (count: number, cap: number) => (count >= cap ? `${cap} leagues already` : undefined);
+
 /** A new league, its maker first of one. */
 export function makeLeague(name: string, scoringFrom: number, code: string): PrivateLeague {
   return { id: code.toLowerCase(), name, code, scoringFrom, managers: 1, rank: 1, maker: true };

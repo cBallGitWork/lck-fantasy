@@ -4,6 +4,7 @@
 // filters have something to work on; so is each week's share of the season, for Span.
 
 import { fromSide, seriesOf } from "../../fixtures/series";
+import { gamesOf, standingOf } from "../../fixtures/standings";
 import { MY_PLAYERS, playerId, STATS_PLAYERS, WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
 import type { RoleKey } from "../../rift";
 import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
@@ -11,22 +12,11 @@ import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
 /** A price move is half a 억 in the picture. */
 const MOVE_EOK = 0.5;
 
-/** Games played by each team, Weeks 1 to 3, as the LCK hub's standings have them. */
-const GAMES: Record<TeamCode, number> = { T1: 15, GEN: 16, HLE: 15, DK: 15, KRX: 15, NS: 13, BRO: 15, DNS: 16, KT: 15, BFX: 13 };
-
-/** Series won and lost by each team, Weeks 1 to 3. */
-const RECORD: Record<TeamCode, readonly [number, number]> = {
-  T1: [5, 1],
-  GEN: [5, 1],
-  HLE: [4, 2],
-  DK: [3, 3],
-  KRX: [3, 3],
-  NS: [2, 4],
-  BRO: [1, 5],
-  DNS: [3, 3],
-  KT: [3, 3],
-  BFX: [1, 5],
-};
+/** Series won and lost by a team, Weeks 1 to 3, as the LCK hub's standings have them. */
+function recordPair(team: TeamCode): readonly [number, number] {
+  const { won, lost } = standingOf(team);
+  return [won, lost];
+}
 
 /** The picture's player lines, by name, in PLAYER_LINES' order. */
 const PICTURE_LINES: Record<string, number[]> = {
@@ -136,7 +126,7 @@ function row(
     form: formOf(points),
     ownedPct,
     points,
-    games: GAMES[team],
+    games: gamesOf(team),
     mine: MY_PLAYERS.has(name),
     lines: {},
   };
@@ -171,7 +161,7 @@ export const SEASON_COACHES: StatsRow[] = [
 ].map(([name, team, price, move, owned, points]) => ({
   ...row("coach", name, team, price, move, owned, points),
   lines: byKeys(COACH_LINES, PICTURE_COACH_LINES[name] ?? []),
-  series: RECORD[team],
+  series: recordPair(team),
 }));
 
 // Span: each week's share of the season, made up. Week 3's games and series are its real
@@ -197,9 +187,10 @@ const half = (n: number) => [Math.ceil(n / 2), Math.floor(n / 2)];
 /** A team's games and series, week by week. */
 function teamWeeks(team: TeamCode) {
   const w3 = week3Results(team);
-  const [g1, g2] = half(GAMES[team] - w3.games);
-  const [won1, won2] = half(RECORD[team][0] - w3.won);
-  const [lost1, lost2] = half(RECORD[team][1] - w3.lost);
+  const { won, lost } = standingOf(team);
+  const [g1, g2] = half(gamesOf(team) - w3.games);
+  const [won1, won2] = half(won - w3.won);
+  const [lost1, lost2] = half(lost - w3.lost);
   return [
     { games: g1 ?? 0, series: [won1 ?? 0, lost1 ?? 0] as const },
     { games: g2 ?? 0, series: [won2 ?? 0, lost2 ?? 0] as const },

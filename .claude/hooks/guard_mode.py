@@ -4,8 +4,8 @@ crafting on scoring, and instead youve tried built it and its destroyed the proj
 command that files, specs, starts or ships work (gh issue create or edit, gh pr create, ready or
 merge, gh workflow run, the GitHub tool's writes, and an edit to SPEC.md or spec/) is denied unless
 Craig's latest message in this session (last_prompt.py) says to act: one of GO_WORDS, as "build it",
-"go ahead", "file it", "ship it", "merge it" (merge and the verbs after a yes need an object), a bare "File",
-a message opening with "yes" or with "file" and an object ("file answers"), one made only of numbered answers
+"go ahead", "file it", "save it", "ship it", "merge it" (merge and the verbs after a yes need an object), a bare
+"File" or "Save", a message opening with "yes" or with "file" or "save" and an object ("file answers"), one made only of numbered answers
 ("1 a\n2 b"), or a slash command, which is an instruction by itself.
 Without his message on record (a cloud session, whose whole run Craig started) nothing is gated. Reads and git are never gated: a branch, a commit and a push are the session's own
 and publish nothing. Stdlib only, Python 3.9+.
@@ -22,7 +22,8 @@ from last_prompt import state_file
 
 GO_WORDS = re.compile(
     r"\b(build|go ahead|go for it|do it|do that|do them|do all|do both|"
-    r"file (it|them|that|these|those|all|both|the rest|an issue|issues)|"
+    # "save" is "file" for a design: Craig's "save" before a PR was refused as talk (15 Nov 2026)
+    r"(file|save) (it|them|that|these|those|all|both|the rest|an issue|issues)|"
     r"ship|merge (it|them|that|this|these|those|the|a|an|now|#\d+)|open (a|the) (pr|pull request)|start (it|them|the build|building)|run it|make it|create|"
     r"sort it|set it up|set up|implement|land|label it|fix (it|that|them|those|the|this|all|everything)|"
     r"just do|get on with|crack on|carry on|proceed|"
@@ -33,11 +34,11 @@ GO_WORDS = re.compile(
     r"yes,? (please,? )?(run|file|merge|start|open|add|make|set) (it|them|that|this|these|those|the|a|an))\b", re.I)
 # a whole message that only says yes to Claude's "shall I file these?" (6 Nov 2026: a bare "File" was
 # refused as talk, and Craig had to say "File them (this is silly)")
-BARE_GO = re.compile(r"^\W*(file|yes|yes please|go|go on)\W*$", re.I)
+BARE_GO = re.compile(r"^\W*(file|save|yes|yes please|go|go on)\W*$", re.I)
 # a message that opens with a go (9 Nov 2026, all refused: "file answers", "yes but multiple workflows in one
 # go"): "file" and an object, unless the object is followed by a verb ("file naming is odd" is talk), or "yes"
 OPENS_WITH_GO = re.compile(
-    r"^\W*(?:(?:ok|okay|please|now|then|and),?\s+)?(?:yes\b|file\s+\w+\b(?!\s+(?:is|are|was|were|looks?|seems?|feels?)\b))", re.I)
+    r"^\W*(?:(?:ok|okay|please|now|then|and),?\s+)?(?:yes\b|(?:file|save)\s+\w+\b(?!\s+(?:is|are|was|were|looks?|seems?|feels?)\b))", re.I)
 # a message made only of numbered answers to Claude's lettered questions: "1a 2b", "1 a\n2 a", "1. a" (9 Nov 2026)
 NUMBERED_ANSWERS = re.compile(r"^\s*(?:\d+\s*[.):-]?\s*[a-z]\b[\s,;.]*)+$", re.I)
 SLASH_COMMAND = re.compile(r"^\s*/[a-z]")

@@ -1,0 +1,79 @@
+.patch-update__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+}
+.patch-update__week {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.patch-update__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-target);
+  height: var(--m-target);
+  font: inherit;
+  font-size: var(--size-lead);
+  font-weight: var(--w-regular);
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.patch-update__arrow--off {
+  color: var(--line);
+  cursor: default;
+}
+.patch-update__when {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  color: var(--mid);
+}
+.patch-update__lists {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-6);
+  margin-top: var(--s-5);
+}
+.patch-update__list-title {
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+  padding-bottom: var(--s-2);
+  border-bottom: var(--m-rule-heavy) solid;
+}
+.patch-update__list--rise .patch-update__list-title {
+  color: var(--rise);
+}
+.patch-update__list--fall .patch-update__list-title {
+  color: var(--fall);
+}
+/* Was, the move's mark, Now and Owned at the picture's widths; the player takes the rest. */
+.patch-update__list col:nth-child(2),
+.patch-update__list col:nth-child(5) {
+  width: calc(var(--s-7) + var(--s-6));
+}
+.patch-update__list col:nth-child(3) {
+  width: var(--s-6);
+}
+.patch-update__list col:nth-child(4) {
+  width: calc(var(--s-7) + var(--s-5));
+}
+.patch-update__name {
+  font-weight: var(--w-bold);
+}
+.patch-update__name:hover {
+  text-decoration: underline;
+}
+.patch-update__meta {
+  color: var(--mid);
+  font-size: var(--size-small);
+  margin-left: var(--s-2);
+}
+.patch-update__was {
+  color: var(--mid);
+}

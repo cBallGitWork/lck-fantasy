@@ -1,11 +1,18 @@
+import { useParams } from "@tanstack/react-router";
 import { MANAGER } from "../../fixtures/week3";
-import { PageFrame, PageHead } from "../../parts";
+import { Empty, PageFrame } from "../../parts";
+import { SERIES_BY_ID } from "./fixtures";
+import { SeriesPage } from "./SeriesPage";
 
-/** A placeholder until its own issue builds it to docs/design/approved/series/. */
+/** The route `/series/$seriesId`, fed by the picture's made-up data until the backend wires it (#36). */
 export function SeriesScreen() {
-  return (
-    <PageFrame screen="series" account={MANAGER.team}>
-      <PageHead title={"Series"} hangul={"시리즈"} />
-    </PageFrame>
-  );
+  const { seriesId } = useParams({ strict: false });
+  const view = seriesId === undefined ? undefined : SERIES_BY_ID[seriesId];
+  if (!view)
+    return (
+      <PageFrame screen="series" active="lckHub" account={MANAGER.team}>
+        <Empty title="No such series" />
+      </PageFrame>
+    );
+  return <SeriesPage view={view} account={MANAGER.team} />;
 }

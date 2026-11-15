@@ -1,0 +1,225 @@
+/* The Series page, drawn to docs/design/approved/series/. Every value is a token. */
+.series__crumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+}
+
+/* The scorebug, as Live's, full width: each team in a box, the series score between on ink. */
+.series__bug {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  height: calc(var(--s-7) + var(--s-5));
+  margin: var(--s-4) 0 var(--s-3);
+}
+.series__bug-team {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 0 var(--s-5);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--ink);
+}
+.series__bug-team--away {
+  justify-content: flex-end;
+}
+.series__bug-code {
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+}
+.series__bug-team--lost .series__bug-code {
+  font-weight: var(--w-regular);
+}
+.series__bug-record {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.series__bug-score {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--s-6);
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: var(--size-title);
+  font-weight: var(--w-semi);
+}
+.series__bug-score--v {
+  font-size: var(--size-head);
+}
+
+/* The line under it: tags, format and day, the time, Watch ›. */
+.series__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+  color: var(--mid);
+}
+.series__meta a {
+  font-weight: var(--w-semi);
+}
+.series__tags {
+  display: flex;
+  gap: var(--s-2);
+  margin-right: calc(var(--s-4) * -1);
+}
+
+.series__two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-6);
+  margin-top: var(--s-5);
+}
+.series__team-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding-top: var(--s-2);
+  margin-bottom: var(--s-2);
+  border-top: var(--m-rule-heavy) solid var(--ink);
+  font-size: var(--size-body);
+  font-weight: var(--w-bold);
+}
+.series__team-head small {
+  color: var(--mid);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+}
+
+/* The grids: one row per player, then the coach; one column per game, then Series. */
+.series__grid,
+.series__roster {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: var(--paper);
+}
+.series__col-role {
+  width: calc(var(--s-7) + var(--s-6) + var(--s-2));
+}
+.series__col-name {
+  width: calc(var(--s-7) * 3 + var(--s-5));
+}
+.series__grid--three .series__col-name {
+  width: calc(var(--s-7) * 3 + var(--s-1));
+}
+.series__col-total {
+  width: calc(var(--s-7) + var(--s-3));
+}
+.series__col-roster-role {
+  width: calc(var(--s-7) * 2 + var(--s-4));
+}
+.series__grid th {
+  padding: var(--s-2);
+  border-bottom: var(--m-rule) solid var(--line);
+  color: var(--mid);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  text-align: left;
+  white-space: nowrap;
+}
+.series__grid th b,
+.series__grid th a {
+  color: var(--text);
+  font-weight: var(--w-semi);
+}
+.series__grid th a {
+  min-height: 0;
+}
+.series__grid th.series__figure {
+  text-align: right;
+}
+.series__grid td,
+.series__roster td {
+  height: var(--s-7);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--fill);
+  vertical-align: middle;
+}
+.series__roster td {
+  height: var(--m-row);
+}
+.series__grid .series__coach td,
+.series__roster .series__coach td {
+  border-top: var(--m-rule) solid var(--line);
+}
+.series__role {
+  color: var(--mid);
+  font-size: var(--size-small);
+  white-space: nowrap;
+}
+.series__role-icon {
+  width: var(--size-small);
+  height: var(--size-small);
+  margin-right: var(--s-2);
+  vertical-align: middle;
+}
+.series__name {
+  white-space: nowrap;
+}
+.series__name b {
+  font-weight: var(--w-semi);
+}
+.series__hangul {
+  margin-left: var(--s-2);
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+
+/* A game: champion and K/D/A at the left, POG over the points at the right. */
+.series__game {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-2);
+}
+.series__champ {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.series__champ small {
+  display: block;
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.series__points {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-1);
+  min-width: calc(var(--s-5) + var(--s-1));
+  font-weight: var(--w-semi);
+}
+.series__box {
+  padding: 0 var(--s-1);
+  border: var(--m-rule) solid var(--ink);
+}
+/* A dropped game, outside the best 2: grey and unboxed. */
+.series__dropped .series__game,
+.series__dropped .series__champ small {
+  color: var(--mid);
+}
+.series__dropped .series__points {
+  font-weight: var(--w-regular);
+}
+.series__none {
+  color: var(--mid);
+}
+.series__coach-lines {
+  font-size: var(--size-small);
+  line-height: var(--lh-body);
+}
+.series__total {
+  border-left: var(--m-rule) solid var(--line);
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  text-align: right;
+}
+.series__total small {
+  display: block;
+  color: var(--mid);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+}

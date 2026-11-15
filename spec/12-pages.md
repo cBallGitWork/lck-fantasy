@@ -115,11 +115,18 @@ Craig's yes in the Home design round, grilled 14 Nov 2026. Its layout is the app
 - **Star and flop** of the last gameweek, the same pair for every manager, each shown with its
   points and effective ownership.
   - Effective ownership: the share of managers starting a player, a Carry counting 1.5. Example:
-    40% start Faker, 20% of them as Carry, so 50%.
+    40% of managers start Faker and 20% of all managers make him Carry, so 50%.
+  - It counts the team as it scored, as FPL sites do: an auto-sub and a Bench Boost bench count
+    as starting, and anyone taking the ×1.5 counts 1.5, the Vice-carry too under Dual Carry
+    (Craig, 15 Nov 2026).
   - Star: the most points × (1 − effective ownership). Example: Kiin, 15 points at 8%, beats
     Chovy, 18 at 45% (13.8 against 9.9).
   - Flop: the fewest points among the 10 highest by effective ownership. Example: Faker, 2 points
     at 62%.
+  - The coach is in the running for both, as the 6th role (Craig, 15 Nov 2026). Example: Gen.G's
+    coach, 12 points at 30%, scores 8.4 and beats a player's 8.0 for star.
+  - Ties: a star tie goes to the lower effective ownership, a flop tie to the higher; everyone
+    tied at 10th joins the flop's pool. Still tied, both are shown (Craig, 15 Nov 2026).
 
 ## Pick Team and Transfers
 

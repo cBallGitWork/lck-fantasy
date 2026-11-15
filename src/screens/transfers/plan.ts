@@ -75,9 +75,20 @@ export function buy(plan: Plan, player: ListPlayer): Plan {
 
 const soldSlots = (plan: Plan) => Object.keys(plan.sold) as SquadSlot[];
 
-/** Each sold slot with who went out and who came in. */
+function outOf(squad: SquadPlayer[], slot: SquadSlot): SquadPlayer {
+  const out = squad.find((p) => p.slot === slot);
+  if (!out) throw new Error(`Transfers: no squad player in the ${slot} slot`);
+  return out;
+}
+
+/**
+ * Each sold slot with who went out and who came in. Selling a player and buying him back cancels out
+ * (spec/03): no transfer, no hit, his old price kept, so it is no move at all.
+ */
 export function moves(squad: SquadPlayer[], plan: Plan): { out: SquadPlayer; in: ListPlayer | null }[] {
-  return soldSlots(plan).map((slot) => ({ out: squad.find((p) => p.slot === slot) as SquadPlayer, in: plan.sold[slot] ?? null }));
+  return soldSlots(plan)
+    .map((slot) => ({ out: outOf(squad, slot), in: plan.sold[slot] ?? null }))
+    .filter((m) => m.in?.id !== m.out.id);
 }
 
 /** Transfers made: a sale with its buy. */

@@ -24,6 +24,16 @@ describe("selling and buying", () => {
     expect(buy(EMPTY_PLAN, named("DuDu"))).toBe(EMPTY_PLAN);
   });
 
+  test("selling a player and buying him back cancels out: no transfer, no hit, his old price kept", () => {
+    const flex = SQUAD.find((p) => p.slot === "flex")!;
+    const back = { ...named("Kingen"), id: flex.id, name: flex.name, team: flex.team, role: flex.role, price: flex.price + 1_000_000 };
+    const plan = buy(sell(EMPTY_PLAN, "flex"), back);
+    const made = transfersMade(SQUAD, plan);
+    expect(made).toBe(0);
+    expect(pendingHit(RULES, made)).toBe(0);
+    expect(bankNow(SQUAD, plan, RULES.bank)).toBe(RULES.bank);
+  });
+
   test("a sale with no buy is an empty slot, not a transfer", () => {
     const plan = sell(PICTURE_PLAN, "top");
     expect(transfersMade(SQUAD, plan)).toBe(1);

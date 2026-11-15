@@ -70,6 +70,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and ignores both.
   - It builds live, with a Not final tag until the week is final.
   - Reached from links on Points and Home.
+  - Rift view or Card view, whichever is saved on Points. Your own players are marked
+    (Craig, 15 Nov 2026).
 - **Patch update** (Craig, 15 Nov 2026; spec once called it Price changes): the new prices for a
   gameweek, set once the deadline before it passes ("just shows the new prices, thats it really").
   Past moves only, no prediction.

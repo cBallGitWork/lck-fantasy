@@ -97,43 +97,6 @@
   padding: var(--s-4) var(--s-5) var(--s-5);
 }
 
-/* The series strip: the last three, a heavy rule for now, the next three. */
-.coach-card__strip {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) var(--m-rule-heavy) repeat(3, minmax(0, 1fr));
-  padding: var(--s-4) 0;
-  border-bottom: var(--m-rule) solid var(--line);
-}
-.coach-card__strip-cell {
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--s-3);
-}
-.coach-card__strip-when {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
-.coach-card__strip-points {
-  display: flex;
-  align-items: center;
-  gap: var(--s-1);
-  font-size: var(--size-head);
-  font-weight: var(--w-semi);
-  line-height: var(--lh-snug);
-}
-.coach-card__strip-now {
-  background: var(--ink);
-}
-.coach-card__strip-next {
-  font-size: var(--size-head);
-  color: var(--mid);
-  line-height: var(--lh-snug);
-}
-.coach-card__strip-next--first {
-  color: var(--text);
-  font-weight: var(--w-semi);
-}
-
 /* A block's head: a series in This week, a table's title in History. */
 .coach-card__block {
   display: flex;

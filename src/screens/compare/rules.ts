@@ -1,6 +1,6 @@
 // Compare's rules, as the picture and spec/12 (Compare) set them, kept apart from the drawing so the tests read them.
 
-import { LINEUP_ORDER, type PersonRole, type RoleKey } from "../../rift";
+import { ROLE_KEYS, type PersonRole } from "../../rift";
 import type { SearchRow } from "./fixtures";
 
 /** Which side holds the higher number; none when they are level. Higher is better for Season, Form and line points. */
@@ -21,9 +21,6 @@ export const ROLE_PLURAL: Record<PersonRole, string> = {
   coach: "Coaches",
 };
 
-/** The search's roles in the broadcast's order. */
-const PLAYER_ROLES = LINEUP_ORDER.filter((slot): slot is RoleKey => slot !== "flex" && slot !== "coach");
-
 export interface SearchGroup {
   role: PersonRole;
   rows: SearchRow[];
@@ -34,7 +31,7 @@ export interface SearchGroup {
  * listed first, best season first; the other roles show once asked for (`wide`) or once a name is typed.
  */
 export function searchGroups(rows: readonly SearchRow[], first: { name: string; role: PersonRole }, query: string, wide: boolean): SearchGroup[] {
-  const roles: PersonRole[] = first.role === "coach" ? ["coach"] : [first.role, ...PLAYER_ROLES.filter((r) => r !== first.role)];
+  const roles: PersonRole[] = first.role === "coach" ? ["coach"] : [first.role, ...ROLE_KEYS.filter((r) => r !== first.role)];
   const typed = query.trim().toLowerCase();
   const shown = typed || wide ? roles : roles.slice(0, 1);
   return shown

@@ -1,13 +1,11 @@
 import { TEAMS } from "../../fixtures/week3";
-import { cx, signed, Table, type Column } from "../../parts";
+import { cx, NONE, pct, SectionHead, signed, Table, type Column } from "../../parts";
 import type { StandingsGroup, StandingsRow } from "./types";
-import { SectionTitle } from "./Week";
 
-const NO_GAMES = "—";
 
 /** `67%`; a team yet to play shows a dash. */
 export const winPct = ({ won, lost }: Pick<StandingsRow, "won" | "lost">) =>
-  won + lost === 0 ? NO_GAMES : `${Math.round((won / (won + lost)) * 100)}%`;
+  won + lost === 0 ? NONE : pct(Math.round((won / (won + lost)) * 100));
 
 const columns = (group: StandingsGroup): Column<StandingsRow>[] => [
   { key: "rank", head: "", width: "row", cell: (r) => <span className="lck-hub__rank num">{group.rows.indexOf(r) + 1}</span> },
@@ -45,7 +43,7 @@ export function Standings({ groups }: { groups: StandingsGroup[] }) {
     <div className="lck-hub__groups">
       {groups.map((g) => (
         <section key={g.name}>
-          <SectionTitle note={<span lang="ko">{g.hangul}</span>}>{g.name}</SectionTitle>
+          <SectionHead className="lck-hub__title" note={<span lang="ko">{g.hangul}</span>}>{g.name}</SectionHead>
           <div className="lck-hub__standings">
             <Table columns={columns(g)} rows={g.rows} rowKey={(r) => r.team} label={g.name} />
           </div>

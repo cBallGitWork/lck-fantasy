@@ -1,6 +1,6 @@
-import { cx, Menu, Tag, Time } from "../../parts";
+import { cx, Menu, score as scoreText, Tag, Time } from "../../parts";
 import type { FinalBug, LiveBug, NextSeries, Picker, Stream } from "./types";
-import { dash, dot, WORDS } from "./words";
+import { dot, WORDS } from "./words";
 
 /** One chip per stream; the one you're watching filled, those not live dashed and greyed. More ▾ lists each channel. */
 export function StreamPicker({ streams, picked, onPick }: Picker) {
@@ -32,7 +32,7 @@ function Score({ home, away, score }: { home: string; away: string; score: reado
   return (
     <span className="live__bug-score">
       <span className="live__bug-team">{home}</span>
-      <span className="live__bug-figure num">{score.join(dash)}</span>
+      <span className="live__bug-figure num">{scoreText(score)}</span>
       <span className="live__bug-team">{away}</span>
     </span>
   );

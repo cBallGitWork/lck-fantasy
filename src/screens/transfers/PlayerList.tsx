@@ -1,10 +1,9 @@
-import { cx, Empty, formatEok, GoLink, Menu, SideSection } from "../../parts";
-import { ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
+import { cx, Empty, formatEok, GoLink, Menu, pct, SideSection } from "../../parts";
+import { ROLE_KEYS, ROLE_NAME, RoleIcon } from "../../rift";
 import { listRows, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type Row, type SortKey, type SquadPlayer, type TransferRules } from "./plan";
 
 const SORTS: Record<SortKey, string> = { points: "Points", price: "Price", owned: "Owned" };
-const PLAYER_ROLES: readonly RoleKey[] = ["top", "jng", "mid", "bot", "sup"];
-const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: "all", label: "All roles" }, ...PLAYER_ROLES.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
+const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: "all", label: "All roles" }, ...ROLE_KEYS.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
 export const ALL_TEAMS = "all";
 
 /** The list: who can fill the slot being sold, with role chips, search, sort and team. */
@@ -119,7 +118,7 @@ function ListRow({ row, next, picked, canBuy, onBuy }: { row: Row; next?: Fixtur
       <td className="transfers__num num">{formatEok(p.price)}</td>
       <td className="transfers__move">{p.move !== 0 && <span className={p.move > 0 ? "rise" : "fall"} title={p.move > 0 ? "Price rose" : "Price fell"} />}</td>
       <td className="transfers__num num">{p.points}</td>
-      <td className="transfers__num num">{p.ownedPct}%</td>
+      <td className="transfers__num num">{pct(p.ownedPct)}</td>
       <td className="transfers__next">{next && `v ${next.against} ${next.day}`}</td>
       <td>
         {canBuy && (

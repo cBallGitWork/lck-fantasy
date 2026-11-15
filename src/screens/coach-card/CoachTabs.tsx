@@ -1,10 +1,9 @@
 // The coach card's tabs: This week, Fixtures, History and Roster (coach.html; Fixtures as the player card's).
 import { Fragment } from "react";
-import { eok, MeDot, outcome, perGame, result, score, signed, Table, Tag } from "../../parts";
+import { eok, MeDot, NONE, outcome, pct, perGame, result, score, signed, Table, Tag } from "../../parts";
 import { ROLE_NAME } from "../../rift";
 import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, RosterRow, WeekSeries } from "./types";
 
-const NONE = "—";
 
 /** This week: each series, its games with the lines they scored, the series line, then the week. */
 export function CoachThisWeek({ week }: { week: CoachWeek }) {
@@ -155,7 +154,7 @@ export function CoachRoster({ rows }: { rows: RosterRow[] }) {
           },
           { key: "price", head: "Price", figure: true, cell: (r) => eok(r.priceEok) },
           { key: "season", head: "Season", figure: true, cell: (r) => <b>{r.points}</b> },
-          { key: "owned", head: "Owned", figure: true, cell: (r) => <span className="coach-card__soft">{r.ownedPct}%</span> },
+          { key: "owned", head: "Owned", figure: true, cell: (r) => <span className="coach-card__soft">{pct(r.ownedPct)}</span> },
         ]}
       />
     </div>

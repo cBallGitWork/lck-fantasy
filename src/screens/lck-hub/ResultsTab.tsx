@@ -1,4 +1,4 @@
-import { cx, GoLink } from "../../parts";
+import { cx, GoLink, score } from "../../parts";
 import type { HubWeek } from "./types";
 import { ByDay, seriesGo, WeekTitle } from "./Week";
 
@@ -18,7 +18,7 @@ export function Results({ week, bestOf, onPrev, onNext }: { week: HubWeek; bestO
             <GoLink key={s.id} className={cx("lck-hub__series", "lck-hub__series--result")} go={seriesGo(s)}>
               <span className="lck-hub__home">{team(s.home, home > away)}</span>
               <span className="lck-hub__score num">
-                {home}–{away}
+                {score(s.score)}
               </span>
               <span>{team(s.away, away > home)}</span>
               <span className="lck-hub__go">›</span>

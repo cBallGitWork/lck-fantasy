@@ -1,8 +1,7 @@
-import { GoLink, Loading, Tag } from "../../parts";
+import { GoLink, Loading, NONE, Tag } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
-import { BENCH_SLOTS, isBench, LINEUP_ORDER, MARK_NAME, ROLE_NAME } from "../../rift";
+import { isBench, MARK_NAME, ROLE_NAME, SQUAD_SIZE } from "../../rift";
 import type { PointsWeek, ProfilePick } from "./fixtures";
-import { NONE } from "./format";
 
 const BENCH = "Bench";
 
@@ -77,7 +76,7 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
           </tbody>
         </table>
       ) : (
-        <Loading rows={LINEUP_ORDER.length + BENCH_SLOTS.length} label={`Week ${week.week}'s team`} />
+        <Loading rows={SQUAD_SIZE} label={`Week ${week.week}'s team`} />
       )}
     </section>
   );

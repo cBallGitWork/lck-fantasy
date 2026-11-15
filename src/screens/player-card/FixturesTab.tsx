@@ -1,4 +1,4 @@
-import { Table } from "../../parts";
+import { bestOf, Table } from "../../parts";
 import type { TeamCode } from "../../fixtures/week3";
 import type { FixtureRow } from "./card";
 import { WeekCell, weekStarts } from "./WeekCell";
@@ -23,7 +23,7 @@ export function FixturesTab({ team, rows }: { team: TeamCode; rows: FixtureRow[]
                 <b>
                   {team} v {r.opponent}
                 </b>{" "}
-                · Bo{r.bestOf}
+                · {bestOf(r.bestOf)}
               </>
             ),
           },

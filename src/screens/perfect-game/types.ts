@@ -42,10 +42,7 @@ export interface PerfectGameData {
 }
 
 /** The two views, Rift first. */
-export const VIEWS = ["Rift view", "Card view"] as const;
-export const RIFT_VIEW = VIEWS[0];
-
-export type PerfectView = (typeof VIEWS)[number];
+export { RIFT_VIEW, VIEWS, type BoardView as PerfectView } from "../../rift";
 
 /** Which starter is tapped, and how a tap or ✕ reaches the page. */
 export interface Selection {

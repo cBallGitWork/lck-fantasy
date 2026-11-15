@@ -1,6 +1,6 @@
 import { fromSide, seriesById } from "../../fixtures/series";
 import type { Series } from "../../fixtures/week3";
-import { outcome, result } from "../../parts";
+import { carryWorking, outcome, result } from "../../parts";
 import { cardGo } from "../../paths";
 import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PerfectPlayer, PlayerSeries } from "./types";
@@ -26,7 +26,8 @@ export function GamesPanel({
 }) {
   const role = ROLE_NAME[player.slot];
   const meta = [player.team, role, player.carry && MARK_NAME.C].filter(Boolean).join(" · ");
-  const sum = player.series.map((s) => s.points).join(" + ");
+  const points = player.series.map((s) => s.points);
+  const sum = points.join(" + ");
   return (
     <PlayerPanel name={player.name} meta={meta} onClose={onClose}>
       {player.series.map((s) => {
@@ -57,7 +58,7 @@ export function GamesPanel({
                 <br />
               </>
             )}
-            {player.carry ? `${sum} = ${player.raw} × ${carryTimes}` : sum}
+            {player.carry && player.raw !== undefined ? carryWorking(points, player.raw, carryTimes) : sum}
           </>
         }
         figure={player.points}

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, eok, LinkGo, PriceMove, Tag, Time } from "../../parts";
+import { bestOf, cx, eok, LinkGo, oneDecimal, pct, PriceMove, Tag, Time } from "../../parts";
 import { cardGo } from "../../paths";
 import { isBench, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PickPlayer } from "./fixtures";
@@ -30,10 +30,10 @@ export function PlayerCard({ data, state, player: p, dispatch }: ViewProps & { p
       )}
       <dl className="pick-team__rows">
         <Row k="Form">
-          <b className="num">{p.form.toFixed(1)}</b> · {ranked(p.formRank)}
+          <b className="num">{oneDecimal(p.form)}</b> · {ranked(p.formRank)}
         </Row>
         <Row k="Owned">
-          <b className="num">{p.ownedPct}%</b> · {ranked(p.ownedRank)}
+          <b className="num">{pct(p.ownedPct)}</b> · {ranked(p.ownedRank)}
         </Row>
         <Row k="Season">
           <b className="num">{p.season}</b> · {ranked(p.seasonRank)}
@@ -51,7 +51,7 @@ export function PlayerCard({ data, state, player: p, dispatch }: ViewProps & { p
               {s.day} <Time local={s.local} kst={s.kst} />
             </span>
             <span>
-              v {opponent(s, p.team)} · Bo{data.bestOf}
+              v {opponent(s, p.team)} · {bestOf(data.bestOf)}
             </span>
           </div>
         ))}

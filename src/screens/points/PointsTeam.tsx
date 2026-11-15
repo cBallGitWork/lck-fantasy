@@ -1,4 +1,4 @@
-import { Tag } from "../../parts";
+import { carrySum, NONE, Tag } from "../../parts";
 import { Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { DIDNT_PLAY, type PointsSeries, type PointsStarter } from "./types";
 
@@ -22,7 +22,7 @@ export function SeriesLine({ series }: { series: PointsSeries[] }) {
 }
 
 /** The Carry's sum before the multiplier, small after his points: `17×1.5`. */
-const carrySum = (carry: PointsStarter["carry"]) => carry && `${carry.raw}×${carry.multiplier}`;
+const carried = (carry: PointsStarter["carry"]) => carry && carrySum(carry.raw, carry.multiplier);
 
 const subbedIn = (p: PointsStarter) => p.subbedInFor && `Subbed in for ${p.subbedInFor}`;
 
@@ -47,8 +47,8 @@ export function PointsRift({ starters, open, onOpen }: TeamProps) {
           at={RIFT_SLOTS[p.slot]}
           mark={p.mark}
           birthday={p.birthday}
-          points={p.points ?? "—"}
-          carrySum={carrySum(p.carry)}
+          points={p.points ?? NONE}
+          carrySum={carried(p.carry)}
           line={<SeriesLine series={p.series} />}
           tags={p.subbedInFor && <Tag>{subbedIn(p)}</Tag>}
           selected={p.name === open}
@@ -73,8 +73,8 @@ export function PointsCards({ starters, open, onOpen }: TeamProps) {
         next: <SeriesLine series={p.series} />,
         footer: (
           <span className="points__card-points num">
-            {p.points ?? "—"}
-            {p.carry && <small>{carrySum(p.carry)}</small>}
+            {p.points ?? NONE}
+            {p.carry && <small>{carried(p.carry)}</small>}
           </span>
         ),
         selected: p.name === open,

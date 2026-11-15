@@ -7,6 +7,7 @@ test("a price move is ▲ rise or ▼ fall to one decimal, nothing when it held"
   expect(html(<PriceMove eok={0.5} />)).toBe('<span class="rise">0.5</span>');
   expect(html(<PriceMove eok={-1} />)).toBe('<span class="fall">1.0</span>');
   expect(html(<PriceMove eok={0} />)).toBe("");
+  expect(html(<PriceMove eok={0.5} className="compare__move" />)).toBe('<span class="rise compare__move">0.5</span>');
 });
 
 test("a rank move is rank-up or rank-down with its places marked", () => {

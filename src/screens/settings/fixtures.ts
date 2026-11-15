@@ -2,7 +2,8 @@
 // Tuesday, before the deadline, with one unsaved change to the hangul banner. Not roster data.
 // Both emails are off, as spec/12 sets them by default.
 
-import { MANAGER } from "../../fixtures/week3";
+import { MANAGER, WEEK4_DEADLINE } from "../../fixtures/week3";
+import { SQUAD_SIZE } from "../../rift";
 import { BROWSER, type Account, type DeleteRow, type SettingsValues } from "./settings";
 import type { SignUpAnswers } from "./SignUp";
 
@@ -27,7 +28,7 @@ export const ACCOUNT: Account = { email: "barons.steal.fc@gmail.com", provider: 
 export const REMINDER_HOURS = 24;
 
 /** Week 4's deadline as an instant: Wed 20 Jan 2027, 16:45 KST. */
-export const DEADLINE_AT = "2027-01-20T07:45:00Z";
+export const DEADLINE_AT = WEEK4_DEADLINE.at;
 
 /** The zone the picture's browser reports. */
 export const BROWSER_ZONE = "Europe/London";
@@ -51,7 +52,7 @@ export const DELETE_ROWS: DeleteRow[] = [
 ];
 
 /** A guest's squad at sign-up: all nine picked. */
-export const SQUAD_SIZE = 9;
+export { SQUAD_SIZE };
 
 /** Sign-up step 2 as the picture draws it: no team picked, the box unticked. */
 export const SIGN_UP: SignUpAnswers = {

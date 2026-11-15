@@ -1,6 +1,6 @@
-import { eok, RankMove, Table, type Column } from "../../parts";
+import { eok, NONE, RankMove, Table, type Column } from "../../parts";
 import type { HistoryRow } from "./fixtures";
-import { count, NONE } from "./format";
+import { count } from "./format";
 
 const COLUMNS: Column<HistoryRow>[] = [
   { key: "week", head: "Week", cell: (r) => `Week ${r.week}` },

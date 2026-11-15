@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LinkGo, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle } from "../../parts";
+import { LinkGo, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle } from "../../parts";
 import { PATHS } from "../../paths";
 import { BenchBar, BenchTile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
@@ -89,7 +89,7 @@ export function PointsPage({
               name={p.name}
               team={p.team}
               detail={played ? undefined : DIDNT_PLAY}
-              points={p.points ?? "—"}
+              points={p.points ?? NONE}
               state={played ? undefined : "out"}
               selected={p.name === open}
               onSelect={played ? () => setOpen(p.name) : undefined}

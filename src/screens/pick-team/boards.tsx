@@ -1,15 +1,15 @@
-import { eok, Tag } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchSwap, BenchTile, Lineup, RIFT_SLOTS_PICK, Rift, Tile, type LineupCardProps, type RoleKey } from "../../rift";
+import { eok, oneDecimal, Tag } from "../../parts";
+import { BENCH_SLOTS, BenchBar, BenchSwap, BenchTile, Lineup, LINEUP_ORDER, RIFT_SLOTS_PICK, Rift, Tile, type LineupCardProps, type RoleKey } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
-import { fitIds, STARTER_SLOTS } from "./model";
+import { fitIds } from "./model";
 
 /** The role a Flex plays; the coach plays none. */
 const playsFor = (p: PickPlayer): RoleKey | undefined => (p.role === "coach" ? undefined : p.role);
 
 /** The starter in each slot, in the broadcast's order. */
 const starters = ({ data, state }: ViewProps) =>
-  STARTER_SLOTS.map((slot) => ({ slot, p: data.players[state.draft.slots[slot]] as PickPlayer }));
+  LINEUP_ORDER.map((slot) => ({ slot, p: data.players[state.draft.slots[slot]] as PickPlayer }));
 
 /** Rift view: the seven starters on the Rift, the bench bar under it. Mid-swap, the rest dim. */
 export function RiftBoard(props: ViewProps) {
@@ -56,7 +56,7 @@ export function CardBoard(props: ViewProps) {
     footer: (
       <>
         <span>
-          Form <b>{p.form.toFixed(1)}</b>
+          Form <b>{oneDecimal(p.form)}</b>
         </span>
         <b>{eok(p.priceEok)}</b>
       </>

@@ -1,9 +1,8 @@
 import type { TeamCode } from "../../fixtures/week3";
-import { GoLink } from "../../parts";
+import { GoLink, NONE } from "../../parts";
 import type { HubWeek } from "./types";
 import { ByDay, seriesGo, WeekTitle } from "./Week";
 
-const NO_RECORD = "—";
 
 /**
  * Fixtures: one week by day. Each series: your time and KST, each team's record beside its code,
@@ -23,7 +22,7 @@ export function Fixtures({
   onPrev?: () => void;
   onNext?: () => void;
 }) {
-  const record = (team: TeamCode) => <small className="lck-hub__record num">{records[team] ?? NO_RECORD}</small>;
+  const record = (team: TeamCode) => <small className="lck-hub__record num">{records[team] ?? NONE}</small>;
   return (
     <section>
       <WeekTitle week={week} bestOf={bestOf} onPrev={onPrev} onNext={onNext} />

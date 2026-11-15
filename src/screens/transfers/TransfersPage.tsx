@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { againstLine } from "../../fixtures/series";
 import type { BuffName } from "../../fixtures/week3";
-import { Deadline, formatEok, MainAction, Menu, OutlinedKey, PageFrame, PageHead, ViewToggle } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchTile, Lineup, RIFT_SLOTS, Rift, Tile, type RiftPoint, type RoleKey, type SlotKey, type SquadSlot } from "../../rift";
+import { Deadline, formatEok, MainAction, Menu, OutlinedKey, PageFrame, PageHead, pct, ViewToggle } from "../../parts";
+import { BENCH_SLOTS, BenchBar, BenchTile, Lineup, RIFT_SLOTS, RIFT_VIEW, Rift, Tile, VIEWS, type BoardView, type RiftPoint, type RoleKey, type SlotKey, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed, costLabel } from "./Confirmed";
 import {
@@ -27,7 +28,7 @@ import {
 import { ALL_TEAMS, PlayerList } from "./PlayerList";
 import "./transfers.css";
 
-export type View = "Rift view" | "Card view";
+export type View = BoardView;
 export type Show = "Fixtures" | "Price" | "Owned";
 
 export interface TransfersPageProps {
@@ -59,7 +60,6 @@ export interface TransfersPageProps {
   onBuff?: (buff: BuffName) => void;
 }
 
-const VIEWS: readonly View[] = ["Rift view", "Card view"];
 const SHOWS: readonly Show[] = ["Fixtures", "Price", "Owned"];
 /** Where each starter stands on Transfers' Rift (transfers.html): Points' places, the Flex a little left. */
 const TRANSFERS_SLOTS: Record<SlotKey, RiftPoint> = { ...RIFT_SLOTS, flex: [238, 468] };
@@ -70,8 +70,8 @@ type Standing = SquadPlayer | ListPlayer;
 /** What sits under a player, by Show: his fixtures (`v DNS · v HLE`), price or owned. */
 export function under(show: Show, p: Standing, fixtures: Record<string, Fixture[]>): string {
   if (show === "Price") return formatEok(p.price);
-  if (show === "Owned") return `${p.ownedPct}%`;
-  return (fixtures[p.team] ?? []).map((f) => `v ${f.against}`).join(" · ");
+  if (show === "Owned") return pct(p.ownedPct);
+  return againstLine((fixtures[p.team] ?? []).map((f) => f.against));
 }
 
 const playsOf = (slot: SquadSlot, p: Standing): RoleKey | undefined => (slot === "flex" && p.role !== "coach" ? p.role : undefined);
@@ -82,7 +82,7 @@ const hitLabel = (hit: number) => (hit > 0 ? `−${hit}` : "0");
 export function TransfersPage(props: TransfersPageProps) {
   const { squad, rules, fixtures } = props;
   const [plan, setPlan] = useState<Plan>(props.initialPlan ?? EMPTY_PLAN);
-  const [view, setView] = useState<View>(props.view ?? "Rift view");
+  const [view, setView] = useState<View>(props.view ?? RIFT_VIEW);
   const [show, setShow] = useState<Show>("Fixtures");
   const [reviewing, setReviewing] = useState(props.reviewing ?? false);
   const [filters, setFilters] = useState<ListFilters>({
@@ -161,7 +161,7 @@ export function TransfersPage(props: TransfersPageProps) {
         <ViewToggle options={VIEWS} chosen={view} onChoose={chooseView} label="View" />
         <Menu className="transfers__show" label={`Show: ${show} ▾`} items={SHOWS.map((s) => ({ label: s, onChoose: () => setShow(s) }))} />
       </div>
-      {view === "Rift view" ? (
+      {view === RIFT_VIEW ? (
         <Rift>
           {STARTERS.map((slot) => {
             const s = slotView(slot);

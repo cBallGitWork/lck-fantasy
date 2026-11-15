@@ -1,8 +1,8 @@
 import type { ChangeEvent, ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
-import { cx, eok, GoLink, MeDot, PageFrame, PageHead, PriceMove, score, Table, Tabs, ViewToggle, type Column } from "../../parts";
+import { cx, eok, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, Tabs, ViewToggle, type Column } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
-import { ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
+import { ROLE_KEYS, ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import {
   ALL,
   FIGURES,
@@ -11,7 +11,6 @@ import {
   pageCount,
   pageLabel,
   pageRows,
-  perGame,
   priceChoices,
   TABS,
   type Figures,
@@ -21,8 +20,6 @@ import {
   type StatsView,
 } from "./stats";
 import "./stats.css";
-
-const ROLES: readonly RoleKey[] = ["top", "jng", "mid", "bot", "sup"];
 
 type Ranked = StatsRow & { rank: number };
 
@@ -74,7 +71,7 @@ function Controls({ view, rows, spans, onChange }: Omit<StatsPageProps, "account
         <ViewToggle<RoleKey | typeof ALL>
           options={[
             { value: ALL, label: "All" },
-            ...ROLES.map((role) => ({
+            ...ROLE_KEYS.map((role) => ({
               value: role,
               label: (
                 <span className="stats__role">
@@ -148,7 +145,7 @@ function Select({
 
 /** A count as the toggle shows it: as it is, or over games to one decimal. Zero in mid grey. */
 function Count({ n, games, figures }: { n: number; games: number; figures: Figures }) {
-  return <span className={cx(n === 0 && "stats__zero")}>{figures === "Per game" ? perGame(n, games).toFixed(1) : n}</span>;
+  return <span className={cx(n === 0 && "stats__zero")}>{figures === "Per game" ? perGame(n, games) : n}</span>;
 }
 
 function Move({ moveEok }: { moveEok: number }) {
@@ -185,8 +182,8 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
     },
     sortable("priceEok", "Price", (r) => eok(r.priceEok)),
     { key: "move", head: "", cell: (r) => <Move moveEok={r.moveEok} /> },
-    sortable("form", "Form", (r) => r.form.toFixed(1)),
-    sortable("ownedPct", "Owned", (r) => `${r.ownedPct}%`),
+    sortable("form", "Form", (r) => oneDecimal(r.form)),
+    sortable("ownedPct", "Owned", (r) => pct(r.ownedPct)),
     sortable("points", "Pts", (r) => <Count n={r.points} games={r.games} figures={view.figures} />),
     sortable("games", "Games", (r) => r.games, true),
     ...(coaches ? [seriesColumn] : []),

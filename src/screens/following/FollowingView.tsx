@@ -1,4 +1,4 @@
-import { Columns, GoLink, OutlinedKey, PageFrame, PageHead, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
+import { bestOf, Columns, GoLink, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
 import {
   movesSummary,
@@ -108,7 +108,7 @@ function Series({ item, multiplier }: { item: SeriesItem; multiplier: number }) 
   return (
     <>
       <span className="following__pts num">{item.points}</span>
-      {item.home} {item.score[0]}–{item.score[1]} {item.away} <span className="following__bo">Bo{item.bestOf}</span>
+      {item.home} {score(item.score)} {item.away} <span className="following__bo">{bestOf(item.bestOf)}</span>
       {item.bigCarry && (
         <>
           {" "}

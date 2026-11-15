@@ -2,6 +2,7 @@
 // the deadline, so Carry shows. Names and numbers are examples, not roster data. The sample manager
 // is week3.ts's. The backend feeds each of these once it is wired (#38).
 
+import { MANAGERS } from "../../fixtures/managers";
 import { MANAGER } from "../../fixtures/week3";
 import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, StandingRow } from "./types";
 
@@ -57,9 +58,9 @@ const PUB_LEAGUE: LeagueView = {
           [
             [1, null, "Kiin Bean", "Tom Reid", "Chovy", 61, 1214],
             me(2, 1, 98, 1198),
-            [3, -1, "Chovy Was Right There", "Minji Park", "Chovy", 54, 1187],
-            [4, 2, "Peanut Butter Gank", "Dan Okafor", "Peyz", 77, 1160],
-            [5, null, "Deft Tomorrow", "Jae Kim", "Ruler", 66, 1151],
+            [3, -1, MANAGERS.minji.team, MANAGERS.minji.name, "Chovy", 54, 1187],
+            [4, 2, MANAGERS.dan.team, MANAGERS.dan.name, "Peyz", 77, 1160],
+            [5, null, MANAGERS.jae.team, MANAGERS.jae.name, "Ruler", 66, 1151],
             [6, -2, "Guma Gang", "Sam Hill", "Gumayusi", 49, 1139],
             [7, 1, "Zeus Juice", "Priya Shah", "Zeus", 70, 1122],
             [8, -1, "Smeb Nostalgia", "Liam Byrne", "Kiin", 58, 1108],

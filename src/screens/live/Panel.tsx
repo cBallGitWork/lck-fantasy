@@ -1,8 +1,8 @@
-import { cx, GoLink, LinkGo, SectionHead, Tag } from "../../parts";
+import { cx, GoLink, LinkGo, NONE, score, SectionHead, Tag } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
-import { dash, dot, WORDS } from "./words";
+import { dot, WORDS } from "./words";
 
 function Mark({ mark }: { mark?: "C" | "V" }) {
   return mark ? <span className={cx("live__mark", mark === "C" && "live__mark--c")}>{mark}</span> : null;
@@ -10,7 +10,7 @@ function Mark({ mark }: { mark?: "C" | "V" }) {
 
 /** This series' games: `G1 4 · G2 1 Live 3/0/2`, dashes where the feed is down. */
 function GameLine({ player }: { player: PanelPlayer }) {
-  const games = player.games.map((g, i) => `${WORDS.gameShort}${i + 1} ${g ?? WORDS.noPoints}`).join(dot);
+  const games = player.games.map((g, i) => `${WORDS.gameShort}${i + 1} ${g ?? NONE}`).join(dot);
   return (
     <span className="live__games num">
       {games}
@@ -78,7 +78,7 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
         </span>
       </div>
       <SectionHead>
-        {series.home} {series.score ? series.score.join(dash) : WORDS.versus} {series.away}
+        {series.home} {series.score ? score(series.score) : WORDS.versus} {series.away}
       </SectionHead>
       {panel.players.map((p) => (
         <PlayerRow key={p.id} player={p} />

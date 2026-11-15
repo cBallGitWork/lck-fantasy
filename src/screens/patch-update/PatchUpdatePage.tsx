@@ -1,5 +1,5 @@
 import { MANAGER } from "../../fixtures/week3";
-import { cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, Table, Time, WeekArrow, type Column } from "../../parts";
+import { cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, pct, Table, Time, WeekArrow, type Column } from "../../parts";
 import { cardGo, type Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { PriceMove, PriceWeek } from "./fixtures";
@@ -37,7 +37,7 @@ const COLUMNS: Column<PriceMove>[] = [
     },
   },
   { key: "now", head: "Now", figure: true, cell: (row) => <b>{eok(row.nowEok)}</b> },
-  { key: "owned", head: "Owned", figure: true, cell: (row) => `${row.ownedPct}%` },
+  { key: "owned", head: "Owned", figure: true, cell: (row) => pct(row.ownedPct) },
 ];
 
 function MoveList({ kind, title, rows }: { kind: "rise" | "fall"; title: string; rows: PriceMove[] }) {

@@ -2,8 +2,9 @@
 // LCK Cup Week 3 on the Sunday before its last two series, so Week 3 is not final. Her series are
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
+import { MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
-import { playerId, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
+import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
 import { score } from "../../parts";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
@@ -140,7 +141,7 @@ const WEEK3_TEAM: ProfilePick[] = [
 ];
 
 export const PROFILE: ProfileData = {
-  manager: { id: "minji", name: "Minji Park", team: "Chovy Was Right There", hangul: "쵸비는 바로 거기 있었다", follow: "following" },
+  manager: { id: MANAGERS.minji.id, name: MANAGERS.minji.name, team: MANAGERS.minji.team, hangul: "쵸비는 바로 거기 있었다", follow: "following" },
   currentWeek: 3,
   weeks: [
     { week: 1, points: 59, final: true, trucks: [] },
@@ -148,14 +149,13 @@ export const PROFILE: ProfileData = {
     {
       week: 3,
       points: 93,
-      average: 79,
-      highest: 136,
+      ...WEEK3_FINAL,
       final: false,
       buff: "Limitless",
       team: WEEK3_TEAM,
       trucks: [
-        { kind: "protest", line: "The template was right there, mate.", from: "Dan Okafor" },
-        { kind: "coffee", line: "This coffee is Keria-tier support.", from: "Jae Kim" },
+        { kind: "protest", line: "The template was right there, mate.", from: MANAGERS.dan.name },
+        { kind: "coffee", line: "This coffee is Keria-tier support.", from: MANAGERS.jae.name },
       ],
     },
   ],

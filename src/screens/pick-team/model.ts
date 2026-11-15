@@ -2,9 +2,8 @@
 // Pick Team; the picture's README, Controls). Swaps, the Carry, the Vice-carry and buffs change
 // only the draft; Save makes the draft the saved team, Reset drops it.
 
-import { BENCH_SLOTS, isBench, type PersonRole, type SlotKey, type SquadSlot } from "../../rift";
+import { BENCH_SLOTS, isBench, LINEUP_ORDER, type PersonRole, type SlotKey, type SquadSlot } from "../../rift";
 
-export const STARTER_SLOTS: readonly SlotKey[] = ["top", "jng", "mid", "bot", "sup", "flex", "coach"];
 
 /** The two buffs played on this page; Remake and Limitless are played on Transfers. */
 export type PickBuff = "benchBoost" | "dualCarry";
@@ -77,7 +76,7 @@ const passMark = (mark: string, out: string, inId: string) => (mark === out ? in
 
 /** How many things the draft changes from the saved team: each swap, the bench order, each mark moved, the buff. */
 export function changeCount(saved: PickTeam, draft: PickTeam): number {
-  const starters = STARTER_SLOTS.filter((s) => saved.slots[s] !== draft.slots[s]).length;
+  const starters = LINEUP_ORDER.filter((s) => saved.slots[s] !== draft.slots[s]).length;
   const savedBench = BENCH_SLOTS.map((b) => saved.slots[b]);
   const draftBench = BENCH_SLOTS.map((b) => draft.slots[b]);
   const sameBench = [...savedBench].sort().join() === [...draftBench].sort().join();

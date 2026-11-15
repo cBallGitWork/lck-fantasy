@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { count, GoLink, RankMove, Tag } from "../../parts";
+import { count, GoLink, NONE, RankMove, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { chaseText } from "./format";
 import type { StandingRow, Standings as StandingsData } from "./types";
@@ -9,7 +9,7 @@ const ALWAYS_SHOWN_COLUMNS = 6;
 
 /** A rank's move: ▲ or ▼ in ink and the places, or `—` when it held. */
 export function Move({ move }: { move: number | null }) {
-  if (move === null || move === 0) return <span className="leagues__nil">—</span>;
+  if (move === null || move === 0) return <span className="leagues__nil">{NONE}</span>;
   return <RankMove move={move} />;
 }
 
@@ -70,7 +70,7 @@ function Row({ row, carryShown, splitColumn }: { row: StandingRow; carryShown: b
       </td>
       {carryShown && <td>{row.carry}</td>}
       <td className="leagues__figure num">{row.week}</td>
-      {splitColumn && <td className="leagues__figure num">{row.split === undefined ? "—" : count(row.split)}</td>}
+      {splitColumn && <td className="leagues__figure num">{row.split === undefined ? NONE : count(row.split)}</td>}
       <td className="leagues__figure num">{count(row.total)}</td>
       <td className="leagues__go">
         <GoLink go={{ to: PATHS.profile, params: { managerId: row.managerId } }} label={`Open ${row.team}`}>

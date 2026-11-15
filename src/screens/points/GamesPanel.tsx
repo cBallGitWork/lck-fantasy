@@ -1,4 +1,4 @@
-import { outcome, result, score, Tag } from "../../parts";
+import { carryWorking, outcome, result, score, Tag } from "../../parts";
 import { cardGo } from "../../paths";
 import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PointsPlayer, PointsSeries, PointsStarter } from "./types";
@@ -43,7 +43,7 @@ export function GamesPanel({ player, onClose }: { player: PointsPlayer & Partial
             <>
               <PanelSumLabel>Your {MARK_NAME.C}</PanelSumLabel>
               <br />
-              {`${player.series.map((s) => s.points).join(" + ")} = ${carry.raw} × ${carry.multiplier}`}
+              {carryWorking(player.series.map((s) => s.points), carry.raw, carry.multiplier)}
               <br />
               <PanelSumLabel>
                 Average {MARK_NAME.C} {carry.average}

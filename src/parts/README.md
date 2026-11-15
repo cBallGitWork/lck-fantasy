@@ -18,6 +18,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `SideSection.tsx`: a side column section: 2px rule, 14px title, its count or state.
 - `SectionHead.tsx`: a main-column section's head: 2px ink rule, 14px bold title, its note in mid grey.
 - `SeriesList.tsx`: the week's series: day, teams, then score and state, or the time.
+- `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px ink rule, the next 3 with `Bo3`, the first in ink (player card, coach card).
 - `Menu.tsx`: a key that opens a list of links and actions (a league's Admin menu; the account menu once its items are settled).
 - `States.tsx`: `Loading` (fill bars), `Empty` (a title, one line), `ErrorState` (a title, one line, `Try again ›`).
 - `Modal.tsx`: a card (1056) or sheet (544) over a dimmed page; ✕, Esc, focus kept inside.
@@ -30,8 +31,8 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `TierShield.tsx`: Overall's tier shield with its division (spec/08); the page sizes and colours it through its class names.
 - `SponsorNote.tsx`: `All sponsors are made up.`
 - `money.ts`: an amount in 억 (`eok` for a price held in 억, `eokToWon`), and the note for overseas players (spec/02).
-- `figures.ts`: counts, places (`2nd`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`) and per-game figures, written one way everywhere.
-- `Move.tsx`: `PriceMove` (▲ 0.5) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
+- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`), per-game and one-decimal figures, per cents, `Bo3`, the Carry's `22×1.5` and absence (`—`), written one way everywhere.
+- `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
 - `GoLink.tsx`: a link inside Flol through the router, typed by `src/paths.ts` (`Go`).
 - `selectable.ts`: makes a tile or card a key: click, Enter or Space.
 - `cx.ts`: joins class names.

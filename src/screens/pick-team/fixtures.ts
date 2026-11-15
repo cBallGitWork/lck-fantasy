@@ -2,7 +2,7 @@
 // picture's moment: Week 4, Tuesday 22:00 London, before the deadline (pick.html). Faker's and
 // Siwoo's card figures are the picture's; the other players' are made up the same way.
 
-import { BEST_OF, COMPETITION, MANAGER, PICK_TEAM_SQUAD, playerId, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
+import { BEST_OF, CARRY_MULTIPLIER, COMPETITION, MANAGER, PICK_TEAM_SQUAD, playerId, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
 import type { Mark, PersonRole, SquadSlot } from "../../rift";
 import type { PickBuff, PickState, PickTeam } from "./model";
 
@@ -92,7 +92,7 @@ export const PICK_TEAM_DATA: PickTeamData = {
   deadline: WEEK4_DEADLINE,
   buffs: [
     { name: "Bench Boost", does: "Your bench scores too", left: 1, here: "benchBoost" },
-    { name: "Dual Carry", does: "Vice-carry ×1.5 too", left: 1, here: "dualCarry" },
+    { name: "Dual Carry", does: `Vice-carry ×${CARRY_MULTIPLIER} too`, left: 1, here: "dualCarry" },
     { name: "Remake", does: "Unlimited transfers, kept", left: 1 },
     { name: "Limitless", does: "One week, no budget or team cap", left: 1 },
   ],

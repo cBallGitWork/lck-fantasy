@@ -22,7 +22,7 @@ nav.top .sp { flex: 1; }
 .bug .sc.v { font-size: 20px; }
 .bug .lo b { color: var(--mid); }
 .meta { display: flex; gap: 24px; align-items: baseline; color: var(--mid); } .meta b { color: var(--ink); font-weight: 600; } .meta .tag { border: 1px solid var(--ink); color: var(--ink); padding: 1px 8px; font-size: 12px; font-weight: 600; }
-.meta .sp { flex: 1; } .meta a { color: var(--ink); font-weight: 600; }
+.meta .tag.nf { border-style: dashed; font-weight: 500; } .meta .sp { flex: 1; } .meta a { color: var(--ink); font-weight: 600; }
 .meta .fig { color: var(--ink); } .meta .fig b { font: 600 20px "IBM Plex Mono", monospace; margin-left: 8px; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
 h2 { font-size: 14px; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 8px; display: flex; gap: 10px; align-items: baseline; } h2 small { color: var(--mid); font-weight: 400; font-size: 12px; }
@@ -46,9 +46,9 @@ tr.co td { border-top: 1px solid var(--line); }
 .none { color: var(--mid); }
 /* the draft: one row per game, blue side left, red side right */
 .draft { margin-top: 32px; }
-.dr { display: grid; grid-template-columns: 88px 1fr 1fr; background: var(--paper); border-top: 1px solid var(--fill); }
+.dr { display: grid; grid-template-columns: 124px 1fr 1fr; background: var(--paper); border-top: 1px solid var(--fill); }
 .dr:first-of-type { border-top: 0; }
-.dr .g { padding: 10px 12px; font: 600 14px "IBM Plex Mono", monospace; } .dr .g small { display: block; font: 12px "IBM Plex Mono", monospace; color: var(--mid); }
+.dr .g { padding: 10px 12px; font: 600 14px "IBM Plex Mono", monospace; } .dr .g small { display: block; font: 12px "IBM Plex Mono", monospace; color: var(--mid); } .dr .g a { font: 600 12px "IBM Plex Sans KR"; color: var(--ink); }
 .side { padding: 10px 12px; display: grid; grid-template-columns: 96px 1fr; row-gap: 2px; }
 .side.red { border-left: 1px solid var(--line); }
 .side .who { grid-row: span 2; font-weight: 700; } .side .who small { display: block; font: 400 12px "IBM Plex Sans KR"; color: var(--mid); }
@@ -115,11 +115,19 @@ const S = {
           ["sup", "Delight", "유환중", [["Nautilus", 0, 3, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 2, 14, 0, 0, 0, 0, 0], ["Leona", 0, 3, 10, 0, 0, 0, 0, 0]]]],
       bans: [["Kalista", "Sylas", "Rakan", "Corki", "Jax"], ["Kai'Sa", "Azir", "Rell", "Sejuani", "Rumble"], ["Lee Sin", "Jinx", "Rell", "Taliyah", "Gnar"]] } },
 };
+// Live: the same series at the Points moment (Sat 21:10 KST): T1 1–0, game 2 at 14:20. Faker G2 1, Siwoo G2 1, kkOma G2 0 (Points).
+// A live game has no gold lead (at 15:00), deathless, solo kills or steals yet: they come at final (spec/11). G2 so far: [champion, K, D, A, first blood]
+S.live = JSON.parse(JSON.stringify(S.final));
+S.live.games[1] = { live: "14:20", blue: "DK" }; S.live.pog = null;
+const G2 = { T1: [["Rumble", 1, 0, 1, 0], ["Xin Zhao", 1, 1, 2, 1], ["Sylas", 3, 0, 2, 0], ["Varus", 2, 0, 3, 0], ["Nautilus", 0, 1, 4, 0]],
+  DK: [["Gnar", 2, 1, 1, 0], ["Maokai", 0, 2, 1, 0], ["Azir", 0, 2, 1, 0], ["Zeri", 0, 1, 0, 0], ["Alistar", 0, 1, 2, 0]] };
+for (const c of ["T1", "DK"]) S.live[c].p.forEach((p, j) => { const [ch, k, d, a, fb] = G2[c][j]; p[3][1] = [ch, k, d, a, 0, 0, fb, 0, 0, true]; });
+S.live.T1.coach[2][1] = [0, 0, 0, 0, 0];
 const RH = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support" };
 const cap = (x) => Math.max(-3, Math.min(3, x));
-function pts(role, [, k, d, a, gold, solo, fb, multi, steal]) {
+function pts(role, [, k, d, a, gold, solo, fb, multi, steal, live]) {
   const kd = role === "top" || role === "sup" ? 2 : 3;
-  return cap(Math.floor(k / kd)) + cap(Math.floor(a / 5)) - cap(Math.floor(d / (role === "sup" ? 4 : 3))) + gold + solo + fb + (d === 0 ? 1 : 0) + multi + steal;
+  return cap(Math.floor(k / kd)) + cap(Math.floor(a / 5)) - cap(Math.floor(d / (role === "sup" ? 4 : 3))) + gold + solo + fb + (d === 0 && !live ? 1 : 0) + multi + steal;
 }
 const sum = (xs) => xs.reduce((s, x) => s + x, 0);
 // best 2 games: the indexes that count (the earlier game wins a tie, as on Points)
@@ -129,26 +137,26 @@ const pog = (s, i, n) => (s.games[i].pog === n ? '<span class="pog">POG</span>' 
 const cell = (s, i, n, label, sub, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}<small>${sub}${pog(s, i, n)}</small></span><span class="p">${counted ? `<span class="box">${p}</span>` : p}</span></div></td>`;
 const L = ["Tower", "Drakes", "Baron", "Elder", "Quick"];
 function team(s, code) {
-  const t = s[code], won = s.games.map((g) => g.w === code), n = s.games.length;
+  const t = s[code], won = s.games.map((g) => g.w === code), n = s.games.length, over = s.games.every((g) => g.w);
   const head = `<colgroup><col style="width:88px"><col style="width:${n > 2 ? 150 : 170}px">${s.games.map(() => "<col>").join("")}<col style="width:60px"></colgroup>
-    <tr><th></th><th></th>${s.games.map((g, i) => `<th>G${i + 1} <b>${g.w === code ? "W" : "L"}</b> · ${g.len}</th>`).join("")}<th class="n">Series</th></tr>`;
+    <tr><th></th><th></th>${s.games.map((g, i) => `<th>G${i + 1} ${g.live ? `<b>● ${g.live}</b>` : `<b>${g.w === code ? "W" : "L"}</b> · ${g.len}`}</th>`).join("")}<th class="n">Series</th></tr>`;
   const rows = t.p.map(([rl, nm, k, gs]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps);
     return `<tr><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}</td><td class="pl"><b>${nm}</b><small>${k}</small>${me(nm)}</td>
       ${gs.map((g, i) => cell(s, i, nm, g[0], `${g[1]}/${g[2]}/${g[3]}`, ps[i], c.includes(i))).join("")}<td class="tot">${sum(c.map((i) => ps[i]))}</td></tr>`; }).join("");
-  const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = won.filter(Boolean).length === 2 ? 3 : -1;
+  const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = !over ? 0 : won.filter(Boolean).length === 2 ? 3 : -1;
   const coach = `<tr class="co"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b><small>${ck}</small>${me(cn)}</td>
     ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? L[j] : "")).filter(Boolean).join(" · ") || "–"}</span>`, "", cp[i], c.includes(i))).join("")}
-    <td class="tot">${sum(c.map((i) => cp[i])) + sw}<small>${sw > 0 ? "+3" : "−1"}</small></td></tr>`;
+    <td class="tot">${sum(c.map((i) => cp[i])) + sw}<small>${sw > 0 ? "+3" : sw < 0 ? "−1" : "&nbsp;"}</small></td></tr>`;
   return { html: `<section><h2>${t.name}</h2><table>${head}${rows}${coach}</table></section>`,
     mine: sum(t.p.filter(([, nm]) => MINE.includes(nm)).map(([rl, , , gs]) => { const ps = gs.map((g) => pts(rl, g)); return sum(best2(ps).map((i) => ps[i])); }))
       + (MINE.includes(cn) ? sum(c.map((i) => cp[i])) + sw : 0) };
 }
 function draft(s) {
-  const side = (code, i, cls) => { const t = s[code], won = s.games[i].w === code;
-    return `<div class="side ${cls}"><div class="who">${code} <span style="font-weight:400;color:var(--mid)">${won ? "W" : "L"}</span><small>${cls === "blue" ? "Blue" : "Red"}</small></div>
+  const side = (code, i, cls) => { const t = s[code], g = s.games[i], won = g.w === code;
+    return `<div class="side ${cls}"><div class="who">${code} <span style="font-weight:400;color:var(--mid)">${g.live ? "" : won ? "W" : "L"}</span><small>${cls === "blue" ? "Blue" : "Red"}</small></div>
       <div class="pk">${t.p.map((p) => `<span>${p[3][i][0]}</span>`).join("")}</div><div class="bn">Bans · ${t.bans[i].join(" · ")}</div></div>`; };
   return `<section class="draft"><h2>Draft</h2>${s.games.map((g, i) => { const red = g.blue === s.a ? s.b : s.a;
-    return `<div class="dr"><div class="g">G${i + 1}<small>${g.len}</small></div>${side(g.blue, i, "blue")}${side(red, i, "red")}</div>`; }).join("")}</section>`;
+    return `<div class="dr"><div class="g">G${i + 1}${g.live ? `<small>● ${g.live}</small>` : `<small>${g.len} · <a>VOD ›</a></small>`}</div>${side(g.blue, i, "blue")}${side(red, i, "red")}</div>`; }).join("")}</section>`;
 }
 // Before it starts: Week 4's HLE v DK, Wednesday 20 Jan, opened at the hub's moment.
 const NEXT = { HLE: [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "김건우"], ["Gumayusi", "이민형"], ["Delight", "유환중"], ["Homme", "윤성영"]],
@@ -160,11 +168,11 @@ if (V === "next") {
   $("two").innerHTML = Object.entries(NEXT).map(([c, ps]) => `<section><h2>${c}<small>${c === "HLE" ? "Hanwha Life" : "Dplus KIA"}</small></h2><table>
     ${ps.map(([n, k], i) => `<tr class="${i === 5 ? "co" : ""}"><td class="rl" style="width:110px;height:48px"><svg><use href="#i-${ICO[i]}"/></svg>${i === 5 ? "Coach" : RH[ICO[i]]}</td><td class="pl" style="height:48px"><b>${n}</b><small>${k}</small>${me(n)}</td></tr>`).join("")}</table></section>`).join("");
 } else {
-  const s = S[V], A = team(s, s.a), B = team(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.length - wa;
+  const s = S[V], A = team(s, s.a), B = team(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.filter((g) => g.w === s.b).length, live = s.games.some((g) => g.live);
   const rec = (c) => (s[c].name === c ? s[c].rec : `${s[c].name} · ${s[c].rec}`);
-  $("bug").innerHTML = `<div class="tm ${wa < wb ? "lo" : ""}"><b>${s.a}</b><small>${rec(s.a)}</small></div><div class="sc">${wa}–${wb}</div><div class="tm b ${wb < wa ? "lo" : ""}"><small>${s[s.b].rec}${s[s.b].name === s.b ? "" : ` · ${s[s.b].name}`}</small><b>${s.b}</b></div>`;
-  $("meta").innerHTML = `<span class="tag">Final</span><span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b> · ${s.time[1]} KST</span><span class="sp"></span>
-    <span class="fig">Series POG <b style="font:600 14px 'IBM Plex Sans KR'">${s.pog}</b></span><span class="fig">Your players<b>${A.mine + B.mine}</b></span>`;
+  $("bug").innerHTML = `<div class="tm ${!live && wa < wb ? "lo" : ""}"><b>${s.a}</b><small>${rec(s.a)}</small></div><div class="sc">${wa}–${wb}</div><div class="tm b ${!live && wb < wa ? "lo" : ""}"><small>${s[s.b].rec}${s[s.b].name === s.b ? "" : ` · ${s[s.b].name}`}</small><b>${s.b}</b></div>`;
+  $("meta").innerHTML = `${live ? '<span class="tag">Live</span><span class="tag nf">Not final</span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b> · ${s.time[1]} KST</span>${live ? "<a>Watch ›</a>" : ""}<span class="sp"></span>
+    ${s.pog ? `<span class="fig">Series POG <b style="font:600 14px 'IBM Plex Sans KR'">${s.pog}</b></span>` : ""}<span class="fig">Your players<b>${A.mine + B.mine}</b></span>`;
   $("two").innerHTML = A.html + B.html;
   $("draft").innerHTML = draft(s);
 }

@@ -40,3 +40,14 @@ These are the FPL player's, the LCK fan's and UX's findings on `s-final.png` and
   - **Draft strip**: one row per game, picks and bans with the blue and red side;
   - **Your points**: one line at the top, the sum of your players in this series (e.g. "Your players: 21").
 - These need spec/12 lines on save. They widen the earlier "winner, length and champions only".
+
+## Round 2 (16 Nov 2026)
+
+- In: the 10 fixes above; POG on each game's K/D/A line and the series POG; the draft strip (blue then red, picks top to support, bans on one line); your players' series total; a 2–1 view (GEN 2–1 HLE).
+- Craig on the 5 calls: "As recommended", so:
+  - a VOD link per finished game, on the draft strip;
+  - no last-meeting line;
+  - the scorebug stays monochrome;
+  - each game's side shows on the draft strip;
+  - a live view drawn: T1 1–0 DK, G2 at 14:20, Live and Not final, Watch ›.
+- The live view keeps Live's numbers (Faker G1 4, G2 1; Siwoo 2, 1; kkOma 2, 0). Live's sidebar shows Siwoo's G2 as 0/1/1, which can't score 1 by spec/05; the Series page uses 2/1/1.

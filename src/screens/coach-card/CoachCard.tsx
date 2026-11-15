@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import { count, Crest, Empty, eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SideSection, signed, Table, Tabs, Tag } from "../../parts";
+import { count, Crest, Empty, eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, Tabs, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CoachFixtures, CoachHistoryTab, CoachRoster, CoachThisWeek } from "./CoachTabs";
-import { COACH_TABS, type CoachCardData, type CoachFrom, type CoachSeason, type CoachTab, type SeasonLine, type StripNext, type StripPast } from "./types";
+import { COACH_TABS, type CoachCardData, type CoachFrom, type CoachSeason, type CoachTab, type SeasonLine } from "./types";
 
 /**
  * The coach card's body, inside the card the page opens (spec/12, The coach card): the header,
@@ -59,7 +59,7 @@ export function CoachCard({
       </div>
       <div className="coach-card__body">
         <div className="coach-card__left">
-          <Strip past={data.past} next={data.next} />
+          <SeriesStrip past={data.past} next={data.next} />
           <Tabs tabs={COACH_TABS} chosen={tab} onChoose={onTab} label="Coach card" />
           <div className="coach-card__main">
             <TabPanel data={data} tab={tab} />
@@ -97,35 +97,6 @@ function Figure({ figure, children }: { figure: string; children: ReactNode }) {
       <b className="coach-card__kv-figure num">{figure}</b>
       {children}
     </span>
-  );
-}
-
-/** The last series with points, a rule, then the next series, the first in ink. */
-function Strip({ past, next }: { past: StripPast[]; next: StripNext[] }) {
-  return (
-    <div className="coach-card__strip">
-      {past.map((s) => (
-        <div key={`${s.week}-${s.day}`} className="coach-card__strip-cell">
-          <span className="coach-card__strip-when">
-            W{s.week} · {s.day}
-          </span>
-          <b className="coach-card__strip-points num">
-            {s.points}
-            {s.live && <Tag kind="live">Live</Tag>}
-          </b>
-          <span className="coach-card__strip-when">v {s.opponent}</span>
-        </div>
-      ))}
-      <span className="coach-card__strip-now" />
-      {next.map((s, i) => (
-        <div key={`${s.week}-${s.day}`} className="coach-card__strip-cell">
-          <span className="coach-card__strip-when">
-            W{s.week} · {s.day} · {s.format}
-          </span>
-          <span className={i === 0 ? "coach-card__strip-next coach-card__strip-next--first num" : "coach-card__strip-next num"}>v {s.opponent}</span>
-        </div>
-      ))}
-    </div>
   );
 }
 

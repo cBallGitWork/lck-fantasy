@@ -103,37 +103,6 @@
   padding-top: var(--s-4);
 }
 
-/* The series strip: the last 3, a 2px rule, the next 3. */
-.player-card__strip {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) var(--m-rule-heavy) repeat(3, minmax(0, 1fr));
-  padding: var(--s-4) 0;
-  border-bottom: var(--m-rule) solid var(--line);
-}
-.player-card__strip-cell {
-  display: flex;
-  flex-direction: column;
-  padding: 0 var(--s-3);
-}
-.player-card__strip-cell .player-card__figure {
-  display: flex;
-  align-items: center;
-  gap: var(--s-1);
-  line-height: var(--lh-snug);
-}
-.player-card__now {
-  background: var(--ink);
-}
-.player-card__next {
-  font-size: var(--size-head);
-  line-height: var(--lh-snug);
-  color: var(--mid);
-}
-.player-card__next--first {
-  color: var(--text);
-  font-weight: var(--w-semi);
-}
-
 /* A section's head inside a tab: 12/600, a 2px rule above all but the first. */
 .player-card__section {
   display: flex;

@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, Tabs, Tag } from "../../parts";
+import { eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
@@ -7,7 +7,6 @@ import { Champions } from "./Champions";
 import { FixturesTab } from "./FixturesTab";
 import { History } from "./History";
 import { SeasonRail } from "./SeasonRail";
-import { SeriesStrip } from "./SeriesStrip";
 import { ThisWeek } from "./ThisWeek";
 import "./PlayerCard.css";
 

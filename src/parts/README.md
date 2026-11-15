@@ -18,6 +18,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `SideSection.tsx`: a side column section: 2px rule, 14px title, its count or state.
 - `SectionHead.tsx`: a main-column section's head: 2px ink rule, 14px bold title, its note in mid grey.
 - `SeriesList.tsx`: the week's series: day, teams, then score and state, or the time.
+- `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px ink rule, the next 3 with `Bo3`, the first in ink (player card, coach card).
 - `Menu.tsx`: a key that opens a list of links and actions (a league's Admin menu; the account menu once its items are settled).
 - `States.tsx`: `Loading` (fill bars), `Empty` (a title, one line), `ErrorState` (a title, one line, `Try again ›`).
 - `Modal.tsx`: a card (1056) or sheet (544) over a dimmed page; ✕, Esc, focus kept inside.

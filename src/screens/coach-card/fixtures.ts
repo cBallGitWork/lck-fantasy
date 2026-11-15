@@ -4,9 +4,9 @@
 import { hangulOf, ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
 import { fromSide, opponent, seriesById, seriesOf } from "../../fixtures/series";
 import { BEST_OF, POINTS_SQUAD, WEEK3_SERIES_AT_POINTS, WEEK4_SERIES } from "../../fixtures/week3";
-import { bestOf } from "../../parts";
+import { bestOf, type StripNext, type StripPast } from "../../parts";
 import type { RoleKey } from "../../rift";
-import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, StripNext, StripPast, WeekGame, WeekSeries } from "./types";
+import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, WeekGame, WeekSeries } from "./types";
 
 const HEAD = { team: "T1", name: "kkOma", hangul: hangulOf("kkOma"), legal: "Kim Jeong-gyun" } as const;
 
@@ -24,9 +24,9 @@ const SERIES_LOST = -1;
 const FORMAT = bestOf(BEST_OF);
 
 const NEXT: StripNext[] = [
-  { week: 4, day: "Wed", opponent: "KT", format: FORMAT },
-  { week: 4, day: "Sat", opponent: "GEN", format: FORMAT },
-  { week: 5, day: "Thu", opponent: "BRO", format: FORMAT },
+  { week: 4, day: "Wed", opponent: "KT", bestOf: BEST_OF },
+  { week: 4, day: "Sat", opponent: "GEN", bestOf: BEST_OF },
+  { week: 5, day: "Thu", opponent: "BRO", bestOf: BEST_OF },
 ];
 
 const PAST_BEFORE_SAT: StripPast[] = [

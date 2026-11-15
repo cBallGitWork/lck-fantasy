@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Series</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+/* type scale: 28 page title · 20 figures and team codes · 14 body · 12 labels (the nav is shared) */
+body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
+.mono { font-family: "IBM Plex Mono", monospace; }
+nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
+nav.top a { color: var(--mid); }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
+nav.top .sp { flex: 1; }
+.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
+.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+.page { padding: 24px 32px 48px; }
+.crumb { color: var(--mid); } .crumb a { color: var(--ink); }
+/* the scorebug, as Live's: each team in a white box, the series score between on black */
+.bug { display: flex; align-items: stretch; margin: 18px 0 10px; }
+.bug .tm { background: var(--paper); border: 1px solid var(--ink); width: 300px; display: flex; align-items: center; gap: 12px; padding: 0 20px; height: 72px; }
+.bug .tm.b { justify-content: flex-end; } .bug .tm b { font-size: 28px; } .bug .tm small { color: var(--mid); }
+.bug .sc { background: var(--ink); color: #fff; font: 600 28px "IBM Plex Mono", monospace; display: flex; align-items: center; padding: 0 28px; }
+.bug .sc.v { font-size: 20px; }
+.bug .lo b { color: var(--mid); }
+.meta { display: flex; gap: 24px; align-items: baseline; color: var(--mid); } .meta b { color: var(--ink); font-weight: 600; } .meta .tag { border: 1px solid var(--ink); color: var(--ink); padding: 1px 8px; font-size: 12px; font-weight: 600; }
+.meta .sp { flex: 1; } .meta a { color: var(--ink); font-weight: 600; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+h2 { font-size: 14px; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 10px; margin-bottom: 8px; display: flex; gap: 10px; align-items: baseline; } h2 small { color: var(--mid); font-weight: 400; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; background: var(--paper); table-layout: fixed; }
+th { font-size: 12px; font-weight: 500; color: var(--mid); text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); } th.n { text-align: right; } th b { color: var(--ink); font-weight: 600; }
+td { padding: 0 12px; height: 60px; border-top: 1px solid var(--fill); vertical-align: middle; }
+td.rl { color: var(--mid); font-size: 12px; } td.rl svg { width: 13px; height: 13px; vertical-align: -2px; margin-right: 6px; }
+td.pl b { font-weight: 600; } td.pl small { display: block; color: var(--mid); font-size: 12px; }
+i.me { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); margin: 0 0 2px 8px; }
+.gm { display: flex; justify-content: space-between; align-items: center; }
+.gm span { font-size: 14px; } .gm small { display: block; color: var(--mid); font: 12px "IBM Plex Mono", monospace; }
+.gm b { font: 600 20px "IBM Plex Mono", monospace; min-width: 32px; text-align: right; }
+td.tot { text-align: right; font: 600 20px "IBM Plex Mono", monospace; border-left: 1px solid var(--line); }
+tr.co td { border-top: 1px solid var(--line); }
+.empty { color: var(--soft); }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
+  <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
+  <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+</defs></svg>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a class="on">LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+<div class="page">
+  <div class="crumb"><a>‹ LCK</a></div>
+  <div class="bug" id="bug"></div>
+  <div class="meta" id="meta"></div>
+  <div class="two" id="two"></div>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const V = new URLSearchParams(location.search).get("v") || "final";
+// T1 v DK, LCK Cup Week 3, Saturday 16 Jan 2027, Bo3; T1 won 2–0 (the LCK hub's Results). Final at the hub's moment (Week 4,
+// Tuesday 22:00 London). Faker, Siwoo and kkOma match the Points picture: Faker G1 Orianna 5/1/9 for 4, Siwoo G1 2, kkOma G1 2.
+const GAMES = [["T1", "31:42"], ["T1", "27:10"]];
+// Points from spec/05: kills +1 per 2 (top, support) or per 3 (jungle, mid, bot), at most +3; assists +1 per 5, at most +3;
+// deaths −1 per 3, per 4 for supports, at most −3; +1 gold lead at 15; +1 a solo kill; +1 first blood; +1 deathless;
+// quadra +1, penta +2; +1 a steal. Per game: [champion, K, D, A, gold lead, solo kills, first blood, multikill, steals]
+const T = {
+  T1: { name: "T1", rec: "5–1", coach: ["kkOma", "김정균", [[1, 1, 0, 0, 0], [1, 1, 1, 0, 0]]], mine: ["Faker", "kkOma"],
+    p: [["top", "Doran", "최현준", [["K'Sante", 2, 1, 7, 1, 0, 0, 0, 0], ["Rumble", 3, 0, 6, 1, 0, 0, 0, 0]]],
+        ["jng", "Oner", "문현준", [["Viego", 3, 2, 9, 1, 0, 0, 0, 0], ["Xin Zhao", 2, 2, 8, 1, 0, 0, 0, 1]]],
+        ["mid", "Faker", "이상혁", [["Orianna", 5, 1, 9, 1, 0, 1, 0, 0], ["Sylas", 7, 0, 6, 1, 1, 0, 0, 0]]],
+        ["bot", "Peyz", "김수환", [["Kalista", 6, 1, 5, 1, 0, 0, 0, 0], ["Varus", 5, 0, 7, 1, 0, 0, 0, 0]]],
+        ["sup", "Keria", "류민석", [["Rell", 0, 3, 12, 0, 0, 0, 0, 0], ["Nautilus", 1, 2, 13, 1, 0, 0, 0, 0]]]] },
+  DK: { name: "Dplus KIA", rec: "3–3", coach: ["cvMax", "김대호", [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]], mine: ["Siwoo"],
+    p: [["top", "Siwoo", "전시우", [["Jax", 2, 3, 2, 1, 1, 0, 0, 0], ["Gnar", 1, 2, 3, 1, 0, 0, 0, 0]]],
+        ["jng", "Lucid", "최용혁", [["Sejuani", 1, 3, 4, 0, 0, 0, 0, 0], ["Maokai", 0, 5, 2, 0, 0, 0, 0, 0]]],
+        ["mid", "ShowMaker", "허수", [["Taliyah", 2, 2, 3, 0, 0, 0, 0, 0], ["Azir", 1, 4, 2, 0, 0, 0, 0, 0]]],
+        ["bot", "Aiming", "김하람", [["Ezreal", 3, 3, 2, 0, 0, 0, 0, 0], ["Zeri", 2, 4, 1, 0, 0, 0, 0, 0]]],
+        ["sup", "BeryL", "조건희", [["Braum", 0, 4, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 3, 4, 0, 0, 0, 0, 0]]]] },
+};
+const RH = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support" };
+const cap = (x) => Math.max(-3, Math.min(3, x));
+function pts(role, [, k, d, a, gold, solo, fb, multi, steal]) {
+  const kd = role === "top" || role === "sup" ? 2 : 3;
+  return cap(Math.floor(k / kd)) + cap(Math.floor(a / 5)) - cap(Math.floor(d / (role === "sup" ? 4 : 3))) + gold + solo + fb + (d === 0 ? 1 : 0) + multi + steal;
+}
+const coachPts = (g) => g.reduce((s, x) => s + x, 0);
+const best2 = (xs) => [...xs].sort((a, b) => b - a).slice(0, 2).reduce((s, x) => s + x, 0);
+const team = (code, other) => {
+  const t = T[code], won = GAMES.map(([w]) => w === code);
+  const head = `<colgroup><col style="width:96px"><col style="width:150px"><col><col><col style="width:76px"></colgroup>
+    <tr><th></th><th></th>${GAMES.map(([w, len], i) => `<th>G${i + 1} <b>${w === code ? "W" : "L"}</b> · ${len}</th>`).join("")}<th class="n">Series</th></tr>`;
+  const rows = t.p.map(([rl, n, k, gs]) => { const ps = gs.map((g) => pts(rl, g));
+    return `<tr><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}</td><td class="pl"><b>${n}</b>${t.mine.includes(n) ? '<i class="me"></i>' : ""}<small>${k}</small></td>
+      ${gs.map((g, i) => `<td><div class="gm"><span>${g[0]}<small>${g[1]}/${g[2]}/${g[3]}</small></span><b>${ps[i]}</b></div></td>`).join("")}<td class="tot">${best2(ps)}</td></tr>`; }).join("");
+  const [cn, ck, cg] = t.coach, cp = cg.map(coachPts), sw = won.filter(Boolean).length === 2 ? 3 : -1;
+  const L = ["Tower", "Drakes", "Barons", "Elders", "Quick"];
+  const coach = `<tr class="co"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b>${t.mine.includes(cn) ? '<i class="me"></i>' : ""}<small>${ck}</small></td>
+    ${cg.map((g, i) => `<td><div class="gm"><span>${g.map((x, j) => x ? L[j] : "").filter(Boolean).join(", ") || "–"}<small>${won[i] ? "Win" : "Loss"}</small></span><b>${cp[i]}</b></div></td>`).join("")}
+    <td class="tot">${best2(cp) + sw}<small style="display:block;font:12px 'IBM Plex Mono';color:var(--mid)">${sw > 0 ? "+3" : "−1"} series</small></td></tr>`;
+  return `<section><h2>${t.name}</h2><table>${head}${rows}${coach}</table></section>`;
+};
+// Before it starts: Week 4's HLE v DK, Wednesday 20 Jan, opened at the hub's moment.
+const NEXT = { HLE: [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "김건우"], ["Gumayusi", "이민형"], ["Delight", "유환중"], ["Homme", "윤성영"]],
+  DK: [["Siwoo", "전시우"], ["Lucid", "최용혁"], ["ShowMaker", "허수"], ["Aiming", "김하람"], ["BeryL", "조건희"], ["cvMax", "김대호"]] };
+const MINE = ["Zeus", "Delight", "Siwoo"];
+if (V === "next") {
+  $("bug").innerHTML = `<div class="tm"><b>HLE</b><small>Hanwha Life · 4–2</small></div><div class="sc v">v</div><div class="tm b"><small>3–3 · Dplus KIA</small><b>DK</b></div>`;
+  $("meta").innerHTML = `<span class="tag">Bo3</span><span>LCK Cup · Week 4 · Wed 20 Jan</span><span><b>08:00</b> · 17:00 KST</span><a>Watch ›</a>`;
+  const ICO = ["top", "jng", "mid", "bot", "sup", "coach"];
+  $("two").innerHTML = Object.entries(NEXT).map(([c, ps]) => `<section><h2>${c}<small>${c === "HLE" ? "Hanwha Life" : "Dplus KIA"}</small></h2><table>
+    ${ps.map(([n, k], i) => `<tr class="${i === 5 ? "co" : ""}"><td class="rl" style="width:110px"><svg><use href="#i-${ICO[i]}"/></svg>${i === 5 ? "Coach" : RH[ICO[i]]}</td><td class="pl" style="height:48px"><b>${n}</b>${MINE.includes(n) ? '<i class="me"></i>' : ""} <small style="display:inline;margin-left:6px">${k}</small></td></tr>`).join("")}</table></section>`).join("");
+} else {
+  $("bug").innerHTML = `<div class="tm"><b>T1</b><small>T1 · 5–1</small></div><div class="sc">2–0</div><div class="tm b lo"><small>3–3 · Dplus KIA</small><b>DK</b></div>`;
+  $("meta").innerHTML = `<span class="tag">Final</span><span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>10:30</b> · 19:30 KST</span>`;
+  $("two").innerHTML = team("T1") + team("DK");
+}
+</script></body></html>

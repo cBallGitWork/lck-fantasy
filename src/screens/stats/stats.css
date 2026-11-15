@@ -1,0 +1,163 @@
+/* Stats, drawn to docs/design/approved/stats/stats.html. Every value is a theme token. */
+
+/* Controls in one row: role, Team, Max price, Span, Totals | Per game, then the search at the right. */
+.stats__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: var(--s-4) 0 var(--s-3);
+  white-space: nowrap;
+}
+.stats__gap {
+  flex: 1;
+}
+.stats__role {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.stats__role-icon {
+  width: var(--size-small);
+  height: var(--size-small);
+}
+.stats__select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  padding: var(--s-2) var(--s-3);
+}
+.stats__select-label {
+  color: var(--mid);
+  font-size: var(--size-small);
+  margin-right: var(--s-2);
+}
+.stats__select-input {
+  appearance: none;
+  font: inherit;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  padding-right: var(--s-4);
+  cursor: pointer;
+}
+.stats__select-input option {
+  background: var(--paper);
+  color: var(--text);
+}
+.stats__select::after {
+  content: "▾";
+  position: absolute;
+  right: var(--s-3);
+  pointer-events: none;
+}
+.stats__find {
+  width: calc(var(--s-7) * 4 + var(--s-2));
+  min-width: 0;
+  font: inherit;
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  color: var(--text);
+  padding: var(--s-2) var(--s-3);
+}
+.stats__find::placeholder {
+  color: var(--mid);
+}
+
+/* The list: rank, role and name in the sticking column, then price and its move. */
+.stats col:nth-child(1) {
+  width: calc(var(--m-tile-w) + var(--s-7) * 2);
+}
+.stats col:nth-child(2) {
+  width: calc(var(--s-7) + var(--s-5) + var(--s-1));
+}
+.stats col:nth-child(3) {
+  width: calc(var(--s-7) + var(--s-1));
+}
+.stats th {
+  font-weight: var(--w-semi);
+}
+.stats__sort {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.stats__lead-head {
+  padding-left: calc(var(--s-6) + var(--s-5));
+}
+.stats__lead {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.stats__rank {
+  flex: none;
+  width: var(--s-6);
+  color: var(--mid);
+}
+.stats__lead-icon {
+  width: var(--size-body);
+  height: var(--size-body);
+  margin-right: var(--s-2);
+}
+.stats__name {
+  font-weight: var(--w-semi);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stats__name:hover {
+  text-decoration: underline;
+}
+.stats__team {
+  color: var(--mid);
+  font-size: var(--size-small);
+  margin-left: var(--s-2);
+}
+.stats td:has(> .stats__move) {
+  font-size: var(--size-small);
+  padding-left: 0;
+}
+.stats td:has(> .stats__sorted) {
+  font-weight: var(--w-semi);
+  background: var(--bg);
+}
+.stats__zero {
+  color: var(--mid);
+}
+
+/* Beneath: how many, then the pages. */
+.stats__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--mid);
+  margin-top: var(--s-3);
+}
+.stats__pages {
+  display: flex;
+}
+.stats__page {
+  min-width: var(--s-6);
+  height: var(--s-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--m-rule) solid var(--line);
+  margin-left: calc(var(--m-rule) * -1);
+  background: var(--paper);
+  color: var(--text);
+  font-size: var(--size-body);
+  cursor: pointer;
+}
+.stats__page--on {
+  background: var(--fill);
+  font-weight: var(--w-bold);
+}
+.stats__page:disabled {
+  color: var(--mid);
+  cursor: default;
+}

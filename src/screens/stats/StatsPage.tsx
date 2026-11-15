@@ -21,7 +21,6 @@ import {
 } from "./stats";
 import "./stats.css";
 
-
 type Ranked = StatsRow & { rank: number };
 
 export interface StatsPageProps {

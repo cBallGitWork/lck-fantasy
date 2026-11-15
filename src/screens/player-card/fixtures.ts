@@ -72,7 +72,8 @@ const WEEK3_AT_POINTS: CardWeek = {
   week: 3,
   series: AT_POINTS.series.map(({ id, games }): WeekSeries => {
     const s = seriesAtPoints(id);
-    const [home, away] = s.score ?? [0, 0];
+    if (!s.score) throw new Error(`Series ${id} has no score in the shared Week 3 fixture`);
+    const [home, away] = s.score;
     return {
       id,
       day: s.day,

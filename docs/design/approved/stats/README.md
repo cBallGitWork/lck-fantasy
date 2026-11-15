@@ -17,7 +17,7 @@ Every stat Flol holds, players and coaches, in one sortable list (spec/12, Stats
 
 ## Layout
 
-- **Head**: Stats, with **Price changes ›** at the right.
+- **Head**: Stats, with **Patch update ›** at the right.
 - **Tabs**: Players | Coaches.
 - **Controls**, one row: role (players only), Team, Max price, Span (Season, or one gameweek), Totals | Per game, and a search.
 - **Players**: rank, role, name and team, price and its last move (▲0.5 red, ▼0.5 blue), form, owned, Pts, then Games and the lines: K, D, A, GD@15, Solo kills, First blood, Deathless, Quadra+, Obj. steals. Your own players carry a dot after the team. The page holds 20 rows, with pages beneath. Academy players come after everyone with games.
@@ -30,7 +30,7 @@ Every stat Flol holds, players and coaches, in one sortable list (spec/12, Stats
 - **Role, Team, Max price, Span**: filter the list.
 - **Totals | Per game**: switches the figures.
 - **A name**: opens the player or coach card.
-- **Price changes ›**: opens Price changes.
+- **Patch update ›**: opens Patch update.
 
 ## Placeholders
 

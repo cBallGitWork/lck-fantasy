@@ -1,0 +1,143 @@
+/* Points (docs/design/approved/points/points.html). Every value is a theme token. */
+
+/* The live bar, under the head. */
+.points__live {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  border: var(--m-rule) solid var(--ink);
+  background: var(--paper);
+}
+
+/* A Live tag inside a tile's series line stays filled: the tile's own rule papers its tags. */
+.points__line-live > span:only-child {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+/* Card view's footer: the points, the Carry's sum small after them. */
+.points__card-points {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+.points__card-points small {
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+  margin-left: var(--s-1);
+}
+
+/* The player's games. */
+.points__series {
+  padding: var(--s-2) var(--s-4) var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.points__series-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--s-1);
+  font-size: var(--size-body);
+}
+.points__series-head span {
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.points__game {
+  display: grid;
+  grid-template-columns: var(--s-6) 1fr var(--m-go-col);
+  gap: var(--s-2);
+  align-items: center;
+  padding: var(--s-1) 0;
+}
+.points__game-no {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.points__game-points {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.points__game-what {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.points__game--dropped {
+  color: var(--mid);
+}
+.points__game--dropped .points__game-points {
+  font-weight: var(--w-regular);
+}
+.points__counted {
+  border: var(--m-rule) solid var(--ink);
+  padding: 0 var(--s-1);
+}
+.points__carry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.points__carry-label {
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.points__carry-points {
+  font-size: var(--size-head);
+}
+.points__full {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--s-2) var(--s-4) var(--s-3);
+  font-size: var(--size-small);
+}
+
+/* Your week: Star, Flop, Killer. */
+.points__pick {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-2)) 1fr auto;
+  gap: var(--s-2);
+  align-items: baseline;
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.points__pick-label,
+.points__pick-owned {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.points__pick-owned {
+  text-align: right;
+}
+
+/* Leagues: name, rank, its move. */
+.points__ranks {
+  display: grid;
+  gap: var(--s-1);
+}
+.points__rank {
+  display: grid;
+  grid-template-columns: 1fr auto calc(var(--s-7) + var(--s-5));
+  gap: var(--s-3);
+  align-items: center;
+}
+.points__rank-place,
+.points__rank > span:last-child {
+  text-align: right;
+}
+.points__tier {
+  margin-top: var(--s-2);
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.points__tier b {
+  color: var(--text);
+}
+
+.points__sponsor {
+  height: var(--m-sponsor-h);
+  margin-bottom: var(--s-2);
+}

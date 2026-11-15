@@ -1,0 +1,223 @@
+/* The Following page (docs/design/approved/following/), drawn to plate.md; colours are tokens only.
+   The picture's own widths (192 and 128 for the feed's columns, 180 and 40 for a swap) are
+   written from the spacing scale, since only this folder may change. */
+.following__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-side);
+  gap: var(--s-6);
+  margin-top: var(--s-5);
+}
+
+/* The feed: one timeline, a head per gameweek. */
+.following__week + .following__week {
+  margin-top: var(--s-5);
+}
+.following__week-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+}
+.following__item {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) * 4) minmax(0, 1fr) calc(var(--s-6) * 4);
+  gap: var(--s-4);
+  align-items: start;
+  background: var(--paper);
+  padding: var(--s-3) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.following__who {
+  display: flex;
+  flex-direction: column;
+}
+.following__item .following__name {
+  font-weight: var(--w-bold);
+}
+.following__name:hover {
+  text-decoration: underline;
+}
+.following__team,
+.following__sub,
+.following__bo,
+.following__so-far {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.following__sub {
+  display: block;
+  margin-top: var(--s-1);
+}
+.following__so-far {
+  margin-left: var(--s-2);
+}
+.following__pts {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  margin-right: var(--s-2);
+}
+.following__when {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--size-small);
+}
+.following__swaps {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) * 4 - var(--s-3)) var(--m-row);
+  gap: var(--s-1) var(--s-2);
+  margin-top: var(--s-1);
+  font-size: var(--size-small);
+}
+.following__swap {
+  display: contents;
+}
+.following__swap b {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.following__truck,
+.following__sent {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+}
+.following__truck {
+  font: inherit;
+  font-weight: var(--w-semi);
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.following__truck:hover {
+  text-decoration: underline;
+}
+.following__sent {
+  color: var(--mid);
+}
+
+/* The side column: requests, trucks, following, followers. */
+.following__request {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--s-2);
+  align-items: center;
+  background: var(--paper);
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.following__parked {
+  background: var(--paper);
+  margin-bottom: var(--s-2);
+}
+.following__by {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--s-2) var(--s-3);
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.following__by b,
+.following__by .following__name {
+  color: var(--text);
+  font-weight: var(--w-bold);
+}
+.following__people {
+  background: var(--paper);
+}
+.following__person {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-2);
+  align-items: baseline;
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.following__acts {
+  display: flex;
+  gap: var(--s-4);
+  justify-content: flex-end;
+}
+.following__act {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  font: inherit;
+  font-size: var(--size-small);
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.following__act:hover {
+  text-decoration: underline;
+}
+
+/* A truck's LED panel: dotted, in capitals, the same everywhere. */
+.following__led {
+  display: flex;
+  align-items: center;
+  min-height: var(--s-7);
+  padding: var(--s-2) var(--s-3);
+  background-color: var(--ink);
+  background-image: radial-gradient(circle, var(--on-ink) calc(var(--m-rule) * 0.35), transparent calc(var(--m-rule) * 0.7));
+  background-size: var(--s-1) var(--s-1);
+  color: var(--on-ink);
+  font: var(--w-semi) var(--size-body) / var(--lh-body) var(--font-mono);
+  text-transform: uppercase;
+}
+.following__led--big {
+  font-size: var(--size-lead);
+  min-height: calc(var(--s-7) + var(--s-5));
+}
+
+/* The truck picker. */
+.following__picker-sub {
+  margin-top: calc(var(--s-3) * -1);
+  color: var(--mid);
+}
+.following__kinds {
+  margin: var(--s-4) 0 var(--s-3);
+}
+.following__line {
+  display: grid;
+  grid-template-columns: var(--s-4) minmax(0, 1fr);
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+  font-family: var(--font-mono);
+  cursor: pointer;
+}
+.following__line--on {
+  font-weight: var(--w-semi);
+}
+.following__radio {
+  appearance: none;
+  width: var(--s-4);
+  height: var(--s-4);
+  margin-top: calc(var(--m-rule) * 2);
+  border: var(--m-rule) solid var(--ink);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.following__radio:checked {
+  background: var(--ink);
+  box-shadow: inset 0 0 0 calc(var(--m-rule) * 3) var(--paper);
+}
+.following__preview {
+  margin: var(--s-4) 0 var(--s-2);
+}
+.following__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.following__foot-note {
+  flex: 1;
+  color: var(--mid);
+  font-size: var(--size-small);
+}

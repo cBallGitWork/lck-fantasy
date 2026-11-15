@@ -67,7 +67,7 @@ Never print a secret: paste it at `gh secret set`'s prompt, or pipe it in.
 3. *Done 14 Nov 2026.* Invite CBHelper180 to the repo with Write access, and accept as that account.
 4. *Done 14 Nov 2026.* Set the secrets:
    - `gh secret set CLAUDE_CODE_OAUTH_TOKEN -R cBallGitWork/lck-fantasy` (from `claude setup-token`);
-   - `gh secret set BUILD_TOKEN -R cBallGitWork/lck-fantasy`: a fine-grained token of CBHelper180 for this repo with read and write on Contents, Pull requests, Issues and Actions, and read on Commit statuses (the fix round's `gh pr checks`). Never give it the Workflows permission: without it GitHub refuses any push that changes `.github/workflows/`, which is what stops the builder editing the workflows that judge it;
+   - `gh secret set BUILD_TOKEN -R cBallGitWork/lck-fantasy`: a classic token of CBHelper180 with the `repo` scope only (the `workflow` scope removed 15 Nov 2026), so a build cannot push a change to `.github/workflows/`, the workflows that judge it;
    - optional: `HEALTHCHECKS_PING_URL`.
 5. *Done 14 Nov 2026.* Repo settings:
    - `gh api -X PATCH repos/cBallGitWork/lck-fantasy -F allow_auto_merge=true -F allow_merge_commit=false -F allow_rebase_merge=false`

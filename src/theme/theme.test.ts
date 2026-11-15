@@ -107,3 +107,7 @@ test("the plate's colour roles all stay as tokens", () => {
   }
   expect(themeCss()).toMatch(/^:root\{--bg:#010A13;/);
 });
+
+test("a stream's frame shape is a token", () => {
+  expect(themeVars()).toContainEqual(["--ratio-stream", "16 / 9"]);
+});

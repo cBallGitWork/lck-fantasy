@@ -37,13 +37,13 @@
 /* Was, the move's mark, Now and Owned at the picture's widths; the player takes the rest. */
 .patch-update__list col:nth-child(2),
 .patch-update__list col:nth-child(5) {
-  width: calc(var(--s-7) + var(--s-6));
+  width: var(--m-col-price);
 }
 .patch-update__list col:nth-child(3) {
   width: var(--s-6);
 }
 .patch-update__list col:nth-child(4) {
-  width: calc(var(--s-7) + var(--s-5));
+  width: var(--m-col-figure);
 }
 .patch-update__name {
   font-weight: var(--w-bold);

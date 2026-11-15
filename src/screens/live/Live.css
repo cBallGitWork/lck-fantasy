@@ -6,7 +6,7 @@
 .live__screen {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--ratio-stream);
   overflow: hidden;
 }
 

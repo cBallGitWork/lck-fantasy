@@ -110,7 +110,7 @@
   width: calc(var(--s-6) * 2);
 }
 .leagues__move-col {
-  width: calc(var(--s-7) + var(--s-5));
+  width: var(--m-col-figure);
 }
 .leagues__carry-col {
   width: calc(var(--s-7) * 3 + var(--s-2));

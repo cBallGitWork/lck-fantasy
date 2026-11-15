@@ -90,7 +90,7 @@
   width: calc(var(--s-7) + var(--s-3));
 }
 .series__col-roster-role {
-  width: calc(var(--s-7) * 2 + var(--s-4));
+  width: var(--m-col-role);
 }
 .series__grid th {
   padding: var(--s-2);

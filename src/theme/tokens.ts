@@ -124,6 +124,10 @@ export const measure = {
   tagLineTight: 14,
   /** A table's last column, holding a row's `›`. */
   goCol: 48,
+  /** A table's figure column (W, L, Win %, a move, Now), its price column (Was, Owned), and a roster's role column. */
+  colFigure: 72,
+  colPrice: 80,
+  colRole: 112,
   /** A menu's list (the Admin menu, the account menu). */
   menuW: 220,
   cardHead: 48,
@@ -137,6 +141,9 @@ export const motion = { fast: "150ms", slow: "250ms" } as const;
 
 /** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
 export const stroke = { shirt: 1.6, dash: 3 } as const;
+
+/** Frame shapes: a stream's picture, the same on Home and Live. */
+export const ratio = { stream: "16 / 9" } as const;
 
 export type MeasureKey = keyof typeof measure;
 
@@ -155,6 +162,7 @@ export function themeVars(): [string, string][] {
     ...Object.entries(lineHeight).map(([k, v]): [string, string] => [`--lh-${k}`, String(v)]),
     ...Object.entries(motion).map(([k, v]): [string, string] => [`--motion-${k}`, v]),
     ...Object.entries(stroke).map(([k, v]): [string, string] => [`--stroke-${k}`, String(v)]),
+    ...Object.entries(ratio).map(([k, v]): [string, string] => [`--ratio-${k}`, v]),
   ];
 }
 

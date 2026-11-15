@@ -97,4 +97,3 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
     </>
   );
 }
-

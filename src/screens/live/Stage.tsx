@@ -91,4 +91,3 @@ export function Idle({ next }: { next: NextSeries }) {
     </div>
   );
 }
-

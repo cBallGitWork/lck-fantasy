@@ -7,8 +7,8 @@ export const WON_PER_EOK = 100_000_000;
 export const EOK_NOTE = "1억 = 100 million won, game money only";
 
 export function formatEok(won: number): string {
-  const eok = (Math.abs(won) / WON_PER_EOK).toFixed(1);
-  return `${won < 0 ? MINUS : ""}${eok}억`;
+  const amount = (Math.abs(won) / WON_PER_EOK).toFixed(1);
+  return `${won < 0 ? MINUS : ""}${amount}억`;
 }
 
 /** A price held in 억, written as every page writes money: `18.5억`. */

@@ -12,12 +12,6 @@ import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
 /** A price move is half a 억 in the picture. */
 const MOVE_EOK = 0.5;
 
-/** Series won and lost by a team, Weeks 1 to 3, as the LCK hub's standings have them. */
-function recordPair(team: TeamCode): readonly [number, number] {
-  const { won, lost } = standingOf(team);
-  return [won, lost];
-}
-
 /** The picture's player lines, by name, in PLAYER_LINES' order. */
 const PICTURE_LINES: Record<string, number[]> = {
   Chovy: [70, 9, 74, 11, 8, 3, 4, 1, 0],
@@ -161,7 +155,7 @@ export const SEASON_COACHES: StatsRow[] = [
 ].map(([name, team, price, move, owned, points]) => ({
   ...row("coach", name, team, price, move, owned, points),
   lines: byKeys(COACH_LINES, PICTURE_COACH_LINES[name] ?? []),
-  series: recordPair(team),
+  series: [standingOf(team).won, standingOf(team).lost] as const,
 }));
 
 // Span: each week's share of the season, made up. Week 3's games and series are its real

@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import { Deadline, MainAction, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, ViewToggle } from "../../parts";
 import { CardBoard, RiftBoard } from "./boards";
 import { Buffs } from "./Buffs";
-import type { PickPlayer, PickTeamData } from "./fixtures";
+import type { PickTeamData } from "./fixtures";
 import type { ViewProps } from "./format";
 import { changeCount, pickReducer, type PickAction, type PickState, type PickTeam, type PickView } from "./model";
 import { PlayerCard } from "./PlayerCard";
@@ -90,7 +90,11 @@ export function PickTeamPage({
   onView?: (view: PickView) => void;
 }) {
   const [state, dispatch] = useReducer(
-    pickReducer((id) => (data.players[id] as PickPlayer).role),
+    pickReducer((id) => {
+      const player = data.players[id];
+      if (!player) throw new Error(`No player with id ${id}`);
+      return player.role;
+    }),
     initial,
   );
   const send = (action: PickAction) => {

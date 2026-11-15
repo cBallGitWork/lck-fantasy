@@ -1,9 +1,10 @@
 // Leaguepedia's match data (spec/11, Final): its "V5 data:" page holds Riot's match-v5 JSON for a
 // pro game, the one free source of solo kills and steals (docs/research/lol-fantasy-scoring-and-steals.md).
 
-/** The page key for an Oracle's Elixir game: its id with a space for each `_`. */
-export function leaguepediaGameKey(oeGameId: string): string {
-  return oeGameId.replaceAll("_", " ");
+/** The page key for an Oracle's Elixir game: the one an admin pasted in when the match isn't found
+ *  on its own, else the game's id with a space for each `_`. */
+export function leaguepediaGameKey(oeGameId: string, pasted?: string): string {
+  return pasted?.trim() || oeGameId.replaceAll("_", " ");
 }
 
 export interface V5Extras {

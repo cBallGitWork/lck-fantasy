@@ -19,7 +19,7 @@ tightened to a few.
 - Two columns: the main column, and a side column 360px wide, 32px apart. The side column is on
   the right on every page.
 - The right column is a stack of titled sections. Each opens with a 2px `--text` rule, never gold, and a 14px
-  title, its count or state after the title in `--mid` (Craig, 16 Nov 2026). A tapped player's panel goes at the top.
+  title, its count or state after the title in `--mid` (Craig, 16 Nov 2026). On Points a tapped player opens a sheet, its game rows 32px.
 - The first row of a screen's main table or picture shows above the fold at 1440 × 900.
 
 ## Spacing

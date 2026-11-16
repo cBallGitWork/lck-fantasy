@@ -21,22 +21,7 @@
   color: var(--mid);
 }
 .points__breakdown-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--m-mark-sheet);
-  height: var(--m-mark-sheet);
   margin-left: var(--s-3);
-  border-radius: 50%;
-  background: var(--text);
-  color: var(--bg);
-  font-family: var(--font-mono);
-  font-size: var(--size-head);
-}
-.points__breakdown-mark--v {
-  background: var(--bg);
-  color: var(--text);
-  border: var(--m-rule) solid var(--text);
 }
 .points__breakdown-mid {
   color: var(--mid);

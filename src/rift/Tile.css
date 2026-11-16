@@ -45,7 +45,11 @@
   height: var(--m-shirt-h);
   margin: 0 auto;
 }
-.tile__mark,
+.tile__mark {
+  position: absolute;
+  top: 0;
+  right: calc(var(--s-2) * -1);
+}
 .tile__flag,
 .tile__sell {
   position: absolute;
@@ -58,17 +62,6 @@
   font-size: var(--size-small);
   font-weight: var(--w-bold);
   line-height: var(--lh-tight);
-}
-.tile__mark {
-  right: calc(var(--s-2) * -1);
-  border-radius: 50%;
-  background: var(--text);
-  color: var(--bg);
-}
-.tile__mark--v {
-  background: var(--bg);
-  color: var(--text);
-  border: var(--m-rule) solid var(--text);
 }
 .tile__flag {
   left: calc(var(--s-2) * -1);

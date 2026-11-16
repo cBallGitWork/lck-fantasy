@@ -17,11 +17,6 @@
 .lck-hub__title {
   gap: var(--s-3);
 }
-.lck-hub__week {
-  display: flex;
-  align-items: center;
-  gap: var(--s-1);
-}
 
 /* Fixtures and Results: one week by day, a day's series on paper. */
 .lck-hub__time-heads {

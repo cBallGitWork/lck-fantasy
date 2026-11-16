@@ -1,12 +1,8 @@
-import { cx, GoLink, LinkGo, NONE, SectionHead, Tag } from "../../parts";
+import { GoLink, LinkGo, LiveTag, NONE, NotFinalTag, SectionHead } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
-import { RoleIcon } from "../../rift";
+import { MarkBadge, RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
 import { dot, WORDS } from "./words";
-
-function Mark({ mark }: { mark?: "C" | "V" }) {
-  return mark ? <span className={cx("live__mark", mark === "C" && "live__mark--c")}>{mark}</span> : null;
-}
 
 /** This series' games: `G1 4 · G2 1 Live 3/0/2`, dashes where the feed is down. */
 function GameLine({ player }: { player: PanelPlayer }) {
@@ -15,7 +11,7 @@ function GameLine({ player }: { player: PanelPlayer }) {
     <span className="live__games num">
       {games}
       {player.won !== undefined && `${dot}${WORDS.won} +${player.won}`}
-      {player.liveGame && <Tag kind="live">{WORDS.live}</Tag>}
+      {player.liveGame && <LiveTag />}
       {player.kda}
     </span>
   );
@@ -29,7 +25,7 @@ function PlayerRow({ player }: { player: PanelPlayer }) {
         <span className="live__name">
           {player.name}
           <small className="live__team">{player.team}</small>
-          <Mark mark={player.mark} />
+          {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}
         </span>
         <GameLine player={player} />
       </span>
@@ -45,7 +41,7 @@ function RestRow({ player }: { player: RestPlayer }) {
         <RoleIcon role={player.role} className="live__rest-icon" />
         {player.name}
         <small className="live__team">{player.team}</small>
-        <Mark mark={player.mark} />
+        {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}
       </span>
       <span className="live__points num">{player.points}</span>
     </GoLink>
@@ -65,7 +61,7 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
       )}
       <SectionHead>
         {WORDS.yourWeek}
-        {week.notFinal && <Tag kind="notFinal">{WORDS.notFinal}</Tag>}
+        {week.notFinal && <NotFinalTag />}
       </SectionHead>
       <div className="live__total">
         <span className="live__key num">{week.total}</span>

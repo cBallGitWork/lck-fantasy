@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, GoLink, LinkGo, PageFrame, score, Tag, Time } from "../../parts";
+import { cx, FinalTag, GoLink, LinkGo, LiveTag, NotFinalTag, PageFrame, score, Tag, Time } from "../../parts";
 import { PATHS } from "../../paths";
 import "./series.css";
 import { gameWon, RosterList, TeamGrid } from "./TeamGrid";
@@ -59,13 +59,13 @@ function Played({ series, live, account }: { series: PlayedSeries; live: boolean
         {live ? (
           <>
             <span className="series__tags">
-              <Tag kind="live">Live</Tag>
-              <Tag kind="notFinal">Not final</Tag>
+              <LiveTag />
+              <NotFinalTag />
             </span>
             <span>Solo kills, steals at final</span>
           </>
         ) : (
-          <Tag>Final</Tag>
+          <FinalTag final />
         )}
         <span>
           {when.format} · {whenLine(when)}

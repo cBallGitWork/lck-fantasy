@@ -1,4 +1,4 @@
-import { cx, result, score } from "../../parts";
+import { cx, seriesResult } from "../../parts";
 import type { CardWeek, WeekSeries } from "./card";
 
 /** A series' points: the games that count. */
@@ -14,7 +14,7 @@ export function ThisWeek({ week }: { week: CardWeek }) {
           <h3 className="player-card__section">
             <span>
               {s.day} · v {s.opponent}{" "}
-              <span className="player-card__quiet">{s.state === "live" ? score(s.score) : result(s.score)}</span>
+              <span className="player-card__quiet">{seriesResult(s.score, s.state === "live")}</span>
             </span>
             <b className="num">{seriesPoints(s)}</b>
           </h3>

@@ -1,6 +1,6 @@
-import { GoLink, Tag } from "../../parts";
+import { GoLink } from "../../parts";
 import { PATHS } from "../../paths";
-import { MARK_NAME, RoleIcon } from "../../rift";
+import { MarkBadge, RoleIcon } from "../../rift";
 import type { SidePlayer, WeekPoints } from "./types";
 
 /** Your week, or last week: the total with Average and Highest. */
@@ -19,9 +19,6 @@ export function WeekTotal({ week }: { week: WeekPoints }) {
   );
 }
 
-export function WeekTag({ final }: { final: boolean }) {
-  return final ? <Tag>Final</Tag> : <Tag kind="notFinal">Not final</Tag>;
-}
 
 /** A side list: role icon, name, C or V, team; a stat line; points. */
 export function PlayerList({ players, label }: { players: SidePlayer[]; label: string }) {
@@ -33,9 +30,7 @@ export function PlayerList({ players, label }: { players: SidePlayer[]; label: s
             <RoleIcon role={p.role} className="home__role-icon" />
             {p.name}
             {p.mark && (
-              <span className="home__mark" title={MARK_NAME[p.mark]}>
-                {p.mark}
-              </span>
+              <MarkBadge mark={p.mark} className="home__mark" />
             )}{" "}
             <span className="home__player-team">{p.team}</span>
           </span>

@@ -20,7 +20,7 @@ The page's frame and its sections.
 
 Keys, links, tabs, sheets and fields.
 
-- `WeekArrow.tsx`: a week's ‹ or ›, a 32px key: a link or a button; a disabled key where there is no week that way.
+- `WeekArrow.tsx`: `WeekStep`, `‹ Week 3 ›` on every page that steps through weeks; each `WeekArrow` a 32px key, a link or a button, disabled where there is no week that way.
 - `ViewToggle.tsx`: butted keys, the chosen one on paper (`Rift view | Card view`).
 - `Tabs.tsx`: a page's or a card's sections, the chosen one underlined.
 - `LinkGo.tsx`: a link ending `›` (`go`), or `↗` leaving Flol (`out`).
@@ -36,7 +36,7 @@ Keys, links, tabs, sheets and fields.
 
 What shows a fact: tags, tables, lists, crests, states.
 
-- `Tag.tsx`: a tag: plain, `Live` filled, `Not final` dashed.
+- `Tag.tsx`: a tag: plain, `Live` filled, `Not final` dashed; `LiveTag`, `NotFinalTag` and `FinalTag` (Final or Not final) say the states one way everywhere.
 - `Deadline.tsx`: `Deadline Wed 07:45  16:45 KST` and the countdown.
 - `Time.tsx`: your time, then KST in mid grey.
 - `MeDot.tsx`: your player's dot.
@@ -54,7 +54,7 @@ What shows a fact: tags, tables, lists, crests, states.
 How figures and money are written.
 
 - `money.ts`: an amount as ₩ and m (`eok` for a price held in m, `eokToWon`) (spec/02).
-- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`), per-game and one-decimal figures, per cents, `Bo3` and absence (`—`), written one way everywhere.
+- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`, `seriesResult` for a week's series), per-game and one-decimal figures, per cents, `Bo3` and absence (`—`), written one way everywhere.
 
 ## util/
 

@@ -1,12 +1,12 @@
-import { Crest, cx, GoLink, LinkGo, Modal, NONE, outcome, result, score, signed, Tag } from "../../parts";
+import { Crest, cx, GoLink, LinkGo, LiveTag, Modal, NONE, NotFinalTag, outcome, seriesResult, signed } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
-import { MARK_NAME, ROLE_NAME } from "../../rift";
+import { MARK_NAME, MarkBadge, ROLE_NAME } from "../../rift";
 import "./BreakdownSheet.css";
 import type { PointsGame, PointsPlayer, PointsSeries, PointsStarter } from "./types";
 
 /** A series' result: `W 2–1`, `1–0` while live (its game row says Live), a Not final tag till it is; the coach's `· +3`. */
 function SeriesResult({ s }: { s: PointsSeries }) {
-  const shown = s.state === "live" ? score(s.score) : result(s.score);
+  const shown = seriesResult(s.score, s.state === "live");
   const coach = s.coachResult === undefined ? "" : ` · ${signed(s.coachResult)}`;
   return (
     <span className="points__breakdown-result num">
@@ -15,7 +15,7 @@ function SeriesResult({ s }: { s: PointsSeries }) {
       {s.state === "notFinal" && (
         <>
           {" "}
-          <Tag kind="notFinal">Not final</Tag>
+          <NotFinalTag />
         </>
       )}
     </span>
@@ -31,7 +31,7 @@ function GameRow({ g }: { g: PointsGame }) {
         {g.champion && <b>{g.champion}</b>}
         {g.clock ? (
           <span>
-            <Tag kind="live">Live</Tag> <span className="num">{g.clock}</span>
+            <LiveTag /> <span className="num">{g.clock}</span>
           </span>
         ) : (
           g.won !== undefined && <span className="points__breakdown-mid">{outcome(g.won)}</span>
@@ -61,9 +61,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
           {player.name}
           <span className="points__breakdown-hangul">{player.hangul}</span>
           {player.mark && (
-            <span className={cx("points__breakdown-mark", player.mark === "V" && "points__breakdown-mark--v")} title={MARK_NAME[player.mark]}>
-              {player.mark}
-            </span>
+            <MarkBadge mark={player.mark} size="sheet" className="points__breakdown-mark" />
           )}
         </h2>
         <span className="points__breakdown-mid">
@@ -73,7 +71,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
       <div className="points__breakdown-total">
         <b className="num">{player.points ?? NONE}</b>
         <span className="points__breakdown-total-note">
-          {!final && <Tag kind="notFinal">Not final</Tag>}
+          {!final && <NotFinalTag />}
           {!final && player.carry && " · "}
           {player.carry && `Average ${MARK_NAME.C} ${player.carry.average}`}
         </span>

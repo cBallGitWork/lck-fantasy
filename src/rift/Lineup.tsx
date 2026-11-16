@@ -4,8 +4,7 @@ import "./Lineup.css";
 import { RoleIcon } from "./RoleIcon";
 import type { RoleKey, SlotKey } from "./roles";
 import { COACH_HANGUL, LINEUP_ORDER, ROLE_NAME, slotIcon } from "./roles";
-import type { Mark } from "./Tile";
-import { MARK_NAME } from "./Tile";
+import { MarkBadge, type Mark } from "./MarkBadge";
 
 export interface LineupCardProps {
   slot: SlotKey;
@@ -45,9 +44,7 @@ function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
 /** One starter's card in Card view (not the Player card screen): role head, photo (a crest for the Coach), name, team, next, footer. */
 export function LineupCard(p: LineupCardProps) {
   const mark = p.mark && (
-    <span className={cx("pcard__mark", p.mark === "V" && !p.dual && "pcard__mark--v")} title={MARK_NAME[p.mark]}>
-      {p.mark}
-    </span>
+    <MarkBadge mark={p.mark} size="card" dual={p.dual} className="pcard__mark" />
   );
   return (
     <div className={cx("pcard", p.selected && "pcard--selected", p.state && `pcard--${p.state}`)} {...selectable(p.onSelect, p.selected)}>

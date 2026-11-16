@@ -3,7 +3,7 @@ import type { Go } from "../../paths";
 import { GoLink } from "../controls/GoLink";
 import { LinkGo } from "../controls/LinkGo";
 import "./PageHead.css";
-import { WeekArrow } from "../controls/WeekArrow";
+import { WeekStep } from "../controls/WeekArrow";
 
 export interface HeadFigure {
   label: string;
@@ -63,15 +63,9 @@ export function PageHead({
         {link && <LinkGo go={link.go}>{link.label}</LinkGo>}
       </div>
       {week && (
-        <div className="page-head__week">
-          <WeekArrow go={week.prev} label="Week before">
-            ‹
-          </WeekArrow>
+        <WeekStep prev={week.prev} next={week.next} className="page-head__week">
           {week.label}
-          <WeekArrow go={week.next} label="Week after">
-            ›
-          </WeekArrow>
-        </div>
+        </WeekStep>
       )}
       {sub !== undefined && <div className="page-head__sub">{sub}</div>}
       {(figure !== undefined || tags !== undefined || figures.length > 0) && (

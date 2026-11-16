@@ -27,6 +27,7 @@ export {
   placeOf,
   result,
   score,
+  seriesResult,
   signed,
   type Score,
 } from "./text/figures";
@@ -45,10 +46,10 @@ export { SPONSOR_NOTE, SponsorNote } from "./frame/SponsorNote";
 export { Empty, ErrorState, Loading } from "./display/States";
 export { Table, type Column, type RowOpen } from "./display/Table";
 export { Tabs } from "./controls/Tabs";
-export { Tag, type TagKind } from "./display/Tag";
+export { FinalTag, LiveTag, NotFinalTag, Tag, TAG_WORD, type TagKind } from "./display/Tag";
 export { TierShield } from "./display/TierShield";
 export { Toast, TOAST_MS } from "./controls/Toast";
 export { Time } from "./display/Time";
 export { TOP_BAR_ITEMS, TopBar, type TopBarItem } from "./frame/TopBar";
 export { ViewToggle, type ToggleOption } from "./controls/ViewToggle";
-export { WeekArrow } from "./controls/WeekArrow";
+export { WeekArrow, WeekStep, type WeekWay } from "./controls/WeekArrow";

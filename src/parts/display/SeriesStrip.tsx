@@ -1,6 +1,6 @@
 import { cx } from "../util/cx";
 import { bestOf } from "../text/figures";
-import { Tag } from "./Tag";
+import { LiveTag } from "./Tag";
 import "./SeriesStrip.css";
 
 /** A series a card's strip shows: when, and against whom. */
@@ -41,7 +41,7 @@ export function SeriesStrip({ past, next }: { past: readonly StripPast[]; next: 
           </span>
           <b className="series-strip__points num">
             {s.points}
-            {s.live && <Tag kind="live">Live</Tag>}
+            {s.live && <LiveTag />}
           </b>
           <span className="series-strip__when">v {s.opponent}</span>
         </div>

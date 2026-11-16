@@ -222,10 +222,10 @@ test("the coach can't swap; a Carry going to the bench hands his C to the player
 
 test("with Dual Carry played the V is gold as the C", () => {
   const plain = html(view(PICK_TEAM_STATES.rift));
-  expect(plain).toContain('tile__mark tile__mark--v"');
+  expect(plain).toContain('mark-badge--v tile__mark"');
   const dual = run(PICK_TEAM_STATES.rift, { type: "playBuff", buff: "dualCarry" });
-  expect(html(view(dual))).not.toContain("tile__mark--v");
-  expect(html(view({ ...dual, view: "cards" }))).not.toContain("pcard__mark--v");
+  expect(html(view(dual))).not.toContain("mark-badge--v");
+  expect(html(view({ ...dual, view: "cards" }))).not.toContain("mark-badge--v");
 });
 
 test("making the Vice-carry the Carry hands the old Carry the V, as FPL's armband", () => {

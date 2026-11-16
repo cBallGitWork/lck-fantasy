@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Series } from "../../fixtures/week3";
-import { bestOf as bestOfLabel, SectionHead, WeekArrow } from "../../parts";
+import { bestOf as bestOfLabel, SectionHead, WeekStep } from "../../parts";
 import { PATHS } from "../../paths";
 import type { HubWeek } from "./types";
 
@@ -11,15 +11,9 @@ export const seriesGo = (s: Series) => ({ to: PATHS.series, params: { seriesId: 
 export function WeekTitle({ week, bestOf, onPrev, onNext }: { week: HubWeek; bestOf: number; onPrev?: () => void; onNext?: () => void }) {
   return (
     <SectionHead className="lck-hub__title" note={`${week.dates} · ${bestOfLabel(bestOf)}`}>
-      <span className="lck-hub__week">
-        <WeekArrow label="Week before" onStep={onPrev}>
-          ‹
-        </WeekArrow>
+      <WeekStep prev={onPrev} next={onNext}>
         {week.label}
-        <WeekArrow label="Week after" onStep={onNext}>
-          ›
-        </WeekArrow>
-      </span>
+      </WeekStep>
     </SectionHead>
   );
 }

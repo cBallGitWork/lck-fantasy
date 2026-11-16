@@ -1,4 +1,4 @@
-import { cx, Menu, score as scoreText, Tag, Time } from "../../parts";
+import { cx, FinalTag, LiveTag, Menu, score as scoreText, Time } from "../../parts";
 import type { FinalBug, LiveBug, NextSeries, Picker, Stream } from "./types";
 import { dot, WORDS } from "./words";
 
@@ -53,7 +53,7 @@ export function BugNow({ bug }: { bug: LiveBug }) {
       <Score {...bug} />
       <span className="live__bug-game">
         <b className="live__bug-state num">
-          <Tag kind="live">{WORDS.live}</Tag>
+          <LiveTag />
           {WORDS.game} {bug.game}
         </b>
         {bug.format}
@@ -70,7 +70,7 @@ export function BugFinal({ bug }: { bug: FinalBug }) {
       <Score {...bug} />
       <span className="live__bug-game">
         <b className="live__bug-state num">
-          <Tag>{WORDS.final}</Tag>
+          <FinalTag final />
           {WORDS.lastSeries}
         </b>
         {[bug.day, bug.format, bug.stage].join(dot)}

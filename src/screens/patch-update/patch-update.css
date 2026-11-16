@@ -4,9 +4,6 @@
   gap: var(--s-4);
 }
 .patch-update__week {
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
   font-size: var(--size-head);
   font-weight: var(--w-bold);
 }

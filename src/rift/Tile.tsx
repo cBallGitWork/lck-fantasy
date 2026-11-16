@@ -6,11 +6,8 @@ import { Shirt } from "./Shirt";
 import type { SlotKey } from "./roles";
 import { slotLabel } from "./roles";
 import type { RiftPoint } from "./slots";
+import { MarkBadge, type Mark } from "./MarkBadge";
 import "./Tile.css";
-
-export type Mark = "C" | "V";
-
-export const MARK_NAME: Record<Mark, string> = { C: "Carry", V: "Vice-carry" };
 
 export interface TileProps {
   /** His slot; a Flex's tile says Flex, never the role he plays, which his card says (Craig, 16 Nov 2026). */
@@ -73,9 +70,7 @@ export function Tile(p: TileProps) {
             </span>
           )}
           {p.mark && (
-            <span className={cx("tile__mark", p.mark === "V" && !p.dual && "tile__mark--v")} title={MARK_NAME[p.mark]}>
-              {p.mark}
-            </span>
+            <MarkBadge mark={p.mark} dual={p.dual} className="tile__mark" />
           )}
         </div>
       </div>

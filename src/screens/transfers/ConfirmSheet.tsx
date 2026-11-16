@@ -37,11 +37,11 @@ export function ConfirmSheet({
         {transfers.map((t) => (
           <li key={t.out.slot}>
             <span className="transfers__sheet-out">
-              {t.out.name} <small>{t.out.team}</small> <span className="num">{formatWon(t.out.price)}</span>
+              {t.out.name} <small>{t.out.team}</small> <span className="num">{formatWon(t.out.priceWon)}</span>
             </span>
             <span aria-label="for">→</span>
             <b>
-              {t.in.name} <small>{t.in.team}</small> <span className="num">{formatWon(t.in.price)}</span>
+              {t.in.name} <small>{t.in.team}</small> <span className="num">{formatWon(t.in.priceWon)}</span>
             </b>
           </li>
         ))}

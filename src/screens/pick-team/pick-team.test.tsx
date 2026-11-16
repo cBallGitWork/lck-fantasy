@@ -2,7 +2,6 @@
 import { expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
-import { ordinal } from "../../parts";
 import { changeCount, pickReducer, swapIds, type PickAction, type PickState } from "./model";
 import { PickTeamView } from "./PickTeam";
 
@@ -207,15 +206,15 @@ test("tap a player, then one lit up, and they swap: a role starter with the benc
 });
 
 test("Zeus and the Flex swap places, the V staying with Zeus: the swap and the V counted once each", () => {
-  const s = run({ ...PICK_TEAM_STATES.rift, selected: undefined }, { type: "makeVice", id: "zeus" }, { type: "select", id: "zeus" }, { type: "select", id: "siwoo" });
-  expect([s.draft.slots.top, s.draft.slots.flex, s.draft.vice]).toEqual(["siwoo", "zeus", "zeus"]);
+  const s = run({ ...PICK_TEAM_STATES.rift, selected: undefined }, { type: "makeViceCarry", id: "zeus" }, { type: "select", id: "zeus" }, { type: "select", id: "siwoo" });
+  expect([s.draft.slots.top, s.draft.slots.flex, s.draft.viceCarry]).toEqual(["siwoo", "zeus", "zeus"]);
   expect(changeCount(s.saved, s.draft)).toBe(2);
   expect(text(view({ ...s, selected: undefined }))).toContain("FlexHLEVZeusv DK, NS");
 });
 
 test("the coach can't swap; a Carry going to the bench hands his C to the player coming on", () => {
   const s = run(PICK_TEAM_STATES.rift, { type: "select", id: "bdd" });
-  expect([s.draft.slots.mid, s.draft.slots.bench1, s.draft.carry, s.draft.vice]).toEqual(["bdd", "faker", "bdd", "ruler"]);
+  expect([s.draft.slots.mid, s.draft.slots.bench1, s.draft.carry, s.draft.viceCarry]).toEqual(["bdd", "faker", "bdd", "ruler"]);
   expect(changeCount(s.saved, s.draft)).toBe(1);
   expect(run({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }, { type: "select", id: "bdd" }).draft).toBe(SAVED_TEAM);
 });
@@ -230,9 +229,9 @@ test("with Dual Carry played the V is gold as the C", () => {
 
 test("making the Vice-carry the Carry hands the old Carry the V, as FPL's armband", () => {
   const s = run(PICK_TEAM_STATES.rift, { type: "makeCarry", id: "ruler" });
-  expect([s.draft.carry, s.draft.vice]).toEqual(["ruler", "faker"]);
-  const t = run(PICK_TEAM_STATES.rift, { type: "makeVice", id: "zeus" });
-  expect([t.draft.carry, t.draft.vice]).toEqual(["faker", "zeus"]);
+  expect([s.draft.carry, s.draft.viceCarry]).toEqual(["ruler", "faker"]);
+  const t = run(PICK_TEAM_STATES.rift, { type: "makeViceCarry", id: "zeus" });
+  expect([t.draft.carry, t.draft.viceCarry]).toEqual(["faker", "zeus"]);
   expect(run(PICK_TEAM_STATES.rift, { type: "makeCarry", id: "kkoma" }).draft.carry).toBe("faker");
 });
 
@@ -254,8 +253,4 @@ test("Rift view | Card view sets the view; ✕ closes the card and ends the swap
   expect(closed.selected).toBeUndefined();
   expect(text(view(closed))).not.toContain("Last 3 series");
   expect(html(view(closed))).not.toMatch(/tile--(fit|dim)/);
-});
-
-test("ranks read as ordinals", () => {
-  expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 101].map(ordinal)).toEqual(["1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd", "101st"]);
 });

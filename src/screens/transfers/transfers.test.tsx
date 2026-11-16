@@ -73,7 +73,7 @@ describe("List view (Craig, 16 Nov 2026)", () => {
   test("the nine by role, as FPL's list: last week, price, form, total, next, ×", () => {
     expectInOrder(out, [
       "Player",
-      "Wk 3",
+      "Week 3",
       "Price",
       "Form",
       "Total",

@@ -19,4 +19,4 @@ export const ranked = (r: Ranked) => placeOf(r.place, r.of);
 export const fixtureLine = (series: readonly Series[], team: string) => `v ${seriesOf(series, team).map((s) => opponent(s, team)).join(", ")}`;
 
 /** C, V or nothing, from the draft. */
-export const markOf = (state: PickState, id: string) => (state.draft.carry === id ? "C" : state.draft.vice === id ? "V" : undefined);
+export const markOf = (state: PickState, id: string) => (state.draft.carry === id ? "C" : state.draft.viceCarry === id ? "V" : undefined);

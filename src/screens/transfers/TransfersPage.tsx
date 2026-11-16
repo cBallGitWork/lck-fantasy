@@ -1,12 +1,13 @@
 import { useCallback, useState } from "react";
 import type { BuffName } from "../../fixtures/week3";
 import { cx, Deadline, formatWon, MainAction, NONE, OutlinedKey, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
-import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
+import { Rift, RIFT_VIEW, Tile } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
-import { arrange, byRole, type Standing } from "./lineup";
+import { byRole, type SlotHolder } from "./lineup";
 import {
   add,
+  ALL,
   bankNow,
   EMPTY_PLAN,
   freeLeft,
@@ -28,13 +29,13 @@ import {
   type Step,
   type TransferRules,
 } from "./plan";
-import { ALL_TEAMS, PlayerList } from "./PlayerList";
+import { PlayerList } from "./PlayerList";
 import { spotOf } from "./spots";
 import { SquadList } from "./SquadList";
 import "./transfers.css";
 
 /** Transfers' two views: the nine on the Rift, or listed by role (Craig, 16 Nov 2026). */
-export const TRANSFER_VIEWS = [RIFT_VIEW, "List view"] as const;
+const TRANSFER_VIEWS = [RIFT_VIEW, "List view"] as const;
 export type View = (typeof TRANSFER_VIEWS)[number];
 
 export interface TransfersPageProps {
@@ -43,8 +44,8 @@ export interface TransfersPageProps {
   competition: string;
   /** `Week 4`. */
   week: string;
-  /** The last week whose points the List view shows: `Wk 3`. */
-  lastWeek: string;
+  /** The last week whose points the List view shows. */
+  lastWeek: number;
   deadline: { local: string; kst: string; countdown: string };
   squad: SquadPlayer[];
   players: ListPlayer[];
@@ -60,13 +61,10 @@ export interface TransfersPageProps {
   initialPlan?: Plan;
   /** The manager's last choice; Rift view on his first visit (spec/12). */
   view?: View;
-  onViewChange?: (view: View) => void;
   /** Opens on the confirm sheet. */
   reviewing?: boolean;
-  /** Each transfer by id, and the nine after them, arranged by role. */
-  onConfirm?: (transfers: { out: string; in: string }[], lineup: Record<SquadSlot, string>) => void;
-  onUndo?: (confirmId: string) => void;
-  onBuff?: (buff: BuffName) => void;
+  /** Each transfer by id. */
+  onConfirm?: (transfers: { out: string; in: string }[]) => void;
 }
 
 
@@ -78,9 +76,9 @@ export function TransfersPage(props: TransfersPageProps) {
   const [reviewing, setReviewing] = useState(props.reviewing ?? false);
   const [toast, setToast] = useState<{ message: string; n: number } | null>(null);
   const [filters, setFilters] = useState<ListFilters>({
-    role: plan.replacing ? roleFilterFor(squad, plan.replacing) : "all",
+    role: plan.replacing ? roleFilterFor(squad, plan.replacing) : ALL,
     search: "",
-    team: ALL_TEAMS,
+    team: ALL,
     sort: "points",
   });
   const endToast = useCallback(() => setToast(null), []);
@@ -99,12 +97,8 @@ export function TransfersPage(props: TransfersPageProps) {
     setToast({ message: step.toast, n: (toast?.n ?? 0) + 1 });
   };
   /** Tapping one of the nine: an empty slot gets its player back; anyone else is taken out. */
-  const tap = (s: Standing) => take(s.empty ? restore(squad, plan, s.slot) : remove(squad, plan, s.slot));
+  const tap = (holder: SlotHolder) => take(holder.empty ? restore(squad, plan, holder.slot) : remove(squad, plan, holder.slot));
   const reset = () => setPlan(EMPTY_PLAN);
-  const chooseView = (next: View) => {
-    setView(next);
-    props.onViewChange?.(next);
-  };
 
   const side = (
     <>
@@ -112,10 +106,7 @@ export function TransfersPage(props: TransfersPageProps) {
       <Confirmed
         week={props.week}
         confirms={props.confirms}
-        onUndo={(id) => {
-          reset();
-          props.onUndo?.(id);
-        }}
+        onUndo={reset}
       />
     </>
   );
@@ -144,10 +135,10 @@ export function TransfersPage(props: TransfersPageProps) {
         </div>
       </PageHead>
       <div className="transfers__controls">
-        <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={chooseView} label="View" />
+        <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={setView} label="View" />
         <span className="transfers__keys">
           {props.buffs.map((buff) => (
-            <OutlinedKey key={buff} onClick={() => props.onBuff?.(buff)}>
+            <OutlinedKey key={buff}>
               {buff}
             </OutlinedKey>
           ))}
@@ -155,21 +146,21 @@ export function TransfersPage(props: TransfersPageProps) {
       </div>
       {view === RIFT_VIEW ? (
         <Rift>
-          {groups.flatMap(({ role, standing }) =>
-            standing.map((s, i) => (
+          {groups.flatMap(({ role, holders }) =>
+            holders.map((holder, i) => (
               <Tile
-                key={s.slot}
+                key={holder.slot}
                 slot={role}
-                name={s.p.name}
-                team={s.p.team}
-                at={spotOf(role, i, standing.length)}
-                mark={s.mark}
-                price={formatWon(s.p.price)}
-                sell={!s.empty}
-                line={nextAgainst(fixtures, s.p.team) || NONE}
-                selected={plan.replacing === s.slot}
-                state={s.empty ? "dim" : undefined}
-                onSelect={() => tap(s)}
+                name={holder.player.name}
+                team={holder.player.team}
+                at={spotOf(role, i, holders.length)}
+                mark={holder.mark}
+                price={formatWon(holder.player.priceWon)}
+                sell={!holder.empty}
+                line={nextAgainst(fixtures, holder.player.team) || NONE}
+                selected={plan.replacing === holder.slot}
+                state={holder.empty ? "dim" : undefined}
+                onSelect={() => tap(holder)}
               />
             )),
           )}
@@ -183,11 +174,11 @@ export function TransfersPage(props: TransfersPageProps) {
             <span key={m.out.slot}>
               {i > 0 && ", "}
               <s className="transfers__out">
-                {m.out.name} {formatWon(m.out.price)}
+                {m.out.name} {formatWon(m.out.priceWon)}
               </s>
               {" → "}
               <b>
-                {m.in.name} {formatWon(m.in.price)}
+                {m.in.name} {formatWon(m.in.priceWon)}
               </b>
             </span>
           ))}
@@ -212,11 +203,7 @@ export function TransfersPage(props: TransfersPageProps) {
           deadline={props.deadline}
           onBack={() => setReviewing(false)}
           onConfirm={() => {
-            const lineup = Object.fromEntries(Object.entries(arrange(squad, plan)).map(([slot, p]) => [slot, p.id])) as Record<SquadSlot, string>;
-            props.onConfirm?.(
-              done.map((m) => ({ out: m.out.id, in: m.in.id })),
-              lineup,
-            );
+            props.onConfirm?.(done.map((m) => ({ out: m.out.id, in: m.in.id })));
             setReviewing(false);
             reset();
           }}

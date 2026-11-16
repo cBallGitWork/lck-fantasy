@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { cx, formatWon, oneDecimal } from "../../parts";
 import { ROLE_NAME, Shirt, type PersonRole, type SquadSlot } from "../../rift";
-import type { Standing } from "./lineup";
+import type { SlotHolder } from "./lineup";
 import { nextAgainst, type Fixture } from "./plan";
 import "./SquadList.css";
 
@@ -17,11 +17,12 @@ export function SquadList({
   replacing,
   onTap,
 }: {
-  groups: { role: PersonRole; standing: Standing[] }[];
+  groups: { role: PersonRole; holders: SlotHolder[] }[];
   fixtures: Record<string, Fixture[]>;
-  lastWeek: string;
+  /** The last week whose points the list shows. */
+  lastWeek: number;
   replacing: SquadSlot | null;
-  onTap: (s: Standing) => void;
+  onTap: (holder: SlotHolder) => void;
 }) {
   return (
     <table className="transfers__squad">
@@ -29,7 +30,7 @@ export function SquadList({
         <tr>
           <th aria-label="Shirt" />
           <th>Player</th>
-          <th className="transfers__num">{lastWeek}</th>
+          <th className="transfers__num">Week {lastWeek}</th>
           <th className="transfers__num">Price</th>
           <th className="transfers__num">Form</th>
           <th className="transfers__num">Total</th>
@@ -38,29 +39,29 @@ export function SquadList({
         </tr>
       </thead>
       <tbody>
-        {groups.map(({ role, standing }) => (
+        {groups.map(({ role, holders }) => (
           <Fragment key={role}>
             <tr className="transfers__group">
               <th colSpan={8} scope="rowgroup">
                 {ROLE_NAME[role]}
               </th>
             </tr>
-            {standing.map((s) => (
-              <tr key={s.slot} className={cx(s.empty && "transfers__row--sold", replacing === s.slot && "transfers__row--picked")}>
+            {holders.map((holder) => (
+              <tr key={holder.slot} className={cx(holder.empty && "transfers__row--sold", replacing === holder.slot && "transfers__row--picked")}>
                 <td>
-                  <Shirt team={s.p.team} small />
+                  <Shirt team={holder.player.team} small />
                 </td>
                 <td className="transfers__name">
-                  <b>{s.p.name}</b> {s.p.team}
+                  <b>{holder.player.name}</b> {holder.player.team}
                 </td>
-                <td className="transfers__num num">{s.p.weekPoints}</td>
-                <td className="transfers__num num">{formatWon(s.p.price)}</td>
-                <td className="transfers__num num">{oneDecimal(s.p.form)}</td>
-                <td className="transfers__num num">{s.p.points}</td>
-                <td className="transfers__next">{nextAgainst(fixtures, s.p.team)}</td>
+                <td className="transfers__num num">{holder.player.weekPoints}</td>
+                <td className="transfers__num num">{formatWon(holder.player.priceWon)}</td>
+                <td className="transfers__num num">{oneDecimal(holder.player.form)}</td>
+                <td className="transfers__num num">{holder.player.points}</td>
+                <td className="transfers__next">{nextAgainst(fixtures, holder.player.team)}</td>
                 <td>
-                  <button type="button" className="transfers__add" aria-label={`${s.empty ? "Restore" : "Sell"} ${s.p.name}`} onClick={() => onTap(s)}>
-                    {s.empty ? "↺" : "×"}
+                  <button type="button" className="transfers__add" aria-label={`${holder.empty ? "Restore" : "Sell"} ${holder.player.name}`} onClick={() => onTap(holder)}>
+                    {holder.empty ? "↺" : "×"}
                   </button>
                 </td>
               </tr>

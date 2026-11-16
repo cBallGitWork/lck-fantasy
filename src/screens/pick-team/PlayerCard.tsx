@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Crest, cx, money, LinkGo, oneDecimal, pct, PriceMove, Tag } from "../../parts";
 import { cardGo } from "../../paths";
-import { isBench, PlayerPanel, ROLE_NAME } from "../../rift";
+import { isBench, markKey, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { ranked, type ViewProps } from "./format";
 import { slotOf } from "./model";
@@ -42,7 +42,7 @@ export function PlayerCard({ state, player: p, dispatch }: Omit<ViewProps, "data
       </dl>
       <dl className="pick-team__rows">
         <Row k="Last 3 series">
-          <span className="num">{p.lastThree.join(" · ")}</span>
+          <span className="num">{p.last3.join(" · ")}</span>
         </Row>
       </dl>
       <CardKeys state={state} player={p} starter={slot !== undefined && !isBench(slot)} dispatch={dispatch} />
@@ -66,14 +66,14 @@ function Row({ k, children }: { k: string; children: ReactNode }) {
 function CardKeys({ state, player: p, starter, dispatch }: Omit<ViewProps, "data"> & { player: PickPlayer; starter: boolean }) {
   const full = <LinkGo go={cardGo(p.id, p.role === "coach")}>Full card</LinkGo>;
   if (p.role === "coach" || !starter) return <div className="pick-team__keys">{full}</div>;
-  const { carry, vice } = state.draft;
+  const { carry, viceCarry } = state.draft;
   return (
     <div className="pick-team__keys">
       <CardKey on={carry === p.id} onClick={() => dispatch({ type: "makeCarry", id: p.id })}>
-        {carry === p.id ? "✓ Carry" : "Make Carry"}
+        {markKey("C", carry === p.id)}
       </CardKey>
-      <CardKey on={vice === p.id} onClick={() => dispatch({ type: "makeVice", id: p.id })}>
-        {vice === p.id ? "✓ Vice-carry" : "Make Vice-carry"}
+      <CardKey on={viceCarry === p.id} onClick={() => dispatch({ type: "makeViceCarry", id: p.id })}>
+        {markKey("V", viceCarry === p.id)}
       </CardKey>
       {full}
     </div>

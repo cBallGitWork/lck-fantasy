@@ -1,11 +1,10 @@
 import { cx, Empty, formatWon, GoLink, Menu, pct, SideSection } from "../../parts";
 import { cardGo } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon } from "../../rift";
-import { listRows, nextAgainst, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
+import { ALL, listRows, nextAgainst, outOf, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
 
 const SORTS: Record<SortKey, string> = { points: "Points", price: "Price", owned: "Owned" };
-const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: "all", label: "All roles" }, ...ROLE_KEYS.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
-export const ALL_TEAMS = "all";
+const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: ALL, label: "All roles" }, ...ROLE_KEYS.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
 
 /** The list: who can be bought, with role chips, search, sort and team; none greyed (Craig, 16 Nov 2026). */
 export function PlayerList({
@@ -28,7 +27,7 @@ export function PlayerList({
   onBuy: (player: ListPlayer) => void;
 }) {
   const rows = listRows(squad, plan, players, filters);
-  const out = plan.replacing ? squad.find((p) => p.slot === plan.replacing) : undefined;
+  const out = plan.replacing ? outOf(squad, plan.replacing) : undefined;
   return (
     <SideSection title={out ? `Replacing ${out.name}` : "Players"}>
       <div className="transfers__roles">
@@ -60,8 +59,8 @@ export function PlayerList({
         />
         <Menu
           className="transfers__tool"
-          label={`Team: ${filters.team === ALL_TEAMS ? "All" : filters.team} ▾`}
-          items={[ALL_TEAMS, ...teams].map((team) => ({ label: team === ALL_TEAMS ? "All" : team, onChoose: () => onFilters({ ...filters, team }) }))}
+          label={`Team: ${filters.team === ALL ? "All" : filters.team} ▾`}
+          items={[ALL, ...teams].map((team) => ({ label: team === ALL ? "All" : team, onChoose: () => onFilters({ ...filters, team }) }))}
         />
       </div>
       {rows.length === 0 ? (
@@ -102,7 +101,7 @@ function ListRow({ p, next, onBuy }: { p: ListPlayer; next: string; onBuy: (p: L
           <b>{p.name}</b> {p.team}
         </GoLink>
       </td>
-      <td className="transfers__num num">{formatWon(p.price)}</td>
+      <td className="transfers__num num">{formatWon(p.priceWon)}</td>
       <td className="transfers__num num">{p.points}</td>
       <td className="transfers__num num">{pct(p.ownedPct)}</td>
       <td className="transfers__next">{next}</td>

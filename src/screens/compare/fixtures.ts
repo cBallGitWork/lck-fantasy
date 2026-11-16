@@ -11,14 +11,14 @@ import type { PersonRole } from "../../rift";
 /** A series already played: its week and day, the opponent, his points. */
 export interface PastSeries {
   when: string;
-  opp: TeamCode;
+  opponent: TeamCode;
   points: number;
 }
 
 /** A series to come: its week and day, the opponent. */
 export interface NextSeries {
   when: string;
-  opp: TeamCode;
+  opponent: TeamCode;
 }
 
 /** One scoring line: its season total and points. A series line (a coach's won or lost) has no per-game figure. */
@@ -53,10 +53,10 @@ export interface ComparePlayer {
 /** A series' week and day: `W4 · Wed`. */
 const when = (s: T1Series) => `W${s.week} · ${s.day}`;
 
-const NEXT_T1: NextSeries[] = T1_NEXT3.map((s) => ({ when: when(s), opp: s.opponent }));
+const NEXT_T1: NextSeries[] = T1_NEXT3.map((s) => ({ when: when(s), opponent: s.opponent }));
 
 /** A T1 member's side, from his card's season figures, his Pick Team price and form, and Stats. */
-function t1Member(season: T1MemberSeason, role: PersonRole, ownedPct: number): ComparePlayer {
+function t1Member(season: T1MemberSeason, role: PersonRole): ComparePlayer {
   const { name } = season;
   const pick = pickedAt(name);
   return {
@@ -70,19 +70,19 @@ function t1Member(season: T1MemberSeason, role: PersonRole, ownedPct: number): C
     form: pick.form,
     priceM: pick.priceM,
     riseM: season.riseM,
-    ownedPct,
-    last3: last3(season).map((s) => ({ when: when(s), opp: s.opponent, points: s.points })),
+    ownedPct: statsOf(name).ownedPct,
+    last3: last3(season).map((s) => ({ when: when(s), opponent: s.opponent, points: s.points })),
     next3: NEXT_T1,
     lines: [...season.lines],
   };
 }
 const NEXT_GEN: NextSeries[] = [
-  { when: "W4 · Thu", opp: "BRO" },
-  { when: "W4 · Sat", opp: "T1" },
-  { when: "W5 · Wed", opp: "DNS" },
+  { when: "W4 · Thu", opponent: "BRO" },
+  { when: "W4 · Sat", opponent: "T1" },
+  { when: "W5 · Wed", opponent: "DNS" },
 ];
 
-export const FAKER: ComparePlayer = t1Member(FAKER_SEASON, "mid", statsOf("Faker").ownedPct);
+export const FAKER: ComparePlayer = t1Member(FAKER_SEASON, "mid");
 
 export const CHOVY: ComparePlayer = {
   id: "chovy",
@@ -97,9 +97,9 @@ export const CHOVY: ComparePlayer = {
   riseM: 0.5,
   ownedPct: 41,
   last3: [
-    { when: "W2 · Sat", opp: "BRO", points: 11 },
-    { when: "W3 · Wed", opp: "KT", points: 9 },
-    { when: "W3 · Sat", opp: "HLE", points: 8 },
+    { when: "W2 · Sat", opponent: "BRO", points: 11 },
+    { when: "W3 · Wed", opponent: "KT", points: 9 },
+    { when: "W3 · Sat", opponent: "HLE", points: 8 },
   ],
   next3: NEXT_GEN,
   lines: [
@@ -115,7 +115,7 @@ export const CHOVY: ComparePlayer = {
   ],
 };
 
-export const KKOMA: ComparePlayer = t1Member(KKOMA_SEASON, "coach", statsOf(KKOMA_SEASON.name).ownedPct);
+export const KKOMA: ComparePlayer = t1Member(KKOMA_SEASON, "coach");
 
 export const RYU: ComparePlayer = {
   id: "ryu",
@@ -129,9 +129,9 @@ export const RYU: ComparePlayer = {
   priceM: 7.0,
   ownedPct: 21,
   last3: [
-    { when: "W2 · Sat", opp: "BRO", points: 5 },
-    { when: "W3 · Wed", opp: "KT", points: 6 },
-    { when: "W3 · Sat", opp: "HLE", points: 9 },
+    { when: "W2 · Sat", opponent: "BRO", points: 5 },
+    { when: "W3 · Wed", opponent: "KT", points: 6 },
+    { when: "W3 · Sat", opponent: "HLE", points: 9 },
   ],
   next3: NEXT_GEN,
   lines: [

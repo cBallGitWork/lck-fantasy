@@ -7,13 +7,11 @@ import { ROSTERS, T1_PRICES_M } from "../../fixtures/rosters";
 import { WEEK3_STANDINGS, type Standing } from "../../fixtures/standings";
 import { BEST_OF, COMPETITION_TITLE, playerId, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
 import { mToWon } from "../../parts";
-import { ROLE_KEYS, type PersonRole } from "../../rift";
+import { PERSON_ROLES } from "../../rift";
 import type { LckHubData, Roster, RosterMember, StandingsRow, TeamRosters } from "./types";
 
 /** A standing as the table draws it: its last five as results. */
 const row = ({ last5, ...rest }: Standing): StandingsRow => ({ ...rest, last5: [...last5].map((r) => (r === "W" ? "W" : "L")) });
-
-const ROLE_ORDER: readonly PersonRole[] = [...ROLE_KEYS, "coach"];
 
 /** A roster in role order, Top to Support then the coach: game name, hangul, and price in m where set. */
 const roster = (name: string, league: string, people: readonly (readonly [string, string])[], pricesM?: readonly number[]): Roster => ({
@@ -21,7 +19,7 @@ const roster = (name: string, league: string, people: readonly (readonly [string
   league,
   members: people.map(([game, hangul], i): RosterMember => {
     const money = pricesM?.[i];
-    return { id: playerId(game), name: game, hangul, role: ROLE_ORDER[i] ?? "coach", ...(money === undefined ? {} : { priceWon: mToWon(money) }) };
+    return { id: playerId(game), name: game, hangul, role: PERSON_ROLES[i] ?? "coach", ...(money === undefined ? {} : { priceWon: mToWon(money) }) };
   }),
 });
 

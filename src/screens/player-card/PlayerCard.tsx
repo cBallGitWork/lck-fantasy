@@ -1,7 +1,7 @@
 import { useState, type ReactNode } from "react";
 import { beyondStrip, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
-import { ROLE_NAME } from "../../rift";
+import { markKey, ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
 import { Champions } from "./Champions";
 import { FixturesTab } from "./FixturesTab";
@@ -100,8 +100,8 @@ export function PlayerCard({
 function PickTeamKeys({ actions }: { actions: CardActions }) {
   return (
     <>
-      <OutlinedKey onClick={() => actions.onMark("C")}>{actions.mark === "C" ? "✓ Carry" : "Make Carry"}</OutlinedKey>
-      <OutlinedKey onClick={() => actions.onMark("V")}>{actions.mark === "V" ? "✓ Vice-carry" : "Make Vice-carry"}</OutlinedKey>
+      <OutlinedKey onClick={() => actions.onMark("C")}>{markKey("C", actions.mark === "C")}</OutlinedKey>
+      <OutlinedKey onClick={() => actions.onMark("V")}>{markKey("V", actions.mark === "V")}</OutlinedKey>
       <OutlinedKey onClick={actions.onSwap}>Swap with bench</OutlinedKey>
       <OutlinedKey onClick={actions.onTransferOut}>Transfer out</OutlinedKey>
     </>

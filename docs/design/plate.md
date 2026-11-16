@@ -18,8 +18,8 @@ tightened to a few.
 - Drawn 1440 wide. Top bar, then the page: 32px each side, 24px above, 48px below.
 - Two columns: the main column, and a side column 360px wide, 32px apart. The side column is on
   the right, save Leagues, whose list of leagues is on the left.
-- The right column is a stack of titled sections. Each opens with a 2px ink rule and a 14px
-  title, its count or state after the title in mid grey. A tapped player's panel goes at the top.
+- The right column is a stack of titled sections. Each opens with a 2px `--text` rule, never gold, and a 14px
+  title, its count or state after the title in `--mid` (Craig, 16 Nov 2026). A tapped player's panel goes at the top.
 - The first row of a screen's main table or picture shows above the fold at 1440 × 900.
 
 ## Spacing
@@ -35,27 +35,40 @@ tightened to a few.
   card names him at 40/700, his hangul at 20, as a broadcast lower third (Craig, 15 Nov 2026). Nothing under 12, except
   a tag's 11.
 - Three weights: 400, 600, 700.
-- One page title, 28/700, with its hangul after it in 16/400 mid grey: `Leagues 리그`. On Points
+- One page title, 28/700, with its hangul after it in 16/400 `--mid`: `Leagues 리그`. On Points
   and Home the title is your team's name: `Baron Steal FC 바론 스틸 FC`.
 
 ## Colour
 
+The built look is navy with gold, from `src/theme/tokens.ts`; each token below is the CSS property
+`var(--name)` the app draws with, and nothing outside `src/theme/` holds a colour (Craig, 16 Nov 2026).
+
 | Token | Value | Use |
 |---|---|---|
-| `--ink` | #1d1d1d | text, rules, the selected thing |
-| `--mid` | #6b6b6b | secondary text (5.3:1 on `--paper`) |
-| `--soft` | #9a9a9a | never text; dashed outlines and placeholders only (2.8:1) |
-| `--line` | #cfcfcf | table rules |
-| `--fill` | #ececec | a selected row, a toggle's ground |
-| `--bg` | #f7f7f5 | the page |
-| `--paper` | #fff | panels and tables |
-| `--rise` | #c8102e | a price rise, Korean red |
-| `--fall` | #1f4fa8 | a price fall, Korean blue |
-| `--gold` | #d9bd7a | the hangul on your team's banner, and only there; its rule #b39550 |
-| `--stage` | #1b1b1b | Live's dark stage; its grey text is #999 (4.5:1) |
+| `--bg` | #010A13 | the page |
+| `--paper` | #0A1428 | panels and tables |
+| `--line` | #1E2D40 | table rules |
+| `--fill` | #14233A | a selected row, a toggle's ground |
+| `--text` | #F0E6D2 | words and figures; section rules, the selected thing, every emphasis |
+| `--mid` | #A09B8C | secondary text (6.5:1 on `--paper`, 5.8:1 on `--fill`) |
+| `--soft` | #5B5A56 | never text; dashed outlines and placeholders only |
+| `--ink` | #C89B3C | Hextech gold: the one main action's fill, and nothing else |
+| `--on-ink` | #010A13 | the words on that filled `--ink` key |
+| `--gold` | #F0D58C | the hangul on your team's banner, and only there |
+| `--gold-rule` | #785A28 | the banner's rule under that hangul |
+| `--rise` | #FF5C6C | a price rise, Korean red lightened for navy |
+| `--fall` | #6EA2FF | a price fall, Korean blue lightened for navy |
+| `--teal` | #0AC8B9 | the second accent, sparingly: the live dot, the focus ring |
+| `--stage` | #000508 | Live's dark stage |
+| `--stage-text` | #A09B8C | grey text on the stage |
+| `--dim` | rgba(1, 10, 19, 0.72) | the page behind a modal |
+| `--map-ground`, `--map-river`, `--map-lane`, `--map-base`, `--map-tower` | #0B1A2C, #0D2B3E, #1A2C42, #22374F, #5B5A56 | the Rift map's ground, river, lanes, bases and towers |
 
-- Grey until the look is chosen. Colour is spent on meaning only, never to decorate: red and
-  blue are prices only; a rank's move stays ink.
+- Gold is for two things only: the one main action on a screen (`--ink`) and the banner's hangul
+  (`--gold`). Section rules, tabs, selected borders, links, marks, tags and a rank's move (▲/▼) are
+  `--text` or grey (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
+- Colour is spent on meaning only, never to decorate: red and blue are prices only; a rank's move
+  stays `--text` (Craig, 16 Nov 2026).
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
 
 ## Parts
@@ -63,23 +76,23 @@ tightened to a few.
 Each part is drawn one way on every screen.
 
 - **Page head:** title and hangul; ‹ week ›; the key figure; its tags; then up to three
-  figures beside it, in mid grey with the figure in ink (`Average 79  Highest 136 ›`).
+  figures beside it, in `--mid` with the figure in `--text` (Craig, 16 Nov 2026) (`Average 79  Highest 136 ›`).
 - **Tag:** a square box, 1px rule, 11px, sentence case: `Live`, `Not final`, `Final`, `Cap 2`.
-  `Live` is filled ink. `Not final` is dashed.
+  `Live` is filled `--text` with `--bg` words (Craig, 16 Nov 2026). `Not final` is dashed.
 - **View toggle:** butted keys on `--fill`, the chosen one on `--paper`: `Rift view | Card view`.
-- **Tabs** (a page's or a card's sections): words in a row, the chosen one ink with a 2px
-  underline.
+- **Tabs** (a page's or a card's sections): words in a row, the chosen one `--text` with a 2px
+  `--text` underline (Craig, 16 Nov 2026).
 - **Top bar**, the same on every screen: `Flol`, Home, Pick Team, Transfers, Points, Leagues, Stats,
   LCK, `● Live` (its dot always shown); at the right `presented by [Sponsor]` and the account menu
   `Baron Steal FC ▾`, or `Sign in` for a visitor.
-- **A link** ends with `›`, in ink, and names where it goes: `Full stats ›`. Not underlined, save
+- **A link** ends with `›`, in `--text` (Craig, 16 Nov 2026), and names where it goes: `Full stats ›`. Not underlined, save
   a link inside a sentence. A link leaving Flol ends with `↗`.
 - **Deadline**, one way everywhere: `Deadline Wed 07:45  16:45 KST` and the countdown `9h 45m`.
-- **Times:** your time first, then KST in mid grey: `Sat 22:00  07:00 KST`. A column of times
+- **Times:** your time first, then KST in `--mid`: `Sat 22:00  07:00 KST`. A column of times
   has a head.
-- **Your player:** an 8px round ink dot after the name. **May not start:** the tag `Not starting`.
+- **Your player:** an 8px round `--text` dot after the name (Craig, 16 Nov 2026). **May not start:** the tag `Not starting`.
 - **Table:** name far left (after its slot, where a table lists a team) with team after it, figures right-aligned, 40px rows, 12px heads
-  in mid grey. No action column: what you can do to a row goes in its panel on the right. Two exceptions,
+  in `--mid`. No action column: what you can do to a row goes in its panel on the right. Two exceptions,
   each a page's one job: Transfers' `+`, and a row's `›` where the row opens something.
 - **The bench**, under the Rift or the cards: one compact bar, `Bench` then a slim tile per
   bench player (order, role icon, name, team, then fixtures or points). Never a band of big shirts.
@@ -92,21 +105,21 @@ Each part is drawn one way on every screen.
 - **Your players** are marked by that dot, on every screen.
 - **Modal** (a card, a sheet): a dimmed page behind, `✕` top right, Esc closes, focus stays
   inside. A card is 1056 wide; a sheet 544.
-- **Form:** label above its field, 14px; the field 40px tall, 1px `--line`, ink when focused;
-  an error is one line in ink under the field with a 1px ink edge on the field.
+- **Form:** label above its field, 14px; the field 40px tall, 1px `--line`, `--text` when focused;
+  an error is one line in `--text` under the field with a 1px `--text` edge on the field (Craig, 16 Nov 2026).
 - **A buff** shows its name, one line on what it does (spec/06), how many are left, and Play.
-- **One main action** per screen, filled ink (`Save team`). Everything else is a link or
+- **One main action** per screen, filled `--ink` gold with `--on-ink` words, `Save team` (Craig, 16 Nov 2026). Everything else is a link or
   an outlined key.
 - **Placeholders** (sponsor, photo) are dashed `--soft` boxes with one word.
-- **A page that shows a sponsor** ends with `All sponsors are made up.`, 12px mid grey
+- **A page that shows a sponsor** ends with `All sponsors are made up.`, 12px `--mid`
   (spec/13).
 
 ## States
 
 Every screen part is drawn for each state it can be in.
 
-- **Hover:** a row gets `--fill`; a link or key its 1px ink underline or edge.
-- **Focus:** a 2px ink ring, always shown.
+- **Hover:** a row gets `--fill`; a link or key its 1px `--text` underline or edge (Craig, 16 Nov 2026).
+- **Focus:** a 2px `--teal` ring, always shown (Craig, 16 Nov 2026).
 - **Disabled:** text `--mid` on `--fill`, no edge, with the reason beside it (`No changes`).
 - **Loading:** the layout drawn with `--fill` bars where figures go; no spinners.
 - **Empty:** a title and at most one short line (`No moves yet`).
@@ -154,4 +167,4 @@ Not drawn yet. It gets its own round: one column, the side column below the main
 
 - Text 4.5:1 against its ground, large text and marks 3:1.
 - Every target at least 24px on the desk, 44px on the phone.
-- Focus always shows: a 2px ink ring.
+- Focus always shows: a 2px `--teal` ring (Craig, 16 Nov 2026).

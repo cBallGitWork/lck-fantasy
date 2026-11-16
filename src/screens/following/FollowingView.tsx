@@ -1,5 +1,6 @@
 import { bestOf, Columns, GoLink, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
+import { PATHS, type Go } from "../../paths";
 import {
   movesSummary,
   playersLine,
@@ -70,7 +71,7 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
   );
 }
 
-const profile = (m: Manager) => ({ to: "/manager/$managerId", params: { managerId: m.id } }) as const;
+const profile = (m: Manager): Go => ({ to: PATHS.profile, params: { managerId: m.id } });
 
 /** A manager's name, opening their profile, with their team under it. */
 function Who({ manager }: { manager: Manager }) {

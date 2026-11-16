@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { againstLine } from "../../fixtures/series";
 import type { BuffName } from "../../fixtures/week3";
-import { Deadline, formatEok, MainAction, Menu, OutlinedKey, PageFrame, PageHead, pct, ViewToggle } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchTile, Lineup, RIFT_SLOTS, RIFT_VIEW, Rift, Tile, VIEWS, type BoardView, type RiftPoint, type RoleKey, type SlotKey, type SquadSlot } from "../../rift";
+import { Deadline, formatEok, MainAction, Menu, MINUS, OutlinedKey, PageFrame, PageHead, pct, ViewToggle } from "../../parts";
+import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, RIFT_SLOTS, RIFT_VIEW, Rift, Tile, VIEWS, type BoardView, type RiftPoint, type SlotKey, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed, costLabel } from "./Confirmed";
 import {
@@ -74,9 +74,8 @@ export function under(show: Show, p: Standing, fixtures: Record<string, Fixture[
   return againstLine((fixtures[p.team] ?? []).map((f) => f.against));
 }
 
-const playsOf = (slot: SquadSlot, p: Standing): RoleKey | undefined => (slot === "flex" && p.role !== "coach" ? p.role : undefined);
 const markOf = (p: Standing) => ("mark" in p ? p.mark : undefined);
-const hitLabel = (hit: number) => (hit > 0 ? `−${hit}` : "0");
+const hitLabel = (hit: number) => (hit > 0 ? `${MINUS}${hit}` : "0");
 
 /** Transfers, Rift view mid-transfer (transfers.html): the squad, the bench, the changes, the list and the week's confirms. */
 export function TransfersPage(props: TransfersPageProps) {
@@ -169,7 +168,7 @@ export function TransfersPage(props: TransfersPageProps) {
               <Tile
                 key={slot}
                 slot={slot}
-                plays={playsOf(slot, s.p)}
+                plays={flexPlays(slot, s.p.role)}
                 name={s.p.name}
                 team={s.p.team}
                 at={TRANSFERS_SLOTS[slot]}
@@ -188,7 +187,7 @@ export function TransfersPage(props: TransfersPageProps) {
             const s = slotView(slot);
             return {
               slot,
-              plays: playsOf(slot, s.p),
+              plays: flexPlays(slot, s.p.role),
               name: s.p.name,
               team: s.p.team,
               mark: markOf(s.p),

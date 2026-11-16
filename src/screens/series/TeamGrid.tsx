@@ -1,10 +1,10 @@
-import { cx, GoLink, LinkGo, MeDot, NONE, outcome, SectionHead, Tag } from "../../parts";
+import { cx, GoLink, LinkGo, MeDot, NONE, outcome, SectionHead, signed, Tag } from "../../parts";
 import { cardGo, type Go } from "../../paths";
 import { RoleIcon, ROLE_NAME, type IconKey } from "../../rift";
 import type { CoachLine, Game, Person, PlayerLine, Roster, TeamSheet } from "./types";
 
 /** The coach's series result as the picture draws it: `W +3`, `L −1`. */
-const resultLabel = (points: number) => (points > 0 ? `W +${points}` : `L −${-points}`);
+const resultLabel = (points: number) => `${outcome(points > 0)} ${signed(points)}`;
 
 export const gameWon = (game: Game, code: string) => "winner" in game && game.winner === code;
 

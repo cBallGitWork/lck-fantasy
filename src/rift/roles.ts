@@ -35,6 +35,11 @@ export const LINEUP_ORDER: readonly SlotKey[] = [...ROLE_KEYS, "flex", "coach"];
 /** A squad's nine: the seven starters and the bench. */
 export const SQUAD_SIZE = LINEUP_ORDER.length + BENCH_SLOTS.length;
 
+/** The role a Flex plays; every other slot, and the coach, plays none. */
+export function flexPlays(slot: SquadSlot, role: PersonRole): RoleKey | undefined {
+  return slot === "flex" && role !== "coach" ? role : undefined;
+}
+
 /** The icon a starter shows: his slot's, save the Flex, who shows the role he plays. */
 export function slotIcon(slot: SlotKey, plays?: RoleKey): IconKey {
   return slot === "flex" && plays ? plays : slot;

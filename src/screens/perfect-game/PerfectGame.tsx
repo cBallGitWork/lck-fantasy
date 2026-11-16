@@ -1,13 +1,10 @@
 import { MANAGER } from "../../fixtures/week3";
 import { carrySum, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle, type WeekNav } from "../../parts";
 import { PATHS } from "../../paths";
-import { Lineup, Rift, RIFT_SLOTS, type RoleKey, Tile } from "../../rift";
+import { flexPlays, Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
 import "./PerfectGame.css";
 import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectPlayer, type PerfectView, type Selection } from "./types";
-
-/** The role a Flex plays; the others play their slot. */
-const plays = (p: PerfectPlayer): RoleKey | undefined => (p.slot === "flex" && p.role !== "coach" ? p.role : undefined);
 
 const carried = (p: PerfectPlayer, times: number) => (p.carry && p.raw !== undefined ? carrySum(p.raw, times) : undefined);
 
@@ -19,7 +16,7 @@ export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGam
         <Tile
           key={p.slot}
           slot={p.slot}
-          plays={plays(p)}
+          plays={flexPlays(p.slot, p.role)}
           name={p.name}
           team={p.team}
           at={RIFT_SLOTS[p.slot]}
@@ -43,7 +40,7 @@ export function PerfectGameCards({ game, selected, onSelect }: { game: PerfectGa
       <Lineup
         cards={game.players.map((p) => ({
           slot: p.slot,
-          plays: plays(p),
+          plays: flexPlays(p.slot, p.role),
           name: p.name,
           team: p.team,
           mark: p.carry ? "C" : undefined,

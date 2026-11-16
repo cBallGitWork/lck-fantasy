@@ -7,6 +7,7 @@ import {
   BenchBar,
   BenchSwap,
   BenchTile,
+  flexPlays,
   isBench,
   Lineup,
   LineupCard,
@@ -35,6 +36,13 @@ test("the map draws the river, three lanes, two bases and ten towers", () => {
   expect(out.match(/rift-map__lane/g)).toHaveLength(3);
   expect(out.match(/rift-map__base/g)).toHaveLength(2);
   expect(out.match(/<rect /g)).toHaveLength(11);
+});
+
+test("only a Flex plays a role: a mid there plays mid; elsewhere, and a coach, play none", () => {
+  expect(flexPlays("flex", "mid")).toBe("mid");
+  expect(flexPlays("mid", "mid")).toBeUndefined();
+  expect(flexPlays("bench1", "top")).toBeUndefined();
+  expect(flexPlays("flex", "coach")).toBeUndefined();
 });
 
 test("each role has its icon, named for screen readers", () => {

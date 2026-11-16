@@ -1,6 +1,6 @@
 // The coach card's tabs: This week, Fixtures, History and Roster (coach.html; Fixtures as the player card's).
 import { Fragment } from "react";
-import { eok, MeDot, NONE, outcome, pct, perGame, result, score, signed, Table, Tag } from "../../parts";
+import { eok, MeDot, NONE, pct, perGame, result, score, signed, Table, Tag } from "../../parts";
 import { ROLE_NAME } from "../../rift";
 import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, RosterRow, WeekSeries } from "./types";
 
@@ -15,8 +15,7 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
             <span>
               {s.day} · v {s.opponent}{" "}
               <span className="coach-card__soft">
-                {s.state === "final" && `${outcome(s.score[0] > s.score[1])} `}
-                {score(s.score)} · {s.state === "live" ? <Tag kind="live">G{s.liveGame} live</Tag> : <Tag>Final</Tag>}
+                {s.state === "final" ? result(s.score) : score(s.score)} · {s.state === "live" ? <Tag kind="live">G{s.liveGame} live</Tag> : <Tag>Final</Tag>}
               </span>
             </span>
             <b className="num">{s.points}</b>

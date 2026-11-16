@@ -1,14 +1,15 @@
 // Points' own made-up data: Weeks 1 and 2 final, and Week 3 at the picture's moment
-// (docs/design/approved/points/points.html), built on src/fixtures/week3.ts and the games in
-// games.ts. It stands in for the backend until a later issue wires real data (series and games #36,
+// (docs/design/approved/points/points.html), built on src/fixtures/week3.ts, Week 3's games included.
+// It stands in for the backend until a later issue wires real data (series and games #36,
 // live points #34, final points and ranks #33).
 
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
-import { fromSide, seriesById } from "../../fixtures/series";
+import { playedFromSide, seriesById } from "../../fixtures/series";
 import {
   carried,
   COMPETITION,
   countedGames,
+  gameAt,
   MANAGER,
   playerId,
   POINTS_SQUAD,
@@ -21,7 +22,6 @@ import {
   WEEK2_SERIES,
   WEEK3_GAMES,
   WEEK3_SERIES_AT_POINTS,
-  winnerOf,
   type GameDetail,
   type Played,
   type PointsPick,
@@ -35,19 +35,17 @@ import type { PointsData, PointsPlayer, PointsSeries, PointsStarter, WeekPick } 
 
 function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[number], details: GameDetail[] = []): PointsSeries {
   const row = seriesById(list, played.id);
-  const side = fromSide(row, pick.team);
-  if (!side.score) throw new Error(`No played series ${played.id}`);
+  const side = playedFromSide(row, pick.team);
   const counted = countedGames(played.games);
   const games = played.games.map((points, index) => {
-    const live = row.state === "live" && index + 1 === row.liveGame;
-    const winner = winnerOf(played.id, index);
+    const { won, clock } = gameAt(row, index, pick.team);
     return {
       game: index + 1,
       champion: details[index]?.champion,
       kda: details[index]?.kda,
       lines: details[index]?.lines ?? [],
-      won: live || !winner ? undefined : winner === pick.team,
-      clock: live ? row.clock : undefined,
+      won,
+      clock,
       points,
       counted: counted.has(index),
     };
@@ -167,7 +165,7 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     team: MANAGER.team,
     hangul: MANAGER.hangul,
     week: weekNav(facts.week, latest),
-    total: starters.reduce((sum, p) => sum + (p.points ?? 0), 0),
+    total: sum(starters.map((p) => p.points ?? 0)),
     final: list.every((s) => s.state === "final"),
     average: facts.average,
     highest: facts.highest,

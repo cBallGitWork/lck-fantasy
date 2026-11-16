@@ -15,8 +15,6 @@ export const BROWSER = "browser";
 /** Team name and hangul banner are capped, as FPL's name is. */
 export const NAME_LIMIT = 20;
 
-const KST_ZONE = "Asia/Seoul";
-
 export interface SettingsValues {
   teamName: string;
   banner: string;
@@ -79,24 +77,6 @@ export const counter = (text: string) => `${charCount(text)}/${NAME_LIMIT}`;
 
 /** The zone a time shows in: the browser's, or the one picked. */
 export const zoneOf = (timeZone: string, browserZone: string) => (timeZone === BROWSER ? browserZone : timeZone);
-
-function clock(instant: string, zone: string, withDay: boolean): string {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: zone,
-    weekday: withDay ? "short" : undefined,
-    hour: "2-digit",
-    minute: "2-digit",
-    hourCycle: "h23",
-  }).formatToParts(new Date(instant));
-  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? "";
-  const time = `${part("hour")}:${part("minute")}`;
-  return withDay ? `${part("weekday")} ${time}` : time;
-}
-
-/** An instant as the Time part shows it: in the manager's zone with its day (`Wed 07:45`), then KST (`16:45`). */
-export function timeIn(instant: string, zone: string): { local: string; kst: string } {
-  return { local: clock(instant, zone, true), kst: clock(instant, KST_ZONE, false) };
-}
 
 /** The reminder's lead time as the Emails tab shows it: `24 hours before`. */
 export const hoursBefore = (hours: number) => `${hours} hour${hours === 1 ? "" : "s"} before`;

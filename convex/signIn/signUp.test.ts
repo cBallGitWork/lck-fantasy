@@ -1,10 +1,10 @@
 import { WON_PER_M } from "../../src/parts/text/money";
 import { describe, expect, test } from "vitest";
-import { chovy, REGULAR_SETTINGS, validSquad } from "../squads/fixtures";
+import { byPick, chovy, REGULAR_SETTINGS, validSquad } from "../squads/fixtures";
 import { allPicks, pickKey } from "../squads/squad";
 import { firstScoringGameweek, signUpProblems } from "./signUp";
 
-const prices = new Map(allPicks(validSquad()).map((pick) => [pickKey(pick), 10 * WON_PER_M]));
+const prices = byPick(allPicks(validSquad()).map((pick) => [pick, 10 * WON_PER_M]));
 // Fixture values: FPL caps team names at 20 characters; the real cap and teams are data.
 const RULES = { squad: REGULAR_SETTINGS, budget: 100 * WON_PER_M, teamNameMaxLength: 20, teamIds: ["t1", "gen", "hle"] };
 const FIELDS = { teamName: "Faker's Chair", favouriteTeamId: "t1", country: "GB" };

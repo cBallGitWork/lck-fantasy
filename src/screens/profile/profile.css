@@ -149,7 +149,7 @@
 }
 .profile__tier-band {
   stroke: var(--bg);
-  opacity: 0.45;
+  opacity: var(--opacity-tier-band);
 }
 .profile__truck {
   margin-bottom: var(--s-2);

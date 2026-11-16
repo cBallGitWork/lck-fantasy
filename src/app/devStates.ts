@@ -2,7 +2,7 @@
 // picture it is checked against. /dev/states lists them; the UI checks read them from here.
 import { LIVE_SERIES_ID } from "../fixtures/week3";
 import { DEV_STATE_PARAM } from "../parts";
-import { PATHS, pathTo, type Go } from "../paths";
+import { leagueGo, PATHS, pathTo, profileGo, seriesGo, type Go } from "../paths";
 
 /** The dev-only page listing every state. */
 export const DEV_STATES_PATH = "/dev/states";
@@ -39,11 +39,9 @@ const page = (name: string, states: StateAt[]): DevState[] =>
   });
 
 const home: Go = { to: PATHS.home };
-const league = (leagueId: string): Go => ({ to: PATHS.league, params: { leagueId } });
-const series = (seriesId: string): Go => ({ to: PATHS.series, params: { seriesId } });
 const faker: Go = { to: PATHS.playerCard, params: { playerId: "faker" } };
 const kkoma: Go = { to: PATHS.coachCard, params: { coachId: "kkoma" } };
-const minji: Go = { to: PATHS.profile, params: { managerId: "minji" } };
+const minji = profileGo("minji");
 
 /**
  * Every state, named as its picture is: the HTML file, or its `?v=` or `#`. Not here: the crests
@@ -65,15 +63,15 @@ export const DEV_STATES: readonly DevState[] = [
   ]),
   ...page("points", [{ state: "points", go: { to: PATHS.points } }]),
   ...page("leagues", [
-    { state: "league", go: league("pub-league") },
-    { state: "overall", go: league("overall") },
-    { state: "admin", go: league("pub-league"), param: true },
-    { state: "create", go: league("pub-league"), param: true },
-    { state: "created", go: league("pub-league"), param: true },
-    { state: "join", go: league("pub-league"), param: true },
-    { state: "member", go: league("flol-discord") },
-    { state: "delete", go: league("pub-league"), param: true },
-    { state: "leave", go: league("flol-discord"), param: true },
+    { state: "league", go: leagueGo("pub-league") },
+    { state: "overall", go: leagueGo("overall") },
+    { state: "admin", go: leagueGo("pub-league"), param: true },
+    { state: "create", go: leagueGo("pub-league"), param: true },
+    { state: "created", go: leagueGo("pub-league"), param: true },
+    { state: "join", go: leagueGo("pub-league"), param: true },
+    { state: "member", go: leagueGo("flol-discord") },
+    { state: "delete", go: leagueGo("pub-league"), param: true },
+    { state: "leave", go: leagueGo("flol-discord"), param: true },
   ]),
   ...page("stats", [
     { state: "stats", go: { to: PATHS.stats } },
@@ -86,10 +84,10 @@ export const DEV_STATES: readonly DevState[] = [
     { state: "down", go: { to: PATHS.live }, param: true },
   ]),
   ...page("series", [
-    { state: "series", go: series(LIVE_SERIES_ID) },
-    { state: "f21", go: series("w3-sat-1"), picture: "1440-21.png" },
-    { state: "live", go: series(LIVE_SERIES_ID), param: true },
-    { state: "next", go: series("w4-wed-1") },
+    { state: "series", go: seriesGo(LIVE_SERIES_ID) },
+    { state: "f21", go: seriesGo("w3-sat-1"), picture: "1440-21.png" },
+    { state: "live", go: seriesGo(LIVE_SERIES_ID), param: true },
+    { state: "next", go: seriesGo("w4-wed-1") },
   ]),
   ...page("compare", [
     { state: "compare", go: { to: PATHS.compare } },
@@ -102,7 +100,7 @@ export const DEV_STATES: readonly DevState[] = [
   ]),
   ...page("patch-update", [{ state: "patch", go: { to: PATHS.patchUpdate } }]),
   ...page("settings", [
-    { state: "settings", go: { to: PATHS.settings } },
+    { state: "settings", go: { to: PATHS.settings }, param: true },
     { state: "display", go: { to: PATHS.settings }, param: true },
     { state: "emails", go: { to: PATHS.settings }, param: true },
     { state: "account", go: { to: PATHS.settings }, param: true },

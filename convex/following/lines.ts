@@ -1,6 +1,7 @@
 // Truck lines (spec/14-following.md, Truck lines): a database of preset lines, each with its kind,
 // the week it fits (a trigger) and a weight for how often it comes up. An admin adds a line; it
 // shows only once Craig approves it. `fit.ts` picks the lines that fit a receiver's week.
+import { refuseFirst, Refused } from "./refused";
 
 export const TRUCK_KINDS = ["coffee", "protest", "sponsor"] as const;
 export type TruckKind = (typeof TRUCK_KINDS)[number];
@@ -57,12 +58,8 @@ export type LineProblem =
   | { rule: "badWeight"; weight: number }
   | { rule: "noLine"; id: string };
 
-/** Thrown by a line change that breaks a rule, never applied silently. */
-export class LineError extends Error {
-  constructor(readonly problem: LineProblem) {
-    super(`Truck line refused: ${problem.rule}.`);
-  }
-}
+/** What a line change refuses as (`Refused`). */
+const LINE = "Truck line";
 
 export function isOneOf<T extends string>(list: readonly T[], value: string): value is T {
   return (list as readonly string[]).includes(value);
@@ -92,8 +89,7 @@ export function lineProblems(lines: readonly TruckLine[], line: NewLine): LinePr
 
 /** An admin adds a line; it waits for Craig's approval before it shows. */
 export function addLine(lines: readonly TruckLine[], line: NewLine): TruckLine[] {
-  const [problem] = lineProblems(lines, line);
-  if (problem) throw new LineError(problem);
+  refuseFirst(LINE, lineProblems(lines, line));
   return [...lines, { ...line, approved: false }];
 }
 
@@ -107,6 +103,6 @@ export function seedLines(rows: readonly NewLine[]): TruckLine[] {
 
 /** Craig approves a line, and it goes live. */
 export function approveLine(lines: readonly TruckLine[], id: string): TruckLine[] {
-  if (!lines.some((line) => line.id === id)) throw new LineError({ rule: "noLine", id });
+  if (!lines.some((line) => line.id === id)) throw new Refused<LineProblem>(LINE, { rule: "noLine", id });
   return lines.map((line) => (line.id === id ? { ...line, approved: true } : line));
 }

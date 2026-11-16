@@ -143,7 +143,7 @@ Every screen part is drawn for each state it can be in.
   when its label says it. Flol's own rules (Carry ×1.5, the team cap) are named where they apply.
 - An empty state is a title and at most one short line.
 - Absence is `—`, never `0`.
-- Money as `₩18.5억`. Times in the viewer's own time, as `Sat 22:00`.
+- Money as `₩18.5m` (spec/02). Times in the viewer's own time, as `Sat 22:00`.
 - One name per thing on every screen: Carry, never Captain; Patch update, never Price changes;
   `Week 4`, never Gameweek.
 - No emoji, save the birthday cake (spec/13).

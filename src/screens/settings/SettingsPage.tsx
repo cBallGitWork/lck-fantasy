@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { TEAMS } from "../../fixtures/week3";
-import { MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, Tabs, Tag, Time, ViewToggle } from "../../parts";
+import { MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, Tabs, Tag, Time, timeIn, ViewToggle } from "../../parts";
 import { CappedInput, LegalNames, plainOptions, ProviderMark, Row, Select, TEAM_OPTIONS } from "./form";
 import {
   BROWSER,
@@ -10,7 +10,6 @@ import {
   hoursBefore,
   TABS,
   THEMES,
-  timeIn,
   zoneOf,
   type Account,
   type SettingsTab,

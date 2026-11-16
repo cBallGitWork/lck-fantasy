@@ -2,7 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { useDevState } from "../../parts";
-import { PATHS, pathTo } from "../../paths";
+import { leagueGo, pathTo } from "../../paths";
 import {
   COMPETITION,
   JOINABLE,
@@ -34,7 +34,7 @@ const FIRST_PAGE = 1;
 let kept: MyLeagues = { list: LEAGUE_LIST, views: LEAGUES };
 
 /** A league's link, as Copy link gives it. */
-const leagueLink = (leagueId: string) => new URL(pathTo({ to: PATHS.league, params: { leagueId } }), location.origin).href;
+const leagueLink = (leagueId: string) => new URL(pathTo(leagueGo(leagueId)), location.origin).href;
 
 /** Copies to the clipboard; a missing or refused clipboard is logged, never dropped. */
 function copy(what: string, words: string) {

@@ -107,7 +107,6 @@ export const measure = {
   markCard: 28,
   /** C and V on a player's breakdown sheet (Craig, 16 Nov 2026: "make C bigger"). */
   markSheet: 32,
-  roleBox: 36,
   roleIcon: 28,
   /** The role icon on a lineup card's head. */
   roleIconSmall: 20,
@@ -126,8 +125,6 @@ export const measure = {
   benchTitleW: 56,
   /** A tag's line. */
   tagLine: 16,
-  /** A tag inside a tile's series line, so the line keeps its height. */
-  tagLineTight: 14,
   /** Stats' sticking column: rank, role and name. */
   colName: 244,
   /** A table's last column, holding a row's `›`. */
@@ -136,7 +133,7 @@ export const measure = {
   colFigure: 72,
   colPrice: 80,
   colRole: 112,
-  /** A menu's list (the Admin menu, the account menu). */
+  /** A menu's list: the Admin menu. */
   menuW: 220,
   cardHead: 48,
   cardPhoto: 176,
@@ -151,7 +148,8 @@ export const measure = {
   sponsorTopW: 120,
 } as const;
 
-export const motion = { fast: "150ms", slow: "250ms" } as const;
+/** Opacities: the band across a tier shield. */
+export const opacity = { tierBand: 0.45 } as const;
 
 /** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
 export const stroke = { shirt: 1.6, dash: 3 } as const;
@@ -174,7 +172,7 @@ export function themeVars(): [string, string][] {
     ...Object.entries(space).map(([k, v]): [string, string] => [`--s-${k}`, `${v}px`]),
     ...Object.entries(measure).map(([k, v]): [string, string] => [`--m-${kebab(k)}`, `${v}px`]),
     ...Object.entries(lineHeight).map(([k, v]): [string, string] => [`--lh-${k}`, String(v)]),
-    ...Object.entries(motion).map(([k, v]): [string, string] => [`--motion-${k}`, v]),
+    ...Object.entries(opacity).map(([k, v]): [string, string] => [`--opacity-${kebab(k)}`, String(v)]),
     ...Object.entries(stroke).map(([k, v]): [string, string] => [`--stroke-${k}`, String(v)]),
     ...Object.entries(ratio).map(([k, v]): [string, string] => [`--ratio-${k}`, v]),
   ];

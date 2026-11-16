@@ -3,7 +3,7 @@ import { cx } from "../util/cx";
 import "./Tag.css";
 
 /** `live` is filled; `notFinal` is dashed. */
-export type TagKind = "plain" | "live" | "notFinal";
+type TagKind = "plain" | "live" | "notFinal";
 
 /** A square box, 11px, sentence case: `Live`, `Not final`, `Final`. Never the team cap (plate.md). */
 export function Tag({ kind = "plain", children }: { kind?: TagKind; children: ReactNode }) {
@@ -11,7 +11,7 @@ export function Tag({ kind = "plain", children }: { kind?: TagKind; children: Re
 }
 
 /** The state tags' words, written once. */
-export const TAG_WORD = { live: "Live", final: "Final", notFinal: "Not final" } as const;
+const TAG_WORD = { live: "Live", final: "Final", notFinal: "Not final" } as const;
 
 /** `Live`, filled. */
 export const LiveTag = () => <Tag kind="live">{TAG_WORD.live}</Tag>;

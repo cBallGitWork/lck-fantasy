@@ -21,7 +21,7 @@ export function FollowingScreen() {
 }
 
 /** The Following page with its controls working, from the data it is fed; `initialPicking` opens the truck picker. */
-export function FollowingPage({ data: initial, initialPicking = null }: { data: FollowingData; initialPicking?: Picking | null }) {
+function FollowingPage({ data: initial, initialPicking = null }: { data: FollowingData; initialPicking?: Picking | null }) {
   const [data, setData] = useState(initial);
   const [picking, setPicking] = useState<Picking | null>(initialPicking);
   const receiver = picking && data.following.find((m) => m.id === picking.managerId);

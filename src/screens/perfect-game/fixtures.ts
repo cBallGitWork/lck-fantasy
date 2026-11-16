@@ -8,6 +8,7 @@ import {
   finalPickOf,
   MY_WEEK3,
   PERFECT_GAME,
+  PERFECT_OTHERS,
   playerId,
   seriesPoints,
   WEEK3_FINAL,
@@ -40,21 +41,14 @@ function mineSeries(name: string): PlayerSeries[] {
   });
 }
 
-/** The others' series this week, the picture's own. */
-const OTHERS_SERIES: Record<string, PlayerSeries[]> = {
-  Pyosik: [{ id: "w3-thu-2", points: 10 }, { id: "w3-sun-2", points: 11 }],
-  Duro: [{ id: "w3-wed-2", points: 6 }, { id: "w3-sat-1", points: 5 }],
-  BuLLDoG: [{ id: "w3-thu-2", points: 9 }, { id: "w3-sun-2", points: 12 }],
-};
-
 const seriesFor = (pick: PerfectPick): PlayerSeries[] => {
   if (pick.mine) return mineSeries(pick.name);
-  const own = OTHERS_SERIES[pick.name];
+  const own = PERFECT_OTHERS[pick.name];
   if (!own) throw new Error(`No Week 3 series for ${pick.name}`);
   return own;
 };
 
-export const PERFECT_PLAYERS: PerfectPlayer[] = PERFECT_GAME.map((pick) => ({ ...pick, id: playerId(pick.name), series: seriesFor(pick) }));
+const PERFECT_PLAYERS: PerfectPlayer[] = PERFECT_GAME.map((pick) => ({ ...pick, id: playerId(pick.name), series: seriesFor(pick) }));
 
 /** Week 3's perfect game as the picture shows it: Faker tapped. */
 export const PERFECT_WEEK3: PerfectGameData = {

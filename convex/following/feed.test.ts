@@ -1,19 +1,19 @@
 import { describe, expect, test } from "vitest";
-import { chovy, gumayusi, keria, ktCoach, oner, ruler, validSquad, zeus } from "../squads/fixtures";
-import { pickKey, type Pick, type ScoringPick } from "../squads/squad";
+import {
+  byPick, CARRY_MULTIPLIER, chovy, faker, gumayusi, keria, ktCoach, oner, ruler, showmaker, validSquad, zeus,
+} from "../squads/fixtures";
+import type { Pick, ScoringPick } from "../squads/squad";
 import { feed, type FeedSettings, type FinishedSeries, type ManagerWeek } from "./feed";
-import { acceptFollow, block, requestFollow, type Follows } from "./follows";
+import { following, LINE_SETTINGS, NO_FOLLOWS } from "./fixtures";
+import { block } from "./follows";
 
-// Fixture values: the real ones are the competition's data.
-const SETTINGS: FeedSettings = { bigCarryPoints: 20, carryMultiplier: 1.5 };
+const SETTINGS: FeedSettings = { bigCarryPoints: LINE_SETTINGS.bigCarryPoints, carryMultiplier: CARRY_MULTIPLIER };
 const DEADLINE = 1_000;
-
-const faker: Pick = { id: "faker", teamId: "t1", role: "mid" };
 
 const lineup: ScoringPick[] = validSquad().starters;
 
 function series(id: string, finishedAt: number, points: [Pick, number][]): FinishedSeries {
-  return { id, finishedAt, points: new Map(points.map(([pick, p]) => [pickKey(pick), p])) };
+  return { id, finishedAt, points: byPick(points) };
 }
 
 function week(managerId: string, changes: Partial<ManagerWeek> = {}): ManagerWeek {
@@ -21,10 +21,7 @@ function week(managerId: string, changes: Partial<ManagerWeek> = {}): ManagerWee
 }
 
 /** Jun follows Minji and Sora; nobody follows Jun. */
-const follows: Follows = ["minji", "sora"].reduce(
-  (state, followed) => acceptFollow(requestFollow(state, "jun", followed), followed, "jun"),
-  { follows: [], blocks: [] } as Follows,
-);
+const follows = following(NO_FOLLOWS, "jun", "minji", "sora");
 
 describe("feed (spec/14, The feed)", () => {
   test("only accepted follows show, one-way", () => {
@@ -46,7 +43,7 @@ describe("feed (spec/14, The feed)", () => {
       series: [
         series("hle-t1", 3_000, [[zeus, 5], [gumayusi, 4], [oner, 6], [keria, 2]]),
         series("gen-kt", 2_000, [[chovy, 8], [ruler, 3], [ktCoach, -1]]),
-        series("dk-bro", 4_000, [[{ id: "showmaker", teamId: "dk", role: "mid" }, 9]]),
+        series("dk-bro", 4_000, [[showmaker, 9]]),
       ],
     };
     const items = feed("jun", follows, gameweek, [week("minji")], SETTINGS);

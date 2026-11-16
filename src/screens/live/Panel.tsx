@@ -1,4 +1,4 @@
-import { GoLink, LinkGo, LiveTag, NONE, NotFinalTag, SectionHead } from "../../parts";
+import { gameNo, GoLink, LinkGo, LiveTag, NONE, NotFinalTag, SectionHead } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { MarkBadge, RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
@@ -6,7 +6,7 @@ import { dot, WORDS } from "./words";
 
 /** This series' games: `G1 4 · G2 1 Live 3/0/2`, dashes where the feed is down. */
 function GameLine({ player }: { player: PanelPlayer }) {
-  const games = player.games.map((g, i) => `${WORDS.gameShort}${i + 1} ${g ?? NONE}`).join(dot);
+  const games = player.games.map((g, i) => `${gameNo(i + 1)} ${g ?? NONE}`).join(dot);
   return (
     <span className="live__games quiet num">
       {games}

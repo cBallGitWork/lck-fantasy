@@ -1,7 +1,6 @@
-import { GoLink, ordinal, SideSection, TierShield } from "../../parts";
-import { PATHS } from "../../paths";
+import { count, GoLink, ordinal, SideSection, TierShield } from "../../parts";
+import { leagueGo } from "../../paths";
 import type { LeagueRow, Truck } from "./fixtures";
-import { count } from "./format";
 import { Move } from "./ProfileHistory";
 
 const TRUCK_KIND: Record<Truck["kind"], string> = { coffee: "Coffee", protest: "Protest" };
@@ -14,7 +13,7 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
         <ul className="profile__leagues">
           {leagues.map((league) => (
             <li key={league.id}>
-              <GoLink className="profile__league" go={{ to: PATHS.league, params: { leagueId: league.id } }}>
+              <GoLink className="profile__league" go={leagueGo(league.id)}>
                 <span className="profile__league-name">
                   {league.name}
                   {league.tier && (

@@ -24,10 +24,6 @@
   color: var(--mid);
   text-decoration: line-through;
 }
-.transfers__sheet {
-  width: 100%;
-  border-collapse: collapse;
-}
 .transfers__sheet th,
 .transfers__sheet td {
   height: var(--m-row);

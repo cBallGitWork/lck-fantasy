@@ -1,6 +1,6 @@
 import { Columns, GoLink, NotFinalTag, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
-import { PATHS, type Go } from "../../paths";
+import { profileGo } from "../../paths";
 import {
   movesSummary,
   playersLine,
@@ -71,13 +71,11 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
   );
 }
 
-const profile = (m: Manager): Go => ({ to: PATHS.profile, params: { managerId: m.id } });
-
 /** A manager's name, opening their profile, with their team under it. */
 function Who({ manager }: { manager: Manager }) {
   return (
     <span className="following__who">
-      <GoLink className="following__name" go={profile(manager)}>
+      <GoLink className="following__name" go={profileGo(manager.id)}>
         {manager.name}
       </GoLink>
       <small className="following__team">{manager.team}</small>
@@ -180,7 +178,7 @@ function Truck({ truck }: { truck: ReceivedTruck }) {
         ) : (
           <span>
             {TRUCK_WORD[truck.kind]} from{" "}
-            <GoLink className="following__name" go={profile(truck.from)}>
+            <GoLink className="following__name" go={profileGo(truck.from.id)}>
               {truck.from.name}
             </GoLink>
           </span>

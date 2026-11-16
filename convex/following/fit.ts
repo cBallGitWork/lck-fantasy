@@ -2,7 +2,9 @@
 // (spec/14-following.md, Truck lines). What each trigger means is Craig's answer on issue #90:
 // the week read is the receiver's last final gameweek, and every number is the competition's data
 // (`LineSettings`).
+import { count } from "../../src/parts/text/figures";
 import { formatWon } from "../../src/parts/text/money";
+import { sum } from "../../src/parts/util/sum";
 import { isOneOf, PLACEHOLDER_PATTERN, PLACEHOLDERS, type Placeholder, type TruckKind, type TruckLine, type Trigger } from "./lines";
 
 export interface LineSettings {
@@ -29,7 +31,7 @@ export interface ReceiverWeek {
   points: number;
   /** Where the week's score sits in the gameweek's global scores (`scoreBand`). */
   band: ScoreBand;
-  /** Points taken off for extra transfers, as a positive number: 4 for one hit. */
+  /** Points taken off for extra transfers, as a positive number: 6 for one hit (spec/03). */
   hits: number;
   transfers: number;
   /** Overall rank's move this gameweek: up is positive. */
@@ -94,7 +96,7 @@ function fitsTrigger(trigger: Trigger, receiver: Receiver, settings: LineSetting
     case "rank_down":
       return week.rankMove < 0;
     case "bench_outscored_starters":
-      return week.benchPoints > week.starters.reduce((sum, player) => sum + player.points, 0);
+      return week.benchPoints > sum(week.starters.map((player) => player.points));
     case "no_transfer":
       return week.transfers === 0;
     case "buff_played":
@@ -109,8 +111,6 @@ function fitsTrigger(trigger: Trigger, receiver: Receiver, settings: LineSetting
       return week.band === "low";
   }
 }
-
-const formatCount = (n: number) => Math.abs(n).toLocaleString("en-GB");
 
 /** A placeholder's value for this receiver and line, or undefined when the week has none. */
 function placeholderValue(
@@ -132,7 +132,7 @@ function placeholderValue(
     case "hits":
       return week && week.hits > 0 ? String(week.hits) : undefined;
     case "move":
-      return week && week.rankMove !== 0 ? formatCount(week.rankMove) : undefined;
+      return week && week.rankMove !== 0 ? count(Math.abs(week.rankMove)) : undefined;
     case "bench":
       return week ? String(week.benchPoints) : undefined;
     case "price": {
@@ -181,7 +181,7 @@ export function linesThatFit(
 
 /** One line, drawn by weight; `roll` is in [0, 1). */
 export function pickWeighted(fitting: readonly FittingLine[], roll: number): FittingLine | undefined {
-  const total = fitting.reduce((sum, one) => sum + one.line.weight, 0);
+  const total = sum(fitting.map((one) => one.line.weight));
   let left = roll * total;
   for (const one of fitting) {
     left -= one.line.weight;

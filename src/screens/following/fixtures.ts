@@ -1,17 +1,12 @@
 // The Following picture's made-up Split 1 Week 3 (docs/design/approved/following/), mid-week.
 // Names, teams and numbers are examples, not roster data. Truck lines are the unapproved drafts
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
-import { MANAGERS } from "../../fixtures/managers";
+import { FOLLOWED_WEEK3, MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
 import { CARRY_MULTIPLIER, HIT_POINTS, WEEK2_SERIES, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS, type Series } from "../../fixtures/week3";
-import type { FollowingData, Manager, SeriesItem } from "./feed";
+import type { FollowingData, SeriesItem } from "./feed";
 
-const { minji: MINJI, jae: JAE, dan: DAN } = MANAGERS;
-const ELLA: Manager = { id: "ella", name: "Ella Wong", team: "Ruler of None" };
-const JOE: Manager = { id: "joe", name: "Joe Grant", team: "BeryL Backup Plan" };
-const TOM: Manager = { id: "tom", name: "Tom Reid", team: "Kiin Bean" };
-const SAM: Manager = { id: "sam", name: "Sam Hill", team: "Guma Gang" };
-const PRIYA: Manager = { id: "priya", name: "Priya Shah", team: "Zeus Juice" };
+const { minji: MINJI, jae: JAE, dan: DAN, ella: ELLA, joe: JOE, tom: TOM, sam: SAM, priya: PRIYA } = MANAGERS;
 
 /** A series' teams and score, as the shared fixture holds them. */
 function scored(list: readonly Series[], seriesId: string): Pick<SeriesItem, "home" | "away" | "score"> {
@@ -41,8 +36,8 @@ export const FOLLOWING: FollowingData = {
           kind: "series",
           id: "f1",
           manager: MINJI,
-          points: 20,
-          ...week3("w3-sat-1"),
+          points: FOLLOWED_WEEK3.minji.points,
+          ...week3(FOLLOWED_WEEK3.minji.seriesId),
           players: [
             { name: "Kiin", points: 5 },
             { name: "Canyon", points: 7 },
@@ -54,8 +49,8 @@ export const FOLLOWING: FollowingData = {
           kind: "series",
           id: "f2",
           manager: JAE,
-          points: 9,
-          ...week3("w3-fri-2"),
+          points: FOLLOWED_WEEK3.jae.points,
+          ...week3(FOLLOWED_WEEK3.jae.seriesId),
           players: [
             { name: "Rich", points: 4 },
             { name: "ucal", points: 2, carry: {} },
@@ -67,8 +62,8 @@ export const FOLLOWING: FollowingData = {
           kind: "series",
           id: "f3",
           manager: DAN,
-          points: 34,
-          ...week3("w3-wed-1"),
+          points: FOLLOWED_WEEK3.dan.points,
+          ...week3(FOLLOWED_WEEK3.dan.seriesId),
           players: [
             { name: "Oner", points: 11 },
             { name: "Faker", points: 18, carry: { before: 12 } },

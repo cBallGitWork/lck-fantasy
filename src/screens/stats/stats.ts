@@ -64,11 +64,11 @@ export interface StatsRow {
 }
 
 /** The columns that sort, besides the lines. */
-export const FIXED_SORTS = ["priceM", "form", "ownedPct", "points", "games"] as const;
+const FIXED_SORTS = ["priceM", "form", "ownedPct", "points", "games"] as const;
 export type SortKey = (typeof FIXED_SORTS)[number] | string;
 
 /** Every column a tab can sort by. */
-export const sortKeys = (tab: Tab): readonly SortKey[] => [...FIXED_SORTS, ...linesFor(tab).map((l) => l.key)];
+const sortKeys = (tab: Tab): readonly SortKey[] => [...FIXED_SORTS, ...linesFor(tab).map((l) => l.key)];
 
 export const ALL = "all";
 
@@ -107,10 +107,10 @@ export function nextView(view: StatsView, change: Partial<StatsView>): StatsView
 }
 
 /** The rows a page holds. */
-export const PAGE_SIZE = 20;
+const PAGE_SIZE = 20;
 
 /** Points and the lines divide by games under Per game; price, form, owned and games never do. */
-export function sortValue(row: StatsRow, key: SortKey, figures: Figures): number {
+function sortValue(row: StatsRow, key: SortKey, figures: Figures): number {
   const divide = (n: number) => (figures === "Per game" ? perGameValue(n, row.games) : n);
   switch (key) {
     case "priceM":

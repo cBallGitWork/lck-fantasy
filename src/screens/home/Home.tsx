@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Columns, count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SponsorNote, TierShield, Time } from "../../parts";
+import { Columns, count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SectionHead, SponsorNote, TierShield, Time } from "../../parts";
 import { Following, Leagues } from "./band";
 import { Move } from "./format";
 import "./home.css";
@@ -58,9 +58,9 @@ function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions
   const { deadline } = data;
   return (
     <section className="home__deadline">
-      <h2 className="home__deadline-title">
-        Week {deadline.week} deadline <span className="home__deadline-competition quiet">{deadline.competition}</span>
-      </h2>
+      <SectionHead note={deadline.competition} className="home__deadline-title">
+        Week {deadline.week} deadline
+      </SectionHead>
       <div className="home__deadline-left">
         <CountdownFigure countdown={data.countdown} />
         <div className="home__deadline-when">

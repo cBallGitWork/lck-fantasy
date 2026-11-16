@@ -1,6 +1,6 @@
 // The coach card's tabs: This week, Fixtures, History and Roster (coach.html; Fixtures as the player card's).
 import { Fragment } from "react";
-import { money, MeDot, NONE, pct, perGame, result, seriesResult, signed, Table } from "../../parts";
+import { gameNo, money, MeDot, NONE, pct, perGame, result, seriesResult, seriesTitle, signed, sum, Table, YOUR_TIME } from "../../parts";
 import { ROLE_NAME } from "../../rift";
 import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, RosterRow, WeekSeries } from "./types";
 
@@ -13,7 +13,7 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
         <Fragment key={s.id}>
           <h2 className="coach-card__block">
             <span>
-              {s.day} · v {s.opponent}{" "}
+              {seriesTitle(s.day, s.opponent)}{" "}
               <span className="coach-card__soft">{seriesResult(s.score, s.state === "live")}</span>
             </span>
             <b className="num">{s.points}</b>
@@ -22,7 +22,7 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
             <tbody>
               {s.games.map((g, i) => (
                 <tr key={i} className={g.counts ? undefined : "coach-card__drop"}>
-                  <td className="coach-card__g coach-card__soft">G{i + 1}</td>
+                  <td className="coach-card__g coach-card__soft">{gameNo(i + 1)}</td>
                   <td className="coach-card__g coach-card__soft">{g.result ?? ""}</td>
                   <td className="coach-card__soft">{g.clock ?? (g.lines.length > 0 ? g.lines.join(" · ") : NONE)}</td>
                   <td className="coach-card__pts num">{g.points}</td>
@@ -85,7 +85,7 @@ export function CoachFixtures({ rows, team }: { rows: FixtureRow[]; team: string
             </>
           ),
         },
-        { key: "local", head: "Your time", figure: true, cell: (r) => r.local },
+        { key: "local", head: YOUR_TIME, figure: true, cell: (r) => r.local },
         { key: "kst", head: "KST", figure: true, cell: (r) => <span className="coach-card__soft">{r.kst}</span> },
       ]}
     />
@@ -97,7 +97,7 @@ export function CoachFixtures({ rows, team }: { rows: FixtureRow[]; team: string
  * `shown` is the rows the strip doesn't show; a week's total still counts them all.
  */
 export function CoachHistoryTab({ history, shown, team }: { history: CoachHistory; shown: HistoryRow[]; team: string }) {
-  const weekTotal = (week: number) => history.rows.filter((r) => r.week === week).reduce((sum, r) => sum + r.points, 0);
+  const weekTotal = (week: number) => sum(history.rows.filter((r) => r.week === week).map((r) => r.points));
   return (
     <div className="coach-card__history">
       <h2 className="coach-card__block coach-card__block--first">{history.competition}</h2>

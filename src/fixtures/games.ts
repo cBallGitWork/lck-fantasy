@@ -1,9 +1,10 @@
 // The made-up games, Weeks 1 to 3: each game's winner, and Week 3's games for Baron Steal FC's squad
 // (champion, K/D/A, the lines that scored) as every page shows them: Points' sheet, Series, Live,
-// Home and the cards. Their points are the squad's (squads.ts).
+// Home, Perfect game and the cards. Their points are the squad's (squads.ts).
 
 import type { TeamCode } from "./competition";
 import { LIVE_SERIES_ID, POINTS_SQUAD } from "./squads";
+import type { Series } from "./weeks";
 
 /** Each game's winner, in each series that a squad member played, Weeks 1 to 3. */
 const GAME_WINNERS: Record<string, TeamCode[]> = {
@@ -60,7 +61,7 @@ const coachGame = (...lines: LineWord[]): GameDetail => ({ lines });
 
 /**
  * Week 3's games, series by series in the order each squad member played them. Each game's points
- * (src/fixtures/squads.ts) are what spec/05's tables give its K/D/A and lines; points.test.tsx checks.
+ * (src/fixtures/squads.ts) are what spec/05's tables give its K/D/A and lines; src/screens/points/points.test.tsx checks.
  */
 export const WEEK3_GAMES: Record<string, GameDetail[][]> = {
   Zeus: [
@@ -110,6 +111,13 @@ const LIVE_SERIES_FINAL_WINNERS: TeamCode[] = ["T1", "T1"];
 /** A game's winner, at Points' moment or once final; none for a game not yet won. */
 export const winnerOf = (seriesId: string, index: number, final = false) =>
   (final && seriesId === LIVE_SERIES_ID ? LIVE_SERIES_FINAL_WINNERS : GAME_WINNERS[seriesId])?.[index];
+
+/** A game from a team's side at Points' moment: its clock while live, won or lost once over, neither before. */
+export function gameAt(s: Series, index: number, team: TeamCode): { clock?: string; won?: boolean } {
+  if (s.state === "live" && index + 1 === s.liveGame) return { clock: s.clock };
+  const winner = winnerOf(s.id, index);
+  return winner ? { won: winner === team } : {};
+}
 
 /** A squad member's games in a Week 3 series, at Points' moment or once final. */
 export function weekGamesOf(name: string, seriesId: string, final = false): GameDetail[] {

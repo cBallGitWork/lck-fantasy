@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import draftJson from "../../docs/research/truck-lines.json?raw";
-import { addLine, approveLine, LineError, lineProblems, placeholdersIn, seedLines, type NewLine } from "./lines";
+import { addLine, approveLine, lineProblems, placeholdersIn, seedLines, type NewLine } from "./lines";
+import { Refused } from "./refused";
 
 const draft = JSON.parse(draftJson) as NewLine[];
 
@@ -31,7 +32,7 @@ describe("truck lines (spec/14, Truck lines)", () => {
   test("a protest line naming a player is refused; a coffee line may", () => {
     for (const placeholder of ["player", "carry"]) {
       const protest = { ...coffee, kind: "protest" as const, text: `EXPLAIN {${placeholder}}.` };
-      expect(() => addLine([], protest)).toThrow(new LineError({ rule: "protestNamesPlayer", placeholder }));
+      expect(() => addLine([], protest)).toThrow(new Refused("Truck line", { rule: "protestNamesPlayer", placeholder }));
     }
     expect(addLine([], coffee)).toEqual([{ ...coffee, approved: false }]);
   });
@@ -39,7 +40,7 @@ describe("truck lines (spec/14, Truck lines)", () => {
   test("a line shows only once approved", () => {
     const lines = approveLine(addLine([], coffee), "x01");
     expect(lines[0]?.approved).toBe(true);
-    expect(() => approveLine(lines, "nope")).toThrow(LineError);
+    expect(() => approveLine(lines, "nope")).toThrow(Refused);
   });
 
   test("a broken line is refused, never added silently", () => {

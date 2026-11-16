@@ -1,7 +1,6 @@
 import { MainAction, Modal } from "../../parts";
 import type { DeleteRow } from "./settings";
 import "./settings.css";
-import "./sheets.css";
 
 /** The Delete account sheet: what goes (the team named once, in the sentence), who each private league passes to, then Back or Delete account. */
 export function DeleteSheet({

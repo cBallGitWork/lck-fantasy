@@ -8,7 +8,7 @@ import { ProfilePoints } from "./ProfilePoints";
 import { ProfileSide } from "./ProfileSide";
 import { ProfileTransfers } from "./ProfileTransfers";
 
-export const PROFILE_TABS = ["Points", "History", "Transfers"] as const;
+const PROFILE_TABS = ["Points", "History", "Transfers"] as const;
 export type ProfileTab = (typeof PROFILE_TABS)[number];
 
 const FOLLOW_LABEL: Record<Exclude<FollowState, "self">, string> = { following: "Following ✓", follow: "Follow", requested: "Requested" };

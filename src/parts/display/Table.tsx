@@ -23,7 +23,7 @@ export interface Column<R> {
 }
 
 /** A row that opens something ends with `›`: a link (`go`) or a key (`onOpen`), named for screen readers. */
-export type RowOpen<R> = { name: (row: R) => string } & ({ go: (row: R) => Go } | { onOpen: (row: R) => void });
+type RowOpen<R> = { name: (row: R) => string } & ({ go: (row: R) => Go } | { onOpen: (row: R) => void });
 
 /**
  * A table: name far left, figures right-aligned, 40px rows, 12px heads in mid grey. For the wide

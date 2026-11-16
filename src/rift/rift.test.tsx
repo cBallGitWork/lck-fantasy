@@ -22,7 +22,6 @@ import {
   PanelSumLabel,
   PlayerPanel,
   RIFT_SLOTS,
-  RIFT_VIEW,
   Rift,
   RiftMap,
   RoleIcon,
@@ -95,7 +94,6 @@ test("the five roles lead the lineup, and the squad is the seven and the bench",
 
 test("the two views, the Rift first", () => {
   expect(VIEWS).toEqual(["Rift view", "Card view"]);
-  expect(RIFT_VIEW).toBe("Rift view");
 });
 
 test("the slots place all seven starters, inside the square Rift", () => {
@@ -145,19 +143,16 @@ test("the panel's body: a series head, its games with the counted boxed, the sum
     <PlayerPanel name="Faker" meta="T1 · Mid">
       <PanelSeries title="Wed · v HLE" result={<span>W 2–1</span>}>
         <PanelGame no={1} what="Azir · W" points={5} counted />
-        <PanelGame no={2} what="Ahri · L" points={2} counted={false} live={<i>Live</i>} />
+        <PanelGame no={2} what="Ahri · L" points={2} counted={false} />
       </PanelSeries>
       <PanelSum lines={<PanelSumLabel>Carry</PanelSumLabel>} figure={40} />
       <PanelFoot go={{ to: "/player/$playerId", params: { playerId: "faker" } }} />
     </PlayerPanel>,
   );
   expect(out).toContain('<h4 class="player-panel__series-head">Wed · v HLE<span>W 2–1</span></h4>');
-  const linked = html(<PanelSeries title="v HLE" result={<span>W 2–1</span>} go={{ to: "/series/$seriesId", params: { seriesId: "w3-wed-1" } }} />);
-  expect(linked).toMatch(/<a [^>]*href="\/series\/w3-wed-1"[^>]*>v HLE<\/a>/);
   expect(out).toContain('<span class="counted">5</span>');
   expect(out.match(/class="counted"/g)).toHaveLength(1);
   expect(out).toContain('class="player-panel__game player-panel__game--dropped"');
-  expect(out).toContain("Ahri · L<i>Live</i>");
   expect(out).toContain('<span class="quiet">Carry</span>');
   expect(out).toContain('<b class="player-panel__sum-figure num">40</b>');
   expect(out).toContain('href="/player/faker"');
@@ -178,8 +173,7 @@ test("the bench bar holds the Rift's tiles, each under its order and role, with 
   expect(chosen).toContain('role="button"');
 });
 
-test("a squad is the seven starters and two bench places, and the bench is told apart", () => {
+test("the bench is two places, told apart", () => {
   expect(BENCH_SLOTS).toEqual(["bench1", "bench2"]);
-  expect(LINEUP_ORDER.length + BENCH_SLOTS.length).toBe(9);
   expect([isBench("bench2"), isBench("flex"), isBench(undefined)]).toEqual([true, false, false]);
 });

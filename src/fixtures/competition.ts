@@ -28,7 +28,7 @@ export const COMPETITION_TITLE = `${COMPETITION} 2027`;
  */
 export const CARRY_MULTIPLIER = 1.5;
 /** The games that count in a series: its best two (spec/05). */
-export const COUNTED_PER_SERIES = 2;
+const COUNTED_PER_SERIES = 2;
 export const BEST_OF = 3;
 export const TEAM_CAP = 2;
 export const HIT_POINTS = 6;

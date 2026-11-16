@@ -4,10 +4,10 @@
 import {
   BEST_OF,
   COMPETITION,
-  finalPickOf,
   kdaText,
   LIVE_SERIES_ID,
   MY_WEEK3,
+  playedIn,
   playerId,
   POINTS_SQUAD,
   POINTS_WEEK,
@@ -61,11 +61,7 @@ const liveKda = (p: PointsPick) => {
   return kda && kdaText(kda);
 };
 /** The finished T1 2–0 DK from the shared squad: each player's games, and a coach's series result. */
-const finalIn = (p: PointsPick) => {
-  const series = finalPickOf(p.name).series.find((s) => s.id === LIVE_SERIES.id);
-  if (!series) throw new Error(`${p.name} has no final ${LIVE_SERIES.id}`);
-  return series;
-};
+const finalIn = (p: PointsPick) => playedIn(p.name, LIVE_SERIES.id, true);
 
 const points = (moment: keyof typeof WEEK_POINTS, p: PointsPick) => {
   const week = WEEK_POINTS[moment][playerId(p.name)];

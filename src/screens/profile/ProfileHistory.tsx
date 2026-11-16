@@ -1,16 +1,16 @@
 import { money, NONE, RankMove, Table, type Column } from "../../parts";
 import type { HistoryRow } from "./fixtures";
-import { count } from "./format";
+import { countOrNone } from "./format";
 
 const COLUMNS: Column<HistoryRow>[] = [
   { key: "week", head: "Week", cell: (r) => `Week ${r.week}` },
   { key: "pts", head: "Pts", figure: true, cell: (r) => r.points },
-  { key: "total", head: "Total", figure: true, cell: (r) => count(r.total) },
-  { key: "weekRank", head: "Week rank", figure: true, cell: (r) => count(r.weekRank) },
-  { key: "overall", head: "Overall", figure: true, cell: (r) => count(r.overall) },
+  { key: "total", head: "Total", figure: true, cell: (r) => countOrNone(r.total) },
+  { key: "weekRank", head: "Week rank", figure: true, cell: (r) => countOrNone(r.weekRank) },
+  { key: "overall", head: "Overall", figure: true, cell: (r) => countOrNone(r.overall) },
   { key: "move", head: "Move", figure: true, cell: (r) => <Move places={r.move} /> },
-  { key: "transfers", head: "Transfers", figure: true, cell: (r) => count(r.transfers) },
-  { key: "hits", head: "Hits", figure: true, cell: (r) => count(r.hits) },
+  { key: "transfers", head: "Transfers", figure: true, cell: (r) => countOrNone(r.transfers) },
+  { key: "hits", head: "Hits", figure: true, cell: (r) => countOrNone(r.hits) },
   { key: "bank", head: "Bank", figure: true, cell: (r) => money(r.bankM) },
   { key: "value", head: "Value", figure: true, cell: (r) => money(r.valueM) },
   { key: "buff", head: "Buff", cell: (r) => r.buff ?? NONE },

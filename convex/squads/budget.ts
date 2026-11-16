@@ -1,5 +1,6 @@
 // Money (spec/02-prices-and-budget.md). Amounts are whole won, so no sum ever rounds; screens show
 // them in m (src/parts/text/money.ts). The budget and every price are data per competition.
+import { sum } from "../../src/parts/util/sum";
 import { allPicks, pickKey, type Pick, type Squad } from "./squad";
 
 /** Current prices in won, keyed by `pickKey`: players and coaches alike (spec/02, Money). */
@@ -20,7 +21,7 @@ export function budgetProblems(squad: Squad, prices: Prices, budget: number | nu
   const unpriced = picks.filter((pick) => priceOf(pick, prices) === undefined);
   if (unpriced.length > 0) return unpriced.map((pick) => ({ rule: "unpriced", pickId: pick.id }));
   if (budget === null) return [];
-  const cost = picks.reduce((sum, pick) => sum + priceOf(pick, prices)!, 0);
+  const cost = sum(picks.map((pick) => priceOf(pick, prices)!));
   return cost > budget ? [{ rule: "overBudget", budget, cost }] : [];
 }
 

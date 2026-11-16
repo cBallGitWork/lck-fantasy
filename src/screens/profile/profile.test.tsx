@@ -128,3 +128,11 @@ describe("the follow key", () => {
     expect(nextFollow("requested")).toBe("requested");
   });
 });
+
+test("a held rank, in Leagues or History, is RankMove's grey —", () => {
+  const held: ProfileData = { ...PROFILE, leagues: PROFILE.leagues.map((l) => ({ ...l, move: 0 })), history: PROFILE.history.map((r) => ({ ...r, move: 0 })) };
+  expect(html(page("Points", held))).toContain('<span class="rank-held">—</span>');
+  const history = html(page("History", held));
+  expect(history).toContain('<span class="rank-held">—</span>');
+  expect(history).not.toMatch(/rank-(up|down)/);
+});

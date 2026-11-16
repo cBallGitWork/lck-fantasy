@@ -47,7 +47,7 @@ What shows a fact: tags, tables, lists, crests, states.
 - `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `TierShield.tsx`: Overall's tier shield, no text on it (spec/08); the page sizes and colours it through its class names.
-- `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
+- `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904, or a mid grey `—` when it held), the one rank move on every screen; no CSS of its own, base.css draws them.
 
 ## text/
 

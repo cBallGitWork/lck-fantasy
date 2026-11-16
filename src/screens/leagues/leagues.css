@@ -117,9 +117,6 @@
 .leagues__rank {
   font-weight: var(--w-semi);
 }
-.leagues__nil {
-  font-family: var(--font-mono);
-}
 .leagues__name small {
   color: var(--mid);
   font-size: var(--size-small);

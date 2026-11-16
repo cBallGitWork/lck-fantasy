@@ -11,7 +11,7 @@ const cheaperMidOverCap = player("cheapermid", "hle", "mid"); // HLE already has
 const cheapCoach = coach("bro");
 const pool: Pick[] = [cheapMid, cheaperMidOverCap, cheapCoach, player("dearmid", "ns", "mid")];
 
-/** Every pick at 10억, then the overrides in 억. */
+/** Every pick at 10m, then the overrides in m. */
 function pricesWith(picks: Pick[], overrides: [Pick, number][]) {
   const prices = new Map(picks.map((pick) => [pickKey(pick), 10 * EOK]));
   for (const [pick, eok] of overrides) prices.set(pickKey(pick), eok * EOK);
@@ -19,7 +19,7 @@ function pricesWith(picks: Pick[], overrides: [Pick, number][]) {
 }
 
 describe("bankAtSplitStart", () => {
-  test("the Road to MSI raise comes back off: a raise of 5억 and a bank of 1억 leave −4억", () => {
+  test("the Road to MSI raise comes back off: a raise of 5m and a bank of 1m leave −4m", () => {
     expect(bankAtSplitStart(1 * EOK, 5 * EOK)).toBe(-4 * EOK);
   });
 });
@@ -32,7 +32,7 @@ describe("fixSquadForSplit", () => {
   });
 
   test("over the cap: the team's most expensive extra is sold for the cheapest same role within the cap", () => {
-    // Three from GEN: Chovy (mid, 12억), Ruler and a GEN coach. Chovy is the dearest, so he goes.
+    // Three from GEN: Chovy (mid, 12m), Ruler and a GEN coach. Chovy is the dearest, so he goes.
     const squad = withStarter(validSquad(), "coach", coach("gen"));
     const prices = pricesWith([...allPicks(squad), ...pool], [[chovy, 12], [cheapMid, 6], [cheaperMidOverCap, 5]]);
     const fix = fixSquadForSplit(squad, 0, CAP, pool, prices);
@@ -66,8 +66,8 @@ describe("fixSquadForSplit", () => {
       [chovy, 14], [oner, 11], [cheapMid, 13], [pool[3]!, 16], [cheapJungler, 2],
     ]);
     const fix = fixSquadForSplit(squad, -3 * EOK, CAP, [...pool, cheapJungler], prices);
-    // Chovy for the cheapest mid within the cap (13억) gains 1억, leaving −2억; the next dearest
-    // left, Oner at 11억, goes for a 2억 jungler: −2 + 9 = 7억.
+    // Chovy for the cheapest mid within the cap (13m) gains 1m, leaving −2m; the next dearest
+    // left, Oner at 11m, goes for a 2m jungler: −2 + 9 = 7m.
     expect(fix.sold.map((pick) => pick.id)).toEqual(["chovy", "oner"]);
     expect(fix.bank).toBe(7 * EOK);
   });

@@ -62,7 +62,7 @@ export function livePointsOf(id: string): number {
   return points;
 }
 
-/** A squad member at the Pick Team picture's moment, with Week 4's price in 억 and form. */
+/** A squad member at the Pick Team picture's moment, with Week 4's price in m and form. */
 export interface PickTeamPick {
   slot: SquadSlot;
   name: string;

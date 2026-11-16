@@ -9,7 +9,7 @@ import { MY_PLAYERS, playerId, STATS_PLAYERS, WEEK3_SERIES_FINAL, type TeamCode 
 import type { RoleKey } from "../../rift";
 import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
 
-/** A price move is half a 억 in the picture. */
+/** A price move is 0.5m in the picture. */
 const MOVE_EOK = 0.5;
 
 /** The picture's player lines, by name, in PLAYER_LINES' order. */

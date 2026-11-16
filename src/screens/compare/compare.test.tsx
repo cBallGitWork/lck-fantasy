@@ -39,7 +39,7 @@ describe("Faker v Chovy", () => {
     expectInOrder(out, [
       "58", "2nd of 10 mids", "Season", "61", "1st of 10 mids",
       "19.3", "Form", "20.3",
-      "18.5억", "0.5", "Price", "17.5억", "0.5",
+      "₩18.5m", "0.5", "Price", "₩17.5m", "0.5",
       "46%", "Owned", "41%",
       "W2 · Fri", "10", "v BFX", "W3 · Wed", "12", "v HLE", "W3 · Sat", "10", "v DK", "Last 3", "W2 · Sat", "11", "v BRO",
       "W4 · Wed", "v KT", "W4 · Sat", "v GEN", "W5 · Thu", "v BRO", "Next 3", "W4 · Thu", "v BRO", "W4 · Sat", "v T1", "W5 · Wed", "v DNS",
@@ -71,8 +71,8 @@ describe("the second player not picked yet", () => {
   const out = text(<ComparePage right={null} onClose={close} />);
 
   test("shows Faker alone, then the search with mids first", () => {
-    expectInOrder(out, ["Mid · T1", "Faker", "이상혁", "v", "Mids", "Chovy", "GEN", "17.5억", "61", "Zeka", "HLE", "15.0억", "41"]);
-    expectInOrder(out, ["BuLLDoG", "DNS", "11.0억", "36", "ShowMaker", "DK", "13.0억", "33", "All mids · Other roles ›"]);
+    expectInOrder(out, ["Mid · T1", "Faker", "이상혁", "v", "Mids", "Chovy", "GEN", "₩17.5m", "61", "Zeka", "HLE", "₩15.0m", "41"]);
+    expectInOrder(out, ["BuLLDoG", "DNS", "₩11.0m", "36", "ShowMaker", "DK", "₩13.0m", "33", "All mids · Other roles ›"]);
     expect(out).not.toContain("Change ›");
     expect(html(<ComparePage right={null} onClose={close} />)).toContain('placeholder="Find a player"');
   });
@@ -94,7 +94,7 @@ describe("kkOma v Ryu", () => {
 
   test("faces each other as coaches, then the top table", () => {
     expectInOrder(out, ["Coach · T1", "kkOma", "김정균", "v", "Coach · GEN", "Ryu", "류상욱", "Change ›"]);
-    expectInOrder(out, ["27", "1st of 10 coaches", "Season", "26", "2nd of 10 coaches", "9.0", "Form", "8.7", "7.0억", "0.5", "Price", "7.0억", "22%", "Owned", "21%"]);
+    expectInOrder(out, ["27", "1st of 10 coaches", "Season", "26", "2nd of 10 coaches", "9.0", "Form", "8.7", "₩7.0m", "0.5", "Price", "₩7.0m", "22%", "Owned", "21%"]);
   });
 
   test("holds the coach lines, with no per-game figure on the series rows", () => {

@@ -60,7 +60,7 @@ Trucks are the feed's reaction, after LCK fans' LED trucks
     are both in; `{league}` names it. If they share none, these lines don't show.
   - **Green and red arrow:** the gameweek's move in overall rank. **Buff wasted:** played, and
     the week ends below the global average; otherwise **buff played**.
-- Lines fill in the receiver's own numbers. Example: WE DID NOT PAY ₩12억 FOR A BENCH WARMER.
+- Lines fill in the receiver's own numbers. Example: WE DID NOT PAY ₩12M FOR A BENCH WARMER.
 - A protest line never names a real player; it mocks the manager's own picks, in the trucks'
   formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CARRY PICK. Coffee lines may cheer
   real players.

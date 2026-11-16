@@ -82,7 +82,7 @@ export interface T1MemberSeason {
   /** His place by season points, and how many he is placed among. */
   place: number;
   of: number;
-  /** This week's price rise in 억. */
+  /** This week's price rise in m. */
   riseEok: number;
   /** His points in each of T1's series, in T1_PLAYED's order (newest first). */
   points: readonly number[];

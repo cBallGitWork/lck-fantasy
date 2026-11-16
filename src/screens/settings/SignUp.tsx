@@ -3,7 +3,6 @@ import { Field, MainAction, Modal, OutlinedKey, Time } from "../../parts";
 import { LegalNames, plainOptions, ProviderMark, Select, TEAM_OPTIONS } from "./form";
 import { canSaveTeam, capName, counter, type Account } from "./settings";
 import "./settings.css";
-import "./sheets.css";
 
 const PROVIDERS: Account["provider"][] = ["Google", "Discord"];
 

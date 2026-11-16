@@ -68,8 +68,6 @@
 .compare__top,
 .compare__lines,
 .compare__results {
-  width: 100%;
-  border-collapse: collapse;
   table-layout: fixed;
 }
 .compare__top {

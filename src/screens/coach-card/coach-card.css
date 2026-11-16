@@ -112,10 +112,6 @@
 }
 
 /* This week's games: G, result, lines, points; a game that doesn't count struck through. */
-.coach-card__games {
-  width: 100%;
-  border-collapse: collapse;
-}
 .coach-card__games td {
   height: var(--m-row);
   padding: 0 var(--s-2);

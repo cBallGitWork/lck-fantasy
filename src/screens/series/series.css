@@ -69,8 +69,6 @@
 /* The grids: one row per player, then the coach; one column per game, then Series. */
 .series__grid,
 .series__roster {
-  width: 100%;
-  border-collapse: collapse;
   table-layout: fixed;
   background: var(--paper);
 }
@@ -91,11 +89,6 @@
 }
 .series__grid th {
   padding: var(--s-2);
-  border-bottom: var(--m-rule) solid var(--line);
-  color: var(--mid);
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  text-align: left;
   white-space: nowrap;
 }
 .series__grid th b,

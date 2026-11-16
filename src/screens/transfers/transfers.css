@@ -109,17 +109,10 @@
 
 /* The player list. */
 .transfers__list {
-  width: 100%;
-  border-collapse: collapse;
   background: var(--paper);
 }
 .transfers__list th {
   padding: var(--s-1);
-  text-align: left;
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  color: var(--mid);
-  border-bottom: var(--m-rule) solid var(--line);
 }
 .transfers__list td {
   height: var(--m-row);

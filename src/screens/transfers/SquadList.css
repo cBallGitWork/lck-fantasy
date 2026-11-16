@@ -2,20 +2,12 @@
 
 /* List view: the nine by role. */
 .transfers__squad {
-  width: 100%;
-  border-collapse: collapse;
   background: var(--paper);
 }
 .transfers__squad th,
 .transfers__squad td {
   padding: var(--s-1) var(--s-2);
   text-align: left;
-}
-.transfers__squad thead th {
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  color: var(--mid);
-  border-bottom: var(--m-rule) solid var(--line);
 }
 .transfers__squad td {
   height: var(--m-row);

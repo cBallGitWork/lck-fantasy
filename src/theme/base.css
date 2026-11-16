@@ -57,6 +57,18 @@ a {
     animation: none !important;
   }
 }
+/* Every table: full width, collapsed rules; its head cells in mid grey over a --line rule. */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+thead th {
+  text-align: left;
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+  border-bottom: var(--m-rule) solid var(--line);
+}
 /* Secondary words: mid grey, 12px. */
 .quiet {
   color: var(--mid);

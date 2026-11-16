@@ -5,6 +5,7 @@ import { v } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
 import { internalMutation, type MutationCtx } from "../_generated/server";
 import { groupSeries, pairKey } from "../lck/series";
+import { rawRow } from "../schema";
 import { playerGameStats, seriesSettledStats } from "../stats/gameStats";
 import { v5Extras } from "./leaguepedia";
 import { oeGame, oeGames, oeSeriesGame, type OeGame, type OeTeamGame } from "./oraclesElixir";
@@ -12,7 +13,7 @@ import { oeGame, oeGames, oeSeriesGame, type OeGame, type OeTeamGame } from "./o
 /** Oracle's Elixir's rows for one league (the file's `league`, such as "LCK"). Returns the games
  *  stored and those out of sequence, which wait unplaced for an admin. */
 export const loadOracleElixir = internalMutation({
-  args: { rows: v.array(v.record(v.string(), v.string())), league: v.string() },
+  args: { rows: v.array(rawRow), league: v.string() },
   handler: async (ctx, { rows, league }) => {
     const pairs = new Set<string>();
     const games = oeGames(rows, league);

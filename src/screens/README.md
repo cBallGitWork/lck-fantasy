@@ -1,6 +1,6 @@
 # src/screens
 
-One folder per screen in the site map (`docs/design/site-map.html`), named as it is there, each with the approved picture in `docs/design/approved/<name>/`. Each `index.tsx` is the screen's route (`src/router.tsx`), a placeholder until its own issue builds it.
+One folder per screen in the site map (`docs/design/site-map.html`), named as it is there, each with the approved picture in `docs/design/approved/<name>/`. Each `index.tsx` is the screen's route (`src/router.tsx`).
 
 So each screen's issue touches only its own folder:
 

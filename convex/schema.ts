@@ -5,7 +5,7 @@ import { PLAYER_ROLES } from "./squads/squad";
 // Tables arrive with the features that need them (docs/data-model.md holds the model).
 
 /** A source's row as it sent it: column name to text (ARCHITECTURE.md, Data). */
-const rawRow = v.record(v.string(), v.string());
+export const rawRow = v.record(v.string(), v.string());
 
 /** One side of a game: its team's lines for the coach (spec/05, The coach). */
 const teamLine = v.object({

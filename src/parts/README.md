@@ -3,8 +3,8 @@
 Parts shared by two or more screens, each drawn one way everywhere (`docs/design/plate.md`, Parts and States). Each has its own CSS file, using theme tokens only. Import them from `src/parts` (`index.ts`). Parts never import `src/rift`; the Rift builds on the parts.
 
 - `TopBar.tsx`: the top bar: Flol, the eight items with `active`, the sponsor, the account menu or `Sign in`.
-- `PageFrame.tsx`: the top bar, then the main column and the 360px side column (`sideFirst` for Leagues).
-- `Columns.tsx`: the frame's two columns (main, then the 360px side; `sideFirst`) for a page whose head runs full width above them.
+- `PageFrame.tsx`: the top bar, then the main column and the 360px side column.
+- `Columns.tsx`: the frame's two columns (main, then the 360px side) for a page whose head runs full width above them.
 - `PageHead.tsx`: title and hangul, ‹ week ›, the key figure, its tags, up to three figures, a link.
 - `WeekArrow.tsx`: a week's ‹ or ›: a link, or a key; off in the rule's grey where there is no week that way.
 - `Tag.tsx`: a tag: plain, `Live` filled, `Not final` dashed.

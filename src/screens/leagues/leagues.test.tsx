@@ -103,10 +103,10 @@ describe("Overall in Split 2, Legend (overall.html)", () => {
 });
 
 describe("the page", () => {
-  test("/leagues opens the list beside Pub League, the sponsor note last", async () => {
+  test("/leagues opens Pub League, then the list on the right, the sponsor note last", async () => {
     const out = await renderRoute("/leagues");
     expect(out).toContain('data-screen="leagues"');
-    expectInOrder(out.replace(/<[^>]+>/g, ""), ["Leagues", "리그", "General", "Overall", "48,211", "6,904", "of 212,480", "United Kingdom", "T1 supporters", "Private", "Pub League", "2nd", "12 managers", "Flol Discord", "14th", "86 managers", "Create a league", "Join a league", "Pub League", "PUB-7K2Q", "All sponsors are made up."]);
+    expectInOrder(out.replace(/<[^>]+>/g, ""), ["Leagues", "리그", "Pub League", "PUB-7K2Q", "General", "Overall", "48,211", "6,904", "of 212,480", "United Kingdom", "T1 supporters", "Private", "Pub League", "2nd", "12 managers", "Flol Discord", "14th", "86 managers", "Create a league", "Join a league", "All sponsors are made up."]);
     expect(out).toMatch(/leagues__list-row--on[^>]*>.*?Pub League/);
   });
 

@@ -228,7 +228,7 @@ test("the series list shows scores with their state, and times for the next", ()
   );
 });
 
-test("the page frame puts the side column after the main, save Leagues", () => {
+test("the page frame puts the side column after the main", () => {
   const right = html(
     <PageFrame screen="points" active="points" account={MANAGER.team} side={<p>side</p>}>
       <p>main</p>
@@ -237,10 +237,4 @@ test("the page frame puts the side column after the main, save Leagues", () => {
   expect(right.indexOf("main")).toBeLessThan(right.indexOf("side</p>"));
   expect(right).toContain("page-frame--two");
   expect(right).toContain('data-screen="points"');
-  const left = html(
-    <PageFrame screen="leagues" active="leagues" account={MANAGER.team} side={<p>side</p>} sideFirst>
-      <p>main</p>
-    </PageFrame>,
-  );
-  expect(left).toContain("page-frame--side-first");
 });

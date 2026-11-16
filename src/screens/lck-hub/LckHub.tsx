@@ -1,6 +1,6 @@
-import { useReducer } from "react";
+import { useId, useReducer } from "react";
 import type { TeamCode } from "../../fixtures/week3";
-import { Columns, Deadline, Empty, PageFrame, PageHead, score, Tabs, ViewToggle } from "../../parts";
+import { Columns, Deadline, Empty, PageFrame, PageHead, score, TabPanel, Tabs, ViewToggle } from "../../parts";
 import { Fixtures } from "./FixturesTab";
 import { nextHub, startHub, weeksOf, type HubAction, type HubState, type WeekTab } from "./hubState";
 import { News } from "./News";
@@ -43,13 +43,14 @@ function TabView({ data, state, act }: { data: LckHubData; state: HubState; act:
 export function LckHub({ data, account, tab }: { data: LckHubData; account: string | null; tab?: HubTab }) {
   const [state, act] = useReducer((s: HubState, a: HubAction) => nextHub(data, s, a), undefined, () => startHub(data, tab));
   const stageNames = data.stages.map((s) => s.name);
+  const tabsId = useId();
   return (
     <PageFrame screen="lck-hub" active="lckHub" account={account}>
       <div className="lck-hub__head">
         <PageHead title={data.title} hangul={data.hangul} />
         <Deadline {...data.deadline} />
       </div>
-      <Tabs tabs={HUB_TABS} chosen={state.tab} onChoose={(t) => act({ type: "tab", tab: t })} label="LCK hub" />
+      <Tabs id={tabsId} tabs={HUB_TABS} chosen={state.tab} onChoose={(t) => act({ type: "tab", tab: t })} label="LCK hub" />
       {state.tab !== "Teams" && (
         <div className="lck-hub__stages">
           <ViewToggle
@@ -61,9 +62,9 @@ export function LckHub({ data, account, tab }: { data: LckHubData; account: stri
         </div>
       )}
       <Columns>
-        <div>
+        <TabPanel id={tabsId}>
           <TabView data={data} state={state} act={act} />
-        </div>
+        </TabPanel>
         <aside>
           <News news={data.news} />
         </aside>

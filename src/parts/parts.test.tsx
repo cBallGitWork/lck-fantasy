@@ -23,6 +23,7 @@ import {
   SideSection,
   SponsorNote,
   Table,
+  TabPanel,
   Tabs,
   Tag,
   Time,
@@ -83,8 +84,19 @@ test("view toggle and tabs mark the chosen one", () => {
   const toggle = html(<ViewToggle options={["Rift view", "Card view"]} chosen="Card view" />);
   expect(toggle).toContain('aria-pressed="true">Card view');
   expect(toggle).toContain('aria-pressed="false">Rift view');
-  const tabs = html(<Tabs tabs={["Players", "Coaches"]} chosen="Players" />);
-  expect(tabs).toContain('aria-pressed="true">Players');
+});
+
+test("tabs are a tab list whose chosen tab names the panel it controls", () => {
+  const out = html(
+    <>
+      <Tabs id="t" tabs={["Players", "Coaches"]} chosen="Players" label="Players or coaches" />
+      <TabPanel id="t">Table</TabPanel>
+    </>,
+  );
+  expect(out).toContain('role="tablist" aria-label="Players or coaches"');
+  expect(out).toContain('role="tab" id="t-tab" class="tabs__tab key-bare tabs__tab--on" aria-selected="true" aria-controls="t-panel">Players');
+  expect(out).toContain('role="tab" class="tabs__tab key-bare" aria-selected="false" aria-controls="t-panel">Coaches');
+  expect(out).toContain('<div role="tabpanel" id="t-panel" aria-labelledby="t-tab">Table</div>');
 });
 
 test("a toggle's key can show more than a word", () => {

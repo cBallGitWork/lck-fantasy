@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import { beyondStrip, count, Crest, Empty, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, Tabs, Tag } from "../../parts";
+import { useId, type ReactNode } from "react";
+import { beyondStrip, count, Crest, Empty, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, TabPanel, Tabs, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CoachFixtures, CoachHistoryTab, CoachRoster, CoachThisWeek } from "./CoachTabs";
@@ -23,6 +23,7 @@ export function CoachCard({
   onTransferOut?: () => void;
 }) {
   const { head, meta, season } = data;
+  const tabsId = useId();
   return (
     <article className="coach-card">
       {data.news && <p className="coach-card__news">! {data.news}</p>}
@@ -60,10 +61,10 @@ export function CoachCard({
       <div className="coach-card__body">
         <div className="coach-card__left">
           <SeriesStrip past={data.past} next={data.next} />
-          <Tabs tabs={COACH_TABS} chosen={tab} onChoose={onTab} label="Coach card" />
-          <div className="coach-card__main">
-            <TabPanel data={data} tab={tab} />
-          </div>
+          <Tabs id={tabsId} tabs={COACH_TABS} chosen={tab} onChoose={onTab} label="Coach card" />
+          <TabPanel id={tabsId} className="coach-card__main">
+            <TabBody data={data} tab={tab} />
+          </TabPanel>
         </div>
         <div className="coach-card__rail">
           <SeasonPanel season={season} />
@@ -82,7 +83,7 @@ export const EMPTY_TAB: Record<CoachTab, string> = {
 };
 
 /** The chosen tab's panel, or its empty state when this opening has no data for it. */
-function TabPanel({ data, tab }: { data: CoachCardData; tab: CoachTab }) {
+function TabBody({ data, tab }: { data: CoachCardData; tab: CoachTab }) {
   const team = data.head.team;
   if (tab === "This week" && data.week) return <CoachThisWeek week={data.week} />;
   if (tab === "Fixtures" && data.fixtures) return <CoachFixtures rows={beyondStrip(data.fixtures, data.next)} team={team} />;

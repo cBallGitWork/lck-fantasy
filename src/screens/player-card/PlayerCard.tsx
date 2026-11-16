@@ -1,5 +1,5 @@
-import { useState, type ReactNode } from "react";
-import { beyondStrip, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, Tabs, Tag } from "../../parts";
+import { useId, useState, type ReactNode } from "react";
+import { beyondStrip, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, TabPanel, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
 import { markKey, ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
@@ -42,6 +42,7 @@ export function PlayerCard({
   initialTab: CardTab;
 }) {
   const [tab, setTab] = useState(initialTab);
+  const tabsId = useId();
   return (
     <div className="player-card">
       {card.news !== undefined && <p className="player-card__news">! {card.news}</p>}
@@ -87,8 +88,10 @@ export function PlayerCard({
       <div className="player-card__body">
         <div className="player-card__main">
           <SeriesStrip past={card.past} next={card.next} />
-          <Tabs tabs={CARD_TABS} chosen={tab} onChoose={setTab} label="Player card" />
-          <div className="player-card__tab">{tabBody(tab, card)}</div>
+          <Tabs id={tabsId} tabs={CARD_TABS} chosen={tab} onChoose={setTab} label="Player card" />
+          <TabPanel id={tabsId} className="player-card__tab">
+            {tabBody(tab, card)}
+          </TabPanel>
         </div>
         <SeasonRail season={card.season} />
       </div>

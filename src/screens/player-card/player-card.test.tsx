@@ -44,7 +44,7 @@ describe("History, opened from Pick Team", () => {
   });
 
   test("marks History as the chosen tab", () => {
-    expect(html(<PlayerCardPage />)).toMatch(/aria-pressed="true"[^>]*>History</);
+    expect(html(<PlayerCardPage />)).toMatch(/aria-selected="true"[^>]*>History</);
   });
 });
 

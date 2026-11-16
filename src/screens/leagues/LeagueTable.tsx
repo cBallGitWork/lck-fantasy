@@ -1,5 +1,5 @@
-import { useRef, useState, type ReactNode } from "react";
-import { Empty, Menu, OutlinedKey, Tabs, type MenuItem } from "../../parts";
+import { useId, useRef, useState, type ReactNode } from "react";
+import { Empty, Menu, OutlinedKey, TabPanel, Tabs, type MenuItem } from "../../parts";
 import { Pager } from "./Pager";
 import { Standings } from "./Standings";
 import type { CompetitionTabs, LeagueView, Standings as StandingsData, TableTab } from "./types";
@@ -68,6 +68,7 @@ export function LeagueTable({
   adminOpen?: boolean;
 } & TableProps) {
   const [renaming, setRenaming] = useState(false);
+  const tabsId = useId();
   const name = renaming ? (
     <RenameField
       name={league.name}
@@ -95,8 +96,10 @@ export function LeagueTable({
       ) : (
         <LeagueHead name={name} />
       )}
-      <Tabs tabs={table.competition.tabs} chosen={table.tab} onChoose={table.onTab} label="Table" />
-      <TableBody league={league} {...table} />
+      <Tabs id={tabsId} tabs={table.competition.tabs} chosen={table.tab} onChoose={table.onTab} label="Table" />
+      <TabPanel id={tabsId}>
+        <TableBody league={league} {...table} />
+      </TabPanel>
     </section>
   );
 }

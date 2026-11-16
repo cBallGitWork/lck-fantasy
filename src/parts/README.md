@@ -22,7 +22,7 @@ Keys, links, tabs, sheets and fields.
 
 - `WeekArrow.tsx`: `WeekStep`, `‹ Week 3 ›` on every page that steps through weeks; each `WeekArrow` a 32px key, a link or a button, disabled where there is no week that way.
 - `ViewToggle.tsx`: butted keys, the chosen one on paper (`Rift view | Card view`).
-- `Tabs.tsx`: a page's or a card's sections, the chosen one underlined.
+- `Tabs.tsx`: a page's or a card's sections, the chosen one underlined, as a tab list; `TabPanel`, the chosen one's section.
 - `LinkGo.tsx`: a link ending `›` (`go`), or `↗` leaving Flol (`out`).
 - `GoLink.tsx`: a link inside Flol through the router, typed by `src/paths.ts` (`Go`).
 - `Menu.tsx`: a key that opens a list of links and actions (a league's Admin menu; the account menu once its items are settled).

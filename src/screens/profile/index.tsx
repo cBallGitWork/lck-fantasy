@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
-import { Columns, OutlinedKey, PageFrame, SponsorNote, Tabs, useDevState } from "../../parts";
+import { Columns, OutlinedKey, PageFrame, SponsorNote, TabPanel, Tabs, useDevState } from "../../parts";
 import { PROFILE, type FollowState, type ProfileData, type ProfileManager } from "./fixtures";
 import "./profile.css";
 import { ProfileHistory } from "./ProfileHistory";
@@ -42,6 +42,7 @@ export function Profile({
   const [tab, setTab] = useState<ProfileTab>(initialTab);
   const [weekNo, setWeekNo] = useState(initialWeek);
   const [follow, setFollow] = useState(data.manager.follow);
+  const tabsId = useId();
   const week = data.weeks.find((w) => w.week === weekNo);
   if (!week) throw new Error(`No Week ${weekNo} on ${data.manager.name}'s profile`);
   const hasWeek = (n: number) => data.weeks.some((w) => w.week === n);
@@ -59,13 +60,13 @@ export function Profile({
   return (
     <PageFrame screen="profile" account={account}>
       <Banner manager={data.manager} follow={follow} onFollow={pressFollow} />
-      <Tabs tabs={PROFILE_TABS} chosen={tab} onChoose={setTab} label="Profile" />
+      <Tabs id={tabsId} tabs={PROFILE_TABS} chosen={tab} onChoose={setTab} label="Profile" />
       <Columns className="profile__grid">
-        <div className="profile__main">
+        <TabPanel id={tabsId} className="profile__main">
           {tab === "Points" && <ProfilePoints week={week} hasPrev={hasWeek(weekNo - 1)} hasNext={hasWeek(weekNo + 1)} onWeek={setWeekNo} />}
           {tab === "History" && <ProfileHistory rows={data.history} buffsLeft={data.buffsLeft} onOpenWeek={openWeek} />}
           {tab === "Transfers" && <ProfileTransfers weeks={data.transfers} />}
-        </div>
+        </TabPanel>
         <aside className="profile__side">
           <ProfileSide leagues={data.leagues} trucks={tab === "Points" ? { week: week.week, list: week.trucks } : undefined} />
         </aside>

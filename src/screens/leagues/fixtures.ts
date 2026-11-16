@@ -1,21 +1,21 @@
-// The Leagues picture's own made-up moment (docs/design/approved/leagues/): Split 2, Week 14, after
-// the deadline, so Carry shows. Names and numbers are examples, not roster data. The sample manager
-// is week3.ts's. The backend feeds each of these once it is wired (#38).
+// Leagues on the shared LCK Cup Week 3, at Points' moment (Saturday, T1 v DK game 2 live): after
+// the deadline, so Carry shows. The pictures (docs/design/approved/leagues/) draw a made-up Split 2
+// Week 14; they bind the layout, and this file holds the Cup's figures. Names and numbers are
+// examples. The sample manager, Minji, Dan and Jae are the shared ones. The backend feeds each of
+// these once it is wired (#38).
 
-import { MANAGERS } from "../../fixtures/managers";
-import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
-import { MANAGER } from "../../fixtures/week3";
+import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
+import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
+import { COMPETITION as CUP, MANAGER, MY_WEEK3, POINTS_WEEK, WEEK3_DEADLINE, WEEK4_SERIES } from "../../fixtures/week3";
 import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, StandingRow } from "./types";
 
-const SEASON = "LCK 2027";
-const WEEK = 14;
+const WEEK = POINTS_WEEK.week;
 
-/** The season's tabs and Overall's groups, as the competition's data will hold them. */
+/** The Cup's tables: the whole competition only, since it has no splits (spec/08, a table per split). */
 export const COMPETITION: CompetitionTabs = {
-  tabs: ["Season", "Split 1", "Split 2"],
+  tabs: ["Season"],
   seasonTab: "Season",
-  groupedTab: "Split 2",
-  groups: ["Legend", "Rise", "All"],
+  groups: [],
 };
 
 /** The league a bare /leagues opens, as the picture does. */
@@ -28,15 +28,21 @@ export const LEAGUE_LIST: LeagueSummary[] = [
 
 type Line = [rank: number, move: number | null, team: string, manager: string, carry: string, week: number, total: number, split?: number];
 
-/** A table's rows from the picture's lines; the sample manager's row is marked yours. */
-function rows(lines: Line[], chase: StandingRow["chase"] = null): StandingRow[] {
-  return lines.map(([rank, move, team, manager, carry, week, total, split]) => {
+/** A table's rows from its lines; the sample manager's row is marked yours, and with `chasing` tagged with the points to the row above. */
+function rows(lines: Line[], chasing = false): StandingRow[] {
+  return lines.map(([rank, move, team, manager, carry, week, total, split], i) => {
     const mine = team === MANAGER.team;
-    return { rank, move, team, manager, managerId: manager.toLowerCase().replace(/\W+/g, "-"), carry, week, total, split, mine, chase: mine ? chase : null };
+    const above = lines[i - 1];
+    const chase: StandingRow["chase"] = mine && chasing && above ? { kind: "chasing", points: above[6] - total, rank: above[0] } : null;
+    return { rank, move, team, manager, managerId: manager.toLowerCase().replace(/\W+/g, "-"), carry, week, total, split, mine, chase };
   });
 }
 
-const me = (rank: number, move: number | null, week: number, total: number, split?: number): Line => [rank, move, MANAGER.team, MANAGER.name, "Faker", week, total, split];
+/** The sample manager's row: his Week 3 so far, and a total counted from the league's first week. */
+const me = (rank: number, move: number | null, total: number): Line => [rank, move, MANAGER.team, MANAGER.name, "Faker", MY_WEEK3.liveTotal, total];
+
+/** A row whose total counts only this week: a league scoring from Week 3. */
+const fromThisWeek = (rank: number, move: number | null, team: string, manager: string, carry: string, week: number): Line => [rank, move, team, manager, carry, week, week];
 
 const PUB_LEAGUE: LeagueView = {
   kind: "private",
@@ -54,20 +60,20 @@ const PUB_LEAGUE: LeagueView = {
       runs: [
         rows(
           [
-            [1, null, "Kiin Bean", "Tom Reid", "Chovy", 61, 1214],
-            me(2, 1, 98, 1198),
-            [3, -1, MANAGERS.minji.team, MANAGERS.minji.name, "Chovy", 54, 1187],
-            [4, 2, MANAGERS.dan.team, MANAGERS.dan.name, "Peyz", 77, 1160],
-            [5, null, MANAGERS.jae.team, MANAGERS.jae.name, "Ruler", 66, 1151],
-            [6, -2, "Guma Gang", "Sam Hill", "Gumayusi", 49, 1139],
-            [7, 1, "Zeus Juice", "Priya Shah", "Zeus", 70, 1122],
-            [8, -1, "Smeb Nostalgia", "Liam Byrne", "Kiin", 58, 1108],
-            [9, null, "Ruler of None", "Ella Wong", "Aiming", 63, 1097],
-            [10, 1, "BeryL Backup Plan", "Joe Grant", "Keria", 72, 1080],
-            [11, -1, "Ambition FC", "Chris Lee", "Canyon", 41, 1052],
-            [12, null, "Gank Plank", "Ruth Ade", "Faker", 55, 1019],
+            [1, null, MANAGERS.minji.team, MANAGERS.minji.name, "Ruler", MINJI_WEEK3.points, MINJI_WEEK3.total],
+            me(2, 1, MY_SEASON_TOTAL),
+            [3, -1, MANAGERS.dan.team, MANAGERS.dan.name, "Faker", 77, 231],
+            [4, 2, MANAGERS.jae.team, MANAGERS.jae.name, "ucal", 66, 226],
+            [5, null, "Kiin Bean", "Tom Reid", "Chovy", 61, 219],
+            [6, -2, "Guma Gang", "Sam Hill", "Gumayusi", 49, 212],
+            [7, 1, "Zeus Juice", "Priya Shah", "Zeus", 70, 205],
+            [8, -1, "Smeb Nostalgia", "Liam Byrne", "Kiin", 58, 198],
+            [9, null, "Ruler of None", "Ella Wong", "Aiming", 63, 190],
+            [10, 1, "BeryL Backup Plan", "Joe Grant", "Keria", 72, 181],
+            [11, -1, "Ambition FC", "Chris Lee", "Canyon", 41, 170],
+            [12, null, "Gank Plank", "Ruth Ade", "Faker", 55, 158],
           ],
-          { kind: "chasing", points: 16, rank: 1 },
+          true,
         ),
       ],
     },
@@ -89,21 +95,21 @@ const FLOL_DISCORD: LeagueView = {
       pages: 2,
       runs: [
         rows([
-          [1, 2, "Canyon Diff", "Hye-jin Lim", "Canyon", 104, 1402],
-          [2, -1, "Smash Mouth Kiin", "Leo Grant", "Kiin", 88, 1377],
-          [3, null, "Ward Hoarders", "Ama Owusu", "Keria", 91, 1360],
-          [4, 1, "Lehends Never Die", "Rui Tan", "Faker", 79, 1341],
-          [5, -2, "T1 Til I Die", "Nadia Khan", "Faker", 70, 1330],
+          fromThisWeek(1, 2, "Canyon Diff", "Hye-jin Lim", "Canyon", 120),
+          fromThisWeek(2, -1, "Smash Mouth Kiin", "Leo Grant", "Kiin", 116),
+          fromThisWeek(3, null, "Ward Hoarders", "Ama Owusu", "Keria", 113),
+          fromThisWeek(4, 1, "Lehends Never Die", "Rui Tan", "Faker", 109),
+          fromThisWeek(5, -2, "T1 Til I Die", "Nadia Khan", "Faker", 106),
         ]),
         rows(
           [
-            [12, 3, "Bdd Wolf", "Owen Shaw", "Bdd", 81, 1214],
-            [13, null, "Siwoo Sweep", "Mei Lin", "Chovy", 64, 1209],
-            me(14, -2, 98, 1198),
-            [15, 1, "Oner Way Ticket", "Sean Doyle", "Oner", 77, 1190],
-            [16, -1, "Clid Was Here", "Ines Silva", "Viper", 52, 1186],
+            fromThisWeek(12, 3, "Bdd Wolf", "Owen Shaw", "Bdd", 97),
+            fromThisWeek(13, null, "Siwoo Sweep", "Mei Lin", "Chovy", 96),
+            me(14, -2, MY_WEEK3.liveTotal),
+            fromThisWeek(15, 1, "Oner Way Ticket", "Sean Doyle", "Oner", 92),
+            fromThisWeek(16, -1, "Clid Was Here", "Ines Silva", "Viper", 90),
           ],
-          { kind: "chasing", points: 11, rank: 13 },
+          true,
         ),
       ],
     },
@@ -114,31 +120,29 @@ const OVERALL: LeagueView = {
   kind: "overall",
   id: "overall",
   name: "Overall",
-  season: SEASON,
+  season: CUP,
   week: WEEK,
   carryShown: true,
-  openTab: "Split 2",
-  openGroup: "Legend",
+  openTab: COMPETITION.seasonTab,
   tables: {
-    "Split 2/Legend": {
+    [COMPETITION.seasonTab]: {
       pages: 1063,
-      splitColumn: COMPETITION.groupedTab,
       runs: [
         rows([
-          [1, null, "Unkillable FC", "Ha-eun Seo", "Faker", 112, 1642, 402],
-          [2, 3, "Bang Bang Bot", "Marco Ruiz", "Ruler", 121, 1631, 415],
-          [3, -1, "Faker's Fan Club", "Yuna Choi", "Faker", 88, 1628, 377],
-          [4, -1, "Showmaker's Shadow", "Ben Price", "ShowMaker", 94, 1619, 390],
-          [5, 2, "GenG Got Game", "Kenji Sato", "Chovy", 109, 1611, 398],
-          [6, null, "Faker Ate My Homework", "Ollie Dunn", "Faker", 97, 1604, 371],
-          [7, -2, "Viper's Nest", "Mina Lee", "Viper", 80, 1598, 366],
+          [1, null, "Unkillable FC", "Ha-eun Seo", "Faker", 112, 341],
+          [2, 3, "Bang Bang Bot", "Marco Ruiz", "Ruler", 121, 338],
+          [3, -1, "Faker's Fan Club", "Yuna Choi", "Faker", 88, 336],
+          [4, -1, "Showmaker's Shadow", "Ben Price", "ShowMaker", 94, 333],
+          [5, 2, "GenG Got Game", "Kenji Sato", "Chovy", 109, 331],
+          [6, null, "Faker Ate My Homework", "Ollie Dunn", "Faker", 97, 329],
+          [7, -2, "Viper's Nest", "Mina Lee", "Viper", 80, 327],
         ]),
         rows([
-          [48209, 6880, "Rookie Mistake", "Jon Park", "Bdd", 97, 1199, 301],
-          [48210, 6901, "Smolder Shoulders", "Aisha Bello", "Aiming", 98, 1198, 298],
-          me(48211, 6904, 98, 1198, 298),
-          [48212, -40, "Doran's Ring Bearer", "Tim Fox", "Doran", 52, 1198, 298],
-          [48213, 2114, "Kiin Bean", "Tom Reid", "Chovy", 61, 1197, 260],
+          [MY_OVERALL.rank - 2, 6880, "Rookie Mistake", "Jon Park", "Bdd", 97, MY_SEASON_TOTAL + 1],
+          [MY_OVERALL.rank - 1, 6901, "Smolder Shoulders", "Aisha Bello", "Aiming", 98, MY_SEASON_TOTAL],
+          me(MY_OVERALL.rank, MY_OVERALL.move, MY_SEASON_TOTAL),
+          [MY_OVERALL.rank + 1, -40, "Doran's Ring Bearer", "Tim Fox", "Doran", 52, MY_SEASON_TOTAL],
+          [MY_OVERALL.rank + 2, 2114, "Moss Rock", "Ivy Moss", "Chovy", 61, MY_SEASON_TOTAL - 1],
         ]),
       ],
     },
@@ -160,11 +164,11 @@ export const PRIVATE_LEAGUE_CAP = 25;
 /** The longest league name, as the Create sheet counts it (create.html, `11 / 30`). */
 export const LEAGUE_NAME_MAX = 30;
 
-/** This week on, this week first: scoring can start no earlier (spec/08). Later weeks' days are made up. */
+/** This week on, this week first: scoring can start no earlier (spec/08). Week 5's day is made up. */
 export const SCORING_WEEKS: ScoringWeeks = [
-  { week: WEEK, starts: "Wed 10 Feb" },
-  { week: WEEK + 1, starts: "Wed 17 Feb" },
-  { week: WEEK + 2, starts: "Wed 24 Feb" },
+  { week: WEEK, starts: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.date}` },
+  { week: WEEK + 1, starts: `${WEEK4_SERIES[0]?.day} ${WEEK4_SERIES[0]?.date}` },
+  { week: WEEK + 2, starts: "Wed 27 Jan" },
 ];
 
 /** The league the Create picture makes, and the code it is given (create.html, created.html). */

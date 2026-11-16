@@ -134,7 +134,7 @@ describe("each state renders from the fixture, in the picture's order", () => {
       "JungleOner 문현준₩14.0m",
       "MidFaker 이상혁₩18.5m",
       "BotPeyz 김수환₩15.0m",
-      "SupportKeria 류민석₩14.5m",
+      "SupportKeria 류민석₩12.0m",
       "CoachkkOma 김정균₩7.0m",
       "T1 Esports AcademyLCK CL",
       "TopHaru 김하루₩5.0m",

@@ -1,8 +1,23 @@
 // The Series picture's own made-up data (docs/design/approved/series/series.html), built on the
-// shared LCK Cup Week 3. Points, best 2 and coach lines are the picture's figures as drawn, not
-// worked out here: the backend scores them (#30, #34).
+// shared LCK Cup Week 3. Points, best 2 and coach lines are the picture's figures as drawn, save
+// Faker's, which are the shared squad's: the backend scores them (#30, #34).
 
-import { BEST_OF, COMPETITION, MY_PLAYERS, playerId, TEAMS, WEEK3_SERIES_FINAL, WEEK4_SERIES, type Series, type TeamCode } from "../../fixtures/week3";
+import {
+  BEST_OF,
+  COMPETITION,
+  LIVE_SERIES_ID,
+  MY_PLAYERS,
+  playerId,
+  POINTS_SQUAD,
+  seriesPoints,
+  TEAMS,
+  WEEK3_FINAL_SQUAD,
+  WEEK3_SERIES_FINAL,
+  WEEK4_SERIES,
+  type PointsPick,
+  type Series,
+  type TeamCode,
+} from "../../fixtures/week3";
 import { ROSTERS, hangulOf } from "../../fixtures/rosters";
 import { seriesById } from "../../fixtures/series";
 import { recordOf } from "../../fixtures/standings";
@@ -38,6 +53,15 @@ const player = (role: RoleKey, name: string, games: (GameCell | null)[], total: 
   sub,
 });
 
+/** Faker's T1 v DK games, live and final, from Baron Steal FC's shared squad: the same on Points, Live and his card. */
+function fakerIn(squad: PointsPick[]): [number, number] {
+  const games = squad.find((p) => p.name === "Faker")?.series.find((s) => s.id === LIVE_SERIES_ID)?.games;
+  if (games?.[0] === undefined || games[1] === undefined) throw new Error(`Faker has no two games in ${LIVE_SERIES_ID}`);
+  return [games[0], games[1]];
+}
+const FAKER_FINAL = fakerIn(WEEK3_FINAL_SQUAD);
+const FAKER_LIVE = fakerIn(POINTS_SQUAD);
+
 const TOWER_DRAKES = ["1st tower", "Drakes"];
 const TOWER_DRAKES_BARON = ["1st tower", "Drakes", "Baron"];
 
@@ -54,7 +78,7 @@ const T1_DK_FINAL: PlayedSeries = {
     players: [
       player("top", "Doran", [g("K'Sante", "2/1/7", 3), g("Rumble", "3/0/6", 4)], 7),
       player("jng", "Oner", [g("Viego", "3/2/9", 3), g("Xin Zhao", "2/2/8", 3)], 6),
-      player("mid", "Faker", [g("Orianna", "5/1/9", 4, true, true), g("Sylas", "7/0/6", 6, true, true)], 10),
+      player("mid", "Faker", [g("Orianna", "5/1/9", FAKER_FINAL[0], true, true), g("Sylas", "7/0/6", FAKER_FINAL[1], true, true)], seriesPoints(FAKER_FINAL)),
       player("bot", "Peyz", [g("Kalista", "6/1/5", 4), g("Varus", "5/0/7", 4)], 8),
       player("sup", "Keria", [g("Rell", "0/3/12", 2), g("Nautilus", "1/2/13", 3)], 5),
     ],
@@ -117,7 +141,7 @@ const T1_DK_LIVE: PlayedSeries = {
     players: [
       player("top", "Doran", [g("K'Sante", "2/1/7", 3), g("Rumble", "1/0/1", 0)], 3),
       player("jng", "Oner", [g("Viego", "3/2/9", 3), g("Xin Zhao", "1/0/2", 0)], 3),
-      player("mid", "Faker", [g("Orianna", "5/1/9", 4, true, true), g("Sylas", "3/0/2", 1)], 5),
+      player("mid", "Faker", [g("Orianna", "5/1/9", FAKER_LIVE[0], true, true), g("Sylas", "3/0/2", FAKER_LIVE[1])], seriesPoints(FAKER_LIVE)),
       player("bot", "Peyz", [g("Kalista", "6/1/5", 4), g("Varus", "1/0/3", 0)], 4),
       player("sup", "Keria", [g("Rell", "0/3/12", 2), g("Nautilus", "0/1/4", 0)], 2),
     ],

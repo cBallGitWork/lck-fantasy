@@ -26,7 +26,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
       "LCK Cup Week 4 · Deadline Wed 07:45 16:45 KST 9h 45m",
       "Free transfers 0",
       "Cost −6",
-      "Bank ₩1.5m",
+      "Bank ₩5.5m",
       "Rift view",
       "List view",
       "Remake",
@@ -37,7 +37,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
   });
 
   test("all nine on the Rift by role, no bench, each with his price; the two Tops together", () => {
-    expectInOrder(out, ["Zeus", "₩16.0m", "Kingen", "₩6.5m", "Canyon", "₩15.5m", "Cuzz", "₩4.0m", "Faker", "₩18.5m", "Bdd", "₩5.0m", "Ruler", "₩17.0m", "Delight", "₩9.0m", "kkOma", "₩7.0m"]);
+    expectInOrder(out, ["Zeus", "₩14.0m", "Kingen", "₩6.5m", "Canyon", "₩15.5m", "Cuzz", "₩4.0m", "Faker", "₩18.5m", "Bdd", "₩5.0m", "Ruler", "₩16.0m", "Delight", "₩10.0m", "kkOma", "₩7.0m"]);
     expect(page).not.toContain("bench-bar");
     expect(out).not.toContain("Siwoo DK");
   });
@@ -48,7 +48,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
   });
 
   test("the changes bar: each transfer, Reset, Review and confirm", () => {
-    expectInOrder(out, ["Siwoo ₩7.5m → Kingen ₩6.5m", "Reset", "Review and confirm ›"]);
+    expectInOrder(out, ["Siwoo ₩11.5m → Kingen ₩6.5m", "Reset", "Review and confirm ›"]);
   });
 
   test("the list: everyone buyable, Next the opponent alone", () => {
@@ -79,7 +79,7 @@ describe("List view (Craig, 16 Nov 2026)", () => {
       "Total",
       "Next",
       "Top",
-      "Zeus HLE15₩16.0m14.048v DK×",
+      "Zeus HLE14₩14.0m16.048v DK×",
       "Kingen NS13₩6.5m12.738v DNS×",
       "Jungle",
       "Canyon GEN",
@@ -111,7 +111,7 @@ describe("the confirm sheet (confirm.html, changed by Craig 16 Nov 2026)", () =>
     const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={plan} reviewing />);
     expectInOrder(out, [
       "Confirm your transfers",
-      "Siwoo DK ₩7.5m",
+      "Siwoo DK ₩11.5m",
       "→",
       "Kingen NS ₩6.5m",
       "Bdd KT ₩5.0m",
@@ -120,7 +120,7 @@ describe("the confirm sheet (confirm.html, changed by Craig 16 Nov 2026)", () =>
       "Cost",
       "−12",
       "Bank",
-      "₩0.5m → ₩1.0m",
+      "₩0.5m → ₩5.0m",
       "Free transfers used",
       "0 of 0",
       "Back",

@@ -26,7 +26,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "94",
     "Not final",
     "Average 74",
-    "Highest 131",
+    "Highest 121",
     "Live",
     "T1 v DK, game 2",
     "Watch ›",

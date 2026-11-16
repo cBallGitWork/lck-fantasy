@@ -34,7 +34,7 @@ describe("Points", () => {
       "›",
       "93",
       "Average 79",
-      "Highest 136 ›",
+      "Highest 128 ›",
       "Not final",
       "Limitless",
       "Slot",

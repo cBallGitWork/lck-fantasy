@@ -12,8 +12,8 @@ export interface CompetitionTabs {
   tabs: readonly TableTab[];
   /** The whole season's tab, which names no split. */
   seasonTab: TableTab;
-  /** The tab that splits Overall into its groups. */
-  groupedTab: TableTab;
+  /** The tab that splits Overall into its groups; none in a competition with no Split 2. */
+  groupedTab?: TableTab;
   /** Overall's groups on the grouped tab. */
   groups: readonly OverallGroup[];
 }
@@ -72,7 +72,7 @@ interface LeagueBase {
 
 export type LeagueView =
   | (LeagueBase & { kind: "private"; code: string; scoringFrom: number; role: "maker" | "member" })
-  | (LeagueBase & { kind: "overall"; season: string; openGroup: OverallGroup })
+  | (LeagueBase & { kind: "overall"; season: string; openGroup?: OverallGroup })
   | (LeagueBase & { kind: "general" });
 
 export type PrivateLeague = Extract<LeagueView, { kind: "private" }>;
@@ -86,7 +86,7 @@ export interface PrivateEntry {
 /** How a league made or joined here opens: its week, Carry, and its first tab. */
 export type NewTable = Pick<LeagueBase, "week" | "carryShown" | "openTab">;
 
-/** A week a new league's scoring can start from, with its first day (`Week 14 · Wed 10 Feb`). */
+/** A week a new league's scoring can start from, with its first day (`Week 3 · Wed 13 Jan`). */
 export interface ScoringWeek {
   week: number;
   starts: string;

@@ -5,7 +5,7 @@
 
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { fromSide, seriesById } from "../../fixtures/series";
-import { COMPETITION, livePointsOf, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
+import { COMPETITION, countedGames, livePointsOf, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, seriesPoints, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
 import { count, ordinal } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays, type SlotKey } from "../../rift";
@@ -32,17 +32,6 @@ const CHAMPIONS: Record<string, string[][]> = {
   Cuzz: [["Viego", "Xin Zhao"], ["Sejuani", "Vi", "Maokai"]],
 };
 
-/** The games that count in a series: its best two (spec/05-scoring.md). The backend sends this later. */
-const COUNTED_PER_SERIES = 2;
-
-function countedGames(games: number[]): Set<number> {
-  const best = games
-    .map((points, index) => ({ points, index }))
-    .sort((a, b) => b.points - a.points)
-    .slice(0, COUNTED_PER_SERIES);
-  return new Set(best.map((g) => g.index));
-}
-
 function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champions: string[] = []): PointsSeries {
   const row = seriesById(WEEK3_SERIES_AT_POINTS, played.id);
   const side = fromSide(row, pick.team);
@@ -60,13 +49,12 @@ function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champi
       counted: counted.has(index),
     };
   });
-  const gamePoints = games.filter((g) => g.counted).reduce((sum, g) => sum + g.points, 0);
   return {
     id: row.id,
     opponent: side.opponent,
     score: side.score,
     state: row.state,
-    points: gamePoints + (played.coachResult ?? 0),
+    points: seriesPoints(played.games, played.coachResult),
     games,
   };
 }

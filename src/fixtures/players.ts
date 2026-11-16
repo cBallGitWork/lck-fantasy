@@ -1,4 +1,5 @@
-// The Stats picture's players and coaches (stats.html), at Week 4's Tuesday, Weeks 1 to 3 final.
+// The Stats picture's players and coaches (stats.html), at Week 4's Tuesday, Weeks 1 to 3 final, and
+// the rest of Baron Steal FC's squad: every page's price, owned % and season points for them.
 // Every name and number is an example.
 
 import type { PersonRole } from "../rift";
@@ -16,7 +17,7 @@ export interface StatsPlayer {
   points: number;
 }
 
-/** The Stats picture's players and coaches (stats.html). Its prices differ from Pick Team's; both are kept. */
+/** The Stats picture's players and coaches (stats.html), then Baron Steal FC's two off its first page. */
 export const STATS_PLAYERS: StatsPlayer[] = [
   { role: "mid", name: "Chovy", team: "GEN", priceEok: 17.5, move: 1, ownedPct: 41, points: 61 },
   { role: "mid", name: "Faker", team: "T1", priceEok: 18.5, move: 1, ownedPct: 46, points: 58 },
@@ -45,7 +46,12 @@ export const STATS_PLAYERS: StatsPlayer[] = [
   { role: "coach", name: "cvMax", team: "DK", priceEok: 6.0, move: 0, ownedPct: 5, points: 13 },
   { role: "coach", name: "Score", team: "KT", priceEok: 5.5, move: 0, ownedPct: 2, points: 12 },
   { role: "coach", name: "Joker", team: "KRX", priceEok: 5.0, move: 0, ownedPct: 2, points: 11 },
+  { role: "jng", name: "Cuzz", team: "KT", priceEok: 4.0, move: 0, ownedPct: 7, points: 23 },
+  { role: "mid", name: "Bdd", team: "KT", priceEok: 5.0, move: 0, ownedPct: 5, points: 16 },
 ];
+
+/** Form, the last 4 weeks' average, is season points ÷ 3 until Week 4 is final. */
+export const formOf = (points: number) => Math.round((points / 3) * 10) / 10;
 
 /** A player in the Stats list; one missing from it is a broken fixture. */
 export function statsOf(name: string): StatsPlayer {

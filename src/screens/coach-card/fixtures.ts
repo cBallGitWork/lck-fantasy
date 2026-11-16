@@ -3,20 +3,21 @@
 // T1 v DK game 2 live). This week's series and points come from the shared Week 3 (week3.ts).
 import { hangulOf, ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
 import { fromSide, seriesById } from "../../fixtures/series";
-import { KKOMA_OWNED_PCT, KKOMA_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
-import { BEST_OF, pickedAt, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
+import { KKOMA_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
+import { BEST_OF, MY_PLAYERS, pickedAt, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
 import { bestOf, type StripNext, type StripPast } from "../../parts";
 import type { RoleKey } from "../../rift";
 import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, WeekGame, WeekSeries } from "./types";
 
 const HEAD = { team: "T1", name: "kkOma", hangul: hangulOf("kkOma"), legal: "Kim Jeong-gyun" } as const;
 
-/** T1's player in roster place `i`, name and price from the shared roster, with the card's own season figures. */
-function t1Player(role: RoleKey, i: number, figures: Pick<RosterRow, "points" | "ownedPct" | "mine">): RosterRow {
+/** T1's player in roster place `i`, from the shared roster, with his price, points and owned % from Stats. */
+function t1Player(role: RoleKey, i: number): RosterRow {
   const name = ROSTERS.T1[i]?.[0];
   const priceEok = T1_PRICES_EOK[i];
   if (name === undefined || priceEok === undefined) throw new Error(`T1 has no rostered player ${i}`);
-  return { role, name, priceEok, ...figures };
+  const { points, ownedPct } = statsOf(name);
+  return { role, name, priceEok, points, ownedPct, mine: MY_PLAYERS.has(name) || undefined };
 }
 
 /** The series line's points (spec/05), held per competition. */
@@ -99,7 +100,7 @@ export const FROM_PICK_TEAM: CoachCardData = {
     moveEok: KKOMA_SEASON.riseEok,
     form: AT_PICK_TEAM.form,
     formRank: 1,
-    ownedPct: KKOMA_OWNED_PCT,
+    ownedPct: statsOf(HEAD.name).ownedPct,
     ownedRank: 2,
     transfersIn: 310,
     transfersOut: 95,
@@ -127,18 +128,18 @@ export const FROM_PICK_TEAM: CoachCardData = {
     ],
   },
   roster: [
-    t1Player("top", 0, { points: 38, ownedPct: 12 }),
-    t1Player("jng", 1, { points: 44, ownedPct: 21 }),
-    t1Player("mid", 2, { points: 58, ownedPct: 46, mine: true }),
-    t1Player("bot", 3, { points: 47, ownedPct: 30 }),
-    t1Player("sup", 4, { points: 41, ownedPct: 25 }),
+    t1Player("top", 0),
+    t1Player("jng", 1),
+    t1Player("mid", 2),
+    t1Player("bot", 3),
+    t1Player("sup", 4),
   ],
 };
 
 /** Opened from Points: Week 3 Saturday, T1 v DK game 2 live. This week is the drawn tab. */
 export const FROM_POINTS: CoachCardData = {
   head: HEAD,
-  meta: { priceEok: 7.0, moveEok: 0.5, form: 5.5, formRank: 2, ownedPct: KKOMA_OWNED_PCT, ownedRank: 2, transfersIn: 204, transfersOut: 58 },
+  meta: { priceEok: 7.0, moveEok: 0.5, form: 5.5, formRank: 2, ownedPct: statsOf(HEAD.name).ownedPct, ownedRank: 2, transfersIn: 204, transfersOut: 58 },
   season: {
     points: 11,
     rank: 3,

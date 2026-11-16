@@ -94,7 +94,7 @@ describe("kkOma v Ryu", () => {
 
   test("faces each other as coaches, then the top table", () => {
     expectInOrder(out, ["Coach · T1", "kkOma", "김정균", "v", "Coach · GEN", "Ryu", "류상욱", "Change ›"]);
-    expectInOrder(out, ["27", "1st of 10 coaches", "Season", "26", "2nd of 10 coaches", "9.0", "Form", "8.7", "₩7.0m", "0.5", "Price", "₩7.0m", "22%", "Owned", "21%"]);
+    expectInOrder(out, ["27", "1st of 10 coaches", "Season", "26", "2nd of 10 coaches", "9.0", "Form", "8.7", "₩7.0m", "0.5", "Price", "₩7.0m", "24%", "Owned", "21%"]);
   });
 
   test("holds the coach lines, with no per-game figure on the series rows", () => {

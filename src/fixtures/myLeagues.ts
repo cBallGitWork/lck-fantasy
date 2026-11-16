@@ -1,5 +1,13 @@
-// Baron Steal FC's leagues, as Home, Points and Leagues share them: rank, places moved and size.
-// Every number is an example.
+// Baron Steal FC's leagues, as Home, Points and Leagues share them: rank, places moved and size,
+// and his season at Points' moment. Every number is an example.
+
+import { MY_WEEK3 } from "./squads";
+
+/** His Weeks 1 and 2, final. */
+export const MY_EARLIER_WEEKS = [64, 79] as const;
+
+/** His season total at Points' moment: Weeks 1 and 2, and Week 3 so far. */
+export const MY_SEASON_TOTAL = MY_EARLIER_WEEKS.reduce((sum, w) => sum + w, 0) + MY_WEEK3.liveTotal;
 
 /** His Overall rank, its move and the field, and the tier it falls in. */
 export const MY_OVERALL = { rank: 48211, move: 6904, size: 212480, tier: "Emerald I", hangul: "에메랄드 1", division: "I" } as const;

@@ -2,7 +2,7 @@
 // LCK Cup Week 3 on the Sunday before its last two series, so Week 3 is not final. Her series are
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
-import { MANAGERS } from "../../fixtures/managers";
+import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
 import { score } from "../../parts";
@@ -149,7 +149,7 @@ export const PROFILE: ProfileData = {
     { week: 2, points: 98, final: true, trucks: [] },
     {
       week: 3,
-      points: 93,
+      points: MINJI_WEEK3.points,
       ...WEEK3_FINAL,
       final: false,
       buff: "Limitless",
@@ -161,7 +161,7 @@ export const PROFILE: ProfileData = {
     },
   ],
   history: [
-    { week: 3, points: 93, total: 250, overall: 21_804, move: 3_112, transfers: 5, hits: 0, bankEok: 0.5, valueEok: 100.9, buff: "Limitless" },
+    { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, hits: 0, bankEok: 0.5, valueEok: 100.9, buff: "Limitless" },
     { week: 2, points: 98, total: 157, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, hits: 0, bankEok: 1.0, valueEok: 100.6 },
     { week: 1, points: 59, total: 59, weekRank: 34_786, overall: 34_786, bankEok: 2.5, valueEok: 100.0 },
   ],

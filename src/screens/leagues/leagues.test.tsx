@@ -2,7 +2,9 @@
 import { createMemoryHistory, RouterProvider } from "@tanstack/react-router";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vitest";
-import { MANAGER } from "../../fixtures/week3";
+import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
+import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
+import { MANAGER, MY_WEEK3 } from "../../fixtures/week3";
 import { makeRouter } from "../../router";
 import { html, text } from "../../testing/render";
 import { COMPETITION, LEAGUE_NAME_MAX, LEAGUES } from "./fixtures";
@@ -10,7 +12,7 @@ import { ordinal } from "../../parts";
 import { chaseText } from "./format";
 import { adminItems, LeagueTable, type LeagueActions, type TableProps } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
-import { tableKey, type LeagueView } from "./types";
+import { tableKey, type CompetitionTabs, type LeagueView } from "./types";
 
 const none = () => {};
 const ACTIONS: LeagueActions = { onCopyLink: none, onRename: none, onRemoveManager: none, onDelete: none, onLeave: none };
@@ -48,13 +50,20 @@ describe("a league you made (league.html)", () => {
   const out = text(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />);
 
   test("heads with the name, scoring week, code, Copy link and Admin, then the tabs and table head", () => {
-    expectInOrder(out, ["Pub League", "Scoring from Week 1", "PUB-7K2Q", "Copy link", "Admin ▾", "Season", "Split 1", "Split 2", "Rank", "Team · Manager", "Carry", "Week 14", "Total"]);
+    expectInOrder(out, ["Pub League", "Scoring from Week 1", "PUB-7K2Q", "Copy link", "Admin ▾", "Season", "Rank", "Team · Manager", "Carry", "Week 3", "Total"]);
     expect(out).not.toContain("Leave");
+    expect(out).not.toContain("Split");
   });
 
   test("lists all 12 rows in rank order, your row with its chase tag", () => {
-    expectInOrder(out, ["1—Kiin BeanTom ReidChovy611,214", `21${MANAGER.team}${MANAGER.name}16 pts to 1stFaker981,198`, "Chovy Was Right There", "Gank PlankRuth AdeFaker551,019"]);
+    expectInOrder(out, [`1—${MANAGERS.minji.team}${MANAGERS.minji.name}Ruler93250`, `21${MANAGER.team}${MANAGER.name}13 pts to 1stFaker94237`, "Peanut Butter Gank", "Gank PlankRuth AdeFaker55158"]);
     expect(html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />)).toMatch(/class="leagues__mine"[^]*Baron Steal FC/);
+  });
+
+  test("your week is Points' Week 3 so far, your total the season's, Minji's her profile's", () => {
+    const rows = league.tables.Season?.runs.flat() ?? [];
+    expect(rows.find((r) => r.mine)).toMatchObject({ week: MY_WEEK3.liveTotal, total: MY_SEASON_TOTAL });
+    expect(rows.find((r) => r.manager === MANAGERS.minji.name)).toMatchObject({ week: MINJI_WEEK3.points, total: MINJI_WEEK3.total });
   });
 
   test("has no pager on a one-page table", () => {
@@ -78,25 +87,46 @@ describe("a league you're a member of (member.html)", () => {
   });
 
   test("shows the top five, a gap, the rows round yours, then the pager", () => {
-    expectInOrder(out, ["Canyon Diff", "T1 Til I Die", "⋯", "Bdd Wolf", "Siwoo Sweep", MANAGER.team, "11 pts to 13th", "Clid Was Here", "12Find me"]);
+    expectInOrder(out, ["Canyon Diff", "T1 Til I Die", "⋯", "Bdd Wolf", "Siwoo Sweep", MANAGER.team, "2 pts to 13th", "Clid Was Here", "12Find me"]);
+  });
+
+  test("scoring from Week 3, every total is Week 3's alone", () => {
+    const rows = league.tables.Season?.runs.flat() ?? [];
+    expect(rows.length).toBeGreaterThan(0);
+    for (const r of rows) expect(r.total).toBe(r.week);
   });
 });
 
-describe("Overall in Split 2, Legend (overall.html)", () => {
+describe("Overall in the LCK Cup (overall.html's layout)", () => {
   const league = LEAGUES.overall!;
   if (league.kind !== "overall") throw new Error("overall is not Overall in the fixture");
-  const out = text(<OverallTable league={league} group="Legend" onGroup={none} {...tableProps(league)} />);
+  const out = text(<OverallTable league={league} onGroup={none} {...tableProps(league)} />);
 
-  test("heads with the season and split, Legend, Rise and All, the tabs, the sponsor and a Split 2 column", () => {
-    expectInOrder(out, ["Overall", "LCK 2027 · Split 2", "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 14", "Split 2", "Total"]);
+  test("heads with the competition, the Season tab alone, the sponsor, then the table head; no groups or split", () => {
+    expectInOrder(out, ["Overall", "LCK Cup", "Season", "Sponsor", "Rank", "Carry", "Week 3", "Total"]);
+    expect(out).not.toContain("Legend");
+    expect(out).not.toContain("Split");
   });
 
   test("shows the top 7, a gap, your neighbourhood, and a pager to the last page with Find me", () => {
-    expectInOrder(out, ["1—Unkillable FCHa-eun SeoFaker1124021,642", "Viper's Nest", "⋯", "48,209", "Rookie Mistake", `48,2116,904${MANAGER.team}`, "Kiin Bean", "123⋯1,063Find me"]);
+    expectInOrder(out, ["1—Unkillable FCHa-eun SeoFaker112341", "Viper's Nest", "⋯", "48,209", "Rookie Mistake", `48,2116,904${MANAGER.team}`, "Moss Rock", "123⋯1,063Find me"]);
+  });
+});
+
+describe("Overall in a season with Split 2 (overall.html)", () => {
+  const MAIN_SEASON: CompetitionTabs = { tabs: ["Season", "Split 1", "Split 2"], seasonTab: "Season", groupedTab: "Split 2", groups: ["Legend", "Rise", "All"] };
+  const cup = LEAGUES.overall!;
+  if (cup.kind !== "overall") throw new Error("overall is not Overall in the fixture");
+  const league = { ...cup, season: "LCK 2027", openTab: "Split 2", openGroup: "Legend", tables: { "Split 2/Legend": { ...cup.tables.Season!, splitColumn: "Split 2" } } };
+  const props = { ...tableProps(league), competition: MAIN_SEASON, table: league.tables["Split 2/Legend"] };
+
+  test("heads with the season and split, Legend, Rise and All, the tabs, the sponsor and a Split 2 column", () => {
+    const grouped = text(<OverallTable league={league} group="Legend" onGroup={none} {...props} />);
+    expectInOrder(grouped, ["Overall", "LCK 2027 · Split 2", "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Split 2", "Total"]);
   });
 
   test("hides the groups off Split 2", () => {
-    const season = text(<OverallTable league={league} group="Legend" onGroup={none} {...tableProps(league)} tab="Season" table={undefined} />);
+    const season = text(<OverallTable league={league} group="Legend" onGroup={none} {...props} tab="Season" table={undefined} />);
     expect(season).not.toContain("Legend");
     expect(season).toContain("LCK 2027");
   });
@@ -112,7 +142,7 @@ describe("the page", () => {
 
   test("a league in the list opens its table", async () => {
     expect(await renderRoute("/leagues/flol-discord")).toContain("FLOL-22XB");
-    expect(await renderRoute("/leagues/overall")).toContain("Legend");
+    expect(await renderRoute("/leagues/overall")).toContain("Unkillable FC");
   });
 
   test("a row opens that manager's team", async () => {

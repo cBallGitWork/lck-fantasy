@@ -74,5 +74,48 @@ export const WEEK4_SERIES: Series[] = [
 /** Week 3's deadline, 15 minutes before its first series. */
 export const WEEK3_DEADLINE = { day: "Wed", date: "13 Jan", time: "07:45", kst: "16:45" } as const;
 
-/** Week 4's deadline, 15 minutes before its first series (pick.html). */
-export const WEEK4_DEADLINE = { local: "Wed 07:45", kst: "16:45", countdown: "9h 45m", at: "2027-01-20T07:45:00Z" } as const;
+/** The pictures' moments as instants: Points' (Saturday 21:10 KST) and Pick Team's (Week 4, Tuesday 22:00 London). */
+export const POINTS_AT = "2027-01-16T12:10:00Z";
+export const PICK_TEAM_AT = "2027-01-19T22:00:00Z";
+
+/** The time from one instant to a later one, in whole minutes. */
+export interface Countdown {
+  days: number;
+  hours: number;
+  minutes: number;
+}
+
+const MINUTE_MS = 60_000;
+
+/** The countdown from `from` to `to`; a `to` before `from` is a broken fixture. */
+export function countdown(from: string, to: string): Countdown {
+  const minutes = Math.floor((Date.parse(to) - Date.parse(from)) / MINUTE_MS);
+  if (!(minutes >= 0)) throw new Error(`${to} is not after ${from}`);
+  return { days: Math.floor(minutes / 1440), hours: Math.floor((minutes % 1440) / 60), minutes: minutes % 60 };
+}
+
+/** A countdown in words: `9h 45m`, with days when there are any: `3d 19h 35m`. */
+export const countdownText = ({ days, hours, minutes }: Countdown) => `${days > 0 ? `${days}d ` : ""}${hours}h ${minutes}m`;
+
+const MONTHS: Record<string, string> = { Jan: "01", Feb: "02", Mar: "03" };
+
+/** When a series starts, as an instant: its date and London time (UTC in January to March). */
+export function startOf(s: Series): string {
+  const [day, month] = s.date.split(" ");
+  const mm = month && MONTHS[month];
+  if (!day || !mm) throw new Error(`Series ${s.id} has no date this season`);
+  return `2027-${mm}-${day.padStart(2, "0")}T${s.local}:00Z`;
+}
+
+const WEEK4_DEADLINE_AT = "2027-01-20T07:45:00Z";
+
+/** Week 4's deadline, 15 minutes before its first series (pick.html), counted down from Pick Team's moment. */
+export const WEEK4_DEADLINE = {
+  local: "Wed 07:45",
+  kst: "16:45",
+  countdown: countdownText(countdown(PICK_TEAM_AT, WEEK4_DEADLINE_AT)),
+  at: WEEK4_DEADLINE_AT,
+} as const;
+
+/** Free transfers Baron Steal FC has for Week 4 before he makes any. */
+export const WEEK4_FREE_TRANSFERS = 2;

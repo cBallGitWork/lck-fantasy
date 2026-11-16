@@ -26,16 +26,16 @@ const disabledKey = (out: string, label: string) => new RegExp(`<button[^>]*disa
 describe("each sheet holds its picture's content in order", () => {
   test("create.html: name with its count, the week scoring starts, Back, Create, the private count", () => {
     const sheet = <CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={TWO_OF_CAP} initialName={NEW_LEAGUE.name} onCreate={none} onClose={none} />;
-    expectInOrder(text(sheet), ["✕", "Create a league", "Name", "11 / 30", "Scoring starts", "Week 14 · Wed 10 Feb", "Back", "Create", "Private leagues: 2 of 25"]);
+    expectInOrder(text(sheet), ["✕", "Create a league", "Name", "11 / 30", "Scoring starts", "Week 3 · Wed 13 Jan", "Back", "Create", "Private leagues: 2 of 25"]);
     expect(html(sheet)).toContain('value="Office Rift"');
     expect(html(sheet)).toContain('maxLength="30"');
   });
 
   test("create.html: this week is chosen first, and later weeks follow", () => {
     expectInOrder(html(<CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={TWO_OF_CAP} onCreate={none} onClose={none} />), [
-      '<option value="14" selected="">Week 14',
-      "Week 15 · Wed 17 Feb",
-      "Week 16 · Wed 24 Feb",
+      '<option value="3" selected="">Week 3',
+      "Week 4 · Wed 20 Jan",
+      "Week 5 · Wed 27 Jan",
     ]);
   });
 
@@ -56,7 +56,7 @@ describe("each sheet holds its picture's content in order", () => {
 
   test("created.html: the name, its first week, the code with Copy code and Copy link, then Open league", () => {
     const sheet = <CreatedSheet league={OFFICE_RIFT.view} onCopyCode={none} onCopyLink={none} onClose={none} />;
-    expectInOrder(text(sheet), ["Office Rift", "Scoring from Week 14", "OFF-9R3D", "Copy code", "Copy link", "Open league"]);
+    expectInOrder(text(sheet), ["Office Rift", "Scoring from Week 3", "OFF-9R3D", "Copy code", "Copy link", "Open league"]);
     expect(html(sheet)).toContain('href="/leagues/off-9r3d"');
   });
 

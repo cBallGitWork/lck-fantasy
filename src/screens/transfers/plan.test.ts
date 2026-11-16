@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { PICTURE_PLAN, PLAYERS, RULES, SQUAD, TRANSFERS_PICTURE } from "./fixtures";
+import { HIT_POINTS, WEEK4_FREE_TRANSFERS } from "../../fixtures/week3";
+import { CONFIRMS, PICTURE_PLAN, PLAYERS, RULES, SQUAD, TRANSFERS_PICTURE } from "./fixtures";
 import { arrange, byRole } from "./lineup";
 import {
   add,
@@ -107,11 +108,20 @@ describe("several transfers in one go", () => {
 });
 
 describe("the head's figures", () => {
-  test("the picture's one transfer, past no free ones, costs −6 and leaves ₩1.5m in the bank", () => {
+  test("the picture's one transfer, past no free ones, costs −6 and leaves ₩5.5m in the bank", () => {
     expect(pendingHit(RULES, 1)).toBe(6);
     expect(freeLeft(RULES, 1)).toBe(0);
     expect(freeUsed(RULES, 1)).toBe(0);
-    expect(formatEok(bankNow(SQUAD, PICTURE_PLAN, RULES.bank))).toBe("₩1.5m");
+    expect(formatEok(bankNow(SQUAD, PICTURE_PLAN, RULES.bank))).toBe("₩5.5m");
+  });
+
+  test("the week's free transfers, Home's figure, are spent by the confirms: two free, then one at the hit", () => {
+    expect(WEEK4_FREE_TRANSFERS).toBe(2);
+    expect(CONFIRMS.map((c) => [c.moves.length, c.hit])).toEqual([
+      [1, HIT_POINTS],
+      [2, 0],
+    ]);
+    expect(RULES.freeTransfers).toBe(0);
   });
 
   test("free transfers cover what they can and the rest cost the hit each", () => {
@@ -121,13 +131,13 @@ describe("the head's figures", () => {
   });
 
   test("a sale with no buy yet puts his price in the bank", () => {
-    expect(formatEok(bankNow(SQUAD, removed("flex"), RULES.bank))).toBe("₩8.0m");
+    expect(formatEok(bankNow(SQUAD, removed("flex"), RULES.bank))).toBe("₩12.0m");
   });
 });
 
 describe("the list", () => {
   test("everyone not in the squad, by points, none greyed", () => {
-    expect(names(PICTURE_PLAN).slice(0, 6)).toEqual(["Chovy", "Keria", "Aiming", "ShowMaker", "Lucid", "PerfecT"]);
+    expect(names(PICTURE_PLAN).slice(0, 6)).toEqual(["Chovy", "Keria", "Lucid", "PerfecT", "ShowMaker", "DuDu"]);
     expect(names(PICTURE_PLAN)).not.toContain("Kingen");
     expect(names(EMPTY_PLAN)).toContain("Kingen");
   });
@@ -143,7 +153,7 @@ describe("the list", () => {
     expect(names(PICTURE_PLAN, { role: "sup" })).toEqual(["Keria", "Pollu"]);
     expect(names(PICTURE_PLAN, { search: "cl" })).toEqual(["Clear", "Clozer"]);
     expect(names(PICTURE_PLAN, { team: "BRO" })).toEqual(["Clozer", "Pollu"]);
-    expect(names(PICTURE_PLAN, { sort: "price" }).slice(0, 2)).toEqual(["Chovy", "Keria"]);
+    expect(names(PICTURE_PLAN, { sort: "price" }).slice(0, 2)).toEqual(["Chovy", "Aiming"]);
   });
 
   test("Next is the next opponent alone, no day", () => {

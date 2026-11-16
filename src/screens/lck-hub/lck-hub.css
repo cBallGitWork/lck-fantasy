@@ -114,13 +114,8 @@
 .lck-hub__standings col:last-child {
   width: calc(var(--s-7) * 3 + var(--s-4));
 }
-.lck-hub__rank,
-.lck-hub__team-name {
+.lck-hub__rank {
   color: var(--mid);
-}
-.lck-hub__team-name {
-  font-size: var(--size-small);
-  margin-left: var(--s-1);
 }
 .lck-hub__form {
   display: inline-block;

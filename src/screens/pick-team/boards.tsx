@@ -1,5 +1,5 @@
-import { eok, oneDecimal, Tag } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchSwap, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS_PICK, Rift, Tile, type LineupCardProps } from "../../rift";
+import { eok, oneDecimal } from "../../parts";
+import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS, Rift, Tile, type LineupCardProps } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
 import { swapIds } from "./model";
@@ -20,7 +20,7 @@ function swapState({ data, state }: ViewProps): (id: string) => "fit" | "dim" | 
   return (id) => (lit.size === 0 || id === state.selected ? undefined : lit.has(id) ? "fit" : "dim");
 }
 
-/** Rift view: the seven starters on the Rift, the Flex labelled, the bench bar under it. */
+/** Rift view: the seven starters on the Rift, the bench bar under it. */
 export function RiftBoard(props: ViewProps) {
   const { data, state, dispatch } = props;
   const swap = swapState(props);
@@ -31,15 +31,13 @@ export function RiftBoard(props: ViewProps) {
           <Tile
             key={slot}
             slot={slot}
-            plays={flexPlays(slot, p.role)}
             name={p.name}
             team={p.team}
-            flexLabel
-            at={RIFT_SLOTS_PICK[slot]}
+            at={RIFT_SLOTS[slot]}
             mark={markOf(state, p.id)}
             dual={state.draft.buff === "dualCarry"}
             line={fixtureLine(data.series, p.team)}
-            tags={p.news && <Tag>{p.news.flag}</Tag>}
+            flag={p.news?.flag}
             selected={p.id === state.selected}
             state={swap(p.id)}
             onSelect={() => dispatch({ type: "select", id: p.id })}
@@ -84,7 +82,7 @@ export function CardBoard(props: ViewProps) {
   );
 }
 
-/** The bench bar: each bench player, with ⇅ Swap between them. Lit when the tapped player can swap with him. */
+/** The bench bar: each bench player; tap one then the other to swap their order. Lit when the tapped player can swap with him. */
 function Bench(props: ViewProps) {
   const { data, state, dispatch } = props;
   const swap = swapState(props);
@@ -107,7 +105,6 @@ function Bench(props: ViewProps) {
   return (
     <BenchBar>
       {first}
-      <BenchSwap onSwap={() => dispatch({ type: "swapBench" })} />
       {second}
     </BenchBar>
   );

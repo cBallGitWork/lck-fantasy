@@ -1,5 +1,5 @@
 // The Rift view and Card view. They build on src/parts (through its index); parts never import these.
-export { BenchBar, BenchSwap, BenchTile } from "./BenchBar";
+export { BenchBar, BenchTile } from "./BenchBar";
 export { Lineup, LineupCard, type LineupCardProps } from "./Lineup";
 export { PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel } from "./PlayerPanel";
 export { RiftMap } from "./RiftMap";
@@ -13,7 +13,7 @@ export {
   ROLE_KEYS,
   ROLE_NAME,
   slotIcon,
-  slotTag,
+  slotLabel,
   SQUAD_SIZE,
   type BenchSlot,
   type IconKey,
@@ -23,6 +23,6 @@ export {
   type SquadSlot,
 } from "./roles";
 export { Shirt } from "./Shirt";
-export { RIFT_SLOTS, RIFT_SLOTS_PICK, type RiftPoint } from "./slots";
+export { RIFT_SLOTS, type RiftPoint } from "./slots";
 export { MARK_NAME, Rift, Tile, type Mark, type TileProps } from "./Tile";
 export { RIFT_VIEW, VIEWS, type BoardView } from "./views";

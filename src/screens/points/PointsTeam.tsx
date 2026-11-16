@@ -31,7 +31,6 @@ export function PointsRift({ starters, open, onOpen }: TeamProps) {
         <Tile
           key={p.slot}
           slot={p.slot}
-          plays={p.plays}
           name={p.name}
           team={p.team}
           at={RIFT_SLOTS[p.slot]}

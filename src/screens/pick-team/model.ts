@@ -32,7 +32,6 @@ export type PickAction =
   | { type: "view"; view: PickView }
   | { type: "makeCarry"; id: string }
   | { type: "makeVice"; id: string }
-  | { type: "swapBench" }
   | { type: "playBuff"; buff: PickBuff }
   | { type: "cancelBuff" }
   | { type: "reset" }
@@ -51,14 +50,15 @@ function fits(slot: SquadSlot, role: PersonRole): boolean {
 
 /**
  * The ids of the players a tapped player can swap with: two of the squad trade places when each fits
- * the other's slot and at least one starts. A role starter swaps with a bench player or a Flex of his
- * role; the Flex with anyone whose slot his role fits; the coach with nobody. Bench order is ⇅ Swap's.
+ * the other's slot. A role starter swaps with a bench player or a Flex of his role; the Flex with
+ * anyone whose slot his role fits; the two bench players with each other, as FPL sets its bench
+ * order (Craig, 16 Nov 2026); the coach with nobody.
  */
 export function swapIds(team: PickTeam, id: string, roleOf: (id: string) => PersonRole): Set<string> {
   const from = slotOf(team, id);
   if (!from) return new Set();
   const partners = (Object.keys(team.slots) as SquadSlot[]).filter((to) => {
-    if (to === from || (isBench(from) && isBench(to))) return false;
+    if (to === from) return false;
     return fits(to, roleOf(id)) && fits(from, roleOf(team.slots[to]));
   });
   return new Set(partners.map((to) => team.slots[to]));
@@ -136,14 +136,6 @@ export function pickReducer(roleOf: (id: string) => PersonRole) {
         if (!isMarkable(draft, action.id) || draft.vice === action.id) return state;
         const carry = draft.carry === action.id ? draft.vice : draft.carry;
         return withDraft(state, { ...draft, vice: action.id, carry });
-      }
-      case "swapBench": {
-        const slots = {
-          ...draft.slots,
-          bench1: draft.slots.bench2,
-          bench2: draft.slots.bench1,
-        };
-        return withDraft(state, { ...draft, slots });
       }
       case "playBuff":
         return draft.buff ? state : withDraft(state, { ...draft, buff: action.buff });

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { PageFrame, Placeholder } from "../../parts";
-import "./Live.css";
+import "./live.css";
 import { PointsPanel } from "./Panel";
 import { BugFinal, BugNow, Idle, StreamPicker } from "./Stage";
 import type { LiveDownProps, LiveIdleProps, LiveNowProps, Picker } from "./types";

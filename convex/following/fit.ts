@@ -2,7 +2,7 @@
 // (spec/14-following.md, Truck lines). What each trigger means is Craig's answer on issue #90:
 // the week read is the receiver's last final gameweek, and every number is the competition's data
 // (`LineSettings`).
-import { formatEok } from "../../src/parts/money";
+import { formatEok } from "../../src/parts/text/money";
 import { isOneOf, PLACEHOLDER_PATTERN, PLACEHOLDERS, type Placeholder, type TruckKind, type TruckLine, type Trigger } from "./lines";
 
 export interface LineSettings {

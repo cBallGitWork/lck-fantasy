@@ -2,7 +2,7 @@
 import { createMemoryHistory, RouterProvider } from "@tanstack/react-router";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect, test } from "vitest";
-import { PATHS, pathTo, type Go, type ScreenKey } from "./paths";
+import { PATHS, pathTo, type Go, type ScreenKey } from "../paths";
 import { makeRouter } from "./router";
 
 // Each route, with its params, and the screen folder it renders. A screen's own content is

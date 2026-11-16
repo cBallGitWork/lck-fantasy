@@ -2,7 +2,7 @@
 import { createMemoryHistory, RouterProvider } from "@tanstack/react-router";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, expect, test, vi } from "vitest";
-import { DEV_STATE_PARAM } from "./parts";
+import { DEV_STATE_PARAM } from "../parts";
 import { DEV_STATES, DEV_STATES_PATH } from "./devStates";
 import { makeRouter } from "./router";
 

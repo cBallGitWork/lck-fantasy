@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { bestOf, count, eok, eokToWon, inOut, MINUS, NONE, oneDecimal, ordinal, outcome, pct, perGame, perGameValue, placeOf, result, score, signed } from ".";
+import { bestOf, count, eok, eokToWon, inOut, MINUS, NONE, oneDecimal, ordinal, outcome, pct, perGame, perGameValue, placeOf, result, score, signed } from "..";
 
 test("a count marks its thousands", () => {
   expect([0, 999, 1204, 48211].map(count)).toEqual(["0", "999", "1,204", "48,211"]);

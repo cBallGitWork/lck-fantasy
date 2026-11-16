@@ -3,7 +3,7 @@ import { PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote,
 import { PATHS } from "../../paths";
 import { flexPlays, Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
-import "./PerfectGame.css";
+import "./perfect-game.css";
 import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectView, type Selection } from "./types";
 
 /** Rift view: the seven on the Rift, each with his points and series, C on the Carry. */

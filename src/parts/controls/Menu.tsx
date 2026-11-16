@@ -1,6 +1,6 @@
 import { useId, useState, type ReactNode } from "react";
-import type { Go } from "../paths";
-import { cx } from "./cx";
+import type { Go } from "../../paths";
+import { cx } from "../util/cx";
 import { GoLink } from "./GoLink";
 import "./Menu.css";
 

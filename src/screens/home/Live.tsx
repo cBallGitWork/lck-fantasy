@@ -2,7 +2,7 @@ import { useState } from "react";
 import { bestOf, cx, LinkGo, Menu, score, SideSection, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { HomeFrame, type HomeActions } from "./Home";
-import "./live.css";
+import "./Live.css";
 import { PlayerList, WeekTag, WeekTotal } from "./side";
 import type { HomeLiveData, LiveSeries, Stream } from "./types";
 

@@ -2,7 +2,7 @@ import { LinkGo, SideSection, Time } from "../../parts";
 import { PATHS } from "../../paths";
 import { MARK_NAME, ROLE_NAME, Shirt } from "../../rift";
 import { HomeFrame, type HomeActions } from "./Home";
-import "./idle.css";
+import "./Idle.css";
 import { PlayerList, WeekTag, WeekTotal } from "./side";
 import type { HomeIdleData, LineupStarter, NextSeries } from "./types";
 

@@ -1,7 +1,7 @@
-import { PATHS } from "../paths";
-import { GoLink } from "./GoLink";
-import { Menu, type MenuItem } from "./Menu";
-import { cx } from "./cx";
+import { PATHS } from "../../paths";
+import { GoLink } from "../controls/GoLink";
+import { Menu, type MenuItem } from "../controls/Menu";
+import { cx } from "../util/cx";
 import { Placeholder } from "./Placeholder";
 import "./TopBar.css";
 

@@ -1,5 +1,5 @@
 // Money (spec/02-prices-and-budget.md). Amounts are whole won, so no sum ever rounds; screens show
-// them in m (src/parts/money.ts). The budget and every price are data per competition.
+// them in m (src/parts/text/money.ts). The budget and every price are data per competition.
 import { allPicks, pickKey, type Pick, type Squad } from "./squad";
 
 /** Current prices in won, keyed by `pickKey`: players and coaches alike (spec/02, Money). */

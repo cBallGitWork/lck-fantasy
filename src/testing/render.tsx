@@ -1,7 +1,7 @@
 import { createMemoryHistory, RouterContextProvider } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { makeRouter } from "../router";
+import { makeRouter } from "../app/router";
 
 // Renders a part or a screen to HTML for a test, inside the app's router so its links resolve.
 const router = makeRouter(createMemoryHistory({ initialEntries: ["/"] }));

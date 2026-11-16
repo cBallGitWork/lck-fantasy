@@ -1,6 +1,6 @@
-import type { Go } from "../paths";
-import { score, type Score } from "./figures";
-import { GoLink } from "./GoLink";
+import type { Go } from "../../paths";
+import { score, type Score } from "../text/figures";
+import { GoLink } from "../controls/GoLink";
 import "./SeriesList.css";
 import { Tag } from "./Tag";
 import { Time } from "./Time";

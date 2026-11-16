@@ -3,7 +3,7 @@ import { LinkGo, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection
 import { PATHS } from "../../paths";
 import { BenchBar, BenchTile } from "../../rift";
 import { BreakdownSheet } from "./BreakdownSheet";
-import "./Points.css";
+import "./points.css";
 import { Leagues, YourWeek } from "./PointsSide";
 import { PointsCards, PointsRift } from "./PointsTeam";
 import { DIDNT_PLAY, POINTS_VIEWS, type PointsData, type PointsView } from "./types";

@@ -1,4 +1,4 @@
-import { cx } from "./cx";
+import { cx } from "../util/cx";
 import "./Tabs.css";
 
 /**

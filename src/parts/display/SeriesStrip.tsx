@@ -1,5 +1,5 @@
-import { cx } from "./cx";
-import { bestOf } from "./figures";
+import { cx } from "../util/cx";
+import { bestOf } from "../text/figures";
 import { Tag } from "./Tag";
 import "./SeriesStrip.css";
 

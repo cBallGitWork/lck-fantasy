@@ -1,7 +1,7 @@
 // Every approved picture's state (docs/design/approved/<page>/), the dev URL that opens it and the
 // picture it is checked against. /dev/states lists them; the UI checks read them from here.
-import { DEV_STATE_PARAM } from "./parts/devState";
-import { PATHS, pathTo, type Go } from "./paths";
+import { DEV_STATE_PARAM } from "../parts";
+import { PATHS, pathTo, type Go } from "../paths";
 
 /** The dev-only page listing every state. */
 export const DEV_STATES_PATH = "/dev/states";

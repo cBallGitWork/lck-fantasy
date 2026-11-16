@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
-import type { Go } from "../paths";
-import { GoLink } from "./GoLink";
-import { LinkGo } from "./LinkGo";
+import type { Go } from "../../paths";
+import { GoLink } from "../controls/GoLink";
+import { LinkGo } from "../controls/LinkGo";
 import "./PageHead.css";
-import { WeekArrow } from "./WeekArrow";
+import { WeekArrow } from "../controls/WeekArrow";
 
 export interface HeadFigure {
   label: string;

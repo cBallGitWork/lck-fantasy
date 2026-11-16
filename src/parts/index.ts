@@ -1,17 +1,17 @@
 // The shared parts. They never import src/rift: the Rift builds on the parts, not the other way.
-export { BuffCard } from "./BuffCard";
-export { Crest } from "./Crest";
-export { Columns } from "./Columns";
-export { cx } from "./cx";
-export { Deadline } from "./Deadline";
-export { DEV_STATE_PARAM, useDevState } from "./devState";
-export { Field } from "./Field";
-export { GoLink } from "./GoLink";
-export { LinkGo } from "./LinkGo";
-export { MainAction } from "./MainAction";
-export { MeDot } from "./MeDot";
-export { Menu, type MenuItem } from "./Menu";
-export { Modal, wrapFocus } from "./Modal";
+export { BuffCard } from "./display/BuffCard";
+export { Crest } from "./display/Crest";
+export { Columns } from "./frame/Columns";
+export { cx } from "./util/cx";
+export { Deadline } from "./display/Deadline";
+export { DEV_STATE_PARAM, useDevState } from "./util/devState";
+export { Field } from "./controls/Field";
+export { GoLink } from "./controls/GoLink";
+export { LinkGo } from "./controls/LinkGo";
+export { MainAction } from "./controls/MainAction";
+export { MeDot } from "./display/MeDot";
+export { Menu, type MenuItem } from "./controls/Menu";
+export { Modal, wrapFocus } from "./controls/Modal";
 export {
   bestOf,
   count,
@@ -29,26 +29,26 @@ export {
   score,
   signed,
   type Score,
-} from "./figures";
-export { eok, eokToWon, formatEok, WON_PER_EOK } from "./money";
-export { PriceMove, RankMove } from "./Move";
-export { OutlinedKey } from "./OutlinedKey";
-export { PageFrame } from "./PageFrame";
-export { PageHead, type HeadFigure, type WeekNav } from "./PageHead";
-export { Placeholder } from "./Placeholder";
-export { chooseOnKey, selectable } from "./selectable";
-export { SectionHead } from "./SectionHead";
-export { SeriesList, type SeriesRow, type SeriesState } from "./SeriesList";
-export { beyondStrip, SeriesStrip, type StripNext, type StripPast } from "./SeriesStrip";
-export { SideSection } from "./SideSection";
-export { SPONSOR_NOTE, SponsorNote } from "./SponsorNote";
-export { Empty, ErrorState, Loading } from "./States";
-export { Table, type Column, type RowOpen } from "./Table";
-export { Tabs } from "./Tabs";
-export { Tag, type TagKind } from "./Tag";
-export { TierShield } from "./TierShield";
-export { Toast, TOAST_MS } from "./Toast";
-export { Time } from "./Time";
-export { TOP_BAR_ITEMS, TopBar, type TopBarItem } from "./TopBar";
-export { ViewToggle, type ToggleOption } from "./ViewToggle";
-export { WeekArrow } from "./WeekArrow";
+} from "./text/figures";
+export { eok, eokToWon, formatEok, WON_PER_EOK } from "./text/money";
+export { PriceMove, RankMove } from "./display/Move";
+export { OutlinedKey } from "./controls/OutlinedKey";
+export { PageFrame } from "./frame/PageFrame";
+export { PageHead, type HeadFigure, type WeekNav } from "./frame/PageHead";
+export { Placeholder } from "./frame/Placeholder";
+export { chooseOnKey, selectable } from "./util/selectable";
+export { SectionHead } from "./frame/SectionHead";
+export { SeriesList, type SeriesRow, type SeriesState } from "./display/SeriesList";
+export { beyondStrip, SeriesStrip, type StripNext, type StripPast } from "./display/SeriesStrip";
+export { SideSection } from "./frame/SideSection";
+export { SPONSOR_NOTE, SponsorNote } from "./frame/SponsorNote";
+export { Empty, ErrorState, Loading } from "./display/States";
+export { Table, type Column, type RowOpen } from "./display/Table";
+export { Tabs } from "./controls/Tabs";
+export { Tag, type TagKind } from "./display/Tag";
+export { TierShield } from "./display/TierShield";
+export { Toast, TOAST_MS } from "./controls/Toast";
+export { Time } from "./display/Time";
+export { TOP_BAR_ITEMS, TopBar, type TopBarItem } from "./frame/TopBar";
+export { ViewToggle, type ToggleOption } from "./controls/ViewToggle";
+export { WeekArrow } from "./controls/WeekArrow";

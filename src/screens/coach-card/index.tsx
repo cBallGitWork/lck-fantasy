@@ -4,7 +4,7 @@ import { MANAGER } from "../../fixtures/week3";
 import { Modal, PageFrame, useDevState } from "../../parts";
 import { PATHS } from "../../paths";
 import { CoachCard } from "./CoachCard";
-import "./CoachCard.css";
+import "./coach-card.css";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
 import type { CoachCardData, CoachFrom, CoachTab } from "./types";
 

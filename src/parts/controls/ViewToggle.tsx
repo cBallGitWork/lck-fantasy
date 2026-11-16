@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx } from "./cx";
+import { cx } from "../util/cx";
 import "./ViewToggle.css";
 
 /** A key: its value alone, or a value with what the key shows (a role icon and a word on Stats). */

@@ -24,7 +24,7 @@ import {
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
-import { count, ordinal } from "../../parts";
+import { count, ordinal, sum } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays } from "../../rift";
 import { hangulOf } from "../../fixtures/rosters";
@@ -72,7 +72,7 @@ function playerOf(list: readonly Series[], pick: PointsPick, games: Record<strin
     cardId: playerId(pick.name),
     mark: pick.mark,
     birthday: pick.birthday,
-    points: pick.subbedOut ? undefined : series.reduce((sum, s) => sum + s.points, 0),
+    points: pick.subbedOut ? undefined : sum(series.map((s) => s.points)),
     series,
   };
 }

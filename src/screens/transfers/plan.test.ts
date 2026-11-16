@@ -137,7 +137,7 @@ describe("the head's figures", () => {
 
 describe("the list", () => {
   test("everyone not in the squad, by points, none greyed", () => {
-    expect(names(PICTURE_PLAN).slice(0, 6)).toEqual(["Chovy", "Keria", "Lucid", "PerfecT", "ShowMaker", "DuDu"]);
+    expect(names(PICTURE_PLAN).slice(0, 6)).toEqual(["Chovy", "Keria", "ShowMaker", "Aiming", "Clozer", "PerfecT"]);
     expect(names(PICTURE_PLAN)).not.toContain("Kingen");
     expect(names(EMPTY_PLAN)).toContain("Kingen");
   });
@@ -151,7 +151,7 @@ describe("the list", () => {
 
   test("a role chip, the search, the team filter and the sort each narrow or reorder it", () => {
     expect(names(PICTURE_PLAN, { role: "sup" })).toEqual(["Keria", "Pollu"]);
-    expect(names(PICTURE_PLAN, { search: "cl" })).toEqual(["Clear", "Clozer"]);
+    expect(names(PICTURE_PLAN, { search: "cl" })).toEqual(["Clozer", "Clear"]);
     expect(names(PICTURE_PLAN, { team: "BRO" })).toEqual(["Clozer", "Pollu"]);
     expect(names(PICTURE_PLAN, { sort: "price" }).slice(0, 2)).toEqual(["Chovy", "Aiming"]);
   });

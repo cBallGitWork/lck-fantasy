@@ -1,6 +1,7 @@
 // Baron Steal FC's squads and week totals at the pictures' moments, and Week 3's perfect game.
 // Every name and number is an example.
 
+import { sum } from "../parts";
 import type { Mark, PersonRole, SlotKey, SquadSlot } from "../rift";
 import { carried, playerId, seriesPoints, type TeamCode } from "./competition";
 import { formOf, statsOf } from "./players";
@@ -77,9 +78,11 @@ export const seriesPointsOf = (pick: PointsPick) => pick.series.map((s) => ({ id
 
 /** A squad member's week before the Carry's ×1.5; `without` leaves a series out. */
 export const rawWeekOf = (pick: PointsPick, without?: string) =>
-  seriesPointsOf(pick)
-    .filter((s) => s.id !== without)
-    .reduce((sum, s) => sum + s.points, 0);
+  sum(
+    seriesPointsOf(pick)
+      .filter((s) => s.id !== without)
+      .map((s) => s.points),
+  );
 
 /** A squad member's week as it counts for Baron Steal FC: the Carry's ×1.5 in. */
 export const weekOf = (pick: PointsPick, without?: string) => (pick.mark === "C" ? carried(rawWeekOf(pick, without)) : rawWeekOf(pick, without));
@@ -88,7 +91,7 @@ export const weekOf = (pick: PointsPick, without?: string) => (pick.mark === "C"
 const startersWeek = (squad: PointsPick[], without?: string): Readonly<Record<string, number>> =>
   Object.fromEntries(squad.filter((p) => p.slot !== "bench").map((p) => [playerId(p.name), weekOf(p, without)]));
 
-const sum = (byId: Readonly<Record<string, number>>) => Object.values(byId).reduce((a, b) => a + b, 0);
+const totalOf = (byId: Readonly<Record<string, number>>) => sum(Object.values(byId));
 
 export type Played = PointsPick["series"];
 
@@ -134,11 +137,11 @@ export const MY_WEEK3 = (() => {
   const live = startersWeek(POINTS_SQUAD);
   const down = startersWeek(POINTS_SQUAD, LIVE_SERIES_ID);
   const final = startersWeek(WEEK3_FINAL_SQUAD);
-  return { live, liveTotal: sum(live), down, downTotal: sum(down), final, finalTotal: sum(final) };
+  return { live, liveTotal: totalOf(live), down, downTotal: totalOf(down), final, finalTotal: totalOf(final) };
 })();
 
 /** Baron Steal FC's Weeks 1 and 2, final, worked from their games as Points shows them. */
-export const MY_EARLIER_WEEKS = [WEEK1_PLAYED, WEEK2_PLAYED].map((played) => sum(startersWeek(squadIn(played))));
+export const MY_EARLIER_WEEKS = [WEEK1_PLAYED, WEEK2_PLAYED].map((played) => totalOf(startersWeek(squadIn(played))));
 
 /** A starter's points at Points' moment, by card id; a missing one is a broken fixture. */
 export function livePointsOf(id: string): number {

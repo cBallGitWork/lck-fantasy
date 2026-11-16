@@ -1,8 +1,8 @@
 // Patch update's made-up data (docs/design/approved/patch-update/patch.html): the moves made at the
-// Week 3 deadline, as Week 4's prices. Prices and owned agree with the Stats picture where it lists
-// the player (STATS_PLAYERS); a dot marks the players in Baron Steal FC's squad (PICK_TEAM_SQUAD).
+// Week 3 deadline, as Week 4's prices. The new prices, teams and owned % are the Stats list's
+// (statsOf); a dot marks the players in Baron Steal FC's squad (PICK_TEAM_SQUAD).
 
-import { MY_PLAYERS, playerId, WEEK3_DEADLINE, type TeamCode } from "../../fixtures/week3";
+import { MY_PLAYERS, playerId, statsOf, WEEK3_DEADLINE, type TeamCode } from "../../fixtures/week3";
 import type { PersonRole } from "../../rift";
 
 /** One player's or coach's price move, in m. */
@@ -27,41 +27,36 @@ export interface PriceWeek {
   falls: PriceMove[];
 }
 
-const move = (name: string, team: TeamCode, role: PriceMove["role"], wasEok: number, nowEok: number, ownedPct: number): PriceMove => ({
-  id: playerId(name),
-  name,
-  team,
-  role,
-  wasEok,
-  nowEok,
-  ownedPct,
-  mine: MY_PLAYERS.has(name),
-});
+/** A price move from `wasEok`; the new price, team, role and owned % are the Stats list's. */
+const move = (name: string, wasEok: number): PriceMove => {
+  const { team, role, priceEok, ownedPct } = statsOf(name);
+  return { id: playerId(name), name, team, role, wasEok, nowEok: priceEok, ownedPct, mine: MY_PLAYERS.has(name) };
+};
 
 /** Week 4's prices, set at the Week 3 deadline (patch.html). */
 export const WEEK4_PRICES: PriceWeek = {
   week: 4,
   set: { local: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.date} ${WEEK3_DEADLINE.time}`, kst: WEEK3_DEADLINE.kst },
   rises: [
-    move("Faker", "T1", "mid", 18.0, 18.5, 46),
-    move("Chovy", "GEN", "mid", 17.0, 17.5, 41),
-    move("Peyz", "T1", "bot", 14.5, 15.0, 33),
-    move("Siwoo", "DK", "top", 11.0, 11.5, 12),
-    move("BuLLDoG", "DNS", "mid", 10.5, 11.0, 6),
-    move("Lucid", "DK", "jng", 8.5, 9.0, 4),
-    move("Kingen", "NS", "top", 6.0, 6.5, 3),
-    move("Ssong", "DNS", "coach", 5.0, 5.5, 3),
-    move("Hype", "KRX", "bot", 5.0, 5.5, 2),
+    move("Faker", 18.0),
+    move("Chovy", 17.0),
+    move("Peyz", 14.5),
+    move("Siwoo", 11.0),
+    move("BuLLDoG", 10.5),
+    move("Lucid", 8.5),
+    move("Kingen", 6.0),
+    move("Ssong", 5.0),
+    move("Hype", 5.0),
   ],
   falls: [
-    move("Gumayusi", "HLE", "bot", 16.0, 15.5, 26),
-    move("Aiming", "DK", "bot", 14.0, 13.5, 8),
-    move("ShowMaker", "DK", "mid", 13.5, 13.0, 9),
-    move("Doran", "T1", "top", 13.0, 12.5, 18),
-    move("DuDu", "DNS", "top", 6.5, 6.0, 2),
-    move("Clear", "BFX", "top", 6.0, 5.5, 1),
-    move("DanDy", "NS", "coach", 5.5, 5.0, 1),
-    move("Edgar", "BRO", "coach", 5.0, 4.5, 1),
+    move("Gumayusi", 16.0),
+    move("Aiming", 14.0),
+    move("ShowMaker", 13.5),
+    move("Doran", 13.0),
+    move("DuDu", 6.5),
+    move("Clear", 6.0),
+    move("DanDy", 5.5),
+    move("Edgar", 5.0),
   ],
 };
 

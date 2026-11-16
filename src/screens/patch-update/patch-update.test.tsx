@@ -26,7 +26,7 @@ describe("Week 4 prices", () => {
     const rises = out.slice(out.indexOf("Rises"), out.indexOf("Falls"));
     const falls = out.slice(out.indexOf("Falls"));
     expect(rises).toContain("PlayerWasNowOwnedFakerT1 · Mid₩18.0m₩18.5m46%ChovyGEN · Mid₩17.0m₩17.5m41%");
-    expect(rises.endsWith("HypeKRX · Bot₩5.0m₩5.5m2%")).toBe(true);
+    expect(rises.endsWith("HypeKRX · Bot₩5.0m₩5.5m1%")).toBe(true);
     expect(falls).toContain("PlayerWasNowOwnedGumayusiHLE · Bot₩16.0m₩15.5m26%");
     expect(falls.endsWith("EdgarBRO · Coach₩5.0m₩4.5m1%")).toBe(true);
     expectInOrder(rises, ["Faker", "Chovy", "Peyz", "Siwoo", "BuLLDoG", "Lucid", "Kingen", "Ssong", "Hype"]);

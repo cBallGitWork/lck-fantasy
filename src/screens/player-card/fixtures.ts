@@ -3,7 +3,7 @@
 // - from Pick Team: Week 4, Tuesday, before the deadline (History, Fixtures, Champions);
 // - from Points: Week 3, Saturday, T1 v DK game 2 live (This week).
 
-import { CARRY_MULTIPLIER, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, type TeamCode } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, LIVE_SERIES_ID, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, type TeamCode } from "../../fixtures/week3";
 import { hangulOf } from "../../fixtures/rosters";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { FAKER_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
@@ -44,9 +44,9 @@ const GAMES_AT_POINTS: Record<string, Omit<CardGame, "points">[]> = {
     { champion: "Taliyah", outcome: "L", kda: "3/2/5", counts: false },
     { champion: "Galio", outcome: "W", kda: "9/0/8", counts: true },
   ],
-  "w3-sat-2": [
+  [LIVE_SERIES_ID]: [
     { champion: "Orianna", outcome: "W", kda: "5/1/9", counts: true },
-    { champion: "Sylas", clock: seriesAtPoints("w3-sat-2").clock, kda: "3/0/2", counts: true },
+    { champion: "Sylas", clock: seriesAtPoints(LIVE_SERIES_ID).clock, kda: "3/0/2", counts: true },
   ],
 };
 
@@ -151,7 +151,7 @@ export const CARD_FROM_POINTS: PlayerCardData = {
   ownedPlace: 1,
   transfersIn: 842,
   transfersOut: 126,
-  past: [...PAST.slice(0, 2), { id: "w3-sat-2", week: 3, day: "Sat", opponent: "DK", points: 5, live: true }],
+  past: [...PAST.slice(0, 2), { id: LIVE_SERIES_ID, week: 3, day: "Sat", opponent: "DK", points: 5, live: true }],
   next: NEXT,
   thisWeek: WEEK3_AT_POINTS,
   fixtures: FIXTURES,

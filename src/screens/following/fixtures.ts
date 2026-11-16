@@ -3,7 +3,7 @@
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
 import { MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
-import { CARRY_MULTIPLIER, HIT_POINTS, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, HIT_POINTS, WEEK2_SERIES, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS, type Series } from "../../fixtures/week3";
 import type { FollowingData, Manager, SeriesItem } from "./feed";
 
 const { minji: MINJI, jae: JAE, dan: DAN } = MANAGERS;
@@ -13,15 +13,17 @@ const TOM: Manager = { id: "tom", name: "Tom Reid", team: "Kiin Bean" };
 const SAM: Manager = { id: "sam", name: "Sam Hill", team: "Guma Gang" };
 const PRIYA: Manager = { id: "priya", name: "Priya Shah", team: "Zeus Juice" };
 
-/** A Week 3 series' teams and score, as the shared fixture holds them. */
-function week3(seriesId: string): Pick<SeriesItem, "home" | "away" | "score"> {
-  const s = seriesById(WEEK3_SERIES_AT_POINTS, seriesId);
-  if (!s.score) throw new Error(`No Week 3 series ${seriesId} with a score.`);
+/** A series' teams and score, as the shared fixture holds them. */
+function scored(list: readonly Series[], seriesId: string): Pick<SeriesItem, "home" | "away" | "score"> {
+  const s = seriesById(list, seriesId);
+  if (!s.score) throw new Error(`No series ${seriesId} with a score.`);
   return { home: s.home, away: s.away, score: s.score };
 }
 
+const week3 = (seriesId: string) => scored(WEEK3_SERIES_AT_POINTS, seriesId);
+
 const DEADLINE = { local: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.time}`, kst: WEEK3_DEADLINE.kst };
-const WEEK2_GEN_DNS = { home: "GEN", away: "DNS", score: [2, 0] } as const;
+const WEEK2_GEN_BRO = scored(WEEK2_SERIES, "w2-wed-2");
 const WEEK2_ENDED = { local: "Sun 12:30", kst: "21:30" } as const;
 
 export const FOLLOWING: FollowingData = {
@@ -111,7 +113,7 @@ export const FOLLOWING: FollowingData = {
           id: "f7",
           manager: JAE,
           points: 21,
-          ...WEEK2_GEN_DNS,
+          ...WEEK2_GEN_BRO,
           bigCarry: true,
           players: [{ name: "Ruler", points: 21, carry: { before: 14 } }],
           ended: WEEK2_ENDED,
@@ -121,7 +123,7 @@ export const FOLLOWING: FollowingData = {
           id: "f8",
           manager: MINJI,
           points: 21,
-          ...WEEK2_GEN_DNS,
+          ...WEEK2_GEN_BRO,
           players: [{ name: "Chovy", points: 21 }],
           ended: WEEK2_ENDED,
         },

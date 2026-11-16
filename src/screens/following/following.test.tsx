@@ -67,7 +67,7 @@ describe("the page (1440.png)", () => {
       "Truck ›",
       "Week 2",
       "Jae Kim",
-      "GEN 2–0 DNS",
+      "GEN 2–0 BRO",
       "Big Carry",
       "Ruler 21 (14 × 1.5)",
       "Minji Park",

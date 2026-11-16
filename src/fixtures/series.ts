@@ -16,9 +16,6 @@ export const seriesOf = (list: readonly Series[], team: string) => list.filter((
 /** The team a team plays in a series. */
 export const opponent = (s: Series, team: string) => (s.home === team ? s.away : s.home);
 
-/** The teams a player meets, in order: `v KT · v GEN`. */
-export const againstLine = (opponents: readonly string[]) => opponents.map((o) => `v ${o}`).join(" · ");
-
 /** A series from one team's side: the opponent, and the score with the team's games first. */
 export function fromSide(s: Series, team: string): { opponent: TeamCode; score?: Score } {
   const home = s.home === team;

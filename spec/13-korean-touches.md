@@ -9,8 +9,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 Flol has no sponsors, so made-up Korean sponsors drawn from LCK memes fill the slots FPL sells.
 
 - Where: a "presented by" line in the header, banner slots between sections on pages, and the
-  sponsor's badge beside your Overall tier (Craig, 14 Nov 2026). Not on players' shirts: team
-  kits are the teams' own.
+  sponsor's badge beside your Overall tier (Craig, 14 Nov 2026), and a made-up hangul sponsor
+  word on each team's shirt (Craig, 16 Nov 2026).
 - Each ad is data an admin adds: a name, art, a line of copy, and where it shows. Claude drafts
   them, and Craig approves each before it goes live.
 - Real players appear only as memes and nicknames, never as a real person endorsing a product.
@@ -20,6 +20,19 @@ Flol has no sponsors, so made-up Korean sponsors drawn from LCK memes fill the s
   "All sponsors are made up."
 - Each slot shows one approved ad, picked at random on each visit. About 10 are ready for the
   beta.
+
+## Shirts and crests
+
+Each team has a fun shirt and a crest, Flol's own drawings (Craig, 16 Nov 2026).
+
+- A player in your squad on a pitch or lineup gets a shirt: the Rift, the bench, Home's lineup.
+- A team on its own gets a crest: fixtures, results, standings, the Series scorebug, the Teams
+  tab, the coach, a supporter league. An empty portrait slot takes the crest until photos exist.
+- A row a role icon already leads takes no team mark: Stats, the Transfers list, Live, feeds,
+  history.
+- A colour fill only where a crest won't fit, as Live's stream scorebug.
+- The kit colours are data. DNS's, DK's and BFX's are guesses, fine for the beta (Craig, 16 Nov
+  2026).
 
 ## Trucks
 

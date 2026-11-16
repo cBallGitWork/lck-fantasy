@@ -30,7 +30,7 @@ Every shirt has the Flol maker mark top left, a small crest top right and a made
 
 ## Where they show
 
-The fresh-eyes reviewer's rules (Craig, 16 Nov 2026):
+Craig's rules (16 Nov 2026), held in [spec/13](../../../../spec/13-korean-touches.md#shirts-and-crests):
 
 - A player in your squad on a pitch or lineup gets a shirt: the Rift, the bench, Home's lineup. Never under 24px.
 - A team on its own gets a crest: fixtures, results, standings, the Series scorebug, the Teams tab, the coach, a supporter league.

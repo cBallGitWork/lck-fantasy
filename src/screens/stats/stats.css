@@ -89,6 +89,9 @@
 .stats__lead-head {
   padding-left: calc(var(--s-6) + var(--s-5));
 }
+.stats__lead-head--coach {
+  padding-left: var(--s-6);
+}
 .stats__lead {
   display: flex;
   align-items: center;

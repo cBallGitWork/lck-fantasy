@@ -8,7 +8,7 @@ import { MANAGERS, MINJI_WEEK3, type MadeUpManager } from "../../fixtures/manage
 import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL, type MyLeague } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
 import { COMPETITION as CUP, MANAGER, MY_WEEK3, POINTS_WEEK, WEEK3_DEADLINE, WEEK4_SERIES } from "../../fixtures/week3";
-import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, Standings, StandingRow } from "./types";
+import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, TableData, TableRow } from "./types";
 
 const WEEK = POINTS_WEEK.week;
 
@@ -34,11 +34,11 @@ export const LEAGUE_LIST: LeagueSummary[] = [
 type Line = [rank: number, move: number | null, team: string, manager: string, carry: string, week: number, total: number, split?: number];
 
 /** A table's rows from its lines; the sample manager's row is marked yours, and with `chasing` tagged with the points to the row above. */
-function rows(lines: Line[], chasing = false): StandingRow[] {
+function rows(lines: Line[], chasing = false): TableRow[] {
   return lines.map(([rank, move, team, manager, carry, week, total, split], i) => {
     const mine = team === MANAGER.team;
     const above = lines[i - 1];
-    const chase: StandingRow["chase"] = mine && chasing && above ? { kind: "chasing", points: above[6] - total, rank: above[0] } : null;
+    const chase: TableRow["chase"] = mine && chasing && above ? { kind: "chasing", points: above[6] - total, rank: above[0] } : null;
     return { rank, move, team, manager, managerId: manager.toLowerCase().replace(/\W+/g, "-"), carry, week, total, split, mine, chase };
   });
 }
@@ -129,7 +129,7 @@ const FLOL_DISCORD: LeagueView = {
 };
 
 /** Overall at Week 3: the season and Split 1 are one table until Split 2 starts. */
-const OVERALL_STANDINGS: Standings = {
+const OVERALL_TABLE: TableData = {
   pages: 1063,
   runs: [
     rows([
@@ -161,8 +161,8 @@ const OVERALL: LeagueView = {
   openTab: THIS_SPLIT,
   openGroup: "Legend",
   tables: {
-    [COMPETITION.seasonTab]: OVERALL_STANDINGS,
-    [THIS_SPLIT]: OVERALL_STANDINGS,
+    [COMPETITION.seasonTab]: OVERALL_TABLE,
+    [THIS_SPLIT]: OVERALL_TABLE,
   },
 };
 

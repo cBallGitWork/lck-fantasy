@@ -34,7 +34,7 @@ export interface LeagueSummary {
 }
 
 /** A row of a league's table. */
-export interface StandingRow {
+export interface TableRow {
   rank: number;
   move: number | null;
   team: string;
@@ -51,8 +51,8 @@ export interface StandingRow {
 }
 
 /** One table: runs of consecutive rows, a gap (`⋯`) between runs, and how many pages it holds. */
-export interface Standings {
-  runs: StandingRow[][];
+export interface TableData {
+  runs: TableRow[][];
   pages: number;
   /** The split's column beside Total on a group's table, headed with the split's name. */
   splitColumn?: TableTab;
@@ -67,7 +67,7 @@ interface LeagueBase {
   carryShown: boolean;
   openTab: TableTab;
   /** Tables by tab, and on Overall's grouped tab by `tab/group` (`tableKey`). */
-  tables: Partial<Record<string, Standings>>;
+  tables: Partial<Record<string, TableData>>;
 }
 
 export type LeagueView =

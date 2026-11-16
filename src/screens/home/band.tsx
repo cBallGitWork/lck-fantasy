@@ -1,4 +1,4 @@
-import { count, LinkGo, ordinal, SideSection, Table } from "../../parts";
+import { leagueRank, LinkGo, SideSection, Table } from "../../parts";
 import { PATHS } from "../../paths";
 import { Move } from "./format";
 import type { FeedItem, HomeLeague } from "./types";
@@ -58,7 +58,7 @@ export function Leagues({ leagues }: { leagues: HomeLeague[] }) {
         rowKey={(l) => l.id}
         columns={[
           { key: "name", head: "League", cell: (l) => l.name, fullText: (l) => l.name },
-          { key: "rank", head: "Rank", figure: true, cell: (l) => (l.kind === "private" ? ordinal(l.rank) : count(l.rank)) },
+          { key: "rank", head: "Rank", figure: true, cell: (l) => leagueRank(l.rank, l.kind === "private") },
           { key: "move", head: "Move", figure: true, width: "goCol", cell: (l) => <Move move={l.move} /> },
         ]}
       />

@@ -27,7 +27,7 @@ import {
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
-import { count, ordinal, sum } from "../../parts";
+import { count, leagueRank, sum } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays } from "../../rift";
 import { hangulOf } from "../../fixtures/rosters";
@@ -175,7 +175,7 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, mine: false }],
     leagues: [
       { name: `Overall · ${MY_OVERALL.tier}`, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
-      ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),
+      ...MY_LEAGUES.map((l) => ({ name: l.name, rank: leagueRank(l.rank, l.kind === "private"), move: l.move })),
     ],
     nextTier: { points: 6, tier: "Diamond IV" },
     series: list,

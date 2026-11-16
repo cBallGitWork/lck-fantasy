@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { bestOf, count, money, mToWon, inOut, MINUS, NONE, oneDecimal, ordinal, outcome, pct, perGame, perGameValue, placeOf, result, score, signed } from "..";
+import { bestOf, count, money, mToWon, inOut, leagueRank, MINUS, NONE, oneDecimal, ordinal, outcome, pct, perGame, perGameValue, placeOf, result, score, signed } from "..";
 
 test("a count marks its thousands", () => {
   expect([0, 999, 1204, 48211].map(count)).toEqual(["0", "999", "1,204", "48,211"]);
@@ -36,6 +36,11 @@ test("one decimal, a per cent, absence and a series' length", () => {
 test("a place alone or among so many", () => {
   expect(placeOf(2)).toBe("2nd");
   expect(placeOf(2, "10 mids")).toBe("2nd of 10 mids");
+});
+
+test("a league's rank is a place in a private league, a count in a public one", () => {
+  expect(leagueRank(2, true)).toBe("2nd");
+  expect(leagueRank(1402, false)).toBe("1,402");
 });
 
 test("a price held in m reads as money and as won", () => {

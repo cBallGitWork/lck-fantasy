@@ -100,8 +100,8 @@ export interface LeagueRow {
   move: number;
   /** Overall's tier (spec/08): its name and division. */
   tier?: { name: string; division: string };
-  /** A private league shows its rank as a place: `3rd`. */
-  ordinal?: boolean;
+  /** A private league, whose rank shows as a place: `3rd`. */
+  private?: boolean;
 }
 
 export interface ProfileData {
@@ -191,6 +191,6 @@ export const PROFILE: ProfileData = {
     { id: "overall", name: "Overall", rank: 21_804, move: 3_112, tier: { name: "Emerald", division: "I" } },
     { id: "south-korea", name: "South Korea", rank: 2_310, move: 402 },
     { id: "gen-supporters", name: "GEN supporters", rank: 1_977, move: 288 },
-    { id: "pub-league", name: "Pub League", rank: 3, move: -1, ordinal: true },
+    { id: "pub-league", name: "Pub League", rank: 3, move: -1, private: true },
   ],
 };

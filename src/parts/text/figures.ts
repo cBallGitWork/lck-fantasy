@@ -16,6 +16,9 @@ export function ordinal(n: number): string {
   return `${count(n)}${tens >= 11 && tens <= 13 ? "th" : (SUFFIX[n % 10] ?? "th")}`;
 }
 
+/** A league's rank: 2nd in a private league, 1,402 in a public one. */
+export const leagueRank = (rank: number, isPrivate: boolean) => (isPrivate ? ordinal(rank) : count(rank));
+
 /** Points as a line scores them: `+6`, `0`, `−1`. */
 export const signed = (n: number) => (n > 0 ? `+${n}` : n < 0 ? `${MINUS}${-n}` : "0");
 

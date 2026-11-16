@@ -15,6 +15,7 @@ import {
   MeDot,
   Menu,
   Modal,
+  nameMatches,
   OutlinedKey,
   PageFrame,
   PageHead,
@@ -249,4 +250,12 @@ test("the page frame puts the side column after the main", () => {
   expect(right.indexOf("main")).toBeLessThan(right.indexOf("side</p>"));
   expect(right).toContain("page-frame--two");
   expect(right).toContain('data-screen="points"');
+});
+
+describe("name search", () => {
+  test("a name matches what was typed, ignoring case and outer spaces; an empty search matches every name", () => {
+    expect(nameMatches("Faker", "  fAk ")).toBe(true);
+    expect(nameMatches("Faker", "chovy")).toBe(false);
+    expect(["Faker", "Chovy"].filter((name) => nameMatches(name, "  "))).toEqual(["Faker", "Chovy"]);
+  });
 });

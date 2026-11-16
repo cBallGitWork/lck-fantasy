@@ -15,7 +15,7 @@ export function OverallTable({
   const { competition } = table;
   const grouped = table.tab === competition.groupedTab;
   return (
-    <section className="leagues__panel" aria-label={league.name}>
+    <section aria-label={league.name}>
       <LeagueHead name={<h2 className="leagues__name-head">{league.name}</h2>} sub={table.tab === competition.seasonTab ? league.season : `${league.season} · ${table.tab}`}>
         {grouped && <ViewToggle options={competition.groups} chosen={group} onChoose={onGroup} label="Group" />}
       </LeagueHead>

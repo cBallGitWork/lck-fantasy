@@ -2,6 +2,7 @@
 // Pure, so the page's every control is tested without a browser. The rules themselves are built
 // in convex/squads/; this is only what the page shows while the manager is still choosing.
 
+import { nameMatches } from "../../parts";
 import { BENCH_SLOTS, isBench, LINEUP_ORDER, ROLE_KEYS, ROLE_NAME, type Mark, type PersonRole, type RoleKey, type SquadSlot } from "../../rift";
 
 /** A player or coach as Transfers shows him: price in won, the last week's points, form, season total. */
@@ -206,13 +207,12 @@ export function roleFilterFor(squad: SquadPlayer[], slot: SquadSlot): RoleFilter
  */
 export function listRows(squad: SquadPlayer[], plan: Plan, players: ListPlayer[], filters: ListFilters): ListPlayer[] {
   const inSquad = new Set(SQUAD_SLOTS.map((s) => inSlot(squad, plan, s)?.id));
-  const query = filters.search.trim().toLowerCase();
   const value = SORT_VALUE[filters.sort];
   return players
     .filter((p) => !inSquad.has(p.id))
     .filter((p) => filters.role === ALL || p.role === filters.role)
     .filter((p) => filters.team === ALL || p.team === filters.team)
-    .filter((p) => p.name.toLowerCase().includes(query))
+    .filter((p) => nameMatches(p.name, filters.search))
     .sort((a, b) => value(b) - value(a));
 }
 

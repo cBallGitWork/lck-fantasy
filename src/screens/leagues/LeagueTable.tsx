@@ -1,8 +1,8 @@
 import { useRef, useState, type ReactNode } from "react";
 import { Empty, Menu, OutlinedKey, Tabs, type MenuItem } from "../../parts";
 import { Pager } from "./Pager";
-import { Standings } from "./Standings";
-import type { CompetitionTabs, LeagueView, Standings as StandingsData, TableTab } from "./types";
+import { TableRows } from "./TableRows";
+import type { CompetitionTabs, LeagueView, TableData, TableTab } from "./types";
 
 /** The table shown, and turning its tabs and pages. */
 export interface TableProps {
@@ -11,7 +11,7 @@ export interface TableProps {
   tab: TableTab;
   onTab: (tab: TableTab) => void;
   /** The table on this tab and page; absent when there is none yet. */
-  table?: StandingsData;
+  table?: TableData;
   page: number;
   onPage: (page: number) => void;
   onFindMe: () => void;
@@ -43,7 +43,7 @@ export function TableBody({ league, table, page, onPage, onFindMe }: { league: L
   if (!table) return <Empty title="No table yet" />;
   return (
     <>
-      <Standings table={table} week={league.week} carryShown={league.carryShown} />
+      <TableRows table={table} week={league.week} carryShown={league.carryShown} />
       {table.pages > 1 && <Pager pages={table.pages} page={page} onPage={onPage} onFindMe={onFindMe} />}
     </>
   );
@@ -81,7 +81,7 @@ export function LeagueTable({
     <h2 className="leagues__name-head">{league.name}</h2>
   );
   return (
-    <section className="leagues__panel" aria-label={league.name}>
+    <section aria-label={league.name}>
       {league.kind === "private" ? (
         <LeagueHead name={name} sub={`Scoring from Week ${league.scoringFrom}`}>
           <span className="leagues__code num">{league.code}</span>

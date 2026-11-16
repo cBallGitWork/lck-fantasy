@@ -1,5 +1,6 @@
 // Compare's rules, as the picture and spec/12 (Compare) set them, kept apart from the drawing so the tests read them.
 
+import { nameMatches } from "../../parts";
 import { ROLE_KEYS, type PersonRole } from "../../rift";
 import type { SearchRow } from "./fixtures";
 
@@ -32,13 +33,12 @@ export interface SearchGroup {
  */
 export function searchGroups(rows: readonly SearchRow[], first: { name: string; role: PersonRole }, query: string, wide: boolean): SearchGroup[] {
   const roles: PersonRole[] = first.role === "coach" ? ["coach"] : [first.role, ...ROLE_KEYS.filter((r) => r !== first.role)];
-  const typed = query.trim().toLowerCase();
-  const shown = typed || wide ? roles : roles.slice(0, 1);
+  const shown = query.trim() || wide ? roles : roles.slice(0, 1);
   return shown
     .map((role) => ({
       role,
       rows: rows
-        .filter((r) => r.role === role && r.name !== first.name && r.name.toLowerCase().includes(typed))
+        .filter((r) => r.role === role && r.name !== first.name && nameMatches(r.name, query))
         .sort((x, y) => y.points - x.points),
     }))
     .filter((g) => g.rows.length > 0);

@@ -2,7 +2,7 @@
 // in what order, and on which page. Pure, so the page and its tests share them.
 
 import type { TeamCode } from "../../fixtures/week3";
-import { perGameValue, type Score } from "../../parts";
+import { nameMatches, perGameValue, type Score } from "../../parts";
 import type { PersonRole, RoleKey } from "../../rift";
 
 export const TABS = ["Players", "Coaches"] as const;
@@ -127,14 +127,13 @@ function sortValue(row: StatsRow, key: SortKey, figures: Figures): number {
 
 /** The rows the filters keep, highest first by the sorted column; academy players (no games) last. */
 export function listRows(rows: readonly StatsRow[], view: StatsView): StatsRow[] {
-  const find = view.search.trim().toLowerCase();
   return rows
     .filter(
       (r) =>
         (view.tab === "Coaches" || view.role === ALL || r.role === view.role) &&
         (view.team === ALL || r.team === view.team) &&
         (view.maxPrice === null || r.priceM <= view.maxPrice) &&
-        r.name.toLowerCase().includes(find),
+        nameMatches(r.name, view.search),
     )
     .sort(
       (a, b) =>

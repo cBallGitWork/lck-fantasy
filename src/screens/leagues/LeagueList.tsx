@@ -1,6 +1,6 @@
-import { count, cx, GoLink, MainAction, ordinal, OutlinedKey, SectionHead } from "../../parts";
+import { count, cx, GoLink, leagueRank, MainAction, OutlinedKey, SectionHead } from "../../parts";
 import { leagueGo } from "../../paths";
-import { Move } from "./Standings";
+import { Move } from "./TableRows";
 import type { LeagueSummary } from "./types";
 
 const SECTIONS = [
@@ -28,11 +28,11 @@ export function LeagueList({ leagues, openId, onCreate, onJoin }: { leagues: Lea
                 current={league.id === openId}
               >
                 <span>{league.name}</span>
-                <b className="num">{kind === "private" ? ordinal(league.rank) : count(league.rank)}</b>
+                <b className="num">{leagueRank(league.rank, kind === "private")}</b>
                 <span className="leagues__list-move">
                   <Move move={league.move} />
                 </span>
-                <small>{kind === "private" ? `${count(league.size)} managers` : `of ${count(league.size)}`}</small>
+                <small className="quiet">{kind === "private" ? `${count(league.size)} managers` : `of ${count(league.size)}`}</small>
               </GoLink>
             ))}
         </section>

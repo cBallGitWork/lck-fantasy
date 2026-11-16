@@ -24,8 +24,6 @@
 }
 .leagues__list-row small {
   grid-column: 1;
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .leagues__list-move {
   text-align: right;
@@ -121,8 +119,6 @@
   font-family: var(--font-mono);
 }
 .leagues__name small {
-  color: var(--mid);
-  font-size: var(--size-small);
   margin-left: var(--s-2);
 }
 .leagues__chase {

@@ -17,6 +17,7 @@ export {
   count,
   gameNo,
   inOut,
+  leagueRank,
   MINUS,
   NONE,
   oneDecimal,
@@ -41,6 +42,7 @@ export { PageFrame } from "./frame/PageFrame";
 export { PageHead, type WeekNav } from "./frame/PageHead";
 export { Placeholder } from "./frame/Placeholder";
 export { chooseOnKey, selectable } from "./util/selectable";
+export { nameMatches } from "./util/search";
 export { sum } from "./util/sum";
 export { SectionHead } from "./frame/SectionHead";
 export { SeriesList, type SeriesRow, type SeriesState } from "./display/SeriesList";

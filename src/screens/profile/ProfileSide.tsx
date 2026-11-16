@@ -1,4 +1,4 @@
-import { count, GoLink, ordinal, SideSection, TierShield } from "../../parts";
+import { GoLink, leagueRank, SideSection, TierShield } from "../../parts";
 import { leagueGo } from "../../paths";
 import type { LeagueRow, Truck } from "./fixtures";
 import { Move } from "./ProfileHistory";
@@ -26,7 +26,7 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
                   )}
                 </span>
                 <span>
-                  <b className="num">{league.ordinal ? ordinal(league.rank) : count(league.rank)}</b> <Move places={league.move} />
+                  <b className="num">{leagueRank(league.rank, league.private === true)}</b> <Move places={league.move} />
                 </span>
               </GoLink>
             </li>

@@ -117,7 +117,7 @@ export const LIVE_IDLE: Omit<LiveIdleProps, "picker"> = {
   last: { ...bug(LAST_SERIES), day: "Saturday", format: FORMAT, stage: STAGE },
   panel: {
     week: { total: MY_WEEK3.finalTotal, ...WEEK3_FINAL, notFinal: false },
-    series: { home: LAST_SERIES.home, away: LAST_SERIES.away, score: LAST_SERIES.score },
+    series: { home: LAST_SERIES.home, away: LAST_SERIES.away },
     players: finalPlayers,
     rest: rest("idle"),
   },

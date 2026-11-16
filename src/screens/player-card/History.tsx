@@ -2,9 +2,12 @@ import { eok, perGame, result, Table } from "../../parts";
 import type { CardHistory, HistoryRow } from "./card";
 import { WeekCell, weekStarts } from "./WeekCell";
 
-/** History: each series with games, K/D/A and points, each week's price and total once; then past LCK seasons scored by Flol. */
-export function History({ history }: { history: CardHistory }) {
-  const starts = weekStarts(history.rows);
+/**
+ * History: each series with games, K/D/A and points, each week's price and total once; then past LCK
+ * seasons scored by Flol. `shown` is the rows the strip doesn't show; a week's total still counts them all.
+ */
+export function History({ history, shown }: { history: CardHistory; shown: HistoryRow[] }) {
+  const starts = weekStarts(shown);
   const weekPoints = (week: number) => history.rows.filter((r) => r.week === week).reduce((sum, r) => sum + r.points, 0);
   const onStart = (r: HistoryRow, figure: string | number) => (starts.has(r.id) ? figure : null);
   return (
@@ -12,7 +15,7 @@ export function History({ history }: { history: CardHistory }) {
       <h3 className="player-card__section">{history.competition}</h3>
       <Table
         label={history.competition}
-        rows={history.rows}
+        rows={shown}
         rowKey={(r) => r.id}
         columns={[
           { key: "week", head: "Week", cell: (r) => <WeekCell week={r.week} starts={starts.has(r.id)} /> },

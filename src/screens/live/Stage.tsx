@@ -2,12 +2,19 @@ import { cx, Menu, score as scoreText, Tag, Time } from "../../parts";
 import type { FinalBug, LiveBug, NextSeries, Picker, Stream } from "./types";
 import { dot, WORDS } from "./words";
 
-/** One chip per stream; the one you're watching filled, those not live dashed and greyed. More ▾ lists each channel. */
+/** The chips the picture draws before `More ▾`. */
+const CHIP_ROWS = 6;
+
+/**
+ * One chip per stream up to the picture's six; the one you're watching filled, those not live dashed
+ * and greyed. More ▾, only when there are more, lists the rest with their channels.
+ */
 export function StreamPicker({ streams, picked, onPick }: Picker) {
   const label = (s: Stream) => `${s.name}${dot}${s.language}`;
+  const more = streams.slice(CHIP_ROWS);
   return (
     <div className="live__picker">
-      {streams.map((s) => (
+      {streams.slice(0, CHIP_ROWS).map((s) => (
         <button
           key={s.id}
           type="button"
@@ -19,11 +26,13 @@ export function StreamPicker({ streams, picked, onPick }: Picker) {
           <small className="live__chip-platform">{s.platform}</small>
         </button>
       ))}
-      <Menu
-        label={WORDS.more}
-        className="live__chip"
-        items={streams.map((s) => ({ label: `${label(s)}${dot}${s.platform}${dot}${s.channel}`, onChoose: () => onPick(s.id) }))}
-      />
+      {more.length > 0 && (
+        <Menu
+          label={WORDS.more}
+          className="live__chip"
+          items={more.map((s) => ({ label: `${label(s)}${dot}${s.platform}${dot}${s.channel}`, onChoose: () => onPick(s.id) }))}
+        />
+      )}
     </div>
   );
 }

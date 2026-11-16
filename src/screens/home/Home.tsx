@@ -19,7 +19,7 @@ function HomeHead({ team, hangul, overall }: { team: string; hangul: string; ove
     <div className="home__head">
       <PageHead title={team} hangul={hangul} />
       <div className="home__tier">
-        <TierShield className="home__shield" division={overall.division} />
+        <TierShield className="home__shield" />
         <div>
           <div className="home__tier-name">
             {overall.tier}
@@ -64,7 +64,7 @@ function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions
       <div className="home__deadline-left">
         <CountdownFigure countdown={data.countdown} />
         <div className="home__deadline-when">
-          Deadline <Time local={deadline.local} kst={deadline.kst} />
+          <Time local={deadline.local} kst={deadline.kst} />
         </div>
       </div>
       <div className="home__deadline-keys">

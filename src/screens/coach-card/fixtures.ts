@@ -63,7 +63,6 @@ function weekSeries(id: string, games: number[], coachResult?: number): WeekSeri
     opponent: side.opponent,
     score: side.score,
     state: live ? "live" : "final",
-    liveGame: s.liveGame,
     games: games.map((points, i) => ({
       result: GAME_LINES[id]?.[i]?.result,
       lines: GAME_LINES[id]?.[i]?.lines ?? [],

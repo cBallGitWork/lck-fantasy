@@ -1,11 +1,11 @@
 // The coach card's tabs: This week, Fixtures, History and Roster (coach.html; Fixtures as the player card's).
 import { Fragment } from "react";
-import { eok, MeDot, NONE, pct, perGame, result, score, signed, Table, Tag } from "../../parts";
+import { eok, MeDot, NONE, pct, perGame, result, score, signed, Table } from "../../parts";
 import { ROLE_NAME } from "../../rift";
 import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, RosterRow, WeekSeries } from "./types";
 
 
-/** This week: each series, its games with the lines they scored, the series line, then the week. */
+/** This week: each series (the strip carries its Live tag), its games with the lines they scored, the series line, then the week. */
 export function CoachThisWeek({ week }: { week: CoachWeek }) {
   return (
     <div className="coach-card__week">
@@ -14,9 +14,7 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
           <h2 className="coach-card__block">
             <span>
               {s.day} · v {s.opponent}{" "}
-              <span className="coach-card__soft">
-                {s.state === "final" ? result(s.score) : score(s.score)} · {s.state === "live" ? <Tag kind="live">G{s.liveGame} live</Tag> : <Tag>Final</Tag>}
-              </span>
+              <span className="coach-card__soft">{s.state === "final" ? result(s.score) : score(s.score)}</span>
             </span>
             <b className="num">{s.points}</b>
           </h2>
@@ -94,23 +92,26 @@ export function CoachFixtures({ rows, team }: { rows: FixtureRow[]; team: string
   );
 }
 
-/** History: each series' points, the week's price and total once; then past seasons, the team's. */
-export function CoachHistoryTab({ history, team }: { history: CoachHistory; team: string }) {
+/**
+ * History: each series' points, the week's price and total once; then past seasons, the team's.
+ * `shown` is the rows the strip doesn't show; a week's total still counts them all.
+ */
+export function CoachHistoryTab({ history, shown, team }: { history: CoachHistory; shown: HistoryRow[]; team: string }) {
   const weekTotal = (week: number) => history.rows.filter((r) => r.week === week).reduce((sum, r) => sum + r.points, 0);
   return (
     <div className="coach-card__history">
       <h2 className="coach-card__block coach-card__block--first">{history.competition}</h2>
       <Table<HistoryRow>
         label={history.competition}
-        rows={history.rows}
+        rows={shown}
         rowKey={(r) => `${r.week}-${r.day}`}
         columns={[
-          { key: "week", head: "Week", width: "goCol", cell: (r) => (firstOfWeek(history.rows, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
+          { key: "week", head: "Week", width: "goCol", cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
           { key: "series", head: "Series", cell: (r) => `${r.day} · ${result(r.score)} ${r.opponent}` },
           { key: "games", head: "Games", figure: true, cell: (r) => r.games },
-          { key: "price", head: "Price", figure: true, cell: (r) => (firstOfWeek(history.rows, r) ? <span className="coach-card__soft">{eok(r.priceEok)}</span> : "") },
+          { key: "price", head: "Price", figure: true, cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{eok(r.priceEok)}</span> : "") },
           { key: "pts", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },
-          { key: "weekPts", head: "Week", figure: true, cell: (r) => (firstOfWeek(history.rows, r) ? <b>{weekTotal(r.week)}</b> : "") },
+          { key: "weekPts", head: "Week", figure: true, cell: (r) => (firstOfWeek(shown, r) ? <b>{weekTotal(r.week)}</b> : "") },
         ]}
       />
       <h2 className="coach-card__block">

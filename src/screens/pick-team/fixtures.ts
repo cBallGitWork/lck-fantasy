@@ -2,7 +2,7 @@
 // picture's moment: Week 4, Tuesday 22:00 London, before the deadline (pick.html). Faker's and
 // Siwoo's card figures are the picture's; the other players' are made up the same way.
 
-import { BEST_OF, CARRY_MULTIPLIER, COMPETITION, MANAGER, PICK_TEAM_SQUAD, playerId, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, COMPETITION, MANAGER, PICK_TEAM_SQUAD, playerId, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
 import type { Mark, PersonRole, SquadSlot } from "../../rift";
 import type { PickBuff, PickState, PickTeam } from "./model";
 
@@ -27,7 +27,7 @@ export interface PickPlayer {
   ownedRank: Ranked;
   season: number;
   seasonRank: Ranked;
-  /** His points in each of the last three weeks, oldest first. */
+  /** His points in each of his last three series, oldest first. */
   lastThree: readonly number[];
   /** The admin's flag and its note: `Not starting` `Wed`. */
   news?: { flag: string; note: string };
@@ -49,8 +49,6 @@ export interface PickTeamData {
   week: string;
   players: Record<string, PickPlayer>;
   series: readonly Series[];
-  /** Games in each of the week's series. */
-  bestOf: number;
   deadline: { local: string; kst: string; countdown: string };
   buffs: readonly PickBuffInfo[];
 }
@@ -88,13 +86,12 @@ export const PICK_TEAM_DATA: PickTeamData = {
   week: `${COMPETITION} Week 4`,
   players: Object.fromEntries(PICK_TEAM_SQUAD.map((p) => [playerId(p.name), player(p)])),
   series: WEEK4_SERIES,
-  bestOf: BEST_OF,
   deadline: WEEK4_DEADLINE,
   buffs: [
-    { name: "Bench Boost", does: "Your bench scores too", left: 1, here: "benchBoost" },
-    { name: "Dual Carry", does: `Vice-carry ×${CARRY_MULTIPLIER} too`, left: 1, here: "dualCarry" },
-    { name: "Remake", does: "Unlimited transfers, kept", left: 1 },
-    { name: "Limitless", does: "One week, no budget or team cap", left: 1 },
+    { name: "Bench Boost", does: "Your bench players score this week too", left: 1, here: "benchBoost" },
+    { name: "Dual Carry", does: `Your Vice-carry scores ×${CARRY_MULTIPLIER} too`, left: 1, here: "dualCarry" },
+    { name: "Remake", does: "Unlimited free transfers; your new squad stays", left: 1 },
+    { name: "Limitless", does: "One week, no budget or team cap; then your squad returns", left: 1 },
   ],
 };
 
@@ -113,10 +110,10 @@ export const SAVED_TEAM: PickTeam = {
 
 /** The three states the picture folder draws. */
 export const PICK_TEAM_STATES: Record<"rift" | "cards" | "swap", PickState> = {
-  /** 1440.png: Rift view, Faker tapped, no changes. */
+  /** 1440.png: Rift view, Faker tapped (Bdd lit to swap with him), no changes. */
   rift: { saved: SAVED_TEAM, draft: SAVED_TEAM, view: "rift", selected: "faker" },
   /** 1440-cards.png: Card view, Faker tapped. */
   cards: { saved: SAVED_TEAM, draft: SAVED_TEAM, view: "cards", selected: "faker" },
-  /** 1440-swap.png: Siwoo going out, Bench Boost on and unsaved. */
-  swap: { saved: SAVED_TEAM, draft: { ...SAVED_TEAM, buff: "benchBoost" }, view: "rift", selected: "siwoo", swapping: "siwoo" },
+  /** 1440-swap.png: Siwoo, the Flex, tapped (Zeus and both bench players lit), Bench Boost on and unsaved. */
+  swap: { saved: SAVED_TEAM, draft: { ...SAVED_TEAM, buff: "benchBoost" }, view: "rift", selected: "siwoo" },
 };

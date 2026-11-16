@@ -4,6 +4,8 @@ The full player card. It opens from **Full card ›** on a page's short card, or
 
 **Approved:** Craig, 14 Nov 2026, "save". Before that he looked at UCL Fantasy and an FPL companion app, called the first drawing "a sea of info", asked for UI and UX designers twice, and asked for it grouped by series, not by week, with the price once per week. He kept the big number on Season on every tab and the news line as a black bar ("1 ok season 2 ok"). The names, teams and numbers are a made-up LCK Cup, the same moment as the Pick Team and Points pictures, not roster data. There is no `plate.md` yet, so this binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-14-player-card/](../../proposals/2026-11-14-player-card/) (`card.html`, `brief.md`).
 
+**Changed by Craig, 16 Nov 2026:** the page says each thing once. History and Fixtures start after the series strip's three played and three coming series; This week's heads show the result with no Live or Final tag (the strip carries Live); the head's price carries a small `price` label like form and owned.
+
 | File | Shows |
 |---|---|
 | `1440.png`, `card.html` | History, opened from Pick Team (Week 4, Tuesday, before the deadline) |

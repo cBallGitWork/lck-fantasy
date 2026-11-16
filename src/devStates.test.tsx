@@ -19,7 +19,7 @@ const KEY: Record<string, string> = {
   "home/idle": "Week 4 lineup",
   "pick-team/pick": "Rift view",
   "pick-team/cards": "Photo",
-  "pick-team/swap": "Bench Boost on",
+  "pick-team/swap": "On · unsaved",
   "transfers/transfers": "Review and confirm",
   "transfers/confirm": "Confirm your transfers",
   "points/points": "Zeus",

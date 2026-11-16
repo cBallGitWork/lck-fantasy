@@ -62,8 +62,9 @@ export const createPrivateLeague = internalMutation({
     const choices = startGameweekChoices(currentGameweek, lastGameweek);
     if (!choices.includes(startGameweek)) throw refuse({ rule: "startGameweek", choices });
     await checkJoin(ctx, entry, 0, settings);
-    let code = joinCode(trimmed, Math.random);
-    while ((await leagueByCode(ctx, code)) !== null) code = joinCode(trimmed, Math.random);
+    let code: string;
+    do code = joinCode(trimmed, Math.random);
+    while ((await leagueByCode(ctx, code)) !== null);
     const league = await ctx.db.insert("leagues", { kind: "private", name: trimmed, code, maker: entry, startGameweek });
     await join(ctx, league, entry);
     return { league, code };

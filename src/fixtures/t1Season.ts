@@ -3,7 +3,7 @@
 
 import type { Score } from "../parts";
 import { BEST_OF, type TeamCode } from "./competition";
-import { fromSide, opponent, seriesOf } from "./series";
+import { opponent, playedFromSide, seriesOf } from "./series";
 import { gamesOf } from "./standings";
 import { EARLY, LATE, WEEK1_SERIES, WEEK2_SERIES, WEEK3_SERIES_FINAL, WEEK4_SERIES } from "./weeks";
 
@@ -31,11 +31,11 @@ export interface T1Fixture extends T1Series {
   kst: string;
 }
 
-const played = (id: string, week: number, day: string, against: TeamCode, score: Score): T1Played => ({
+const played = (id: string, week: number, day: string, opponent: TeamCode, score: Score): T1Played => ({
   id,
   week,
   day,
-  opponent: against,
+  opponent,
   score,
   games: score[0] + score[1],
 });
@@ -51,8 +51,7 @@ export const T1_PLAYED: readonly T1Played[] = (
   seriesOf(list, T1)
     .reverse()
     .map((s) => {
-      const side = fromSide(s, T1);
-      if (!side.score) throw new Error(`Week ${week}'s ${s.id} has no score`);
+      const side = playedFromSide(s, T1);
       return played(s.id, week, s.day, side.opponent, side.score);
     }),
 );

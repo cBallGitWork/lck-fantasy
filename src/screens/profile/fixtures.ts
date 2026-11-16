@@ -3,7 +3,7 @@
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
 import { MANAGERS, MINJI_EARLIER_WEEKS, MINJI_WEEK3 } from "../../fixtures/managers";
-import { fromSide, seriesById } from "../../fixtures/series";
+import { playedFromSide, seriesById } from "../../fixtures/series";
 import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
 import { score } from "../../parts";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
@@ -120,8 +120,7 @@ const player = (name: string, team: TeamCode): ProfilePlayer => ({ id: playerId(
 /** A series from his team's side, as Points shows it: `v KT 2–0 · Wed` (the row already names his team). */
 function seriesLine(team: TeamCode, id: string): string {
   const s = seriesById(WEEK3_SERIES_FINAL, id);
-  const side = fromSide(s, team);
-  if (!side.score) throw new Error(`No final Week 3 series ${id}`);
+  const side = playedFromSide(s, team);
   return `v ${side.opponent} ${score(side.score)} · ${s.day}`;
 }
 

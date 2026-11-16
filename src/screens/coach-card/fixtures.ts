@@ -2,9 +2,9 @@
 // moments the picture draws: from Pick Team (Week 4, Tuesday) and from Points (Week 3 Saturday,
 // T1 v DK game 2 live). This week's series and points come from the shared Week 3 (week3.ts).
 import { hangulOf, ROSTERS, T1_PRICES_M } from "../../fixtures/rosters";
-import { fromSide, seriesById } from "../../fixtures/series";
+import { playedFromSide, seriesById } from "../../fixtures/series";
 import { KKOMA_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
-import { BEST_OF, COMPETITION_TITLE, countedGames, MY_PLAYERS, pickedAt, POINTS_SQUAD, seriesPoints, statsOf, WEEK3_SERIES_AT_POINTS, weekGamesOf, winnerOf } from "../../fixtures/week3";
+import { BEST_OF, COMPETITION_TITLE, countedGames, gameAt, MY_PLAYERS, pickedAt, POINTS_SQUAD, seriesPoints, statsOf, WEEK3_SERIES_AT_POINTS, weekGamesOf } from "../../fixtures/week3";
 import { bestOf, type StripNext, type StripPast, sum } from "../../parts";
 import type { RoleKey } from "../../rift";
 import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, WeekSeries } from "./types";
@@ -43,9 +43,7 @@ if (!COACH?.series) throw new Error("Week 3's Points squad has no coach with ser
 
 function weekSeries(id: string, games: number[], coachResult?: number): WeekSeries {
   const s = seriesById(WEEK3_SERIES_AT_POINTS, id);
-  const side = fromSide(s, HEAD.team);
-  if (!side.score) throw new Error(`Week 3 has no series ${id} with a score`);
-  const live = s.state === "live";
+  const side = playedFromSide(s, HEAD.team);
   const lines = weekGamesOf(HEAD.name, id);
   const counted = countedGames(games);
   return {
@@ -53,16 +51,15 @@ function weekSeries(id: string, games: number[], coachResult?: number): WeekSeri
     day: s.day,
     opponent: side.opponent,
     score: side.score,
-    state: live ? "live" : "final",
+    state: s.state === "live" ? "live" : "final",
     games: games.map((points, i) => {
-      const winner = winnerOf(id, i);
-      const playing = live && i + 1 === s.liveGame;
+      const { won, clock } = gameAt(s, i, HEAD.team);
       return {
-        result: playing || !winner ? undefined : winner === HEAD.team ? "W" : "L",
+        result: won === undefined ? undefined : won ? "W" : "L",
         lines: [...(lines[i]?.lines ?? [])],
         points,
         counts: counted.has(i),
-        clock: playing ? s.clock : undefined,
+        clock,
       };
     }),
     points: seriesPoints(games, coachResult),

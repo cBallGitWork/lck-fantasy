@@ -21,3 +21,10 @@ export function fromSide(s: Series, team: string): { opponent: TeamCode; score?:
   const home = s.home === team;
   return { opponent: home ? s.away : s.home, score: s.score && (home ? s.score : [s.score[1], s.score[0]]) };
 }
+
+/** A played series from one team's side; one with no score is a broken fixture. */
+export function playedFromSide(s: Series, team: string): { opponent: TeamCode; score: Score } {
+  const { opponent, score } = fromSide(s, team);
+  if (!score) throw new Error(`Series ${s.id} has no score`);
+  return { opponent, score };
+}

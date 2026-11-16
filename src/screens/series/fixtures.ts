@@ -2,7 +2,7 @@
 // shared Split 1 Week 3. Points, best 2 and coach lines are the picture's figures as drawn, save
 // Baron Steal FC's players', whose games are the shared ones: the backend scores them (#30, #34).
 
-import { BEST_OF, COMPETITION, countedGames, kdaText, LINE, LIVE_SERIES_ID, MY_PLAYERS, playerId, POINTS_SQUAD, seriesPoints, TEAMS, WEEK3_FINAL_SQUAD, WEEK3_SERIES_FINAL, WEEK4_SERIES, weekGamesOf, type Series, type TeamCode } from "../../fixtures/week3";
+import { BEST_OF, COMPETITION, countedGames, kdaText, LINE, LIVE_SERIES_ID, MY_PLAYERS, playedIn, playerId, seriesPoints, TEAMS, WEEK3_SERIES_FINAL, WEEK4_SERIES, weekGamesOf, type Series, type TeamCode } from "../../fixtures/week3";
 import { ROSTERS, hangulOf } from "../../fixtures/rosters";
 import { seriesById } from "../../fixtures/series";
 import { recordOf } from "../../fixtures/standings";
@@ -42,8 +42,7 @@ const player = (role: RoleKey, name: string, games: (GameCell | null)[], total: 
  * points his squad gives them, at Points' moment or once final. `pog` marks his player-of-the-game games.
  */
 function squadLine(role: RoleKey, name: string, seriesId: string, final: boolean, pog: number[] = []): PlayerLine {
-  const played = (final ? WEEK3_FINAL_SQUAD : POINTS_SQUAD).find((p) => p.name === name)?.series.find((s) => s.id === seriesId);
-  if (!played) throw new Error(`${name} has no ${seriesId} in the squad`);
+  const played = playedIn(name, seriesId, final);
   const counted = countedGames(played.games);
   const games = weekGamesOf(name, seriesId, final).map((d, i) => {
     if (!d.champion || !d.kda) throw new Error(`${name}'s game ${i + 1} in ${seriesId} has no champion or K/D/A`);
@@ -54,8 +53,7 @@ function squadLine(role: RoleKey, name: string, seriesId: string, final: boolean
 
 /** A Baron Steal FC coach's games: his lines as every page shows them, the points his squad gives them. */
 function squadCoachGames(name: string, seriesId: string, final: boolean): CoachCell[] {
-  const played = (final ? WEEK3_FINAL_SQUAD : POINTS_SQUAD).find((p) => p.name === name)?.series.find((s) => s.id === seriesId);
-  if (!played) throw new Error(`${name} has no ${seriesId} in the squad`);
+  const played = playedIn(name, seriesId, final);
   const counted = countedGames(played.games);
   return weekGamesOf(name, seriesId, final).map((d, i) => c([...d.lines], played.games[i] ?? 0, counted.has(i)));
 }

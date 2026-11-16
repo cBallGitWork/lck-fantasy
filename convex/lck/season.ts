@@ -3,16 +3,16 @@
 import { v, type Infer } from "convex/values";
 import type { Id } from "../_generated/dataModel";
 import { internalMutation, internalQuery, type MutationCtx } from "../_generated/server";
-import { gameweekState, pricedPick, seasonSettings } from "../schema";
+import { competitionFields, gameweekState, pricedPick, seasonSettings, split } from "../schema";
 import season2027 from "../../data/lck/season-2027.json";
 
 /** A season file in data/lck/, such as season-2027.json. */
 export const seasonFile = v.object({
   note: v.optional(v.string()),
   madeUp: v.boolean(),
-  competition: v.object({ name: v.string(), region: v.string(), timeZone: v.string() }),
+  competition: v.object(competitionFields),
   year: v.number(),
-  splits: v.array(v.object({ number: v.number(), name: v.string() })),
+  splits: v.array(split),
   settings: seasonSettings,
   /** Each deadline in ISO 8601 UTC, such as 2027-01-20T07:45:00Z. */
   gameweeks: v.array(v.object({ number: v.number(), split: v.number(), deadline: v.string(), state: gameweekState })),

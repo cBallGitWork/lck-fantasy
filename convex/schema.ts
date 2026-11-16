@@ -37,8 +37,10 @@ export const seasonSettings = v.object({
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */
-export const GAMEWEEK_STATES = ["toCome", "live", "final"] as const;
-export const gameweekState = literals(GAMEWEEK_STATES);
+export const gameweekState = literals(["toCome", "live", "final"]);
+
+export const competitionFields = { name: v.string(), region: v.string(), timeZone: v.string() };
+export const split = v.object({ number: v.number(), name: v.string() });
 
 /** A price's pick, by team code: a player by role and handle, or the team's coach, which is the team
  *  and has no handle (spec/01). */
@@ -61,11 +63,11 @@ const teamLine = v.object({
 
 export default defineSchema({
   // The real world (convex/lck): filled by feeds, corrected by an admin, never written by the game.
-  competitions: defineTable({ name: v.string(), region: v.string(), timeZone: v.string() }).index("by_name", ["name"]),
+  competitions: defineTable(competitionFields).index("by_name", ["name"]),
   seasons: defineTable({
     competition: v.id("competitions"),
     year: v.number(),
-    splits: v.array(v.object({ number: v.number(), name: v.string() })),
+    splits: v.array(split),
     settings: seasonSettings,
     /** Made-up values, held until the real ones are known (spec/10). */
     madeUp: v.boolean(),

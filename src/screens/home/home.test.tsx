@@ -118,6 +118,12 @@ describe("idle", () => {
     const markup = html(<Home data={HOME_IDLE} />);
     expect(markup.match(/class="home__plate-role[ "]/g)).toHaveLength(HOME_IDLE.lineup.length);
   });
+
+  test("draws the truck on the shared LED panel and Overall on the shared, outlined tier shield", () => {
+    const markup = html(<Home data={HOME_IDLE} />);
+    expect(markup).toContain('<div class="led">Sell your bot laner</div>');
+    expect(markup).toContain('<svg class="tier-shield home__shield"');
+  });
 });
 
 test("a held rank, Overall's or a league's, is RankMove's grey —", () => {

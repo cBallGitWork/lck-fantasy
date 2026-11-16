@@ -1,17 +1,12 @@
-import { count, LinkGo, ordinal, RankMove, SideSection, Table } from "../../parts";
+import { count, Led, LinkGo, ordinal, RankMove, SideSection, Table } from "../../parts";
 import { PATHS } from "../../paths";
 import type { FeedItem, HomeLeague } from "./types";
-
-/** A truck's line on its dotted LED panel, in capitals (plate.md, Never). */
-function Led({ line }: { line: string }) {
-  return <div className="home__led">{line}</div>;
-}
 
 function FeedRow({ item, onTruck }: { item: FeedItem; onTruck?: (item: FeedItem) => void }) {
   if (item.kind === "truck") {
     return (
       <div className="home__feed-row home__feed-row--truck">
-        <Led line={item.line} />
+        <Led>{item.line}</Led>
         <div>
           <b>Truck from {item.from}</b>
           <small className="home__feed-small quiet">Week {item.week}</small>

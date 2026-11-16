@@ -1,6 +1,5 @@
-import { cx, MainAction, Modal, ViewToggle } from "../../parts";
+import { cx, Led, MainAction, Modal, ViewToggle } from "../../parts";
 import { TRUCK_HANGUL, TRUCK_KINDS, TRUCK_WORD, type Manager, type SentKind, type TruckLine } from "./feed";
-import { Led } from "./Led";
 import "./following.css";
 
 const KIND_OPTIONS = TRUCK_KINDS.map((kind) => ({

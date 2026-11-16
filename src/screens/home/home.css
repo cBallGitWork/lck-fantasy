@@ -15,19 +15,7 @@
   border-left: var(--m-rule) solid var(--line);
 }
 .home__shield {
-  display: block;
   width: calc(var(--s-6) + var(--s-2));
-  aspect-ratio: 40 / 46;
-}
-.home__shield-body {
-  fill: var(--text);
-  stroke: var(--text);
-  stroke-width: var(--stroke-shirt);
-}
-.home__shield-band {
-  stroke: var(--bg);
-  stroke-width: var(--m-rule);
-  opacity: var(--opacity-tier-band);
 }
 .home__tier-name {
   font-size: var(--size-head);
@@ -198,18 +186,6 @@
   align-items: center;
   min-height: var(--m-target);
   color: var(--text);
-}
-.home__led {
-  display: flex;
-  align-items: center;
-  height: var(--m-row);
-  padding: var(--s-2);
-  font: var(--w-semi) var(--size-small) / var(--lh-snug) var(--font-mono);
-  text-transform: uppercase;
-  color: var(--text);
-  background-color: var(--stage);
-  background-image: radial-gradient(circle, var(--line) var(--m-rule), transparent calc(var(--m-rule) * 1.4));
-  background-size: var(--s-1) var(--s-1);
 }
 
 .home__sponsor {

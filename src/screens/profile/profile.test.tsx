@@ -69,6 +69,12 @@ describe("Points", () => {
     for (const id of ["overall", "south-korea", "gen-supporters", "pub-league"]) expect(markup).toContain(`href="/leagues/${id}"`);
   });
 
+  test("draws each truck on the shared LED panel and Overall on the shared, outlined tier shield", () => {
+    const markup = html(page("Points"));
+    expect(markup).toContain('<div class="led">The template was right there, mate.</div>');
+    expect(markup).toContain('<svg class="tier-shield profile__tier"');
+  });
+
   test("an earlier week shows its points, its team loading until the backend feeds it, and no trucks", () => {
     const week2 = text(page("Points", PROFILE, 2));
     expectInOrder(week2, ["Week 2", "112"]);

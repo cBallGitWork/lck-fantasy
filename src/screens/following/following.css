@@ -137,24 +137,6 @@
   color: var(--text);
 }
 
-/* A truck's LED panel: dotted, in capitals, the same everywhere. */
-.following__led {
-  display: flex;
-  align-items: center;
-  min-height: var(--s-7);
-  padding: var(--s-2) var(--s-3);
-  background-color: var(--text);
-  background-image: radial-gradient(circle, var(--bg) calc(var(--m-rule) * 0.35), transparent calc(var(--m-rule) * 0.7));
-  background-size: var(--s-1) var(--s-1);
-  color: var(--bg);
-  font: var(--w-semi) var(--size-body) / var(--lh-body) var(--font-mono);
-  text-transform: uppercase;
-}
-.following__led--big {
-  font-size: var(--size-lead);
-  min-height: calc(var(--s-7) + var(--s-5));
-}
-
 /* The truck picker. */
 .following__picker-sub {
   margin-top: calc(var(--s-3) * -1);

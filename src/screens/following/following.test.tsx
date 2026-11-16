@@ -114,6 +114,10 @@ describe("the page (1440.png)", () => {
     expect(page).toContain('href="/manager/priya"');
   });
 
+  test("draws each truck received on the shared LED panel", () => {
+    expect(html(view())).toContain('<div class="led">THIS TRUCK WAS FUNDED BY YOUR −6.</div>');
+  });
+
   test("the screen renders on its fixture", () => {
     expect(text(<FollowingScreen />)).toContain("Limitless, 5 transfers");
   });
@@ -158,6 +162,7 @@ describe("the truck picker (1440-truck.png)", () => {
     expect(out).toMatch(/aria-pressed="true"[^>]*>Protest/);
     expect(out.match(/checked=""/g)).toHaveLength(1);
     expect(out).not.toContain("KERIA-TIER");
+    expect(out).toContain('<div class="led led--big">MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS.</div>');
   });
 
   test("Send truck waits for a line", () => {

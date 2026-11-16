@@ -1,17 +1,16 @@
 import { cx, Empty, formatEok, GoLink, Menu, pct, SideSection } from "../../parts";
 import { cardGo } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon } from "../../rift";
-import { listRows, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type Row, type SortKey, type SquadPlayer, type TransferRules } from "./plan";
+import { listRows, nextAgainst, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
 
 const SORTS: Record<SortKey, string> = { points: "Points", price: "Price", owned: "Owned" };
 const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: "all", label: "All roles" }, ...ROLE_KEYS.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
 export const ALL_TEAMS = "all";
 
-/** The list: who can fill the slot being sold, with role chips, search, sort and team. */
+/** The list: who can be bought, with role chips, search, sort and team; none greyed (Craig, 16 Nov 2026). */
 export function PlayerList({
   squad,
   players,
-  rules,
   fixtures,
   teams,
   plan,
@@ -21,7 +20,6 @@ export function PlayerList({
 }: {
   squad: SquadPlayer[];
   players: ListPlayer[];
-  rules: TransferRules;
   fixtures: Record<string, Fixture[]>;
   teams: string[];
   plan: Plan;
@@ -29,9 +27,8 @@ export function PlayerList({
   onFilters: (filters: ListFilters) => void;
   onBuy: (player: ListPlayer) => void;
 }) {
-  const rows = listRows(squad, plan, players, filters, rules);
+  const rows = listRows(squad, plan, players, filters);
   const out = plan.replacing ? squad.find((p) => p.slot === plan.replacing) : undefined;
-  const filling = plan.replacing ? plan.sold[plan.replacing] : undefined;
   return (
     <SideSection title={out ? `Replacing ${out.name}` : "Players"}>
       <div className="transfers__roles">
@@ -76,7 +73,6 @@ export function PlayerList({
               <th aria-label="Role" />
               <th>Player</th>
               <th className="transfers__num">Price</th>
-              <th aria-label="Price move" />
               <th className="transfers__num">Pts</th>
               <th className="transfers__num">Owned</th>
               <th>Next</th>
@@ -84,15 +80,8 @@ export function PlayerList({
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
-              <ListRow
-                key={row.player.id}
-                row={row}
-                next={fixtures[row.player.team]?.[0]}
-                picked={filling?.id === row.player.id}
-                canBuy={plan.replacing !== null}
-                onBuy={onBuy}
-              />
+            {rows.map((p) => (
+              <ListRow key={p.id} p={p} next={nextAgainst(fixtures, p.team)} onBuy={onBuy} />
             ))}
           </tbody>
         </table>
@@ -101,11 +90,10 @@ export function PlayerList({
   );
 }
 
-/** One row: role, name and team (why he can't be bought under it), price, its move, points, owned, next, `+`. */
-function ListRow({ row, next, picked, canBuy, onBuy }: { row: Row; next?: Fixture; picked: boolean; canBuy: boolean; onBuy: (p: ListPlayer) => void }) {
-  const { player: p, why } = row;
+/** One row: role, name and team, price, points, owned, next opponent, `+`. A buy that can't be made is refused when tried. */
+function ListRow({ p, next, onBuy }: { p: ListPlayer; next: string; onBuy: (p: ListPlayer) => void }) {
   return (
-    <tr className={cx(why && "transfers__row--off", picked && "transfers__row--picked")}>
+    <tr>
       <td>
         <RoleIcon role={p.role} />
       </td>
@@ -113,26 +101,15 @@ function ListRow({ row, next, picked, canBuy, onBuy }: { row: Row; next?: Fixtur
         <GoLink go={cardGo(p.id, p.role === "coach")}>
           <b>{p.name}</b> {p.team}
         </GoLink>
-        {why && <small className="transfers__why">{why}</small>}
       </td>
       <td className="transfers__num num">{formatEok(p.price)}</td>
-      <td className="transfers__move">{p.move !== 0 && <span className={p.move > 0 ? "rise" : "fall"} title={p.move > 0 ? "Price rose" : "Price fell"} />}</td>
       <td className="transfers__num num">{p.points}</td>
       <td className="transfers__num num">{pct(p.ownedPct)}</td>
-      <td className="transfers__next">{next && `v ${next.against} ${next.day}`}</td>
+      <td className="transfers__next">{next}</td>
       <td>
-        {canBuy && (
-          <button
-            type="button"
-            className="transfers__add"
-            disabled={why !== undefined}
-            aria-pressed={picked}
-            aria-label={why ? `${p.name}: ${why}` : `Buy ${p.name}`}
-            onClick={() => onBuy(p)}
-          >
-            {picked ? "✓" : "+"}
-          </button>
-        )}
+        <button type="button" className="transfers__add" aria-label={`Buy ${p.name}`} onClick={() => onBuy(p)}>
+          +
+        </button>
       </td>
     </tr>
   );

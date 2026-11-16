@@ -2,31 +2,27 @@
 // Pure, so the page's every control is tested without a browser. The rules themselves are built
 // in convex/squads/; this is only what the page shows while the manager is still choosing.
 
-import { isBench, type Mark, type PersonRole, type SquadSlot } from "../../rift";
+import { BENCH_SLOTS, isBench, LINEUP_ORDER, ROLE_KEYS, ROLE_NAME, type Mark, type PersonRole, type RoleKey, type SquadSlot } from "../../rift";
 
-/** One of the nine, as the page shows him: his sell price in won. */
-export interface SquadPlayer {
-  slot: SquadSlot;
-  id: string;
-  name: string;
-  team: string;
-  role: PersonRole;
-  price: number;
-  ownedPct: number;
-  mark?: Mark;
-}
-
-/** A player or coach in the list: price in won, last price move, season points. */
+/** A player or coach as Transfers shows him: price in won, the last week's points, form, season total. */
 export interface ListPlayer {
   id: string;
   name: string;
   team: string;
   role: PersonRole;
   price: number;
-  /** −1 a fall, 0 none yet, 1 a rise. */
-  move: -1 | 0 | 1;
+  /** The last week's points. */
+  weekPoints: number;
+  form: number;
+  /** Season points. */
   points: number;
   ownedPct: number;
+}
+
+/** One of the nine: his slot, his sell price, his C or V. */
+export interface SquadPlayer extends ListPlayer {
+  slot: SquadSlot;
+  mark?: Mark;
 }
 
 /** What the manager has done: each slot he sold, with who he bought (null until he picks). */
@@ -50,32 +46,94 @@ export interface TransferRules {
   bank: number;
 }
 
-export type Why = "Team full" | "Over budget";
-
-/** A list row: the player, and why he can't be bought, if he can't. */
-export interface Row {
-  player: ListPlayer;
-  why?: Why;
+/** A step's outcome: the plan after it, and the toast that says what happened or why not. */
+export interface Step {
+  plan: Plan;
+  toast: string;
 }
 
-/** Tapping a squad player sells him, or, once sold, makes his slot the one the list fills. */
-export function sell(plan: Plan, slot: SquadSlot): Plan {
-  const sold = slot in plan.sold ? plan.sold : { ...plan.sold, [slot]: null };
-  return { sold, replacing: slot };
-}
+/** The nine slots in squad order. */
+export const SQUAD_SLOTS: readonly SquadSlot[] = [...LINEUP_ORDER, ...BENCH_SLOTS];
 
-/** A row's `+` buys him into the slot the list is filling. */
-export function buy(plan: Plan, player: ListPlayer): Plan {
-  if (!plan.replacing) return plan;
-  return { ...plan, sold: { ...plan.sold, [plan.replacing]: player } };
-}
+const soldSlots = (plan: Plan) => SQUAD_SLOTS.filter((slot) => slot in plan.sold);
+const isEmpty = (plan: Plan, slot: SquadSlot) => slot in plan.sold && !plan.sold[slot];
+const emptyList = (plan: Plan) => SQUAD_SLOTS.filter((slot) => isEmpty(plan, slot));
 
-const soldSlots = (plan: Plan) => Object.keys(plan.sold) as SquadSlot[];
-
-function outOf(squad: SquadPlayer[], slot: SquadSlot): SquadPlayer {
+export function outOf(squad: SquadPlayer[], slot: SquadSlot): SquadPlayer {
   const out = squad.find((p) => p.slot === slot);
   if (!out) throw new Error(`Transfers: no squad player in the ${slot} slot`);
   return out;
+}
+
+/** Who stands in a slot now: the one bought into it, the one there before, or no one while it is empty. */
+export function inSlot(squad: SquadPlayer[], plan: Plan, slot: SquadSlot): ListPlayer | null {
+  if (slot in plan.sold) return plan.sold[slot] ?? null;
+  return squad.find((p) => p.slot === slot) ?? null;
+}
+
+/** The coach's slot takes a coach; any other takes a player of any role (the squad rule, 16 Nov 2026). */
+export const fits = (slot: SquadSlot, role: PersonRole) => (slot === "coach") === (role === "coach");
+
+/** `Kingen added`, `Siwoo removed`, `Siwoo restored`. */
+export const added = (name: string) => `${name} added`;
+export const removed = (name: string) => `${name} removed`;
+export const restored = (name: string) => `${name} restored`;
+
+/** Takes the one standing in a slot out: an original sold, or a buy undone. The list then fills that slot. */
+export function remove(squad: SquadPlayer[], plan: Plan, slot: SquadSlot): Step {
+  const who = inSlot(squad, plan, slot) ?? outOf(squad, slot);
+  return { plan: { sold: { ...plan.sold, [slot]: null }, replacing: slot }, toast: removed(who.name) };
+}
+
+/** Puts a sold player back in his slot, as if never sold. */
+export function restore(squad: SquadPlayer[], plan: Plan, slot: SquadSlot): Step {
+  const sold = { ...plan.sold };
+  delete sold[slot];
+  const next = { sold, replacing: plan.replacing };
+  if (plan.replacing === slot) next.replacing = emptyList(next)[0] ?? null;
+  return { plan: next, toast: restored(outOf(squad, slot).name) };
+}
+
+/** The slot a buy goes into: the one being filled if it is empty and he fits it, else the first empty one he fits. */
+function targetFor(plan: Plan, role: PersonRole): SquadSlot | undefined {
+  const open = emptyList(plan).filter((slot) => fits(slot, role));
+  return open.find((slot) => slot === plan.replacing) ?? open[0];
+}
+
+/** `Team full: 2 from T1`. */
+export const teamFull = (cap: number, team: string) => `Team full: ${cap} from ${team}`;
+/** `No Top left`. */
+export const roleEmpty = (role: RoleKey) => `No ${ROLE_NAME[role]} left`;
+
+/**
+ * Why a buy into a slot can never be valid, or nothing: his team at the cap, or a role left with no one
+ * that the other empty slots can't still fill (the squad keeps at least one of each role). Over the
+ * budget is allowed while choosing; it only stops the confirm, as FPL.
+ */
+export function refusal(squad: SquadPlayer[], plan: Plan, slot: SquadSlot, player: ListPlayer, rules: TransferRules): string | undefined {
+  const others = SQUAD_SLOTS.filter((s) => s !== slot).map((s) => inSlot(squad, plan, s));
+  if (others.filter((p) => p?.team === player.team).length >= rules.teamCap) return teamFull(rules.teamCap, player.team);
+  if (player.role === "coach") return undefined;
+  const roles = new Set([...others.map((p) => p?.role), player.role]);
+  const missing = ROLE_KEYS.filter((role) => !roles.has(role));
+  const stillOpen = emptyList(plan).filter((s) => s !== slot && s !== "coach").length;
+  return missing.length > stillOpen ? roleEmpty(missing[0]!) : undefined;
+}
+
+/** `Remove a player first`, `Remove your coach first`: no empty slot he fits. */
+export const noRoom = (role: PersonRole) => (role === "coach" ? "Remove your coach first" : "Remove a player first");
+
+/**
+ * A row's `+`: buys him into the slot being filled, or the first empty one he fits, then moves on to the
+ * next empty slot, if any. Refused, with why, when no slot is open or the move can never be valid.
+ */
+export function add(squad: SquadPlayer[], plan: Plan, player: ListPlayer, rules: TransferRules): Step {
+  const slot = targetFor(plan, player.role);
+  if (!slot) return { plan, toast: noRoom(player.role) };
+  const why = refusal(squad, plan, slot, player, rules);
+  if (why) return { plan, toast: why };
+  const sold = { ...plan.sold, [slot]: player };
+  return { plan: { sold, replacing: SQUAD_SLOTS.find((s) => s in sold && !sold[s]) ?? null }, toast: added(player.name) };
 }
 
 /**
@@ -92,41 +150,30 @@ export function moves(squad: SquadPlayer[], plan: Plan): { out: SquadPlayer; in:
 export const transfersMade = (squad: SquadPlayer[], plan: Plan) => moves(squad, plan).filter((m) => m.in !== null).length;
 
 /** Slots sold and not yet filled. */
-export const emptySlots = (plan: Plan) => soldSlots(plan).filter((slot) => !plan.sold[slot]).length;
+export const emptySlots = (plan: Plan) => emptyList(plan).length;
 
 export function freeLeft(rules: TransferRules, made: number): number {
   return Math.max(0, rules.freeTransfers - made);
 }
+
+/** The free transfers the transfers made now use. */
+export const freeUsed = (rules: TransferRules, made: number) => Math.min(rules.freeTransfers, made);
 
 /** The points the transfers made now cost: each past the free ones. */
 export function pendingHit(rules: TransferRules, made: number): number {
   return Math.max(0, made - rules.freeTransfers) * rules.hitPoints;
 }
 
-/** The bank now: every sale in, every buy out. */
+/** The bank now: every sale in, every buy out. Below zero while over the budget. */
 export function bankNow(squad: SquadPlayer[], plan: Plan, bank: number): number {
   return moves(squad, plan).reduce((sum, m) => sum + m.out.price - (m.in?.price ?? 0), bank);
 }
 
-/** Who stands in a slot now: the one bought into it, or the one there before. */
-export function inSlot(squad: SquadPlayer[], plan: Plan, slot: SquadSlot): SquadPlayer | ListPlayer | null {
-  if (slot in plan.sold) return plan.sold[slot] ?? null;
-  return squad.find((p) => p.slot === slot) ?? null;
-}
-
-/** The roles a slot takes: its own, any player's for the Flex and the bench, a coach for the Coach. */
-export function fits(slot: SquadSlot, role: PersonRole): boolean {
-  if (slot === "coach") return role === "coach";
-  if (slot === "flex" || isBench(slot)) return role !== "coach";
-  return role === slot;
-}
-
-/** Why a player can't go into the slot: his team already at the cap, or more than the bank. */
-export function whyNot(squad: SquadPlayer[], plan: Plan, slot: SquadSlot, player: ListPlayer, rules: TransferRules): Why | undefined {
-  const others = squad.map((p) => p.slot).filter((s) => s !== slot).map((s) => inSlot(squad, plan, s));
-  if (others.filter((p) => p?.team === player.team).length >= rules.teamCap) return "Team full";
-  const inHand = bankNow(squad, plan, rules.bank) + (plan.sold[slot]?.price ?? 0);
-  if (player.price > inHand) return "Over budget";
+/** Why Review and confirm is off: a slot still empty, nothing to confirm, or over the budget. */
+export function reviewBlock(squad: SquadPlayer[], plan: Plan, rules: TransferRules): string | undefined {
+  if (emptySlots(plan) > 0) return "Slot empty";
+  if (transfersMade(squad, plan) === 0) return "No changes";
+  if (bankNow(squad, plan, rules.bank) < 0) return "Over budget";
   return undefined;
 }
 
@@ -147,27 +194,24 @@ const SORT_VALUE: Record<SortKey, (p: ListPlayer) => number> = {
 };
 
 /** The role chip a slot opens the list on: his role, or All roles where any fits. */
-export function roleFilterFor(slot: SquadSlot): RoleFilter {
-  return slot === "flex" || isBench(slot) ? "all" : slot;
+export function roleFilterFor(squad: SquadPlayer[], slot: SquadSlot): RoleFilter {
+  return slot === "coach" ? "coach" : slot === "flex" || isBench(slot) ? "all" : outOf(squad, slot).role;
 }
 
 /**
- * The list: players not standing in another slot who fit the slot being filled and the filters, best first by
- * the sort; those who can't be bought stay, with why, last (spec/12).
+ * The list: everyone not standing in the squad who matches the filters, best first by the sort. None is
+ * greyed: a buy that can't be made is refused when tried, with why (Craig, 16 Nov 2026).
  */
-export function listRows(squad: SquadPlayer[], plan: Plan, players: ListPlayer[], filters: ListFilters, rules: TransferRules): Row[] {
-  const slot = plan.replacing;
-  const standing = new Set(squad.map((p) => p.slot).filter((s) => s !== slot).map((s) => inSlot(squad, plan, s)?.id));
+export function listRows(squad: SquadPlayer[], plan: Plan, players: ListPlayer[], filters: ListFilters): ListPlayer[] {
+  const standing = new Set(SQUAD_SLOTS.map((s) => inSlot(squad, plan, s)?.id));
   const query = filters.search.trim().toLowerCase();
-  const rows = players
+  const value = SORT_VALUE[filters.sort];
+  return players
     .filter((p) => !standing.has(p.id))
-    .filter((p) => (slot ? fits(slot, p.role) : true))
     .filter((p) => filters.role === "all" || p.role === filters.role)
     .filter((p) => filters.team === "all" || p.team === filters.team)
     .filter((p) => p.name.toLowerCase().includes(query))
-    .map((player): Row => ({ player, why: slot ? whyNot(squad, plan, slot, player, rules) : undefined }));
-  const value = SORT_VALUE[filters.sort];
-  return rows.sort((a, b) => Number(a.why !== undefined) - Number(b.why !== undefined) || value(b.player) - value(a.player));
+    .sort((a, b) => value(b) - value(a));
 }
 
 /** One of a team's series this week: who against, and the day. */
@@ -175,6 +219,12 @@ export interface Fixture {
   against: string;
   day: string;
 }
+
+/** `v DK`: a team's next opponent alone, or nothing. */
+export const nextAgainst = (fixtures: Record<string, Fixture[]>, team: string) => {
+  const next = fixtures[team]?.[0];
+  return next ? `v ${next.against}` : "";
+};
 
 /** One confirm this week: when, who went out and came in, its hit (0 is free), and the buff it was under. */
 export interface Confirm {

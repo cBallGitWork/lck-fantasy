@@ -4,6 +4,21 @@ Where a manager sells and buys players. Reached from **Transfers** in the top ba
 
 **Approved:** Craig, 13 Nov 2026. He asked for players who are too dear to be greyed but still listed ("we need to see those players"), then said "Yes save". Later that day he cut Form, asked for both of the week's series under each player and in Next, a toggle for what shows under a player, no explainer sentences, and the transfer buffs at the top as FPL's, the others on Pick Team. On 14 Nov he asked for fresh eyes on the whole page and less obvious explaining text; the redraw adds Undo, price arrows and −6 hits, and he said "yes save". Names, teams and numbers are a made-up LCK Cup Week 4, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn.
 
+## Changed by Craig, 16 Nov 2026
+
+He looked at the built page and asked for these; they overrule the pictures where they differ.
+
+1. No price ▲/▼ arrows on this page.
+2. Rift view has no bench: all nine stand on the Rift by role, the coach in his own spot, several of one role side by side in their lane, as FPL's Transfers pitch stands all fifteen.
+3. Each Rift tile shows the player's price under his name, as FPL's Transfers pitch; the Show ▾ menu is gone.
+4. No team crests on the tiles.
+5. Card view is replaced by **List view** (Rift view | List view): the nine grouped by role, each row shirt, name, team, last week's points, price, form, total, Next (the next opponent alone, "v DK") and × to sell (↺ puts him back).
+6. Several transfers in one go, as FPL: remove and add several, then one confirm. Each add or refusal says so in a short message at the foot of the page (`Kingen added`, `Team full: 2 from GEN`, `No Bot left`); no row is greyed. Over the budget is allowed while choosing: the bank goes red below zero and Review and confirm is off, as FPL.
+7. The confirm sheet stands out (a heavy ink frame) and has one row per transfer, out → in with each price, then cost, bank and free transfers used.
+8. The head shows free transfers, cost and bank, as FPL's.
+9. Any role for any role: the squad keeps at least one of each role; past that any player can be sold for any player. A buy that would leave a role empty is refused with why. On confirm the squad is arranged by role, a starter keeping his place.
+10. Next in the player list drops the day: "v DK", not "Wed v DK".
+
 | File | Shows |
 |---|---|
 | `1440.png`, `transfers.html` | Rift view mid-transfer, Tuesday night: Siwoo sold, Kingen in the Flex at −6; the week's two confirms under the list, the latest with Undo |

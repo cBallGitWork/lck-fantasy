@@ -2,7 +2,7 @@
 
 Seed data held per competition and season: teams, kit colours, stages. Data, never constants in code.
 
-- `lck/crests/<code>.svg`: each LCK team's crest, by team code (docs/design/approved/crests/). `src/parts/Crest.tsx` draws them.
+- `lck/crests/<code>.svg`: each LCK team's crest, by team code (docs/design/approved/crests/). `src/parts/display/Crest.tsx` draws them.
 - `lck/shirts/<code>.svg`: each LCK team's shirt, by team code, viewBox 0 0 100 100, every id prefixed by team so all ten sit inline on one page. Inline them (or load IBM Plex Sans KR) so the hangul sponsor word keeps its font.
 - `lck/teams.json`: each team's kit colours (primary body, secondary pattern, accent trim), by team code. Their shirts are approved in docs/design/approved/shirts/ (Craig, 16 Nov 2026), with where shirts and crests show.
 

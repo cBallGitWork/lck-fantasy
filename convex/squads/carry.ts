@@ -1,5 +1,5 @@
 // The Carry and Vice-carry (spec/04-captain.md): FPL's captain and vice-captain.
-import { pickKey, playerKey, type ScoringPick, type Squad } from "./squad";
+import { pickKey, playerKey, type Pick, type ScoringPick, type Squad } from "./squad";
 
 /** Player ids: the armband is only ever on a player, never the coach. */
 export interface Armband {
@@ -36,6 +36,11 @@ export function carryingPlayers(armband: Armband, played: ReadonlySet<string>, d
   return new Set(vicePlayed ? [armband.viceCarry] : []);
 }
 
+/** Whether a pick takes the multiplier: a player in `carrying`, never the coach. */
+export function isCarrying(pick: Pick, carrying: ReadonlySet<string>): boolean {
+  return pick.role !== "coach" && carrying.has(pick.id);
+}
+
 /** Points multiplied and rounded towards zero: ×1.5 makes a 9 a 13 and a −3 a −4 (spec/05, The Carry). */
 export function multiplied(points: number, multiplier: number): number {
   return Math.trunc(points * multiplier) + 0;
@@ -55,7 +60,6 @@ export function lineupPoints(
 ): SlotPoints[] {
   return lineup.map((scoring) => {
     const base = points.get(pickKey(scoring.pick)) ?? 0;
-    const isCarrying = scoring.pick.role !== "coach" && carrying.has(scoring.pick.id);
-    return { ...scoring, points: isCarrying ? multiplied(base, carryMultiplier) : base };
+    return { ...scoring, points: isCarrying(scoring.pick, carrying) ? multiplied(base, carryMultiplier) : base };
   });
 }

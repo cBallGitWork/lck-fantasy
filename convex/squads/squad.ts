@@ -121,6 +121,11 @@ export function allPicks(squad: Squad): Pick[] {
   return [...squad.starters.map((starter) => starter.pick), ...squad.bench];
 }
 
+/** Every pick's `pickKey` in the squad. */
+export function pickKeysOf(squad: Squad): Set<string> {
+  return new Set(allPicks(squad).map(pickKey));
+}
+
 /** How many picks each team fills, the coach counting as one (spec/01, The coach). */
 export function picksPerTeam(picks: Pick[]): Map<string, number> {
   const counts = new Map<string, number>();

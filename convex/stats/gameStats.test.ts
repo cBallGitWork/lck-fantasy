@@ -1,8 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { leaguepediaGameKey, v5Extras } from "../feeds/leaguepedia";
-import { oeSeriesGame } from "../feeds/oraclesElixir";
-import { BRION, DRX, gameOnePlayer, OE_FIXTURE_GAMES, OE_GAME_1 } from "../feeds/fixtures/oe";
+import { BRION, DRX, gameOnePlayer, OE_GAME_1, OE_SERIES_GAMES } from "../feeds/fixtures/oe";
 import { v5Game } from "../feeds/fixtures/v5-shape";
+import { HOUR_MS, SPEC_FINAL_AFTER_MS } from "../lck/fixtures";
 import { groupSeries, seriesState } from "../lck/series";
 import { OE_2025_BRION_DRX } from "../scoring/fixtures";
 import { playerGameStats, seriesSettledStats, teamGameStats } from "./gameStats";
@@ -29,13 +29,11 @@ describe("playerGameStats", () => {
 });
 
 describe("seriesSettledStats", () => {
-  const HOUR = 60 * 60 * 1000;
-  const FINAL_AFTER = 3 * HOUR; // spec/11's 3 hours, passed in as data
-  const [series] = groupSeries(OE_FIXTURE_GAMES.map(oeSeriesGame)).series;
+  const [series] = groupSeries(OE_SERIES_GAMES).series;
   const { endedAt, games } = series!;
   const pages = (gameIds: readonly string[]) => new Map(gameIds.map((id) => [leaguepediaGameKey(id), v5Game()]));
   const allIds = games.map((g) => g.gameId);
-  const stateAt = (now: number, stats: ReturnType<typeof seriesSettledStats>) => seriesState(endedAt, stats.settled, now, FINAL_AFTER);
+  const stateAt = (now: number, stats: ReturnType<typeof seriesSettledStats>) => seriesState(endedAt, stats.settled, now, SPEC_FINAL_AFTER_MS);
 
   test("with every game's settled stats, the series turns final at 3 hours, matching the scoring's fixture", () => {
     const stats = seriesSettledStats(games, pages(allIds));
@@ -45,15 +43,15 @@ describe("seriesSettledStats", () => {
     const clozer = stats.games[0]!.players.find((p) => p.playerId === player("Clozer").playerId);
     expect(clozer?.stats).toEqual(OE_2025_BRION_DRX.clozer);
     expect(stats.games[0]!.teams.find((t) => t.teamId === BRION)?.stats).toEqual(OE_2025_BRION_DRX.brion);
-    expect(stateAt(endedAt + FINAL_AFTER - 1, stats)).toBe("provisional");
-    expect(stateAt(endedAt + FINAL_AFTER, stats)).toBe("final");
+    expect(stateAt(endedAt + SPEC_FINAL_AFTER_MS - 1, stats)).toBe("provisional");
+    expect(stateAt(endedAt + SPEC_FINAL_AFTER_MS, stats)).toBe("final");
   });
 
   test("a game with no Leaguepedia page keeps it provisional, and it turns final when the page lands", () => {
     const before = seriesSettledStats(games, pages(allIds.slice(0, 2)));
     expect(before).toEqual({ settled: false, waiting: [`${allIds[2]}: no Leaguepedia page "${leaguepediaGameKey(allIds[2]!)}"`] });
-    expect(stateAt(endedAt + 10 * HOUR, before)).toBe("provisional");
-    expect(stateAt(endedAt + 10 * HOUR, seriesSettledStats(games, pages(allIds)))).toBe("final");
+    expect(stateAt(endedAt + 10 * HOUR_MS, before)).toBe("provisional");
+    expect(stateAt(endedAt + 10 * HOUR_MS, seriesSettledStats(games, pages(allIds)))).toBe("final");
   });
 
   test("an admin's pasted key finds a page the game's own id doesn't", () => {

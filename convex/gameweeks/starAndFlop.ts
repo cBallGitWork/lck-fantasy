@@ -1,6 +1,7 @@
 // The gameweek's star and flop (spec/12-pages.md, Home): the same pair for every manager, picked
 // from effective ownership once the gameweek is final.
 import type { BuffLineup } from "../squads/buffs";
+import { isCarrying } from "../squads/carry";
 import { pickKey } from "../squads/squad";
 
 /** One manager's gameweek as it scored: the line-up after auto-subs or with a Bench Boost bench,
@@ -42,9 +43,8 @@ export function starAndFlop(
   const weights = new Map<string, number>([...points.keys()].map((key) => [key, 0]));
   for (const { lineup, carrying } of managers) {
     for (const { pick } of lineup) {
-      const isCarrying = pick.role !== "coach" && carrying.has(pick.id);
       const key = pickKey(pick);
-      weights.set(key, (weights.get(key) ?? 0) + (isCarrying ? settings.carryMultiplier : 1));
+      weights.set(key, (weights.get(key) ?? 0) + (isCarrying(pick, carrying) ? settings.carryMultiplier : 1));
     }
   }
 

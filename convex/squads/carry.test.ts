@@ -1,13 +1,11 @@
 import { describe, expect, test } from "vitest";
 import { armbandProblems, carryingPlayers, lineupPoints, multiplied } from "./carry";
-import { chovy, gumayusi, keria, playedExcept, validSquad } from "./fixtures";
+import { byPick, CARRY_MULTIPLIER, chovy, gumayusi, keria, playedExcept, validSquad } from "./fixtures";
 import { allPicks, pickKey } from "./squad";
-
-const CARRY_MULTIPLIER = 1.5; // a fixture value: the real one is the competition's data
 
 /** Every pick of the valid squad scoring `each`, with some set apart. */
 function pointsOf(each: number, special: Record<string, number> = {}) {
-  return new Map(allPicks(validSquad()).map((pick) => [pickKey(pick), special[pickKey(pick)] ?? each]));
+  return byPick(allPicks(validSquad()).map((pick) => [pick, special[pickKey(pick)] ?? each]));
 }
 
 const armband = { carry: "chovy", viceCarry: "keria" };

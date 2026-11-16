@@ -2,7 +2,7 @@
 // squad still over the budget or the cap at Split 2's first deadline is fixed by Flol, at no
 // points cost.
 import { priceOf, requirePrice, type Prices } from "./budget";
-import { allPicks, pickKey, picksPerTeam, type Pick, type Squad } from "./squad";
+import { allPicks, pickKey, pickKeysOf, picksPerTeam, type Pick, type Squad } from "./squad";
 
 /** The money bank once Split 2 starts: the raise comes off, and may leave it below zero. */
 export function bankAtSplitStart(bank: number, knockoutRaise: number): number {
@@ -42,7 +42,7 @@ export function fixSquadForSplit(squad: Squad, bank: number, teamCap: number, po
     for (const extra of extras.slice(0, Math.max(0, count - teamCap))) swap(extra);
   }
 
-  const original = new Set(allPicks(squad).map(pickKey));
+  const original = pickKeysOf(squad);
   while (money < 0) {
     const left = allPicks(current).filter(
       (pick) => pick.role !== "coach" && original.has(pickKey(pick)),
@@ -55,7 +55,7 @@ export function fixSquadForSplit(squad: Squad, bank: number, teamCap: number, po
 }
 
 function cheapestReplacement(squad: Squad, out: Pick, teamCap: number, pool: Pick[], prices: Prices): Pick | undefined {
-  const inSquad = new Set(allPicks(squad).map(pickKey));
+  const inSquad = pickKeysOf(squad);
   const perTeam = picksPerTeam(allPicks(squad).filter((pick) => pick !== out));
   const candidates = pool.filter(
     (pick) =>

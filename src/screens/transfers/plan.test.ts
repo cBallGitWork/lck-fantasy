@@ -2,7 +2,7 @@
 import { describe, expect, test } from "vitest";
 import { HIT_POINTS, WEEK4_FREE_TRANSFERS } from "../../fixtures/week3";
 import { CONFIRMS, PICTURE_PLAN, PLAYERS, RULES, SQUAD, TRANSFERS_PICTURE } from "./fixtures";
-import { byRole } from "./lineup";
+import { arrange, byRole } from "./lineup";
 import {
   add,
   ALL,
@@ -68,9 +68,11 @@ describe("several transfers in one go", () => {
     expect([two.replacing, transfersMade(SQUAD, two), emptySlots(two)]).toEqual([null, 2, 0]);
   });
 
-  test("any role for any role: a Mid bought for a Top can be confirmed", () => {
+  test("any role for any role: a Mid bought for a Top, the Top who started takes the Top slot", () => {
     const plan = bought(removed("top"), "Clozer");
     expect(reviewBlock(SQUAD, plan, RULES)).toBeUndefined();
+    const lineup = arrange(SQUAD, plan);
+    expect([lineup.top.name, lineup.flex.name, lineup.mid.name]).toEqual(["Siwoo", "Clozer", "Faker"]);
   });
 
   test("a buy that would leave a role empty is refused, with why", () => {

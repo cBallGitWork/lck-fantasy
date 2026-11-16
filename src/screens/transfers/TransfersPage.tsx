@@ -1,10 +1,10 @@
 import { useCallback, useState } from "react";
 import type { BuffName } from "../../fixtures/week3";
 import { cx, Deadline, formatWon, MainAction, NONE, OutlinedKey, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
-import { Rift, RIFT_VIEW, Tile } from "../../rift";
+import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
-import { byRole, type SlotHolder } from "./lineup";
+import { arrange, byRole, type SlotHolder } from "./lineup";
 import {
   add,
   ALL,
@@ -61,10 +61,13 @@ export interface TransfersPageProps {
   initialPlan?: Plan;
   /** The manager's last choice; Rift view on his first visit (spec/12). */
   view?: View;
+  onViewChange?: (view: View) => void;
   /** Opens on the confirm sheet. */
   reviewing?: boolean;
-  /** Each transfer by id. */
-  onConfirm?: (transfers: { out: string; in: string }[]) => void;
+  /** Each transfer by id, and the nine after them, arranged by role. */
+  onConfirm?: (transfers: { out: string; in: string }[], lineup: Record<SquadSlot, string>) => void;
+  onUndo?: (confirmId: string) => void;
+  onBuff?: (buff: BuffName) => void;
 }
 
 
@@ -99,6 +102,10 @@ export function TransfersPage(props: TransfersPageProps) {
   /** Tapping one of the nine: an empty slot gets its player back; anyone else is taken out. */
   const tap = (holder: SlotHolder) => take(holder.empty ? restore(squad, plan, holder.slot) : remove(squad, plan, holder.slot));
   const reset = () => setPlan(EMPTY_PLAN);
+  const chooseView = (next: View) => {
+    setView(next);
+    props.onViewChange?.(next);
+  };
 
   const side = (
     <>
@@ -106,7 +113,10 @@ export function TransfersPage(props: TransfersPageProps) {
       <Confirmed
         week={props.week}
         confirms={props.confirms}
-        onUndo={reset}
+        onUndo={(id) => {
+          reset();
+          props.onUndo?.(id);
+        }}
       />
     </>
   );
@@ -135,10 +145,10 @@ export function TransfersPage(props: TransfersPageProps) {
         </div>
       </PageHead>
       <div className="transfers__controls">
-        <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={setView} label="View" />
+        <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={chooseView} label="View" />
         <span className="transfers__keys">
           {props.buffs.map((buff) => (
-            <OutlinedKey key={buff}>
+            <OutlinedKey key={buff} onClick={() => props.onBuff?.(buff)}>
               {buff}
             </OutlinedKey>
           ))}
@@ -203,7 +213,11 @@ export function TransfersPage(props: TransfersPageProps) {
           deadline={props.deadline}
           onBack={() => setReviewing(false)}
           onConfirm={() => {
-            props.onConfirm?.(done.map((m) => ({ out: m.out.id, in: m.in.id })));
+            const lineup = Object.fromEntries(Object.entries(arrange(squad, plan)).map(([slot, p]) => [slot, p.id])) as Record<SquadSlot, string>;
+            props.onConfirm?.(
+              done.map((m) => ({ out: m.out.id, in: m.in.id })),
+              lineup,
+            );
             setReviewing(false);
             reset();
           }}

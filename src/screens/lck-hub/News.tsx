@@ -11,7 +11,7 @@ export function News({ news }: { news: HubNews }) {
             <Placeholder word="thumbnail" fill />
           </span>
           <span>
-            <b className="lck-hub__headline">{h.headline}</b>
+            <b className="lck-hub__headline hover-line">{h.headline}</b>
             <small className="quiet">{h.date} ↗</small>
           </span>
         </a>

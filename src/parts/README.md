@@ -40,14 +40,14 @@ What shows a fact: tags, tables, lists, crests, states.
 - `Deadline.tsx`: `Deadline Wed 07:45  16:45 KST` and the countdown.
 - `Time.tsx`: your time, then KST in mid grey; the words over such times (`YOUR_TIME`, `TIME_NOTE`).
 - `MeDot.tsx`: your player's dot.
-- `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a row's `›` (`open`); sticky head and name column for the wide table.
+- `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a rule above a row starting a group (`ruleAbove`), a row's `›` (`open`); sticky head and name column for the wide table.
 - `SeriesList.tsx`: the week's series: day, teams, then score and state, or the time.
 - `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px `--text` rule, the next 3 with `Bo3`, the first in `--text` (player card, coach card).
 - `States.tsx`: `Loading` (fill bars), `Empty` (a title, one line), `ErrorState` (a title, one line, `Try again ›`).
 - `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `TierShield.tsx`: Overall's tier shield, no text on it (spec/08); the page sizes and colours it through its class names.
-- `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
+- `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904, or a mid grey `—` when it held), the one rank move on every screen; no CSS of its own, base.css draws them.
 
 ## text/
 

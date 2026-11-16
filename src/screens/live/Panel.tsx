@@ -1,5 +1,5 @@
 import { gameNo, GoLink, LinkGo, LiveTag, NONE, NotFinalTag, SectionHead } from "../../parts";
-import { cardGo, PATHS } from "../../paths";
+import { cardGo, PATHS, profileGo } from "../../paths";
 import { MarkBadge, RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
 import { dot, WORDS } from "./words";
@@ -68,10 +68,10 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
         <span className="live__avg">
           {WORDS.average} <b className="live__figure num">{week.average}</b>
         </span>
-        <span className="live__avg">
+        <GoLink className="live__avg" go={profileGo(week.highestBy)}>
           {WORDS.highest} <b className="live__figure num">{week.highest}</b>
           <span className="live__go">›</span>
-        </span>
+        </GoLink>
       </div>
       <SectionHead>
         {series.home} {WORDS.versus} {series.away}

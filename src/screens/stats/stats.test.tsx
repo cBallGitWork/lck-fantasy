@@ -38,7 +38,7 @@ const PICTURE_TOTALS = [
 ];
 
 /** Each row's name, in the order the page shows them. */
-const names = (out: string) => [...out.matchAll(/class="stats__name"[^>]*>([^<]+)</g)].map((m) => m[1]);
+const names = (out: string) => [...out.matchAll(/class="stats__name hover-line"[^>]*>([^<]+)</g)].map((m) => m[1]);
 
 /** The text of each head cell, in order. */
 const heads = (out: string) => [...out.matchAll(/<th[^>]*>(.*?)<\/th>/g)].map((m) => plain(m[1] ?? ""));

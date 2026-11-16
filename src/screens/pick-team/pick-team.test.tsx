@@ -102,10 +102,10 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expect(markup).not.toContain("plays Top</div>");
   // His card shows T1's crest; the Rift's tiles and the bench show none (Craig, 16 Nov 2026).
   expect(markup.match(/alt="T1 crest"/g)).toHaveLength(1);
-  expect(markup).toMatch(/main-action__key"[^>]*disabled/);
+  expect(markup).toMatch(/main-action__key[^"]*"[^>]*disabled/);
   expect(markup).not.toContain("Reset");
   expect(markup.match(/buff-card__play/g)).toHaveLength(2);
-  expect(markup.match(/href="\/transfers"[^>]*class="link-go"|class="link-go"[^>]*href="\/transfers"/g)).toHaveLength(2);
+  expect(markup.match(/href="\/transfers"[^>]*class="link-go hover-line"|class="link-go hover-line"[^>]*href="\/transfers"/g)).toHaveLength(2);
   expect(markup).toContain('href="/player/faker"');
 });
 
@@ -176,7 +176,7 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
   expect(markup).toContain("buff-card--on");
   expect(markup.match(/buff-card--off/g)).toHaveLength(3);
   expect(markup).not.toContain("buff-card__play");
-  expect(markup).not.toMatch(/main-action__key"[^>]*disabled/);
+  expect(markup).not.toMatch(/main-action__key[^"]*"[^>]*disabled/);
 });
 
 test("the coach's card has no Carry or swap keys", () => {

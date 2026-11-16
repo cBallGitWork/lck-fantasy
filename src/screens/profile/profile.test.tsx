@@ -53,7 +53,7 @@ describe("Points", () => {
     expect(markup).toContain('data-screen="profile"');
     expect(markup).toMatch(/aria-selected="true"[^>]*>Points</);
     expect(markup).toContain('aria-label="Week before"');
-    expect(markup).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">›</button>');
+    expect(markup).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
   });
 
   test("links each player to his card, the coach to the coach card, Highest to Perfect game and each league to its table", () => {
@@ -127,4 +127,12 @@ describe("the follow key", () => {
     expect(nextFollow("follow")).toBe("requested");
     expect(nextFollow("requested")).toBe("requested");
   });
+});
+
+test("a held rank, in Leagues or History, is RankMove's grey —", () => {
+  const held: ProfileData = { ...PROFILE, leagues: PROFILE.leagues.map((l) => ({ ...l, move: 0 })), history: PROFILE.history.map((r) => ({ ...r, move: 0 })) };
+  expect(html(page("Points", held))).toContain('<span class="rank-held">—</span>');
+  const history = html(page("History", held));
+  expect(history).toContain('<span class="rank-held">—</span>');
+  expect(history).not.toMatch(/rank-(up|down)/);
 });

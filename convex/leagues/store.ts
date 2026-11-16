@@ -46,8 +46,10 @@ export const changeFavouriteTeam = internalMutation({
   handler: async (ctx, { entry, team, firstScoredGameweek }) => {
     if (!canChangeFavouriteTeam(firstScoredGameweek)) throw refuse({ rule: "favouriteTeamFixed" });
     const manager = await managerOf(ctx, entry);
-    const old = await autoLeague(ctx, { kind: "team", teamId: manager.favouriteTeam });
-    await leave(ctx, old, entry);
+    // Every entry joins its team's league at sign-up, so one that isn't in it is a broken row, said so.
+    const old = await membership(ctx, await autoLeague(ctx, { kind: "team", teamId: manager.favouriteTeam }), entry);
+    if (old === null) throw new Error(`Entry ${entry} isn't in its favourite team's league.`);
+    await ctx.db.delete(old._id);
     await ctx.db.patch(manager._id, { favouriteTeam: team });
     await join(ctx, await autoLeague(ctx, { kind: "team", teamId: team }), entry);
   },
@@ -131,7 +133,7 @@ export const leaguesOf = internalQuery({
   handler: async (ctx, { entry }) => {
     const rows = await ctx.db.query("leagueEntries").withIndex("by_entry", (q) => q.eq("entry", entry)).collect();
     const leagues = await Promise.all(
-      rows.map(async (row) => ({ ...(await ctx.db.get(row.league))!, size: (await members(ctx, row.league)).length })),
+      rows.map(async (row) => ({ ...(await leagueOf(ctx, row)), size: (await members(ctx, row.league)).length })),
     );
     const order: Doc<"leagues">["kind"][] = ["overall", "country", "team", "private"];
     return leagues.sort((a, b) => order.indexOf(a.kind) - order.indexOf(b.kind));
@@ -144,6 +146,13 @@ async function managerOf(ctx: QueryCtx, entry: Id<"entries">): Promise<Doc<"mana
   const manager = await ctx.db.get(row.manager);
   if (manager === null) throw new Error(`No manager for entry ${entry}.`);
   return manager;
+}
+
+/** A membership's league; a membership whose league is gone is a broken row, said so. */
+async function leagueOf(ctx: QueryCtx, row: Doc<"leagueEntries">): Promise<Doc<"leagues">> {
+  const league = await ctx.db.get(row.league);
+  if (league === null) throw new Error(`No league ${row.league} for membership ${row._id}.`);
+  return league;
 }
 
 /** The one league of an auto kind, made the first time a manager needs it. */
@@ -182,7 +191,7 @@ async function leave(ctx: MutationCtx, league: Id<"leagues">, entry: Id<"entries
 /** Refused when the entry is at the private league cap, or the league is full. */
 async function checkJoin(ctx: QueryCtx, entry: Id<"entries">, size: number, settings: { privateLeagueCap: number; privateLeagueSize: number | null }) {
   const rows = await ctx.db.query("leagueEntries").withIndex("by_entry", (q) => q.eq("entry", entry)).collect();
-  const kinds = await Promise.all(rows.map(async (row) => (await ctx.db.get(row.league))?.kind));
+  const kinds = await Promise.all(rows.map(async (row) => (await leagueOf(ctx, row)).kind));
   const [problem] = joinProblems(kinds.filter((kind) => kind === "private").length, size, settings);
   if (problem !== undefined) throw refuse(problem);
 }

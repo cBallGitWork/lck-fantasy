@@ -64,6 +64,27 @@ describe("leagues every manager joins", () => {
       rule: "favouriteTeamFixed",
     });
   });
+
+  test("an entry never entered into its leagues is a broken row: the change says so and changes nothing", async () => {
+    const { t, t1, gen } = await world();
+    const entry = await t.run(async (ctx) => {
+      const manager = await ctx.db.insert("managers", { country: "GB", favouriteTeam: t1 });
+      return ctx.db.insert("entries", { manager, teamName: "Faker Fan" });
+    });
+    await expect(t.mutation(store.changeFavouriteTeam, { entry, team: gen, firstScoredGameweek: null })).rejects.toThrow(
+      "isn't in its favourite team's league",
+    );
+    expect(await t.run(async (ctx) => (await ctx.db.query("managers").first())?.favouriteTeam)).toBe(t1);
+  });
+
+  test("a membership whose league is gone is said, not skipped", async () => {
+    const { t, t1 } = await world();
+    const craig = await entryOf(t, "Faker Fan", "GB", t1);
+    const { league } = await make(t, craig);
+    await t.run((ctx) => ctx.db.delete(league));
+    await expect(t.query(store.leaguesOf, { entry: craig })).rejects.toThrow(`No league ${league}`);
+    await expect(make(t, craig, "Two")).rejects.toThrow(`No league ${league}`);
+  });
 });
 
 describe("private leagues", () => {

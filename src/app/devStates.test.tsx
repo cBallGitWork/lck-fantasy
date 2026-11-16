@@ -41,7 +41,7 @@ const KEY: Record<string, string> = {
   "series/series": "Doran",
   "series/f21": "Gen.G",
   "series/live": "Not final",
-  "series/next": "LCK Cup · Week 4 · Wed 20 Jan",
+  "series/next": "Split 1 · Week 4 · Wed 20 Jan",
   "compare/compare": "Chovy",
   "compare/pick": 'placeholder="Find a player"',
   "compare/coaches": "Coach · GEN",

@@ -11,8 +11,8 @@ export interface PriceMove {
   name: string;
   team: TeamCode;
   role: PersonRole;
-  wasEok: number;
-  nowEok: number;
+  wasM: number;
+  nowM: number;
   ownedPct: number;
   /** One of your own players. */
   mine: boolean;
@@ -27,10 +27,10 @@ export interface PriceWeek {
   falls: PriceMove[];
 }
 
-/** A price move from `wasEok`; the new price, team, role and owned % are the Stats list's. */
-const move = (name: string, wasEok: number): PriceMove => {
-  const { team, role, priceEok, ownedPct } = statsOf(name);
-  return { id: playerId(name), name, team, role, wasEok, nowEok: priceEok, ownedPct, mine: MY_PLAYERS.has(name) };
+/** A price move from `wasM`; the new price, team, role and owned % are the Stats list's. */
+const move = (name: string, wasM: number): PriceMove => {
+  const { team, role, priceM, ownedPct } = statsOf(name);
+  return { id: playerId(name), name, team, role, wasM, nowM: priceM, ownedPct, mine: MY_PLAYERS.has(name) };
 };
 
 /** Week 4's prices, set at the Week 3 deadline (patch.html). */

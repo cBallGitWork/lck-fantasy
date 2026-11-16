@@ -83,7 +83,7 @@ export interface LiveSeries {
   score: Score;
   game: number;
   bestOf: number;
-  /** `LCK Cup Week 3`. */
+  /** `Split 1 Week 3`. */
   label: string;
 }
 

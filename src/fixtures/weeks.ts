@@ -1,4 +1,4 @@
-// The made-up LCK Cup's Weeks 1 to 4: their series and deadlines, Weeks 3 and 4 at the pictures' moments.
+// The made-up Split 1's Weeks 1 to 4: their series and deadlines, Weeks 3 and 4 at the pictures' moments.
 
 import type { SeriesRow } from "../parts";
 import type { TeamCode } from "./competition";

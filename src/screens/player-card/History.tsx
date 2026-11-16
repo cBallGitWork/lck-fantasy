@@ -1,4 +1,4 @@
-import { eok, perGame, result, Table } from "../../parts";
+import { money, perGame, result, Table } from "../../parts";
 import type { CardHistory, HistoryRow } from "./card";
 import { WeekCell, weekStarts } from "./WeekCell";
 
@@ -22,7 +22,7 @@ export function History({ history, shown }: { history: CardHistory; shown: Histo
           { key: "series", head: "Series", cell: (r) => `${r.day} · ${result(r.score)} ${r.opponent}` },
           { key: "games", head: "Games", figure: true, cell: (r) => r.games },
           { key: "kda", head: "K / D / A", figure: true, cell: (r) => r.kda },
-          { key: "price", head: "Price", figure: true, cell: (r) => <span className="player-card__quiet quiet">{onStart(r, eok(r.priceEok))}</span> },
+          { key: "price", head: "Price", figure: true, cell: (r) => <span className="player-card__quiet quiet">{onStart(r, money(r.priceM))}</span> },
           { key: "points", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },
           { key: "weekPoints", head: "Week", figure: true, cell: (r) => <b>{onStart(r, weekPoints(r.week))}</b> },
         ]}

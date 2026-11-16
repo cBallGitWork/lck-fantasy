@@ -1,4 +1,4 @@
-// The Following picture's made-up LCK Cup Week 3 (docs/design/approved/following/), mid-week.
+// The Following picture's made-up Split 1 Week 3 (docs/design/approved/following/), mid-week.
 // Names, teams and numbers are examples, not roster data. Truck lines are the unapproved drafts
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
 import { MANAGERS } from "../../fixtures/managers";

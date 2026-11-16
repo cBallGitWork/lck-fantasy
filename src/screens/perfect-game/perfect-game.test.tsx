@@ -23,7 +23,7 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "Perfect game",
     "퍼펙트 게임",
     "‹",
-    "LCK Cup · Week 3",
+    "Split 1 · Week 3",
     "›",
     "130",
     "Final",

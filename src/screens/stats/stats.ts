@@ -48,9 +48,9 @@ export interface StatsRow {
   name: string;
   team: TeamCode;
   role: PersonRole;
-  priceEok: number;
+  priceM: number;
   /** The last move in m: above 0 a rise, below a fall, 0 none. */
-  moveEok: number;
+  moveM: number;
   form: number;
   ownedPct: number;
   points: number;
@@ -64,7 +64,7 @@ export interface StatsRow {
 }
 
 /** The columns that sort, besides the lines. */
-export const FIXED_SORTS = ["priceEok", "form", "ownedPct", "points", "games"] as const;
+export const FIXED_SORTS = ["priceM", "form", "ownedPct", "points", "games"] as const;
 export type SortKey = (typeof FIXED_SORTS)[number] | string;
 
 /** Every column a tab can sort by. */
@@ -113,7 +113,7 @@ export const PAGE_SIZE = 20;
 export function sortValue(row: StatsRow, key: SortKey, figures: Figures): number {
   const divide = (n: number) => (figures === "Per game" ? perGameValue(n, row.games) : n);
   switch (key) {
-    case "priceEok":
+    case "priceM":
     case "form":
     case "ownedPct":
     case "games":
@@ -133,7 +133,7 @@ export function listRows(rows: readonly StatsRow[], view: StatsView): StatsRow[]
       (r) =>
         (view.tab === "Coaches" || view.role === ALL || r.role === view.role) &&
         (view.team === ALL || r.team === view.team) &&
-        (view.maxPrice === null || r.priceEok <= view.maxPrice) &&
+        (view.maxPrice === null || r.priceM <= view.maxPrice) &&
         r.name.toLowerCase().includes(find),
     )
     .sort(
@@ -158,4 +158,4 @@ export function pageLabel(total: number, page: number): string {
 }
 
 /** Max price's choices: each price the list holds, highest first, as FPL's Max cost lists them. */
-export const priceChoices = (rows: readonly StatsRow[]) => [...new Set(rows.map((r) => r.priceEok))].sort((a, b) => b - a);
+export const priceChoices = (rows: readonly StatsRow[]) => [...new Set(rows.map((r) => r.priceM))].sort((a, b) => b - a);

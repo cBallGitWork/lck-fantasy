@@ -22,9 +22,9 @@ export interface CoachHead {
 }
 
 export interface CoachMeta {
-  priceEok: number;
+  priceM: number;
   /** The last price move, in m. */
-  moveEok: number;
+  moveM: number;
   form: number;
   formRank: Rank;
   ownedPct: number;
@@ -96,7 +96,7 @@ export interface HistoryRow {
   opponent: TeamCode;
   score: Score;
   games: number;
-  priceEok: number;
+  priceM: number;
   points: number;
 }
 
@@ -115,7 +115,7 @@ export interface CoachHistory {
 export interface RosterRow {
   role: RoleKey;
   name: string;
-  priceEok: number;
+  priceM: number;
   points: number;
   ownedPct: number;
   /** In your team. */

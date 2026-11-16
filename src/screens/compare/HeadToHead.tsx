@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, eok, Modal, oneDecimal, pct, perGame, Placeholder, placeOf, PriceMove, signed, Tag } from "../../parts";
+import { cx, money, Modal, oneDecimal, pct, perGame, Placeholder, placeOf, PriceMove, signed, Tag } from "../../parts";
 import { ROLE_NAME } from "../../rift";
 import { better, ROLE_PLURAL, type Side } from "./rules";
 import type { ComparePlayer, NextSeries, PastSeries } from "./fixtures";
@@ -57,8 +57,8 @@ function Row({ label, left, right, mark = null, kind }: { label: string; left: R
 function Price({ player }: { player: ComparePlayer }) {
   return (
     <>
-      {eok(player.priceEok)}
-      {player.riseEok !== undefined && <PriceMove eok={player.riseEok} className="compare__move" />}
+      {money(player.priceM)}
+      {player.riseM !== undefined && <PriceMove money={player.riseM} className="compare__move" />}
     </>
   );
 }

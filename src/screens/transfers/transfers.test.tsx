@@ -23,7 +23,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
     expectInOrder(out, [
       "Transfers",
       "이적",
-      "LCK Cup Week 4 · Deadline Wed 07:45 16:45 KST 9h 45m",
+      "Split 1 Week 4 · Deadline Wed 07:45 16:45 KST 9h 45m",
       "Free transfers 0",
       "Cost −6",
       "Bank ₩5.5m",

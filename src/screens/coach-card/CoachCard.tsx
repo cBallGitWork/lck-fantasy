@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { beyondStrip, count, Crest, Empty, eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, Tabs, Tag } from "../../parts";
+import { beyondStrip, count, Crest, Empty, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, Tabs, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CoachFixtures, CoachHistoryTab, CoachRoster, CoachThisWeek } from "./CoachTabs";
@@ -50,8 +50,8 @@ export function CoachCard({
         </div>
       </header>
       <div className="coach-card__meta">
-        <Figure figure={eok(meta.priceEok)}>
-          price <PriceMove eok={meta.moveEok} />
+        <Figure figure={money(meta.priceM)}>
+          price <PriceMove money={meta.moveM} />
         </Figure>
         <Figure figure={oneDecimal(meta.form)}>form · {ordinal(meta.formRank)}</Figure>
         <Figure figure={pct(meta.ownedPct)}>owned · {ordinal(meta.ownedRank)}</Figure>

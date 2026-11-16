@@ -1,12 +1,12 @@
-// The LCK hub picture's made-up data (docs/design/approved/lck-hub/hub.html): the LCK Cup seen on
+// The LCK hub picture's made-up data (docs/design/approved/lck-hub/hub.html): the Split 1 seen on
 // Week 4's Tuesday, after Week 3. Records, sets and form are after Week 3. Rosters are 2026's, a
 // placeholder; the academy and its prices are made up. Headlines are made up and link to Sheep
 // Esports' front page until #116 brings its LCK tag page.
 
-import { ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
+import { ROSTERS, T1_PRICES_M } from "../../fixtures/rosters";
 import { WEEK3_STANDINGS, type Standing } from "../../fixtures/standings";
-import { BEST_OF, COMPETITION, playerId, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
-import { eokToWon } from "../../parts";
+import { BEST_OF, COMPETITION_TITLE, playerId, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
+import { mToWon } from "../../parts";
 import { ROLE_KEYS, type PersonRole } from "../../rift";
 import type { LckHubData, Roster, RosterMember, StandingsRow, TeamRosters } from "./types";
 
@@ -16,19 +16,19 @@ const row = ({ last5, ...rest }: Standing): StandingsRow => ({ ...rest, last5: [
 const ROLE_ORDER: readonly PersonRole[] = [...ROLE_KEYS, "coach"];
 
 /** A roster in role order, Top to Support then the coach: game name, hangul, and price in m where set. */
-const roster = (name: string, league: string, people: readonly (readonly [string, string])[], pricesEok?: readonly number[]): Roster => ({
+const roster = (name: string, league: string, people: readonly (readonly [string, string])[], pricesM?: readonly number[]): Roster => ({
   name,
   league,
   members: people.map(([game, hangul], i): RosterMember => {
-    const eok = pricesEok?.[i];
-    return { id: playerId(game), name: game, hangul, role: ROLE_ORDER[i] ?? "coach", ...(eok === undefined ? {} : { priceWon: eokToWon(eok) }) };
+    const money = pricesM?.[i];
+    return { id: playerId(game), name: game, hangul, role: ROLE_ORDER[i] ?? "coach", ...(money === undefined ? {} : { priceWon: mToWon(money) }) };
   }),
 });
 
 const LCK = "LCK";
 const LCK_CL = "LCK CL";
 
-const lck = (team: TeamCode, pricesEok?: readonly number[]): TeamRosters => ({ team, lck: roster(team, LCK, ROSTERS[team], pricesEok) });
+const lck = (team: TeamCode, pricesM?: readonly number[]): TeamRosters => ({ team, lck: roster(team, LCK, ROSTERS[team], pricesM) });
 
 /** Academy players are in the pool like FPL's reserves, at cheap-pick prices; there is no academy coach. */
 const T1_ACADEMY_PRICES = [5.0, 5.0, 5.5, 5.0, 5.0];
@@ -36,8 +36,8 @@ const T1_ACADEMY_PRICES = [5.0, 5.0, 5.5, 5.0, 5.0];
 const SHEEP = "https://www.sheepesports.com/";
 
 export const LCK_HUB: LckHubData = {
-  title: `${COMPETITION} 2027`,
-  hangul: "LCK 컵",
+  title: COMPETITION_TITLE,
+  hangul: "스플릿 1",
   bestOf: BEST_OF,
   deadline: WEEK4_DEADLINE,
   stages: [
@@ -54,7 +54,7 @@ export const LCK_HUB: LckHubData = {
   ],
   teams: [
     {
-      ...lck("T1", T1_PRICES_EOK),
+      ...lck("T1", T1_PRICES_M),
       academy: roster(
         "T1 Esports Academy",
         LCK_CL,

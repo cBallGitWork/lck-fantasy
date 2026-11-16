@@ -39,7 +39,7 @@ export function PageHead({
   /** A link on the title's line (`Patch update ›`). */
   link?: { label: string; go: Go };
   week?: WeekNav;
-  /** A plain line under the title, where there are no week arrows (`LCK Cup Week 4`). */
+  /** A plain line under the title, where there are no week arrows (`Split 1 Week 4`). */
   sub?: ReactNode;
   /** The page's one key figure, 44px. */
   figure?: ReactNode;

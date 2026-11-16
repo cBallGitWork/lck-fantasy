@@ -1,4 +1,4 @@
-import { eok, oneDecimal } from "../../parts";
+import { money, oneDecimal } from "../../parts";
 import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS, Rift, Tile, type LineupCardProps } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
@@ -67,7 +67,7 @@ export function CardBoard(props: ViewProps) {
         <span>
           Form <b>{oneDecimal(p.form)}</b>
         </span>
-        <b>{eok(p.priceEok)}</b>
+        <b>{money(p.priceM)}</b>
       </>
     ),
     selected: p.id === state.selected,

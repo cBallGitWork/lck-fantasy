@@ -1,4 +1,4 @@
-// The made-up LCK Cup Week 3 the approved pictures share (docs/design/approved/). Every name, score
+// The made-up Split 1 Week 3 the approved pictures share (docs/design/approved/). Every name, score
 // and price is an example, not roster data. Pages are built on it until the backend wires real data.
 //
 // The pictures catch the season at three moments, kept apart where they differ rather than merged:

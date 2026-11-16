@@ -1,3 +1,4 @@
+import { WON_PER_M } from "../../src/parts/text/money";
 import { describe, expect, test } from "vitest";
 import draftJson from "../../docs/research/truck-lines.json?raw";
 import { fillLine, linesThatFit, pickWeighted, scoreBand, type LineSettings, type Receiver, type ReceiverWeek } from "./fit";
@@ -5,7 +6,6 @@ import { approveLine, seedLines, type NewLine, type TruckLine } from "./lines";
 
 // Fixture values: the real ones are the competition's data.
 const SETTINGS: LineSettings = { blankPoints: 2, flopPoints: 2, bigCarryPoints: 20 };
-const EOK = 100_000_000;
 
 /** The draft set, every line approved. */
 const draft: TruckLine[] = (() => {
@@ -24,8 +24,8 @@ const quiet: ReceiverWeek = {
   globalAverage: 45,
   carry: { name: "Chovy", points: 9, bestSeries: 6 },
   starters: [
-    { name: "Chovy", price: 12 * EOK, points: 9 },
-    { name: "Zeus", price: 10 * EOK, points: 8 },
+    { name: "Chovy", price: 12 * WON_PER_M, points: 9 },
+    { name: "Zeus", price: 10 * WON_PER_M, points: 8 },
   ],
   benchPoints: 3,
 };
@@ -63,7 +63,7 @@ describe("lines that fit the receiver's week (spec/14, Truck lines)", () => {
       [{ transfers: 0 }, {}, "protest", "p15"],
       [{ buffPlayed: true, points: 40 }, {}, "protest", "p18"],
       [{ buffPlayed: true, points: 45 }, {}, "coffee", "c08"],
-      [{ starters: [{ name: "Chovy", price: 12 * EOK, points: 2 }, { name: "Zeus", price: 10 * EOK, points: 8 }] }, {}, "protest", "p20"],
+      [{ starters: [{ name: "Chovy", price: 12 * WON_PER_M, points: 2 }, { name: "Zeus", price: 10 * WON_PER_M, points: 8 }] }, {}, "protest", "p20"],
       [{ band: "high" }, {}, "coffee", "c11"],
       [{ band: "low" }, {}, "protest", "p23"],
     ];
@@ -72,7 +72,7 @@ describe("lines that fit the receiver's week (spec/14, Truck lines)", () => {
   });
 
   test("a dear player's flop is the dearest starter's, not a cheaper one's", () => {
-    const cheapFlop = { starters: [{ name: "Chovy", price: 12 * EOK, points: 9 }, { name: "Zeus", price: 10 * EOK, points: 1 }] };
+    const cheapFlop = { starters: [{ name: "Chovy", price: 12 * WON_PER_M, points: 9 }, { name: "Zeus", price: 10 * WON_PER_M, points: 1 }] };
     expect(fitIds("protest", receiver(cheapFlop))).not.toContain("p20");
   });
 
@@ -106,7 +106,7 @@ describe("a line fills in the receiver's own numbers (spec/14, Truck lines)", ()
   const line = (id: string) => draft.find((one) => one.id === id)!;
 
   test("a dear flop's price, in m as money shows everywhere", () => {
-    const flopWeek = receiver({ starters: [{ name: "Chovy", price: 12 * EOK, points: 1 }] });
+    const flopWeek = receiver({ starters: [{ name: "Chovy", price: 12 * WON_PER_M, points: 1 }] });
     expect(fillLine(line("p20"), flopWeek, SETTINGS)).toBe("₩12.0M SPENT. WE DEMAND TO SEE THE SPREADSHEET.");
   });
 

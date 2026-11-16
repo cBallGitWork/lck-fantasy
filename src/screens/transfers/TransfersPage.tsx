@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import type { BuffName } from "../../fixtures/week3";
-import { cx, Deadline, formatEok, MainAction, NONE, OutlinedKey, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
+import { cx, Deadline, formatWon, MainAction, NONE, OutlinedKey, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
 import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
@@ -139,7 +139,7 @@ export function TransfersPage(props: TransfersPageProps) {
             Cost <b className="num">{signed(-hit)}</b>
           </span>
           <span className={cx("transfers__figure quiet", bank < 0 && "transfers__figure--over")}>
-            Bank <b className="num">{formatEok(bank)}</b>
+            Bank <b className="num">{formatWon(bank)}</b>
           </span>
         </div>
       </PageHead>
@@ -164,7 +164,7 @@ export function TransfersPage(props: TransfersPageProps) {
                 team={s.p.team}
                 at={spotOf(role, i, standing.length)}
                 mark={s.mark}
-                price={formatEok(s.p.price)}
+                price={formatWon(s.p.price)}
                 sell={!s.empty}
                 line={nextAgainst(fixtures, s.p.team) || NONE}
                 selected={plan.replacing === s.slot}
@@ -183,11 +183,11 @@ export function TransfersPage(props: TransfersPageProps) {
             <span key={m.out.slot}>
               {i > 0 && ", "}
               <s className="transfers__out">
-                {m.out.name} {formatEok(m.out.price)}
+                {m.out.name} {formatWon(m.out.price)}
               </s>
               {" → "}
               <b>
-                {m.in.name} {formatEok(m.in.price)}
+                {m.in.name} {formatWon(m.in.price)}
               </b>
             </span>
           ))}

@@ -1,5 +1,5 @@
 // Minji Park's profile as the approved picture shows it (docs/design/approved/profile/): a made-up
-// LCK Cup Week 3 on the Sunday before its last two series, so Week 3 is not final. Her series are
+// Split 1 Week 3 on the Sunday before its last two series, so Week 3 is not final. Her series are
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
 import { MANAGERS, MINJI_EARLIER_WEEKS, MINJI_WEEK3 } from "../../fixtures/managers";
@@ -70,15 +70,15 @@ export interface HistoryRow {
   move?: number;
   transfers?: number;
   hits?: number;
-  bankEok: number;
-  valueEok: number;
+  bankM: number;
+  valueM: number;
   buff?: BuffName;
 }
 
 export interface Transfer {
   slot: SlotKey;
-  out: ProfilePlayer & { priceEok: number };
-  in: ProfilePlayer & { priceEok: number };
+  out: ProfilePlayer & { priceM: number };
+  in: ProfilePlayer & { priceM: number };
   /** Points the player in scored over the player out. */
   gained: number;
 }
@@ -163,9 +163,9 @@ export const PROFILE: ProfileData = {
     },
   ],
   history: [
-    { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, hits: 0, bankEok: 0.5, valueEok: 100.9, buff: "Limitless" },
-    { week: 2, points: W2, total: W1 + W2, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, hits: 0, bankEok: 1.0, valueEok: 100.6 },
-    { week: 1, points: W1, total: W1, weekRank: 34_786, overall: 34_786, bankEok: 2.5, valueEok: 100.0 },
+    { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, hits: 0, bankM: 0.5, valueM: 100.9, buff: "Limitless" },
+    { week: 2, points: W2, total: W1 + W2, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, hits: 0, bankM: 1.0, valueM: 100.6 },
+    { week: 1, points: W1, total: W1, weekRank: 34_786, overall: 34_786, bankM: 2.5, valueM: 100.0 },
   ],
   buffsLeft: ["Remake", "Bench Boost", "Dual Carry"],
   transfers: [
@@ -174,18 +174,18 @@ export const PROFILE: ProfileData = {
       at: { local: "Tue 09:00", kst: "18:00" },
       cost: "Limitless · 0 hits",
       transfers: [
-        { slot: "top", out: { ...player("Doran", "T1"), priceEok: 13.0 }, in: { ...player("Kiin", "GEN"), priceEok: 13.5 }, gained: 1 },
-        { slot: "bot", out: { ...player("Peyz", "T1"), priceEok: 13.0 }, in: { ...player("Ruler", "GEN"), priceEok: 16.0 }, gained: 4 },
-        { slot: "sup", out: { ...player("Lehends", "NS"), priceEok: 10.0 }, in: { ...player("Keria", "T1"), priceEok: 12.0 }, gained: -1 },
-        { slot: "flex", out: { ...player("Siwoo", "DK"), priceEok: 11.0 }, in: { ...player("Kingen", "NS"), priceEok: 6.0 }, gained: -4 },
-        { slot: "jng", out: { ...player("Peanut", "NS"), priceEok: 15.5 }, in: { ...player("Canyon", "GEN"), priceEok: 15.5 }, gained: 2 },
+        { slot: "top", out: { ...player("Doran", "T1"), priceM: 13.0 }, in: { ...player("Kiin", "GEN"), priceM: 13.5 }, gained: 1 },
+        { slot: "bot", out: { ...player("Peyz", "T1"), priceM: 13.0 }, in: { ...player("Ruler", "GEN"), priceM: 16.0 }, gained: 4 },
+        { slot: "sup", out: { ...player("Lehends", "NS"), priceM: 10.0 }, in: { ...player("Keria", "T1"), priceM: 12.0 }, gained: -1 },
+        { slot: "flex", out: { ...player("Siwoo", "DK"), priceM: 11.0 }, in: { ...player("Kingen", "NS"), priceM: 6.0 }, gained: -4 },
+        { slot: "jng", out: { ...player("Peanut", "NS"), priceM: 15.5 }, in: { ...player("Canyon", "GEN"), priceM: 15.5 }, gained: 2 },
       ],
     },
     {
       week: 2,
       at: { local: "Mon 12:40", kst: "21:40" },
       cost: "1 free",
-      transfers: [{ slot: "bot", out: { ...player("Smash", "T1"), priceEok: 6.0 }, in: { ...player("Peyz", "T1"), priceEok: 13.0 }, gained: 6 }],
+      transfers: [{ slot: "bot", out: { ...player("Smash", "T1"), priceM: 6.0 }, in: { ...player("Peyz", "T1"), priceM: 13.0 }, gained: 6 }],
     },
   ],
   leagues: [

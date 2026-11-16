@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Crest, cx, eok, LinkGo, oneDecimal, pct, PriceMove, Tag } from "../../parts";
+import { Crest, cx, money, LinkGo, oneDecimal, pct, PriceMove, Tag } from "../../parts";
 import { cardGo } from "../../paths";
 import { isBench, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PickPlayer } from "./fixtures";
@@ -19,7 +19,7 @@ export function PlayerCard({ state, player: p, dispatch }: Omit<ViewProps, "data
           <span className="pick-team__crest">
             <Crest team={p.team} size="crestSmall" />
           </span>
-          {p.team} · {role} · {eok(p.priceEok)} {move !== undefined && <PriceMove eok={move} />}
+          {p.team} · {role} · {money(p.priceM)} {move !== undefined && <PriceMove money={move} />}
         </>
       }
       onClose={() => dispatch({ type: "close" })}

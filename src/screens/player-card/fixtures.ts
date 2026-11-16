@@ -1,9 +1,9 @@
-// Faker's card on the pictures' made-up LCK Cup (docs/design/approved/player-card/card.html), built on
+// Faker's card on the pictures' made-up Split 1 (docs/design/approved/player-card/card.html), built on
 // src/fixtures/week3.ts. Every number is an example. Two moments, as the pictures draw them:
 // - from Pick Team: Week 4, Tuesday, before the deadline (History, Fixtures, Champions);
 // - from Points: Week 3, Saturday, T1 v DK game 2 live (This week).
 
-import { CARRY_MULTIPLIER, LIVE_SERIES_ID, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, type TeamCode } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, COMPETITION_TITLE, LIVE_SERIES_ID, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, type TeamCode } from "../../fixtures/week3";
 import { hangulOf } from "../../fixtures/rosters";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { FAKER_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
@@ -28,7 +28,7 @@ const NEXT: NextSeries[] = T1_NEXT3.map(({ id, week, day, bestOf, opponent }) =>
 const PAST: PastSeries[] = last3(FAKER_SEASON).map(({ id, week, day, opponent, points }) => ({ id, week, day, opponent, points }));
 
 /** Each played series' K/D/A and his price then, in T1_PLAYED's order (newest first). */
-const HISTORY_KDA_PRICE: [kda: string, priceEok: number][] = [
+const HISTORY_KDA_PRICE: [kda: string, priceM: number][] = [
   ["12/1/15", 18.5],
   ["18/3/20", 18.5],
   ["13/6/14", 18.0],
@@ -87,8 +87,8 @@ export const CARD_FROM_PICK_TEAM: PlayerCardData = {
     games: FAKER_SEASON.games,
     lines: [...FAKER_SEASON.lines],
   },
-  priceEok: AT_PICK_TEAM.priceEok,
-  priceMove: FAKER_SEASON.riseEok,
+  priceM: AT_PICK_TEAM.priceM,
+  priceMove: FAKER_SEASON.riseM,
   form: AT_PICK_TEAM.form,
   formPlace: 2,
   ownedPct: IN_STATS.ownedPct,
@@ -99,11 +99,11 @@ export const CARD_FROM_PICK_TEAM: PlayerCardData = {
   next: NEXT,
   fixtures: FIXTURES,
   history: {
-    competition: "LCK Cup 2027",
+    competition: COMPETITION_TITLE,
     rows: playedBy(FAKER_SEASON).map((s, i) => {
-      const [kda, priceEok] = HISTORY_KDA_PRICE[i] ?? [];
-      if (kda === undefined || priceEok === undefined) throw new Error(`${NAME} has no K/D/A or price for ${s.id}`);
-      return { ...s, kda, priceEok };
+      const [kda, priceM] = HISTORY_KDA_PRICE[i] ?? [];
+      if (kda === undefined || priceM === undefined) throw new Error(`${NAME} has no K/D/A or price for ${s.id}`);
+      return { ...s, kda, priceM };
     }),
     pastSeasons: [
       { name: "LCK 2026", games: 98, kda: "392/171/598", points: 412 },
@@ -143,7 +143,7 @@ export const CARD_FROM_POINTS: PlayerCardData = {
       { line: "Steals", total: 1, points: 1 },
     ],
   },
-  priceEok: AT_PICK_TEAM.priceEok,
+  priceM: AT_PICK_TEAM.priceM,
   priceMove: 0.5,
   form: 18.0,
   formPlace: 1,

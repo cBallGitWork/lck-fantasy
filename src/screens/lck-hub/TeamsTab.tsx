@@ -1,5 +1,5 @@
 import type { TeamCode } from "../../fixtures/week3";
-import { cx, formatEok, GoLink, NONE, SectionHead, ViewToggle } from "../../parts";
+import { cx, formatWon, GoLink, NONE, SectionHead, ViewToggle } from "../../parts";
 import { cardGo } from "../../paths";
 import { RoleIcon, ROLE_NAME } from "../../rift";
 import type { Roster, TeamRosters } from "./types";
@@ -26,7 +26,7 @@ function RosterTable({ roster }: { roster: Roster }) {
                 </GoLink>
               </td>
               <td className={cx("lck-hub__price", "num", m.priceWon === undefined && "lck-hub__price--none")}>
-                {m.priceWon === undefined ? NONE : formatEok(m.priceWon)}
+                {m.priceWon === undefined ? NONE : formatWon(m.priceWon)}
               </td>
             </tr>
           ))}

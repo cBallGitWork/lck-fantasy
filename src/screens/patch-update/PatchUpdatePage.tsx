@@ -1,5 +1,5 @@
 import { MANAGER } from "../../fixtures/week3";
-import { type Column, cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, pct, Table, Time, WeekStep } from "../../parts";
+import { type Column, cx, Empty, money, GoLink, LinkGo, MeDot, PageFrame, PageHead, pct, Table, Time, WeekStep } from "../../parts";
 import { cardGo, type Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { PriceMove, PriceWeek } from "./fixtures";
@@ -26,8 +26,8 @@ const COLUMNS: Column<PriceMove>[] = [
       </>
     ),
   },
-  { key: "was", head: "Was", figure: true, cell: (row) => <span className="patch-update__was">{eok(row.wasEok)}</span> },
-  { key: "now", head: "Now", figure: true, cell: (row) => <b>{eok(row.nowEok)}</b> },
+  { key: "was", head: "Was", figure: true, cell: (row) => <span className="patch-update__was">{money(row.wasM)}</span> },
+  { key: "now", head: "Now", figure: true, cell: (row) => <b>{money(row.nowM)}</b> },
   { key: "owned", head: "Owned", figure: true, cell: (row) => pct(row.ownedPct) },
 ];
 

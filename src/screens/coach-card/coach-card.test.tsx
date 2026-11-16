@@ -88,7 +88,7 @@ describe("History, from Pick Team (1440.png)", () => {
       "Fixtures",
       "History",
       "Roster",
-      "LCK Cup 2027",
+      "Split 1 2027",
       "WeekSeriesGamesPricePtsWeek",
       "2Wed · W 2–0 DNS2₩6.5m48",
       "1Sat · W 2–0 NS2₩6.5m33",

@@ -55,6 +55,6 @@ test("every countdown is worked from a moment and the deadline", () => {
 });
 
 test("the squad's prices and form are Stats'", () => {
-  for (const p of PICK_TEAM_SQUAD) expect(p.priceEok, p.name).toBe(statsOf(p.name).priceEok);
-  expect(PICK_TEAM_SQUAD.find((p) => p.name === "Siwoo")?.priceEok).toBe(11.5);
+  for (const p of PICK_TEAM_SQUAD) expect(p.priceM, p.name).toBe(statsOf(p.name).priceM);
+  expect(PICK_TEAM_SQUAD.find((p) => p.name === "Siwoo")?.priceM).toBe(11.5);
 });

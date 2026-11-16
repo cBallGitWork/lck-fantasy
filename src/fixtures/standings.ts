@@ -1,4 +1,4 @@
-// The made-up LCK Cup's group standings after Week 3, as the LCK hub, the Series page and Stats
+// The made-up Split 1's group standings after Week 3, as the LCK hub, the Series page and Stats
 // share them. Every number is an example.
 
 import type { TeamCode } from "./competition";

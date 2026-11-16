@@ -26,7 +26,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
   expectInOrder(text(PICTURE), [
     "Baron Steal FC",
     "바론 스틸 FC",
-    "LCK Cup · Week 3",
+    "Split 1 · Week 3",
     "94",
     "Not final",
     "Average 74",
@@ -215,7 +215,7 @@ test("a final week says Final once, as the head's tag (Craig, 16 Nov 2026): no N
     const data = week(n);
     expect(data.final).toBe(true);
     const out = text(<PointsPage data={data} open="Faker" />);
-    expect(out).toContain(`LCK Cup · Week ${n}`);
+    expect(out).toContain(`Split 1 · Week ${n}`);
     expect(out.match(/Final/g)).toHaveLength(1);
     expect(out).not.toMatch(/Not final|· final|Watch/);
     // Only the top bar's Live item.

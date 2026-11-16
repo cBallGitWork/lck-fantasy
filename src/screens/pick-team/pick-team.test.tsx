@@ -67,7 +67,7 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expectInOrder(out, [
     "Pick Team",
     "팀 선택",
-    "LCK Cup Week 4",
+    "Split 1 Week 4",
     ...BUFFS,
     "Rift view",
     "Card view",

@@ -1,5 +1,5 @@
 // The Series picture's own made-up data (docs/design/approved/series/series.html), built on the
-// shared LCK Cup Week 3. Points, best 2 and coach lines are the picture's figures as drawn, save
+// shared Split 1 Week 3. Points, best 2 and coach lines are the picture's figures as drawn, save
 // Faker's, which are the shared squad's: the backend scores them (#30, #34).
 
 import {

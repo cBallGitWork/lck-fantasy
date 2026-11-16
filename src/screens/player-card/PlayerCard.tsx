@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { beyondStrip, eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, Tabs, Tag } from "../../parts";
+import { beyondStrip, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
@@ -74,7 +74,7 @@ export function PlayerCard({
       </header>
       <div className="player-card__meta">
         <span className="player-card__quiet quiet">
-          <b className="player-card__figure num">{eok(card.priceEok)}</b>price <PriceMove eok={card.priceMove} />
+          <b className="player-card__figure num">{money(card.priceM)}</b>price <PriceMove money={card.priceMove} />
         </span>
         <span className="player-card__quiet quiet">
           <b className="player-card__figure num">{oneDecimal(card.form)}</b>form · {ordinal(card.formPlace)}

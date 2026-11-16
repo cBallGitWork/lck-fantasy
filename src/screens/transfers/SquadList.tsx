@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { cx, formatEok, oneDecimal } from "../../parts";
+import { cx, formatWon, oneDecimal } from "../../parts";
 import { ROLE_NAME, Shirt, type PersonRole, type SquadSlot } from "../../rift";
 import type { Standing } from "./lineup";
 import { nextAgainst, type Fixture } from "./plan";
@@ -54,7 +54,7 @@ export function SquadList({
                   <b>{s.p.name}</b> {s.p.team}
                 </td>
                 <td className="transfers__num num">{s.p.weekPoints}</td>
-                <td className="transfers__num num">{formatEok(s.p.price)}</td>
+                <td className="transfers__num num">{formatWon(s.p.price)}</td>
                 <td className="transfers__num num">{oneDecimal(s.p.form)}</td>
                 <td className="transfers__num num">{s.p.points}</td>
                 <td className="transfers__next">{nextAgainst(fixtures, s.p.team)}</td>

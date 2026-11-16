@@ -1,4 +1,4 @@
-// The made-up LCK Cup's teams and values, and the sample manager, as the approved pictures share
+// The made-up Split 1's teams and values, and the sample manager, as the approved pictures share
 // them. Every name and number is an example.
 
 export const TEAMS = {
@@ -16,7 +16,11 @@ export const TEAMS = {
 
 export type TeamCode = keyof typeof TEAMS;
 
-export const COMPETITION = "LCK Cup";
+/** The split the pictures show, Split 1 the beta (spec/10). */
+export const COMPETITION = "Split 1";
+
+/** The split with its year, as the LCK hub and the cards title it. */
+export const COMPETITION_TITLE = `${COMPETITION} 2027`;
 
 /**
  * The competition's values the pictures share: the Carry's multiplier, each series' length, the

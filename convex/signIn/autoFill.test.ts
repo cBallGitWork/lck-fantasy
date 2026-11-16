@@ -1,17 +1,17 @@
+import { WON_PER_M } from "../../src/parts/text/money";
 import { describe, expect, test } from "vitest";
 import { budgetProblems } from "../squads/budget";
 import { coach, player, REGULAR_SETTINGS, validSquad } from "../squads/fixtures";
 import { allPicks, pickKey, PLAYER_ROLES, squadProblems, type Pick, type Squad } from "../squads/squad";
 import { autoFill, type Chooser } from "./autoFill";
 
-const EOK = 100_000_000;
 const first: Chooser = (candidates) => candidates[0]!;
 const dearestFirst: Chooser = (candidates) => [...candidates].sort((a, b) => prices.get(pickKey(b))! - prices.get(pickKey(a))!)[0]!;
 
 // A pool of six teams: for each, a coach and one player per role. Team "a" is dearest.
 const TEAMS = ["a", "b", "c", "d", "e", "f"];
 const pool: Pick[] = TEAMS.flatMap((team) => [coach(team), ...PLAYER_ROLES.map((role) => player(`${team}-${role}`, team, role))]);
-const prices = new Map(pool.map((pick) => [pickKey(pick), (pick.teamId === "a" ? 20 : 8) * EOK]));
+const prices = new Map(pool.map((pick) => [pickKey(pick), (pick.teamId === "a" ? 20 : 8) * WON_PER_M]));
 const emptySquad: Squad = { starters: [], bench: [] };
 
 function expectValid(squad: Squad, budget: number | null) {
@@ -21,27 +21,27 @@ function expectValid(squad: Squad, budget: number | null) {
 
 describe("autoFill", () => {
   test("fills an empty squad with a valid nine under budget", () => {
-    const squad = autoFill(emptySquad, pool, prices, REGULAR_SETTINGS, 100 * EOK, first);
+    const squad = autoFill(emptySquad, pool, prices, REGULAR_SETTINGS, 100 * WON_PER_M, first);
     expect(allPicks(squad)).toHaveLength(9);
-    expectValid(squad, 100 * EOK);
+    expectValid(squad, 100 * WON_PER_M);
   });
 
   test("even choosing the dearest it can, it leaves money for the slots still empty", () => {
-    const squad = autoFill(emptySquad, pool, prices, REGULAR_SETTINGS, 100 * EOK, dearestFirst);
-    expectValid(squad, 100 * EOK);
+    const squad = autoFill(emptySquad, pool, prices, REGULAR_SETTINGS, 100 * WON_PER_M, dearestFirst);
+    expectValid(squad, 100 * WON_PER_M);
     expect(allPicks(squad).filter((pick) => pick.teamId === "a").length).toBeGreaterThan(0);
   });
 
   test("a guest pick with no price throws, rather than count as free", () => {
     const partial: Squad = { starters: [{ slot: "mid", pick: player("unpriced-mid", "a", "mid") }], bench: [] };
-    expect(() => autoFill(partial, pool, prices, REGULAR_SETTINGS, 100 * EOK, first)).toThrow("No current price for player:unpriced-mid");
+    expect(() => autoFill(partial, pool, prices, REGULAR_SETTINGS, 100 * WON_PER_M, first)).toThrow("No current price for player:unpriced-mid");
   });
 
   test("keeps the guest's picks and fills only the empty slots", () => {
     const partial: Squad = { starters: [{ slot: "mid", pick: player("a-mid", "a", "mid") }], bench: [] };
-    const squad = autoFill(partial, pool, prices, REGULAR_SETTINGS, 100 * EOK, first);
+    const squad = autoFill(partial, pool, prices, REGULAR_SETTINGS, 100 * WON_PER_M, first);
     expect(squad.starters[0]).toEqual(partial.starters[0]);
-    expectValid(squad, 100 * EOK);
+    expectValid(squad, 100 * WON_PER_M);
   });
 
   test("a full squad is left as it is", () => {
@@ -50,21 +50,21 @@ describe("autoFill", () => {
   });
 
   test("throws when no valid fill fits the budget, never returning a broken squad", () => {
-    expect(() => autoFill(emptySquad, pool, prices, REGULAR_SETTINGS, 50 * EOK, first)).toThrow(/Auto-fill found no pick/);
+    expect(() => autoFill(emptySquad, pool, prices, REGULAR_SETTINGS, 50 * WON_PER_M, first)).toThrow(/Auto-fill found no pick/);
   });
 
   /** The valid squad's starters, free, with the bench to fill from `benchPool`. */
-  function fillBench(benchPool: [Pick, number][], budgetEok: number) {
+  function fillBench(benchPool: [Pick, number][], budgetM: number) {
     const starters = validSquad().starters;
     const thinPrices = new Map<string, number>([
       ...starters.map((s) => [pickKey(s.pick), 0] as [string, number]),
-      ...benchPool.map(([pick, eok]) => [pickKey(pick), eok * EOK] as [string, number]),
+      ...benchPool.map(([pick, money]) => [pickKey(pick), money * WON_PER_M] as [string, number]),
     ]);
     const thinPool = benchPool.map(([pick]) => pick);
     const priceOfPick = (pick: Pick) => thinPrices.get(pickKey(pick))!;
     const dearest: Chooser = (candidates) => [...candidates].sort((a, b) => priceOfPick(b) - priceOfPick(a))[0]!;
-    const squad = autoFill({ starters, bench: [] }, thinPool, thinPrices, REGULAR_SETTINGS, budgetEok * EOK, dearest);
-    expect(budgetProblems(squad, thinPrices, budgetEok * EOK)).toEqual([]);
+    const squad = autoFill({ starters, bench: [] }, thinPool, thinPrices, REGULAR_SETTINGS, budgetM * WON_PER_M, dearest);
+    expect(budgetProblems(squad, thinPrices, budgetM * WON_PER_M)).toEqual([]);
     expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([]);
     return squad.bench.map((pick) => pick.id).sort();
   }
@@ -79,10 +79,10 @@ describe("autoFill", () => {
     ];
     const prices24 = new Map<string, number>([
       ...starters.map((s) => [pickKey(s.pick), 0] as [string, number]),
-      ...benchPool.map(([pick, eok]) => [pickKey(pick), eok * EOK] as [string, number]),
+      ...benchPool.map(([pick, money]) => [pickKey(pick), money * WON_PER_M] as [string, number]),
     ]);
     const dearest: Chooser = (candidates) => [...candidates].sort((a, b) => prices24.get(pickKey(b))! - prices24.get(pickKey(a))!)[0]!;
-    const squad = autoFill({ starters, bench: [] }, benchPool.map(([pick]) => pick), prices24, REGULAR_SETTINGS, 24 * EOK, dearest);
+    const squad = autoFill({ starters, bench: [] }, benchPool.map(([pick]) => pick), prices24, REGULAR_SETTINGS, 24 * WON_PER_M, dearest);
     expect(allPicks(squad).filter((pick) => pick.teamId !== "kt" && prices24.get(pickKey(pick))! > 0).map((p) => p.id).sort())
       .toEqual(["bot15", "cheap", "mid8"]);
   });

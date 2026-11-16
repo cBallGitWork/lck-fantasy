@@ -1,4 +1,4 @@
-import { eok, NONE, RankMove, Table, type Column } from "../../parts";
+import { money, NONE, RankMove, Table, type Column } from "../../parts";
 import type { HistoryRow } from "./fixtures";
 import { count } from "./format";
 
@@ -11,8 +11,8 @@ const COLUMNS: Column<HistoryRow>[] = [
   { key: "move", head: "Move", figure: true, cell: (r) => <Move places={r.move} /> },
   { key: "transfers", head: "Transfers", figure: true, cell: (r) => count(r.transfers) },
   { key: "hits", head: "Hits", figure: true, cell: (r) => count(r.hits) },
-  { key: "bank", head: "Bank", figure: true, cell: (r) => eok(r.bankEok) },
-  { key: "value", head: "Value", figure: true, cell: (r) => eok(r.valueEok) },
+  { key: "bank", head: "Bank", figure: true, cell: (r) => money(r.bankM) },
+  { key: "value", head: "Value", figure: true, cell: (r) => money(r.valueM) },
   { key: "buff", head: "Buff", cell: (r) => r.buff ?? NONE },
 ];
 

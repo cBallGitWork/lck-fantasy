@@ -47,7 +47,7 @@ describe("Week 4 prices", () => {
     });
     expect(shared.map(({ row }) => row.name)).toEqual(["Faker", "Chovy", "Peyz", "Siwoo", "BuLLDoG", "Ssong", "Gumayusi", "Aiming", "ShowMaker", "Doran"]);
     for (const { row, stats } of shared) {
-      expect([row.nowEok, row.ownedPct, Math.sign(row.nowEok - row.wasEok)]).toEqual([stats.priceEok, stats.ownedPct, stats.move]);
+      expect([row.nowM, row.ownedPct, Math.sign(row.nowM - row.wasM)]).toEqual([stats.priceM, stats.ownedPct, stats.move]);
     }
   });
 });

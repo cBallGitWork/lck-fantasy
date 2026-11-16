@@ -22,7 +22,7 @@ import {
   type Plan,
 } from "./plan";
 import { spotOf, STEP } from "./spots";
-import { formatEok } from "../../parts";
+import { formatWon } from "../../parts";
 import type { SquadSlot } from "../../rift";
 
 const ALL: ListFilters = { role: "all", search: "", team: "all", sort: "points" };
@@ -112,7 +112,7 @@ describe("the head's figures", () => {
     expect(pendingHit(RULES, 1)).toBe(6);
     expect(freeLeft(RULES, 1)).toBe(0);
     expect(freeUsed(RULES, 1)).toBe(0);
-    expect(formatEok(bankNow(SQUAD, PICTURE_PLAN, RULES.bank))).toBe("₩5.5m");
+    expect(formatWon(bankNow(SQUAD, PICTURE_PLAN, RULES.bank))).toBe("₩5.5m");
   });
 
   test("the week's free transfers, Home's figure, are spent by the confirms: two free, then one at the hit", () => {
@@ -131,7 +131,7 @@ describe("the head's figures", () => {
   });
 
   test("a sale with no buy yet puts his price in the bank", () => {
-    expect(formatEok(bankNow(SQUAD, removed("flex"), RULES.bank))).toBe("₩12.0m");
+    expect(formatWon(bankNow(SQUAD, removed("flex"), RULES.bank))).toBe("₩12.0m");
   });
 });
 

@@ -17,7 +17,7 @@ export const ROSTERS: Record<TeamCode, readonly (readonly [name: string, hangul:
 };
 
 /** T1's prices in m, in roster order, the coach's last: Stats' prices, as the LCK hub's and the coach card's Roster tab show them. */
-export const T1_PRICES_EOK: readonly number[] = ROSTERS.T1.map(([name]) => statsOf(name).priceEok);
+export const T1_PRICES_M: readonly number[] = ROSTERS.T1.map(([name]) => statsOf(name).priceM);
 
 const HANGUL = new Map(Object.values(ROSTERS).flat());
 

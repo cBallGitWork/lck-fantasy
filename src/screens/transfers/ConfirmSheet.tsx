@@ -1,4 +1,4 @@
-import { formatEok, MainAction, Modal, Time } from "../../parts";
+import { formatWon, MainAction, Modal, Time } from "../../parts";
 import { costLabel } from "./Confirmed";
 import type { ListPlayer, SquadPlayer } from "./plan";
 import "./ConfirmSheet.css";
@@ -37,11 +37,11 @@ export function ConfirmSheet({
         {transfers.map((t) => (
           <li key={t.out.slot}>
             <span className="transfers__sheet-out">
-              {t.out.name} <small>{t.out.team}</small> <span className="num">{formatEok(t.out.price)}</span>
+              {t.out.name} <small>{t.out.team}</small> <span className="num">{formatWon(t.out.price)}</span>
             </span>
             <span aria-label="for">→</span>
             <b>
-              {t.in.name} <small>{t.in.team}</small> <span className="num">{formatEok(t.in.price)}</span>
+              {t.in.name} <small>{t.in.team}</small> <span className="num">{formatWon(t.in.price)}</span>
             </b>
           </li>
         ))}
@@ -55,7 +55,7 @@ export function ConfirmSheet({
           <tr>
             <th scope="row">Bank</th>
             <td className="num">
-              {formatEok(bankFrom)} → <b>{formatEok(bankTo)}</b>
+              {formatWon(bankFrom)} → <b>{formatWon(bankTo)}</b>
             </td>
           </tr>
           <tr>

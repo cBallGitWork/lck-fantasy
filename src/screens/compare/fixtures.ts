@@ -1,5 +1,5 @@
 // Compare's made-up data, as its approved picture draws it (docs/design/approved/compare/):
-// LCK Cup Week 4, Tuesday, Weeks 1 to 3 final. Faker and kkOma are the cards' own; Chovy and Ryu
+// Split 1 Week 4, Tuesday, Weeks 1 to 3 final. Faker and kkOma are the cards' own; Chovy and Ryu
 // are the Stats and Transfers pictures'. Only these four have lines until the backend (#36).
 
 import { hangulOf } from "../../fixtures/rosters";
@@ -41,9 +41,9 @@ export interface ComparePlayer {
   /** Season points, his rank and how many he is ranked among (`2nd of 10 mids`). */
   season: { points: number; rank: number; among: number };
   form: number;
-  priceEok: number;
+  priceM: number;
   /** This week's price rise in m, if any. */
-  riseEok?: number;
+  riseM?: number;
   ownedPct: number;
   last3: PastSeries[];
   next3: NextSeries[];
@@ -68,8 +68,8 @@ function t1Member(season: T1MemberSeason, role: PersonRole, ownedPct: number): C
     games: season.games,
     season: { points: statsOf(name).points, rank: season.place, among: season.of },
     form: pick.form,
-    priceEok: pick.priceEok,
-    riseEok: season.riseEok,
+    priceM: pick.priceM,
+    riseM: season.riseM,
     ownedPct,
     last3: last3(season).map((s) => ({ when: when(s), opp: s.opponent, points: s.points })),
     next3: NEXT_T1,
@@ -93,8 +93,8 @@ export const CHOVY: ComparePlayer = {
   games: 16,
   season: { points: 61, rank: 1, among: 10 },
   form: 20.3,
-  priceEok: 17.5,
-  riseEok: 0.5,
+  priceM: 17.5,
+  riseM: 0.5,
   ownedPct: 41,
   last3: [
     { when: "W2 · Sat", opp: "BRO", points: 11 },
@@ -126,7 +126,7 @@ export const RYU: ComparePlayer = {
   games: 16,
   season: { points: 26, rank: 2, among: 10 },
   form: 8.7,
-  priceEok: 7.0,
+  priceM: 7.0,
   ownedPct: 21,
   last3: [
     { when: "W2 · Sat", opp: "BRO", points: 5 },
@@ -153,9 +153,9 @@ export interface SearchRow {
   name: string;
   team: TeamCode;
   role: PersonRole;
-  priceEok: number;
+  priceM: number;
   points: number;
 }
 
 /** The search's players: the Stats picture's list. */
-export const SEARCH_ROWS: SearchRow[] = STATS_PLAYERS.map(({ name, team, role, priceEok, points }) => ({ name, team, role, priceEok, points }));
+export const SEARCH_ROWS: SearchRow[] = STATS_PLAYERS.map(({ name, team, role, priceM, points }) => ({ name, team, role, priceM, points }));

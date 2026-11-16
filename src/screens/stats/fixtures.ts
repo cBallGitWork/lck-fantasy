@@ -1,4 +1,4 @@
-// The Stats picture's made-up list (docs/design/approved/stats/stats.html), at its moment: LCK Cup
+// The Stats picture's made-up list (docs/design/approved/stats/stats.html), at its moment: Split 1
 // Week 4, Tuesday, Weeks 1 to 3 final. The first 20 players and the 10 coaches are the picture's.
 // The rest of the LCK's starters and a few academy players are made up here so the pages and
 // filters have something to work on; so is each week's share of the season, for Span.
@@ -12,7 +12,7 @@ import type { RoleKey } from "../../rift";
 import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
 
 /** A price move is 0.5m in the picture. */
-const MOVE_EOK = 0.5;
+const MOVE_M = 0.5;
 
 /** Each season line's key in a row's `lines`, by the name the cards give it. */
 const LINE_KEYS: Record<string, string> = {
@@ -132,7 +132,7 @@ function row(
   role: StatsRow["role"],
   name: string,
   team: TeamCode,
-  priceEok: number,
+  priceM: number,
   move: number,
   ownedPct: number,
   points: number,
@@ -142,8 +142,8 @@ function row(
     name,
     team,
     role,
-    priceEok,
-    moveEok: move * MOVE_EOK,
+    priceM,
+    moveM: move * MOVE_M,
     form: formOf(points),
     ownedPct,
     points,
@@ -158,11 +158,11 @@ const PICTURE_PLAYERS = STATS_PLAYERS.filter((p) => p.role !== "coach");
 /** Every player over the season: the picture's first, then the rest, then the academy. */
 export const SEASON_PLAYERS: StatsRow[] = [
   ...PICTURE_PLAYERS.map((p) => ({
-    ...row(p.role, p.name, p.team, p.priceEok, p.move, p.ownedPct, p.points),
+    ...row(p.role, p.name, p.team, p.priceM, p.move, p.ownedPct, p.points),
     lines: byKeys(PLAYER_LINES, PICTURE_LINES[p.name] ?? []),
   })),
   ...OFF_PAGE_PLAYERS.filter((p) => p.role !== "coach").map((p) => ({
-    ...row(p.role, p.name, p.team, p.priceEok, p.move, p.ownedPct, p.points),
+    ...row(p.role, p.name, p.team, p.priceM, p.move, p.ownedPct, p.points),
     lines: byKeys(PLAYER_LINES, MORE_LINES[p.name] ?? []),
   })),
   ...ACADEMY.map(([role, name, team, price]) => ({ ...row(role, name, team, price, 0, 0, 0), games: 0, lines: byKeys(PLAYER_LINES, []) })),
@@ -175,7 +175,7 @@ export const SEASON_COACHES: StatsRow[] = [
 ]
   .filter((p) => p.role === "coach")
   .map((p) => ({
-    ...row("coach", p.name, p.team, p.priceEok, p.move, p.ownedPct, p.points),
+    ...row("coach", p.name, p.team, p.priceM, p.move, p.ownedPct, p.points),
     lines: byKeys(COACH_LINES, PICTURE_COACH_LINES[p.name] ?? []),
     series: [standingOf(p.team).won, standingOf(p.team).lost] as const,
   }));

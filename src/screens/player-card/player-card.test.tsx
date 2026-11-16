@@ -20,7 +20,7 @@ const HEAD = ["Mid · T1", "Faker", "이상혁", "Lee Sang-hyeok"];
 const STRIP_NEXT = ["W4 · Wed · Bo3", "v KT", "W4 · Sat · Bo3", "v GEN", "W5 · Thu · Bo3", "v BRO"];
 const TABS = ["This week", "Fixtures", "History", "Champions"];
 const PICK_TEAM_KEYS = ["✓ Carry", "Make Vice-carry", "Swap with bench", "Transfer out", "Compare ›"];
-const PICK_TEAM_META = ["₩18.5m", "0.5", "19.3", "form · 2nd", "46%", "owned · 1st", "+1,204 / −310 this week"];
+const PICK_TEAM_META = ["₩18.5m", "price 0.5", "19.3", "form · 2nd", "46%", "owned · 1st", "+1,204 / −310 this week"];
 const PICK_TEAM_STRIP = ["W2 · Fri", "10", "v BFX", "W3 · Wed", "12", "v HLE", "W3 · Sat", "10", "v DK", ...STRIP_NEXT];
 const PICK_TEAM_SEASON = ["Season", "15 games", "Total", "Per game", "Pts", "Kills", "73", "4.9", "+22", "Deaths", "26", "1.7", "−4", "Steals", "2", "0.1", "+2"];
 
@@ -38,10 +38,7 @@ describe("History, opened from Pick Team", () => {
       ...TABS,
       "LCK Cup 2027",
       "Week", "Series", "Games", "K / D / A", "Price", "Pts", "Week",
-      "3", "Sat · W 2–0 DK", "2", "12/1/15", "₩18.5m", "10", "22",
-      "Wed · W 2–1 HLE", "3", "18/3/20", "12",
-      "2", "Fri · W 2–1 BFX", "13/6/14", "₩18.0m", "10", "22",
-      "Wed · W 2–0 DNS", "14/4/16", "12",
+      "2", "Wed · W 2–0 DNS", "14/4/16", "₩18.0m", "12", "22",
       "1", "Sat · W 2–0 NS", "9/3/11", "₩17.5m", "11", "14",
       "Wed · L 1–2 GEN", "7/9/10", "3",
       "Past seasons", "LCK, scored by Flol",
@@ -53,8 +50,8 @@ describe("History, opened from Pick Team", () => {
   });
 
   test("shows each week's price and total once, on its first row", () => {
-    expect(out.match(/18\.5m/g)).toHaveLength(2);
-    expect(out.match(/18\.0m/g)).toHaveLength(1);
+    expect(out.match(/₩17\.5m/g)).toHaveLength(1);
+    expect(out.match(/₩18\.0m/g)).toHaveLength(1);
   });
 
   test("marks History as the chosen tab", () => {
@@ -72,15 +69,15 @@ describe("This week, opened from Points with T1 v DK game 2 live", () => {
       "36",
       "Season · 2nd of 10 mids",
       "Compare ›",
-      "₩18.5m", "0.5", "18.0", "form · 1st", "46%", "owned · 1st", "+842 / −126 this week",
+      "₩18.5m", "price 0.5", "18.0", "form · 1st", "46%", "owned · 1st", "+842 / −126 this week",
       "W2 · Fri", "10", "v BFX", "W3 · Wed", "12", "v HLE", "W3 · Sat", "5", "Live", "v DK",
       ...STRIP_NEXT,
       ...TABS,
-      "Wed · v HLE", "W 2–1", "Final", "12",
+      "Wed · v HLE", "W 2–1", "12",
       "G1", "Azir", "· W", "6/1/7", "5",
       "G2", "Taliyah", "· L", "3/2/5", "2",
       "G3", "Galio", "· W", "9/0/8", "7",
-      "Sat · v DK", "1–0", "G2 live", "5",
+      "Sat · v DK", "1–0", "5",
       "G1", "Orianna", "· W", "5/1/9", "4",
       "G2", "Sylas", "· 14:20", "3/0/2", "1",
       "Week 3", "17 × 1.5 Carry", "25",
@@ -95,6 +92,22 @@ describe("This week, opened from Points with T1 v DK game 2 live", () => {
   test("strikes through the game that doesn't count", () => {
     expect(html(screen)).toMatch(/player-card__dropped"><td[^>]*>G2<\/td><td>Taliyah/);
     expect(html(screen).match(/player-card__dropped/g)).toHaveLength(1);
+  });
+
+  test("says Live once, on the strip, and never Final", () => {
+    expect(html(screen).match(/tag--live/g)).toHaveLength(1);
+    expect(out).not.toContain("Final");
+  });
+});
+
+describe("the strip's series show once", () => {
+  test("History starts after the strip's 3 played, Fixtures after its 3 to come", () => {
+    const history = text(<PlayerCardPage />);
+    expect(history).not.toContain("Sat · W 2–0 DK");
+    expect(history).not.toContain("Fri · W 2–1 BFX");
+    const fixtures = text(<PlayerCardPage initialTab="Fixtures" />);
+    expect(fixtures).not.toContain("T1 v KT");
+    expect(fixtures).not.toContain("T1 v BRO");
   });
 });
 
@@ -111,10 +124,7 @@ describe("Fixtures, with a news line", () => {
       ...PICK_TEAM_STRIP,
       ...TABS,
       "Week", "Series", "Your time", "KST",
-      "4", "Wed · T1 v KT · Bo3", "10:30", "19:30",
-      "Sat · T1 v GEN · Bo3", "08:00", "17:00",
-      "5", "Thu · T1 v BRO · Bo3", "08:00", "17:00",
-      "Sun · T1 v KRX · Bo3", "10:30", "19:30",
+      "5", "Sun · T1 v KRX · Bo3", "10:30", "19:30",
       "6", "Wed · T1 v DK · Bo3", "08:00", "17:00",
       "Sat · T1 v HLE · Bo3", "10:30", "19:30",
       ...PICK_TEAM_SEASON,

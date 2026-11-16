@@ -1,10 +1,10 @@
-import { cx, result, score, Tag } from "../../parts";
+import { cx, result, score } from "../../parts";
 import type { CardWeek, WeekSeries } from "./card";
 
 /** A series' points: the games that count. */
 const seriesPoints = (s: WeekSeries) => s.games.reduce((sum, g) => sum + (g.counts ? g.points : 0), 0);
 
-/** This week: each series with its points in its head, each game with champion, K/D/A and points, then the week's total. */
+/** This week: each series with its score and points in its head (the strip carries its Live tag), each game with champion, K/D/A and points, then the week's total. */
 export function ThisWeek({ week }: { week: CardWeek }) {
   const raw = week.series.reduce((sum, s) => sum + seriesPoints(s), 0);
   return (
@@ -14,8 +14,7 @@ export function ThisWeek({ week }: { week: CardWeek }) {
           <h3 className="player-card__section">
             <span>
               {s.day} · v {s.opponent}{" "}
-              <span className="player-card__quiet">{s.state === "live" ? score(s.score) : result(s.score)}</span>{" "}
-              {s.state === "live" ? <Tag kind="live">G{s.liveGame} live</Tag> : <Tag>Final</Tag>}
+              <span className="player-card__quiet">{s.state === "live" ? score(s.score) : result(s.score)}</span>
             </span>
             <b className="num">{seriesPoints(s)}</b>
           </h3>

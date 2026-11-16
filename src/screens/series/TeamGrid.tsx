@@ -40,16 +40,19 @@ function Points({ points, counts, pog }: { points: number; counts: boolean; pog?
   );
 }
 
-function GameHead({ game, n, code }: { game: Game; n: number; code: string }) {
+/** A game's head: its W or L for this side; with `details`, its length and VOD, or the live game's clock. */
+function GameHead({ game, n, code, details }: { game: Game; n: number; code: string; details: boolean }) {
   if ("clock" in game)
     return (
       <th scope="col">
-        G{n} <Tag kind="live">Live</Tag> <b className="num">{game.clock}</b>
+        G{n}
+        {details && <> <b className="num">{game.clock}</b></>}
       </th>
     );
   return (
     <th scope="col">
-      G{n} <b>{outcome(gameWon(game, code))}</b> · <span className="num">{game.length}</span> · <LinkGo out={game.vod}>VOD</LinkGo>
+      G{n} <b>{outcome(gameWon(game, code))}</b>
+      {details && <> · <span className="num">{game.length}</span> · <LinkGo out={game.vod}>VOD</LinkGo></>}
     </th>
   );
 }
@@ -102,11 +105,14 @@ function CoachRow({ coach }: { coach: CoachLine }) {
   );
 }
 
-/** One team's grid: a row per player in role order, then the coach; a column per game, then Series. */
-export function TeamGrid({ team, games }: { team: TeamSheet; games: Game[] }) {
+/**
+ * One team's grid, headed by its code: a row per player in role order, then the coach; a column per
+ * game, then Series. Only the grid with `details` heads each game with its length, VOD and clock.
+ */
+export function TeamGrid({ team, games, details = false }: { team: TeamSheet; games: Game[]; details?: boolean }) {
   return (
     <section className="series__team">
-      <SectionHead>{team.name}</SectionHead>
+      <SectionHead>{team.code}</SectionHead>
       <table className={cx("series__grid", games.length > 2 && "series__grid--three")}>
         <colgroup>
           <col className="series__col-role" />
@@ -121,7 +127,7 @@ export function TeamGrid({ team, games }: { team: TeamSheet; games: Game[] }) {
             <th scope="col" aria-label="Role" />
             <th scope="col" aria-label="Name" />
             {games.map((game, i) => (
-              <GameHead key={i} game={game} n={i + 1} code={team.code} />
+              <GameHead key={i} game={game} n={i + 1} code={team.code} details={details} />
             ))}
             <th scope="col" className="series__figure">
               Series
@@ -143,7 +149,7 @@ export function TeamGrid({ team, games }: { team: TeamSheet; games: Game[] }) {
 export function RosterList({ team }: { team: Roster }) {
   return (
     <section className="series__team">
-      <SectionHead note={team.name}>{team.code}</SectionHead>
+      <SectionHead>{team.code}</SectionHead>
       <table className="series__roster">
         <colgroup>
           <col className="series__col-roster-role" />

@@ -3,7 +3,7 @@ import type { DeleteRow } from "./settings";
 import "./settings.css";
 import "./sheets.css";
 
-/** The Delete account sheet: what goes, who each private league passes to, then Back or Delete account. */
+/** The Delete account sheet: what goes (the team named once, in the sentence), who each private league passes to, then Back or Delete account. */
 export function DeleteSheet({
   team,
   rows,
@@ -24,7 +24,7 @@ export function DeleteSheet({
         {rows.map((row) => (
           <li key={row.what} className="settings__list-row">
             <b className="settings__list-what">{row.what}</b>
-            <span className="settings__list-detail">{row.detail}</span>
+            {row.detail && <span className="settings__list-detail">{row.detail}</span>}
           </li>
         ))}
       </ul>

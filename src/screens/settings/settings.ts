@@ -34,10 +34,10 @@ export interface Account {
   provider: "Google" | "Discord";
 }
 
-/** A line of the Delete sheet: what goes, and its detail. */
+/** A line of the Delete sheet: what goes, and its detail where the sentence above hasn't said it. */
 export interface DeleteRow {
   what: string;
-  detail: string;
+  detail?: string;
 }
 
 /** Each setting's tab and its name in the save bar, in the order the tabs show them. */

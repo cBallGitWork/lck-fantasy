@@ -45,8 +45,6 @@ export interface WeekSeries {
   opponent: TeamCode;
   score: Score;
   state: "final" | "live";
-  /** The game being played, while live. */
-  liveGame?: number;
   games: CardGame[];
 }
 

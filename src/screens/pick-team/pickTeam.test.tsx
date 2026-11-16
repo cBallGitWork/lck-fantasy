@@ -3,7 +3,7 @@ import { expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
 import { ordinal } from "../../parts";
-import { canSwap, changeCount, fitIds, pickReducer, type PickAction, type PickState } from "./model";
+import { changeCount, pickReducer, swapIds, type PickAction, type PickState } from "./model";
 import { PickTeamView } from "./PickTeam";
 
 const roleOf = (id: string) => (PICK_TEAM_DATA.players[id] as PickPlayer).role;
@@ -21,16 +21,19 @@ function expectInOrder(out: string, pieces: string[]) {
   }
 }
 
-const SIDE_TAIL = [
-  "Buffs",
+/** The buffs, in one row above the Rift. */
+const BUFFS = [
   "Bench Boost",
-  "Your bench scores too",
+  "Your bench players score this week too",
   "Dual Carry",
-  "Vice-carry ×1.5 too",
+  "Your Vice-carry scores ×1.5 too",
   "Remake",
-  "Unlimited transfers, kept",
+  "Unlimited free transfers; your new squad stays",
   "Limitless",
-  "One week, no budget or team cap",
+  "One week, no budget or team cap; then your squad returns",
+];
+
+const SIDE_TAIL = [
   "This week's series",
   "your time · KST",
   "HLE v DK",
@@ -53,14 +56,9 @@ const FAKER_CARD = [
   "Form19.3 · 1st of 10 mids",
   "Owned46% · 1st",
   "Season58 · 2nd",
-  "Last 3 weeks19 · 22 · 17",
-  "Wed 10:30 19:30 KST",
-  "v KT · Bo3",
-  "Sat 08:00 17:00 KST",
-  "v GEN · Bo3",
+  "Last 3 series19 · 22 · 17",
   "✓ Carry",
   "Make Vice-carry",
-  "Swap with bench",
   "Full card ›",
 ];
 
@@ -70,21 +68,22 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
     "Pick Team",
     "팀 선택",
     "LCK Cup Week 4",
+    ...BUFFS,
     "Rift view",
     "Card view",
-    "Zeusv DK · v NS",
-    "Canyonv BRO · v T1",
-    "Fakerv KT · v GEN",
-    "Rulerv BRO · v T1",
-    "Delightv DK · v NS",
-    "Siwoov HLE · v KTNot startingFlex · plays Top",
-    "kkOmav KT · v GENCoach 감독",
+    "Zeusv DK, NS",
+    "Canyonv BRO, T1",
+    "Fakerv KT, GEN",
+    "Rulerv BRO, T1",
+    "Delightv DK, NS",
+    "Siwoov HLE, KTNot startingFlex · plays Top",
+    "kkOmav KT, GENCoach 감독",
     "Bench",
     "1",
-    "Bdd KTv T1 · v DK",
+    "Bdd KTv T1, DK",
     "⇅ Swap",
     "2",
-    "Cuzz KTv T1 · v DK",
+    "Cuzz KTv T1, DK",
     "No changes",
     "Deadline Wed 07:45 16:45 KST 9h 45m",
     "Save team",
@@ -96,6 +95,12 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expect(markup).toContain('title="Carry">C');
   expect(markup).toContain('title="Vice-carry">V');
   expect(markup.match(/tile--selected/g)).toHaveLength(1);
+  // Faker tapped: Bdd, the bench mid, is lit to swap with him; the Flex plays Top, so isn't; the other six starters and Cuzz dim.
+  expect(markup.match(/bench-tile--fit/g)).toHaveLength(1);
+  expect(markup.match(/tile--dim/g)).toHaveLength(7);
+  expect(markup.match(/class="tile__flex"/g)).toHaveLength(1);
+  // His card shows T1's crest; the Rift's tiles and the bench show none (Craig, 16 Nov 2026).
+  expect(markup.match(/alt="T1 crest"/g)).toHaveLength(1);
   expect(markup).toMatch(/main-action__key"[^>]*disabled/);
   expect(markup).not.toContain("Reset");
   expect(markup.match(/buff-card__play/g)).toHaveLength(2);
@@ -108,14 +113,14 @@ test("Card view: the seven starters as the broadcast lineup, the bench bar, then
   expectInOrder(out, [
     "Rift view",
     "Card view",
-    "TopPhotoZeusHLEv DK · v NSForm 14.0₩16.0m",
-    "JunglePhotoCanyonGENv BRO · v T1Form 14.7₩15.5m",
-    "MidPhotoCFakerT1v KT · v GENForm 19.3₩18.5m",
-    "BotPhotoVRulerGENv BRO · v T1Form 15.3₩17.0m",
-    "SupportPhotoDelightHLEv DK · v NSForm 9.3₩9.0m",
-    "Flexplays TopPhotoNot startingSiwooDKv HLE · v KTForm 7.7₩7.5m",
+    "TopPhotoZeusHLEv DK, NSForm 14.0₩16.0m",
+    "JunglePhotoCanyonGENv BRO, T1Form 14.7₩15.5m",
+    "MidPhotoCFakerT1v KT, GENForm 19.3₩18.5m",
+    "BotPhotoVRulerGENv BRO, T1Form 15.3₩17.0m",
+    "SupportPhotoDelightHLEv DK, NSForm 9.3₩9.0m",
+    "Flexplays TopPhotoNot startingSiwooDKv HLE, KTForm 7.7₩7.5m",
     "Coach감독",
-    "kkOmaT1v KT · v GENForm 9.0₩7.0m",
+    "kkOmaT1v KT, GENForm 9.0₩7.0m",
     "Bench",
     "Bdd",
     "⇅ Swap",
@@ -131,14 +136,20 @@ test("Card view: the seven starters as the broadcast lineup, the bench bar, then
   expect(markup).not.toContain("rift-map");
 });
 
-test("Mid-swap: Siwoo going out, both bench players fit, Bench Boost on and unsaved", () => {
+test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on and unsaved", () => {
   const out = text(view(PICK_TEAM_STATES.swap));
   expectInOrder(out, [
+    "Bench Boost",
+    "On · unsaved",
+    "Cancel",
+    "Dual Carry",
+    "1 left",
+    "Remake",
     "Siwoo",
     "Bench",
     "Bdd",
     "Cuzz",
-    "1 change · Bench Boost on",
+    "1 change",
     "Reset",
     "Deadline Wed 07:45 16:45 KST 9h 45m",
     "Save team",
@@ -148,26 +159,20 @@ test("Mid-swap: Siwoo going out, both bench players fit, Bench Boost on and unsa
     "Form7.7 · 7th of 10 tops",
     "Owned6% · 9th",
     "Season23 · 8th",
-    "Last 3 weeks6 · 9 · 8",
-    "Wed 08:00 17:00 KST",
-    "v HLE · Bo3",
-    "Fri 10:30 19:30 KST",
-    "v KT · Bo3",
+    "Last 3 series6 · 9 · 8",
     "Make Carry",
     "Make Vice-carry",
-    "Cancel swap",
     "Full card ›",
-    "Bench Boost",
-    "On · unsaved",
-    "Cancel",
-    "Dual Carry",
-    "1 left",
-    ...SIDE_TAIL.slice(SIDE_TAIL.indexOf("Remake")),
+    ...SIDE_TAIL,
   ]);
+  // The buff's card says it is on, so the bar gives only the count; his series are on his tile, not his card.
+  expect(out).toContain("1 changeReset");
+  expect(out).not.toContain("Bench Boost on");
+  expect(out).not.toContain("Bo3");
   const markup = html(view(PICK_TEAM_STATES.swap));
   expect(markup.match(/bench-tile--fit/g)).toHaveLength(2);
-  expect(markup.match(/tile--dim/g)).toHaveLength(6);
-  expect(markup.match(/pick-team__key"[^>]*disabled/g)).toHaveLength(2);
+  expect(markup.match(/"tile tile--narrow tile--fit"/g)).toHaveLength(1);
+  expect(markup.match(/tile--dim/g)).toHaveLength(5);
   expect(markup).toContain("buff-card--on");
   expect(markup.match(/buff-card--off/g)).toHaveLength(3);
   expect(markup).not.toContain("buff-card__play");
@@ -178,30 +183,48 @@ test("the coach's card has no Carry or swap keys", () => {
   const out = text(view({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }));
   expect(out).toContain("T1 · Coach · ₩7.0m");
   expect(out).not.toContain("Make Carry");
-  expect(out).not.toContain("Swap with bench");
+  // He can swap with nobody, so nothing lights or dims.
+  expect(html(view({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }))).not.toMatch(/tile--(fit|dim)/);
   expect(html(view({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }))).toContain('href="/coach/kkoma"');
 });
 
-test("a swap brings on a bench player who fits: own role, or any role for the Flex", () => {
-  expect(fitIds(SAVED_TEAM, "siwoo", roleOf)).toEqual(new Set(["bdd", "cuzz"]));
-  expect(fitIds(SAVED_TEAM, "zeus", roleOf)).toEqual(new Set());
-  expect(fitIds(SAVED_TEAM, "canyon", roleOf)).toEqual(new Set(["cuzz"]));
-  const swapped = run(PICK_TEAM_STATES.rift, { type: "select", id: "canyon" }, { type: "startSwap", id: "canyon" }, { type: "swapIn", id: "bdd" });
-  expect(swapped.draft.slots.jng).toBe("canyon");
-  const done = run(swapped, { type: "swapIn", id: "cuzz" }, { type: "startSwap", id: "canyon" }, { type: "swapIn", id: "cuzz" });
-  expect(done.draft.slots.jng).toBe("cuzz");
-  expect(done.draft.slots.bench2).toBe("canyon");
-  expect(done.swapping).toBeUndefined();
+test("tap a player, then one lit up, and they swap: a role starter with the bench or a Flex of his role", () => {
+  expect(swapIds(SAVED_TEAM, "faker", roleOf)).toEqual(new Set(["bdd"]));
+  expect(swapIds(SAVED_TEAM, "canyon", roleOf)).toEqual(new Set(["cuzz"]));
+  expect(swapIds(SAVED_TEAM, "zeus", roleOf)).toEqual(new Set(["siwoo"]));
+  expect(swapIds(SAVED_TEAM, "siwoo", roleOf)).toEqual(new Set(["zeus", "bdd", "cuzz"]));
+  expect(swapIds(SAVED_TEAM, "bdd", roleOf)).toEqual(new Set(["faker", "siwoo"]));
+  expect(swapIds(SAVED_TEAM, "kkoma", roleOf)).toEqual(new Set());
+  // One tap each: Canyon, then Cuzz.
+  const done = run(PICK_TEAM_STATES.rift, { type: "select", id: "canyon" }, { type: "select", id: "cuzz" });
+  expect([done.draft.slots.jng, done.draft.slots.bench2, done.selected]).toEqual(["cuzz", "canyon", undefined]);
   expect(changeCount(done.saved, done.draft)).toBe(1);
+  // A tap on one not lit picks him instead; a second tap on the same lets go.
+  const picked = run(PICK_TEAM_STATES.rift, { type: "select", id: "canyon" }, { type: "select", id: "faker" });
+  expect([picked.draft, picked.selected]).toEqual([SAVED_TEAM, "faker"]);
+  expect(run(picked, { type: "select", id: "faker" }).selected).toBeUndefined();
 });
 
-test("the coach can't go to the bench; a Carry who does hands his C to the player coming on", () => {
-  expect(canSwap(SAVED_TEAM, "kkoma")).toBe(false);
-  expect(canSwap(SAVED_TEAM, "faker")).toBe(true);
-  expect(run(PICK_TEAM_STATES.rift, { type: "startSwap", id: "kkoma" }).swapping).toBeUndefined();
-  const s = run(PICK_TEAM_STATES.rift, { type: "startSwap", id: "faker" }, { type: "swapIn", id: "bdd" });
+test("Zeus and the Flex swap places, the V staying with Zeus: the swap and the V counted once each", () => {
+  const s = run({ ...PICK_TEAM_STATES.rift, selected: undefined }, { type: "makeVice", id: "zeus" }, { type: "select", id: "zeus" }, { type: "select", id: "siwoo" });
+  expect([s.draft.slots.top, s.draft.slots.flex, s.draft.vice]).toEqual(["siwoo", "zeus", "zeus"]);
+  expect(changeCount(s.saved, s.draft)).toBe(2);
+  expect(text(view({ ...s, selected: undefined }))).toContain("Zeusv DK, NSFlex · plays Top");
+});
+
+test("the coach can't swap; a Carry going to the bench hands his C to the player coming on", () => {
+  const s = run(PICK_TEAM_STATES.rift, { type: "select", id: "bdd" });
   expect([s.draft.slots.mid, s.draft.slots.bench1, s.draft.carry, s.draft.vice]).toEqual(["bdd", "faker", "bdd", "ruler"]);
   expect(changeCount(s.saved, s.draft)).toBe(1);
+  expect(run({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }, { type: "select", id: "bdd" }).draft).toBe(SAVED_TEAM);
+});
+
+test("with Dual Carry played the V is gold as the C", () => {
+  const plain = html(view(PICK_TEAM_STATES.rift));
+  expect(plain).toContain('tile__mark tile__mark--v"');
+  const dual = run(PICK_TEAM_STATES.rift, { type: "playBuff", buff: "dualCarry" });
+  expect(html(view(dual))).not.toContain("tile__mark--v");
+  expect(html(view({ ...dual, view: "cards" }))).not.toContain("pcard__mark--v");
 });
 
 test("making the Vice-carry the Carry hands the old Carry the V, as FPL's armband", () => {
@@ -220,15 +243,16 @@ test("⇅ Swap swaps bench 1 and 2; one buff a week; Reset drops the draft and S
   expect(run(s, { type: "reset" }).draft).toBe(SAVED_TEAM);
   const saved = run(s, { type: "save" });
   expect(changeCount(saved.saved, saved.draft)).toBe(0);
-  expect(text(view(saved))).toContain("BuffsBench BoostYour bench scores tooOnCancel");
+  expect(text(view(saved))).toContain("Bench BoostYour bench players score this week tooOnCancel");
   expect(run(saved, { type: "cancelBuff" }).draft.buff).toBeUndefined();
 });
 
 test("Rift view | Card view sets the view; ✕ closes the card and ends the swap", () => {
   expect(run(PICK_TEAM_STATES.rift, { type: "view", view: "cards" }).view).toBe("cards");
   const closed = run(PICK_TEAM_STATES.swap, { type: "close" });
-  expect([closed.selected, closed.swapping]).toEqual([undefined, undefined]);
-  expect(text(view(closed))).not.toContain("Last 3 weeks");
+  expect(closed.selected).toBeUndefined();
+  expect(text(view(closed))).not.toContain("Last 3 series");
+  expect(html(view(closed))).not.toMatch(/tile--(fit|dim)/);
 });
 
 test("ranks read as ordinals", () => {

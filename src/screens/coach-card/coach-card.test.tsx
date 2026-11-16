@@ -57,13 +57,13 @@ describe("History, from Pick Team (1440.png)", () => {
       "Coach · T1",
       "kkOma",
       "김정균",
-      "Kim Jeong-gyun · head coach",
+      "Kim Jeong-gyun",
       "27",
       "Season · 1st of 10 coaches",
       "Transfer out",
       "Compare ›",
       "₩7.0m",
-      "0.5",
+      "price 0.5",
       "9.0",
       "form · 1st",
       "22%",
@@ -90,10 +90,7 @@ describe("History, from Pick Team (1440.png)", () => {
       "Roster",
       "LCK Cup 2027",
       "WeekSeriesGamesPricePtsWeek",
-      "3Sat · W 2–0 DK2₩7.0m816",
-      "Wed · W 2–1 HLE38",
-      "2Fri · W 2–1 BFX3₩6.5m48",
-      "Wed · W 2–0 DNS24",
+      "2Wed · W 2–0 DNS2₩6.5m48",
       "1Sat · W 2–0 NS2₩6.5m33",
       "Wed · L 1–2 GEN30",
       "Past seasons",
@@ -129,17 +126,18 @@ describe("This week, from Points (1440-week.png)", () => {
       "Season · 3rd of 10 coaches",
       "Compare ›",
       "₩7.0m",
+      "price",
       "5.5",
       "form · 2nd",
       "+204 / −58 this week",
       "W3 · Sat",
       "2Live",
-      "Wed · v HLE W 2–1 · Final8",
+      "Wed · v HLE W 2–18",
       "G1WFirst tower · Most drakes2",
       "G2L—0",
       "G3WFirst tower · Most drakes · Most barons3",
       "Series won+3",
-      "Sat · v DK 1–0 · G2 live2",
+      "Sat · v DK 1–02",
       "G1WFirst tower · Most drakes2",
       "G214:200",
       "Series · +3 if won, −1 if lost—",
@@ -155,7 +153,26 @@ describe("This week, from Points (1440-week.png)", () => {
     expect(out).not.toContain("Transfer out");
     const marked = html(card(FROM_POINTS, "points", "This week"));
     expect(marked.match(/coach-card__drop/g)).toHaveLength(1);
-    expect(marked).toContain('<span class="tag tag--live">G2 live</span>');
+  });
+
+  test("says Live once, on the strip, and never Final", () => {
+    expect(html(card(FROM_POINTS, "points", "This week")).match(/tag--live/g)).toHaveLength(1);
+    expect(out).not.toContain("Final");
+  });
+});
+
+describe("the strip's series show once", () => {
+  test("History starts after the strip's 3 played, Fixtures after its 3 to come", () => {
+    const history = text(card(FROM_PICK_TEAM, "pickTeam", "History"));
+    expect(history).not.toContain("Sat · W 2–0 DK");
+    expect(history).not.toContain("Fri · W 2–1 BFX");
+    const fixtures = text(card(FROM_PICK_TEAM, "pickTeam", "Fixtures"));
+    expect(fixtures).not.toContain("T1 v KT");
+    expect(fixtures).not.toContain("T1 v BRO");
+  });
+
+  test("the head names the coach once, without his job", () => {
+    expect(text(card(FROM_PICK_TEAM, "pickTeam", "History"))).not.toContain("head coach");
   });
 });
 
@@ -181,10 +198,7 @@ describe("Fixtures (the player card's 1440-fixtures.png)", () => {
     const out = text(card(FROM_PICK_TEAM, "pickTeam", "Fixtures"));
     inOrder(out, [
       "WeekSeriesYour timeKST",
-      "4Wed · T1 v KT · Bo310:3019:30",
-      "Sat · T1 v GEN · Bo308:0017:00",
-      "5Thu · T1 v BRO · Bo308:0017:00",
-      "Sun · T1 v KRX · Bo310:3019:30",
+      "5Sun · T1 v KRX · Bo310:3019:30",
       "6Wed · T1 v DK · Bo308:0017:00",
       "Sat · T1 v HLE · Bo310:3019:30",
     ]);

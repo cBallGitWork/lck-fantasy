@@ -72,7 +72,7 @@ function Played({ series, live, account }: { series: PlayedSeries; live: boolean
         </span>
       </Meta>
       <div className="series__two">
-        <TeamGrid team={home} games={games} />
+        <TeamGrid team={home} games={games} details />
         <TeamGrid team={away} games={games} />
       </div>
     </Frame>

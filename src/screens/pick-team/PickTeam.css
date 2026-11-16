@@ -84,10 +84,17 @@
   cursor: default;
 }
 
-/* Buffs: four boxes of one size. */
+/* Buffs: four boxes of one size, in one row above the Rift. */
 .pick-team__buffs {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--s-2);
+  margin-bottom: var(--s-4);
+}
+
+/* The team's crest before its code in the card's meta. */
+.pick-team__crest > * {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: var(--s-1);
 }

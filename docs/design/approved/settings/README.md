@@ -4,6 +4,8 @@ The manager's team, display, emails and account, in four tabs (spec/12, Settings
 
 **Approved:** Craig, 15 Nov 2026. He asked for GDPR to be covered and took every recommendation (Download my data, no cookie banner, a 16+ tick, Privacy and Terms with a contact, a public-data line, erase at once). Then he said "maybe get differen tparts into tabs", that the favourite team can't change in the season, that both lock "once your first gameweek starts", and answered the last calls: "1 save team 2 your call 3 ok 4 your call 5 just text is fine no need for draw, do some basics and file". The names and numbers are a made-up LCK Cup Week 4, the Transfers picture's moment, with Home's Baron Steal FC; not roster data. There is no `plate.md` yet, so this binds layout, content and order, not colour or type. The source is `settings.html`, and its brief is [docs/design/proposals/2026-11-16-settings/](../../proposals/2026-11-16-settings/).
 
+**Changed by Craig, 16 Nov 2026:** the banner preview is the hangul and team name, as Profile's banner (no favourite team and country line); the Delete sheet names the team in its sentence only.
+
 | File | Shows |
 |---|---|
 | `1440.png`, `settings.html` | Team tab, one unsaved change |

@@ -15,11 +15,6 @@
   font-size: var(--size-head);
   font-weight: var(--w-bold);
 }
-.home__stage-go {
-  position: absolute;
-  right: var(--s-5);
-  top: var(--s-4);
-}
 .home__next {
   position: absolute;
   left: var(--s-5);

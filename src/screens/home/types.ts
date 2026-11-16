@@ -3,11 +3,10 @@
 import type { Score } from "../../parts";
 import type { IconKey, Mark, RoleKey, SlotKey } from "../../rift";
 
-/** Overall as a LoL tier with divisions (spec/08): the shield's division, the tier, its hangul, the rank and move. */
+/** Overall as a LoL tier with divisions (spec/08): the tier with its division, its hangul, the rank and move. */
 export interface OverallTier {
   tier: string;
   hangul: string;
-  division: string;
   rank: number;
   /** Places moved: up positive, down negative. */
   move: number;

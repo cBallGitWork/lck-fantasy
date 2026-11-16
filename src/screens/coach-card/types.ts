@@ -68,8 +68,6 @@ export interface WeekSeries {
   /** The coach's team's games first. */
   score: Score;
   state: "final" | "live";
-  /** The game being played, while live. */
-  liveGame?: number;
   games: WeekGame[];
   points: number;
 }

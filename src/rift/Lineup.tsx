@@ -14,6 +14,8 @@ export interface LineupCardProps {
   name: string;
   team: string;
   mark?: Mark;
+  /** Dual Carry is played: the V is gold as the C (spec/06). */
+  dual?: boolean;
   me?: boolean;
   /** A tag on the photo, such as `Not starting`. */
   news?: string;
@@ -22,6 +24,8 @@ export interface LineupCardProps {
   /** The footer: Form and price on Pick Team, points on Points. */
   footer?: ReactNode;
   selected?: boolean;
+  /** `dim` while another card is being moved; `fit` where it could go. */
+  state?: "dim" | "fit";
   onSelect?: () => void;
 }
 
@@ -41,15 +45,12 @@ function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
 /** One starter's card in Card view (not the Player card screen): role head, photo (a crest for the Coach), name, team, next, footer. */
 export function LineupCard(p: LineupCardProps) {
   const mark = p.mark && (
-    <span className={cx("pcard__mark", p.mark === "V" && "pcard__mark--v")} title={MARK_NAME[p.mark]}>
+    <span className={cx("pcard__mark", p.mark === "V" && !p.dual && "pcard__mark--v")} title={MARK_NAME[p.mark]}>
       {p.mark}
     </span>
   );
   return (
-    <div
-      className={cx("pcard", p.selected && "pcard--selected")}
-      {...selectable(p.onSelect, p.selected)}
-    >
+    <div className={cx("pcard", p.selected && "pcard--selected", p.state && `pcard--${p.state}`)} {...selectable(p.onSelect, p.selected)}>
       <RoleHead slot={p.slot} plays={p.plays} />
       {p.slot === "coach" ? (
         <div className="pcard__photo pcard__photo--crest">

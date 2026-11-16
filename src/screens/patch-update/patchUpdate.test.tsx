@@ -33,10 +33,9 @@ describe("Week 4 prices", () => {
     expectInOrder(falls, ["Gumayusi", "Aiming", "ShowMaker", "Doran", "DuDu", "Clear", "DanDy", "Edgar"]);
   });
 
-  test("marks a rise ▲ and a fall ▼, and your own players with the dot", () => {
+  test("marks no row with an arrow (the list says rise or fall), and your own players with the dot", () => {
     const page = html(<PatchUpdatePage week={WEEK4_PRICES} />);
-    expect(page.match(/class="rise"/g)).toHaveLength(WEEK4_PRICES.rises.length);
-    expect(page.match(/class="fall"/g)).toHaveLength(WEEK4_PRICES.falls.length);
+    expect(page).not.toMatch(/class="(rise|fall)"/);
     expect(page.match(/me-dot/g)).toHaveLength(2);
     expect(WEEK4_PRICES.rises.filter((row) => row.mine).map((row) => row.name)).toEqual(["Faker", "Siwoo"]);
   });

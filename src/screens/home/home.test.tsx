@@ -16,7 +16,7 @@ function expectInOrder(out: string, pieces: string[]) {
 }
 
 const HEAD = ["Baron Steal FC", "바론 스틸 FC", "Emerald I", "에메랄드 1", "48,211", "6,904", "Badge"];
-const deadline = (d: string, h: string, m: string) => ["Week 4 deadline", "LCK Cup", `${d}d${h}h${m}m`, "Deadline", "Wed 07:45", "16:45 KST", "Pick Team", "Transfers", "1 free transfer"];
+const deadline = (d: string, h: string, m: string) => ["Week 4 deadline", "LCK Cup", `${d}d${h}h${m}m`, "Wed 07:45", "16:45 KST", "Pick Team", "Transfers", "1 free transfer"];
 const BAND = [
   "Following",
   "Minji · GEN v HLE",
@@ -65,7 +65,7 @@ describe("live", () => {
       "LCK · English · Twitch",
       ...["LCK · English", "Twitch", "LCK · English", "YouTube", "LCK · 한국어", "YouTube", "Caedrel · English", "Twitch", "Kameto · Français", "Twitch", "More ▾"],
       ...["Your week", "Not final", "94", "Average 74", "Highest 131›"],
-      ...["In this series", "Faker", "C", "T1", "G2 · 3/0/2", "25", "Siwoo", "DK", "G2 · 0/1/1", "8", "kkOma", "T1", "G2", "10"],
+      ...["In this series", "Faker", "C", "T1", "3/0/2", "25", "Siwoo", "DK", "0/1/1", "8", "kkOma", "T1", "10"],
       ...["Still to play", "None", "Points ›"],
       ...BAND,
     ]);
@@ -98,18 +98,22 @@ describe("idle", () => {
       ...HEAD,
       ...deadline("1", "20", "45"),
       "Week 4 lineup",
-      "Pick Team ›",
       ...["Next on stream", "HLE v DK", "Wed 08:00", "17:00 KST", "in", "1d 21h"],
       ...["HLE", "Zeus", "Top", "GEN", "Canyon", "Jungle", "T1", "C", "Faker", "Mid", "GEN", "V", "Ruler", "Bot"],
       ...["HLE", "Delight", "Support", "DK", "Siwoo", "Flex · Top", "T1", "kkOma", "Coach"],
       ...["Week 3", "Final", "109", "Average 79", "Highest 136›"],
-      ...["Star and flop", "Faker", "T1", "star", "22", "Delight", "HLE", "flop", "9", "Points ›"],
+      ...["Faker", "T1", "Star", "22", "Delight", "HLE", "Flop", "9", "Points ›"],
       ...BAND,
     ]);
   });
 
-  test("shows no live series and links Pick Team", () => {
+  test("shows no live series, no stage Pick Team, no second Deadline and no division on the shield", () => {
     expect(out).not.toContain("In this series");
+    expect(out).not.toContain("Star and flop");
+    expect(out.match(/Deadline/g)).toBeNull();
+    const markup = html(<Home data={HOME_IDLE} />);
+    expect(markup).not.toContain("home__stage-go");
+    expect(markup).not.toContain("home__shield-division");
     expect(out).not.toContain("Not final");
     expect(html(<Home data={HOME_IDLE} />)).toContain('href="/pick-team"');
   });

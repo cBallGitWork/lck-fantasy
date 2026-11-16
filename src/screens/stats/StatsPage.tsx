@@ -176,7 +176,7 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
   return [
     {
       key: "name",
-      head: <span className="stats__lead-head">{coaches ? "Coach" : "Player"}</span>,
+      head: <span className={cx("stats__lead-head", coaches && "stats__lead-head--coach")}>{coaches ? "Coach" : "Player"}</span>,
       cell: (r) => <Lead row={r} />,
       fullText: (r) => r.name,
     },
@@ -198,12 +198,12 @@ const seriesColumn: Column<Ranked> = {
   figure: true,
 };
 
-/** Rank, role icon, then the name (to his card), team and your dot. */
+/** Rank, role icon (none for a coach: the tab says it), then the name (to his card), team and your dot. */
 function Lead({ row }: { row: Ranked }) {
   return (
     <span className="stats__lead">
       <span className="stats__rank num">{row.rank}</span>
-      <RoleIcon role={row.role} className="stats__lead-icon" />
+      {row.role !== "coach" && <RoleIcon role={row.role} className="stats__lead-icon" />}
       <GoLink go={cardGo(row.id, row.role === "coach")} className="stats__name">
         {row.name}
       </GoLink>

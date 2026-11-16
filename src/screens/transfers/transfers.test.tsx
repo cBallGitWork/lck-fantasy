@@ -1,9 +1,9 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
-import { TRANSFERS_PICTURE, SQUAD } from "./fixtures";
+import { TRANSFERS_PICTURE } from "./fixtures";
 import { EMPTY_PLAN } from "./plan";
-import { TransfersPage, under } from "./TransfersPage";
+import { TransfersPage } from "./TransfersPage";
 
 /** Fails unless each piece is found after the one before it. */
 function expectInOrder(out: string, pieces: string[]) {
@@ -15,82 +15,45 @@ function expectInOrder(out: string, pieces: string[]) {
   }
 }
 
-describe("Rift view mid-transfer (transfers.html)", () => {
+describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)", () => {
   const out = text(<TransfersPage {...TRANSFERS_PICTURE} />);
+  const page = html(<TransfersPage {...TRANSFERS_PICTURE} />);
 
-  test("the head, the strip and the controls, in the picture's order", () => {
+  test("the head with free transfers, cost and bank, then the controls", () => {
     expectInOrder(out, [
       "Transfers",
       "이적",
       "LCK Cup Week 4 · Deadline Wed 07:45 16:45 KST 9h 45m",
       "Free transfers 0",
-      "Pending hit −6",
+      "Cost −6",
       "Bank 1.5억",
+      "Rift view",
+      "List view",
       "Remake",
       "Limitless",
-      "Rift view",
-      "Card view",
-      "Show: Fixtures ▾",
     ]);
+    expect(out).not.toContain("Show:");
+    expect(out).not.toContain("Card view");
   });
 
-  test("the Rift with Kingen in the Flex, the bench, then the changes bar", () => {
-    expectInOrder(out, [
-      "Zeus",
-      "v DK · v NS",
-      "Canyon",
-      "Faker",
-      "kkOma",
-      "Coach 감독",
-      "Kingen",
-      "v DNS · v HLE",
-      "Flex · plays Top",
-      "Delight",
-      "Ruler",
-      "Bench",
-      "Bdd",
-      "Cuzz",
-      "1 transfer · −6 · Siwoo 7.5억 → Kingen 6.5억 · bank 0.5억 → 1.5억",
-      "Reset",
-      "Review and confirm ›",
-    ]);
+  test("all nine on the Rift by role, no bench, each with his price; the two Tops together", () => {
+    expectInOrder(out, ["Zeus", "16.0억", "Kingen", "6.5억", "Canyon", "15.5억", "Cuzz", "4.0억", "Faker", "18.5억", "Bdd", "5.0억", "Ruler", "17.0억", "Delight", "9.0억", "kkOma", "7.0억"]);
+    expect(page).not.toContain("bench-bar");
     expect(out).not.toContain("Siwoo DK");
   });
 
-  test("the list replacing Siwoo: the buyable by points, then the greyed with why", () => {
-    expectInOrder(out, [
-      "Replacing Siwoo",
-      "All roles",
-      "Support",
-      "Sort: Points ▾",
-      "Team: All ▾",
-      "Player",
-      "Price",
-      "Pts",
-      "Owned",
-      "Next",
-      "Kingen NS6.5억389%v DNS Thu✓",
-      "DuDu DNS6.0억336%v NS Thu+",
-      "Hype KRX",
-      "Clear BFX",
-      "Clozer BRO",
-      "Pollu BRO",
-      "Chovy GENTeam full17.5억",
-      "Keria T1Team full",
-      "Aiming DKOver budget",
-      "ShowMaker DKOver budget",
-      "Lucid DKOver budget",
-      "PerfecT KTTeam full",
-    ]);
+  test("no price arrows and no crests on the page", () => {
+    expect(page).not.toMatch(/class="(rise|fall)"/);
+    expect(page).not.toContain("crest");
   });
 
-  test("a greyed row can't be bought; the picked one is pressed; price moves show ▲ or ▼", () => {
-    const page = html(<TransfersPage {...TRANSFERS_PICTURE} />);
-    expect(page).toMatch(/disabled=""[^>]*aria-label="Chovy: Team full"/);
-    expect(page).toMatch(/aria-pressed="true"[^>]*aria-label="Buy Kingen"/);
-    expect(page).toMatch(/Kingen<\/b> NS.*?class="rise"/);
-    expect(page).toMatch(/DuDu<\/b> DNS.*?class="fall"/);
-    expect(page).not.toMatch(/Clozer<\/b> BRO.*?class="(rise|fall)".*?Pollu/);
+  test("the changes bar: each transfer, Reset, Review and confirm", () => {
+    expectInOrder(out, ["Siwoo 7.5억 → Kingen 6.5억", "Reset", "Review and confirm ›"]);
+  });
+
+  test("the list: everyone buyable, Next the opponent alone", () => {
+    expectInOrder(out, ["Players", "All roles", "Support", "Sort: Points ▾", "Team: All ▾", "Player", "Price", "Pts", "Owned", "Next", "Chovy GEN17.5억6141%v BRO+", "Keria T1"]);
+    expect(out).not.toMatch(/v [A-Z0-9]+ (Mon|Tue|Wed|Thu|Fri|Sat|Sun)/);
   });
 
   test("the week's confirms, newest first, Undo on the newest only", () => {
@@ -104,51 +67,89 @@ describe("Rift view mid-transfer (transfers.html)", () => {
   });
 });
 
-describe("the confirm sheet (confirm.html)", () => {
-  test("out, in, cost and bank, then Back or Confirm with the deadline", () => {
-    const out = text(<TransfersPage {...TRANSFERS_PICTURE} reviewing />);
+describe("List view (Craig, 16 Nov 2026)", () => {
+  const out = text(<TransfersPage {...TRANSFERS_PICTURE} view="List view" />);
+
+  test("the nine by role, as FPL's list: last week, price, form, total, next, ×", () => {
+    expectInOrder(out, [
+      "Player",
+      "Wk 3",
+      "Price",
+      "Form",
+      "Total",
+      "Next",
+      "Top",
+      "Zeus HLE1516.0억14.048v DK×",
+      "Kingen NS136.5억12.738v DNS×",
+      "Jungle",
+      "Canyon GEN",
+      "Cuzz KT",
+      "Mid",
+      "Faker T1",
+      "Bdd KT",
+      "Bot",
+      "Ruler GEN",
+      "Support",
+      "Delight HLE",
+      "Coach",
+      "kkOma T1",
+    ]);
+    expect(html(<TransfersPage {...TRANSFERS_PICTURE} view="List view" />)).not.toContain('class="rift"');
+  });
+
+  test("a removed player's row offers him back", () => {
+    const plan = { sold: { top: null }, replacing: "top" as const };
+    expect(html(<TransfersPage {...TRANSFERS_PICTURE} view="List view" initialPlan={plan} />)).toContain('aria-label="Restore Zeus"');
+  });
+});
+
+describe("the confirm sheet (confirm.html, changed by Craig 16 Nov 2026)", () => {
+  test("one row per transfer, out → in with each price, then cost, bank and free transfers used", () => {
+    const kingen = TRANSFERS_PICTURE.players.find((p) => p.name === "Kingen")!;
+    const hype = TRANSFERS_PICTURE.players.find((p) => p.name === "Hype")!;
+    const plan = { sold: { flex: kingen, bench1: hype }, replacing: null };
+    const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={plan} reviewing />);
     expectInOrder(out, [
       "Confirm your transfers",
-      "Out",
-      "Siwoo DK · Flex · 7.5억",
-      "In",
-      "Kingen NS · Flex, plays Top · 6.5억",
+      "Siwoo DK 7.5억",
+      "→",
+      "Kingen NS 6.5억",
+      "Bdd KT 5.0억",
+      "→",
+      "Hype KRX 5.5억",
       "Cost",
-      "−6 · no free transfers left",
+      "−12",
       "Bank",
-      "0.5억 → 1.5억",
+      "0.5억 → 1.0억",
+      "Free transfers used",
+      "0 of 0",
       "Back",
       "Confirm",
       "Deadline Wed 07:45 16:45 KST",
     ]);
   });
+
+  test("it stands out from the page", () => {
+    expect(html(<TransfersPage {...TRANSFERS_PICTURE} reviewing />)).toContain("modal__box--strong");
+  });
 });
 
 describe("before any change", () => {
-  const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />);
-
-  test("the squad as it stands, no hit, and Review and confirm off with why", () => {
-    expectInOrder(out, ["Free transfers 0", "Pending hit 0", "Bank 0.5억", "Siwoo", "Flex · plays Top", "No changes", "Review and confirm ›", "Players"]);
+  test("the squad as it stands, no cost, and Review and confirm off with why", () => {
+    const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />);
+    expectInOrder(out, ["Free transfers 0", "Cost 0", "Bank 0.5억", "Siwoo", "No changes", "Review and confirm ›", "Players"]);
     expect(html(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />)).toMatch(/<button[^>]*disabled=""[^>]*>Review and confirm/);
   });
 });
 
-describe("Rift view or Card view", () => {
+describe("Rift view or List view", () => {
   test("the first visit opens on Rift view", () => {
     expect(html(<TransfersPage {...TRANSFERS_PICTURE} />)).toContain('class="rift"');
   });
 
-  test("the manager's last choice, Card view, is what opens", () => {
-    const page = html(<TransfersPage {...TRANSFERS_PICTURE} view="Card view" />);
-    expect(page).not.toContain('class="rift"');
-    expect(page).toContain('class="lineup"');
-    expect(page).toMatch(/aria-pressed="true"[^>]*>Card view/);
+  test("the manager's last choice, List view, is what opens", () => {
+    const page = html(<TransfersPage {...TRANSFERS_PICTURE} view="List view" />);
+    expect(page).toContain('class="transfers__squad"');
+    expect(page).toMatch(/aria-pressed="true"[^>]*>List view/);
   });
-});
-
-test("Show puts fixtures, price or owned under a player", () => {
-  const zeus = SQUAD[0]!;
-  expect(under("Fixtures", zeus, TRANSFERS_PICTURE.fixtures)).toBe("v DK · v NS");
-  expect(under("Price", zeus, TRANSFERS_PICTURE.fixtures)).toBe("16.0억");
-  expect(under("Owned", zeus, TRANSFERS_PICTURE.fixtures)).toBe("31%");
 });

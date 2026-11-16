@@ -24,6 +24,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `Modal.tsx`: a card (1056) or sheet (544) over a dimmed page; ✕, Esc, focus kept inside.
 - `Field.tsx`: a form field: label above, 40px, an error line under.
 - `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
+- `Toast.tsx`: a short message at the foot of the page that goes by itself after `TOAST_MS` (`Kingen added`, `Team full: 2 from T1`).
 - `MainAction.tsx`: the screen's one filled key; disabled with its reason.
 - `OutlinedKey.tsx`: any other key; disabled with its reason.
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.

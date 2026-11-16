@@ -51,11 +51,12 @@ tightened to a few.
 | `--paper` | #fff | panels and tables |
 | `--rise` | #c8102e | a price rise, Korean red |
 | `--fall` | #1f4fa8 | a price fall, Korean blue |
+| `--over` | #c8102e | the bank below zero, over the budget, with its − (Craig, 16 Nov 2026) |
 | `--gold` | #d9bd7a | the hangul on your team's banner, and only there; its rule #b39550 |
 | `--stage` | #1b1b1b | Live's dark stage; its grey text is #999 (4.5:1) |
 
 - Grey until the look is chosen. Colour is spent on meaning only, never to decorate: red and
-  blue are prices only; a rank's move stays ink.
+  blue are prices and the bank only; a rank's move stays ink.
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
 
 ## Parts

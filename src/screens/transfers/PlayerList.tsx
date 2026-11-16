@@ -96,8 +96,8 @@ function ListRow({ p, next, onBuy }: { p: ListPlayer; next: string; onBuy: (p: L
       <td>
         <RoleIcon role={p.role} />
       </td>
-      <td className="transfers__name" title={p.name}>
-        <GoLink go={cardGo(p.id, p.role === "coach")}>
+      <td className="transfers__name truncate" title={p.name}>
+        <GoLink go={cardGo(p.id, p.role)}>
           <b>{p.name}</b> {p.team}
         </GoLink>
       </td>

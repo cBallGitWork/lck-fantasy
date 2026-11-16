@@ -208,11 +208,6 @@
   display: flex;
   align-items: center;
 }
-.live__rest-icon {
-  width: var(--s-3);
-  height: var(--s-3);
-  margin-right: var(--s-2);
-}
 .live__more {
   margin-top: var(--s-4);
   font-weight: var(--w-semi);

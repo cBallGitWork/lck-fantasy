@@ -25,7 +25,7 @@ function Name({ person, go }: { person: Person; go: Go }) {
 function Role({ icon, label }: { icon: IconKey; label: string }) {
   return (
     <td className="series__role quiet">
-      <RoleIcon role={icon} className="series__role-icon" />
+      <RoleIcon role={icon} inline />
       {label}
     </td>
   );
@@ -61,14 +61,14 @@ function PlayerRow({ p }: { p: PlayerLine }) {
   return (
     <tr>
       <Role icon={p.role} label={p.sub ? `${ROLE_NAME[p.role]} · sub` : ROLE_NAME[p.role]} />
-      <Name person={p} go={cardGo(p.id, false)} />
+      <Name person={p} go={cardGo(p.id, p.role)} />
       {p.games.map((game, i) =>
         game ? (
           <td key={i} className={cx(!game.counts && "series__dropped")}>
             <div className="series__game">
-              <span className="series__champ">
+              <span className="series__champ truncate">
                 {game.champion}
-                <small className="num">{game.kda}</small>
+                <small className="quiet num">{game.kda}</small>
               </span>
               <Points points={game.points} counts={game.counts} pog={game.pog} />
             </div>
@@ -88,7 +88,7 @@ function CoachRow({ coach }: { coach: CoachLine }) {
   return (
     <tr className="series__coach">
       <Role icon="coach" label={ROLE_NAME.coach} />
-      <Name person={coach} go={cardGo(coach.id, true)} />
+      <Name person={coach} go={cardGo(coach.id, "coach")} />
       {coach.games.map((game, i) => (
         <td key={i} className={cx(!game.counts && "series__dropped")}>
           <div className="series__game">
@@ -99,7 +99,7 @@ function CoachRow({ coach }: { coach: CoachLine }) {
       ))}
       <td className="series__total num">
         {coach.total}
-        {coach.result !== undefined && <small>{resultLabel(coach.result)}</small>}
+        {coach.result !== undefined && <small className="quiet">{resultLabel(coach.result)}</small>}
       </td>
     </tr>
   );
@@ -111,7 +111,7 @@ function CoachRow({ coach }: { coach: CoachLine }) {
  */
 export function TeamGrid({ team, games, details = false }: { team: TeamSheet; games: Game[]; details?: boolean }) {
   return (
-    <section className="series__team">
+    <section>
       <SectionHead>{team.code}</SectionHead>
       <table className={cx("series__grid", games.length > 2 && "series__grid--three")}>
         <colgroup>
@@ -148,7 +148,7 @@ export function TeamGrid({ team, games, details = false }: { team: TeamSheet; ga
 /** Before it starts: the team's roster in role order, the coach last. */
 export function RosterList({ team }: { team: Roster }) {
   return (
-    <section className="series__team">
+    <section>
       <SectionHead>{team.code}</SectionHead>
       <table className="series__roster">
         <colgroup>
@@ -159,12 +159,12 @@ export function RosterList({ team }: { team: Roster }) {
           {team.players.map((p) => (
             <tr key={p.id}>
               <Role icon={p.role} label={ROLE_NAME[p.role]} />
-              <Name person={p} go={cardGo(p.id, false)} />
+              <Name person={p} go={cardGo(p.id, p.role)} />
             </tr>
           ))}
           <tr className="series__coach">
             <Role icon="coach" label={ROLE_NAME.coach} />
-            <Name person={team.coach} go={cardGo(team.coach.id, true)} />
+            <Name person={team.coach} go={cardGo(team.coach.id, "coach")} />
           </tr>
         </tbody>
       </table>

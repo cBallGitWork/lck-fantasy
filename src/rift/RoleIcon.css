@@ -3,6 +3,12 @@
   height: var(--m-role-icon);
   flex: none;
 }
+.role-icon--inline {
+  width: var(--size-small);
+  height: var(--size-small);
+  margin-right: var(--s-2);
+  vertical-align: middle;
+}
 .role-icon__a {
   fill: var(--text);
 }

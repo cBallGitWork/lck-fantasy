@@ -58,7 +58,7 @@ function Price({ player }: { player: ComparePlayer }) {
   return (
     <>
       {money(player.priceM)}
-      {player.riseM !== undefined && <PriceMove money={player.riseM} className="compare__move" />}
+      {player.moveM !== undefined && <PriceMove moveM={player.moveM} className="compare__move" />}
     </>
   );
 }

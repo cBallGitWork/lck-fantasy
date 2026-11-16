@@ -42,8 +42,6 @@
 }
 .pcard__role small {
   display: block;
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .pcard__photo {
   position: relative;
@@ -73,9 +71,6 @@
   font-weight: var(--w-bold);
   padding: 0 var(--s-2);
   line-height: var(--lh-snug);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .pcard__team {
   padding: 0 var(--s-2) var(--s-2);

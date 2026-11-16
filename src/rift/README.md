@@ -10,6 +10,6 @@ The Rift view and Card view: the map, the tiles, the shirts, the role icons, the
 - `RoleIcon.tsx`: the role icons: top, jungle, mid, bot, support, coach, flex.
 - `Shirt.tsx`: the plain shirt with a team code.
 - `roles.ts`: role names, the five player roles (`ROLE_KEYS`), the lineup order, the squad's size, each slot's icon and tag, the role a Flex plays (`flexPlays`); a player's role or coach (`PersonRole`), and the squad's nine places (`SquadSlot`, `BENCH_SLOTS`, `isBench`).
-- `views.ts`: the two views' names, `Rift view | Card view` (`VIEWS`, `RIFT_VIEW`, `BoardView`).
+- `views.ts`: the two views' names, `Rift view | Card view` (`BOARD_VIEWS`, `RIFT_VIEW`, `CARD_VIEW`, `BoardView`).
 - `BenchBar.tsx`: the bench bar, its tiles (`BenchTile`: the Rift's own `Tile` under its order and role, `1. Mid`, as FPL's bench and its `1. DEF`; it can be chosen). No swap key: tap one bench player, then the other (Craig, 16 Nov 2026).
 - `PlayerPanel.tsx`: a tapped player's panel: shirt, name, meta, ✕, then the page's body. The body's pieces: `PanelSeries` (`v HLE`, its result, its games), `PanelGame` (a game, counted points boxed), `PanelSum` with `PanelSumLabel` (the sum), `PanelFoot` (`Full stats ›`).

@@ -92,7 +92,5 @@ export interface PointsData {
   series: readonly SeriesRow[];
 }
 
-export { VIEWS as POINTS_VIEWS, type BoardView as PointsView } from "../../rift";
-
 /** A player with no games this week, on his tile and his bench tile. */
 export const DIDNT_PLAY = "Didn't play";

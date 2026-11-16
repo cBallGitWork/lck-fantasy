@@ -51,7 +51,7 @@ export function SquadList({
                 <td>
                   <Shirt team={holder.player.team} small />
                 </td>
-                <td className="transfers__name">
+                <td className="transfers__name truncate">
                   <b>{holder.player.name}</b> {holder.player.team}
                 </td>
                 <td className="transfers__num num">{holder.player.weekPoints}</td>

@@ -43,7 +43,7 @@ export interface ComparePlayer {
   form: number;
   priceM: number;
   /** This week's price rise in m, if any. */
-  riseM?: number;
+  moveM?: number;
   ownedPct: number;
   last3: PastSeries[];
   next3: NextSeries[];
@@ -69,7 +69,7 @@ function t1Member(season: T1MemberSeason, role: PersonRole): ComparePlayer {
     season: { points: statsOf(name).points, rank: season.place, among: season.of },
     form: pick.form,
     priceM: pick.priceM,
-    riseM: season.riseM,
+    moveM: season.moveM,
     ownedPct: statsOf(name).ownedPct,
     last3: last3(season).map((s) => ({ when: when(s), opponent: s.opponent, points: s.points })),
     next3: NEXT_T1,
@@ -94,7 +94,7 @@ export const CHOVY: ComparePlayer = {
   season: { points: 61, rank: 1, among: 10 },
   form: 20.3,
   priceM: 17.5,
-  riseM: 0.5,
+  moveM: 0.5,
   ownedPct: 41,
   last3: [
     { when: "W2 · Sat", opponent: "BRO", points: 11 },

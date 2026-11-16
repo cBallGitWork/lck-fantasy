@@ -28,7 +28,7 @@ export function CoachCard({
       {data.news && <p className="coach-card__news">! {data.news}</p>}
       <header className="coach-card__head">
         <Crest team={head.team} />
-        <div className="coach-card__who">
+        <div>
           <Tag>{`${ROLE_NAME.coach} · ${head.team}`}</Tag>
           <h1 className="coach-card__name">
             {head.name}
@@ -51,7 +51,7 @@ export function CoachCard({
       </header>
       <div className="coach-card__meta">
         <Figure figure={money(meta.priceM)}>
-          price <PriceMove money={meta.moveM} />
+          price <PriceMove moveM={meta.moveM} />
         </Figure>
         <Figure figure={oneDecimal(meta.form)}>form · {ordinal(meta.formRank)}</Figure>
         <Figure figure={pct(meta.ownedPct)}>owned · {ordinal(meta.ownedRank)}</Figure>

@@ -93,9 +93,6 @@
   color: var(--on-tile-plate);
   font-weight: var(--w-bold);
   padding: 0 var(--s-1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .tile__name .me-dot {
   background: var(--on-tile-plate);
@@ -110,9 +107,6 @@
 .tile__line {
   background: var(--bg);
   padding: 0 var(--s-1) var(--s-1);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .tile__line--fixtures {
   color: var(--text);

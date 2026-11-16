@@ -7,7 +7,7 @@ import type { Transfer, TransferWeek } from "./fixtures";
 /** Transfers: each week's swaps by slot, out → in with team and price, the week's cost and points gained. */
 export function ProfileTransfers({ weeks }: { weeks: TransferWeek[] }) {
   return (
-    <section className="profile__transfers">
+    <section>
       <table className="table profile__table">
         <colgroup>
           <col className="profile__col-swap-slot" />
@@ -52,24 +52,23 @@ export function ProfileTransfers({ weeks }: { weeks: TransferWeek[] }) {
 }
 
 function SwapRow({ swap }: { swap: Transfer }) {
-  const coach = swap.slot === "coach";
   return (
     <tr>
       <td>
-        <small>{ROLE_NAME[swap.slot]}</small>
+        <small className="quiet">{ROLE_NAME[swap.slot]}</small>
       </td>
       <td>
-        <GoLink go={cardGo(swap.out.id, coach)}>{swap.out.name}</GoLink>{" "}
-        <small>
+        <GoLink go={cardGo(swap.out.id, swap.slot)}>{swap.out.name}</GoLink>{" "}
+        <small className="quiet">
           {swap.out.team} · {money(swap.out.priceM)}
         </small>
       </td>
       <td>→</td>
       <td>
-        <GoLink className="profile__name" go={cardGo(swap.in.id, coach)}>
+        <GoLink className="profile__name" go={cardGo(swap.in.id, swap.slot)}>
           {swap.in.name}
         </GoLink>{" "}
-        <small>
+        <small className="quiet">
           {swap.in.team} · {money(swap.in.priceM)}
         </small>
       </td>

@@ -172,7 +172,7 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
       fullText: (r) => r.name,
     },
     sortable("priceM", "Price", (r) => money(r.priceM)),
-    { key: "move", head: "", cell: (r) => <PriceMove money={r.moveM} className="stats__move" /> },
+    { key: "move", head: "", cell: (r) => <PriceMove moveM={r.moveM} className="stats__move" /> },
     sortable("form", "Form", (r) => oneDecimal(r.form)),
     sortable("ownedPct", "Owned", (r) => pct(r.ownedPct)),
     sortable("points", "Pts", (r) => <Count n={r.points} games={r.games} figures={view.figures} />),
@@ -195,7 +195,7 @@ function Lead({ row }: { row: Ranked }) {
     <span className="stats__lead">
       <span className="stats__rank num">{row.rank}</span>
       {row.role !== "coach" && <RoleIcon role={row.role} className="stats__lead-icon" />}
-      <GoLink go={cardGo(row.id, row.role === "coach")} className="stats__name">
+      <GoLink go={cardGo(row.id, row.role)} className="stats__name truncate">
         {row.name}
       </GoLink>
       <small className="stats__team quiet num">{row.team}</small>

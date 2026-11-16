@@ -10,7 +10,7 @@ import { slotOf } from "./model";
 export function PlayerCard({ state, player: p, dispatch }: Omit<ViewProps, "data"> & { player: PickPlayer }) {
   const slot = slotOf(state.draft, p.id);
   const role = slot === "flex" ? `${ROLE_NAME.flex} · plays ${ROLE_NAME[p.role]}` : ROLE_NAME[p.role];
-  const move = p.priceMove;
+  const move = p.moveM;
   return (
     <PlayerPanel
       name={p.name}
@@ -19,7 +19,7 @@ export function PlayerCard({ state, player: p, dispatch }: Omit<ViewProps, "data
           <span className="pick-team__crest">
             <Crest team={p.team} size="crestSmall" />
           </span>
-          {p.team} · {role} · {money(p.priceM)} {move !== undefined && <PriceMove money={move} />}
+          {p.team} · {role} · {money(p.priceM)} {move !== undefined && <PriceMove moveM={move} />}
         </>
       }
       onClose={() => dispatch({ type: "close" })}
@@ -64,7 +64,7 @@ function Row({ k, children }: { k: string; children: ReactNode }) {
  * players he can swap with are lit on the board. The coach, and a bench player, have only Full card.
  */
 function CardKeys({ state, player: p, starter, dispatch }: Omit<ViewProps, "data"> & { player: PickPlayer; starter: boolean }) {
-  const full = <LinkGo go={cardGo(p.id, p.role === "coach")}>Full card</LinkGo>;
+  const full = <LinkGo go={cardGo(p.id, p.role)}>Full card</LinkGo>;
   if (p.role === "coach" || !starter) return <div className="pick-team__keys">{full}</div>;
   const { carry, viceCarry } = state.draft;
   return (

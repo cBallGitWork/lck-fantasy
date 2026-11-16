@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
 import { PICK_TEAM_SQUAD } from "../fixtures/week3";
-import { html, text } from "../testing/render";
+import { expectInOrder, html, text } from "../testing/render";
 import { measure } from "../theme/tokens";
 import {
   BENCH_SLOTS,
@@ -14,7 +14,7 @@ import {
   LINEUP_ORDER,
   ROLE_KEYS,
   SQUAD_SIZE,
-  VIEWS,
+  BOARD_VIEWS,
   PanelFoot,
   PanelGame,
   PanelSeries,
@@ -93,7 +93,7 @@ test("the five roles lead the lineup, and the squad is the seven and the bench",
 });
 
 test("the two views, the Rift first", () => {
-  expect(VIEWS).toEqual(["Rift view", "Card view"]);
+  expect(BOARD_VIEWS).toEqual(["Rift view", "Card view"]);
 });
 
 test("the slots place all seven starters, inside the square Rift", () => {
@@ -115,8 +115,7 @@ test("Card view shows the seven in broadcast order, with photo, crest, C and V, 
     footer: <span>Form {p.form}</span>,
   }));
   const out = text(<Lineup cards={cards} />);
-  const order = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"].map((n) => out.indexOf(n));
-  expect(order).toEqual([...order].sort((a, b) => a - b));
+  expectInOrder(out, ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"]);
   expect(out).toContain("Flexplays Top");
   expect(out).toContain("Coach감독");
   expect(html(<Lineup cards={cards} />)).toContain('alt="T1 crest"');

@@ -2,7 +2,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { PageFrame, useDevState } from "../../parts";
-import { PATHS } from "../../paths";
+import { cardGo } from "../../paths";
 import { CompareSheet, HeadToHead } from "./HeadToHead";
 import { CHOVY, COMPARE_PLAYERS, FAKER, KKOMA, RYU, SEARCH_ROWS, type ComparePlayer, type SearchRow } from "./fixtures";
 import { PickSecond } from "./PickSecond";
@@ -29,10 +29,7 @@ export function ComparePage({
 }) {
   const navigate = useNavigate();
   const [second, setSecond] = useState(right);
-  const backToCard = () =>
-    left.role === "coach"
-      ? void navigate({ to: PATHS.coachCard, params: { coachId: left.id } })
-      : void navigate({ to: PATHS.playerCard, params: { playerId: left.id } });
+  const backToCard = () => void navigate(cardGo(left.id, left.role));
   return (
     <PageFrame screen="compare" active="pickTeam" account={MANAGER.team}>
       <CompareSheet left={left} right={second} onChange={() => setSecond(null)} onClose={onClose ?? backToCard}>

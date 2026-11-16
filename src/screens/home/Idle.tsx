@@ -22,7 +22,7 @@ function Starter({ starter }: { starter: LineupStarter }) {
         <MarkBadge mark={starter.mark} size="card" className="home__starter-mark" />
       )}
       <div className="home__plate">
-        <b className="home__plate-name">{starter.name}</b>
+        <b className="home__plate-name truncate">{starter.name}</b>
         <span className="quiet">{plateRole(starter)}</span>
       </div>
     </li>

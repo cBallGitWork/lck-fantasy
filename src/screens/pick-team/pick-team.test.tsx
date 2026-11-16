@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { CARD_VIEW } from "../../rift";
+import { expectInOrder, html, text } from "../../testing/render";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
 import { changeCount, pickReducer, swapIds, type PickAction, type PickState } from "./model";
 import { PickTeamView } from "./PickTeam";
@@ -9,16 +10,6 @@ const roleOf = (id: string) => (PICK_TEAM_DATA.players[id] as PickPlayer).role;
 const reduce = pickReducer(roleOf);
 const run = (state: PickState, ...actions: PickAction[]) => actions.reduce(reduce, state);
 const view = (state: PickState) => <PickTeamView data={PICK_TEAM_DATA} state={state} dispatch={() => {}} />;
-
-/** Fails unless every piece is in the text, each after the one before. */
-function expectInOrder(out: string, pieces: string[]) {
-  let at = 0;
-  for (const piece of pieces) {
-    const found = out.indexOf(piece, at);
-    expect(found, `"${piece}" after position ${at}`).toBeGreaterThanOrEqual(0);
-    at = found + piece.length;
-  }
-}
 
 /** The buffs, in one row above the Rift. */
 const BUFFS = [
@@ -224,7 +215,7 @@ test("with Dual Carry played the V is gold as the C", () => {
   expect(plain).toContain('mark-badge--v tile__mark"');
   const dual = run(PICK_TEAM_STATES.rift, { type: "playBuff", buff: "dualCarry" });
   expect(html(view(dual))).not.toContain("mark-badge--v");
-  expect(html(view({ ...dual, view: "cards" }))).not.toContain("mark-badge--v");
+  expect(html(view({ ...dual, view: CARD_VIEW }))).not.toContain("mark-badge--v");
 });
 
 test("making the Vice-carry the Carry hands the old Carry the V, as FPL's armband", () => {
@@ -248,7 +239,7 @@ test("tapping one bench player then the other swaps bench 1 and 2, as FPL; one b
 });
 
 test("Rift view | Card view sets the view; ✕ closes the card and ends the swap", () => {
-  expect(run(PICK_TEAM_STATES.rift, { type: "view", view: "cards" }).view).toBe("cards");
+  expect(run(PICK_TEAM_STATES.rift, { type: "view", view: CARD_VIEW }).view).toBe(CARD_VIEW);
   const closed = run(PICK_TEAM_STATES.swap, { type: "close" });
   expect(closed.selected).toBeUndefined();
   expect(text(view(closed))).not.toContain("Last 3 series");

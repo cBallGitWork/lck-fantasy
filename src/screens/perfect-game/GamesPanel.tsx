@@ -48,7 +48,7 @@ export function GamesPanel({
         );
       })}
       <PanelSum lines={player.carry ? <PanelSumLabel>{MARK_NAME.C}</PanelSumLabel> : sum} figure={player.points} />
-      <PanelFoot go={cardGo(player.id, player.slot === "coach")} />
+      <PanelFoot go={cardGo(player.id, player.slot)} />
     </PlayerPanel>
   );
 }

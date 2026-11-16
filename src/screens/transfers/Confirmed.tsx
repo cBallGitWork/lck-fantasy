@@ -15,7 +15,7 @@ export function Confirmed({ week, confirms, onUndo }: { week: string; confirms: 
           <div key={c.id} className={cx("transfers__confirm", i > 0 && "transfers__confirm--old")}>
             <span className="transfers__when">
               {c.local}
-              <small>{c.kst} KST</small>
+              <small className="quiet">{c.kst} KST</small>
             </span>
             <b>{c.moves.map((m) => `${m.out} → ${m.in}`).join(", ")}</b>
             <span className={cx("transfers__cost", c.hit > 0 && "num")}>{costLabel(c.hit)}</span>

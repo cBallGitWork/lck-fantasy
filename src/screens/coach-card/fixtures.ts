@@ -88,7 +88,7 @@ export const FROM_PICK_TEAM: CoachCardData = {
   head: HEAD,
   meta: {
     priceM: AT_PICK_TEAM.priceM,
-    moveM: KKOMA_SEASON.riseM,
+    moveM: KKOMA_SEASON.moveM,
     form: AT_PICK_TEAM.form,
     formRank: 1,
     ownedPct: statsOf(HEAD.name).ownedPct,

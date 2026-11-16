@@ -8,7 +8,7 @@ import "./patch-update.css";
 export const NO_MOVES = "No moves yet";
 
 /** A name opens the player's card, or the coach's. */
-export const cardOf = (row: PriceMove) => cardGo(row.id, row.role === "coach");
+export const cardOf = (row: PriceMove) => cardGo(row.id, row.role);
 
 const COLUMNS: Column<PriceMove>[] = [
   {

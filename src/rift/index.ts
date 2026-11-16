@@ -24,4 +24,4 @@ export { Shirt } from "./Shirt";
 export { RIFT_SLOTS, type RiftPoint } from "./slots";
 export { MARK_NAME, MarkBadge, markKey, type Mark } from "./MarkBadge";
 export { Rift, Tile } from "./Tile";
-export { RIFT_VIEW, VIEWS, type BoardView } from "./views";
+export { BOARD_VIEWS, CARD_VIEW, RIFT_VIEW, type BoardView } from "./views";

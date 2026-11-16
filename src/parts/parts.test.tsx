@@ -144,7 +144,7 @@ test("a row that opens something ends with a named ›", () => {
   );
   expect(linked).toMatch(/<a[^>]*href="\/manager\/minji"[^>]*aria-label="Open Chovy Was Right There"|<a[^>]*aria-label="Open Chovy Was Right There"[^>]*href="\/manager\/minji"/);
   const keyed = html(<Table rows={rows} rowKey={(r) => r.id} columns={columns} open={{ name: (r) => r.name, onOpen: () => {} }} />);
-  expect(keyed).toContain('<button type="button" aria-label="Open Chovy Was Right There">›</button>');
+  expect(keyed).toContain('<button type="button" class="key-bare" aria-label="Open Chovy Was Right There">›</button>');
 });
 
 test("a side section has its title and note", () => {

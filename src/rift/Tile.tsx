@@ -74,13 +74,13 @@ export function Tile(p: TileProps) {
           )}
         </div>
       </div>
-      <div className="tile__name" title={p.name}>
+      <div className="tile__name truncate" title={p.name}>
         {p.name}
         {p.me && <MeDot />}
         {p.birthday && " 🎂"}
       </div>
       {p.points !== undefined && <div className="tile__points num">{p.points}</div>}
-      {p.line !== undefined && <div className={cx("tile__line quiet", p.points === undefined && "tile__line--fixtures")}>{p.line}</div>}
+      {p.line !== undefined && <div className={cx("tile__line quiet truncate", p.points === undefined && "tile__line--fixtures")}>{p.line}</div>}
     </div>
   );
 }

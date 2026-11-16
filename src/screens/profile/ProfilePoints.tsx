@@ -22,7 +22,7 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
   const starters = week.team?.filter((pick) => !onBench(pick)) ?? [];
   const bench = week.team?.filter(onBench) ?? [];
   return (
-    <section className="profile__points" aria-label={`Week ${week.week}`}>
+    <section aria-label={`Week ${week.week}`}>
       <div className="profile__week">
         <WeekStep prev={hasPrev ? () => onWeek?.(week.week - 1) : undefined} next={hasNext ? () => onWeek?.(week.week + 1) : undefined}>
           <h2 className="profile__week-name">Week {week.week}</h2>
@@ -82,20 +82,20 @@ function PickRow({ pick }: { pick: ProfilePick }) {
   return (
     <tr>
       <td>
-        <small>{pickSlot(pick)}</small>
+        <small className="quiet">{pickSlot(pick)}</small>
       </td>
       <td>
-        <GoLink className="profile__name" go={cardGo(pick.id, pick.slot === "coach")}>
+        <GoLink className="profile__name" go={cardGo(pick.id, pick.slot)}>
           {pick.name}
         </GoLink>
         {pick.mark && (
           <MarkBadge mark={pick.mark} className="profile__mark" />
         )}{" "}
-        <small>{pick.team}</small>
+        <small className="quiet">{pick.team}</small>
       </td>
       <td className="profile__figure num">{pick.points ?? NONE}</td>
       <td>
-        <small>
+        <small className="quiet">
           {pick.note ??
             pick.series.map((line) => (
               <span key={line} className="profile__series">

@@ -16,10 +16,6 @@
   border-bottom: var(--m-rule) solid var(--line);
   font-size: var(--size-lead);
 }
-.transfers__sheet-moves small {
-  color: var(--mid);
-  font-size: var(--size-small);
-}
 .transfers__sheet-out {
   color: var(--mid);
   text-decoration: line-through;

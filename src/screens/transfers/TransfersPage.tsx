@@ -196,7 +196,7 @@ export function TransfersPage(props: TransfersPageProps) {
           ))}
         </span>
         <span className="transfers__actions">
-          <button type="button" className="transfers__reset" onClick={reset}>
+          <button type="button" className="transfers__reset key-bare" onClick={reset}>
             Reset
           </button>
           <MainAction disabledReason={reviewBlock(squad, plan, rules)} onClick={() => setReviewing(true)}>

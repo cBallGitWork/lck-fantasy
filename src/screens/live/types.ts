@@ -49,7 +49,7 @@ export interface WeekTotal {
   total: number;
   average: number;
   highest: number;
-  notFinal: boolean;
+  final: boolean;
 }
 
 export interface Panel {

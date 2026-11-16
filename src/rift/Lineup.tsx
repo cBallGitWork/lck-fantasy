@@ -35,7 +35,7 @@ function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
       <RoleIcon role={slotIcon(slot, plays)} />
       <span>
         {ROLE_NAME[slot]}
-        {small && <small>{small}</small>}
+        {small && <small className="quiet">{small}</small>}
       </span>
     </div>
   );
@@ -65,7 +65,7 @@ export function LineupCard(p: LineupCardProps) {
           )}
         </div>
       )}
-      <div className="pcard__name" title={p.name}>
+      <div className="pcard__name truncate" title={p.name}>
         {p.name}
         {p.me && <MeDot />}
       </div>

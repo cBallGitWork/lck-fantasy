@@ -90,7 +90,7 @@ const bug = (s: Series) => {
 export const LIVE_NOW: Omit<LiveNowProps, "picker"> = {
   bug: { ...bug(LIVE_SERIES), game: LIVE_SERIES.liveGame ?? 1, format: FORMAT, stage: STAGE },
   panel: {
-    week: { total: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest, notFinal: true },
+    week: { total: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest, final: false },
     series: { home: LIVE_SERIES.home, away: LIVE_SERIES.away },
     players: livePlayers,
     rest: rest("live"),
@@ -101,7 +101,7 @@ export const LIVE_NOW: Omit<LiveNowProps, "picker"> = {
 export const LIVE_DOWN: Omit<LiveDownProps, "picker"> = {
   bug: LIVE_NOW.bug,
   panel: {
-    week: { total: MY_WEEK3.downTotal, average: 66, highest: 118, notFinal: true },
+    week: { total: MY_WEEK3.downTotal, average: 66, highest: 118, final: false },
     series: LIVE_NOW.panel.series,
     players: downPlayers,
     rest: rest("down"),
@@ -122,7 +122,7 @@ export const LIVE_IDLE: Omit<LiveIdleProps, "picker"> = {
   },
   last: { ...bug(LAST_SERIES), day: "Saturday", format: FORMAT, stage: STAGE },
   panel: {
-    week: { total: MY_WEEK3.finalTotal, ...WEEK3_FINAL, notFinal: false },
+    week: { total: MY_WEEK3.finalTotal, ...WEEK3_FINAL, final: true },
     series: { home: LAST_SERIES.home, away: LAST_SERIES.away },
     players: finalPlayers,
     rest: rest("idle"),

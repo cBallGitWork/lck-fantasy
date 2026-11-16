@@ -1,10 +1,10 @@
 import { MANAGER } from "../../fixtures/week3";
 import { FinalTag, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, sum, ViewToggle, type WeekNav } from "../../parts";
 import { PATHS } from "../../paths";
-import { flexPlays, Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
+import { BOARD_VIEWS, flexPlays, Lineup, Rift, RIFT_SLOTS, RIFT_VIEW, Tile, type BoardView } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
 import "./perfect-game.css";
-import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectView, type Selection } from "./types";
+import type { PerfectGameData, Selection } from "./types";
 
 /** Rift view: the seven on the Rift, each with his points and series, C on the Carry. */
 export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGameData } & Selection) {
@@ -65,8 +65,8 @@ export function PerfectGame({
   onSelect,
 }: {
   game: PerfectGameData;
-  view: PerfectView;
-  onView?: (view: PerfectView) => void;
+  view: BoardView;
+  onView?: (view: BoardView) => void;
   /** The week before and after; the route takes no week yet. */
   weekNav?: Omit<WeekNav, "label">;
 } & Selection) {
@@ -102,7 +102,7 @@ export function PerfectGame({
         ]}
       />
       <div className="perfect-game__toggle">
-        <ViewToggle options={VIEWS} chosen={view} onChoose={onView} label="View" />
+        <ViewToggle options={BOARD_VIEWS} chosen={view} onChoose={onView} label="View" />
       </div>
       {view === RIFT_VIEW ? <PerfectGameRift {...viewProps} /> : <PerfectGameCards {...viewProps} />}
     </PageFrame>

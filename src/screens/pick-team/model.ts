@@ -2,7 +2,7 @@
 // Pick Team; the picture's README, Controls). Swaps, the Carry, the Vice-carry and buffs change
 // only the draft; Save makes the draft the saved team, Reset drops it.
 
-import { isBench, type PersonRole, type SquadSlot } from "../../rift";
+import { isBench, type BoardView, type PersonRole, type SquadSlot } from "../../rift";
 
 /** The two buffs played on this page; Remake and Limitless are played on Transfers. */
 export type PickBuff = "benchBoost" | "dualCarry";
@@ -16,12 +16,10 @@ export interface PickTeam {
   buff?: PickBuff;
 }
 
-export type PickView = "rift" | "cards";
-
 export interface PickState {
   saved: PickTeam;
   draft: PickTeam;
-  view: PickView;
+  view: BoardView;
   /** The tapped player: his card is open and those he can swap with light up (FPL's one-tap swap). */
   selected?: string;
 }
@@ -29,7 +27,7 @@ export interface PickState {
 export type PickAction =
   | { type: "select"; id: string }
   | { type: "close" }
-  | { type: "view"; view: PickView }
+  | { type: "view"; view: BoardView }
   | { type: "makeCarry"; id: string }
   | { type: "makeViceCarry"; id: string }
   | { type: "playBuff"; buff: PickBuff }

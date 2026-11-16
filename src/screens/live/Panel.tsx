@@ -19,7 +19,7 @@ function GameLine({ player }: { player: PanelPlayer }) {
 
 function PlayerRow({ player }: { player: PanelPlayer }) {
   return (
-    <GoLink go={cardGo(player.id, player.role === "coach")} className="live__row">
+    <GoLink go={cardGo(player.id, player.role)} className="live__row">
       <RoleIcon role={player.role} className="live__row-icon" />
       <span>
         <span className="live__name">
@@ -36,9 +36,9 @@ function PlayerRow({ player }: { player: PanelPlayer }) {
 
 function RestRow({ player }: { player: RestPlayer }) {
   return (
-    <GoLink go={cardGo(player.id, player.role === "coach")} className="live__rest">
+    <GoLink go={cardGo(player.id, player.role)} className="live__rest">
       <span className="live__rest-name">
-        <RoleIcon role={player.role} className="live__rest-icon" />
+        <RoleIcon role={player.role} inline />
         {player.name}
         <small className="live__team quiet">{player.team}</small>
         {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}
@@ -61,7 +61,7 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
       )}
       <SectionHead>
         {WORDS.yourWeek}
-        {week.notFinal && <NotFinalTag />}
+        {!week.final && <NotFinalTag />}
       </SectionHead>
       <div className="live__total">
         <span className="live__key num">{week.total}</span>

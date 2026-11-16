@@ -121,7 +121,7 @@ export interface PlayerCardData {
   season: { points: number; place: number; field: string; games: number; lines: SeasonLine[] };
   priceM: number;
   /** The last move, in m. */
-  priceMove: number;
+  moveM: number;
   form: number;
   formPlace: number;
   ownedPct: number;

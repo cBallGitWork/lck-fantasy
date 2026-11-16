@@ -50,7 +50,6 @@ function GameRow({ g }: { g: PointsGame }) {
  * page) over its games, and Full stats. The Carry's total is his result, the ×1.5 hidden.
  */
 export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Partial<Pick<PointsStarter, "plays" | "carry">>; onClose: () => void }) {
-  const coach = player.role === "coach";
   const role = ROLE_NAME[player.plays ?? player.role];
   const final = player.series.every((s) => s.state === "final");
   const head = (
@@ -94,7 +93,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
         </section>
       ))}
       <footer className="points__breakdown-foot">
-        <LinkGo go={cardGo(player.cardId, coach)}>Full stats</LinkGo>
+        <LinkGo go={cardGo(player.cardId, player.role)}>Full stats</LinkGo>
       </footer>
     </Modal>
   );

@@ -1,24 +1,24 @@
 import { useParams } from "@tanstack/react-router";
 import { MANAGER } from "../../fixtures/week3";
 import { Empty, PageFrame } from "../../parts";
+import { BOARD_VIEWS, type BoardView } from "../../rift";
 import { LATEST_WEEK, POINTS_WEEKS } from "./fixtures";
 import { PointsPage } from "./PointsPage";
-import { POINTS_VIEWS, type PointsView } from "./types";
 
 /** The browser storage key the manager's last Points view is kept under (spec/12: then remembered). */
 export const POINTS_VIEW_KEY = "flol.pointsView";
 
 /** The view kept in this browser, or Rift view on the first visit or where storage can't be read. */
-export function rememberedView(storage: Pick<Storage, "getItem"> | undefined): PointsView {
+export function rememberedView(storage: Pick<Storage, "getItem"> | undefined): BoardView {
   try {
     const kept = storage?.getItem(POINTS_VIEW_KEY);
-    return POINTS_VIEWS.find((v) => v === kept) ?? POINTS_VIEWS[0];
+    return BOARD_VIEWS.find((v) => v === kept) ?? BOARD_VIEWS[0];
   } catch {
-    return POINTS_VIEWS[0];
+    return BOARD_VIEWS[0];
   }
 }
 
-function rememberView(view: PointsView) {
+function rememberView(view: BoardView) {
   try {
     localStorage.setItem(POINTS_VIEW_KEY, view);
   } catch {

@@ -74,7 +74,7 @@ export function PlayerCard({
       </header>
       <div className="player-card__meta">
         <span className="player-card__quiet quiet">
-          <b className="player-card__figure num">{money(card.priceM)}</b>price <PriceMove money={card.priceMove} />
+          <b className="player-card__figure num">{money(card.priceM)}</b>price <PriceMove moveM={card.moveM} />
         </span>
         <span className="player-card__quiet quiet">
           <b className="player-card__figure num">{oneDecimal(card.form)}</b>form · {ordinal(card.formPlace)}

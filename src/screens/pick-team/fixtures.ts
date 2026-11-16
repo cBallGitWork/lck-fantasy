@@ -4,7 +4,7 @@
 
 import { FAKER_SEASON, KKOMA_SEASON, last3, type T1MemberSeason } from "../../fixtures/t1Season";
 import { CARRY_MULTIPLIER, COMPETITION, finalPickOf, MANAGER, PICK_TEAM_SQUAD, playerId, seriesPointsOf, statsOf, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
-import type { Mark, PersonRole, SquadSlot } from "../../rift";
+import { CARD_VIEW, RIFT_VIEW, type Mark, type PersonRole, type SquadSlot } from "../../rift";
 import type { PickBuff, PickState, PickTeam } from "./model";
 
 /** A place in a ranking and what it is out of: `1st of 10 mids`. */
@@ -21,7 +21,7 @@ export interface PickPlayer {
   role: PersonRole;
   priceM: number;
   /** His last price move in m; absent before it first moves. */
-  priceMove?: number;
+  moveM?: number;
   form: number;
   formRank: Ranked;
   ownedPct: number;
@@ -74,7 +74,7 @@ function last3Of(name: string): number[] {
 const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceM" | "form" | "ownedPct" | "season" | "last3">> = {
   Zeus: { formRank: { place: 3, of: "10 tops" }, ownedRank: { place: 4 }, seasonRank: { place: 7 } },
   Canyon: { formRank: { place: 2, of: "10 junglers" }, ownedRank: { place: 5 }, seasonRank: { place: 6 } },
-  Faker: { priceMove: 0.5, formRank: { place: 1, of: "10 mids" }, ownedRank: { place: 1 }, seasonRank: { place: 2 } },
+  Faker: { moveM: 0.5, formRank: { place: 1, of: "10 mids" }, ownedRank: { place: 1 }, seasonRank: { place: 2 } },
   Ruler: { formRank: { place: 1, of: "10 bots" }, ownedRank: { place: 3 }, seasonRank: { place: 3 } },
   Delight: { formRank: { place: 4, of: "10 supports" }, ownedRank: { place: 8 }, seasonRank: { place: 12 } },
   Siwoo: {
@@ -125,9 +125,9 @@ export const SAVED_TEAM: PickTeam = {
 /** The three states the picture folder draws. */
 export const PICK_TEAM_STATES: Record<"rift" | "cards" | "swap", PickState> = {
   /** 1440.png: Rift view, Faker tapped (Bdd lit to swap with him), no changes. */
-  rift: { saved: SAVED_TEAM, draft: SAVED_TEAM, view: "rift", selected: "faker" },
+  rift: { saved: SAVED_TEAM, draft: SAVED_TEAM, view: RIFT_VIEW, selected: "faker" },
   /** 1440-cards.png: Card view, Faker tapped. */
-  cards: { saved: SAVED_TEAM, draft: SAVED_TEAM, view: "cards", selected: "faker" },
+  cards: { saved: SAVED_TEAM, draft: SAVED_TEAM, view: CARD_VIEW, selected: "faker" },
   /** 1440-swap.png: Siwoo, the Flex, tapped (Zeus and both bench players lit), Bench Boost on and unsaved. */
-  swap: { saved: SAVED_TEAM, draft: { ...SAVED_TEAM, buff: "benchBoost" }, view: "rift", selected: "siwoo" },
+  swap: { saved: SAVED_TEAM, draft: { ...SAVED_TEAM, buff: "benchBoost" }, view: RIFT_VIEW, selected: "siwoo" },
 };

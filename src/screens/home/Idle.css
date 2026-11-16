@@ -78,9 +78,6 @@
 .home__plate-name,
 .home__plate-role {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   transform: skewX(12deg);
 }
 .home__plate-name {

@@ -26,15 +26,15 @@ export function PlayerList({ players, label }: { players: SidePlayer[]; label: s
     <ul className="home__players" aria-label={label}>
       {players.map((p) => (
         <li key={`${p.name}-${p.team}`} className="home__player">
-          <span className="home__player-who">
-            <RoleIcon role={p.role} className="home__role-icon" />
+          <span>
+            <RoleIcon role={p.role} inline />
             {p.name}
             {p.mark && (
               <MarkBadge mark={p.mark} className="home__mark" />
             )}{" "}
-            <span className="home__player-team">{p.team}</span>
+            <span className="home__player-team quiet">{p.team}</span>
           </span>
-          <span className="home__player-stat">{p.stat}</span>
+          <span className="home__player-stat quiet">{p.stat}</span>
           <b className="home__player-points num">{p.points}</b>
         </li>
       ))}

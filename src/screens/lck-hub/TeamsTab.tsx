@@ -18,7 +18,7 @@ function RosterTable({ roster }: { roster: Roster }) {
                 {ROLE_NAME[m.role]}
               </td>
               <td>
-                <GoLink className="lck-hub__person" go={cardGo(m.id, m.role === "coach")}>
+                <GoLink className="lck-hub__person" go={cardGo(m.id, m.role)}>
                   <b>{m.name}</b>{" "}
                   <small className="lck-hub__hangul quiet" lang="ko">
                     {m.hangul}

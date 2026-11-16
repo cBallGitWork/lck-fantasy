@@ -103,8 +103,6 @@
 }
 .stats__name {
   font-weight: var(--w-semi);
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 .stats__name:hover {
   text-decoration: underline;

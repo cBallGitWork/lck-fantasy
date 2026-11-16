@@ -119,12 +119,6 @@
 .series__role {
   white-space: nowrap;
 }
-.series__role-icon {
-  width: var(--size-small);
-  height: var(--size-small);
-  margin-right: var(--s-2);
-  vertical-align: middle;
-}
 .series__name {
   white-space: nowrap;
 }
@@ -144,14 +138,9 @@
 }
 .series__champ {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .series__champ small {
   display: block;
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .series__points {
   display: flex;
@@ -186,7 +175,5 @@
 }
 .series__total small {
   display: block;
-  color: var(--mid);
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
 }

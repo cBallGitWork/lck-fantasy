@@ -1,18 +1,13 @@
 import { useReducer } from "react";
 import { Deadline, MainAction, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, TIME_NOTE, ViewToggle } from "../../parts";
-import { VIEWS as BOARD_VIEWS } from "../../rift";
+import { BOARD_VIEWS, RIFT_VIEW, type BoardView } from "../../rift";
 import { CardBoard, RiftBoard } from "./boards";
 import { Buffs } from "./Buffs";
 import type { PickTeamData } from "./fixtures";
 import type { ViewProps } from "./format";
-import { changeCount, pickReducer, type PickAction, type PickState, type PickTeam, type PickView } from "./model";
+import { changeCount, pickReducer, type PickAction, type PickState, type PickTeam } from "./model";
 import { PlayerCard } from "./PlayerCard";
 import "./pick-team.css";
-
-const VIEWS = [
-  { value: "rift", label: BOARD_VIEWS[0] },
-  { value: "cards", label: BOARD_VIEWS[1] },
-] as const;
 
 /** Pick Team, drawn from its state: Rift or Card view, the bench bar, the buffs above it, the bar under the pitch, the side column. */
 export function PickTeamView({ data, state, dispatch }: ViewProps) {
@@ -36,8 +31,8 @@ export function PickTeamView({ data, state, dispatch }: ViewProps) {
     >
       <PageHead title="Pick Team" hangul="팀 선택" sub={data.week} />
       <Buffs {...props} />
-      <ViewToggle label="View" options={VIEWS} chosen={state.view} onChoose={(view: PickView) => dispatch({ type: "view", view })} />
-      {state.view === "rift" ? <RiftBoard {...props} /> : <CardBoard {...props} />}
+      <ViewToggle label="View" options={BOARD_VIEWS} chosen={state.view} onChoose={(view: BoardView) => dispatch({ type: "view", view })} />
+      {state.view === RIFT_VIEW ? <RiftBoard {...props} /> : <CardBoard {...props} />}
       <ChangeBar {...props} />
     </PageFrame>
   );
@@ -86,7 +81,7 @@ export function PickTeamPage({
   initial: PickState;
   onSave?: (team: PickTeam) => void;
   /** The backend remembers each manager's view (spec/12). */
-  onView?: (view: PickView) => void;
+  onView?: (view: BoardView) => void;
 }) {
   const [state, dispatch] = useReducer(
     pickReducer((id) => {

@@ -26,10 +26,6 @@
 .table th.table__sorted::after {
   content: " ▼";
 }
-.table__truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
 .table tbody tr:hover td,
 .table__row--selected td {
   background: var(--fill);
@@ -54,11 +50,7 @@
   justify-content: center;
   min-width: var(--m-target);
   min-height: var(--m-target);
-  font: inherit;
   color: var(--text);
-  background: none;
-  border: 0;
-  cursor: pointer;
 }
 .table__scroll {
   overflow: auto;

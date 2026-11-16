@@ -2,7 +2,7 @@
 // picture it is checked against. /dev/states lists them; the UI checks read them from here.
 import { LIVE_SERIES_ID } from "../fixtures/week3";
 import { DEV_STATE_PARAM } from "../parts";
-import { leagueGo, PATHS, pathTo, profileGo, seriesGo, type Go } from "../paths";
+import { cardGo, leagueGo, PATHS, pathTo, profileGo, seriesGo, type Go } from "../paths";
 
 /** The dev-only page listing every state. */
 export const DEV_STATES_PATH = "/dev/states";
@@ -39,8 +39,8 @@ const page = (name: string, states: StateAt[]): DevState[] =>
   });
 
 const home: Go = { to: PATHS.home };
-const faker: Go = { to: PATHS.playerCard, params: { playerId: "faker" } };
-const kkoma: Go = { to: PATHS.coachCard, params: { coachId: "kkoma" } };
+const faker = cardGo("faker", "mid");
+const kkoma = cardGo("kkoma", "coach");
 const minji = profileGo("minji");
 
 /**

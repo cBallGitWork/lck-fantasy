@@ -37,11 +37,11 @@ export function ConfirmSheet({
         {transfers.map((t) => (
           <li key={t.out.slot}>
             <span className="transfers__sheet-out">
-              {t.out.name} <small>{t.out.team}</small> <span className="num">{formatWon(t.out.priceWon)}</span>
+              {t.out.name} <small className="quiet">{t.out.team}</small> <span className="num">{formatWon(t.out.priceWon)}</span>
             </span>
             <span aria-label="for">→</span>
             <b>
-              {t.in.name} <small>{t.in.team}</small> <span className="num">{formatWon(t.in.priceWon)}</span>
+              {t.in.name} <small className="quiet">{t.in.team}</small> <span className="num">{formatWon(t.in.priceWon)}</span>
             </b>
           </li>
         ))}
@@ -67,7 +67,7 @@ export function ConfirmSheet({
         </tbody>
       </table>
       <div className="transfers__sheet-keys">
-        <button type="button" className="transfers__back" onClick={onBack}>
+        <button type="button" className="transfers__back key-bare" onClick={onBack}>
           Back
         </button>
         <MainAction onClick={onConfirm}>Confirm</MainAction>

@@ -74,6 +74,12 @@ thead th {
   color: var(--mid);
   font-size: var(--size-small);
 }
+/* Words cut to one line with an ellipsis. */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 /* A key drawn as its words alone: no box, the page's type. */
 .key-bare {
   font: inherit;

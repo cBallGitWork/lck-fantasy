@@ -158,20 +158,9 @@
   height: var(--m-row);
   border-bottom: var(--m-rule) solid var(--fill);
 }
-.home__player .home__role-icon {
-  width: var(--s-3);
-  height: var(--s-3);
-  margin-right: var(--s-2);
-  vertical-align: middle;
-}
 .home__mark {
   margin-left: var(--s-1);
   vertical-align: middle;
-}
-.home__player-team,
-.home__player-stat {
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .home__player-points {
   text-align: right;

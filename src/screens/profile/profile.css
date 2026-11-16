@@ -56,10 +56,6 @@
 }
 
 /* Points' and Transfers' tables: the Table part's look, with a sub-row for the bench or a week. */
-.profile__table td small {
-  color: var(--mid);
-  font-size: var(--size-small);
-}
 .profile__table .profile__figure {
   text-align: right;
 }

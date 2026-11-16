@@ -43,9 +43,9 @@ export function pathTo(go: Go): string {
   return go.to.replace(/\$(\w+)/g, (_, name: string) => encodeURIComponent(params[name] ?? ""));
 }
 
-/** A player's card, or the coach's card for a coach. */
-export function cardGo(id: string, coach: boolean): Go {
-  return coach ? { to: PATHS.coachCard, params: { coachId: id } } : { to: PATHS.playerCard, params: { playerId: id } };
+/** A player's card, or the coach's card for a coach (role or slot). */
+export function cardGo(id: string, role: string): Go {
+  return role === "coach" ? { to: PATHS.coachCard, params: { coachId: id } } : { to: PATHS.playerCard, params: { playerId: id } };
 }
 
 /** A league's page. */

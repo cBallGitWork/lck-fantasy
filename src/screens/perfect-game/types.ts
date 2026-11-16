@@ -37,9 +37,6 @@ export interface PerfectGameData {
   series: Series[];
 }
 
-/** The two views, Rift first. */
-export { RIFT_VIEW, VIEWS, type BoardView as PerfectView } from "../../rift";
-
 /** Which starter is tapped, and how a tap or ✕ reaches the page. */
 export interface Selection {
   selected?: SlotKey;

@@ -46,10 +46,13 @@ function Paths({ role }: { role: IconKey }) {
   }
 }
 
-/** A role's icon, 16 units square, drawn at the size its box gives it. */
-export function RoleIcon({ role, className }: { role: IconKey; className?: string }) {
+/**
+ * A role's icon, 16 units square, drawn at the size its box gives it.
+ * `inline`: a role's icon at the head of a line of text.
+ */
+export function RoleIcon({ role, inline = false, className }: { role: IconKey; inline?: boolean; className?: string }) {
   return (
-    <svg className={cx("role-icon", className)} viewBox="0 0 16 16" role="img" aria-label={ROLE_NAME[role]}>
+    <svg className={cx("role-icon", inline && "role-icon--inline", className)} viewBox="0 0 16 16" role="img" aria-label={ROLE_NAME[role]}>
       <Paths role={role} />
     </svg>
   );

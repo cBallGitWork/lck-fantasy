@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { FinalTag, LinkGo, LiveTag, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, TIME_NOTE, ViewToggle } from "../../parts";
 import { PATHS } from "../../paths";
-import { BenchBar, BenchTile } from "../../rift";
+import { BenchBar, BenchTile, BOARD_VIEWS, RIFT_VIEW, type BoardView } from "../../rift";
 import { BreakdownSheet } from "./BreakdownSheet";
 import "./points.css";
 import { Leagues, YourWeek } from "./PointsSide";
 import { PointsCards, PointsRift } from "./PointsTeam";
-import { DIDNT_PLAY, POINTS_VIEWS, type PointsData, type PointsView } from "./types";
+import { DIDNT_PLAY, type PointsData } from "./types";
 
 /**
  * Points: your week. The head and the live bar; Rift or Card view with the bench under it; on the
@@ -15,22 +15,22 @@ import { DIDNT_PLAY, POINTS_VIEWS, type PointsData, type PointsView } from "./ty
  */
 export function PointsPage({
   data,
-  view: firstView = "Rift view",
+  view: firstView = RIFT_VIEW,
   onView,
   open: firstOpen,
 }: {
   data: PointsData;
   /** The view it opens on: Rift on the first visit, then the manager's last choice. */
-  view?: PointsView;
+  view?: BoardView;
   /** Called with each view the manager chooses, so it can be remembered. */
-  onView?: (view: PointsView) => void;
+  onView?: (view: BoardView) => void;
   /** The player whose breakdown is open, by name; none until a tap. */
   open?: string;
 }) {
   const [view, setView] = useState(firstView);
   const [open, setOpen] = useState(firstOpen);
   const opened = [...data.starters, ...data.bench].find((p) => p.name === open);
-  const chooseView = (next: PointsView) => {
+  const chooseView = (next: BoardView) => {
     setView(next);
     onView?.(next);
   };
@@ -72,8 +72,8 @@ export function PointsPage({
           </div>
         )}
       </PageHead>
-      <ViewToggle options={POINTS_VIEWS} chosen={view} onChoose={chooseView} label="View" />
-      {view === "Rift view" ? (
+      <ViewToggle options={BOARD_VIEWS} chosen={view} onChoose={chooseView} label="View" />
+      {view === RIFT_VIEW ? (
         <PointsRift starters={data.starters} open={open} onOpen={setOpen} />
       ) : (
         <PointsCards starters={data.starters} open={open} onOpen={setOpen} />

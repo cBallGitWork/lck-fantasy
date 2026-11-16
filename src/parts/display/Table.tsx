@@ -81,7 +81,7 @@ export function Table<R>({
               return (
                 <td
                   key={c.key}
-                  className={cx(c.figure && "table__figure num", c.group && "table__group", full !== undefined && "table__truncate")}
+                  className={cx(c.figure && "table__figure num", c.group && "table__group", full !== undefined && "truncate")}
                   title={full}
                 >
                   {c.cell(row)}
@@ -108,7 +108,7 @@ function OpenRow<R>({ open, row }: { open: RowOpen<R>; row: R }) {
       ›
     </GoLink>
   ) : (
-    <button type="button" aria-label={label} onClick={() => open.onOpen(row)}>
+    <button type="button" className="key-bare" aria-label={label} onClick={() => open.onOpen(row)}>
       ›
     </button>
   );

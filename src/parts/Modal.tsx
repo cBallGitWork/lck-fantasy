@@ -22,6 +22,7 @@ export function Modal({
   title,
   onClose,
   strong,
+  head,
   children,
 }: {
   kind: "card" | "sheet";
@@ -29,6 +30,8 @@ export function Modal({
   strong?: boolean;
   /** The sheet's 20px title, and the dialog's name. */
   title: string;
+  /** A sheet's own head, drawn in place of its title (a player's breakdown); the title still names the dialog. */
+  head?: ReactNode;
   onClose: () => void;
   children: ReactNode;
 }) {
@@ -68,7 +71,7 @@ export function Modal({
         <button type="button" className="modal__close" aria-label="Close" onClick={onClose}>
           ✕
         </button>
-        {kind === "sheet" && <h2 className="modal__title">{title}</h2>}
+        {kind === "sheet" && (head ?? <h2 className="modal__title">{title}</h2>)}
         {children}
       </div>
     </div>

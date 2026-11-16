@@ -46,6 +46,6 @@ export function PointsScreen() {
         <Empty title="No such week" />
       </PageFrame>
     );
-  // Keyed by week, so stepping to another week closes the open player's games.
+  // Keyed by week, so stepping to another week closes the open breakdown.
   return <PointsPage key={week} data={data} view={rememberedView(browserStorage())} onView={rememberView} />;
 }

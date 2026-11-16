@@ -105,6 +105,8 @@ export const measure = {
   mark: 20,
   /** C and V on a lineup card. */
   markCard: 28,
+  /** C and V on a player's breakdown sheet (Craig, 16 Nov 2026: "make C bigger"). */
+  markSheet: 32,
   roleBox: 36,
   roleIcon: 28,
   /** The role icon on a lineup card's head. */
@@ -141,6 +143,10 @@ export const measure = {
   crest: 96,
   /** A crest beside a team code: in a player's panel. */
   crestSmall: 20,
+  /** The crest in a breakdown sheet's portrait slot, until photos exist. */
+  crestSheet: 56,
+  /** A game's row on a breakdown sheet: 32 in a sheet (Claude's call, Craig: "your call"). */
+  rowSheet: 32,
   sponsorH: 112,
   sponsorTopW: 120,
 } as const;

@@ -125,8 +125,6 @@
 
 /* This week's games: G, champion, K/D/A, points; a game that doesn't count struck through. */
 .player-card__games {
-  width: 100%;
-  border-collapse: collapse;
   table-layout: fixed;
 }
 .player-card__games td {

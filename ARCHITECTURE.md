@@ -33,6 +33,7 @@ product's set, because it is proven on these services.
 | Vitest with `convex-test` | game rules test as plain functions, and Convex functions run in memory, with no deployment |
 | TypeScript, ESLint | strict types and lint, both in `npm run verify` |
 | Papa Parse | reads Oracle's Elixir's daily CSV, quoted fields included, with errors reported, not skipped (#36) |
+| Playwright | drives Chrome for Forge's QA panel walk tool (`scripts/qa-walk.mjs`); dev only |
 
 `convex/_generated/` is normally written by `npx convex dev`, which needs a Convex deployment. Until
 Craig creates one, it is written by hand (#36), and `npx convex dev` will overwrite it. The rules are
@@ -54,7 +55,7 @@ Each folder has a README saying what goes in it.
 | Folder | What lives there |
 |---|---|
 | `convex/lck/` | The real world: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. |
-| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload. |
+| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload. |
 | `convex/stats/` | Per-player stats for each game, as the feed sent them, plus the latest live reading. |
 | `convex/scoring/` | Scoring rules as data, the engine that turns stats into series points, and the re-score. |
 | `convex/gameweeks/` | Gameweeks, deadlines and settling a gameweek. |
@@ -86,6 +87,6 @@ The rules:
 - A feature's server code, its tests and its fixtures sit in its one `convex/` folder.
 - `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`, `achievements`). The game reads the real world; it never writes it.
 - Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
-- A screen imports from `src/parts`, `src/rift`, `src/theme` and `src/fixtures`, never from another screen.
+- A screen never imports from another screen (src/screens/README.md).
 - A screen's CSS classes start with its folder's name (`.points__side`); a test fails on any other.
 - Before adding a helper or a fixture, search for its home and reuse it.

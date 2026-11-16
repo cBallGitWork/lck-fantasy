@@ -1,11 +1,11 @@
 // Leagues on the shared Week 3 of Split 1, at Points' moment (Saturday, T1 v DK game 2 live): after
 // the deadline, so Carry shows. The pictures (docs/design/approved/leagues/) draw a made-up Split 2
 // Week 14; they bind the layout, tabs and groups, and this file holds Week 3's figures. Names and numbers are
-// examples. The sample manager, Minji, Dan and Jae are the shared ones. The backend feeds each of
+// examples. The sample manager and the Pub League's managers in MANAGERS are the shared ones. The backend feeds each of
 // these once it is wired (#38).
 
-import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
-import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
+import { MANAGERS, MINJI_WEEK3, type MadeUpManager } from "../../fixtures/managers";
+import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL, type MyLeague } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
 import { COMPETITION as CUP, MANAGER, MY_WEEK3, POINTS_WEEK, WEEK3_DEADLINE, WEEK4_SERIES } from "../../fixtures/week3";
 import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, Standings, StandingRow } from "./types";
@@ -43,8 +43,15 @@ function rows(lines: Line[], chasing = false): StandingRow[] {
   });
 }
 
-/** The sample manager's row: his Week 3 so far, and a total counted from the league's first week. */
-const me = (rank: number, move: number | null, total: number): Line => [rank, move, MANAGER.team, MANAGER.name, "Faker", MY_WEEK3.liveTotal, total];
+/** The sample manager's row in a league, its rank and move his: his Week 3 so far, and a total counted from the league's first week. */
+function me(leagueId: MyLeague["id"] | "overall", total: number): Line {
+  const league = leagueId === "overall" ? MY_OVERALL : MY_LEAGUES.find((l) => l.id === leagueId);
+  if (!league) throw new Error(`Baron Steal FC is not in ${leagueId}`);
+  return [league.rank, league.move, MANAGER.team, MANAGER.name, "Faker", MY_WEEK3.liveTotal, total];
+}
+
+/** A made-up manager's row: his team and name from MANAGERS. */
+const theirs = ({ team, name }: MadeUpManager, rank: number, move: number | null, carry: string, week: number, total: number): Line => [rank, move, team, name, carry, week, total];
 
 /** A row whose total counts only this week: a league scoring from Week 3. */
 const fromThisWeek = (rank: number, move: number | null, team: string, manager: string, carry: string, week: number): Line => [rank, move, team, manager, carry, week, week];
@@ -65,16 +72,16 @@ const PUB_LEAGUE: LeagueView = {
       runs: [
         rows(
           [
-            [1, null, MANAGERS.minji.team, MANAGERS.minji.name, "Ruler", MINJI_WEEK3.points, MINJI_WEEK3.total],
-            me(2, 1, MY_SEASON_TOTAL),
-            [3, -1, MANAGERS.dan.team, MANAGERS.dan.name, "Faker", 77, 296],
-            [4, 2, MANAGERS.jae.team, MANAGERS.jae.name, "ucal", 66, 291],
-            [5, null, "Kiin Bean", "Tom Reid", "Chovy", 61, 284],
-            [6, -2, "Guma Gang", "Sam Hill", "Gumayusi", 49, 277],
-            [7, 1, "Zeus Juice", "Priya Shah", "Zeus", 70, 270],
+            theirs(MANAGERS.minji, 1, null, "Ruler", MINJI_WEEK3.points, MINJI_WEEK3.total),
+            me("pub-league", MY_SEASON_TOTAL),
+            theirs(MANAGERS.dan, 3, -1, "Faker", 77, 296),
+            theirs(MANAGERS.jae, 4, 2, "ucal", 66, 291),
+            theirs(MANAGERS.tom, 5, null, "Chovy", 61, 284),
+            theirs(MANAGERS.sam, 6, -2, "Gumayusi", 49, 277),
+            theirs(MANAGERS.priya, 7, 1, "Zeus", 70, 270),
             [8, -1, "Smeb Nostalgia", "Liam Byrne", "Kiin", 58, 263],
-            [9, null, "Ruler of None", "Ella Wong", "Aiming", 63, 255],
-            [10, 1, "BeryL Backup Plan", "Joe Grant", "Keria", 72, 246],
+            theirs(MANAGERS.ella, 9, null, "Aiming", 63, 255),
+            theirs(MANAGERS.joe, 10, 1, "Keria", 72, 246),
             [11, -1, "Ambition FC", "Chris Lee", "Canyon", 41, 235],
             [12, null, "Gank Plank", "Ruth Ade", "Faker", 55, 223],
           ],
@@ -110,7 +117,7 @@ const FLOL_DISCORD: LeagueView = {
           [
             fromThisWeek(12, 3, "Bdd Wolf", "Owen Shaw", "Bdd", 97),
             fromThisWeek(13, null, "Siwoo Sweep", "Mei Lin", "Chovy", 96),
-            me(14, -2, MY_WEEK3.liveTotal),
+            me("flol-discord", MY_WEEK3.liveTotal),
             fromThisWeek(15, 1, "Oner Way Ticket", "Sean Doyle", "Oner", 92),
             fromThisWeek(16, -1, "Clid Was Here", "Ines Silva", "Viper", 90),
           ],
@@ -137,7 +144,7 @@ const OVERALL_STANDINGS: Standings = {
     rows([
       [MY_OVERALL.rank - 2, 6880, "Rookie Mistake", "Jon Park", "Bdd", 97, MY_SEASON_TOTAL + 1],
       [MY_OVERALL.rank - 1, 6901, "Smolder Shoulders", "Aisha Bello", "Aiming", 98, MY_SEASON_TOTAL],
-      me(MY_OVERALL.rank, MY_OVERALL.move, MY_SEASON_TOTAL),
+      me("overall", MY_SEASON_TOTAL),
       [MY_OVERALL.rank + 1, -40, "Doran's Ring Bearer", "Tim Fox", "Doran", 52, MY_SEASON_TOTAL],
       [MY_OVERALL.rank + 2, 2114, "Moss Rock", "Ivy Moss", "Chovy", 61, MY_SEASON_TOTAL - 1],
     ]),

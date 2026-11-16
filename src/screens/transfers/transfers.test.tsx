@@ -1,8 +1,9 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
-import { TRANSFERS_PICTURE } from "./fixtures";
-import { EMPTY_PLAN } from "./plan";
+import { PICTURE_PLAN, TRANSFERS_PICTURE } from "./fixtures";
+import { lineupIds } from "./lineup";
+import { confirmTransfers, EMPTY_PLAN } from "./plan";
 import { TransfersPage } from "./TransfersPage";
 
 /** Fails unless each piece is found after the one before it. */
@@ -73,7 +74,7 @@ describe("List view (Craig, 16 Nov 2026)", () => {
   test("the nine by role, as FPL's list: last week, price, form, total, next, ×", () => {
     expectInOrder(out, [
       "Player",
-      "Week 3",
+      "Wk 3",
       "Price",
       "Form",
       "Total",
@@ -139,6 +140,24 @@ describe("before any change", () => {
     const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />);
     expectInOrder(out, ["Free transfers 0", "Cost 0", "Bank ₩0.5m", "Siwoo", "No changes", "Review and confirm ›", "Players"]);
     expect(html(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />)).toMatch(/<button[^>]*disabled=""[^>]*>Review and confirm/);
+  });
+});
+
+describe("once Siwoo → Kingen is confirmed (#215)", () => {
+  const { squad, players, rules, confirms } = TRANSFERS_PICTURE;
+  const id = (name: string) => [...squad, ...players].find((p) => p.name === name)!.id;
+  const after = confirmTransfers(squad, players, rules, [{ out: id("Siwoo"), in: id("Kingen") }], lineupIds(squad, PICTURE_PLAN));
+  const confirm = { id: "c3", local: "Tue 22:00", kst: "07:00", moves: after.moves, hit: after.hit };
+  const out = text(<TransfersPage {...TRANSFERS_PICTURE} squad={after.squad} rules={after.rules} confirms={[confirm, ...confirms]} initialPlan={EMPTY_PLAN} />);
+
+  test("the squad has Kingen, the bank is the new one, and nothing is left to review", () => {
+    expectInOrder(out, ["Free transfers 0", "Cost 0", "Bank ₩5.5m", "Kingen", "No changes"]);
+    expect(out).not.toContain("Siwoo DK");
+  });
+
+  test("the swap heads Confirmed · Week 4 with its cost and the only Undo", () => {
+    expectInOrder(out, ["Confirmed · Week 4", "Tue 22:00", "Siwoo → Kingen", "−6", "Undo", "Kiin → Zeus", "Peyz → Ruler"]);
+    expect(out.match(/Undo/g)).toHaveLength(1);
   });
 });
 

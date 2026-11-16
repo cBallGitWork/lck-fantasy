@@ -1,16 +1,9 @@
 .table {
-  width: 100%;
-  border-collapse: collapse;
   table-layout: fixed;
   background: var(--paper);
 }
 .table th {
-  text-align: left;
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  color: var(--mid);
   padding: var(--s-2) var(--s-3);
-  border-bottom: var(--m-rule) solid var(--line);
   white-space: nowrap;
   background: var(--paper);
 }

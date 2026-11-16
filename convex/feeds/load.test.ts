@@ -5,19 +5,16 @@ import schema from "../schema";
 import { modules } from "../test.setup";
 import { groupSeries, seriesState } from "../lck/series";
 import { OE_2025_BRION_DRX } from "../scoring/fixtures";
-import { BRION, DRX, gameOnePlayer, OE_FIXTURE_GAMES, OE_FIXTURE_ROWS, OE_GAME_1 } from "./fixtures/oe";
+import { HOUR_MS, SPEC_FINAL_AFTER_MS } from "../lck/fixtures";
+import { BRION, DRX, gameOnePlayer, OE_FIXTURE_GAMES, OE_FIXTURE_LEAGUE, OE_FIXTURE_ROWS, OE_GAME_1, OE_SERIES_GAMES } from "./fixtures/oe";
 import { v5Game } from "./fixtures/v5-shape";
 import { leaguepediaGameKey } from "./leaguepedia";
-import { oeSeriesGame } from "./oraclesElixir";
 
-const LEAGUE = "LCK";
-const HOUR = 60 * 60 * 1000;
-const FINAL_AFTER = 3 * HOUR; // spec/11's 3 hours, passed in as data
 const GAME_IDS = OE_FIXTURE_GAMES.map((g) => g.gameId);
 
 async function loaded() {
   const t = convexTest(schema, modules);
-  await t.mutation(internal.feeds.load.loadOracleElixir, { rows: OE_FIXTURE_ROWS, league: LEAGUE });
+  await t.mutation(internal.feeds.load.loadOracleElixir, { rows: OE_FIXTURE_ROWS, league: OE_FIXTURE_LEAGUE });
   return t;
 }
 
@@ -56,7 +53,7 @@ const statsOf = (snap: Awaited<ReturnType<typeof snapshot>>, gameId: string, pla
 describe("loadOracleElixir", () => {
   test("a series appears with its two teams, its games, and who played each in which role on which champion", async () => {
     const snap = await snapshot(await loaded());
-    const [expected] = groupSeries(OE_FIXTURE_GAMES.map(oeSeriesGame)).series;
+    const [expected] = groupSeries(OE_SERIES_GAMES).series;
     expect(snap.series).toHaveLength(1);
     expect(snap.series[0]).toMatchObject({ firstGame: GAME_IDS[0], teams: [BRION, DRX], score: expected!.score, endedAt: expected!.endedAt });
     expect(snap.games.map((g) => [g.oeId, g.gameNumber, g.inSeries])).toEqual(GAME_IDS.map((id, i) => [id, i + 1, true]));
@@ -89,7 +86,7 @@ describe("loadOracleElixir", () => {
   test("a game out of sequence is left unplaced, and the rest still load", async () => {
     const t = convexTest(schema, modules);
     const rows = OE_FIXTURE_ROWS.filter((row) => row.gameid !== GAME_IDS[0]);
-    expect(await t.mutation(internal.feeds.load.loadOracleElixir, { rows, league: LEAGUE })).toEqual({
+    expect(await t.mutation(internal.feeds.load.loadOracleElixir, { rows, league: OE_FIXTURE_LEAGUE })).toEqual({
       games: 2, unplaced: GAME_IDS.slice(1),
     });
     const snap = await snapshot(t);
@@ -113,12 +110,12 @@ describe("loadLeaguepedia", () => {
     for (const id of GAME_IDS.slice(0, 2)) await loadPage(t, id);
     const before = (await snapshot(t)).series[0]!;
     expect(before).toMatchObject({ settledStatsIn: false, waiting: [`${GAME_IDS[2]}: no Leaguepedia page "${leaguepediaGameKey(GAME_IDS[2]!)}"`] });
-    expect(seriesState(before.endedAt, before.settledStatsIn, before.endedAt + 10 * HOUR, FINAL_AFTER)).toBe("provisional");
+    expect(seriesState(before.endedAt, before.settledStatsIn, before.endedAt + 10 * HOUR_MS, SPEC_FINAL_AFTER_MS)).toBe("provisional");
     await loadPage(t, GAME_IDS[2]!);
     const after = (await snapshot(t)).series[0]!;
     expect(after).toMatchObject({ settledStatsIn: true, waiting: [] });
-    expect(seriesState(after.endedAt, after.settledStatsIn, after.endedAt + FINAL_AFTER - 1, FINAL_AFTER)).toBe("provisional");
-    expect(seriesState(after.endedAt, after.settledStatsIn, after.endedAt + FINAL_AFTER, FINAL_AFTER)).toBe("final");
+    expect(seriesState(after.endedAt, after.settledStatsIn, after.endedAt + SPEC_FINAL_AFTER_MS - 1, SPEC_FINAL_AFTER_MS)).toBe("provisional");
+    expect(seriesState(after.endedAt, after.settledStatsIn, after.endedAt + SPEC_FINAL_AFTER_MS, SPEC_FINAL_AFTER_MS)).toBe("final");
   });
 
   test("a game not loaded yet, or a page with a field missing, throws", async () => {
@@ -133,7 +130,7 @@ describe("re-running a load", () => {
     const t = await loaded();
     await loadPage(t, GAME_IDS[0]!, v5Game({ 3: { soloKills: 2 } }));
     const first = await snapshot(t);
-    await t.mutation(internal.feeds.load.loadOracleElixir, { rows: OE_FIXTURE_ROWS, league: LEAGUE });
+    await t.mutation(internal.feeds.load.loadOracleElixir, { rows: OE_FIXTURE_ROWS, league: OE_FIXTURE_LEAGUE });
     expect(await snapshot(t)).toEqual(first);
   });
 
@@ -141,7 +138,7 @@ describe("re-running a load", () => {
     const t = await loaded();
     const clozer = gameOnePlayer("Clozer");
     const rows = OE_FIXTURE_ROWS.map((row) => (row === clozer.raw ? { ...row, kills: "5" } : row));
-    await t.mutation(internal.feeds.load.loadOracleElixir, { rows, league: LEAGUE });
+    await t.mutation(internal.feeds.load.loadOracleElixir, { rows, league: OE_FIXTURE_LEAGUE });
     const snap = await snapshot(t);
     expect(statsOf(snap, GAME_IDS[0]!, "Clozer")).toMatchObject({ kills: 5, raw: { kills: "5" } });
     expect(snap.stats).toHaveLength(30);

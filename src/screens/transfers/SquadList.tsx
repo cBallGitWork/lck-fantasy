@@ -30,7 +30,7 @@ export function SquadList({
         <tr>
           <th aria-label="Shirt" />
           <th>Player</th>
-          <th className="transfers__num">Week {lastWeek}</th>
+          <th className="transfers__num">Wk {lastWeek}</th>
           <th className="transfers__num">Price</th>
           <th className="transfers__num">Form</th>
           <th className="transfers__num">Total</th>

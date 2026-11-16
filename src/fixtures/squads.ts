@@ -22,8 +22,7 @@ export interface PointsPick {
   /** Each series he played this week: its id and points per game. A live series' last game is live. */
   series: { id: string; games: number[]; coachResult?: number }[];
   birthday?: boolean;
-  /** Who he came on for, or that he went off unplayed. */
-  subbedInFor?: string;
+  /** That he went off unplayed. */
   subbedOut?: boolean;
 }
 
@@ -34,7 +33,7 @@ export const POINTS_SQUAD: PointsPick[] = [
   { slot: "mid", name: "Faker", team: "T1", role: "mid", mark: "C", series: [{ id: "w3-wed-1", games: [5, 2, 7] }, { id: "w3-sat-2", games: [4, 1] }] },
   { slot: "bot", name: "Ruler", team: "GEN", role: "bot", mark: "V", series: [{ id: "w3-wed-2", games: [3, 4] }, { id: "w3-sat-1", games: [3, 1, 4] }] },
   { slot: "sup", name: "Delight", team: "HLE", role: "sup", birthday: true, series: [{ id: "w3-wed-1", games: [2, 3, 1] }, { id: "w3-sat-1", games: [1, 2, 2] }] },
-  { slot: "flex", name: "Siwoo", team: "DK", role: "top", subbedInFor: "Bdd", series: [{ id: "w3-thu-1", games: [3, 2] }, { id: "w3-sat-2", games: [2, 1] }] },
+  { slot: "flex", name: "Siwoo", team: "DK", role: "top", series: [{ id: "w3-thu-1", games: [3, 2] }, { id: "w3-sat-2", games: [2, 1] }] },
   {
     slot: "coach",
     name: "kkOma",
@@ -157,6 +156,13 @@ export function finalPickOf(name: string): PointsPick {
   return pick;
 }
 
+/** A squad member's series in Week 3, at Points' moment or once final; a missing one is a broken fixture. */
+export function playedIn(name: string, seriesId: string, final = false): Played[number] {
+  const played = (final ? WEEK3_FINAL_SQUAD : POINTS_SQUAD).find((p) => p.name === name)?.series.find((s) => s.id === seriesId);
+  if (!played) throw new Error(`${name} has no ${seriesId} in the squad`);
+  return played;
+}
+
 /** A squad member at the Pick Team picture's moment, with Week 4's price in m and form, from Stats. */
 export interface PickTeamPick {
   slot: SquadSlot;
@@ -222,13 +228,28 @@ function mineInPerfect(slot: SlotKey, carry = false): PerfectPick {
   return { slot, role: pick.role, name: pick.name, mine: true, team: pick.team, points: carry ? carried(raw) : raw, raw: carry ? raw : undefined, carry: carry || undefined, line };
 }
 
+/** The perfect game's other three: each series he played in Week 3 and his points in it, the picture's own. */
+export const PERFECT_OTHERS: Record<string, { id: string; points: number }[]> = {
+  Pyosik: [{ id: "w3-thu-2", points: 10 }, { id: "w3-sun-2", points: 11 }],
+  Duro: [{ id: "w3-wed-2", points: 6 }, { id: "w3-sat-1", points: 5 }],
+  BuLLDoG: [{ id: "w3-thu-2", points: 9 }, { id: "w3-sun-2", points: 12 }],
+};
+
+/** A perfect pick from outside Baron Steal FC's squad: his points the sum of his series in PERFECT_OTHERS. */
+function otherInPerfect(slot: SlotKey, role: PersonRole, name: string, team: TeamCode): PerfectPick {
+  const series = PERFECT_OTHERS[name];
+  if (!series) throw new Error(`No Week 3 series for ${name}`);
+  const line = series.map((s) => `v ${opponentIn(s.id, team)} ${s.points}`).join(" · ");
+  return { slot, role, name, team, points: sum(series.map((s) => s.points)), line };
+}
+
 /** Week 3's perfect game (perfect.html): Baron Steal FC's four worked from his squad's games. */
 export const PERFECT_GAME: PerfectPick[] = [
   mineInPerfect("top"),
-  { slot: "jng", role: "jng", name: "Pyosik", team: "DNS", points: 21, line: "v BRO 10 · v BFX 11" },
+  otherInPerfect("jng", "jng", "Pyosik", "DNS"),
   mineInPerfect("mid", true),
   mineInPerfect("bot"),
-  { slot: "sup", role: "sup", name: "Duro", team: "GEN", points: 11, line: "v KT 6 · v HLE 5" },
-  { slot: "flex", role: "mid", name: "BuLLDoG", team: "DNS", points: 21, line: "v BRO 9 · v BFX 12" },
+  otherInPerfect("sup", "sup", "Duro", "GEN"),
+  otherInPerfect("flex", "mid", "BuLLDoG", "DNS"),
   mineInPerfect("coach"),
 ];

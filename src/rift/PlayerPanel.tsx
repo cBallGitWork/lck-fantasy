@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, GoLink, LinkGo } from "../parts";
+import { cx, gameNo, LinkGo } from "../parts";
 import type { Go } from "../paths";
 import { Shirt } from "./Shirt";
 import "./PlayerPanel.css";
@@ -36,18 +36,12 @@ export function PlayerPanel({
   );
 }
 
-/** One series in the panel: `v HLE`, a link to its Series page when given `go`, then its result (a span, in mid grey), then its games. */
-export function PanelSeries({ title, result, go, children }: { title: string; result: ReactNode; go?: Go; children?: ReactNode }) {
+/** One series in the panel: `v HLE`, then its result (a span, in mid grey), then its games. */
+export function PanelSeries({ title, result, children }: { title: string; result: ReactNode; children?: ReactNode }) {
   return (
     <div className="player-panel__series">
       <h4 className="player-panel__series-head">
-        {go ? (
-          <GoLink go={go} className="player-panel__series-go">
-            {title}
-          </GoLink>
-        ) : (
-          title
-        )}
+        {title}
         {result}
       </h4>
       {children}
@@ -55,15 +49,12 @@ export function PanelSeries({ title, result, go, children }: { title: string; re
   );
 }
 
-/** A game: `G1  Azir · W  [5]`; counted points boxed, a dropped game in mid grey; `live` after the words. */
-export function PanelGame({ no, what, points, counted, live }: { no: number; what: ReactNode; points: number; counted: boolean; live?: ReactNode }) {
+/** A game: `G1  Azir · W  [5]`; counted points boxed, a dropped game in mid grey. */
+export function PanelGame({ no, what, points, counted }: { no: number; what: ReactNode; points: number; counted: boolean }) {
   return (
     <div className={cx("player-panel__game", !counted && "player-panel__game--dropped")}>
-      <span className="quiet">G{no}</span>
-      <span className="player-panel__game-what">
-        {what}
-        {live}
-      </span>
+      <span className="quiet">{gameNo(no)}</span>
+      <span className="player-panel__game-what">{what}</span>
       <span className="player-panel__game-points num">{counted ? <span className="counted">{points}</span> : points}</span>
     </div>
   );

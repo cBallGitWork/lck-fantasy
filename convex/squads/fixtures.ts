@@ -1,8 +1,11 @@
-// Test fixtures for the squad rules: picks and settings, never product data.
+// Test fixtures for every convex test and the guest squad's: picks and settings, never product data.
 import { allPicks, pickKey, type Pick, type PlayerRole, type Squad, type SquadSettings, type StarterSlot } from "./squad";
 import type { ConfirmedTransfer, TransferSettings } from "./transfers";
 
 export const TRANSFER_SETTINGS: TransferSettings = { freePerGameweek: 1, bankCap: 3, hitPoints: 6, freeAfterUnlimited: 2 };
+
+/** The Carry's multiplier. */
+export const CARRY_MULTIPLIER = 1.5;
 
 /** A confirmed transfer; prices in won, 5 a pick unless given. */
 export const confirmed = (out: Pick, pickIn: Pick, prices: { outPrice?: number; inPrice?: number } = {}): ConfirmedTransfer =>
@@ -32,6 +35,13 @@ export const ktCoach = coach("kt");
 export const bdd = player("bdd", "kt", "mid");
 export const lucid = player("lucid", "dk", "jungle");
 
+// Picks outside the valid squad.
+export const faker = player("faker", "t1", "mid");
+export const showmaker = player("showmaker", "dk", "mid");
+export const peyz = player("peyz", "dk", "bot");
+export const canyon = player("canyon", "dk", "jungle");
+export const doran = player("doran", "t1", "top");
+
 /** A valid squad under REGULAR_SETTINGS: two from each of HLE, T1, GEN and KT, one from DK. */
 export function validSquad(): Squad {
   return {
@@ -51,6 +61,16 @@ export function validSquad(): Squad {
 /** The squad with one starter slot's pick swapped. */
 export function withStarter(squad: Squad, slot: StarterSlot, pick: Pick): Squad {
   return { ...squad, starters: squad.starters.map((s) => (s.slot === slot ? { ...s, pick } : s)) };
+}
+
+/** The valid squad with T1's coach and Faker at mid: four from T1. */
+export function fourFromT1(): Squad {
+  return withStarter(withStarter(validSquad(), "coach", coach("t1")), "mid", faker);
+}
+
+/** A number per pick, keyed by `pickKey`: prices or points. */
+export function byPick(entries: readonly (readonly [Pick, number])[]): Map<string, number> {
+  return new Map(entries.map(([pick, n]) => [pickKey(pick), n]));
 }
 
 /** The `pickKey`s of everyone in the squad who played, all but `sitOut`. */

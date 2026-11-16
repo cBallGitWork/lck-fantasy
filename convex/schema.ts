@@ -82,4 +82,32 @@ export default defineSchema({
   })
     .index("by_game", ["game"])
     .index("by_player", ["player"]),
+
+  // The game. Managers and entries hold only what leagues need; sign-up (#42) adds the rest.
+  managers: defineTable({ country: v.string(), favouriteTeam: v.id("teams") }),
+  entries: defineTable({ manager: v.id("managers"), teamName: v.string() }),
+
+  // Leagues (convex/leagues): Overall, country and team leagues exist once each (spec/08).
+  leagues: defineTable(
+    v.union(
+      v.object({ kind: v.literal("overall") }),
+      v.object({ kind: v.literal("country"), country: v.string() }),
+      v.object({ kind: v.literal("team"), team: v.id("teams") }),
+      v.object({
+        kind: v.literal("private"),
+        name: v.string(),
+        code: v.string(),
+        maker: v.id("entries"),
+        /** The gameweek its scoring starts from, picked by its maker. */
+        startGameweek: v.number(),
+      }),
+    ),
+  )
+    .index("by_kind", ["kind"])
+    .index("by_country", ["country"])
+    .index("by_team", ["team"])
+    .index("by_code", ["code"]),
+  leagueEntries: defineTable({ league: v.id("leagues"), entry: v.id("entries") })
+    .index("by_league", ["league", "entry"])
+    .index("by_entry", ["entry"]),
 });

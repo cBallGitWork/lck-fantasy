@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import "./Toast.css";
 
 /** How long a toast stays, in ms. */
-export const TOAST_MS = 3000;
+const TOAST_MS = 3000;
 
 /**
  * A short message at the foot of the page that goes by itself (`Kingen added`, `Team full: 2 from T1`),

@@ -1,7 +1,8 @@
 import type { TeamCode } from "../../fixtures/week3";
 import { GoLink, NONE } from "../../parts";
+import { seriesGo } from "../../paths";
 import type { HubWeek } from "./types";
-import { ByDay, seriesGo, WeekTitle } from "./Week";
+import { ByDay, WeekTitle } from "./Week";
 
 
 /**
@@ -33,7 +34,7 @@ export function Fixtures({
       <ByDay
         series={week.series}
         row={(s) => (
-          <GoLink key={s.id} className="lck-hub__series" go={seriesGo(s)}>
+          <GoLink key={s.id} className="lck-hub__series" go={seriesGo(s.id)}>
             <span className="num">{s.local}</span>
             <span className="lck-hub__kst num">{s.kst}</span>
             <span className="lck-hub__home">

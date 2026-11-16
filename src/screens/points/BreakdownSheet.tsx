@@ -1,5 +1,5 @@
-import { Crest, cx, GoLink, LinkGo, LiveTag, Modal, NONE, NotFinalTag, outcome, seriesResult, signed } from "../../parts";
-import { cardGo, PATHS } from "../../paths";
+import { Crest, cx, gameNo, GoLink, LinkGo, LiveTag, Modal, NONE, NotFinalTag, outcome, seriesResult, signed } from "../../parts";
+import { cardGo, seriesGo } from "../../paths";
 import { MARK_NAME, MarkBadge, ROLE_NAME } from "../../rift";
 import "./BreakdownSheet.css";
 import type { PointsGame, PointsPlayer, PointsSeries, PointsStarter } from "./types";
@@ -26,7 +26,7 @@ function SeriesResult({ s }: { s: PointsSeries }) {
 function GameRow({ g }: { g: PointsGame }) {
   return (
     <div className={cx("points__breakdown-game", !g.counted && "points__breakdown-game--dropped")}>
-      <span className="quiet num">G{g.game}</span>
+      <span className="quiet num">{gameNo(g.game)}</span>
       <span className="points__breakdown-game-what">
         {g.champion && <b>{g.champion}</b>}
         {g.clock ? (
@@ -83,7 +83,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
       {player.series.map((s) => (
         <section key={s.id} className="points__breakdown-series" aria-label={`v ${s.opponent}`}>
           <h3 className="points__breakdown-series-head">
-            <GoLink go={{ to: PATHS.series, params: { seriesId: s.id } }} className="points__breakdown-series-go">
+            <GoLink go={seriesGo(s.id)} className="points__breakdown-series-go">
               <span className="points__breakdown-day quiet">{s.day}</span> v {s.opponent} <SeriesResult s={s} /> ›
             </GoLink>
             <b className="points__breakdown-series-points num">{s.points}</b>

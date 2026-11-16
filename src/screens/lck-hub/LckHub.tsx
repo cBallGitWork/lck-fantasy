@@ -1,6 +1,6 @@
 import { useReducer } from "react";
 import type { TeamCode } from "../../fixtures/week3";
-import { Columns, Deadline, Empty, PageFrame, PageHead, Tabs, ViewToggle } from "../../parts";
+import { Columns, Deadline, Empty, PageFrame, PageHead, score, Tabs, ViewToggle } from "../../parts";
 import { Fixtures } from "./FixturesTab";
 import { nextHub, startHub, weeksOf, type HubAction, type HubState, type WeekTab } from "./hubState";
 import { News } from "./News";
@@ -14,7 +14,7 @@ import "./lck-hub.css";
 const NOT_STARTED = "Not started";
 
 const recordsOf = (data: LckHubData, stage: number): Partial<Record<TeamCode, string>> =>
-  Object.fromEntries((data.stages[stage]?.groups ?? []).flatMap((g) => g.rows.map((r) => [r.team, `${r.won}–${r.lost}`])));
+  Object.fromEntries((data.stages[stage]?.groups ?? []).flatMap((g) => g.rows.map((r) => [r.team, score([r.won, r.lost])])));
 
 /** The chosen tab's view, in the chosen stage. */
 function TabView({ data, state, act }: { data: LckHubData; state: HubState; act: (a: HubAction) => void }) {

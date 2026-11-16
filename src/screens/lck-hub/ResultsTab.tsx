@@ -1,6 +1,7 @@
 import { cx, GoLink, score } from "../../parts";
+import { seriesGo } from "../../paths";
 import type { HubWeek } from "./types";
-import { ByDay, seriesGo, WeekTitle } from "./Week";
+import { ByDay, WeekTitle } from "./Week";
 
 const team = (code: string, won: boolean) => <b className={cx("lck-hub__code", "num", !won && "lck-hub__loser")}>{code}</b>;
 
@@ -15,7 +16,7 @@ export function Results({ week, bestOf, onPrev, onNext }: { week: HubWeek; bestO
           if (!s.score) throw new Error(`Result ${s.id} has no score`);
           const [home, away] = s.score;
           return (
-            <GoLink key={s.id} className={cx("lck-hub__series", "lck-hub__series--result")} go={seriesGo(s)}>
+            <GoLink key={s.id} className={cx("lck-hub__series", "lck-hub__series--result")} go={seriesGo(s.id)}>
               <span className="lck-hub__home">{team(s.home, home > away)}</span>
               <span className="lck-hub__score num">
                 {score(s.score)}

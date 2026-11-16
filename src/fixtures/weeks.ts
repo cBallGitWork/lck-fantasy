@@ -46,31 +46,6 @@ export const WEEK2_SERIES: Series[] = [
   { id: "w2-sun-2", day: "Sun", date: "10 Jan", ...LATE, home: "BRO", away: "NS", score: [1, 2], state: "final" },
 ];
 
-/** Week 3 at the Points picture's moment: Saturday 21:10 KST, T1 v DK game 2 live. */
-export const WEEK3_SERIES_AT_POINTS: Series[] = [
-  { id: "w3-wed-1", day: "Wed", date: "13 Jan", ...EARLY, home: "T1", away: "HLE", score: [2, 1], state: "final" },
-  { id: "w3-wed-2", day: "Wed", date: "13 Jan", ...LATE, home: "GEN", away: "KT", score: [2, 0], state: "final" },
-  { id: "w3-thu-1", day: "Thu", date: "14 Jan", ...EARLY, home: "DK", away: "NS", score: [2, 0], state: "final" },
-  { id: "w3-thu-2", day: "Thu", date: "14 Jan", ...LATE, home: "BRO", away: "DNS", score: [1, 2], state: "final" },
-  { id: "w3-fri-1", day: "Fri", date: "15 Jan", ...EARLY, home: "KT", away: "BFX", score: [2, 1], state: "final" },
-  { id: "w3-fri-2", day: "Fri", date: "15 Jan", ...LATE, home: "NS", away: "KRX", score: [0, 2], state: "final" },
-  { id: "w3-sat-1", day: "Sat", date: "16 Jan", ...EARLY, home: "GEN", away: "HLE", score: [2, 1], state: "notFinal" },
-  {
-    id: "w3-sat-2",
-    day: "Sat",
-    date: "16 Jan",
-    ...LATE,
-    home: "T1",
-    away: "DK",
-    score: [1, 0],
-    state: "live",
-    liveGame: 2,
-    clock: "14:20",
-  },
-  { id: "w3-sun-1", day: "Sun", date: "17 Jan", ...EARLY, home: "KRX", away: "BRO", state: "next" },
-  { id: "w3-sun-2", day: "Sun", date: "17 Jan", ...LATE, home: "BFX", away: "DNS", state: "next" },
-];
-
 /** Week 3 final, as Perfect game, the LCK hub's Results and the Series page show it. */
 export const WEEK3_SERIES_FINAL: Series[] = [
   { id: "w3-wed-1", day: "Wed", date: "13 Jan", ...EARLY, home: "T1", away: "HLE", score: [2, 1], state: "final" },
@@ -84,6 +59,20 @@ export const WEEK3_SERIES_FINAL: Series[] = [
   { id: "w3-sun-1", day: "Sun", date: "17 Jan", ...EARLY, home: "KRX", away: "BRO", score: [2, 1], state: "final" },
   { id: "w3-sun-2", day: "Sun", date: "17 Jan", ...LATE, home: "BFX", away: "DNS", score: [0, 2], state: "final" },
 ];
+
+/** What Points' moment changes in Week 3 final, by series: GEN v HLE not final, T1 v DK game 2 live, Sunday's pair unplayed. */
+const AT_POINTS: Record<string, Partial<Series>> = {
+  "w3-sat-1": { state: "notFinal" },
+  "w3-sat-2": { score: [1, 0], state: "live", liveGame: 2, clock: "14:20" },
+  "w3-sun-1": { state: "next", score: undefined },
+  "w3-sun-2": { state: "next", score: undefined },
+};
+
+/** Week 3 at the Points picture's moment: Saturday 21:10 KST, T1 v DK game 2 live. */
+export const WEEK3_SERIES_AT_POINTS: Series[] = WEEK3_SERIES_FINAL.map((s) => {
+  const { score, ...rest } = { ...s, ...AT_POINTS[s.id] };
+  return score ? { ...rest, score } : rest;
+});
 
 /** Week 4's fixtures, as Pick Team and the LCK hub show them. */
 export const WEEK4_SERIES: Series[] = [

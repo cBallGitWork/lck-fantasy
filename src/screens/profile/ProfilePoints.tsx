@@ -8,7 +8,7 @@ const BENCH = "Bench";
 const onBench = (pick: ProfilePick) => isBench(pick.slot);
 
 /** The slot as the table names it: `Top`, `Flex · Top`, `Bench 1 · Mid`. */
-export function slotLabel(pick: ProfilePick): string {
+function pickSlot(pick: ProfilePick): string {
   const plays = pick.plays ? ` · ${ROLE_NAME[pick.plays]}` : "";
   if (isBench(pick.slot)) return `${BENCH} ${pick.slot.slice(-1)}${plays}`;
   return `${ROLE_NAME[pick.slot]}${plays}`;
@@ -82,7 +82,7 @@ function PickRow({ pick }: { pick: ProfilePick }) {
   return (
     <tr>
       <td>
-        <small>{slotLabel(pick)}</small>
+        <small>{pickSlot(pick)}</small>
       </td>
       <td>
         <GoLink className="profile__name" go={cardGo(pick.id, pick.slot === "coach")}>

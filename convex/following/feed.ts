@@ -2,7 +2,8 @@
 // the deadline and how each swap is doing, their points at the end of each series, and a big Carry.
 import type { Transfer } from "../squads/budget";
 import type { BuffEffect } from "../squads/buffs";
-import { lineupPoints } from "../squads/carry";
+import { sum } from "../../src/parts/util/sum";
+import { isCarrying, lineupPoints } from "../squads/carry";
 import { pickKey, type Pick, type ScoringPick } from "../squads/squad";
 import { followedBy, type Follows } from "./follows";
 
@@ -65,7 +66,7 @@ export function feed(
 }
 
 function movesItem(week: ManagerWeek, deadline: number, series: readonly FinishedSeries[]): FeedItem {
-  const pointsSoFar = (pick: Pick) => series.reduce((sum, one) => sum + (one.points.get(pickKey(pick)) ?? 0), 0);
+  const pointsSoFar = (pick: Pick) => sum(series.map((one) => one.points.get(pickKey(pick)) ?? 0));
   const swaps = week.transfers.map((transfer) => ({
     out: transfer.out,
     in: transfer.in,
@@ -87,12 +88,11 @@ function seriesItems(week: ManagerWeek, series: FinishedSeries, settings: FeedSe
       managerId: week.managerId,
       at,
       seriesId: series.id,
-      points: slots.reduce((sum, slot) => sum + slot.points, 0),
+      points: sum(slots.map((slot) => slot.points)),
     },
   ];
   for (const slot of slots) {
-    const isCarry = slot.pick.role !== "coach" && week.carrying.has(slot.pick.id);
-    if (isCarry && slot.points >= settings.bigCarryPoints) {
+    if (isCarrying(slot.pick, week.carrying) && slot.points >= settings.bigCarryPoints) {
       items.push({ kind: "bigCarry", managerId: week.managerId, at, seriesId: series.id, pick: slot.pick, points: slot.points });
     }
   }

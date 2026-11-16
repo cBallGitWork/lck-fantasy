@@ -1,4 +1,4 @@
-import { cx, GoLink, LinkGo, MeDot, NONE, outcome, SectionHead, signed, Tag } from "../../parts";
+import { cx, gameNo, GoLink, LinkGo, MeDot, NONE, outcome, SectionHead, signed, Tag } from "../../parts";
 import { cardGo, type Go } from "../../paths";
 import { RoleIcon, ROLE_NAME, type IconKey } from "../../rift";
 import type { CoachLine, Game, Person, PlayerLine, Roster, TeamSheet } from "./types";
@@ -45,13 +45,13 @@ function GameHead({ game, n, code, details }: { game: Game; n: number; code: str
   if ("clock" in game)
     return (
       <th scope="col">
-        G{n}
+        {gameNo(n)}
         {details && <> <b className="num">{game.clock}</b></>}
       </th>
     );
   return (
     <th scope="col">
-      G{n} <b>{outcome(gameWon(game, code))}</b>
+      {gameNo(n)} <b>{outcome(gameWon(game, code))}</b>
       {details && <> · <span className="num">{game.length}</span> · <LinkGo out={game.vod}>VOD</LinkGo></>}
     </th>
   );
@@ -75,7 +75,7 @@ function PlayerRow({ p }: { p: PlayerLine }) {
           </td>
         ) : (
           <td key={i} className="series__none">
-            —
+            {NONE}
           </td>
         ),
       )}

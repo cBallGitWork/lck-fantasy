@@ -148,15 +148,6 @@ function Count({ n, games, figures }: { n: number; games: number; figures: Figur
   return <span className={cx(n === 0 && "stats__zero")}>{figures === "Per game" ? perGame(n, games) : n}</span>;
 }
 
-function Move({ moveM }: { moveM: number }) {
-  if (moveM === 0) return null;
-  return (
-    <span className="stats__move">
-      <PriceMove money={moveM} />
-    </span>
-  );
-}
-
 /** The list's columns: the name, price and move, form, owned, Pts, then Games and the lines. */
 function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<Ranked>[] {
   const sortable = (key: SortKey, head: string, cell: Column<Ranked>["cell"], group = false): Column<Ranked> => ({
@@ -181,7 +172,7 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
       fullText: (r) => r.name,
     },
     sortable("priceM", "Price", (r) => money(r.priceM)),
-    { key: "move", head: "", cell: (r) => <Move moveM={r.moveM} /> },
+    { key: "move", head: "", cell: (r) => <PriceMove money={r.moveM} className="stats__move" /> },
     sortable("form", "Form", (r) => oneDecimal(r.form)),
     sortable("ownedPct", "Owned", (r) => pct(r.ownedPct)),
     sortable("points", "Pts", (r) => <Count n={r.points} games={r.games} figures={view.figures} />),

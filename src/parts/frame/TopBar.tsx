@@ -5,7 +5,7 @@ import { cx } from "../util/cx";
 import { Placeholder } from "./Placeholder";
 import "./TopBar.css";
 
-export const TOP_BAR_ITEMS = [
+const TOP_BAR_ITEMS = [
   ["home", "Home"],
   ["pickTeam", "Pick Team"],
   ["transfers", "Transfers"],

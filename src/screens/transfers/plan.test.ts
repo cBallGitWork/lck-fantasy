@@ -2,11 +2,12 @@
 import { describe, expect, test } from "vitest";
 import { HIT_POINTS, WEEK4_FREE_TRANSFERS } from "../../fixtures/week3";
 import { CONFIRMS, PICTURE_PLAN, PLAYERS, RULES, SQUAD, TRANSFERS_PICTURE } from "./fixtures";
-import { arrange, byRole } from "./lineup";
+import { arrange, byRole, lineupIds } from "./lineup";
 import {
   add,
   ALL,
   bankNow,
+  confirmTransfers,
   EMPTY_PLAN,
   emptySlots,
   freeLeft,
@@ -184,5 +185,28 @@ describe("the nine by role", () => {
     const [a, b] = [spotOf("mid", 0, 2), spotOf("mid", 1, 2)];
     expect(b[0] - a[0]).toBe(STEP);
     expect(spotOf("mid", 0, 1)).toEqual([(a[0] + b[0]) / 2, a[1]]);
+  });
+});
+
+describe("a confirm applied (#215)", () => {
+  const transfers = [{ out: SQUAD.find((p) => p.name === "Siwoo")!.id, in: named("Kingen").id }];
+  const after = confirmTransfers(SQUAD, PLAYERS, RULES, transfers, lineupIds(SQUAD, PICTURE_PLAN));
+
+  test("Kingen stands in Siwoo's place at his list price; the rest keep their slots and their C and V", () => {
+    expect(after.squad.find((p) => p.slot === "flex")).toMatchObject({ name: "Kingen", priceWon: named("Kingen").priceWon });
+    expect(after.squad.map((p) => p.name)).not.toContain("Siwoo");
+    expect(after.squad.find((p) => p.name === "Faker")!.mark).toBe("C");
+    expect(after.squad.find((p) => p.name === "Ruler")!.mark).toBe("V");
+  });
+
+  test("the bank, free transfers and the hit are what the changes showed", () => {
+    expect(after.rules.bank).toBe(bankNow(SQUAD, PICTURE_PLAN, RULES.bank));
+    expect(after.rules.freeTransfers).toBe(freeLeft(RULES, 1));
+    expect(after.hit).toBe(pendingHit(RULES, 1));
+    expect(after.moves).toEqual([{ out: "Siwoo", in: "Kingen" }]);
+  });
+
+  test("the squad after it has no changes to review", () => {
+    expect(reviewBlock(after.squad, EMPTY_PLAN, after.rules)).toBe("No changes");
   });
 });

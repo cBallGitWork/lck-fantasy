@@ -1,12 +1,11 @@
 import { describe, expect, test } from "vitest";
 import { autoSubs } from "./autoSubs";
-import { bdd, chovy, ktCoach, player, playedExcept, ruler, validSquad, zeus } from "./fixtures";
+import { bdd, chovy, doran, ktCoach, player, playedExcept, ruler, showmaker, validSquad, zeus } from "./fixtures";
 
 const slotOf = (lineup: ReturnType<typeof autoSubs>["lineup"], slot: string) =>
   lineup.find((starter) => starter.slot === slot)?.pick.id;
 
 const support = player("lehends", "ns", "support");
-const top = player("doran", "t1", "top");
 
 describe("autoSubs", () => {
   test("everyone played: no subs, the line-up is the starters", () => {
@@ -26,32 +25,30 @@ describe("autoSubs", () => {
 
   test("a bench player comes on only into his own role or the flex", () => {
     // Bench 1 a support, bench 2 a top laner: the top laner out brings on bench 2.
-    const squad = { ...validSquad(), bench: [support, top] };
+    const squad = { ...validSquad(), bench: [support, doran] };
     const result = autoSubs(squad, playedExcept(squad, zeus));
-    expect(result.subs).toEqual([{ slot: "top", out: zeus, in: top }]);
+    expect(result.subs).toEqual([{ slot: "top", out: zeus, in: doran }]);
   });
 
   test("a flex starter out is replaced by the first bench player who played, whatever his role", () => {
-    const squad = { ...validSquad(), bench: [support, top] };
+    const squad = { ...validSquad(), bench: [support, doran] };
     const result = autoSubs(squad, playedExcept(squad, ruler));
     expect(result.subs).toEqual([{ slot: "flex", out: ruler, in: support }]);
   });
 
   test("own role before the flex: mid and flex out with two mids on the bench", () => {
-    const secondMid = player("showmaker", "dk", "mid");
-    const squad = { ...validSquad(), bench: [bdd, secondMid] };
+    const squad = { ...validSquad(), bench: [bdd, showmaker] };
     const result = autoSubs(squad, playedExcept(squad, chovy, ruler));
     expect(result.subs).toEqual([
       { slot: "mid", out: chovy, in: bdd },
-      { slot: "flex", out: ruler, in: secondMid },
+      { slot: "flex", out: ruler, in: showmaker },
     ]);
   });
 
   test("a bench player who also played no game is skipped and the next is tried", () => {
-    const secondMid = player("showmaker", "dk", "mid");
-    const squad = { ...validSquad(), bench: [bdd, secondMid] };
+    const squad = { ...validSquad(), bench: [bdd, showmaker] };
     const result = autoSubs(squad, playedExcept(squad, chovy, bdd));
-    expect(result.subs).toEqual([{ slot: "mid", out: chovy, in: secondMid }]);
+    expect(result.subs).toEqual([{ slot: "mid", out: chovy, in: showmaker }]);
   });
 
   test("a bench player who fits no open slot stays on the bench", () => {

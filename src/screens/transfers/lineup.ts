@@ -46,3 +46,7 @@ export function arrange(squad: SquadPlayer[], plan: Plan): Record<SquadSlot, Lis
   }
   return placed;
 }
+
+/** The arranged nine by id, as a confirm hands them over. */
+export const lineupIds = (squad: SquadPlayer[], plan: Plan) =>
+  Object.fromEntries(Object.entries(arrange(squad, plan)).map(([slot, p]) => [slot, p.id])) as Record<SquadSlot, string>;

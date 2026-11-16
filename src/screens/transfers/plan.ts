@@ -237,3 +237,40 @@ export interface Confirm {
   hit: number;
   buff?: string;
 }
+
+/** The toast once a confirm goes through. */
+export const CONFIRMED = "Transfers confirmed";
+
+/** The week after a confirm: the nine as arranged, the bank and free transfers left, and the line Confirmed lists. */
+export interface AfterConfirm {
+  squad: SquadPlayer[];
+  rules: TransferRules;
+  moves: Confirm["moves"];
+  hit: number;
+}
+
+/**
+ * A confirm applied, as the page hands it over: each transfer by id and the nine by slot. A player kept
+ * keeps his C or V; one bought comes at his list price. Free transfers and the bank are what is left.
+ */
+export function confirmTransfers(
+  squad: SquadPlayer[],
+  players: ListPlayer[],
+  rules: TransferRules,
+  transfers: { out: string; in: string }[],
+  lineup: Record<SquadSlot, string>,
+): AfterConfirm {
+  const byId = new Map<string, ListPlayer>([...squad, ...players].map((p) => [p.id, p]));
+  const find = (id: string) => {
+    const p = byId.get(id);
+    if (!p) throw new Error(`Transfers: no player ${id}`);
+    return p;
+  };
+  const pairs = transfers.map((t) => ({ out: find(t.out), in: find(t.in) }));
+  return {
+    squad: SQUAD_SLOTS.map((slot) => ({ ...find(lineup[slot]), slot })),
+    rules: { ...rules, freeTransfers: freeLeft(rules, pairs.length), bank: pairs.reduce((sum, m) => sum + m.out.priceWon - m.in.priceWon, rules.bank) },
+    moves: pairs.map((m) => ({ out: m.out.name, in: m.in.name })),
+    hit: pendingHit(rules, pairs.length),
+  };
+}

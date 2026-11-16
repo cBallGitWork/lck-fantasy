@@ -24,7 +24,7 @@ import {
   weekGamesOf,
   type Series,
 } from "../../fixtures/week3";
-import { MANAGERS } from "../../fixtures/managers";
+import { FOLLOWED_WEEK3, MANAGERS } from "../../fixtures/managers";
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
 import { flexPlays, isBench } from "../../rift";
@@ -33,6 +33,12 @@ import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./ty
 const atPoints = (id: string) => seriesById(WEEK3_SERIES_AT_POINTS, id);
 const matchup = (s: Series) => `${s.home} v ${s.away}`;
 
+/** A followed manager's Week 3 series as Home's feed lists it. */
+function followed(who: keyof typeof FOLLOWED_WEEK3) {
+  const { seriesId, points } = FOLLOWED_WEEK3[who];
+  return { id: `${who}-${seriesId}`, manager: MANAGERS[who].first, series: matchup(atPoints(seriesId)), points };
+}
+
 const SHARED: Omit<HomeShared, "countdown"> = {
   team: MANAGER.team,
   hangul: MANAGER.hangul,
@@ -40,9 +46,9 @@ const SHARED: Omit<HomeShared, "countdown"> = {
   deadline: { week: 4, competition: COMPETITION, local: WEEK4_DEADLINE.local, kst: WEEK4_DEADLINE.kst },
   freeTransfers: WEEK4_FREE_TRANSFERS,
   following: [
-    { kind: "series", id: "minji-w3-sat-1", manager: MANAGERS.minji.first, series: matchup(atPoints("w3-sat-1")), points: 20 },
-    { kind: "carry", id: "dan-w3-wed-1", manager: MANAGERS.dan.first, player: "Faker", series: matchup(atPoints("w3-wed-1")), points: 34 },
-    { kind: "series", id: "jae-w3-fri-2", manager: MANAGERS.jae.first, series: matchup(atPoints("w3-fri-2")), points: 9 },
+    { kind: "series", ...followed("minji") },
+    { kind: "carry", ...followed("dan"), player: FOLLOWED_WEEK3.dan.carry },
+    { kind: "series", ...followed("jae") },
     { kind: "truck", id: "truck-minji-w3", line: "Sell your bot laner", from: MANAGERS.minji.first, week: 3 },
   ],
   leagues: MY_LEAGUES.map(({ id, name, kind, rank, move }) => ({ id, name, kind, rank, move })),

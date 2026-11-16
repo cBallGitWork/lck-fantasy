@@ -29,7 +29,7 @@ make it here:
 - **Saved data.** Renaming a stored field, or anything persisted, is a migration.
 - **The LCK's facts as data.** Lifting a competition's fact or a value Craig may tune into a
   constant is never a tidy-up: it stays data, per competition (`CLAUDE.md`, Decided).
-- **Building ahead.** "While I'm in here" pulling toward an unbuilt feature: stop and file it.
+- **Building ahead.** "While I'm in here" pulling towards an unbuilt feature: stop and file it.
 
 ## The checklist, one pass
 

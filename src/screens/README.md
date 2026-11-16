@@ -4,7 +4,7 @@ One folder per screen in the site map (`docs/design/site-map.html`), named as it
 
 So each screen's issue touches only its own folder:
 
-- A screen imports from `src/parts`, `src/rift`, `src/theme` and `src/fixtures`, never from another screen.
+- A screen imports from `src/parts`, `src/rift`, `src/theme`, `src/fixtures` and `src/paths` (and `convex/squads/squad` for the guest squad's shape), never from another screen.
 - Its page is a `PageFrame` with `screen` set to its folder's name; `src/app/router.test.tsx` checks only that.
 - Every class in its CSS starts with its folder's name: `.points`, `.points__side`, `.points--live` (`screens.test.ts`).
 - Its files are named one way: the screen's own CSS and tests after its folder (`points.css`, `points.test.tsx`), a component's CSS after the component (`BreakdownSheet.css`).

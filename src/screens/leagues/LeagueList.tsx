@@ -1,5 +1,5 @@
 import { count, cx, GoLink, MainAction, ordinal, OutlinedKey, SectionHead } from "../../parts";
-import { PATHS } from "../../paths";
+import { leagueGo } from "../../paths";
 import { Move } from "./Standings";
 import type { LeagueSummary } from "./types";
 
@@ -23,7 +23,7 @@ export function LeagueList({ leagues, openId, onCreate, onJoin }: { leagues: Lea
             .map((league) => (
               <GoLink
                 key={league.id}
-                go={{ to: PATHS.league, params: { leagueId: league.id } }}
+                go={leagueGo(league.id)}
                 className={cx("leagues__list-row", league.id === openId && "leagues__list-row--on")}
                 current={league.id === openId}
               >

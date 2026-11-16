@@ -2,7 +2,7 @@
 import { describe, expect, test } from "vitest";
 import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
-import { COMPETITION as COMPETITION_NAME, MANAGER, MY_WEEK3 } from "../../fixtures/week3";
+import { MANAGER, MY_WEEK3, SEASON } from "../../fixtures/week3";
 import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
 import { COMPETITION, LEAGUE_NAME_MAX, LEAGUES } from "./fixtures";
 import { chaseText } from "./format";
@@ -81,7 +81,7 @@ describe("Overall in Split 1 (overall.html's layout)", () => {
   const out = text(<OverallTable league={league} group={league.openGroup} onGroup={noop} {...tableProps(league)} />);
 
   test("opens on the split being played: the season and split, the three tabs, the sponsor, then the table head", () => {
-    expectInOrder(out, ["Overall", `${COMPETITION_NAME} · Split 1`, "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Total"]);
+    expectInOrder(out, ["Overall", `${SEASON} · Split 1`, "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Total"]);
   });
 
   test("hides the groups off Split 2", () => {
@@ -106,7 +106,7 @@ describe("Overall in Split 2, Legend (overall.html)", () => {
 
   test("heads with the season and split, Legend, Rise and All, the tabs, the sponsor and a Split 2 column", () => {
     const grouped = text(<OverallTable league={league} group="Legend" onGroup={noop} {...props} />);
-    expectInOrder(grouped, ["Overall", `${COMPETITION_NAME} · Split 2`, "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Split 2", "Total"]);
+    expectInOrder(grouped, ["Overall", `${SEASON} · Split 2`, "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Split 2", "Total"]);
   });
 });
 

@@ -103,6 +103,12 @@ describe("History, from Pick Team (1440.png)", () => {
     expect(out).toContain('<span class="rise">0.5</span>');
     expect(out).toContain('href="/compare"');
   });
+
+  test("draws a rule above each new week, none above the first", () => {
+    const rows = html(card(FROM_PICK_TEAM, "pickTeam", "History")).match(/<tr[^>]*>.*?<\/tr>/g) ?? [];
+    const ruled = rows.filter((r) => r.includes("table__row--rule")).map((r) => r.replace(/<[^>]+>/g, ""));
+    expect(ruled).toEqual(["1Sat · W 2–0 NS2₩6.5m33"]);
+  });
 });
 
 describe("This week, from Points (1440-week.png)", () => {

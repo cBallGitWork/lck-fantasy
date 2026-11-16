@@ -26,6 +26,10 @@
 .table th.table__sorted::after {
   content: " ▼";
 }
+/* A rule above a row that starts a group: the row above's own line, since collapsed borders let it win. */
+.table tr:has(+ .table__row--rule) td {
+  border-bottom-color: var(--line);
+}
 .table__truncate {
   overflow: hidden;
   text-overflow: ellipsis;

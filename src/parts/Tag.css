@@ -1,6 +1,6 @@
 .tag {
   display: inline-block;
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   padding: 0 var(--s-1);
   font: var(--w-regular) var(--size-tag) / var(--m-tag-line) var(--font-sans);
   color: var(--text);
@@ -10,6 +10,6 @@
   border-style: dashed;
 }
 .tag--live {
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
 }

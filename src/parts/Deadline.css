@@ -12,7 +12,7 @@
 }
 .deadline b.deadline__count {
   margin-left: var(--s-3);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   padding: 0 var(--s-2);
   font-weight: var(--w-semi);
 }

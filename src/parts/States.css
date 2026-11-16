@@ -24,7 +24,7 @@
 }
 .state__retry {
   font: inherit;
-  color: var(--ink);
+  color: var(--text);
   background: none;
   border: 0;
   padding: 0;

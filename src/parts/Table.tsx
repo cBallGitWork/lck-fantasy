@@ -16,7 +16,7 @@ export interface Column<R> {
   width?: MeasureKey;
   /** A long name ends in `…` at the column's width; this is its full text, shown on hover. */
   fullText?: (row: R) => string;
-  /** The column the table is sorted by: its head in ink, with ▼. */
+  /** The column the table is sorted by: its head in `--text`, with ▼. */
   sorted?: boolean;
   /** Starts a group of columns, with a 1px rule on its left (Stats). */
   group?: boolean;

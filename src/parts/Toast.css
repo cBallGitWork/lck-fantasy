@@ -5,8 +5,8 @@
   z-index: 20;
   transform: translateX(-50%);
   padding: var(--s-2) var(--s-4);
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
   font-weight: var(--w-semi);
   white-space: nowrap;
 }

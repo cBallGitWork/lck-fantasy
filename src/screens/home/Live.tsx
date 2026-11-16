@@ -31,7 +31,7 @@ function StreamScreen({ series, stream }: { series: LiveSeries; stream: Stream |
   );
 }
 
-/** The Live page's picker (spec/12): each stream and its platform, the pick in ink, one not live greyed out. */
+/** The Live page's picker (spec/12): each stream and its platform, the pick in `--text`, one not live greyed out. */
 function StreamPicker({ streams, picked, onPick }: { streams: Stream[]; picked: string; onPick: (id: string) => void }) {
   const shown = streams.slice(0, PICKER_ROWS);
   const more = streams.slice(PICKER_ROWS);

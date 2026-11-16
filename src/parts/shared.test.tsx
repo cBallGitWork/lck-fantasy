@@ -19,7 +19,7 @@ test("a section head is an h2 with its note, if any, in a small", () => {
   expect(html(<SectionHead className="live__apart">The rest</SectionHead>)).toBe('<h2 class="section-head live__apart">The rest</h2>');
 });
 
-test("a series strip holds the last series with points, the rule, then the next with their length, the first in ink", () => {
+test("a series strip holds the last series with points, the rule, then the next with their length, the first in --text", () => {
   const out = html(
     <SeriesStrip
       past={[

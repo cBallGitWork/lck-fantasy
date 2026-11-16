@@ -13,7 +13,7 @@
   padding: var(--s-2) var(--s-4);
   background: var(--paper);
   border: var(--m-rule) solid var(--line);
-  border-top: var(--m-rule-heavy) solid var(--ink);
+  border-top: var(--m-rule-heavy) solid var(--text);
   font-size: var(--size-small);
   color: var(--mid);
 }
@@ -48,7 +48,7 @@
   margin-top: var(--s-4);
   padding: var(--s-2) var(--s-4);
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
 }
 .transfers__out {
   color: var(--mid);
@@ -93,9 +93,9 @@
   font-size: var(--size-small);
 }
 .transfers__chip--on {
-  background: var(--ink);
-  color: var(--on-ink);
-  border-color: var(--ink);
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
 }
 .transfers__search {
   flex: 1;
@@ -156,7 +156,7 @@
   justify-content: center;
   width: var(--m-target);
   height: var(--m-target);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   font-weight: var(--w-bold);
 }
 .transfers__row--picked td {
@@ -188,7 +188,7 @@
 }
 .transfers__undo {
   padding: 0 var(--s-2);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   font-size: var(--size-small);
   font-weight: var(--w-bold);
 }

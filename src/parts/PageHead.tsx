@@ -21,7 +21,7 @@ export interface WeekNav {
 
 /**
  * The page head: title and hangul (`Leagues 리그`); ‹ week ›; the key figure, its tags, and up to
- * three figures beside it in mid grey with the figure in ink (`Average 79  Highest 136 ›`).
+ * three figures beside it in mid grey with the figure in `--text` (`Average 79  Highest 136 ›`).
  */
 export function PageHead({
   title,

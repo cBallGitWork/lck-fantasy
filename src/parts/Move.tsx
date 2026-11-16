@@ -8,7 +8,7 @@ export function PriceMove({ eok, className }: { eok: number; className?: string 
   return <span className={cx(eok > 0 ? "rise" : "fall", className)}>{oneDecimal(Math.abs(eok))}</span>;
 }
 
-/** A rank's move in ink: ▲ or ▼ and the places. Each screen draws its own `—` for a rank that held. */
+/** A rank's move in `--text`, never gold: ▲ or ▼ and the places. Each screen draws its own `—` for a rank that held. */
 export function RankMove({ move }: { move: number }) {
   return <span className={move < 0 ? "rank-down" : "rank-up"}>{count(Math.abs(move))}</span>;
 }

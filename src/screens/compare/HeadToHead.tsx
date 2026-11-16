@@ -89,7 +89,7 @@ function Past({ series }: { series: PastSeries[] }) {
   );
 }
 
-/** The next 3 series: when and opponent, the first in ink. */
+/** The next 3 series: when and opponent, the first in `--text`. */
 function Next({ series }: { series: NextSeries[] }) {
   return (
     <span className="compare__strip">

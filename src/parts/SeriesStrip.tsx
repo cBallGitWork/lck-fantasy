@@ -30,7 +30,7 @@ export function beyondStrip<R extends { week: number; day: string }>(rows: reado
   return rows.filter((r) => !shown.has(cellKey(r)));
 }
 
-/** A card's series strip: the last 3 with his points (`Live` while live), a 2px ink rule, then the next 3, the first in ink. */
+/** A card's series strip: the last 3 with his points (`Live` while live), a 2px `--text` rule, then the next 3, the first in `--text`. */
 export function SeriesStrip({ past, next }: { past: readonly StripPast[]; next: readonly StripNext[] }) {
   return (
     <div className="series-strip">

@@ -25,7 +25,7 @@ export function Modal({
   children,
 }: {
   kind: "card" | "sheet";
-  /** A sheet that must stand out from the page (Transfers' confirm): a heavy ink frame on `fill`. */
+  /** A sheet that must stand out from the page (Transfers' confirm): a heavy `--text` frame on `fill`. */
   strong?: boolean;
   /** The sheet's 20px title, and the dialog's name. */
   title: string;

@@ -1,0 +1,15 @@
+{
+  "note": "Each LCK team's kit colours and shirt pattern, by team code (docs/design/proposals/2026-11-16-team-shirts/). Proposed, not approved. primary is the shirt's body, secondary its pattern, accent its collar, cuffs and outline. Sources: data/README.md.",
+  "teams": [
+    { "code": "T1", "name": "T1", "primary": "#E2012D", "secondary": "#111111", "accent": "#FFFFFF", "pattern": "halves" },
+    { "code": "GEN", "name": "Gen.G", "primary": "#111111", "secondary": "#AA8A00", "accent": "#D2B984", "pattern": "plain" },
+    { "code": "HLE", "name": "Hanwha Life", "primary": "#F3741B", "secondary": "#111111", "accent": "#BCBEC1", "pattern": "hoops" },
+    { "code": "DK", "name": "Dplus KIA", "primary": "#F5F5F5", "secondary": "#111111", "accent": "#111111", "pattern": "halves" },
+    { "code": "KT", "name": "KT Rolster", "primary": "#EC1B23", "secondary": "#111111", "accent": "#FFFFFF", "pattern": "stripes" },
+    { "code": "DNS", "name": "DN SOOPers", "primary": "#1F4FD8", "secondary": "#0B1E4F", "accent": "#FFFFFF", "pattern": "plain" },
+    { "code": "NS", "name": "Nongshim RedForce", "primary": "#ED1C24", "secondary": "#111111", "accent": "#CF8F3A", "pattern": "sash" },
+    { "code": "KRX", "name": "Kiwoom DRX", "primary": "#1E2C5D", "secondary": "#E4007F", "accent": "#E4007F", "pattern": "stripes" },
+    { "code": "BRO", "name": "HANJIN BRION", "primary": "#004B29", "secondary": "#F37021", "accent": "#F37021", "pattern": "plain" },
+    { "code": "BFX", "name": "BNK FEARX", "primary": "#FFC20E", "secondary": "#111111", "accent": "#111111", "pattern": "sash" }
+  ]
+}

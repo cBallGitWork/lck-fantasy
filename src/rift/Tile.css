@@ -1,7 +1,8 @@
+/* The Rift keeps the pictures' 984 × 560 shape at any width, so the map and the tiles' places never stretch. */
 .rift {
   position: relative;
   width: 100%;
-  height: var(--m-rift-h);
+  aspect-ratio: var(--ratio-rift);
 }
 .tile {
   position: absolute;
@@ -24,7 +25,7 @@
 }
 .tile__role {
   position: absolute;
-  left: calc(var(--s-5) * -1);
+  left: calc(var(--m-role-box) * -1);
   top: 0;
   width: var(--m-role-box);
   height: var(--m-role-box);
@@ -54,6 +55,16 @@
   color: var(--ink);
   border: var(--m-rule) solid var(--ink);
 }
+.tile__flex {
+  display: inline-block;
+  margin-bottom: var(--s-1);
+  padding: 0 var(--s-2);
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  text-transform: uppercase;
+}
 .tile__name {
   background: var(--paper);
   border: var(--m-rule) solid var(--ink);
@@ -69,11 +80,6 @@
   font-size: var(--size-head);
   font-weight: var(--w-semi);
   line-height: var(--lh-body);
-}
-.tile__points small {
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  margin-left: var(--s-1);
 }
 .tile__line {
   background: var(--paper);
@@ -110,7 +116,17 @@
   outline: var(--m-rule-heavy) dashed var(--ink);
   outline-offset: var(--m-rule-heavy);
 }
-.tile--dim .tile__name {
+.tile--dim .tile__flex {
+  display: inline-block;
+  margin-bottom: var(--s-1);
+  padding: 0 var(--s-2);
+  background: var(--ink);
+  color: var(--on-ink);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  text-transform: uppercase;
+}
+.tile__name {
   color: var(--mid);
   border-color: var(--line);
 }

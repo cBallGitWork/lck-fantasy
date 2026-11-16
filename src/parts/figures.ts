@@ -55,8 +55,3 @@ export const bestOf = (n: number) => `Bo${n}`;
 /** A place, alone or among so many: `2nd`, `2nd of 10 mids`. */
 export const placeOf = (place: number, of?: string) => (of === undefined ? ordinal(place) : `${ordinal(place)} of ${of}`);
 
-/** The Carry's sum on a tile: `22×1.5`. */
-export const carrySum = (raw: number, times: number) => `${raw}×${times}`;
-
-/** The Carry's working in a games panel: `8 + 9 = 17 × 1.5`. */
-export const carryWorking = (points: readonly number[], raw: number, times: number) => `${points.join(" + ")} = ${raw} × ${times}`;

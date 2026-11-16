@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { count, Crest, Empty, eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, Tabs, Tag } from "../../parts";
+import { beyondStrip, count, Crest, Empty, eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, Tabs, Tag } from "../../parts";
 import { PATHS } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CoachFixtures, CoachHistoryTab, CoachRoster, CoachThisWeek } from "./CoachTabs";
@@ -34,7 +34,7 @@ export function CoachCard({
             {head.name}
             <span className="coach-card__hangul">{head.hangul}</span>
           </h1>
-          <p className="coach-card__legal">{head.legal} · head coach</p>
+          <p className="coach-card__legal">{head.legal}</p>
         </div>
         <div className="coach-card__side">
           <p className="coach-card__hero">
@@ -51,7 +51,7 @@ export function CoachCard({
       </header>
       <div className="coach-card__meta">
         <Figure figure={eok(meta.priceEok)}>
-          <PriceMove eok={meta.moveEok} />
+          price <PriceMove eok={meta.moveEok} />
         </Figure>
         <Figure figure={oneDecimal(meta.form)}>form · {ordinal(meta.formRank)}</Figure>
         <Figure figure={pct(meta.ownedPct)}>owned · {ordinal(meta.ownedRank)}</Figure>
@@ -85,8 +85,8 @@ export const EMPTY_TAB: Record<CoachTab, string> = {
 function TabPanel({ data, tab }: { data: CoachCardData; tab: CoachTab }) {
   const team = data.head.team;
   if (tab === "This week" && data.week) return <CoachThisWeek week={data.week} />;
-  if (tab === "Fixtures" && data.fixtures) return <CoachFixtures rows={data.fixtures} team={team} />;
-  if (tab === "History" && data.history) return <CoachHistoryTab history={data.history} team={team} />;
+  if (tab === "Fixtures" && data.fixtures) return <CoachFixtures rows={beyondStrip(data.fixtures, data.next)} team={team} />;
+  if (tab === "History" && data.history) return <CoachHistoryTab history={data.history} shown={beyondStrip(data.history.rows, data.past)} team={team} />;
   if (tab === "Roster" && data.roster) return <CoachRoster rows={data.roster} />;
   return <Empty title={EMPTY_TAB[tab]} />;
 }

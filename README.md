@@ -17,5 +17,5 @@ The app is being built. The LCK Cup (January to March 2027) is the planned beta.
 ```bash
 npm install
 npm run verify   # doc checks, hook checks, lint, typecheck and tests
-npm run dev      # the app; needs VITE_CONVEX_URL, which `npx convex dev` writes to .env.local
+npm run dev      # the app; /dev/states opens every approved state. Without VITE_CONVEX_URL (`npx convex dev` writes it) it warns and runs without Convex
 ```

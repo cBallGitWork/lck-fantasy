@@ -1,15 +1,20 @@
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
-import { Modal, PageFrame } from "../../parts";
+import { Modal, PageFrame, useDevState } from "../../parts";
 import { PATHS } from "../../paths";
 import type { CardMark, CardTab, PlayerCardData } from "./card";
-import { CARD_FROM_PICK_TEAM, MARK_AT_PICK_TEAM } from "./fixtures";
+import { CARD_FROM_PICK_TEAM, CARD_FROM_POINTS, CARD_WITH_NEWS, MARK_AT_PICK_TEAM } from "./fixtures";
 import { PlayerCard } from "./PlayerCard";
 
-/** The route: until the backend feeds it, the pictures' Faker, opened from Pick Team on History. */
+/** The route: until the backend feeds it, the pictures' Faker, opened from Pick Team on History. `?state=week`, `fixtures` or `champs` opens those pictures, in dev. */
 export function PlayerCardScreen() {
-  return <PlayerCardPage />;
+  const dev = useDevState<Parameters<typeof PlayerCardPage>[0]>({
+    week: { card: CARD_FROM_POINTS, initialTab: "This week", openedFrom: "points" },
+    fixtures: { card: CARD_WITH_NEWS, initialTab: "Fixtures" },
+    champs: { initialTab: "Champions" },
+  });
+  return <PlayerCardPage {...dev} />;
 }
 
 /** The full player card over the page that opened it (docs/design/approved/player-card/). */

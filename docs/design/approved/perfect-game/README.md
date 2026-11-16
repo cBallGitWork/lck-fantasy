@@ -9,6 +9,12 @@ The gameweek's best team: the 7 starter slots, one of them the Carry, under the 
 | `1440.png`, `perfect.html#rift` | Rift view: the seven on the Rift, Faker as Carry and tapped |
 | `1440-card.png`, `perfect.html#card` | Card view: the seven as the broadcast lineup, Faker as Carry |
 
+## Changed by Craig, 16 Nov 2026
+
+After using the built page; these override the picture.
+
+- Nothing said twice: Final is the head's tag alone, not also the week's series' note; the Carry's games say `T1 · Mid`, his C and his sum's label already name him.
+
 ## Borrowed
 
 - **FPL's Team of the Week**: the team, its total, the gameweek arrows.
@@ -18,7 +24,7 @@ The gameweek's best team: the 7 starter slots, one of them the Carry, under the 
 ## Layout
 
 - **Header:** Perfect game and hangul; ‹ week ›; the total, Final or Not final, Cap 2; Average, Highest, Your points ›.
-- **Left:** Rift view | Card view (Card view is the broadcast lineup, no bench: redrawn 15 Nov 2026 from a table); each player's points and series; C on the Carry with its ×1.5; the dot after each player you own; Flex shows the role it plays; Coach 감독.
+- **Left:** Rift view | Card view (Card view is the broadcast lineup, no bench: redrawn 15 Nov 2026 from a table); each player's points and series; C on the Carry, his points the result only (Craig, 16 Nov 2026, on Points); the dot after each player you own; Flex shows the role it plays; Coach 감독.
 - **Right:** the tapped player's games, the week's series, the sponsor slot.
 
 ## Controls

@@ -100,10 +100,10 @@ export const measure = {
   mark: 20,
   /** C and V on a lineup card. */
   markCard: 28,
-  roleBox: 28,
-  roleIcon: 20,
+  roleBox: 36,
+  roleIcon: 28,
   /** The role icon on a lineup card's head. */
-  roleIconSmall: 16,
+  roleIconSmall: 20,
   shirtW: 56,
   shirtH: 50,
   /** The shirt in a player's panel. */
@@ -135,6 +135,8 @@ export const measure = {
   cardHead: 48,
   cardPhoto: 176,
   crest: 96,
+  /** A crest beside a team code: in a player's panel. */
+  crestSmall: 20,
   sponsorH: 112,
   sponsorTopW: 120,
 } as const;
@@ -144,8 +146,8 @@ export const motion = { fast: "150ms", slow: "250ms" } as const;
 /** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
 export const stroke = { shirt: 1.6, dash: 3 } as const;
 
-/** Frame shapes: a stream's picture, the same on Home and Live. */
-export const ratio = { stream: "16 / 9" } as const;
+/** Frame shapes: a stream's picture, the same on Home and Live; the Rift, the pictures' 984 × 560 at any width. */
+export const ratio = { stream: "16 / 9", rift: `${measure.riftW} / ${measure.riftH}` } as const;
 
 export type MeasureKey = keyof typeof measure;
 

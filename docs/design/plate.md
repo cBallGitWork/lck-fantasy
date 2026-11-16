@@ -17,7 +17,7 @@ tightened to a few.
 
 - Drawn 1440 wide. Top bar, then the page: 32px each side, 24px above, 48px below.
 - Two columns: the main column, and a side column 360px wide, 32px apart. The side column is on
-  the right, save Leagues, whose list of leagues is on the left.
+  the right on every page.
 - The right column is a stack of titled sections. Each opens with a 2px ink rule and a 14px
   title, its count or state after the title in mid grey. A tapped player's panel goes at the top.
 - The first row of a screen's main table or picture shows above the fold at 1440 × 900.

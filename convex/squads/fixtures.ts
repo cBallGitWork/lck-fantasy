@@ -18,6 +18,7 @@ export const coach = (teamId: string): Pick => ({ id: teamId, teamId, role: "coa
 export const REGULAR_SETTINGS: SquadSettings = {
   starterSlots: { top: 1, jungle: 1, mid: 1, bot: 1, support: 1, flex: 1, coach: 1 },
   benchSize: 2,
+  minPerRole: { top: 1, jungle: 1, mid: 1, bot: 1, support: 1 },
   teamCap: 2,
 };
 

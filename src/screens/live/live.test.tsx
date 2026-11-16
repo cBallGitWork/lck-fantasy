@@ -24,7 +24,6 @@ const CHIPS = [
   "Caedrel · EnglishTwitch",
   "LCK · Tiếng ViệtYouTube",
   "Kameto · FrançaisTwitch",
-  "More ▾",
 ];
 const REST = ["Rest of your week", "ZeusHLE14", "CanyonGEN14", "RulerGENV14", "DelightHLE9", "Points ›"];
 
@@ -91,7 +90,7 @@ describe("nothing live", () => {
       "T1", "2–0", "DK", "Final", "Last series", "Saturday · Bo3 · LCK Cup Week 3",
       ...CHIPS,
       "Your week", "109", "Average 79", "Highest 136›",
-      "T1 2–0 DK",
+      "T1 v DK",
       "FakerT1C", "G1 4 · G2 6", "33",
       "SiwooDK", "G1 2 · G2 2", "9",
       "kkOmaT1", "G1 2 · G2 3 · won +3", "16",

@@ -14,7 +14,7 @@ const VIEWS = [
   { value: "cards", label: BOARD_VIEWS[1] },
 ] as const;
 
-/** Pick Team, drawn from its state: Rift or Card view, the bench bar, the bar under the pitch, the side column. */
+/** Pick Team, drawn from its state: Rift or Card view, the bench bar, the buffs above it, the bar under the pitch, the side column. */
 export function PickTeamView({ data, state, dispatch }: ViewProps) {
   const selected = state.selected ? data.players[state.selected] : undefined;
   const props = { data, state, dispatch };
@@ -25,8 +25,7 @@ export function PickTeamView({ data, state, dispatch }: ViewProps) {
       account={data.account}
       side={
         <>
-          {selected && <PlayerCard {...props} player={selected} />}
-          <Buffs {...props} />
+          {selected && <PlayerCard state={state} dispatch={dispatch} player={selected} />}
           <SideSection title="This week's series" note="your time · KST">
             <SeriesList series={data.series} />
           </SideSection>
@@ -36,6 +35,7 @@ export function PickTeamView({ data, state, dispatch }: ViewProps) {
       }
     >
       <PageHead title="Pick Team" hangul="팀 선택" sub={data.week} />
+      <Buffs {...props} />
       <ViewToggle label="View" options={VIEWS} chosen={state.view} onChoose={(view: PickView) => dispatch({ type: "view", view })} />
       {state.view === "rift" ? <RiftBoard {...props} /> : <CardBoard {...props} />}
       <ChangeBar {...props} />
@@ -43,10 +43,9 @@ export function PickTeamView({ data, state, dispatch }: ViewProps) {
   );
 }
 
-/** The bar under the pitch: what changed, Reset, the deadline, Save team (spec/12: nothing counts until Save). */
+/** The bar under the pitch: how many changes (a buff's card says it is on), Reset, the deadline, Save team (spec/12: nothing counts until Save). */
 function ChangeBar({ data, state, dispatch }: ViewProps) {
   const changes = changeCount(state.saved, state.draft);
-  const buff = state.draft.buff !== state.saved.buff ? data.buffs.find((b) => b.here !== undefined && b.here === state.draft.buff) : undefined;
   return (
     <div className="pick-team__bar">
       {changes === 0 ? (
@@ -57,7 +56,6 @@ function ChangeBar({ data, state, dispatch }: ViewProps) {
             <b>
               {changes} {changes === 1 ? "change" : "changes"}
             </b>
-            {buff && ` · ${buff.name} on`}
           </span>
           <button type="button" className="pick-team__reset" onClick={() => dispatch({ type: "reset" })}>
             Reset

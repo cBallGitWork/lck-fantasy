@@ -36,6 +36,9 @@ test("the map draws the river, three lanes, two bases and ten towers", () => {
   expect(out.match(/rift-map__lane/g)).toHaveLength(3);
   expect(out.match(/rift-map__base/g)).toHaveLength(2);
   expect(out.match(/<rect /g)).toHaveLength(11);
+  // Drawn in the Rift's own shape and never stretched to its box.
+  expect(out).toContain('viewBox="0 0 984 560"');
+  expect(out).not.toContain("preserveAspectRatio");
 });
 
 test("only a Flex plays a role: a mid there plays mid; elsewhere, and a coach, play none", () => {
@@ -51,10 +54,10 @@ test("each role has its icon, named for screen readers", () => {
   }
 });
 
-test("a Points tile shows team, role, C, name, your dot, points with ×1.5, line, and stands at its slot", () => {
+test("a Points tile shows team, role, C, name, your dot, points (the Carry's result only), line, and stands at its slot", () => {
   const out = html(
     <Rift>
-      <Tile slot="mid" name="Faker" team="T1" at={RIFT_SLOTS.mid} mark="C" me points={25} carrySum="17×1.5" line="v HLE 12 · v DK 5" selected />
+      <Tile slot="mid" name="Faker" team="T1" at={RIFT_SLOTS.mid} mark="C" me points={25} line="v HLE 12 · v DK 5" selected />
     </Rift>,
   );
   expect(out).toContain("rift-map");
@@ -62,7 +65,7 @@ test("a Points tile shows team, role, C, name, your dot, points with ×1.5, line
   expect(out).toContain('aria-label="Mid"');
   expect(out).toContain('title="Carry">C');
   expect(out).toContain('aria-label="Your player"');
-  expect(out).toContain("25<small>17×1.5</small>");
+  expect(out).toContain('class="tile__points num">25</div>');
   expect(out).toContain("v HLE 12 · v DK 5");
   expect(out).toContain("tile--selected");
   // 500 of 984 across, 260 of 560 down: the same share of the Rift at any width.
@@ -150,6 +153,8 @@ test("the panel's body: a series head, its games with the counted boxed, the sum
     </PlayerPanel>,
   );
   expect(out).toContain('<h4 class="player-panel__series-head">Wed · v HLE<span>W 2–1</span></h4>');
+  const linked = html(<PanelSeries title="v HLE" result={<span>W 2–1</span>} go={{ to: "/series/$seriesId", params: { seriesId: "w3-wed-1" } }} />);
+  expect(linked).toMatch(/<a [^>]*href="\/series\/w3-wed-1"[^>]*>v HLE<\/a>/);
   expect(out).toContain('<span class="player-panel__counted">5</span>');
   expect(out.match(/player-panel__counted/g)).toHaveLength(1);
   expect(out).toContain('class="player-panel__game player-panel__game--dropped"');

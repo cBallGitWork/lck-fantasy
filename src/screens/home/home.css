@@ -29,12 +29,6 @@
   stroke-width: var(--m-rule);
   opacity: 0.45;
 }
-.home__shield-division {
-  fill: var(--on-ink);
-  font-family: var(--font-mono);
-  font-weight: var(--w-semi);
-  font-size: var(--size-small);
-}
 .home__tier-name {
   font-size: var(--size-head);
   font-weight: var(--w-bold);

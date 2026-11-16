@@ -19,12 +19,29 @@ Where a manager sets his starters, bench order, Carry and Vice-carry, and plays 
 ## Controls
 
 - **Rift view | Card view**: Rift on the first visit, then remembered (spec/12).
-- **A player**: opens his card on the right: price and last move, form, owned and season with ranks, last 3 weeks, this week's series, and Make Carry (or ✓ Carry), Make Vice-carry, Swap with bench, Full card ›. The coach's card has no Carry or swap buttons (spec/01, spec/04).
-- **Swap with bench**: the bench players who fit (own role, or any role for the Flex, spec/01) are outlined and the rest dimmed; tap one to swap in, or Cancel swap.
+- **A player**: opens his card on the right: crest, team, price and last move, form, owned and season with ranks, last 3 series, and Make Carry (or ✓ Carry), Make Vice-carry, Full card ›. The coach's card has no Carry buttons (spec/01, spec/04). Those he can swap with are outlined and the rest dimmed; tap one and they swap (FPL's one-tap swap), tap him again to let go.
 - **Bench bar**: one row under the pitch (and under the lineup in Card view): `Bench`, then each bench player as a compact tile (order, role icon, name, team, the two fixtures), with **⇅ Swap** between them, which swaps bench 1 and 2. Redrawn 15 Nov 2026 from the grey band of two shirts.
 - **Card view**: one row of seven equal cards, Top, Jungle, Mid, Bot, Support, Flex ("plays Top"), Coach, each with role and icon, photo (the coach a crest), name, team, the two fixtures, form and price; C and V on the photo.
-- **Buffs**: four boxes of one size and style, each its name, one line from spec/06 (Bench Boost: Your bench scores too; Dual Carry: Vice-carry ×1.5 too; Remake: Unlimited transfers, kept; Limitless: One week, no budget or team cap) and `1 left`. Bench Boost and Dual Carry show Play, then Cancel until the deadline; once one is chosen the others grey (one a week, spec/06). Remake and Limitless link to Transfers.
-- **Bar under the pitch**: what changed, Reset, the deadline and its countdown, Save team. Save is disabled with no changes; swaps, Carry, Vice-carry and buffs take effect only on Save (spec/12).
+- **Buffs**: four boxes of one size and style in one row above the Rift, each its name, one line from spec/06 (Bench Boost: Your bench players score this week too; Dual Carry: Your Vice-carry scores ×1.5 too; Remake: Unlimited free transfers; your new squad stays; Limitless: One week, no budget or team cap; then your squad returns) and `1 left`. Bench Boost and Dual Carry show Play, then Cancel until the deadline; once one is chosen the others grey (one a week, spec/06). Remake and Limitless link to Transfers.
+- **Bar under the pitch**: how many changes, Reset, the deadline and its countdown, Save team. Save is disabled with no changes; swaps, Carry, Vice-carry and buffs take effect only on Save (spec/12).
+
+## Changed by Craig, 16 Nov 2026
+
+From his look at the built page; these bind over the pictures above.
+
+- Buffs sit in one row at the top of the page, above the Rift, not in the side column.
+- Each buff's line says plainly what it does, from spec/06 (Controls, Buffs).
+- One-tap swap, as FPL: tap a player and those he can swap with light up; tap one and they swap. No Swap with bench key.
+- A role starter swaps with the Flex when the result is valid: the Flex holds any role, each role slot its own (Zeus and a Flex who plays Top).
+- Role icons are bigger, everywhere (`roleBox`, `roleIcon`, `roleIconSmall` in the theme).
+- The Rift keeps its 984 × 560 shape at any width and the map is drawn in it, so nothing stretches, everywhere.
+- With Dual Carry played the V is gold, as the C.
+- The card's form history is the last 3 series, not weeks.
+- A team crest in a player's card, never on the Rift's tiles or the bench (Craig, 16 Nov 2026).
+- The Flex's tile carries a `FLEX` label over his shirt.
+- Fixture lines give only the opponents: `v DK, NS`.
+- The card drops its series rows: his tile already shows them, and the side lists the week's series.
+- The bar gives only the count (`1 change`); the buff's own card says it is on and unsaved.
 
 ## Placeholders
 

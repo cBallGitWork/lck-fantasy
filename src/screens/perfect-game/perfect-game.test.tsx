@@ -35,8 +35,7 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "Card view",
     ...SEVEN,
     "Faker",
-    "T1 · Mid · Carry",
-    "✕",
+    "T1 · Mid✕",
     "Wed · v HLE W 2–1",
     "G1Azir · W5",
     "G2Taliyah · L2",
@@ -47,12 +46,17 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "Carry40",
     "Full stats ›",
     "Week 3 series",
-    "Final",
     "WedT1 v HLE2–1",
     "SunBFX v DNS0–2",
     "Sponsor",
     "All sponsors are made up.",
   ]);
+});
+
+test("Final is the head's tag alone, and Carry is the sum's label alone", () => {
+  const out = text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />);
+  expect(out.match(/Final/g)).toHaveLength(1);
+  expect(out.match(/Carry/g)).toHaveLength(1);
 });
 
 test("the Rift's tiles carry each starter's points (the Carry's result only), series, your dots and the Flex and Coach tags", () => {

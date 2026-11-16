@@ -82,7 +82,7 @@ export function PerfectGame({
       side={
         <>
           {tapped && <GamesPanel player={tapped} week={game.series} onClose={onSelect && (() => onSelect(undefined))} />}
-          <SideSection title={game.seriesTitle} note={game.final ? "Final" : "Not final"}>
+          <SideSection title={game.seriesTitle}>
             <SeriesList series={game.series} />
           </SideSection>
           <Placeholder word="Sponsor" height="sponsorH" />

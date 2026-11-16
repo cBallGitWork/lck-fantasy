@@ -18,6 +18,7 @@ After using the built page; these override the picture.
 - Each series in a player's games opens its Series page.
 - Your week moves below Leagues and the week's series, above the sponsor.
 - A series in a player's games is its opponent alone: `v DK`, no day.
+- Live said once per place: on the head's live bar, the open game's row and the week's series (a shared list, kept). A tile's or card's series line and a series result in a player's games drop it: `v DK 5`, `1–0`.
 
 ## Borrowed
 

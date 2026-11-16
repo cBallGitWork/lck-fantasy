@@ -1,8 +1,8 @@
-import { NONE, Tag } from "../../parts";
+import { NONE } from "../../parts";
 import { Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { DIDNT_PLAY, type PointsSeries, type PointsStarter } from "./types";
 
-/** Each series' points after its opponent, as a starter's line shows them: `v HLE 12 · v DK 5 Live`. */
+/** Each series' points after its opponent, as a starter's line shows them: `v HLE 12 · v DK 5`. Live is the head's bar. */
 export function SeriesLine({ series }: { series: PointsSeries[] }) {
   if (series.length === 0) return <>{DIDNT_PLAY}</>;
   return (
@@ -10,11 +10,6 @@ export function SeriesLine({ series }: { series: PointsSeries[] }) {
       {series.map((s, i) => (
         <span key={s.id}>
           {i > 0 && " · "}v {s.opponent} {s.points}
-          {s.state === "live" && (
-            <span className="points__line-live">
-              <Tag kind="live">Live</Tag>
-            </span>
-          )}
         </span>
       ))}
     </>

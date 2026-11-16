@@ -19,7 +19,6 @@ export interface PointsSeries {
   /** Games won, his team's first. */
   score: Score;
   state: SeriesState;
-  liveGame?: number;
   points: number;
   games: PointsGame[];
 }

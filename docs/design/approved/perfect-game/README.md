@@ -9,6 +9,12 @@ The gameweek's best team: the 7 starter slots, one of them the Carry, under the 
 | `1440.png`, `perfect.html#rift` | Rift view: the seven on the Rift, Faker as Carry and tapped |
 | `1440-card.png`, `perfect.html#card` | Card view: the seven as the broadcast lineup, Faker as Carry |
 
+## Changed by Craig, 16 Nov 2026
+
+After using the built page; these override the picture.
+
+- Nothing said twice: Final is the head's tag alone, not also the week's series' note; the Carry's games say `T1 · Mid`, his C and his sum's label already name him.
+
 ## Borrowed
 
 - **FPL's Team of the Week**: the team, its total, the gameweek arrows.

@@ -66,7 +66,6 @@ function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champi
     opponent: side.opponent,
     score: side.score,
     state: row.state,
-    liveGame: row.liveGame,
     points: gamePoints + (played.coachResult ?? 0),
     games,
   };

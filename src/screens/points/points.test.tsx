@@ -34,11 +34,11 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "Card view",
     "Zeus14v T1 7 · v GEN 7",
     "Canyon14v KT 7 · v HLE 7",
-    "Faker25v HLE 12 · v DK 5Live",
+    "Faker25v HLE 12 · v DK 5",
     "Ruler14v KT 7 · v HLE 7",
-    "Delight 🎂9v T1 5 · v GEN 4",
-    "Siwoo8v NS 5 · v T1 3LiveFlex · plays Top",
-    "kkOma10v HLE 8 · v DK 2LiveCoach 감독",
+        "Delight 🎂9v T1 5 · v GEN 4",
+    "Siwoo8v NS 5 · v T1 3Flex · plays Top",
+    "kkOma10v HLE 8 · v DK 2Coach 감독",
     "Bench",
     "1Bdd KT · Didn't play—",
     "2Cuzz KT9",
@@ -47,8 +47,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "G1Azir · W5",
     "G2Taliyah · L2",
     "G3Galio · W7",
-    "v DK1–0 · game 2 live",
-    "G1Orianna · W4",
+    "v DK1–0G1Orianna · W4",
     "G2Sylas · 14:20Live1",
     "Your CarryAverage Carry 1925",
     "Full stats ›",
@@ -93,6 +92,14 @@ test("the Carry shows only his result, and no one's tile, card or games show an 
   }
 });
 
+test("Live shows on the head's bar, the open game's row and the week's series, never on a tile or a series result", () => {
+  const out = text(PICTURE);
+  // The top bar's Live item, then the three.
+  expect(out.match(/Live/g)).toHaveLength(4);
+  expectInOrder(out, ["Live", "T1 v DK, game 2", "v DK1–0G1", "G2Sylas · 14:20Live", "SatT1 v DK1–0 Live"]);
+  expect(out).not.toMatch(/game \d live/);
+});
+
 test("each series in a player's games opens its Series page, with no day before the opponent", () => {
   const out = html(PICTURE);
   expect(out).toMatch(/<a [^>]*href="\/series\/w3-wed-1"[^>]*>v HLE<\/a>/);
@@ -120,7 +127,7 @@ test("the Coach's games lead to his coach card and show no Carry sum", () => {
   expect(html(coach)).toContain('href="/coach/kkoma"');
   const out = text(coach);
   expect(out).not.toContain("Your Carry");
-  expectInOrder(out, ["kkOmaT1 · Coach✕", "G1W2", "G2L0", "G3W3", "v DK1–0 · game 2 live", "G1W2", "G214:20Live0"]);
+  expectInOrder(out, ["kkOmaT1 · Coach✕", "G1W2", "G2L0", "G3W3", "v DK1–0G1W2", "G214:20Live0"]);
 });
 
 test("Card view shows the seven in the broadcast's order with their series and points, then the bench", () => {
@@ -131,7 +138,7 @@ test("Card view shows the seven in the broadcast's order with their series and p
     "v T1 7 · v GEN 7",
     "14",
     "Faker",
-    "v HLE 12 · v DK 5Live",
+    "v HLE 12 · v DK 5",
     "25",
     "Siwoo",
     "kkOma",

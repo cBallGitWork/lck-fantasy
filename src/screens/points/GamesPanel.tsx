@@ -3,9 +3,9 @@ import { cardGo, PATHS } from "../../paths";
 import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PointsPlayer, PointsSeries, PointsStarter } from "./types";
 
-/** `W 2–1 · final`, `1–0 · game 2 live`, or `W 2–1` and a Not final tag. */
+/** `W 2–1 · final`, `1–0` while live (its game row says Live), or `W 2–1` and a Not final tag. */
 function SeriesResult({ s }: { s: PointsSeries }) {
-  if (s.state === "live") return <span>{`${score(s.score)} · game ${s.liveGame} live`}</span>;
+  if (s.state === "live") return <span>{score(s.score)}</span>;
   const done = result(s.score);
   if (s.state === "notFinal")
     return (

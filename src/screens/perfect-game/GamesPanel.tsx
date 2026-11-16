@@ -23,7 +23,8 @@ export function GamesPanel({
   onClose?: () => void;
 }) {
   const role = ROLE_NAME[player.slot];
-  const meta = [player.team, role, player.carry && MARK_NAME.C].filter(Boolean).join(" · ");
+  // The Carry is named by his C and his sum's label, so the meta leaves it out.
+  const meta = `${player.team} · ${role}`;
   const sum = player.series.map((s) => s.points).join(" + ");
   return (
     <PlayerPanel name={player.name} meta={meta} onClose={onClose}>

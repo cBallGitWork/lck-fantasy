@@ -7,7 +7,7 @@ import type { StandingRow, Standings as StandingsData } from "./types";
 /** Rank, move, team, week, total and `›`; Carry and the split come and go. */
 const ALWAYS_SHOWN_COLUMNS = 6;
 
-/** A rank's move: ▲ or ▼ in ink and the places, or `—` when it held. */
+/** A rank's move: ▲ or ▼ in `--text` and the places, or `—` when it held. */
 export function Move({ move }: { move: number | null }) {
   if (move === null || move === 0) return <span className="leagues__nil">{NONE}</span>;
   return <RankMove move={move} />;

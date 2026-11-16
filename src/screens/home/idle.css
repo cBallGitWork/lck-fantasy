@@ -74,7 +74,7 @@
   width: var(--m-target);
   height: var(--m-target);
   border-radius: 50%;
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   background: var(--paper);
   font-size: var(--size-small);
   font-weight: var(--w-bold);
@@ -82,7 +82,7 @@
 .home__plate {
   padding: var(--s-2) 0 var(--s-1);
   background: var(--paper);
-  border-top: var(--m-rule-heavy) solid var(--ink);
+  border-top: var(--m-rule-heavy) solid var(--text);
   transform: skewX(-12deg);
 }
 .home__plate-name,

@@ -71,7 +71,7 @@
   width: var(--m-mark);
   height: var(--m-mark);
   flex: none;
-  accent-color: var(--ink);
+  accent-color: var(--text);
 }
 .settings__underlined {
   text-decoration: underline;

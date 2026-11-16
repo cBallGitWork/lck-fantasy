@@ -7,7 +7,7 @@
   gap: var(--s-3);
   margin-top: var(--s-4);
   padding: var(--s-2) var(--s-4);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   background: var(--paper);
 }
 

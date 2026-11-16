@@ -36,8 +36,8 @@
   padding-top: var(--s-3);
   font-size: var(--size-small);
   font-weight: var(--w-bold);
-  color: var(--ink);
-  border-bottom: var(--m-rule) solid var(--ink);
+  color: var(--text);
+  border-bottom: var(--m-rule) solid var(--text);
 }
 .transfers__row--sold td {
   color: var(--mid);

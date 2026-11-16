@@ -3,7 +3,7 @@
   flex-direction: column;
   padding: var(--s-2) var(--s-3);
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
 }
 .buff-card__does {
   margin-top: var(--s-1);
@@ -29,18 +29,18 @@
   padding: 0 var(--s-2);
   color: var(--text);
   background: none;
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }
 .buff-card--on {
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
 }
 .buff-card--on .buff-card__does,
 .buff-card--on .buff-card__foot,
 .buff-card--on .buff-card__foot button {
-  color: var(--on-ink);
-  border-color: var(--on-ink);
+  color: var(--bg);
+  border-color: var(--bg);
 }
 .buff-card--off {
   background: var(--fill);

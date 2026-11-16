@@ -31,7 +31,7 @@
   text-align: right;
 }
 .leagues__list-row--on {
-  box-shadow: inset var(--m-rule-heavy) 0 0 var(--ink);
+  box-shadow: inset var(--m-rule-heavy) 0 0 var(--text);
   background: var(--fill);
   font-weight: var(--w-bold);
 }
@@ -74,14 +74,14 @@
   padding: 0 var(--s-3);
   color: var(--text);
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
 }
 /* Admin ▾, drawn as an outlined key. */
 .leagues__admin {
   font-weight: var(--w-bold);
   padding: var(--s-2) var(--s-4);
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
 }
 .leagues__tabs-line {
   position: relative;
@@ -173,7 +173,7 @@
 }
 .leagues__page:hover,
 .leagues__page--on {
-  border-color: var(--ink);
+  border-color: var(--text);
 }
 .leagues__page--on {
   font-weight: var(--w-bold);

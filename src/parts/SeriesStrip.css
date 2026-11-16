@@ -1,4 +1,4 @@
-/* A card's series strip: the last 3, a 2px ink rule for now, the next 3. */
+/* A card's series strip: the last 3, a 2px --text rule for now, the next 3. */
 .series-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr)) var(--m-rule-heavy) repeat(3, minmax(0, 1fr));
@@ -25,7 +25,7 @@
   color: var(--text);
 }
 .series-strip__now {
-  background: var(--ink);
+  background: var(--text);
 }
 .series-strip__next {
   font-size: var(--size-head);

@@ -4,7 +4,7 @@
   padding: var(--s-2) var(--s-4);
   color: var(--text);
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }
 .outlined-key:disabled {

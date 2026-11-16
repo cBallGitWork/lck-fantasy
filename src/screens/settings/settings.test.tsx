@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import { timeIn } from "../../parts";
 import { html, text } from "../../testing/render";
 import { DeleteSheet } from "./DeleteSheet";
-import { BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, REMINDER_HOURS, SAVED, SIGN_UP, SQUAD_SIZE } from "./fixtures";
+import { BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, DRAFT, REMINDER_HOURS, SAVED, SIGN_UP, SQUAD_SIZE } from "./fixtures";
 import { Settings } from "./index";
 import { canSaveTeam, capName, changedFields, changeLine, counter, dirtyTabs, hoursBefore, type SettingsTab } from "./settings";
 import { SignUpStepOne, SignUpStepTwo } from "./SignUp";
@@ -20,8 +20,10 @@ function expectInOrder(markup: string, pieces: string[]) {
   }
 }
 
+const PICTURE = { draft: DRAFT, browserZone: BROWSER_ZONE };
+
 const settingsOn = (tab: SettingsTab, props: Partial<Parameters<typeof Settings>[0]> = {}) =>
-  html(<Settings firstTab={tab} browserZone={BROWSER_ZONE} {...props} />);
+  html(<Settings firstTab={tab} {...PICTURE} {...props} />);
 
 const SAVE_BAR = ["1 change: hangul banner", "Reset", "Save"];
 const FOOT = ["Privacy ›", "Terms ›", "privacy email"];
@@ -62,12 +64,12 @@ describe("Settings, each tab as its picture draws it", () => {
   test("Display: the browser's zone, the deadline in it and in KST, and the theme", () => {
     const out = settingsOn("Display");
     expectInOrder(out, [">Team •<", 'aria-pressed="true">Display<', "Time zone", "Browser · Europe/London", "Deadline", "Wed 07:45", "16:45 KST", "Theme"]);
-    expectInOrder(text(<Settings firstTab="Display" browserZone={BROWSER_ZONE} />), ["DeviceLightDark", ...SAVE_BAR, ...FOOT]);
+    expectInOrder(text(<Settings firstTab="Display" {...PICTURE} />), ["DeviceLightDark", ...SAVE_BAR, ...FOOT]);
     expect(out).toMatch(/aria-pressed="true">Device</);
   });
 
   test("Emails: both off by default (spec/12), the reminder's lead time, and the address they go to", () => {
-    const out = text(<Settings firstTab="Emails" browserZone={BROWSER_ZONE} />);
+    const out = text(<Settings firstTab="Emails" {...PICTURE} />);
     expectInOrder(out, ["Deadline reminder", hoursBefore(REMINDER_HOURS), "OnOff", "Weekly recap", "Once the week is final", "OnOff", "Sent to barons.steal.fc@gmail.com", ...SAVE_BAR, ...FOOT]);
     expect([SAVED.deadlineReminder, SAVED.weeklyRecap]).toEqual([false, false]);
     const markup = settingsOn("Emails");
@@ -82,7 +84,7 @@ describe("Settings, each tab as its picture draws it", () => {
   });
 
   test("Account: email and Sign out, what is public, Download my data, Delete account, and no save bar", () => {
-    const out = text(<Settings firstTab="Account" browserZone={BROWSER_ZONE} />);
+    const out = text(<Settings firstTab="Account" {...PICTURE} />);
     expectInOrder(out, [
       "Email",
       "G",
@@ -99,8 +101,8 @@ describe("Settings, each tab as its picture draws it", () => {
     expect(out).not.toContain("change:");
   });
 
-  test("with nothing unsaved there is no save bar and no tab carries a dot", () => {
-    const out = text(<Settings draft={SAVED} browserZone={BROWSER_ZONE} />);
+  test("it opens with nothing unsaved: no save bar and no tab carries a dot", () => {
+    const out = text(<Settings browserZone={BROWSER_ZONE} />);
     expect(out).not.toContain("change:");
     expect(out).not.toContain("•");
   });

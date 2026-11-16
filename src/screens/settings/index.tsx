@@ -20,21 +20,26 @@ function saveJson(data: unknown) {
   URL.revokeObjectURL(url);
 }
 
-/** The Settings route, on the picture's made-up data until the backend (#42) feeds it. `?state=` opens a tab or the Delete account sheet, in dev. */
+/**
+ * The Settings route, on the picture's made-up data until the backend (#42) feeds it, opening with nothing
+ * changed. `?state=` opens a picture, in dev: the Team, Display or Emails tab with its unsaved banner, Account,
+ * or the Delete account sheet.
+ */
 export function SettingsScreen() {
-  const dev = useDevState<{ firstTab: SettingsTab; deleting?: true }>({
-    display: { firstTab: "Display" },
-    emails: { firstTab: "Emails" },
+  const dev = useDevState<{ firstTab: SettingsTab; draft?: SettingsValues; deleting?: true }>({
+    settings: { firstTab: "Team", draft: DRAFT },
+    display: { firstTab: "Display", draft: DRAFT },
+    emails: { firstTab: "Emails", draft: DRAFT },
     account: { firstTab: "Account" },
     delete: { firstTab: "Account", deleting: true },
   });
   return <Settings {...dev} />;
 }
 
-/** Settings (docs/design/approved/settings/), holding the draft until Save; the backend saves, signs out and deletes for real. */
+/** Settings (docs/design/approved/settings/), holding the draft (the saved settings, unless given) until Save; the backend saves, signs out and deletes for real. */
 export function Settings({
   saved: savedAtStart = SAVED,
-  draft: draftAtStart = DRAFT,
+  draft: draftAtStart = savedAtStart,
   account = ACCOUNT,
   locked = LOCKED,
   deadlineAt = DEADLINE_AT,

@@ -6,8 +6,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## The season
 
-- The LCK Cup (January–March 2027) is a closed beta, a proof of concept. It scores every stage:
-  groups, play-in and playoffs.
+- The LCK Cup is dropped: Split 1 is the beta (Craig, 16 Nov 2026).
 - The real test is the main season's knockouts: Road to MSI and the LCK playoffs.
 - The main game splits into Split 1 and Split 2, and buffs reset at the split, the way FPL's chips
   reset at GW19.

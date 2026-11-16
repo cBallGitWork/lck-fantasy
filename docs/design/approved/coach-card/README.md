@@ -4,6 +4,8 @@ The full card for the coach slot. It opens from **Full card ›** on the coach's
 
 **Approved:** Craig, 14 Nov 2026, "save", after "coach card should be not much differetn from player really". It was drawn as a variant of the approved player card and went to Craig without the four-reviewer panel. The names, teams and numbers are a made-up LCK Cup, the same moment as the Pick Team and Points pictures (kkOma 10 so far in Week 3, form 9.0), not roster data. There is no `plate.md` yet, so this binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-14-coach-card/](../../proposals/2026-11-14-coach-card/).
 
+**Changed by Craig, 16 Nov 2026:** the page says each thing once, as the player card. History and Fixtures start after the strip's series; This week's heads show the result with no Live or Final tag; the head drops `· head coach` (the tag says Coach); the price carries a small `price` label like form and owned.
+
 | File | Shows |
 |---|---|
 | `1440.png`, `coach.html` | History, opened from Pick Team (Week 4, Tuesday, before the deadline) |

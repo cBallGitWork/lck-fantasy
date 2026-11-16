@@ -1,7 +1,7 @@
 .player-panel {
   background: var(--paper);
   border: var(--m-rule) solid var(--line);
-  border-top: var(--m-rule-heavy) solid var(--ink);
+  border-top: var(--m-rule-heavy) solid var(--text);
   margin-bottom: var(--s-5);
 }
 .player-panel__head {
@@ -49,6 +49,11 @@
   font-weight: var(--w-regular);
   color: var(--mid);
 }
+.player-panel__series-go:hover {
+  text-decoration: underline;
+  text-decoration-thickness: var(--m-rule);
+  text-underline-offset: var(--s-1);
+}
 .player-panel__game {
   display: grid;
   grid-template-columns: var(--s-6) 1fr var(--m-go-col);
@@ -76,7 +81,7 @@
   font-weight: var(--w-regular);
 }
 .player-panel__counted {
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   padding: 0 var(--s-1);
 }
 .player-panel__sum {

@@ -4,6 +4,8 @@ The feed of managers you follow, your requests, trucks, follows and followers. R
 
 **Approved:** Craig, 14 Nov 2026. In the round he picked a follow request from the profile only, one timeline newest first, and a following cap held as data; on trucking past weeks, "live or previous week (if next gameweek hasnt started)"; then "Yes, save it". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn. The source is [docs/design/proposals/2026-11-14-following/](../../proposals/2026-11-14-following/) (`build.py`, `brief.md`).
 
+**Changed by Craig, 16 Nov 2026:** the week's deadline shows once under its head and the deadline rows drop it and their `Deadline:`; no Bo3 on series rows; the side's head is `Trucks`.
+
 | File | Shows |
 |---|---|
 | `1440.png`, `following.html` | Mid-Week 3: the feed, requests, trucks received, following, followers |

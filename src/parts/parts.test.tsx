@@ -26,6 +26,7 @@ import {
   Tabs,
   Tag,
   Time,
+  Toast,
   TopBar,
   ViewToggle,
 } from ".";
@@ -73,7 +74,7 @@ test("page head shows title, hangul, week, key figure, tags and up to three figu
 });
 
 test("a tag is plain, Live filled, or Not final dashed", () => {
-  expect(html(<Tag>Cap 2</Tag>)).toBe('<span class="tag">Cap 2</span>');
+  expect(html(<Tag>Bo3</Tag>)).toBe('<span class="tag">Bo3</span>');
   expect(html(<Tag kind="live">Live</Tag>)).toContain("tag--live");
   expect(html(<Tag kind="notFinal">Not final</Tag>)).toContain("tag--not-final");
 });
@@ -165,6 +166,17 @@ test("a modal names itself, has ✕, and is a card or a sheet", () => {
   expect(html(<Modal kind="card" title="Faker" onClose={() => {}}>x</Modal>)).toContain("modal__box--card");
 });
 
+test("a strong sheet stands out with its own frame", () => {
+  expect(html(<Modal kind="sheet" title="Confirm" onClose={() => {}} strong>x</Modal>)).toContain("modal__box--strong");
+  expect(html(<Modal kind="sheet" title="Confirm" onClose={() => {}}>x</Modal>)).not.toContain("modal__box--strong");
+});
+
+test("a toast is a polite status with its message", () => {
+  const out = html(<Toast message="Kingen added" n={1} onDone={() => {}} />);
+  expect(out).toContain('role="status"');
+  expect(out).toContain("Kingen added");
+});
+
 test("a form field has its label above and an error under it", () => {
   const out = html(<Field label="Team name" error="Taken" />);
   expect(out.indexOf("Team name")).toBeLessThan(out.indexOf("<input"));
@@ -228,7 +240,7 @@ test("the series list shows scores with their state, and times for the next", ()
   );
 });
 
-test("the page frame puts the side column after the main, save Leagues", () => {
+test("the page frame puts the side column after the main", () => {
   const right = html(
     <PageFrame screen="points" active="points" account={MANAGER.team} side={<p>side</p>}>
       <p>main</p>
@@ -237,10 +249,4 @@ test("the page frame puts the side column after the main, save Leagues", () => {
   expect(right.indexOf("main")).toBeLessThan(right.indexOf("side</p>"));
   expect(right).toContain("page-frame--two");
   expect(right).toContain('data-screen="points"');
-  const left = html(
-    <PageFrame screen="leagues" active="leagues" account={MANAGER.team} side={<p>side</p>} sideFirst>
-      <p>main</p>
-    </PageFrame>,
-  );
-  expect(left).toContain("page-frame--side-first");
 });

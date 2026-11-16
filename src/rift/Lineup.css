@@ -10,13 +10,21 @@
   flex-direction: column;
   min-width: 0;
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
 }
 .pcard[role="button"] {
   cursor: pointer;
 }
 .pcard--selected {
-  outline: var(--m-rule-heavy) solid var(--ink);
+  outline: var(--m-rule-heavy) solid var(--text);
+}
+.pcard--fit {
+  outline: var(--m-rule-heavy) dashed var(--text);
+  outline-offset: var(--m-rule-heavy);
+}
+.pcard--dim {
+  border-color: var(--line);
+  color: var(--mid);
 }
 .pcard__role {
   height: var(--m-card-head);
@@ -65,14 +73,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
   font-weight: var(--w-bold);
 }
 .pcard__mark--v {
   background: var(--paper);
-  color: var(--ink);
-  border: var(--m-rule) solid var(--ink);
+  color: var(--text);
+  border: var(--m-rule) solid var(--text);
 }
 .pcard__name {
   font-size: var(--size-head);

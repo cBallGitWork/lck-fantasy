@@ -51,7 +51,7 @@
   height: var(--m-target);
   font: inherit;
   font-size: var(--size-lead);
-  color: var(--ink);
+  color: var(--text);
   background: none;
   border: 0;
   cursor: pointer;
@@ -127,8 +127,8 @@
   height: var(--m-mark);
   margin-left: var(--s-2);
   border-radius: 50%;
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
   font-size: var(--size-small);
   font-weight: var(--w-bold);
   line-height: var(--m-mark);
@@ -137,7 +137,7 @@
 .profile__mark--v {
   background: var(--paper);
   color: var(--text);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   line-height: calc(var(--m-mark) - var(--m-rule-heavy));
 }
 
@@ -178,17 +178,11 @@
   width: var(--m-mark);
 }
 .profile__tier-body {
-  fill: var(--ink);
+  fill: var(--text);
 }
 .profile__tier-band {
-  stroke: var(--on-ink);
+  stroke: var(--bg);
   opacity: 0.45;
-}
-.profile__tier-division {
-  fill: var(--on-ink);
-  font-family: var(--font-mono);
-  font-weight: var(--w-semi);
-  font-size: var(--size-body);
 }
 .profile__truck {
   margin-bottom: var(--s-2);

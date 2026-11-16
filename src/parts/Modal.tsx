@@ -21,9 +21,12 @@ export function Modal({
   kind,
   title,
   onClose,
+  strong,
   children,
 }: {
   kind: "card" | "sheet";
+  /** A sheet that must stand out from the page (Transfers' confirm): a heavy `--text` frame on `fill`. */
+  strong?: boolean;
   /** The sheet's 20px title, and the dialog's name. */
   title: string;
   onClose: () => void;
@@ -61,7 +64,7 @@ export function Modal({
   return (
     <div className="modal">
       <div className="modal__dim" onClick={onClose} />
-      <div ref={box} className={cx("modal__box", `modal__box--${kind}`)} role="dialog" aria-modal="true" aria-label={title}>
+      <div ref={box} className={cx("modal__box", `modal__box--${kind}`, strong && "modal__box--strong")} role="dialog" aria-modal="true" aria-label={title}>
         <button type="button" className="modal__close" aria-label="Close" onClick={onClose}>
           ✕
         </button>

@@ -1,5 +1,5 @@
 .side-section {
-  border-top: var(--m-rule-heavy) solid var(--ink);
+  border-top: var(--m-rule-heavy) solid var(--text);
   padding-top: var(--s-2);
   margin-bottom: var(--s-5);
 }

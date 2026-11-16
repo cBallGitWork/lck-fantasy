@@ -49,7 +49,7 @@ export interface StatsRow {
   team: TeamCode;
   role: PersonRole;
   priceEok: number;
-  /** The last move in 억: above 0 a rise, below a fall, 0 none. */
+  /** The last move in m: above 0 a rise, below a fall, 0 none. */
   moveEok: number;
   form: number;
   ownedPct: number;
@@ -78,7 +78,7 @@ export interface StatsView {
   figures: Figures;
   role: RoleKey | typeof ALL;
   team: TeamCode | typeof ALL;
-  /** The highest price shown, in 억; null for any. */
+  /** The highest price shown, in m; null for any. */
   maxPrice: number | null;
   span: string;
   search: string;

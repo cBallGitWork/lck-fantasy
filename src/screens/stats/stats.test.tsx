@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
+import { FAKER_SEASON, KKOMA_SEASON } from "../../fixtures/t1Season";
 import { MANAGER } from "../../fixtures/week3";
 import { html, text } from "../../testing/render";
 import { SEASON_COACHES, SEASON_PLAYERS, SPANS, STATS_BY_SPAN } from "./fixtures";
@@ -110,21 +111,21 @@ describe("players, totals (1440.png)", () => {
   test("Faker's row: rank, team, dot, price and rise, form, owned, Pts, games and lines", () => {
     expect(cells(out, "Faker")).toEqual([
       "2FakerT1",
-      "18.5억",
+      "₩18.5m",
       "0.5",
       "19.3",
       "46%",
       "58",
       "15",
-      "66",
-      "16",
-      "87",
-      "10",
-      "6",
+      "73",
+      "26",
+      "86",
+      "9",
+      "5",
       "3",
-      "3",
+      "4",
       "1",
-      "0",
+      "2",
     ]);
     const faker = out.split("<tr").find((r) => r.includes(">Faker<")) ?? "";
     expect(faker).toContain('aria-label="Your player"');
@@ -133,6 +134,13 @@ describe("players, totals (1440.png)", () => {
     const doran = out.split("<tr").find((r) => r.includes(">Doran<")) ?? "";
     expect(doran).toContain('class="fall"');
     expect(doran).not.toContain("Your player");
+  });
+
+  test("Faker's and kkOma's season lines are their cards'", () => {
+    const total = (season: typeof FAKER_SEASON, line: string) => season.lines.find((l) => l.line === line)?.total;
+    const faker = SEASON_PLAYERS.find((p) => p.name === "Faker")?.lines;
+    expect([faker?.kills, faker?.deaths, faker?.assists]).toEqual([total(FAKER_SEASON, "Kills"), total(FAKER_SEASON, "Deaths"), total(FAKER_SEASON, "Assists")]);
+    expect(SEASON_COACHES.find((c) => c.name === "kkOma")?.lines.drakes).toBe(total(KKOMA_SEASON, "Most drakes"));
   });
 
   test("pages beneath: 20 rows a page", () => {
@@ -151,21 +159,21 @@ describe("players, per game (1440-pergame.png)", () => {
     expect(names(out)).toEqual(perGame);
     expect(cells(out, "Faker")).toEqual([
       "1FakerT1",
-      "18.5억",
+      "₩18.5m",
       "0.5",
       "19.3",
       "46%",
       "3.9",
       "15",
-      "4.4",
-      "1.1",
-      "5.8",
-      "0.7",
-      "0.4",
+      "4.9",
+      "1.7",
+      "5.7",
+      "0.6",
+      "0.3",
       "0.2",
-      "0.2",
+      "0.3",
       "0.1",
-      "0.0",
+      "0.1",
     ]);
     expect(out).toContain('aria-pressed="true">Per game<');
   });
@@ -193,7 +201,7 @@ describe("coaches (1440-coaches.png)", () => {
     expect(names(out)).toEqual(["kkOma", "Ryu", "Homme", "Ssong", "cvMax", "Score", "Joker", "DanDy", "Edgar", "Mowgli"]);
     expect(out).not.toContain(">Jungle<");
     expect(out).toContain('placeholder="Find a coach"');
-    expect(cells(out, "kkOma")).toEqual(["1kkOmaT1", "7.0억", "", "9.0", "24%", "27", "15", "5–1", "6", "5", "5", "0", "2"]);
+    expect(cells(out, "kkOma")).toEqual(["1kkOmaT1", "₩7.0m", "", "9.0", "24%", "27", "15", "5–1", "8", "7", "3", "1", "0"]);
     expect(out).toContain('href="/coach/kkoma"');
   });
 });

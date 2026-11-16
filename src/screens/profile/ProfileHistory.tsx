@@ -16,7 +16,7 @@ const COLUMNS: Column<HistoryRow>[] = [
   { key: "buff", head: "Buff", cell: (r) => r.buff ?? NONE },
 ];
 
-/** A rank's move, in ink with ▲ or ▼; `—` when there is none. */
+/** A rank's move, in `--text` with ▲ or ▼; `—` when there is none. */
 export function Move({ places }: { places: number | undefined }) {
   if (!places) return <>{NONE}</>;
   return <RankMove move={places} />;

@@ -8,7 +8,7 @@ of this is Flol's own. Open questions are in [docs/to-grill.md](../docs/to-grill
 
 ## Following
 
-- In the LCK Cup beta.
+- In the beta, Split 1 (Craig, 16 Nov 2026).
 - By request, one-way: a manager asks to follow Minji, she accepts, and Minji's week shows in his
   feed. She sees his only if she asks too.
 - A manager can unfollow, and can remove or block a follower.
@@ -60,7 +60,7 @@ Trucks are the feed's reaction, after LCK fans' LED trucks
     are both in; `{league}` names it. If they share none, these lines don't show.
   - **Green and red arrow:** the gameweek's move in overall rank. **Buff wasted:** played, and
     the week ends below the global average; otherwise **buff played**.
-- Lines fill in the receiver's own numbers. Example: WE DID NOT PAY ₩12억 FOR A BENCH WARMER.
+- Lines fill in the receiver's own numbers. Example: WE DID NOT PAY ₩12M FOR A BENCH WARMER.
 - A protest line never names a real player; it mocks the manager's own picks, in the trucks'
   formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CARRY PICK. Coffee lines may cheer
   real players.

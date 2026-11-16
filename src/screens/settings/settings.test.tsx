@@ -46,7 +46,6 @@ describe("Settings, each tab as its picture draws it", () => {
       "8/20",
       ">바론 스틸 FC<",
       "Baron Steal FC",
-      "T1 · United Kingdom",
       "Favourite team",
       ">T1<",
       "Locked",
@@ -56,6 +55,7 @@ describe("Settings, each tab as its picture draws it", () => {
       ...SAVE_BAR,
       ...FOOT,
     ]);
+    expect(out).not.toContain("T1 · United Kingdom");
   });
 
   test("Display: the browser's zone, the deadline in it and in KST, and the theme", () => {
@@ -116,7 +116,7 @@ test("the Delete sheet lists what goes, then Back and Delete account", () => {
   expectInOrder(out, [
     "Delete account?",
     "Baron Steal FC is erased at once and can't be brought back.",
-    "Team and squadBaron Steal FC",
+    "Team and squad",
     "Points and historyWeeks 1–3 · 187 pts",
     "Ranks in 5 leaguesOverall, United Kingdom, T1, 2 private",
     "Follows12 following · 9 followers",

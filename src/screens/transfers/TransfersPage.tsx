@@ -1,21 +1,23 @@
-import { useState } from "react";
-import { againstLine } from "../../fixtures/series";
+import { useCallback, useState } from "react";
 import type { BuffName } from "../../fixtures/week3";
-import { Deadline, formatEok, MainAction, Menu, MINUS, OutlinedKey, PageFrame, PageHead, pct, ViewToggle } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, RIFT_SLOTS, RIFT_VIEW, Rift, Tile, VIEWS, type BoardView, type RiftPoint, type SlotKey, type SquadSlot } from "../../rift";
+import { cx, Deadline, formatEok, MainAction, MINUS, NONE, OutlinedKey, PageFrame, PageHead, Toast, ViewToggle } from "../../parts";
+import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
-import { Confirmed, costLabel } from "./Confirmed";
+import { Confirmed } from "./Confirmed";
+import { arrange, byRole, type Standing } from "./lineup";
 import {
+  add,
   bankNow,
-  buy,
   EMPTY_PLAN,
-  emptySlots,
   freeLeft,
-  inSlot,
+  freeUsed,
   moves,
+  nextAgainst,
   pendingHit,
+  remove,
+  restore,
+  reviewBlock,
   roleFilterFor,
-  sell,
   transfersMade,
   type Confirm,
   type Fixture,
@@ -23,13 +25,17 @@ import {
   type ListPlayer,
   type Plan,
   type SquadPlayer,
+  type Step,
   type TransferRules,
 } from "./plan";
 import { ALL_TEAMS, PlayerList } from "./PlayerList";
+import { spotOf } from "./spots";
+import { SquadList } from "./SquadList";
 import "./transfers.css";
 
-export type View = BoardView;
-export type Show = "Fixtures" | "Price" | "Owned";
+/** Transfers' two views: the nine on the Rift, or listed by role (Craig, 16 Nov 2026). */
+export const TRANSFER_VIEWS = [RIFT_VIEW, "List view"] as const;
+export type View = (typeof TRANSFER_VIEWS)[number];
 
 export interface TransfersPageProps {
   /** The account menu's team name. */
@@ -37,6 +43,8 @@ export interface TransfersPageProps {
   competition: string;
   /** `Week 4`. */
   week: string;
+  /** The last week whose points the List view shows: `Wk 3`. */
+  lastWeek: string;
   deadline: { local: string; kst: string; countdown: string };
   squad: SquadPlayer[];
   players: ListPlayer[];
@@ -55,67 +63,53 @@ export interface TransfersPageProps {
   onViewChange?: (view: View) => void;
   /** Opens on the confirm sheet. */
   reviewing?: boolean;
-  onConfirm?: (transfers: { slot: SquadSlot; out: string; in: string }[]) => void;
+  /** Each transfer by id, and the nine after them, arranged by role. */
+  onConfirm?: (transfers: { out: string; in: string }[], lineup: Record<SquadSlot, string>) => void;
   onUndo?: (confirmId: string) => void;
   onBuff?: (buff: BuffName) => void;
 }
 
-const SHOWS: readonly Show[] = ["Fixtures", "Price", "Owned"];
-/** Where each starter stands on Transfers' Rift (transfers.html): Points' places, the Flex a little left. */
-const TRANSFERS_SLOTS: Record<SlotKey, RiftPoint> = { ...RIFT_SLOTS, flex: [238, 468] };
-const STARTERS = Object.keys(TRANSFERS_SLOTS) as SlotKey[];
-
-type Standing = SquadPlayer | ListPlayer;
-
-/** What sits under a player, by Show: his fixtures (`v DNS · v HLE`), price or owned. */
-export function under(show: Show, p: Standing, fixtures: Record<string, Fixture[]>): string {
-  if (show === "Price") return formatEok(p.price);
-  if (show === "Owned") return pct(p.ownedPct);
-  return againstLine((fixtures[p.team] ?? []).map((f) => f.against));
-}
-
-const markOf = (p: Standing) => ("mark" in p ? p.mark : undefined);
 const hitLabel = (hit: number) => (hit > 0 ? `${MINUS}${hit}` : "0");
 
-/** Transfers, Rift view mid-transfer (transfers.html): the squad, the bench, the changes, the list and the week's confirms. */
+/** Transfers (transfers.html, changed by Craig 16 Nov 2026): the nine by role, the changes, the list and the week's confirms. */
 export function TransfersPage(props: TransfersPageProps) {
   const { squad, rules, fixtures } = props;
   const [plan, setPlan] = useState<Plan>(props.initialPlan ?? EMPTY_PLAN);
   const [view, setView] = useState<View>(props.view ?? RIFT_VIEW);
-  const [show, setShow] = useState<Show>("Fixtures");
   const [reviewing, setReviewing] = useState(props.reviewing ?? false);
+  const [toast, setToast] = useState<{ message: string; n: number } | null>(null);
   const [filters, setFilters] = useState<ListFilters>({
-    role: plan.replacing ? roleFilterFor(plan.replacing) : "all",
+    role: plan.replacing ? roleFilterFor(squad, plan.replacing) : "all",
     search: "",
     team: ALL_TEAMS,
     sort: "points",
   });
+  const endToast = useCallback(() => setToast(null), []);
 
   const made = transfersMade(squad, plan);
   const hit = pendingHit(rules, made);
   const bank = bankNow(squad, plan, rules.bank);
   const done = moves(squad, plan).filter((m): m is { out: SquadPlayer; in: ListPlayer } => m.in !== null);
-  const reviewReason = made === 0 ? "No changes" : emptySlots(plan) > 0 ? "Slot empty" : undefined;
+  const groups = byRole(squad, plan);
 
+  const take = (step: Step) => {
+    if (step.plan !== plan && step.plan.replacing && step.plan.replacing !== plan.replacing) {
+      setFilters({ ...filters, role: roleFilterFor(squad, step.plan.replacing) });
+    }
+    setPlan(step.plan);
+    setToast({ message: step.toast, n: (toast?.n ?? 0) + 1 });
+  };
+  /** Tapping one of the nine: an empty slot gets its player back; anyone else is taken out. */
+  const tap = (s: Standing) => take(s.empty ? restore(squad, plan, s.slot) : remove(squad, plan, s.slot));
   const reset = () => setPlan(EMPTY_PLAN);
   const chooseView = (next: View) => {
     setView(next);
     props.onViewChange?.(next);
   };
-  /** A slot as drawn: who stands there (the sold player while it is empty), and whether it is chosen. */
-  const slotView = (slot: SquadSlot) => ({
-    p: inSlot(squad, plan, slot) ?? (squad.find((s) => s.slot === slot) as SquadPlayer),
-    empty: slot in plan.sold && !plan.sold[slot],
-    selected: plan.replacing === slot,
-    onSelect: () => {
-      setPlan(sell(plan, slot));
-      setFilters({ ...filters, role: roleFilterFor(slot) });
-    },
-  });
 
   const side = (
     <>
-      <PlayerList {...props} plan={plan} filters={filters} onFilters={setFilters} onBuy={(p) => setPlan(buy(plan, p))} />
+      <PlayerList {...props} plan={plan} filters={filters} onFilters={setFilters} onBuy={(p) => take(add(squad, plan, p, rules))} />
       <Confirmed
         week={props.week}
         confirms={props.confirms}
@@ -137,18 +131,22 @@ export function TransfersPage(props: TransfersPageProps) {
             {props.competition} {props.week} · <Deadline {...props.deadline} />
           </>
         }
-      />
-      <div className="transfers__strip">
-        <span className="transfers__figure">
-          Free transfers <b className="num">{freeLeft(rules, made)}</b>
-        </span>
-        <span className="transfers__figure">
-          Pending hit <b className="num">{hitLabel(hit)}</b>
-        </span>
-        <span className="transfers__figure">
-          Bank <b className="num">{formatEok(bank)}</b>
-        </span>
-        <span className="transfers__buffs">
+      >
+        <div className="transfers__figures">
+          <span className="transfers__figure">
+            Free transfers <b className="num">{freeLeft(rules, made)}</b>
+          </span>
+          <span className="transfers__figure">
+            Cost <b className="num">{hitLabel(hit)}</b>
+          </span>
+          <span className={cx("transfers__figure", bank < 0 && "transfers__figure--over")}>
+            Bank <b className="num">{formatEok(bank)}</b>
+          </span>
+        </div>
+      </PageHead>
+      <div className="transfers__controls">
+        <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={chooseView} label="View" />
+        <span className="transfers__keys">
           {props.buffs.map((buff) => (
             <OutlinedKey key={buff} onClick={() => props.onBuff?.(buff)}>
               {buff}
@@ -156,95 +154,50 @@ export function TransfersPage(props: TransfersPageProps) {
           ))}
         </span>
       </div>
-      <div className="transfers__controls">
-        <ViewToggle options={VIEWS} chosen={view} onChoose={chooseView} label="View" />
-        <Menu className="transfers__show" label={`Show: ${show} ▾`} items={SHOWS.map((s) => ({ label: s, onChoose: () => setShow(s) }))} />
-      </div>
       {view === RIFT_VIEW ? (
         <Rift>
-          {STARTERS.map((slot) => {
-            const s = slotView(slot);
-            return (
+          {groups.flatMap(({ role, standing }) =>
+            standing.map((s, i) => (
               <Tile
-                key={slot}
-                slot={slot}
-                plays={flexPlays(slot, s.p.role)}
+                key={s.slot}
+                slot={role}
                 name={s.p.name}
                 team={s.p.team}
-                at={TRANSFERS_SLOTS[slot]}
-                mark={markOf(s.p)}
-                line={under(show, s.p, fixtures)}
-                selected={s.selected}
+                at={spotOf(role, i, standing.length)}
+                mark={s.mark}
+                price={formatEok(s.p.price)}
+                sell={!s.empty}
+                line={nextAgainst(fixtures, s.p.team) || NONE}
+                selected={plan.replacing === s.slot}
                 state={s.empty ? "dim" : undefined}
-                onSelect={s.onSelect}
+                onSelect={() => tap(s)}
               />
-            );
-          })}
+            )),
+          )}
         </Rift>
       ) : (
-        <Lineup
-          cards={STARTERS.map((slot) => {
-            const s = slotView(slot);
-            return {
-              slot,
-              plays: flexPlays(slot, s.p.role),
-              name: s.p.name,
-              team: s.p.team,
-              mark: markOf(s.p),
-              next: under(show, s.p, fixtures),
-              selected: s.selected,
-              onSelect: s.onSelect,
-            };
-          })}
-        />
+        <SquadList groups={groups} fixtures={fixtures} lastWeek={props.lastWeek} replacing={plan.replacing} onTap={tap} />
       )}
-      <BenchBar>
-        {BENCH_SLOTS.map((slot, i) => {
-          const s = slotView(slot);
-          return (
-            <BenchTile
-              key={slot}
-              order={i + 1}
-              role={s.p.role}
-              name={s.p.name}
-              team={s.p.team}
-              line={under(show, s.p, fixtures)}
-              selected={s.selected}
-              state={s.empty ? "dim" : undefined}
-              onSelect={s.onSelect}
-            />
-          );
-        })}
-      </BenchBar>
       <div className="transfers__changes">
         <span>
-          {done.length > 0 && (
-            <>
+          {done.map((m, i) => (
+            <span key={m.out.slot}>
+              {i > 0 && ", "}
+              <s className="transfers__out">
+                {m.out.name} {formatEok(m.out.price)}
+              </s>
+              {" → "}
               <b>
-                {made} transfer{made === 1 ? "" : "s"}
+                {m.in.name} {formatEok(m.in.price)}
               </b>
-              {` · ${costLabel(hit)} · `}
-              {done.map((m, i) => (
-                <span key={m.out.slot}>
-                  {i > 0 && ", "}
-                  <s className="transfers__out">
-                    {m.out.name} {formatEok(m.out.price)}
-                  </s>
-                  {" → "}
-                  <b>
-                    {m.in.name} {formatEok(m.in.price)}
-                  </b>
-                </span>
-              ))}
-              {` · bank ${formatEok(rules.bank)} → ${formatEok(bank)}`}
-            </>
-          )}
+            </span>
+          ))}
         </span>
         <span className="transfers__actions">
           <button type="button" className="transfers__reset" onClick={reset}>
             Reset
           </button>
-          <MainAction disabledReason={reviewReason} onClick={() => setReviewing(true)}>
+          <MainAction disabledReason={reviewBlock(squad, plan, rules)} onClick={() => setReviewing(true)}>
             Review and confirm ›
           </MainAction>
         </span>
@@ -253,18 +206,24 @@ export function TransfersPage(props: TransfersPageProps) {
         <ConfirmSheet
           transfers={done}
           hit={hit}
-          freeLeft={freeLeft(rules, made)}
+          freeUsed={freeUsed(rules, made)}
+          freeHad={rules.freeTransfers}
           bankFrom={rules.bank}
           bankTo={bank}
           deadline={props.deadline}
           onBack={() => setReviewing(false)}
           onConfirm={() => {
-            props.onConfirm?.(done.map((m) => ({ slot: m.out.slot, out: m.out.id, in: m.in.id })));
+            const lineup = Object.fromEntries(Object.entries(arrange(squad, plan)).map(([slot, p]) => [slot, p.id])) as Record<SquadSlot, string>;
+            props.onConfirm?.(
+              done.map((m) => ({ out: m.out.id, in: m.in.id })),
+              lineup,
+            );
             setReviewing(false);
             reset();
           }}
         />
       )}
+      {toast && <Toast message={toast.message} n={toast.n} onDone={endToast} />}
     </PageFrame>
   );
 }

@@ -24,7 +24,6 @@ const CHIPS = [
   "Caedrel · EnglishTwitch",
   "LCK · Tiếng ViệtYouTube",
   "Kameto · FrançaisTwitch",
-  "More ▾",
 ];
 const REST = ["Rest of your week", "ZeusHLE14", "CanyonGEN14", "RulerGENV14", "DelightHLE9", "Points ›"];
 
@@ -38,7 +37,7 @@ describe("a series live", () => {
       "stream",
       "T1", "1–0", "DK", "Live", "Game 2", "Bo3 · LCK Cup Week 3",
       ...CHIPS,
-      "Your week", "Not final", "94", "Average 74", "Highest 131›",
+      "Your week", "Not final", "94", "Average 74", "Highest 121›",
       "T1 v DK",
       "FakerT1C", "G1 4 · G2 1", "Live", "3/0/2", "25",
       "SiwooDK", "G1 2 · G2 1", "Live", "1/0/1", "8",
@@ -90,8 +89,8 @@ describe("nothing live", () => {
       "Next · Sunday · LCK Cup Week 3 · Bo3", "KRXvBRO", "08:00", "17:00 KST", "1h20m",
       "T1", "2–0", "DK", "Final", "Last series", "Saturday · Bo3 · LCK Cup Week 3",
       ...CHIPS,
-      "Your week", "109", "Average 79", "Highest 136›",
-      "T1 2–0 DK",
+      "Your week", "109", "Average 79", "Highest 128›",
+      "T1 v DK",
       "FakerT1C", "G1 4 · G2 6", "33",
       "SiwooDK", "G1 2 · G2 2", "9",
       "kkOmaT1", "G1 2 · G2 3 · won +3", "16",

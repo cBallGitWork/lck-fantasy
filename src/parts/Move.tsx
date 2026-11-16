@@ -2,13 +2,13 @@
 import { cx } from "./cx";
 import { count, oneDecimal } from "./figures";
 
-/** A price's move in 억: ▲ or ▼ and the amount to one decimal; nothing when it held. */
+/** A price's move in m: ▲ or ▼ and the amount to one decimal; nothing when it held. */
 export function PriceMove({ eok, className }: { eok: number; className?: string }) {
   if (eok === 0) return null;
   return <span className={cx(eok > 0 ? "rise" : "fall", className)}>{oneDecimal(Math.abs(eok))}</span>;
 }
 
-/** A rank's move in ink: ▲ or ▼ and the places. Each screen draws its own `—` for a rank that held. */
+/** A rank's move in `--text`, never gold: ▲ or ▼ and the places. Each screen draws its own `—` for a rank that held. */
 export function RankMove({ move }: { move: number }) {
   return <span className={move < 0 ? "rank-down" : "rank-up"}>{count(Math.abs(move))}</span>;
 }

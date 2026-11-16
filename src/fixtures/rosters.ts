@@ -1,6 +1,7 @@
 // The LCK teams' rosters as the pictures share them: 2026's, a placeholder until real data. Each in
 // role order, Top to Support then the coach: game name, then hangul.
 import type { TeamCode } from "./competition";
+import { statsOf } from "./players";
 
 export const ROSTERS: Record<TeamCode, readonly (readonly [name: string, hangul: string])[]> = {
   T1: [["Doran", "최현준"], ["Oner", "문현준"], ["Faker", "이상혁"], ["Peyz", "김수환"], ["Keria", "류민석"], ["kkOma", "김정균"]],
@@ -15,8 +16,8 @@ export const ROSTERS: Record<TeamCode, readonly (readonly [name: string, hangul:
   BFX: [["Clear", "송현민"], ["Raptor", "전어진"], ["VicLa", "이대광"], ["Diable", "남대근"], ["Kellin", "김형규"], ["Mowgli", "이재하"]],
 };
 
-/** T1's prices in 억, in roster order, the coach's last: the LCK hub's and the coach card's Roster tab. */
-export const T1_PRICES_EOK = [12.5, 14.0, 18.5, 15.0, 14.5, 7.0] as const;
+/** T1's prices in m, in roster order, the coach's last: Stats' prices, as the LCK hub's and the coach card's Roster tab show them. */
+export const T1_PRICES_EOK: readonly number[] = ROSTERS.T1.map(([name]) => statsOf(name).priceEok);
 
 const HANGUL = new Map(Object.values(ROSTERS).flat());
 

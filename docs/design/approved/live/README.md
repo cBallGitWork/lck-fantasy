@@ -4,6 +4,8 @@ The Live page: a stream beside the manager's live points (spec/12, Live). It is 
 
 **Approved:** Craig, 14 Nov 2026, "save". He asked for "live first", and to keep Average and Highest beside the total ("Keep them"). The names, teams and numbers are a made-up LCK Cup at the moment of the Points picture: Week 3 Saturday, T1 v DK game 2 live, Baron Steal FC on 94. Every player's points match Points; the idle shot's finished T1 2–0 DK matches the Series page. There is no `plate.md` yet, so this binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-14-live/](../../proposals/2026-11-14-live/) (`live.html`, `brief.md`).
 
+**Changed by Craig, 16 Nov 2026:** the panel's series head is the teams alone, `T1 v DK`, in both states (the scorebug has the score); More ▾ shows only when there are streams past the six chips, and lists only those.
+
 | File | Shows |
 |---|---|
 | `1440.png`, `live.html` | A series live: T1 1–0 DK, game 2 |

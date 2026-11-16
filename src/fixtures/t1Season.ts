@@ -1,11 +1,11 @@
-// T1's made-up LCK Cup at Week 4's Tuesday, Weeks 1 to 3 final, and the season figures of Faker and
+// T1's made-up LCK Cup at Week 4's Tuesday, Weeks 1 to 3 final (src/fixtures/weeks.ts), and the season figures of Faker and
 // kkOma, as their cards and Compare share them. Every number is an example.
 
 import type { Score } from "../parts";
 import { BEST_OF, type TeamCode } from "./competition";
 import { fromSide, opponent, seriesOf } from "./series";
 import { gamesOf } from "./standings";
-import { EARLY, LATE, WEEK3_SERIES_FINAL, WEEK4_SERIES } from "./weeks";
+import { EARLY, LATE, WEEK1_SERIES, WEEK2_SERIES, WEEK3_SERIES_FINAL, WEEK4_SERIES } from "./weeks";
 
 const T1: TeamCode = "T1";
 
@@ -40,20 +40,22 @@ const played = (id: string, week: number, day: string, against: TeamCode, score:
   games: score[0] + score[1],
 });
 
-/** T1's series so far, newest first: Week 3's from its results, Weeks 1 and 2 made up here. */
-export const T1_PLAYED: readonly T1Played[] = [
-  ...seriesOf(WEEK3_SERIES_FINAL, T1)
+/** T1's series so far, newest first, from each week's results. */
+export const T1_PLAYED: readonly T1Played[] = (
+  [
+    [3, WEEK3_SERIES_FINAL],
+    [2, WEEK2_SERIES],
+    [1, WEEK1_SERIES],
+  ] as const
+).flatMap(([week, list]) =>
+  seriesOf(list, T1)
     .reverse()
     .map((s) => {
       const side = fromSide(s, T1);
-      if (!side.score) throw new Error(`Week 3's ${s.id} has no score`);
-      return played(s.id, 3, s.day, side.opponent, side.score);
+      if (!side.score) throw new Error(`Week ${week}'s ${s.id} has no score`);
+      return played(s.id, week, s.day, side.opponent, side.score);
     }),
-  played("w2-fri-2", 2, "Fri", "BFX", [2, 1]),
-  played("w2-wed-1", 2, "Wed", "DNS", [2, 0]),
-  played("w1-sat-1", 1, "Sat", "NS", [2, 0]),
-  played("w1-wed-2", 1, "Wed", "GEN", [1, 2]),
-];
+);
 
 /** T1's series to come: Week 4's from its fixtures, then Weeks 5 and 6. */
 export const T1_FIXTURES: readonly T1Fixture[] = [
@@ -82,7 +84,7 @@ export interface T1MemberSeason {
   /** His place by season points, and how many he is placed among. */
   place: number;
   of: number;
-  /** This week's price rise in 억. */
+  /** This week's price rise in m. */
   riseEok: number;
   /** His points in each of T1's series, in T1_PLAYED's order (newest first). */
   points: readonly number[];
@@ -108,9 +110,6 @@ export const FAKER_SEASON: T1MemberSeason = {
     { line: "Steals", total: 2, points: 2 },
   ],
 };
-
-/** kkOma's owned % on his card and Compare; the Stats picture has its own. */
-export const KKOMA_OWNED_PCT = 22;
 
 export const KKOMA_SEASON: T1MemberSeason = {
   name: "kkOma",

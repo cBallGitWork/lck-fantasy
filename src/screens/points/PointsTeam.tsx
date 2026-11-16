@@ -1,8 +1,8 @@
-import { carrySum, NONE, Tag } from "../../parts";
+import { NONE } from "../../parts";
 import { Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { DIDNT_PLAY, type PointsSeries, type PointsStarter } from "./types";
 
-/** Each series' points after its opponent, as a starter's line shows them: `v HLE 12 · v DK 5 Live`. */
+/** Each series' points after its opponent, as a starter's line shows them: `v HLE 12 · v DK 5`. Live is the head's bar. */
 export function SeriesLine({ series }: { series: PointsSeries[] }) {
   if (series.length === 0) return <>{DIDNT_PLAY}</>;
   return (
@@ -10,21 +10,11 @@ export function SeriesLine({ series }: { series: PointsSeries[] }) {
       {series.map((s, i) => (
         <span key={s.id}>
           {i > 0 && " · "}v {s.opponent} {s.points}
-          {s.state === "live" && (
-            <span className="points__line-live">
-              <Tag kind="live">Live</Tag>
-            </span>
-          )}
         </span>
       ))}
     </>
   );
 }
-
-/** The Carry's sum before the multiplier, small after his points: `17×1.5`. */
-const carried = (carry: PointsStarter["carry"]) => carry && carrySum(carry.raw, carry.multiplier);
-
-const subbedIn = (p: PointsStarter) => p.subbedInFor && `Subbed in for ${p.subbedInFor}`;
 
 interface TeamProps {
   starters: PointsStarter[];
@@ -41,16 +31,13 @@ export function PointsRift({ starters, open, onOpen }: TeamProps) {
         <Tile
           key={p.slot}
           slot={p.slot}
-          plays={p.plays}
           name={p.name}
           team={p.team}
           at={RIFT_SLOTS[p.slot]}
           mark={p.mark}
           birthday={p.birthday}
           points={p.points ?? NONE}
-          carrySum={carried(p.carry)}
           line={<SeriesLine series={p.series} />}
-          tags={p.subbedInFor && <Tag>{subbedIn(p)}</Tag>}
           selected={p.name === open}
           onSelect={() => onOpen(p.name)}
         />
@@ -69,13 +56,9 @@ export function PointsCards({ starters, open, onOpen }: TeamProps) {
         name: p.name,
         team: p.team,
         mark: p.mark,
-        news: subbedIn(p),
         next: <SeriesLine series={p.series} />,
         footer: (
-          <span className="points__card-points num">
-            {p.points ?? NONE}
-            {p.carry && <small>{carried(p.carry)}</small>}
-          </span>
+<span className="points__card-points num">{p.points ?? NONE}</span>
         ),
         selected: p.name === open,
         onSelect: () => onOpen(p.name),

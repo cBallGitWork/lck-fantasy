@@ -97,7 +97,7 @@ describe("each state renders from the fixture, in the picture's order", () => {
     expect(html(page("Results"))).not.toMatch(/lck-hub__loser">T1</);
   });
 
-  test("Standings: the two groups, each team's W, L, sets, +/−, Win % and last 5", () => {
+  test("Standings: the two groups, each team named once by its code, its W, L, sets, +/−, Win % and last 5", () => {
     const out = text(page("Standings"));
     expectInOrder(out, [
       ...HEAD,
@@ -106,20 +106,21 @@ describe("each state renders from the fixture, in the picture's order", () => {
       "Baron group",
       "바론 그룹",
       "TeamWLSets WSets L+/−Win %Last 5",
-      "1T1 T151114+783%WWWWW",
-      "2DK Dplus KIA3387+150%WLWWL",
-      "3KRX Kiwoom DRX3378−150%LWLWW",
-      "4NS Nongshim RedForce2458−333%WWLLL",
-      "5BRO HANJIN BRION15411−717%WLLLL",
+      "1T151114+783%WWWWW",
+      "2DK3387+150%WLWWL",
+      "3KRX3378−150%LWLWW",
+      "4NS2458−333%WWLLL",
+      "5BRO15411−717%WLLLL",
       "Elder group",
       "장로 그룹",
-      "1GEN Gen.G51115+683%LWWWW",
-      "2HLE Hanwha Life4296+367%WWWLL",
-      "3DNS DN SOOPers338805",
-      "4KT KT Rolster3378−150%LWLLW",
-      "5BFX BNK FEARX1549−517%LWLLL",
+      "1GEN51115+683%LWWWW",
+      "2HLE4296+367%WWWLL",
+      "3DNS338805",
+      "4KT3378−150%LWLLW",
+      "5BFX1549−517%LWLLL",
       ...NEWS,
     ]);
+    expect(out).not.toContain("Dplus KIA");
   });
 
   test("Teams: the picker, T1's roster in role order with prices, beside its academy; no stage toggle", () => {
@@ -129,18 +130,18 @@ describe("each state renders from the fixture, in the picture's order", () => {
       ...TABS,
       "T1GENHLEDKKTDNSNSKRXBROBFX",
       "T1LCK",
-      "TopDoran 최현준12.5억",
-      "JungleOner 문현준14.0억",
-      "MidFaker 이상혁18.5억",
-      "BotPeyz 김수환15.0억",
-      "SupportKeria 류민석14.5억",
-      "CoachkkOma 김정균7.0억",
+      "TopDoran 최현준₩12.5m",
+      "JungleOner 문현준₩14.0m",
+      "MidFaker 이상혁₩18.5m",
+      "BotPeyz 김수환₩15.0m",
+      "SupportKeria 류민석₩12.0m",
+      "CoachkkOma 김정균₩7.0m",
       "T1 Esports AcademyLCK CL",
-      "TopHaru 김하루5.0억",
-      "JungleSejin 박세진5.0억",
-      "MidDowon 이도원5.5억",
-      "BotMinjae 최민재5.0억",
-      "SupportYunho 정윤호5.0억",
+      "TopHaru 김하루₩5.0m",
+      "JungleSejin 박세진₩5.0m",
+      "MidDowon 이도원₩5.5m",
+      "BotMinjae 최민재₩5.0m",
+      "SupportYunho 정윤호₩5.0m",
       ...NEWS,
     ]);
     expect(out).not.toContain("Play-In");

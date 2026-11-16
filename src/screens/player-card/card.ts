@@ -45,8 +45,6 @@ export interface WeekSeries {
   opponent: TeamCode;
   score: Score;
   state: "final" | "live";
-  /** The game being played, while live. */
-  liveGame?: number;
   games: CardGame[];
 }
 
@@ -122,7 +120,7 @@ export interface PlayerCardData {
   news?: string;
   season: { points: number; place: number; field: string; games: number; lines: SeasonLine[] };
   priceEok: number;
-  /** The last move, in 억. */
+  /** The last move, in m. */
   priceMove: number;
   form: number;
   formPlace: number;

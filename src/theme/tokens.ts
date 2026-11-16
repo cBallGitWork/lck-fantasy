@@ -31,6 +31,8 @@ export const color = {
   rise: "#FF5C6C",
   /** A price fall, Korean blue, lightened to read on navy. */
   fall: "#6EA2FF",
+  /** A figure past its limit: the bank below zero while over the budget. */
+  over: "#FF5C6C",
   /** The hangul on your team's banner, and only there. */
   gold: "#F0D58C",
   /** The banner's rule under the gold hangul. */
@@ -49,6 +51,11 @@ export const color = {
   mapLane: "#1A2C42",
   mapBase: "#22374F",
   mapTower: "#5B5A56",
+  /** A Rift tile's card: the faint, lighter ground behind his shirt, as FPL's (Craig, 16 Nov 2026). */
+  tileCard: "rgba(240, 230, 210, 0.12)",
+  /** A Rift tile's white name plate, and the dark words on it, as FPL's (Craig, 16 Nov 2026). */
+  tilePlate: "#FFFFFF",
+  onTilePlate: "#010A13",
 } as const;
 
 export const font = {
@@ -98,30 +105,29 @@ export const measure = {
   mark: 20,
   /** C and V on a lineup card. */
   markCard: 28,
-  roleBox: 28,
-  roleIcon: 20,
+  roleBox: 36,
+  roleIcon: 28,
   /** The role icon on a lineup card's head. */
-  roleIconSmall: 16,
+  roleIconSmall: 20,
   shirtW: 56,
   shirtH: 50,
   /** The shirt in a player's panel. */
   shirtSmallW: 40,
   shirtSmallH: 36,
-  /** The Rift fills the main column: 984 wide at 1440. Tiles stand at fractions of it. */
-  riftW: 984,
-  riftH: 560,
-  tileW: 148,
-  /** Pick Team's tiles, which carry no points bar. */
-  tileWNarrow: 132,
-  benchH: 72,
-  benchTileW: 280,
-  benchTileH: 48,
+  /** The Rift is square, 720 a side, centred in the main column (Craig, 16 Nov 2026). Tiles stand at shares of it. */
+  rift: 720,
+  /** A tile on the Rift: its card, name plate and band. */
+  tileW: 124,
+  /** The round of a tile's card, FPL's one rounded shape (Craig, 16 Nov 2026). */
+  tileRadius: 6,
   /** `Bench`, before the bench tiles. */
   benchTitleW: 56,
   /** A tag's line. */
   tagLine: 16,
   /** A tag inside a tile's series line, so the line keeps its height. */
   tagLineTight: 14,
+  /** Stats' sticking column: rank, role and name. */
+  colName: 244,
   /** A table's last column, holding a row's `›`. */
   goCol: 48,
   /** A table's figure column (W, L, Win %, a move, Now), its price column (Was, Owned), and a roster's role column. */
@@ -133,6 +139,8 @@ export const measure = {
   cardHead: 48,
   cardPhoto: 176,
   crest: 96,
+  /** A crest beside a team code: in a player's panel. */
+  crestSmall: 20,
   sponsorH: 112,
   sponsorTopW: 120,
 } as const;
@@ -142,8 +150,8 @@ export const motion = { fast: "150ms", slow: "250ms" } as const;
 /** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
 export const stroke = { shirt: 1.6, dash: 3 } as const;
 
-/** Frame shapes: a stream's picture, the same on Home and Live. */
-export const ratio = { stream: "16 / 9" } as const;
+/** Frame shapes: a stream's picture, the same on Home and Live; the Rift, square at any width. */
+export const ratio = { stream: "16 / 9", rift: `${measure.rift} / ${measure.rift}` } as const;
 
 export type MeasureKey = keyof typeof measure;
 

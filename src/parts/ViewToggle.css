@@ -18,5 +18,5 @@
   font-weight: var(--w-semi);
 }
 .view-toggle__key:hover {
-  border-color: var(--ink);
+  border-color: var(--text);
 }

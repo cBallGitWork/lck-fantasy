@@ -21,12 +21,21 @@ export interface StripNext extends StripSeries {
   bestOf: number;
 }
 
-/** A card's series strip: the last 3 with his points (`Live` while live), a 2px ink rule, then the next 3, the first in ink. */
+/** The strip's cell key: a team plays once a day. */
+const cellKey = (s: { week: number; day: string }) => `${s.week}-${s.day}`;
+
+/** A card tab's rows less the series its strip already shows, so each series shows once. */
+export function beyondStrip<R extends { week: number; day: string }>(rows: readonly R[], strip: readonly { week: number; day: string }[]): R[] {
+  const shown = new Set(strip.map(cellKey));
+  return rows.filter((r) => !shown.has(cellKey(r)));
+}
+
+/** A card's series strip: the last 3 with his points (`Live` while live), a 2px `--text` rule, then the next 3, the first in `--text`. */
 export function SeriesStrip({ past, next }: { past: readonly StripPast[]; next: readonly StripNext[] }) {
   return (
     <div className="series-strip">
       {past.map((s) => (
-        <div key={`${s.week}-${s.day}`} className="series-strip__cell">
+        <div key={cellKey(s)} className="series-strip__cell">
           <span className="series-strip__when">
             W{s.week} · {s.day}
           </span>
@@ -39,7 +48,7 @@ export function SeriesStrip({ past, next }: { past: readonly StripPast[]; next: 
       ))}
       <span className="series-strip__now" />
       {next.map((s, i) => (
-        <div key={`${s.week}-${s.day}`} className="series-strip__cell">
+        <div key={cellKey(s)} className="series-strip__cell">
           <span className="series-strip__when">
             W{s.week} · {s.day} · {bestOf(s.bestOf)}
           </span>

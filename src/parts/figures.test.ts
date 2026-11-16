@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { bestOf, carrySum, carryWorking, count, eok, eokToWon, inOut, MINUS, NONE, oneDecimal, ordinal, outcome, pct, perGame, perGameValue, placeOf, result, score, signed } from ".";
+import { bestOf, count, eok, eokToWon, inOut, MINUS, NONE, oneDecimal, ordinal, outcome, pct, perGame, perGameValue, placeOf, result, score, signed } from ".";
 
 test("a count marks its thousands", () => {
   expect([0, 999, 1204, 48211].map(count)).toEqual(["0", "999", "1,204", "48,211"]);
@@ -38,12 +38,7 @@ test("a place alone or among so many", () => {
   expect(placeOf(2, "10 mids")).toBe("2nd of 10 mids");
 });
 
-test("the Carry's sum and working", () => {
-  expect(carrySum(22, 1.5)).toBe("22×1.5");
-  expect(carryWorking([8, 9], 17, 1.5)).toBe("8 + 9 = 17 × 1.5");
-});
-
-test("a price held in 억 reads as money and as won", () => {
-  expect(eok(18.5)).toBe("18.5억");
+test("a price held in m reads as money and as won", () => {
+  expect(eok(18.5)).toBe("₩18.5m");
   expect(eokToWon(7.5)).toBe(750_000_000);
 });

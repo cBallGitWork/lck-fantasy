@@ -51,14 +51,22 @@ export function TableBody({ league, table, page, onPage, onFindMe }: { league: L
 
 /**
  * A league that isn't Overall: name and when its scoring starts; for a private league its code,
- * Copy link, and Admin ▾ for the maker or Leave for a member; Season, Split 1 and Split 2; the table.
+ * Copy link, and Admin ▾ for the maker or Leave for a member; the competition's tabs; the table.
  */
 export function LeagueTable({
   league,
   nameMax,
   actions,
+  adminOpen,
   ...table
-}: { league: Exclude<LeagueView, { kind: "overall" }>; /** The longest name Rename takes. */ nameMax: number; actions: LeagueActions } & TableProps) {
+}: {
+  league: Exclude<LeagueView, { kind: "overall" }>;
+  /** The longest name Rename takes. */
+  nameMax: number;
+  actions: LeagueActions;
+  /** The Admin menu opens at once (admin.html). */
+  adminOpen?: boolean;
+} & TableProps) {
   const [renaming, setRenaming] = useState(false);
   const name = renaming ? (
     <RenameField
@@ -79,7 +87,7 @@ export function LeagueTable({
           <span className="leagues__code num">{league.code}</span>
           <OutlinedKey onClick={actions.onCopyLink}>Copy link</OutlinedKey>
           {league.role === "maker" ? (
-            <Menu label="Admin ▾" className="leagues__admin" items={adminItems(actions, () => setRenaming(true))} />
+            <Menu label="Admin ▾" className="leagues__admin" items={adminItems(actions, () => setRenaming(true))} startOpen={adminOpen} />
           ) : (
             <OutlinedKey onClick={actions.onLeave}>Leave</OutlinedKey>
           )}

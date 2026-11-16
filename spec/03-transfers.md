@@ -15,6 +15,23 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   gameweek, then 1 a week up to 3.
 - All these numbers are data per competition, never code.
 
+## Roles in a transfer
+
+- A transfer may sell any role and buy any role in one go, as long as the squad still holds one
+  of each role ([spec/01](01-squad-and-slots.md)). Example: sell your starting jungler for a mid
+  while a jungler sits on your bench, with no need to bench him first (Craig, 16 Nov 2026).
+- The coach is swapped only for a coach (Craig, 16 Nov 2026).
+- After transfers Flol arranges the squad by role, as FPL does: each role slot takes a player of
+  that role; where there's a choice, the player already starting keeps his place; new players
+  fill what is left, the flex or the bench. Example: in the swap above, the bench jungler starts
+  at jungle and the new mid takes his bench spot (Craig, 16 Nov 2026).
+- An empty role slot takes a new player of that role first, then the bench in bench order (bench
+  1 before bench 2), and the flex only last. New players left over fill the flex before the
+  bench (Craig, 16 Nov 2026).
+- Crossed transfers each fill the other's role slot. Example: sell your jungler for a mid and
+  your mid for a jungler; the new jungler starts at jungle, the new mid at mid, and the bench is
+  left alone (Craig, 16 Nov 2026).
+
 ## Undoing a transfer
 
 Grilled 14 Nov 2026.
@@ -45,7 +62,7 @@ Craig, 13 Nov 2026:
   Wednesdays before.
 - The budget raise from Road to MSI ([spec/10](10-season-and-gameweeks.md)) comes back off every
   manager's bank when Split 2 starts, so a bank can fall below zero. Price rises earned in Split 1
-  are kept. Example: a raise of 5억 and a bank of 1억 leave −4억.
+  are kept. Example: a raise of ₩5m and a bank of ₩1m leave −₩4m.
 - In that window every squad must get back to a bank of zero or more and to the regular cap of 2
   per team, the coach included.
 - A squad still over at the deadline is fixed by Flol, at no points cost:

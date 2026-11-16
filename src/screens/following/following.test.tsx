@@ -32,43 +32,42 @@ describe("the page (1440.png)", () => {
       "팔로잉",
       "Week 3",
       "Not final",
+      "Deadline Wed 07:45 16:45 KST",
       "Minji Park",
       "Chovy Was Right There",
       "20",
-      "GEN 2–1 HLE Bo3",
+      "GEN 2–1 HLE",
       "Kiin 5 · Canyon 7 · Chovy 8",
       "Ended Sat 10:20 19:20 KST",
       "Truck ›",
       "Jae Kim",
-      "NS 0–2 KRX Bo3",
+      "NS 0–2 KRX",
       "Rich 4 · ucal 2 (Carry) · Lehends 3",
       "Ended Fri 13:00 22:00 KST",
       "Truck ›",
       "Dan Okafor",
-      "T1 2–1 HLE Bo3",
+      "T1 2–1 HLE",
       "Oner 11 · Faker 18 (12 × 1.5) · Keria 5",
       "Coffee sent",
       "Minji Park",
-      "Deadline: Limitless, 5 transfers",
+      "Limitless, 5 transfers",
       "so far",
       "Doran → Kiin+9",
       "Peyz → Ruler+4",
       "Lehends → Keria−1",
       "+ 2 more",
-      "Wed 07:45 16:45 KST",
       "Truck ›",
       "Dan Okafor",
-      "Deadline: 2 transfers, −6",
+      "2 transfers, −6",
       "Lucid → Oner0",
       "Chovy → Faker+24",
       "Coffee sent",
       "Jae Kim",
-      "Deadline: no transfers",
-      "Wed 07:45 16:45 KST",
+      "no transfers",
       "Truck ›",
       "Week 2",
       "Jae Kim",
-      "GEN 2–0 DNS Bo3",
+      "GEN 2–0 DNS",
       "Big Carry",
       "Ruler 21 (14 × 1.5)",
       "Minji Park",
@@ -85,7 +84,7 @@ describe("the page (1440.png)", () => {
       "Accept",
       "Decline",
       "Joe Grant",
-      "Trucks · Week 3",
+      "Trucks",
       "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!",
       "Coffee from Minji Park",
       "THIS TRUCK WAS FUNDED BY YOUR −6.",
@@ -124,7 +123,7 @@ describe("the page (1440.png)", () => {
   });
 
   test("the screen renders on its fixture", () => {
-    expect(text(<FollowingScreen />)).toContain("Deadline: Limitless, 5 transfers");
+    expect(text(<FollowingScreen />)).toContain("Limitless, 5 transfers");
   });
 });
 
@@ -206,7 +205,7 @@ describe("the controls", () => {
 
 test("figures and summaries read as the picture writes them", () => {
   expect([signed(9), signed(-1), signed(0)]).toEqual(["+9", "−1", "0"]);
-  const moves = (over: Partial<DeadlineItem>): DeadlineItem => ({ kind: "deadline", id: "x", manager: FOLLOWING.following[0]!, transfers: 0, swaps: [], at: { local: "", kst: "" }, ...over });
+  const moves = (over: Partial<DeadlineItem>): DeadlineItem => ({ kind: "deadline", id: "x", manager: FOLLOWING.following[0]!, transfers: 0, swaps: [], ...over });
   expect(movesSummary(moves({ transfers: 1 }))).toBe("1 transfer");
   expect(movesSummary(moves({ buff: "Limitless", transfers: 5 }))).toBe("Limitless, 5 transfers");
   expect(playersLine([{ name: "Faker", points: 18, carry: { before: 12 } }], 1.5)).toBe("Faker 18 (12 × 1.5)");

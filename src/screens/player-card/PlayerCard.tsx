@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, Tabs, Tag } from "../../parts";
+import { beyondStrip, eok, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
@@ -11,15 +11,15 @@ import { ThisWeek } from "./ThisWeek";
 import "./PlayerCard.css";
 
 
-/** Each tab's content; a tab whose data hasn't come yet shows nothing. */
+/** Each tab's content; a tab whose data hasn't come yet shows nothing. Fixtures and History start after the strip's series. */
 function tabBody(tab: CardTab, card: PlayerCardData): ReactNode {
   switch (tab) {
     case "This week":
       return card.thisWeek && <ThisWeek week={card.thisWeek} />;
     case "Fixtures":
-      return card.fixtures && <FixturesTab team={card.team} rows={card.fixtures} />;
+      return card.fixtures && <FixturesTab team={card.team} rows={beyondStrip(card.fixtures, card.next)} />;
     case "History":
-      return card.history && <History history={card.history} />;
+      return card.history && <History history={card.history} shown={beyondStrip(card.history.rows, card.past)} />;
     case "Champions":
       return card.champions && <Champions rows={card.champions} />;
   }
@@ -74,8 +74,7 @@ export function PlayerCard({
       </header>
       <div className="player-card__meta">
         <span className="player-card__quiet">
-          <b className="player-card__figure num">{eok(card.priceEok)}</b>
-          <PriceMove eok={card.priceMove} />
+          <b className="player-card__figure num">{eok(card.priceEok)}</b>price <PriceMove eok={card.priceMove} />
         </span>
         <span className="player-card__quiet">
           <b className="player-card__figure num">{oneDecimal(card.form)}</b>form · {ordinal(card.formPlace)}

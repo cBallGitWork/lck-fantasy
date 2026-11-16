@@ -17,7 +17,7 @@
   position: relative;
   max-width: 100%;
   background: var(--paper);
-  border-top: var(--m-rule-heavy) solid var(--ink);
+  border-top: var(--m-rule-heavy) solid var(--text);
 }
 .modal__box--card {
   width: var(--m-modal-card);
@@ -25,6 +25,11 @@
 .modal__box--sheet {
   width: var(--m-modal-sheet);
   padding: var(--s-5) var(--s-6) var(--s-6);
+}
+.modal__box--strong {
+  background: var(--fill);
+  border: var(--m-rule-heavy) solid var(--text);
+  border-top-width: var(--s-1);
 }
 .modal__close {
   position: absolute;

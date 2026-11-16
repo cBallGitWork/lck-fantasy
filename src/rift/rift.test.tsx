@@ -2,10 +2,10 @@
 import { expect, test } from "vitest";
 import { PICK_TEAM_SQUAD } from "../fixtures/week3";
 import { html, text } from "../testing/render";
+import { measure } from "../theme/tokens";
 import {
   BENCH_SLOTS,
   BenchBar,
-  BenchSwap,
   BenchTile,
   flexPlays,
   isBench,
@@ -22,7 +22,6 @@ import {
   PanelSumLabel,
   PlayerPanel,
   RIFT_SLOTS,
-  RIFT_SLOTS_PICK,
   RIFT_VIEW,
   Rift,
   RiftMap,
@@ -36,6 +35,9 @@ test("the map draws the river, three lanes, two bases and ten towers", () => {
   expect(out.match(/rift-map__lane/g)).toHaveLength(3);
   expect(out.match(/rift-map__base/g)).toHaveLength(2);
   expect(out.match(/<rect /g)).toHaveLength(11);
+  // Drawn square, in the Rift's own shape, and never stretched to its box.
+  expect(out).toContain('viewBox="0 0 720 720"');
+  expect(out).not.toContain("preserveAspectRatio");
 });
 
 test("only a Flex plays a role: a mid there plays mid; elsewhere, and a coach, play none", () => {
@@ -51,22 +53,23 @@ test("each role has its icon, named for screen readers", () => {
   }
 });
 
-test("a Points tile shows team, role, C, name, your dot, points with ×1.5, line, and stands at its slot", () => {
+test("a Points tile shows team, C, name, your dot, points (the Carry's result only), line, and stands at its slot", () => {
   const out = html(
     <Rift>
-      <Tile slot="mid" name="Faker" team="T1" at={RIFT_SLOTS.mid} mark="C" me points={25} carrySum="17×1.5" line="v HLE 12 · v DK 5" selected />
+      <Tile slot="mid" name="Faker" team="T1" at={RIFT_SLOTS.mid} mark="C" me points={25} line="v HLE 12 · v DK 5" selected />
     </Rift>,
   );
   expect(out).toContain("rift-map");
   expect(out).toContain('class="shirt__code">T1');
-  expect(out).toContain('aria-label="Mid"');
   expect(out).toContain('title="Carry">C');
   expect(out).toContain('aria-label="Your player"');
-  expect(out).toContain("25<small>17×1.5</small>");
+  expect(out).toContain('class="tile__points num">25</div>');
   expect(out).toContain("v HLE 12 · v DK 5");
   expect(out).toContain("tile--selected");
-  // 500 of 984 across, 260 of 560 down: the same share of the Rift at any width.
-  expect(out).toMatch(/left:50\.81\d*%;top:46\.42\d*%/);
+  // 372 of 720 across and down: the same share of the square Rift at any width.
+  expect(out).toMatch(/left:51\.66\d*%;top:51\.66\d*%/);
+  // FPL's tile: no role icon, a white name plate, the points in a dark band.
+  expect(out).not.toContain("role-icon");
   expect(out).toContain('title="Faker"');
 });
 
@@ -79,10 +82,8 @@ test("a tile or a lineup card that can be chosen is a key the keyboard reaches",
   expect(card).toContain('tabindex="0"');
 });
 
-test("a Flex tile shows the role he plays, a Coach tile its hangul", () => {
-  expect(text(<Tile slot="flex" plays="top" name="Siwoo" team="DK" at={RIFT_SLOTS_PICK.flex} line="v HLE · v KT" />)).toContain(
-    "Flex · plays Top",
-  );
+test("a Flex tile is labelled Flex over his shirt, not the role he plays; a Coach tile its hangul", () => {
+  expect(text(<Tile slot="flex" name="Siwoo" team="DK" at={RIFT_SLOTS.flex} line="v HLE · v KT" />)).toBe("FlexDKSiwoov HLE · v KT");
   expect(text(<Tile slot="coach" name="kkOma" team="T1" at={RIFT_SLOTS.coach} mark="V" />)).toContain("Coach 감독");
 });
 
@@ -97,8 +98,9 @@ test("the two views, the Rift first", () => {
   expect(RIFT_VIEW).toBe("Rift view");
 });
 
-test("both slot sets place all seven starters", () => {
-  for (const slots of [RIFT_SLOTS, RIFT_SLOTS_PICK]) expect(Object.keys(slots).sort()).toEqual([...LINEUP_ORDER].sort());
+test("the slots place all seven starters, inside the square Rift", () => {
+  expect(Object.keys(RIFT_SLOTS).sort()).toEqual([...LINEUP_ORDER].sort());
+  for (const [x, y] of Object.values(RIFT_SLOTS)) expect([x, y].every((v) => v > 0 && v < measure.rift)).toBe(true);
 });
 
 test("Card view shows the seven in broadcast order, with photo, crest, C and V, and footer", () => {
@@ -150,6 +152,8 @@ test("the panel's body: a series head, its games with the counted boxed, the sum
     </PlayerPanel>,
   );
   expect(out).toContain('<h4 class="player-panel__series-head">Wed · v HLE<span>W 2–1</span></h4>');
+  const linked = html(<PanelSeries title="v HLE" result={<span>W 2–1</span>} go={{ to: "/series/$seriesId", params: { seriesId: "w3-wed-1" } }} />);
+  expect(linked).toMatch(/<a [^>]*href="\/series\/w3-wed-1"[^>]*>v HLE<\/a>/);
   expect(out).toContain('<span class="player-panel__counted">5</span>');
   expect(out.match(/player-panel__counted/g)).toHaveLength(1);
   expect(out).toContain('class="player-panel__game player-panel__game--dropped"');
@@ -160,17 +164,17 @@ test("the panel's body: a series head, its games with the counted boxed, the sum
   expect(text(<PanelFoot go={{ to: "/points" }} />)).toBe("Full stats ›");
 });
 
-test("the bench bar holds slim tiles and the swap key; a bench tile can be chosen", () => {
+test("the bench bar holds the Rift's tiles, each under its order and role, with no swap key; a bench tile can be chosen", () => {
   const out = text(
     <BenchBar>
       <BenchTile order={1} role="mid" name="Bdd" team="KT" detail="Didn't play" points="—" state="out" />
-      <BenchSwap />
       <BenchTile order={2} role="jng" name="Cuzz" team="KT" line="v DK · v T1" />
     </BenchBar>,
   );
-  expect(out).toBe("Bench1Bdd KT · Didn't play—⇅ Swap2Cuzz KTv DK · v T1");
+  expect(out).toBe("Bench1. MidKTBdd—Didn't play2. JungleKTCuzzv DK · v T1");
+  // The bench shows the Rift's own tiles, as FPL's bench under the pitch (Craig, 16 Nov 2026).
   const chosen = html(<BenchTile order={1} role="mid" name="Bdd" team="KT" selected onSelect={() => {}} />);
-  expect(chosen).toContain("bench-tile--selected");
+  expect(chosen).toContain("tile tile--bench tile--selected");
   expect(chosen).toContain('role="button"');
 });
 

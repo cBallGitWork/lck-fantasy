@@ -1,9 +1,11 @@
 // The Live picture's made-up data (docs/design/approved/live/live.html), built on Week 3 at the
-// Points picture's moment. Every week figure is the picture's own: the backend computes them later
-// (#33, #34), so nothing here scores.
+// Points picture's moment. Each player's week is the shared squad's (MY_WEEK3), so Live, Points
+// and Home agree; the backend computes them later (#33, #34).
 import {
   BEST_OF,
   COMPETITION,
+  finalPickOf,
+  LIVE_SERIES_ID,
   MY_WEEK3,
   playerId,
   POINTS_SQUAD,
@@ -36,8 +38,8 @@ export const DEFAULT_STREAM = LIVE_STREAMS[0]!.id;
 const STAGE = `${COMPETITION} Week ${POINTS_WEEK.week}`;
 const FORMAT = bestOf(BEST_OF);
 
-const LIVE_SERIES = seriesById(WEEK3_SERIES_AT_POINTS, "w3-sat-2");
-const LAST_SERIES = seriesById(WEEK3_SERIES_FINAL, "w3-sat-2");
+const LIVE_SERIES = seriesById(WEEK3_SERIES_AT_POINTS, LIVE_SERIES_ID);
+const LAST_SERIES = seriesById(WEEK3_SERIES_FINAL, LIVE_SERIES_ID);
 const NEXT_SERIES = seriesById(WEEK3_SERIES_AT_POINTS, "w3-sun-1");
 
 const starters = POINTS_SQUAD.filter((p) => p.slot !== "bench");
@@ -45,17 +47,20 @@ const playsIn = (p: PointsPick) => p.series.some((s) => s.id === LIVE_SERIES.id)
 const base = (p: PointsPick) => ({ id: playerId(p.name), name: p.name, team: p.team, role: p.role, mark: p.mark });
 const liveGames = (p: PointsPick) => p.series.find((s) => s.id === LIVE_SERIES.id)?.games ?? [];
 
-/** Each player's week points at each moment, as the picture gives them. */
-const WEEK_POINTS: Record<"live" | "down" | "idle", Record<string, number>> = {
+/** Each player's week points at each moment, from the shared squad. */
+const WEEK_POINTS: Record<"live" | "down" | "idle", Readonly<Record<string, number>>> = {
   live: MY_WEEK3.live,
-  down: { faker: 18, siwoo: 5, kkoma: 8, zeus: 14, canyon: 14, ruler: 14, delight: 9 },
-  idle: { faker: 33, siwoo: 9, kkoma: 16, zeus: 14, canyon: 14, ruler: 14, delight: 9 },
+  down: MY_WEEK3.down,
+  idle: MY_WEEK3.final,
 };
 /** The live game's K/D/A, per player in it. */
 const LIVE_KDA: Record<string, string> = { faker: "3/0/2", siwoo: "1/0/1" };
-/** The finished T1 2–0 DK as the Series page has it, and kkOma's +3 for a series won. */
-const FINAL_GAMES: Record<string, number[]> = { faker: [4, 6], siwoo: [2, 2], kkoma: [2, 3] };
-const FINAL_WON: Record<string, number> = { kkoma: 3 };
+/** The finished T1 2–0 DK from the shared squad: each player's games, and a coach's series result. */
+const finalIn = (p: PointsPick) => {
+  const series = finalPickOf(p.name).series.find((s) => s.id === LIVE_SERIES.id);
+  if (!series) throw new Error(`${p.name} has no final ${LIVE_SERIES.id}`);
+  return series;
+};
 
 const points = (moment: keyof typeof WEEK_POINTS, p: PointsPick) => {
   const week = WEEK_POINTS[moment][playerId(p.name)];
@@ -73,7 +78,7 @@ const downPlayers: PanelPlayer[] = starters
   .map((p) => ({ ...base(p), games: liveGames(p).map(() => null), points: points("down", p) }));
 const finalPlayers: PanelPlayer[] = starters
   .filter(playsIn)
-  .map((p) => ({ ...base(p), games: FINAL_GAMES[playerId(p.name)] ?? [], won: FINAL_WON[playerId(p.name)], points: points("idle", p) }));
+  .map((p) => ({ ...base(p), games: finalIn(p).games, won: finalIn(p).coachResult, points: points("idle", p) }));
 
 const bug = (s: Series) => {
   if (!s.score) throw new Error(`Series ${s.id} has no score`);
@@ -95,7 +100,7 @@ export const LIVE_NOW: Omit<LiveNowProps, "picker"> = {
 export const LIVE_DOWN: Omit<LiveDownProps, "picker"> = {
   bug: LIVE_NOW.bug,
   panel: {
-    week: { total: 82, average: 66, highest: 118, notFinal: true },
+    week: { total: MY_WEEK3.downTotal, average: 66, highest: 118, notFinal: true },
     series: LIVE_NOW.panel.series,
     players: downPlayers,
     rest: rest("down"),
@@ -117,7 +122,7 @@ export const LIVE_IDLE: Omit<LiveIdleProps, "picker"> = {
   last: { ...bug(LAST_SERIES), day: "Saturday", format: FORMAT, stage: STAGE },
   panel: {
     week: { total: MY_WEEK3.finalTotal, ...WEEK3_FINAL, notFinal: false },
-    series: { home: LAST_SERIES.home, away: LAST_SERIES.away, score: LAST_SERIES.score },
+    series: { home: LAST_SERIES.home, away: LAST_SERIES.away },
     players: finalPlayers,
     rest: rest("idle"),
   },

@@ -25,18 +25,17 @@ describe("Week 4 prices", () => {
   test("lists each move in the picture's order: name, team and role, was, now, owned", () => {
     const rises = out.slice(out.indexOf("Rises"), out.indexOf("Falls"));
     const falls = out.slice(out.indexOf("Falls"));
-    expect(rises).toContain("PlayerWasNowOwnedFakerT1 · Mid18.0억18.5억46%ChovyGEN · Mid17.0억17.5억41%");
-    expect(rises.endsWith("HypeKRX · Bot5.0억5.5억2%")).toBe(true);
-    expect(falls).toContain("PlayerWasNowOwnedGumayusiHLE · Bot16.0억15.5억26%");
-    expect(falls.endsWith("EdgarBRO · Coach5.0억4.5억1%")).toBe(true);
+    expect(rises).toContain("PlayerWasNowOwnedFakerT1 · Mid₩18.0m₩18.5m46%ChovyGEN · Mid₩17.0m₩17.5m41%");
+    expect(rises.endsWith("HypeKRX · Bot₩5.0m₩5.5m2%")).toBe(true);
+    expect(falls).toContain("PlayerWasNowOwnedGumayusiHLE · Bot₩16.0m₩15.5m26%");
+    expect(falls.endsWith("EdgarBRO · Coach₩5.0m₩4.5m1%")).toBe(true);
     expectInOrder(rises, ["Faker", "Chovy", "Peyz", "Siwoo", "BuLLDoG", "Lucid", "Kingen", "Ssong", "Hype"]);
     expectInOrder(falls, ["Gumayusi", "Aiming", "ShowMaker", "Doran", "DuDu", "Clear", "DanDy", "Edgar"]);
   });
 
-  test("marks a rise ▲ and a fall ▼, and your own players with the dot", () => {
+  test("marks no row with an arrow (the list says rise or fall), and your own players with the dot", () => {
     const page = html(<PatchUpdatePage week={WEEK4_PRICES} />);
-    expect(page.match(/class="rise"/g)).toHaveLength(WEEK4_PRICES.rises.length);
-    expect(page.match(/class="fall"/g)).toHaveLength(WEEK4_PRICES.falls.length);
+    expect(page).not.toMatch(/class="(rise|fall)"/);
     expect(page.match(/me-dot/g)).toHaveLength(2);
     expect(WEEK4_PRICES.rises.filter((row) => row.mine).map((row) => row.name)).toEqual(["Faker", "Siwoo"]);
   });
@@ -61,11 +60,10 @@ describe("controls", () => {
     expect(cardOf(WEEK4_PRICES.falls.at(-1)!)).toEqual({ to: "/coach/$coachId", params: { coachId: "edgar" } });
   });
 
-  test("‹ and › are keys only where there is a week to go to", () => {
+  test("‹ and › step only where there is a week to go to; the other is a disabled key", () => {
     const latest = html(<PatchUpdatePage week={WEEK4_PRICES} onPrev={noop} />);
-    expect(latest).toContain('aria-label="Week before"');
-    expect(latest).not.toContain('aria-label="Week after"');
-    expect(latest).toContain("week-arrow--off");
+    expect(latest).toContain('<button type="button" class="week-arrow" aria-label="Week before">');
+    expect(latest).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">');
   });
 
   test("stepping stops at the first and the latest week", () => {

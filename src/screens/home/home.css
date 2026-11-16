@@ -20,20 +20,14 @@
   aspect-ratio: 40 / 46;
 }
 .home__shield-body {
-  fill: var(--ink);
-  stroke: var(--ink);
+  fill: var(--text);
+  stroke: var(--text);
   stroke-width: var(--stroke-shirt);
 }
 .home__shield-band {
-  stroke: var(--on-ink);
+  stroke: var(--bg);
   stroke-width: var(--m-rule);
   opacity: 0.45;
-}
-.home__shield-division {
-  fill: var(--on-ink);
-  font-family: var(--font-mono);
-  font-weight: var(--w-semi);
-  font-size: var(--size-small);
 }
 .home__tier-name {
   font-size: var(--size-head);
@@ -68,7 +62,7 @@
   align-items: end;
   margin-bottom: var(--s-5);
   padding-top: var(--s-2);
-  border-top: var(--m-rule-heavy) solid var(--ink);
+  border-top: var(--m-rule-heavy) solid var(--text);
 }
 .home__deadline-title {
   grid-column: 1 / -1;
@@ -195,8 +189,8 @@
   height: var(--s-4);
   margin-left: var(--s-1);
   border-radius: 50%;
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
   font-size: var(--size-small);
   font-weight: var(--w-bold);
   vertical-align: middle;

@@ -5,7 +5,7 @@ import "./Tag.css";
 /** `live` is filled; `notFinal` is dashed. */
 export type TagKind = "plain" | "live" | "notFinal";
 
-/** A square box, 11px, sentence case: `Live`, `Not final`, `Final`, `Cap 2`. */
+/** A square box, 11px, sentence case: `Live`, `Not final`, `Final`. Never the team cap (plate.md). */
 export function Tag({ kind = "plain", children }: { kind?: TagKind; children: ReactNode }) {
   return <span className={cx("tag", kind === "live" && "tag--live", kind === "notFinal" && "tag--not-final")}>{children}</span>;
 }

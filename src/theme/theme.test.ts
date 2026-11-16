@@ -94,8 +94,10 @@ test.each([
   ["onInk", "ink"],
   ["rise", "paper"],
   ["fall", "paper"],
+  ["over", "bg"],
   ["gold", "stage"],
   ["stageText", "stage"],
+  ["onTilePlate", "tilePlate"],
 ] as const)("%s reads on %s at 4.5:1 or more", (fg, bg) => {
   expect(contrast(color[fg], color[bg])).toBeGreaterThanOrEqual(4.5);
 });

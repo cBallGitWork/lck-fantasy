@@ -37,6 +37,6 @@ and 10. If the Carry plays no game, nobody else steps in.
 
 ## How many, and when
 
-- The LCK Cup beta has all four, one of each.
+- The beta, Split 1, has all four, one of each (Craig, 16 Nov 2026).
 - The main season gives one of each per split.
 - Every buff can be played in every stage, knockouts included.

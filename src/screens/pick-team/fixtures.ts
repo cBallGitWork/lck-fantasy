@@ -1,8 +1,9 @@
 // Pick Team's own made-up data, built on the shared Week 3 file (src/fixtures/week3.ts), at the
-// picture's moment: Week 4, Tuesday 22:00 London, before the deadline (pick.html). Faker's and
-// Siwoo's card figures are the picture's; the other players' are made up the same way.
+// picture's moment: Week 4, Tuesday 22:00 London, before the deadline (pick.html). Prices, form,
+// owned % and season points are Stats'; Faker's and kkOma's last three series are the T1 season's.
 
-import { BEST_OF, CARRY_MULTIPLIER, COMPETITION, MANAGER, PICK_TEAM_SQUAD, playerId, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
+import { FAKER_SEASON, KKOMA_SEASON, last3, type T1MemberSeason } from "../../fixtures/t1Season";
+import { CARRY_MULTIPLIER, COMPETITION, finalPickOf, MANAGER, PICK_TEAM_SQUAD, playerId, seriesPointsOf, statsOf, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
 import type { Mark, PersonRole, SquadSlot } from "../../rift";
 import type { PickBuff, PickState, PickTeam } from "./model";
 
@@ -19,7 +20,7 @@ export interface PickPlayer {
   team: TeamCode;
   role: PersonRole;
   priceEok: number;
-  /** His last price move in 억; absent before it first moves. */
+  /** His last price move in m; absent before it first moves. */
   priceMove?: number;
   form: number;
   formRank: Ranked;
@@ -27,7 +28,7 @@ export interface PickPlayer {
   ownedRank: Ranked;
   season: number;
   seasonRank: Ranked;
-  /** His points in each of the last three weeks, oldest first. */
+  /** His points in each of his last three series, oldest first. */
   lastThree: readonly number[];
   /** The admin's flag and its note: `Not starting` `Wed`. */
   news?: { flag: string; note: string };
@@ -49,38 +50,49 @@ export interface PickTeamData {
   week: string;
   players: Record<string, PickPlayer>;
   series: readonly Series[];
-  /** Games in each of the week's series. */
-  bestOf: number;
   deadline: { local: string; kst: string; countdown: string };
   buffs: readonly PickBuffInfo[];
 }
 
 
-/** Each player's card figures, by name. */
-const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceEok" | "form">> = {
-  Zeus: { formRank: { place: 3, of: "10 tops" }, ownedPct: 31, ownedRank: { place: 4 }, season: 48, seasonRank: { place: 7 }, lastThree: [12, 16, 14] },
-  Canyon: { formRank: { place: 2, of: "10 junglers" }, ownedPct: 29, ownedRank: { place: 5 }, season: 50, seasonRank: { place: 6 }, lastThree: [15, 13, 16] },
-  Faker: { priceMove: 0.5, formRank: { place: 1, of: "10 mids" }, ownedPct: 46, ownedRank: { place: 1 }, season: 58, seasonRank: { place: 2 }, lastThree: [19, 22, 17] },
-  Ruler: { formRank: { place: 1, of: "10 bots" }, ownedPct: 38, ownedRank: { place: 3 }, season: 56, seasonRank: { place: 3 }, lastThree: [14, 17, 15] },
-  Delight: { formRank: { place: 4, of: "10 supports" }, ownedPct: 19, ownedRank: { place: 8 }, season: 38, seasonRank: { place: 12 }, lastThree: [8, 11, 9] },
+/** T1's two in the squad: their last three series are the shared T1 season's. */
+const T1_SEASONS: Record<string, T1MemberSeason> = { Faker: FAKER_SEASON, kkOma: KKOMA_SEASON };
+
+/** The others' series points before Week 3, oldest first, made up; Week 3's are the shared squad's. */
+const BEFORE_WEEK3: Record<string, number[]> = { Zeus: [12], Canyon: [15], Ruler: [14], Delight: [8], Siwoo: [6], Bdd: [4, 6, 6], Cuzz: [9] };
+
+/** His points in his last three series, oldest first (spec/12, the player card's front). */
+function lastThreeOf(name: string): number[] {
+  const t1 = T1_SEASONS[name];
+  if (t1) return last3(t1).map((s) => s.points);
+  const before = BEFORE_WEEK3[name];
+  if (!before) throw new Error(`${name} has no series before Week 3`);
+  return [...before, ...seriesPointsOf(finalPickOf(name)).map((s) => s.points)].slice(-3);
+}
+
+/** Each player's card figures, by name; owned % and season points are Stats'. */
+const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceEok" | "form" | "ownedPct" | "season" | "lastThree">> = {
+  Zeus: { formRank: { place: 3, of: "10 tops" }, ownedRank: { place: 4 }, seasonRank: { place: 7 } },
+  Canyon: { formRank: { place: 2, of: "10 junglers" }, ownedRank: { place: 5 }, seasonRank: { place: 6 } },
+  Faker: { priceMove: 0.5, formRank: { place: 1, of: "10 mids" }, ownedRank: { place: 1 }, seasonRank: { place: 2 } },
+  Ruler: { formRank: { place: 1, of: "10 bots" }, ownedRank: { place: 3 }, seasonRank: { place: 3 } },
+  Delight: { formRank: { place: 4, of: "10 supports" }, ownedRank: { place: 8 }, seasonRank: { place: 12 } },
   Siwoo: {
     formRank: { place: 7, of: "10 tops" },
-    ownedPct: 6,
     ownedRank: { place: 9 },
-    season: 23,
     seasonRank: { place: 8 },
-    lastThree: [6, 9, 8],
     news: { flag: "Not starting", note: "Wed" },
   },
-  kkOma: { formRank: { place: 1, of: "10 coaches" }, ownedPct: 24, ownedRank: { place: 1 }, season: 27, seasonRank: { place: 1 }, lastThree: [8, 10, 9] },
-  Bdd: { formRank: { place: 8, of: "10 mids" }, ownedPct: 4, ownedRank: { place: 10 }, season: 18, seasonRank: { place: 9 }, lastThree: [4, 6, 6] },
-  Cuzz: { formRank: { place: 6, of: "10 junglers" }, ownedPct: 5, ownedRank: { place: 9 }, season: 24, seasonRank: { place: 8 }, lastThree: [9, 4, 10] },
+  kkOma: { formRank: { place: 1, of: "10 coaches" }, ownedRank: { place: 1 }, seasonRank: { place: 1 } },
+  Bdd: { formRank: { place: 8, of: "10 mids" }, ownedRank: { place: 10 }, seasonRank: { place: 9 } },
+  Cuzz: { formRank: { place: 6, of: "10 junglers" }, ownedRank: { place: 9 }, seasonRank: { place: 8 } },
 };
 
 const player = (p: PickTeamPick): PickPlayer => {
   const card = CARDS[p.name];
   if (!card) throw new Error(`No card figures for ${p.name}`);
-  return { id: playerId(p.name), name: p.name, team: p.team, role: p.role, priceEok: p.priceEok, form: p.form, ...card };
+  const { ownedPct, points } = statsOf(p.name);
+  return { id: playerId(p.name), name: p.name, team: p.team, role: p.role, priceEok: p.priceEok, form: p.form, ownedPct, season: points, lastThree: lastThreeOf(p.name), ...card };
 };
 
 export const PICK_TEAM_DATA: PickTeamData = {
@@ -88,13 +100,12 @@ export const PICK_TEAM_DATA: PickTeamData = {
   week: `${COMPETITION} Week 4`,
   players: Object.fromEntries(PICK_TEAM_SQUAD.map((p) => [playerId(p.name), player(p)])),
   series: WEEK4_SERIES,
-  bestOf: BEST_OF,
   deadline: WEEK4_DEADLINE,
   buffs: [
-    { name: "Bench Boost", does: "Your bench scores too", left: 1, here: "benchBoost" },
-    { name: "Dual Carry", does: `Vice-carry ×${CARRY_MULTIPLIER} too`, left: 1, here: "dualCarry" },
-    { name: "Remake", does: "Unlimited transfers, kept", left: 1 },
-    { name: "Limitless", does: "One week, no budget or team cap", left: 1 },
+    { name: "Bench Boost", does: "Your bench players score this week too", left: 1, here: "benchBoost" },
+    { name: "Dual Carry", does: `Your Vice-carry scores ×${CARRY_MULTIPLIER} too`, left: 1, here: "dualCarry" },
+    { name: "Remake", does: "Unlimited free transfers; your new squad stays", left: 1 },
+    { name: "Limitless", does: "One week, no budget or team cap; then your squad returns", left: 1 },
   ],
 };
 
@@ -113,10 +124,10 @@ export const SAVED_TEAM: PickTeam = {
 
 /** The three states the picture folder draws. */
 export const PICK_TEAM_STATES: Record<"rift" | "cards" | "swap", PickState> = {
-  /** 1440.png: Rift view, Faker tapped, no changes. */
+  /** 1440.png: Rift view, Faker tapped (Bdd lit to swap with him), no changes. */
   rift: { saved: SAVED_TEAM, draft: SAVED_TEAM, view: "rift", selected: "faker" },
   /** 1440-cards.png: Card view, Faker tapped. */
   cards: { saved: SAVED_TEAM, draft: SAVED_TEAM, view: "cards", selected: "faker" },
-  /** 1440-swap.png: Siwoo going out, Bench Boost on and unsaved. */
-  swap: { saved: SAVED_TEAM, draft: { ...SAVED_TEAM, buff: "benchBoost" }, view: "rift", selected: "siwoo", swapping: "siwoo" },
+  /** 1440-swap.png: Siwoo, the Flex, tapped (Zeus and both bench players lit), Bench Boost on and unsaved. */
+  swap: { saved: SAVED_TEAM, draft: { ...SAVED_TEAM, buff: "benchBoost" }, view: "rift", selected: "siwoo" },
 };

@@ -1,6 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
+import { useDevState } from "../../parts";
 import { PATHS } from "../../paths";
-import { HOME_LIVE } from "./fixtures";
+import { HOME_IDLE, HOME_LIVE } from "./fixtures";
 import { HomeIdle } from "./Idle";
 import { HomeLive } from "./Live";
 import type { HomeData } from "./types";
@@ -15,7 +16,7 @@ export function Home({ data, onPickStream }: { data: HomeData; onPickStream?: (i
   return data.state === "live" ? <HomeLive data={data} onPickStream={onPickStream} {...actions} /> : <HomeIdle data={data} {...actions} />;
 }
 
-/** The route: made-up data until the backend's query feeds it (issue #80). */
+/** The route: made-up data until the backend's query feeds it (issue #80). `?state=idle` opens nothing live, in dev. */
 export function HomeScreen() {
-  return <Home data={HOME_LIVE} />;
+  return <Home data={useDevState({ idle: HOME_IDLE }) ?? HOME_LIVE} />;
 }

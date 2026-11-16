@@ -23,7 +23,7 @@ export interface CoachHead {
 
 export interface CoachMeta {
   priceEok: number;
-  /** The last price move, in 억. */
+  /** The last price move, in m. */
   moveEok: number;
   form: number;
   formRank: Rank;
@@ -68,8 +68,6 @@ export interface WeekSeries {
   /** The coach's team's games first. */
   score: Score;
   state: "final" | "live";
-  /** The game being played, while live. */
-  liveGame?: number;
   games: WeekGame[];
   points: number;
 }

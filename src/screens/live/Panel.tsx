@@ -1,4 +1,4 @@
-import { cx, GoLink, LinkGo, NONE, score, SectionHead, Tag } from "../../parts";
+import { cx, GoLink, LinkGo, NONE, SectionHead, Tag } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
@@ -78,7 +78,7 @@ export function PointsPanel({ panel, down }: { panel: Panel; down?: boolean }) {
         </span>
       </div>
       <SectionHead>
-        {series.home} {series.score ? score(series.score) : WORDS.versus} {series.away}
+        {series.home} {WORDS.versus} {series.away}
       </SectionHead>
       {panel.players.map((p) => (
         <PlayerRow key={p.id} player={p} />

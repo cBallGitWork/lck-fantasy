@@ -34,23 +34,23 @@ describe("Points", () => {
       "›",
       "93",
       "Average 79",
-      "Highest 136 ›",
+      "Highest 128 ›",
       "Not final",
       "Limitless",
       "Slot",
       "Player",
       "Pts",
       "Series",
-      "Top", "Kiin", "GEN", "11", "GEN 2–0 KT · Wed", "GEN 2–1 HLE · Sat",
+      "Top", "Kiin", "GEN", "11", "v KT 2–0 · Wed", "v HLE 2–1 · Sat",
       "Jungle", "Canyon", "14",
       "Mid", "Chovy", "V", "17",
       "Bot", "Ruler", "C", "21",
-      "Support", "Keria", "T1", "9", "T1 2–1 HLE · Wed", "T1 2–0 DK · Sat",
-      "Flex · Top", "Kingen", "NS", "5", "DK 2–0 NS · Thu", "NS 0–2 KRX · Fri",
+      "Support", "Keria", "T1", "9", "v HLE 2–1 · Wed", "v DK 2–0 · Sat",
+      "Flex · Top", "Kingen", "NS", "5", "v DK 0–2 · Thu", "v KRX 0–2 · Fri",
       "Coach", "kkOma", "16",
       "Bench",
       "Bench 1 · Mid", "Bdd", "KT", "—", "Not in KT's lineup",
-      "Bench 2 · Jungle", "Cuzz", "9", "GEN 2–0 KT · Wed", "KT 2–1 BFX · Fri",
+      "Bench 2 · Jungle", "Cuzz", "9", "v GEN 0–2 · Wed", "v BFX 2–1 · Fri",
       ...LEAGUES,
       "Trucks · Week 3", "2",
       "The template was right there, mate.", "Protest from Dan Okafor",
@@ -78,7 +78,7 @@ describe("Points", () => {
 
   test("an earlier week shows its points, its team loading until the backend feeds it, and no trucks", () => {
     const week2 = text(page("Points", PROFILE, 2));
-    inOrder(week2, ["Week 2", "98"]);
+    inOrder(week2, ["Week 2", "112"]);
     expect(week2).not.toContain("Not final");
     expect(week2).not.toContain("Trucks");
     expect(html(page("Points", PROFILE, 2))).toContain("Week 2&#x27;s team");
@@ -90,9 +90,9 @@ describe("History", () => {
     inOrder(text(page("History")), [
       ...BANNER,
       "Week", "Pts", "Total", "Week rank", "Overall", "Move", "Transfers", "Hits", "Bank", "Value", "Buff",
-      "Week 3", "93", "250", "—", "21,804", "3,112", "5", "0", "0.5억", "100.9억", "Limitless", "›",
-      "Week 2", "98", "157", "4,211", "24,916", "9,870", "1", "0", "1.0억", "100.6억", "—", "›",
-      "Week 1", "59", "59", "34,786", "34,786", "—", "—", "—", "2.5억", "100.0억", "—", "›",
+      "Week 3", "93", "315", "—", "21,804", "3,112", "5", "0", "₩0.5m", "₩100.9m", "Limitless", "›",
+      "Week 2", "112", "222", "4,211", "24,916", "9,870", "1", "0", "₩1.0m", "₩100.6m", "—", "›",
+      "Week 1", "110", "110", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",
       "Buffs left: Remake · Bench Boost · Dual Carry",
       ...LEAGUES,
     ]);
@@ -111,13 +111,13 @@ describe("Transfers", () => {
       ...BANNER,
       "Slot", "Out", "In", "Pts gained",
       "Week 3", "Tue 09:00", "18:00 KST", "Limitless · 0 hits",
-      "Top", "Doran", "T1 · 13.0억", "→", "Kiin", "GEN · 13.5억", "+1",
-      "Bot", "Peyz", "T1 · 13.0억", "→", "Ruler", "GEN · 16.0억", "+4",
-      "Support", "Lehends", "NS · 10.0억", "→", "Keria", "T1 · 12.0억", "−1",
-      "Flex", "Siwoo", "DK · 11.0억", "→", "Kingen", "NS · 6.0억", "−4",
-      "Jungle", "Peanut", "NS · 15.5억", "→", "Canyon", "GEN · 15.5억", "+2",
+      "Top", "Doran", "T1 · ₩13.0m", "→", "Kiin", "GEN · ₩13.5m", "+1",
+      "Bot", "Peyz", "T1 · ₩13.0m", "→", "Ruler", "GEN · ₩16.0m", "+4",
+      "Support", "Lehends", "NS · ₩10.0m", "→", "Keria", "T1 · ₩12.0m", "−1",
+      "Flex", "Siwoo", "DK · ₩11.0m", "→", "Kingen", "NS · ₩6.0m", "−4",
+      "Jungle", "Peanut", "NS · ₩15.5m", "→", "Canyon", "GEN · ₩15.5m", "+2",
       "Week 2", "Mon 12:40", "21:40 KST", "1 free",
-      "Bot", "Smash", "T1 · 6.0억", "→", "Peyz", "T1 · 13.0억", "+6",
+      "Bot", "Smash", "T1 · ₩6.0m", "→", "Peyz", "T1 · ₩13.0m", "+6",
       ...LEAGUES,
     ]);
   });

@@ -3,7 +3,7 @@
 // are the Stats and Transfers pictures'. Only these four have lines until the backend (#36).
 
 import { hangulOf } from "../../fixtures/rosters";
-import { FAKER_SEASON, KKOMA_OWNED_PCT, KKOMA_SEASON, last3, T1_NEXT3, type T1MemberSeason, type T1Series } from "../../fixtures/t1Season";
+import { FAKER_SEASON, KKOMA_SEASON, last3, T1_NEXT3, type T1MemberSeason, type T1Series } from "../../fixtures/t1Season";
 import { pickedAt, playerId, statsOf, STATS_PLAYERS, type TeamCode } from "../../fixtures/week3";
 import type { PersonRole } from "../../rift";
 
@@ -42,7 +42,7 @@ export interface ComparePlayer {
   season: { points: number; rank: number; among: number };
   form: number;
   priceEok: number;
-  /** This week's price rise in 억, if any. */
+  /** This week's price rise in m, if any. */
   riseEok?: number;
   ownedPct: number;
   last3: PastSeries[];
@@ -115,7 +115,7 @@ export const CHOVY: ComparePlayer = {
   ],
 };
 
-export const KKOMA: ComparePlayer = t1Member(KKOMA_SEASON, "coach", KKOMA_OWNED_PCT);
+export const KKOMA: ComparePlayer = t1Member(KKOMA_SEASON, "coach", statsOf(KKOMA_SEASON.name).ownedPct);
 
 export const RYU: ComparePlayer = {
   id: "ryu",
@@ -148,7 +148,7 @@ export const RYU: ComparePlayer = {
 /** Every player Compare has lines for, by name. */
 export const COMPARE_PLAYERS: Record<string, ComparePlayer> = Object.fromEntries([FAKER, CHOVY, KKOMA, RYU].map((p) => [p.name, p]));
 
-/** A row of the second player's search: name, team, price in 억, season points. */
+/** A row of the second player's search: name, team, price in m, season points. */
 export interface SearchRow {
   name: string;
   team: TeamCode;

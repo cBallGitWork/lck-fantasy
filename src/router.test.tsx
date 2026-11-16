@@ -12,6 +12,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   pickTeam: [{ to: PATHS.pickTeam }, "pick-team"],
   transfers: [{ to: PATHS.transfers }, "transfers"],
   points: [{ to: PATHS.points }, "points"],
+  pointsWeek: [{ to: PATHS.pointsWeek, params: { week: "2" } }, "points"],
   leagues: [{ to: PATHS.leagues }, "leagues"],
   league: [{ to: PATHS.league, params: { leagueId: "pub-league" } }, "leagues"],
   stats: [{ to: PATHS.stats }, "stats"],

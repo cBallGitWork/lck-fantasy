@@ -4,6 +4,8 @@ Any manager's public page, with three tabs: Points, History, Transfers. Reached 
 
 **Approved:** Craig, 14 Nov 2026. He asked "does manager profile have transfer history?", picked the profile as the next design, took the recommended calls (private leagues shown, truck from the feed only, a History row opens that week), then "File and merge". Names, teams and numbers are a made-up LCK Cup Week 3 on the Sunday before its last two series, the same Minji as the Following picture, with Points' fixtures and the Series picture's numbers; not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn. The source is [docs/design/proposals/2026-11-14-profile/](../../proposals/2026-11-14-profile/) (`build.py`, `brief.md`).
 
+**Changed by Craig, 16 Nov 2026:** the Points tab's series read from the player's side, `v KT 2–0 · Wed` (the row names his team); the league shield bears no division, `Emerald I` says it.
+
 | File | Shows |
 |---|---|
 | `1440.png`, `points.html` | Points: Week 3 not final, her team in role order with C and V, points and each series; her tier beside Overall; trucks parked on her |

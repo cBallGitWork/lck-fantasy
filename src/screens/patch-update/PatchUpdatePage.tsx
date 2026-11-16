@@ -27,15 +27,6 @@ const COLUMNS: Column<PriceMove>[] = [
     ),
   },
   { key: "was", head: "Was", figure: true, cell: (row) => <span className="patch-update__was">{eok(row.wasEok)}</span> },
-  {
-    key: "move",
-    head: "",
-    figure: true,
-    cell: (row) => {
-      const rise = row.nowEok > row.wasEok;
-      return <span className={rise ? "rise" : "fall"} role="img" aria-label={rise ? "Rise" : "Fall"} />;
-    },
-  },
   { key: "now", head: "Now", figure: true, cell: (row) => <b>{eok(row.nowEok)}</b> },
   { key: "owned", head: "Owned", figure: true, cell: (row) => pct(row.ownedPct) },
 ];

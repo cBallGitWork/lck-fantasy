@@ -2,8 +2,7 @@
 // Pick Team; the picture's README, Controls). Swaps, the Carry, the Vice-carry and buffs change
 // only the draft; Save makes the draft the saved team, Reset drops it.
 
-import { BENCH_SLOTS, isBench, LINEUP_ORDER, type PersonRole, type SlotKey, type SquadSlot } from "../../rift";
-
+import { isBench, type PersonRole, type SquadSlot } from "../../rift";
 
 /** The two buffs played on this page; Remake and Limitless are played on Transfers. */
 export type PickBuff = "benchBoost" | "dualCarry";
@@ -23,10 +22,8 @@ export interface PickState {
   saved: PickTeam;
   draft: PickTeam;
   view: PickView;
-  /** The tapped player, whose card is open. */
+  /** The tapped player: his card is open and those he can swap with light up (FPL's one-tap swap). */
   selected?: string;
-  /** The starter going out while a swap is under way. */
-  swapping?: string;
 }
 
 export type PickAction =
@@ -35,10 +32,6 @@ export type PickAction =
   | { type: "view"; view: PickView }
   | { type: "makeCarry"; id: string }
   | { type: "makeVice"; id: string }
-  | { type: "startSwap"; id: string }
-  | { type: "cancelSwap" }
-  | { type: "swapIn"; id: string }
-  | { type: "swapBench" }
   | { type: "playBuff"; buff: PickBuff }
   | { type: "cancelBuff" }
   | { type: "reset" }
@@ -49,55 +42,88 @@ export function slotOf(team: PickTeam, id: string): SquadSlot | undefined {
   return (Object.keys(team.slots) as SquadSlot[]).find((slot) => team.slots[slot] === id);
 }
 
-/** A bench player fits a starter's slot when he plays its role; the Flex takes any role (spec/01). */
-export function fits(slot: SlotKey, benchRole: PersonRole): boolean {
-  if (slot === "coach" || benchRole === "coach") return false;
-  return slot === "flex" || slot === benchRole;
+/** Whether a player can stand in a slot: a role slot takes its own role, the Flex and the bench any role, the coach's slot only the coach (spec/01). */
+function fits(slot: SquadSlot, role: PersonRole): boolean {
+  if (slot === "coach" || role === "coach") return false;
+  return slot === "flex" || isBench(slot) || slot === role;
 }
 
-/** The ids of the bench players who could come on for the starter going out. */
-export function fitIds(team: PickTeam, outId: string, roleOf: (id: string) => PersonRole): Set<string> {
-  const slot = slotOf(team, outId);
-  if (!slot || isBench(slot)) return new Set();
-  return new Set(BENCH_SLOTS.map((b) => team.slots[b]).filter((id) => fits(slot, roleOf(id))));
+/**
+ * The ids of the players a tapped player can swap with: two of the squad trade places when each fits
+ * the other's slot. A role starter swaps with a bench player or a Flex of his role; the Flex with
+ * anyone whose slot his role fits; the two bench players with each other, as FPL sets its bench
+ * order (Craig, 16 Nov 2026); the coach with nobody.
+ */
+export function swapIds(team: PickTeam, id: string, roleOf: (id: string) => PersonRole): Set<string> {
+  const from = slotOf(team, id);
+  if (!from) return new Set();
+  const partners = (Object.keys(team.slots) as SquadSlot[]).filter((to) => {
+    if (to === from) return false;
+    return fits(to, roleOf(id)) && fits(from, roleOf(team.slots[to]));
+  });
+  return new Set(partners.map((to) => team.slots[to]));
 }
 
-/** Who can take the Carry, the Vice-carry or a swap: a starter who isn't the coach (spec/01, spec/04). */
+/** Who can take the Carry or the Vice-carry: a starter who isn't the coach (spec/01, spec/04). */
 const isMarkable = (team: PickTeam, id: string) => {
   const slot = slotOf(team, id);
   return slot !== undefined && !isBench(slot) && slot !== "coach";
 };
 
-/** Whether a starter can go to the bench: any but the coach. */
-export const canSwap = isMarkable;
-
-/** The Carry and Vice-carry stay on the field: whoever comes on takes the mark of whoever goes off (spec/04). */
-const passMark = (mark: string, out: string, inId: string) => (mark === out ? inId : mark);
-
-/** How many things the draft changes from the saved team: each swap, the bench order, each mark moved, the buff. */
+/**
+ * How many things the draft changes from the saved team: each swap (the fewest that turn the saved
+ * places into the draft's, bench order included), each mark handed to another player in another
+ * slot, the buff.
+ */
 export function changeCount(saved: PickTeam, draft: PickTeam): number {
-  const starters = LINEUP_ORDER.filter((s) => saved.slots[s] !== draft.slots[s]).length;
-  const savedBench = BENCH_SLOTS.map((b) => saved.slots[b]);
-  const draftBench = BENCH_SLOTS.map((b) => draft.slots[b]);
-  const sameBench = [...savedBench].sort().join() === [...draftBench].sort().join();
-  const benchOrder = sameBench && savedBench.join() !== draftBench.join() ? 1 : 0;
-  // A mark counts when it moves to another slot, so a swap that hands it on is one change.
-  const moved = (mark: "carry" | "vice") => Number(slotOf(saved, saved[mark]) !== slotOf(draft, draft[mark]));
-  const marks = moved("carry") + moved("vice");
-  return starters + benchOrder + marks + Number(saved.buff !== draft.buff);
+  const seen = new Set<SquadSlot>();
+  let swaps = 0;
+  for (const start of Object.keys(saved.slots) as SquadSlot[]) {
+    let at: SquadSlot | undefined = start;
+    let length = 0;
+    while (at && !seen.has(at)) {
+      seen.add(at);
+      length += 1;
+      at = slotOf(draft, saved.slots[at]);
+    }
+    swaps += Math.max(length - 1, 0);
+  }
+  // A mark counts when both its player and his slot change, so a swap that hands it on, or one that moves him, is one change.
+  const moved = (mark: "carry" | "vice") => Number(saved[mark] !== draft[mark] && slotOf(saved, saved[mark]) !== slotOf(draft, draft[mark]));
+  return swaps + moved("carry") + moved("vice") + Number(saved.buff !== draft.buff);
 }
 
-const withDraft = (state: PickState, draft: PickTeam): PickState => ({ ...state, draft });
+const withDraft = (state: PickState, draft: PickTeam): PickState => ({
+  ...state,
+  draft,
+});
 
-/** The page's state after one action; the roles say who fits a swap. */
+/** The draft after two players trade places. The Carry and Vice-carry stay on the field: whoever comes on takes the mark of whoever goes off (spec/04). */
+function swap(draft: PickTeam, a: string, b: string): PickTeam {
+  const aSlot = slotOf(draft, a) as SquadSlot;
+  const bSlot = slotOf(draft, b) as SquadSlot;
+  const slots = { ...draft.slots, [aSlot]: b, [bSlot]: a };
+  const pass = (mark: string) => (mark === a && isBench(bSlot) ? b : mark === b && isBench(aSlot) ? a : mark);
+  return { ...draft, slots, carry: pass(draft.carry), vice: pass(draft.vice) };
+}
+
+/** The page's state after one action; the roles say who can swap with whom. */
 export function pickReducer(roleOf: (id: string) => PersonRole) {
   return (state: PickState, action: PickAction): PickState => {
-    const { draft } = state;
+    const { draft, selected } = state;
     switch (action.type) {
       case "select":
-        return state.swapping ? state : { ...state, selected: action.id };
+        // As FPL: tap a player, then one of those lit up to swap them; tap him again, or another, to change your mind.
+        if (selected === action.id) return { ...state, selected: undefined };
+        if (selected && swapIds(draft, selected, roleOf).has(action.id))
+          return {
+            ...state,
+            draft: swap(draft, selected, action.id),
+            selected: undefined,
+          };
+        return { ...state, selected: action.id };
       case "close":
-        return { ...state, selected: undefined, swapping: undefined };
+        return { ...state, selected: undefined };
       case "view":
         return { ...state, view: action.view };
       case "makeCarry": {
@@ -111,32 +137,14 @@ export function pickReducer(roleOf: (id: string) => PersonRole) {
         const carry = draft.carry === action.id ? draft.vice : draft.carry;
         return withDraft(state, { ...draft, vice: action.id, carry });
       }
-      case "startSwap":
-        return canSwap(draft, action.id) ? { ...state, selected: action.id, swapping: action.id } : state;
-      case "cancelSwap":
-        return { ...state, swapping: undefined };
-      case "swapIn": {
-        const out = state.swapping;
-        if (!out || !fitIds(draft, out, roleOf).has(action.id)) return state;
-        const outSlot = slotOf(draft, out) as SquadSlot;
-        const inSlot = slotOf(draft, action.id) as SquadSlot;
-        const slots = { ...draft.slots, [outSlot]: action.id, [inSlot]: out };
-        const carry = passMark(draft.carry, out, action.id);
-        const vice = passMark(draft.vice, out, action.id);
-        return { ...state, draft: { ...draft, slots, carry, vice }, swapping: undefined, selected: action.id };
-      }
-      case "swapBench": {
-        const slots = { ...draft.slots, bench1: draft.slots.bench2, bench2: draft.slots.bench1 };
-        return withDraft(state, { ...draft, slots });
-      }
       case "playBuff":
         return draft.buff ? state : withDraft(state, { ...draft, buff: action.buff });
       case "cancelBuff":
         return withDraft(state, { ...draft, buff: undefined });
       case "reset":
-        return { ...state, draft: state.saved, swapping: undefined };
+        return { ...state, draft: state.saved, selected: undefined };
       case "save":
-        return { ...state, saved: draft, swapping: undefined };
+        return { ...state, saved: draft, selected: undefined };
     }
   };
 }

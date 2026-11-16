@@ -31,6 +31,8 @@ export const color = {
   rise: "#FF5C6C",
   /** A price fall, Korean blue, lightened to read on navy. */
   fall: "#6EA2FF",
+  /** A figure past its limit: the bank below zero while over the budget. */
+  over: "#FF5C6C",
   /** The hangul on your team's banner, and only there. */
   gold: "#F0D58C",
   /** The banner's rule under the gold hangul. */

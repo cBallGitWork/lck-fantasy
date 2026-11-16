@@ -26,6 +26,11 @@
   width: var(--m-modal-sheet);
   padding: var(--s-5) var(--s-6) var(--s-6);
 }
+.modal__box--strong {
+  background: var(--fill);
+  border: var(--m-rule-heavy) solid var(--ink);
+  border-top-width: var(--s-1);
+}
 .modal__close {
   position: absolute;
   right: var(--s-4);

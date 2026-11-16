@@ -1,5 +1,6 @@
 import { cx, FinalTag, LiveTag, Menu, score as scoreText, Time } from "../../parts";
-import type { FinalBug, LiveBug, NextSeries, Picker, Stream } from "./types";
+import { streamLabel } from "../../fixtures/streams";
+import type { FinalBug, LiveBug, NextSeries, Picker } from "./types";
 import { dot, WORDS } from "./words";
 
 /** The chips the picture draws before `More ▾`. */
@@ -10,7 +11,6 @@ const CHIP_ROWS = 6;
  * and greyed. More ▾, only when there are more, lists the rest with their channels.
  */
 export function StreamPicker({ streams, picked, onPick }: Picker) {
-  const label = (s: Stream) => `${s.name}${dot}${s.language}`;
   const more = streams.slice(CHIP_ROWS);
   return (
     <div className="live__picker">
@@ -22,7 +22,7 @@ export function StreamPicker({ streams, picked, onPick }: Picker) {
           aria-pressed={s.id === picked}
           onClick={() => onPick(s.id)}
         >
-          {label(s)}
+          {streamLabel(s)}
           <small className="live__chip-platform">{s.platform}</small>
         </button>
       ))}
@@ -30,7 +30,7 @@ export function StreamPicker({ streams, picked, onPick }: Picker) {
         <Menu
           label={WORDS.more}
           className="live__chip"
-          items={more.map((s) => ({ label: `${label(s)}${dot}${s.platform}${dot}${s.channel}`, onChoose: () => onPick(s.id) }))}
+          items={more.map((s) => ({ label: `${streamLabel(s)}${dot}${s.platform}${dot}${s.channel}`, onChoose: () => onPick(s.id) }))}
         />
       )}
     </div>

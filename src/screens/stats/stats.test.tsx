@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
+import { ROSTERS } from "../../fixtures/rosters";
 import { FAKER_SEASON, KKOMA_SEASON } from "../../fixtures/t1Season";
 import { MANAGER } from "../../fixtures/week3";
 import { sum } from "../../parts";
@@ -55,7 +56,7 @@ describe("players, totals (1440.png)", () => {
     expectInOrder(text(page({})), [
       "Stats",
       "통계",
-      "Patch update ›",
+      "Price changes ›",
       "Players",
       "Coaches",
       "All",
@@ -135,6 +136,15 @@ describe("players, totals (1440.png)", () => {
     expect(SEASON_COACHES.find((c) => c.name === "kkOma")?.lines.drakes).toBe(total(KKOMA_SEASON, "Most drakes"));
   });
 
+  test("each rostered name is spelt as the roster spells it: ucal, not Ucal", () => {
+    const rostered = new Map(Object.values(ROSTERS).flatMap((team) => team.map(([name]) => [name.toLowerCase(), name])));
+    for (const { name } of [...SEASON_PLAYERS, ...SEASON_COACHES]) {
+      const spelling = rostered.get(name.toLowerCase());
+      if (spelling) expect(name).toBe(spelling);
+    }
+    expect(rostered.get("ucal")).toBe("ucal");
+  });
+
   test("pages beneath: 20 rows a page", () => {
     const total = SEASON_PLAYERS.length;
     expect(text(page({}))).toContain(`1–20 of ${total}`);
@@ -208,6 +218,7 @@ describe("the controls work on the list", () => {
     expect(upTo12.length).toBeGreaterThan(0);
     expect(upTo12.every((r) => r.priceM <= 12)).toBe(true);
     expect(list({ search: "  fAk " })).toEqual(["Faker"]);
+    expect(list({ search: "ucal" })).toEqual(["ucal"]);
     expect(priceChoices(SEASON_PLAYERS)[0]).toBe(18.5);
   });
 

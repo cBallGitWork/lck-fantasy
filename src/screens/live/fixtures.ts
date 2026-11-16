@@ -20,23 +20,12 @@ import {
 } from "../../fixtures/week3";
 import { MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
+import { STREAMS, type Stream } from "../../fixtures/streams";
 import { bestOf } from "../../parts";
-import type { LiveDownProps, LiveIdleProps, LiveNowProps, PanelPlayer, RestPlayer, Stream } from "./types";
-
-/** The streams list: admin data (spec/12). The first is the official English stream it opens on. */
-export const LIVE_STREAMS: Stream[] = [
-  { id: "lck-en-twitch", name: "LCK", language: "English", platform: "Twitch", channel: "twitch.tv/lck", live: true },
-  { id: "lck-en-youtube", name: "LCK", language: "English", platform: "YouTube", channel: "youtube.com/@LCKglobal", live: true },
-  { id: "lck-ko-youtube", name: "LCK", language: "한국어", platform: "YouTube", channel: "youtube.com/@LCK", live: true },
-  { id: "caedrel", name: "Caedrel", language: "English", platform: "Twitch", channel: "twitch.tv/caedrel", live: true },
-  { id: "lck-vi-youtube", name: "LCK", language: "Tiếng Việt", platform: "YouTube", channel: "youtube.com/@LCKVietnam", live: false },
-  { id: "kameto", name: "Kameto", language: "Français", platform: "Twitch", channel: "twitch.tv/kamet0", live: false },
-];
+import type { LiveDownProps, LiveIdleProps, LiveNowProps, PanelPlayer, RestPlayer } from "./types";
 
 /** With nothing live, every stream is greyed. */
-export const IDLE_STREAMS: Stream[] = LIVE_STREAMS.map((s) => ({ ...s, live: false }));
-
-export const DEFAULT_STREAM = LIVE_STREAMS[0]!.id;
+export const IDLE_STREAMS: Stream[] = STREAMS.map((s) => ({ ...s, live: false }));
 
 /** The made-up manager with the week's Highest at every moment: Highest › opens his Points. */
 const TOP_MANAGER = MANAGERS.priya.id;

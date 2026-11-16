@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, noop, text } from "../../testing/render";
+import { expectDeadlinePart, expectInOrder, html, noop, text } from "../../testing/render";
 import { accept, decline, movesSummary, playersLine, receiverLine, removeFollower, sendTruck, unfollow, type DeadlineItem } from "./feed";
 import { FOLLOWING, PICKER_AS_DRAWN } from "./fixtures";
 import { FollowingScreen } from ".";
@@ -62,6 +62,10 @@ describe("the page (1440.png)", () => {
       "Chovy 21",
       "Ended Sun 12:30 21:30 KST",
     ]);
+  });
+
+  test("a week's deadline is the Deadline part, as on Pick Team", () => {
+    expectDeadlinePart(html(view()), "Wed 07:45");
   });
 
   test("shows requests, trucks, following and followers on the right, then the sponsor note", () => {

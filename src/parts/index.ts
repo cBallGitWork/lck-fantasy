@@ -26,6 +26,7 @@ export {
   perGame,
   perGameValue,
   placeOf,
+  plural,
   result,
   score,
   seriesResult,

@@ -98,7 +98,7 @@ export const DEV_STATES: readonly DevState[] = [
     { state: "rift", go: { to: PATHS.perfectGame }, param: true },
     { state: "card", go: { to: PATHS.perfectGame }, param: true },
   ]),
-  ...page("patch-update", [{ state: "patch", go: { to: PATHS.patchUpdate } }]),
+  ...page("price-changes", [{ state: "patch", go: { to: PATHS.priceChanges } }]),
   ...page("settings", [
     { state: "settings", go: { to: PATHS.settings }, param: true },
     { state: "display", go: { to: PATHS.settings }, param: true },

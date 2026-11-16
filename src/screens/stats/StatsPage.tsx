@@ -43,7 +43,7 @@ export function StatsPage({ account, view, rows, spans, onChange }: StatsPagePro
   return (
     <PageFrame screen="stats" active="stats" account={account}>
       <div className="stats">
-        <PageHead title="Stats" hangul="통계" link={{ label: "Patch update", go: { to: PATHS.patchUpdate } }} />
+        <PageHead title="Stats" hangul="통계" link={{ label: "Price changes", go: { to: PATHS.priceChanges } }} />
         <Tabs id={tabsId} tabs={TABS} chosen={view.tab} onChoose={(tab) => onChange({ tab })} label="Players or coaches" />
         <TabPanel id={tabsId}>
           <Controls view={view} rows={rows} spans={spans} onChange={onChange} />

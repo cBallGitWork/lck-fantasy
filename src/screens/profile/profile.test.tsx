@@ -56,6 +56,10 @@ describe("Points", () => {
     expect(markup).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
   });
 
+  test("her team is the Table part's, Bench a sub-row above the bench", () => {
+    expect(html(page("Points"))).toMatch(/<tr class="table__sub"><td colSpan="4">Bench<\/td><\/tr><tr><td><small>Bench 1 · Mid/);
+  });
+
   test("links each player to his card, the coach to the coach card, Highest to Perfect game and each league to its table", () => {
     const markup = html(page("Points"));
     expect(markup).toContain('href="/player/kiin"');
@@ -115,6 +119,12 @@ describe("Transfers", () => {
       "Bot", "Smash", "T1 · ₩6.0m", "→", "Peyz", "T1 · ₩13.0m", "+6",
       ...LEAGUES,
     ]);
+  });
+
+  test("is the Table part's, each week a sub-row with its cost on the right", () => {
+    const markup = html(page("Transfers"));
+    expect(markup.match(/<tr class="table__sub"><td colSpan="6"><b>Week \d<\/b>/g)).toHaveLength(2);
+    expect(markup).toContain('<span class="table__sub-aside">Limitless · 0 hits</span>');
   });
 });
 

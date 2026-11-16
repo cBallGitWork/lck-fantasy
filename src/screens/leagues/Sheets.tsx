@@ -1,7 +1,7 @@
 // The league forms as the pictures draw them (docs/design/approved/leagues/): each a sheet over the
 // Leagues page. Each is fed by props; the screen (index.tsx) holds the leagues.
 import { useId, useState, type ReactNode } from "react";
-import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf } from "../../parts";
+import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf, plural } from "../../parts";
 import { leagueGo } from "../../paths";
 import { capReason, privateCountLine } from "./forms";
 import type { PrivateLeague, ScoringWeek, ScoringWeeks } from "./types";
@@ -165,7 +165,7 @@ export function DeleteSheet({
   return (
     <Modal kind="sheet" title={`Delete ${name}?`} onClose={onClose}>
       <p>
-        {count(size)} managers · scoring from Week {scoringFrom}
+        {plural(size, "manager")} · scoring from Week {scoringFrom}
       </p>
       <SheetKeys onBack={onClose}>
         <MainAction onClick={onDelete}>Delete league</MainAction>

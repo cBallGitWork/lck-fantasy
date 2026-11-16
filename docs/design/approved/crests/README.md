@@ -6,8 +6,9 @@ Flol's crest for each of the ten LCK teams, each leaning into one thing fans kno
 
 | File | Shows |
 |---|---|
-| `1440.png`, `crests.html` | The ten picks at 120, 56, 40 and 24 |
+| `1440.png`, `crests.html` | The ten picks at 120, 56, 40 and 24, before the sizing pass: `data/lck/crests/` binds |
 | `round1.png` | Round one: each brief and both designers' crests |
+| `sizing.png` | Before and after the sizing pass (Craig, 16 Nov 2026: no tiles, size them to one weight); GEN's tile came off after it |
 | `round2.png` | Round two: each crest leaning into one thing, round one beside it |
 
 ## The picks
@@ -24,6 +25,10 @@ Flol's crest for each of the ten LCK teams, each leaning into one thing fans kno
 | DNS | The mad dogs, 물어! | B |
 | BRO | A bro fist, OK BRO (Craig) | B |
 | KRX | The heart that never breaks, 중꺾마 | A |
+
+## Sizing
+
+No tile or outline behind a crest (Craig, 16 Nov 2026). Each file scales and centres its drawing so the ten read at one weight in the same box: a crest that fills its square (GEN, KRX) is drawn a little smaller, a light one (T1, BRO, DNS, NS, GEN once its black tile came off) a little larger, never past 116 of the 120 box (measured 16 Nov 2026: the widest, T1, NS, DNS and BRO, reach 116).
 
 ## Rights
 

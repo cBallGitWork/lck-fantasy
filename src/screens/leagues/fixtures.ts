@@ -7,7 +7,7 @@
 import { MANAGERS, MINJI_WEEK3, type MadeUpManager } from "../../fixtures/managers";
 import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL, type MyLeague } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
-import { COMPETITION as CUP, MANAGER, MY_WEEK3, POINTS_WEEK, WEEK3_DEADLINE, WEEK4_SERIES } from "../../fixtures/week3";
+import { MANAGER, MY_WEEK3, POINTS_WEEK, SEASON, WEEK3_DEADLINE, WEEK4_SERIES } from "../../fixtures/week3";
 import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, Standings, StandingRow } from "./types";
 
 const WEEK = POINTS_WEEK.week;
@@ -155,7 +155,7 @@ const OVERALL: LeagueView = {
   kind: "overall",
   id: "overall",
   name: "Overall",
-  season: CUP,
+  season: SEASON,
   week: WEEK,
   carryShown: true,
   openTab: THIS_SPLIT,

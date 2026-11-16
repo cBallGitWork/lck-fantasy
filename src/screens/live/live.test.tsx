@@ -49,6 +49,10 @@ describe("a series live", () => {
     expect(page).toContain('href="/player/delight"');
     expect(page).toContain('href="/points"');
   });
+
+  test("links Highest › to the week's top manager's Points, his profile", () => {
+    expect(page).toMatch(new RegExp(`href="/manager/${LIVE_NOW.panel.week.highestBy}"[^>]*>Highest`));
+  });
 });
 
 describe("the live feed down", () => {

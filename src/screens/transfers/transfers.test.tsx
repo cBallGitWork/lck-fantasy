@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectDeadlinePart, html, text } from "../../testing/render";
 import { PICTURE_PLAN, TRANSFERS_PICTURE } from "./fixtures";
 import { lineupIds } from "./lineup";
 import { confirmTransfers, EMPTY_PLAN } from "./plan";
@@ -128,6 +128,11 @@ describe("the confirm sheet (confirm.html, changed by Craig 16 Nov 2026)", () =>
       "Confirm",
       "Deadline Wed 07:45 16:45 KST",
     ]);
+  });
+
+  test("its deadline is the Deadline part, as on Pick Team", () => {
+    const out = html(<TransfersPage {...TRANSFERS_PICTURE} reviewing />);
+    expectDeadlinePart(out.slice(out.indexOf("transfers__sheet-deadline")), "Wed 07:45");
   });
 
   test("it stands out from the page", () => {

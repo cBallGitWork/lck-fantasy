@@ -1,4 +1,4 @@
-import { Columns, GoLink, NotFinalTag, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
+import { Columns, Deadline, GoLink, NotFinalTag, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
 import { profileGo } from "../../paths";
 import {
@@ -92,7 +92,7 @@ function Week({ week, data, onTruck }: { week: FeedWeek; data: FollowingData; on
       </h2>
       {week.deadline && (
         <p className="following__deadline">
-          Deadline <Time {...week.deadline} />
+          <Deadline {...week.deadline} />
         </p>
       )}
       {week.items.map((item) => (

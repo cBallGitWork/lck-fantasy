@@ -7,7 +7,7 @@ import type { PickTeamData } from "./fixtures";
 import type { ViewProps } from "./format";
 import { changeCount, pickReducer, type PickAction, type PickState, type PickTeam, type PickView } from "./model";
 import { PlayerCard } from "./PlayerCard";
-import "./PickTeam.css";
+import "./pick-team.css";
 
 const VIEWS = [
   { value: "rift", label: BOARD_VIEWS[0] },

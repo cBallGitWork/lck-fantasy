@@ -2,25 +2,25 @@ import { createRootRoute, createRoute, createRouter, Outlet, type RouterHistory 
 import type { ReactElement } from "react";
 import { DEV_STATES_PATH } from "./devStates";
 import { DevStatesPage } from "./DevStatesPage";
-import { PATHS, type ScreenKey } from "./paths";
-import { CoachCardScreen } from "./screens/coach-card";
-import { CompareScreen } from "./screens/compare";
-import { FollowingScreen } from "./screens/following";
-import { HomeScreen } from "./screens/home";
-import { LckHubScreen } from "./screens/lck-hub";
-import { LeaguesScreen } from "./screens/leagues";
-import { LiveScreen } from "./screens/live";
-import { PatchUpdateScreen } from "./screens/patch-update";
-import { PerfectGameScreen } from "./screens/perfect-game";
-import { PickTeamScreen } from "./screens/pick-team";
-import { PlayerCardScreen } from "./screens/player-card";
-import { PointsScreen } from "./screens/points";
-import { ProfileScreen } from "./screens/profile";
-import { SeriesScreen } from "./screens/series";
-import { SettingsScreen } from "./screens/settings";
-import { StatsScreen } from "./screens/stats";
-import { TransfersScreen } from "./screens/transfers";
-import { ThemeStyle } from "./theme";
+import { PATHS, type ScreenKey } from "../paths";
+import { CoachCardScreen } from "../screens/coach-card";
+import { CompareScreen } from "../screens/compare";
+import { FollowingScreen } from "../screens/following";
+import { HomeScreen } from "../screens/home";
+import { LckHubScreen } from "../screens/lck-hub";
+import { LeaguesScreen } from "../screens/leagues";
+import { LiveScreen } from "../screens/live";
+import { PatchUpdateScreen } from "../screens/patch-update";
+import { PerfectGameScreen } from "../screens/perfect-game";
+import { PickTeamScreen } from "../screens/pick-team";
+import { PlayerCardScreen } from "../screens/player-card";
+import { PointsScreen } from "../screens/points";
+import { ProfileScreen } from "../screens/profile";
+import { SeriesScreen } from "../screens/series";
+import { SettingsScreen } from "../screens/settings";
+import { StatsScreen } from "../screens/stats";
+import { TransfersScreen } from "../screens/transfers";
+import { ThemeStyle } from "../theme";
 
 // One route per approved screen (docs/design/approved/), each its folder's index.tsx; in dev also /dev/states.
 function Root() {

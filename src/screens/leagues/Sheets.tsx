@@ -5,7 +5,7 @@ import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf } from ".
 import { PATHS } from "../../paths";
 import { capReason, privateCountLine } from "./forms";
 import type { PrivateLeague, ScoringWeek, ScoringWeeks } from "./types";
-import "./sheets.css";
+import "./Sheets.css";
 
 /** Back, a text link in every sheet (as in the Transfers confirm), then the sheet's main action. */
 function SheetKeys({ onBack, children }: { onBack: () => void; children: ReactNode }) {

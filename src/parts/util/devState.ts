@@ -1,6 +1,6 @@
 import { useRouterState } from "@tanstack/react-router";
 
-/** The search param that opens an approved picture's state in dev: `/?state=idle` (`src/devStates.ts` lists them). */
+/** The search param that opens an approved picture's state in dev: `/?state=idle` (`src/app/devStates.ts` lists them). */
 export const DEV_STATE_PARAM = "state";
 
 /**

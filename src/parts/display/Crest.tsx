@@ -1,10 +1,10 @@
-import { measureVar, type MeasureKey } from "../theme/tokens";
-import { cx } from "./cx";
+import { measureVar, type MeasureKey } from "../../theme/tokens";
+import { cx } from "../util/cx";
 import "./Crest.css";
 
 /** Each team's crest, held as data per competition (`data/lck/crests/<code>.svg`), keyed by team code. */
 const CRESTS: Record<string, string> = Object.fromEntries(
-  Object.entries(import.meta.glob<string>("../../data/lck/crests/*.svg", { eager: true, query: "?url", import: "default" })).map(
+  Object.entries(import.meta.glob<string>("../../../data/lck/crests/*.svg", { eager: true, query: "?url", import: "default" })).map(
     ([path, url]) => [path.match(/([^/]+)\.svg$/)?.[1] ?? path, url],
   ),
 );

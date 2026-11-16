@@ -1,5 +1,5 @@
-import type { Go } from "../paths";
-import { cx } from "./cx";
+import type { Go } from "../../paths";
+import { cx } from "../util/cx";
 import { GoLink } from "./GoLink";
 import "./WeekArrow.css";
 

@@ -1,6 +1,6 @@
 import { Link, type LinkComponentProps } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import type { Go } from "../paths";
+import type { Go } from "../../paths";
 
 /**
  * A link inside Flol, through the router: no page reload, and a path or param that doesn't exist

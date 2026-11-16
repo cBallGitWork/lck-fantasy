@@ -1,5 +1,5 @@
-import { measureVar, type MeasureKey } from "../theme/tokens";
-import { cx } from "./cx";
+import { measureVar, type MeasureKey } from "../../theme/tokens";
+import { cx } from "../util/cx";
 import "./Placeholder.css";
 
 /** A dashed box with one word, where a sponsor or a photo will go. Sizes are the theme's measures; `fill` takes its box. */

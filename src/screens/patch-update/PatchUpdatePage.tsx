@@ -3,7 +3,7 @@ import { cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, pct, Table,
 import { cardGo, type Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { PriceMove, PriceWeek } from "./fixtures";
-import "./PatchUpdate.css";
+import "./patch-update.css";
 
 export const NO_MOVES = "No moves yet";
 

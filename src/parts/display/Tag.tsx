@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx } from "./cx";
+import { cx } from "../util/cx";
 import "./Tag.css";
 
 /** `live` is filled; `notFinal` is dashed. */

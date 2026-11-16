@@ -65,13 +65,14 @@ Each folder has a README saying what goes in it.
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
-| `src/` | The app's entry (`main.tsx`), its routes (`router.tsx`) and every screen's path (`paths.ts`). |
+| `src/` | Every screen's path (`paths.ts`), and the folders below. |
+| `src/app/` | The app's entry (`main.tsx`), its routes (`router.tsx`) and the dev states page. |
 | `src/theme/` | Every colour, font, size, gap and width, as tokens; nothing else holds a colour. |
 | `src/fixtures/` | Made-up data the screens are built on until the backend wires real data. |
 | `src/testing/` | Test helpers: a part or screen rendered to HTML or text inside the app's router. |
 | `src/screens/` | One folder per screen in the site map (`docs/design/site-map.html`), named as it is there. |
 | `src/rift/` | The Rift view and Card view: the map, the tiles, the shirts, the role icons, the bench bar. Builds on `src/parts`; parts never import it. |
-| `src/parts/` | Parts shared by two or more screens: the top bar and page frame, tables, tabs, tags, keys, modal, menu, form fields, states (`src/parts/README.md`). |
+| `src/parts/` | Parts shared by two or more screens: the top bar and page frame, tables, tabs, tags, keys, modal, menu, form fields, states, in `frame/`, `controls/`, `display/`, `text/` and `util/` (`src/parts/README.md`). |
 | `data/` | Seed data held per competition and season: teams, kit colours, stages. Data, never constants in code. |
 | `tests/` | Tests that cross features: a replayed gameweek, the signed-out pick to sign-up path. |
 | `docs/design/approved/` | One folder per screen with the picture Craig approved. An approved picture binds the layout. |

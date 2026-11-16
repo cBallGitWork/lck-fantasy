@@ -8,7 +8,7 @@ import { FixturesTab } from "./FixturesTab";
 import { History } from "./History";
 import { SeasonRail } from "./SeasonRail";
 import { ThisWeek } from "./ThisWeek";
-import "./PlayerCard.css";
+import "./player-card.css";
 
 
 /** Each tab's content; a tab whose data hasn't come yet shows nothing. Fixtures and History start after the strip's series. */

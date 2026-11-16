@@ -5,7 +5,7 @@ import { describe, expect, test } from "vitest";
 import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { COMPETITION as COMPETITION_NAME, MANAGER, MY_WEEK3 } from "../../fixtures/week3";
-import { makeRouter } from "../../router";
+import { makeRouter } from "../../app/router";
 import { html, text } from "../../testing/render";
 import { COMPETITION, LEAGUE_NAME_MAX, LEAGUES } from "./fixtures";
 import { ordinal } from "../../parts";

@@ -1,6 +1,6 @@
 // A price's move and a rank's move, drawn by base.css's `rise`, `fall`, `rank-up` and `rank-down`.
-import { cx } from "./cx";
-import { count, oneDecimal } from "./figures";
+import { cx } from "../util/cx";
+import { count, oneDecimal } from "../text/figures";
 
 /** A price's move in m: ▲ or ▼ and the amount to one decimal; nothing when it held. */
 export function PriceMove({ eok, className }: { eok: number; className?: string }) {

@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import type { Go } from "../paths";
-import { measureVar, type MeasureKey } from "../theme/tokens";
-import { cx } from "./cx";
-import { GoLink } from "./GoLink";
+import type { Go } from "../../paths";
+import { measureVar, type MeasureKey } from "../../theme/tokens";
+import { cx } from "../util/cx";
+import { GoLink } from "../controls/GoLink";
 import "./Table.css";
 
 export interface Column<R> {

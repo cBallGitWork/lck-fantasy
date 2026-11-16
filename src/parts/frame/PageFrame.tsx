@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import "./Columns.css";
-import { cx } from "./cx";
+import { cx } from "../util/cx";
 import "./PageFrame.css";
 import { TopBar, type TopBarItem } from "./TopBar";
 

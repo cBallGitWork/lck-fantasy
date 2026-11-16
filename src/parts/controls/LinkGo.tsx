@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { Go } from "../paths";
+import type { Go } from "../../paths";
 import { GoLink } from "./GoLink";
 import "./LinkGo.css";
 

@@ -10,12 +10,12 @@ export function YourWeek({ picks }: { picks: WeekPick[] }) {
     <SideSection title="Your week">
       {picks.map((p) => (
         <div key={p.label} className="points__pick">
-          <span className="points__pick-label">{p.label}</span>
+          <span className="points__pick-label quiet">{p.label}</span>
           <b>
             {p.name}
             {p.mine && <MeDot />}
           </b>
-          <span className="points__pick-owned">{owned(p)}</span>
+          <span className="points__pick-owned quiet">{owned(p)}</span>
         </div>
       ))}
     </SideSection>

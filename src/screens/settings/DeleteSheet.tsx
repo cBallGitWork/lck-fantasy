@@ -29,13 +29,13 @@ export function DeleteSheet({
       </ul>
       <p className="settings__warn quiet">
         Backups clear within 30 days.{" "}
-        <button type="button" className="settings__inline-key" onClick={onDownload}>
+        <button type="button" className="settings__inline-key key-bare" onClick={onDownload}>
           Download my data
         </button>{" "}
         first to keep a copy.
       </p>
       <div className="settings__sheet-keys">
-        <button type="button" className="settings__text-key" onClick={onBack}>
+        <button type="button" className="settings__text-key key-bare" onClick={onBack}>
           Back
         </button>
         <MainAction onClick={onDelete}>Delete account</MainAction>

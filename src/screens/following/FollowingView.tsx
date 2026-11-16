@@ -32,12 +32,12 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
     <PageFrame screen="following" account={MANAGER.team}>
       <PageHead title="Following" hangul="팔로잉" />
       <Columns className="following__grid">
-        <div className="following__feed">
+        <div>
           {data.feed.map((week) => (
             <Week key={week.week} week={week} data={data} onTruck={act.onTruck} />
           ))}
         </div>
-        <div className="following__side">
+        <div>
           <SideSection title="Requests" note={data.requests.length}>
             {data.requests.map((m) => (
               <div key={m.id} className="following__request">
@@ -78,7 +78,7 @@ function Who({ manager }: { manager: Manager }) {
       <GoLink className="following__name" go={profileGo(manager.id)}>
         {manager.name}
       </GoLink>
-      <small className="following__team">{manager.team}</small>
+      <small className="following__team quiet">{manager.team}</small>
     </span>
   );
 }
@@ -88,17 +88,17 @@ function Week({ week, data, onTruck }: { week: FeedWeek; data: FollowingData; on
     <section className="following__week">
       <h2 className="following__week-head">
         Week {week.week}
-        {week.notFinal && <NotFinalTag />}
+        {!week.final && <NotFinalTag />}
       </h2>
       {week.deadline && (
-        <p className="following__deadline">
+        <p className="following__deadline quiet">
           Deadline <Time {...week.deadline} />
         </p>
       )}
       {week.items.map((item) => (
         <div key={item.id} className="following__item">
           <Who manager={item.manager} />
-          <div className="following__what">
+          <div>
             {item.kind === "series" ? <Series item={item} multiplier={data.carryMultiplier} /> : <Moves item={item} />}
           </div>
           <TruckCell item={item} week={week} data={data} onTruck={onTruck} />
@@ -119,7 +119,7 @@ function Series({ item, multiplier }: { item: SeriesItem; multiplier: number }) 
           <Tag>Big Carry</Tag>
         </>
       )}
-      <small className="following__sub">{playersLine(item.players, multiplier)}</small>
+      <small className="following__sub quiet">{playersLine(item.players, multiplier)}</small>
       <span className="following__when">
         Ended <Time {...item.ended} />
       </span>
@@ -133,7 +133,7 @@ function Moves({ item }: { item: DeadlineItem }) {
   return (
     <>
       {movesSummary(item)}
-      {item.swaps.length > 0 && <span className="following__so-far">so far</span>}
+      {item.swaps.length > 0 && <span className="following__so-far quiet">so far</span>}
       {shown.length > 0 && (
         <span className="following__swaps num">
           {shown.map((s) => (
@@ -146,7 +146,7 @@ function Moves({ item }: { item: DeadlineItem }) {
           ))}
         </span>
       )}
-      {more > 0 && <small className="following__sub">+ {more} more</small>}
+      {more > 0 && <small className="following__sub quiet">+ {more} more</small>}
     </>
   );
 }

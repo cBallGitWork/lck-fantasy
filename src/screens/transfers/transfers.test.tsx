@@ -1,20 +1,10 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, text } from "../../testing/render";
 import { PICTURE_PLAN, TRANSFERS_PICTURE } from "./fixtures";
 import { lineupIds } from "./lineup";
 import { confirmTransfers, EMPTY_PLAN } from "./plan";
 import { TransfersPage } from "./TransfersPage";
-
-/** Fails unless each piece is found after the one before it. */
-function expectInOrder(out: string, pieces: string[]) {
-  let from = 0;
-  for (const piece of pieces) {
-    const at = out.indexOf(piece, from);
-    expect(at, `"${piece}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + piece.length;
-  }
-}
 
 describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)", () => {
   const out = text(<TransfersPage {...TRANSFERS_PICTURE} />);

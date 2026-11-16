@@ -25,7 +25,7 @@ export function Move({ places }: { places: number | undefined }) {
 /** History: each week's points, total, ranks, transfers, hits, bank, value and buff; then the buffs left. */
 export function ProfileHistory({ rows, buffsLeft, onOpenWeek }: { rows: HistoryRow[]; buffsLeft: string[]; onOpenWeek: (week: number) => void }) {
   return (
-    <section className="profile__history">
+    <section>
       <Table
         columns={COLUMNS}
         rows={rows}

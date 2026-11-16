@@ -28,7 +28,7 @@ export const FOLLOWING: FollowingData = {
   feed: [
     {
       week: 3,
-      notFinal: true,
+      final: false,
       deadline: DEADLINE,
       truckable: true,
       items: [
@@ -101,6 +101,7 @@ export const FOLLOWING: FollowingData = {
     },
     {
       week: 2,
+      final: true,
       truckable: false,
       items: [
         {

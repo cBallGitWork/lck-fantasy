@@ -69,7 +69,7 @@ export function SettingsPage(props: SettingsProps) {
       {tab !== "Account" && changed.length > 0 && (
         <div className="settings__save-bar">
           <span className="settings__save-line">{changeLine(changed)}</span>
-          <button type="button" className="settings__text-key" onClick={onReset}>
+          <button type="button" className="settings__text-key key-bare" onClick={onReset}>
             Reset
           </button>
           <MainAction onClick={onSave}>Save</MainAction>
@@ -191,7 +191,7 @@ function AccountTab({ account, onSignOut, onDownload, onDelete }: SettingsProps)
           </span>
         </Row>
         <Row label="Public">
-          <p className="settings__public">Team name, favourite team, country, banner, points</p>
+          <p>Team name, favourite team, country, banner, points</p>
         </Row>
         <Row label="Your data">
           <OutlinedKey onClick={onDownload}>Download my data</OutlinedKey>

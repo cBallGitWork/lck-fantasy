@@ -27,8 +27,8 @@ export function PageFrame({
     <>
       <TopBar active={active} account={account} />
       <div className={cx("page-frame", side !== undefined && "page-frame--two columns")} data-screen={screen}>
-        <main className="page-frame__main">{children}</main>
-        {side !== undefined && <aside className="page-frame__side">{side}</aside>}
+        <main>{children}</main>
+        {side !== undefined && <aside>{side}</aside>}
       </div>
     </>
   );

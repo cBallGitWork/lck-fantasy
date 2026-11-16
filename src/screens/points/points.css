@@ -26,11 +26,6 @@
   padding: var(--s-2) 0;
   border-bottom: var(--m-rule) solid var(--fill);
 }
-.points__pick-label,
-.points__pick-owned {
-  color: var(--mid);
-  font-size: var(--size-small);
-}
 .points__pick-owned {
   text-align: right;
 }

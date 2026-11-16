@@ -98,7 +98,7 @@ export function SignUpStepTwo({
         </span>
       </label>
       <div className="settings__sheet-keys">
-        <button type="button" className="settings__text-key" onClick={onBack}>
+        <button type="button" className="settings__text-key key-bare" onClick={onBack}>
           Back
         </button>
         <MainAction onClick={onSave} disabledReason={ready ? undefined : ""}>

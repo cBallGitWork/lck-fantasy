@@ -98,8 +98,8 @@ export function HomeFrame({
       <HomeHead team={data.team} hangul={data.hangul} overall={data.overall} />
       <DeadlineBar data={data} actions={actions} />
       <Columns className="home__row">
-        <div className="home__main">{hero}</div>
-        <aside className="home__side">{side}</aside>
+        <div>{hero}</div>
+        <aside>{side}</aside>
       </Columns>
       <Columns className="home__row home__row--band">
         <Following items={data.following} onTruck={actions.onTruck} />

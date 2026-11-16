@@ -61,12 +61,12 @@ export function Profile({
       <Banner manager={data.manager} follow={follow} onFollow={pressFollow} />
       <Tabs tabs={PROFILE_TABS} chosen={tab} onChoose={setTab} label="Profile" />
       <Columns className="profile__grid">
-        <div className="profile__main">
+        <div>
           {tab === "Points" && <ProfilePoints week={week} hasPrev={hasWeek(weekNo - 1)} hasNext={hasWeek(weekNo + 1)} onWeek={setWeekNo} />}
           {tab === "History" && <ProfileHistory rows={data.history} buffsLeft={data.buffsLeft} onOpenWeek={openWeek} />}
           {tab === "Transfers" && <ProfileTransfers weeks={data.transfers} />}
         </div>
-        <aside className="profile__side">
+        <aside>
           <ProfileSide leagues={data.leagues} trucks={tab === "Points" ? { week: week.week, list: week.trucks } : undefined} />
         </aside>
       </Columns>

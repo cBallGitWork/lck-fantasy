@@ -39,13 +39,6 @@
 .following__name:hover {
   text-decoration: underline;
 }
-.following__team,
-.following__sub,
-.following__deadline,
-.following__so-far {
-  color: var(--mid);
-  font-size: var(--size-small);
-}
 .following__sub {
   display: block;
   margin-top: var(--s-1);

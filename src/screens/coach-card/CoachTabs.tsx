@@ -8,7 +8,7 @@ import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, Roste
 /** This week: each series (the strip carries its Live tag), its games with the lines they scored, the series line, then the week. */
 export function CoachThisWeek({ week }: { week: CoachWeek }) {
   return (
-    <div className="coach-card__week">
+    <div>
       {week.series.map((s) => (
         <Fragment key={s.id}>
           <h2 className="coach-card__block">

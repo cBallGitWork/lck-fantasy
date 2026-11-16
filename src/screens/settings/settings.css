@@ -151,13 +151,9 @@
 }
 .settings__text-key,
 .settings__inline-key {
-  font: inherit;
   color: var(--text);
-  background: none;
-  border: 0;
   text-decoration: underline;
   text-underline-offset: var(--s-1);
-  cursor: pointer;
 }
 .settings__text-key {
   min-height: var(--m-target);

@@ -61,7 +61,7 @@ export type FeedItem = SeriesItem | DeadlineItem;
 
 export interface FeedWeek {
   week: number;
-  notFinal?: boolean;
+  final: boolean;
   /** The week's deadline, once, under its head, when it has deadline rows. */
   deadline?: When;
   /** Its rows can be trucked: the live week, or last week's until the next starts (spec/14). */

@@ -47,7 +47,7 @@ export function TruckPicker({
       <div className="following__kinds">
         <ViewToggle options={KIND_OPTIONS} chosen={kind} onChoose={onKind} label="Truck" />
       </div>
-      <div className="following__lines" role="radiogroup" aria-label="Line">
+      <div role="radiogroup" aria-label="Line">
         {shown.map((l) => (
           <label key={l.id} className={cx("following__line", l.id === picked && "following__line--on")}>
             <input type="radio" className="following__radio" name="truck-line" checked={l.id === picked} onChange={() => onPick(l.id)} />

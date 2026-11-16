@@ -1,4 +1,4 @@
-import { GoLink, Loading, NONE, NotFinalTag, Tag, WeekStep } from "../../parts";
+import { GoLink, Loading, NONE, NotFinalTag, Table, Tag, WeekStep, type Column } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { isBench, MarkBadge, ROLE_NAME, SQUAD_SIZE } from "../../rift";
 import type { PointsWeek, ProfilePick } from "./fixtures";
@@ -42,35 +42,12 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
         {week.buff && <Tag>{week.buff}</Tag>}
       </div>
       {week.team ? (
-        <table className="table profile__table">
-          <colgroup>
-            <col className="profile__col-slot" />
-            <col className="profile__col-player" />
-            <col className="profile__col-pts" />
-            <col />
-          </colgroup>
-          <thead>
-            <tr>
-              <th scope="col">Slot</th>
-              <th scope="col">Player</th>
-              <th scope="col" className="profile__figure">
-                Pts
-              </th>
-              <th scope="col">Series</th>
-            </tr>
-          </thead>
-          <tbody>
-            {starters.map((pick) => (
-              <PickRow key={pick.slot} pick={pick} />
-            ))}
-            <tr className="profile__sub">
-              <td colSpan={4}>{BENCH}</td>
-            </tr>
-            {bench.map((pick) => (
-              <PickRow key={pick.slot} pick={pick} />
-            ))}
-          </tbody>
-        </table>
+        <Table
+          columns={PICK_COLUMNS}
+          rows={[...starters, ...bench]}
+          rowKey={(pick) => pick.slot}
+          subAbove={(pick) => (pick === bench[0] ? { head: BENCH } : undefined)}
+        />
       ) : (
         <Loading rows={SQUAD_SIZE} label={`Week ${week.week}'s team`} />
       )}
@@ -78,32 +55,34 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
   );
 }
 
-function PickRow({ pick }: { pick: ProfilePick }) {
-  return (
-    <tr>
-      <td>
-        <small>{pickSlot(pick)}</small>
-      </td>
-      <td>
+const PICK_COLUMNS: Column<ProfilePick>[] = [
+  { key: "slot", head: "Slot", width: "colSlot", cell: (pick) => <small>{pickSlot(pick)}</small> },
+  {
+    key: "player",
+    head: "Player",
+    width: "colPlayer",
+    cell: (pick) => (
+      <>
         <GoLink className="profile__name" go={cardGo(pick.id, pick.slot === "coach")}>
           {pick.name}
         </GoLink>
-        {pick.mark && (
-          <MarkBadge mark={pick.mark} className="profile__mark" />
-        )}{" "}
-        <small>{pick.team}</small>
-      </td>
-      <td className="profile__figure num">{pick.points ?? NONE}</td>
-      <td>
-        <small>
-          {pick.note ??
-            pick.series.map((line) => (
-              <span key={line} className="profile__series">
-                {line}
-              </span>
-            ))}
-        </small>
-      </td>
-    </tr>
-  );
-}
+        {pick.mark && <MarkBadge mark={pick.mark} className="profile__mark" />} <small>{pick.team}</small>
+      </>
+    ),
+  },
+  { key: "pts", head: "Pts", figure: true, width: "colPts", cell: (pick) => pick.points ?? NONE },
+  {
+    key: "series",
+    head: "Series",
+    cell: (pick) => (
+      <small>
+        {pick.note ??
+          pick.series.map((line) => (
+            <span key={line} className="profile__series">
+              {line}
+            </span>
+          ))}
+      </small>
+    ),
+  },
+];

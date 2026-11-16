@@ -34,9 +34,29 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.table tbody tr:hover td,
+.table tbody tr:not(.table__sub, .table__gap):hover td,
 .table__row--selected td {
   background: var(--fill);
+}
+/* A sub-row: a group's head, what is true of the group on its right; or `⋯` where rows are skipped. */
+.table .table__sub td {
+  height: auto;
+  padding: var(--s-2) var(--s-3);
+  background: var(--bg);
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.table__sub b {
+  color: var(--text);
+}
+.table__sub-aside {
+  float: right;
+}
+.table .table__gap td {
+  height: auto;
+  padding: var(--s-1);
+  text-align: center;
+  color: var(--mid);
 }
 .table__row--selected td {
   font-weight: var(--w-bold);

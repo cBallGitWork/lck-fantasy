@@ -55,7 +55,7 @@ describe("players, totals (1440.png)", () => {
     expectInOrder(text(page({})), [
       "Stats",
       "통계",
-      "Patch update ›",
+      "Price changes ›",
       "Players",
       "Coaches",
       "All",

@@ -10,11 +10,11 @@ import { HomeScreen } from "../screens/home";
 import { LckHubScreen } from "../screens/lck-hub";
 import { LeaguesScreen } from "../screens/leagues";
 import { LiveScreen } from "../screens/live";
-import { PatchUpdateScreen } from "../screens/patch-update";
 import { PerfectGameScreen } from "../screens/perfect-game";
 import { PickTeamScreen } from "../screens/pick-team";
 import { PlayerCardScreen } from "../screens/player-card";
 import { PointsScreen } from "../screens/points";
+import { PriceChangesScreen } from "../screens/price-changes";
 import { ProfileScreen } from "../screens/profile";
 import { SeriesScreen } from "../screens/series";
 import { SettingsScreen } from "../screens/settings";
@@ -50,7 +50,7 @@ const routeTree = rootRoute.addChildren([
   screen(PATHS.series, SeriesScreen),
   screen(PATHS.compare, CompareScreen),
   screen(PATHS.perfectGame, PerfectGameScreen),
-  screen(PATHS.patchUpdate, PatchUpdateScreen),
+  screen(PATHS.priceChanges, PriceChangesScreen),
   screen(PATHS.settings, SettingsScreen),
   screen(PATHS.lckHub, LckHubScreen),
   screen(PATHS.playerCard, PlayerCardScreen),

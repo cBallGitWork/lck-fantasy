@@ -36,7 +36,7 @@ export function PageHead({
 }: {
   title: string;
   hangul?: string;
-  /** A link on the title's line (`Patch update ›`). */
+  /** A link on the title's line (`Price changes ›`). */
   link?: { label: string; go: Go };
   week?: WeekNav;
   /** A plain line under the title, where there are no week arrows (`Split 1 Week 4`). */

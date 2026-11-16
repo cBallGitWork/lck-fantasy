@@ -38,7 +38,7 @@ const KEY: Record<string, string> = {
   "compare/coaches": "Coach · GEN",
   "perfect-game/rift": 'href="/player/faker"',
   "perfect-game/card": "Photo",
-  "patch-update/patch": "Week 4",
+  "price-changes/patch": "Week 4",
   "settings/settings": "1 change: hangul banner",
   "settings/display": "Time zone",
   "settings/emails": "Deadline reminder",

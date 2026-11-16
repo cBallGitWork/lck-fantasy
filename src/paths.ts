@@ -14,7 +14,7 @@ export const PATHS = {
   series: "/series/$seriesId",
   compare: "/compare",
   perfectGame: "/perfect-game",
-  patchUpdate: "/patch-update",
+  priceChanges: "/price-changes",
   settings: "/settings",
   lckHub: "/lck",
   playerCard: "/player/$playerId",

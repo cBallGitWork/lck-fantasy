@@ -4,13 +4,13 @@ import { STATS_PLAYERS } from "../../fixtures/week3";
 import { expectInOrder, html, noop, text } from "../../testing/render";
 import { stepWeek } from ".";
 import { WEEK3_PRICES, WEEK4_PRICES } from "./fixtures";
-import { cardOf, NO_MOVES, PatchUpdatePage } from "./PatchUpdatePage";
+import { cardOf, NO_MOVES, PriceChangesPage } from "./PriceChangesPage";
 
 describe("Week 4 prices", () => {
-  const out = text(<PatchUpdatePage week={WEEK4_PRICES} onPrev={noop} />);
+  const out = text(<PriceChangesPage week={WEEK4_PRICES} onPrev={noop} />);
 
   test("shows the head, then when the prices were set, then Rises before Falls", () => {
-    expectInOrder(out, ["Patch update", "패치 노트", "‹", "Week 4 prices", "›", "Set Wed 13 Jan 07:45 16:45 KST", "Rises", "Falls"]);
+    expectInOrder(out, ["Price changes", "가격 변동", "‹", "Week 4 prices", "›", "Set Wed 13 Jan 07:45 16:45 KST", "Rises", "Falls"]);
   });
 
   test("lists each move in the picture's order: name, team and role, was, now, owned", () => {
@@ -25,7 +25,7 @@ describe("Week 4 prices", () => {
   });
 
   test("marks no row with an arrow (the list says rise or fall), and your own players with the dot", () => {
-    const page = html(<PatchUpdatePage week={WEEK4_PRICES} />);
+    const page = html(<PriceChangesPage week={WEEK4_PRICES} />);
     expect(page).not.toMatch(/class="(rise|fall)"/);
     expect(page.match(/me-dot/g)).toHaveLength(2);
     expect(WEEK4_PRICES.rises.filter((row) => row.mine).map((row) => row.name)).toEqual(["Faker", "Siwoo"]);
@@ -45,14 +45,14 @@ describe("Week 4 prices", () => {
 
 describe("controls", () => {
   test("a name opens the player's card, or the coach's", () => {
-    const page = html(<PatchUpdatePage week={WEEK4_PRICES} />);
+    const page = html(<PriceChangesPage week={WEEK4_PRICES} />);
     expect(page).toContain('href="/player/faker"');
     expect(page).toContain('href="/coach/ssong"');
     expect(cardOf(WEEK4_PRICES.falls.at(-1)!)).toEqual({ to: "/coach/$coachId", params: { coachId: "edgar" } });
   });
 
   test("‹ and › step only where there is a week to go to; the other is a disabled key", () => {
-    const latest = html(<PatchUpdatePage week={WEEK4_PRICES} onPrev={noop} />);
+    const latest = html(<PriceChangesPage week={WEEK4_PRICES} onPrev={noop} />);
     expect(latest).toContain('<button type="button" class="week-arrow" aria-label="Week before">');
     expect(latest).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">');
   });
@@ -64,14 +64,14 @@ describe("controls", () => {
   });
 
   test("How prices move › shows only once it has somewhere to go", () => {
-    expect(text(<PatchUpdatePage week={WEEK4_PRICES} />)).not.toContain("How prices move");
-    expect(text(<PatchUpdatePage week={WEEK4_PRICES} howPricesMove={{ to: "/stats" }} />)).toContain("Set Wed 13 Jan 07:45 16:45 KSTHow prices move ›");
+    expect(text(<PriceChangesPage week={WEEK4_PRICES} />)).not.toContain("How prices move");
+    expect(text(<PriceChangesPage week={WEEK4_PRICES} howPricesMove={{ to: "/stats" }} />)).toContain("Set Wed 13 Jan 07:45 16:45 KSTHow prices move ›");
   });
 });
 
 describe("before the first move", () => {
   test("both lists read No moves yet", () => {
-    const out = text(<PatchUpdatePage week={WEEK3_PRICES} onNext={noop} />);
+    const out = text(<PriceChangesPage week={WEEK3_PRICES} onNext={noop} />);
     expect(out).toContain(`Week 3 prices›Rises${NO_MOVES}Falls${NO_MOVES}`);
     expect(out).not.toContain("Set ");
   });

@@ -33,6 +33,7 @@ product's set, because it is proven on these services.
 | Vitest with `convex-test` | game rules test as plain functions, and Convex functions run in memory, with no deployment |
 | TypeScript, ESLint | strict types and lint, both in `npm run verify` |
 | Papa Parse | reads Oracle's Elixir's daily CSV, quoted fields included, with errors reported, not skipped (#36) |
+| Playwright | drives Chrome for Forge's QA panel walk tool (`scripts/qa-walk.mjs`); dev only |
 
 `convex/_generated/` is normally written by `npx convex dev`, which needs a Convex deployment. Until
 Craig creates one, it is written by hand (#36), and `npx convex dev` will overwrite it. The rules are

@@ -1,0 +1,55 @@
+{
+  "start": "npx vite --port 5310 --strictPort --host 127.0.0.1",
+  "env": {},
+  "port": 5310,
+  "startPath": "/",
+  "data": "made-up preview data at Week 3 of Split 1, signed in as the manager of Baron Steal FC; nothing you change is saved",
+  "personas": [
+    {
+      "style": "fresh eyes",
+      "who": "plays Fantasy Premier League every week, has watched a few LCK games, never used this site",
+      "jobs": [
+        "Find out how many points your team scored this week.",
+        "Make a different player your Carry for next week, and save it.",
+        "Find out when the deadline for next week is.",
+        "Find where you rank in a league you're in."
+      ]
+    },
+    {
+      "style": "bug hunter",
+      "who": "a long-time LCK fan who checks every stat against what they saw on stream",
+      "jobs": [
+        "Find Faker's price and his points this week.",
+        "Find which LCK team is top of the standings.",
+        "Find out how many points your team scored this week, and who scored the most for you.",
+        "Look at how one of your players did in each game of his last series."
+      ]
+    },
+    {
+      "style": "breaker",
+      "who": "impatient, clicks fast, double-clicks everything, types whatever into boxes",
+      "jobs": [
+        "Swap one of your players for someone else, and confirm it.",
+        "Change your team's name.",
+        "Create a new private league."
+      ]
+    },
+    {
+      "style": "completionist",
+      "who": "a fantasy veteran who wants to know everything the site offers before committing",
+      "jobs": [
+        "Find every page of the site and say what each is for.",
+        "Find the rules for how players score points."
+      ]
+    },
+    {
+      "style": "minimalist",
+      "who": "has two minutes on a lunch break to sort their team",
+      "jobs": [
+        "Make a different player your Carry for next week, and save it.",
+        "Swap one of your players for a cheaper one in the same role, and confirm it.",
+        "See how many points you scored this week."
+      ]
+    }
+  ]
+}

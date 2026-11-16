@@ -18,6 +18,14 @@
 .pcard--selected {
   outline: var(--m-rule-heavy) solid var(--ink);
 }
+.pcard--fit {
+  outline: var(--m-rule-heavy) dashed var(--ink);
+  outline-offset: var(--m-rule-heavy);
+}
+.pcard--dim {
+  border-color: var(--line);
+  color: var(--mid);
+}
 .pcard__role {
   height: var(--m-card-head);
   display: flex;

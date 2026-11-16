@@ -37,6 +37,11 @@
   font-size: var(--size-small);
   color: var(--mid);
 }
+.bench-tile__who .crest {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: var(--s-1);
+}
 .bench-tile__who small {
   display: block;
   font-family: var(--font-mono);

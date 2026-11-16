@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Crest, cx, selectable } from "../parts";
+import { cx, selectable } from "../parts";
 import "./BenchBar.css";
 import { RoleIcon } from "./RoleIcon";
 import type { IconKey } from "./roles";
@@ -20,7 +20,6 @@ export function BenchTile({
   role,
   name,
   team,
-  crest,
   detail,
   line,
   points,
@@ -32,8 +31,6 @@ export function BenchTile({
   role: IconKey;
   name: string;
   team: string;
-  /** The team's crest before its code (Pick Team). */
-  crest?: boolean;
   /** After the team, such as `Didn't play`. */
   detail?: string;
   /** A second, mono line: the week's fixtures. */
@@ -52,7 +49,6 @@ export function BenchTile({
       <span className="bench-tile__who">
         <b title={name}>{name}</b>{" "}
         <span>
-          {crest && <Crest team={team} size="crestSmall" />}
           {team}
           {detail && ` · ${detail}`}
         </span>

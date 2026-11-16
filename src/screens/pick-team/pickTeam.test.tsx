@@ -99,7 +99,8 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expect(markup.match(/bench-tile--fit/g)).toHaveLength(1);
   expect(markup.match(/tile--dim/g)).toHaveLength(7);
   expect(markup.match(/class="tile__flex"/g)).toHaveLength(1);
-  expect(markup).toContain('alt="T1 crest"');
+  // His card shows T1's crest; the Rift's tiles and the bench show none (Craig, 16 Nov 2026).
+  expect(markup.match(/alt="T1 crest"/g)).toHaveLength(1);
   expect(markup).toMatch(/main-action__key"[^>]*disabled/);
   expect(markup).not.toContain("Reset");
   expect(markup.match(/buff-card__play/g)).toHaveLength(2);

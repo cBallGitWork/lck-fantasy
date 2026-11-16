@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Crest, cx, MeDot, selectable, Tag } from "../parts";
+import { cx, MeDot, selectable, Tag } from "../parts";
 import { measure } from "../theme/tokens";
 import { RiftMap } from "./RiftMap";
 import { RoleIcon } from "./RoleIcon";
@@ -24,8 +24,6 @@ export interface TileProps {
   mark?: Mark;
   /** Dual Carry is played: the V is gold as the C, as the Vice-carry scores ×1.5 too (spec/06). */
   dual?: boolean;
-  /** The team's crest beside the name (Pick Team). */
-  crest?: boolean;
   /** A `Flex` label over the Flex's shirt, so his place reads at a glance (Pick Team). */
   flexLabel?: boolean;
   /** One of your players. */
@@ -73,8 +71,7 @@ export function Tile(p: TileProps) {
           </span>
         )}
       </div>
-      <div className={cx("tile__name", p.crest && "tile__name--crest")} title={p.name}>
-        {p.crest && <Crest team={p.team} size="crestSmall" />}
+      <div className="tile__name" title={p.name}>
         {p.name}
         {p.me && <MeDot />}
         {p.birthday && " 🎂"}

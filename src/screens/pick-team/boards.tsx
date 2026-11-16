@@ -34,7 +34,6 @@ export function RiftBoard(props: ViewProps) {
             plays={flexPlays(slot, p.role)}
             name={p.name}
             team={p.team}
-            crest
             flexLabel
             at={RIFT_SLOTS_PICK[slot]}
             mark={markOf(state, p.id)}
@@ -98,7 +97,6 @@ function Bench(props: ViewProps) {
         role={p.role}
         name={p.name}
         team={p.team}
-        crest
         line={fixtureLine(data.series, p.team)}
         state={swap(p.id)}
         selected={p.id === state.selected}

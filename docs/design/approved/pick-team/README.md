@@ -37,7 +37,7 @@ From his look at the built page; these bind over the pictures above.
 - The Rift keeps its 984 × 560 shape at any width and the map is drawn in it, so nothing stretches, everywhere.
 - With Dual Carry played the V is gold, as the C.
 - The card's form history is the last 3 series, not weeks.
-- Team crests beside each player's name on the tiles, his team on the bench tiles and in his card.
+- A team crest in a player's card, never on the Rift's tiles or the bench (Craig, 16 Nov 2026).
 - The Flex's tile carries a `FLEX` label over his shirt.
 - Fixture lines give only the opponents: `v DK, NS`.
 - The card drops its series rows: his tile already shows them, and the side lists the week's series.

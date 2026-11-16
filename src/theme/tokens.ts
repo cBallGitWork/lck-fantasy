@@ -133,7 +133,7 @@ export const measure = {
   cardHead: 48,
   cardPhoto: 176,
   crest: 96,
-  /** A crest beside a team code: on a Rift tile, a bench tile, a player's panel. */
+  /** A crest beside a team code: in a player's panel. */
   crestSmall: 20,
   sponsorH: 112,
   sponsorTopW: 120,

@@ -74,12 +74,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.tile__name--crest {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--s-1);
-}
 .tile__points {
   background: var(--ink);
   color: var(--on-ink);

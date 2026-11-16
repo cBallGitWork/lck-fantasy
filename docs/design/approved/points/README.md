@@ -6,7 +6,7 @@ Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in the shar
 
 | File | Shows |
 |---|---|
-| `1440.png`, `points.html` | Saturday, T1 v DK live: your team on the Rift, the bench bar, Faker's games open (replaced by the sheet, below), your week, leagues, the week's series |
+| `1440.png`, `points.html` | Saturday, T1 v DK live: your team on the Rift, the bench bar, Faker's games open in the side column, which is gone: the sheet, below, replaces it, and the picture isn't redrawn, your week, leagues, the week's series |
 | `breakdown.png`, `breakdown.html` | A tapped player's breakdown sheet: Faker, the Carry, two series |
 | `breakdown-coach.png`, `breakdown-coach.html` | The same sheet for the coach: kkOma |
 | `breakdown-brief.md`, `bg.png` | The sheet's brief; the page behind it |
@@ -27,7 +27,7 @@ After using the built page; these override the picture.
 - The bench shows the Rift's own tiles (shirt on its card, name plate, points band, `Didn't play` under a dash), each under its order and role, `1. Mid`, as FPL's bench and its `1. DEF`.
 - Live said once per place: on the head's live bar, the open game's row and the week's series (a shared list, kept). A tile's or card's series line and a series result in a player's games drop it: `v DK 5`, `1–0`.
 - `Final` on the head alone (Changed by Craig, 16 Nov 2026): a series result in a player's games is `W 2–1`, not `W 2–1 · final`; the head's tag is `Final`, or `Not final` while the week isn't, `Live` while a game is. Perfect game, reached by Highest ›, keeps its `Final` and drops `Cap 2`.
-- A tap opens a breakdown sheet (Changed by Craig, 16 Nov 2026: "tapping a player card on points rift view didn't do anything, should show that gameweek's points breakdown like FPL"; "your call" on popup or scroll; then "huge info dump", so slimmed; approved with "File both approve"). A 544 modal over the page, replacing the side panel: portrait, name and hangul, a bigger C or V, the total, then Average Carry for the Carry. Each series is a header (day, opponent, result ›, its points) over one 32px row per game: champion and W/L, K/D/A, the bonus lines that scored as words, the points boxed when counted and in `--mid` when dropped. The ×1.5 stays hidden: the total is his result. The coach gets the same sheet with his lines and the series' +3 or −1. Full stats › at the foot.
+- A tap opens a breakdown sheet (Changed by Craig, 16 Nov 2026: "tapping a player card on points rift view didn't do anything, should show that gameweek's points breakdown like FPL"; "your call" on popup or scroll; then "huge info dump", so slimmed; approved with "File both approve"). A 544 modal over the page, replacing the side panel: portrait, name and hangul, a bigger C or V, the total, then Average Carry for the Carry. Each series is a header (day, opponent, result ›, its points) over one 32px row per game (the pictures draw 40; 32 binds): champion and W/L, K/D/A, the bonus lines that scored as words, the points boxed when counted and in `--mid` when dropped. The ×1.5 stays hidden: the total is his result. The coach gets the same sheet with his lines and the series' +3 or −1. Full stats › at the foot.
 - Week arrows as FPL's (Changed by Craig, 16 Nov 2026): ‹ and › are 32px keys, text on paper with a mid edge, beside the week. Each is a link by the router, the week in the path (`/points/2`; `/points` is the latest), so a week can be linked; › is a disabled key at the latest week and ‹ at Week 1. The made-up data has Weeks 1 and 2, final, to step back to.
 
 ## Borrowed

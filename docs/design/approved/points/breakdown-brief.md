@@ -18,4 +18,4 @@
 **Made-up data (Points' moment, Saturday, T1 v DK game 2 live):** Faker, Carry. v HLE W 2–1: Azir 6/1/9 = 5, Taliyah 2/4/5 = 2 (dropped), Galio 4/0/14 = 7 → 12. v DK 1–0: Orianna 5/2/8 = 4, Sylas live 1/0/2 at 14:20 = 1 → 5. 17 × 1.5 = 25.
 
 **Coach (Craig, 16 Nov 2026: "yes coach version"):** the same sheet with spec/05's coach lines (first tower, most drakes, most barons, most elders, quick win; a line that scored in no game is left out), each counted game boxed, then `Series won +3` or `Series lost −1` once a series is over. No C, no Average Carry. kkOma: v HLE 2 + 3 + 3 = 8, v DK live 2 + 0 = 2, 10 in all (coach.png).
-**Rows:** 32px in a sheet (Claude's call, Craig: "your call"). **×1.5:** hidden (Craig). **C:** 32px (Craig: "make C bigger").
+**Rows:** 32px in a sheet (Claude's call, Craig: "your call"); the pictures draw them at 40, and 32 binds. **×1.5:** hidden (Craig). **C:** 32px (Craig: "make C bigger").

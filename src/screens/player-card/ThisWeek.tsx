@@ -1,12 +1,12 @@
-import { cx, seriesResult } from "../../parts";
+import { cx, seriesResult, sum } from "../../parts";
 import type { CardWeek, WeekSeries } from "./card";
 
 /** A series' points: the games that count. */
-const seriesPoints = (s: WeekSeries) => s.games.reduce((sum, g) => sum + (g.counts ? g.points : 0), 0);
+const seriesPoints = (s: WeekSeries) => sum(s.games.filter((g) => g.counts).map((g) => g.points));
 
 /** This week: each series with its score and points in its head (the strip carries its Live tag), each game with champion, K/D/A and points, then the week's total. */
 export function ThisWeek({ week }: { week: CardWeek }) {
-  const raw = week.series.reduce((sum, s) => sum + seriesPoints(s), 0);
+  const raw = sum(week.series.map(seriesPoints));
   return (
     <div>
       {week.series.map((s) => (

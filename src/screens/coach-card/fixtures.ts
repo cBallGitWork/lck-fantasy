@@ -5,7 +5,7 @@ import { hangulOf, ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { KKOMA_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
 import { BEST_OF, MY_PLAYERS, pickedAt, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
-import { bestOf, type StripNext, type StripPast } from "../../parts";
+import { bestOf, type StripNext, type StripPast, sum } from "../../parts";
 import type { RoleKey } from "../../rift";
 import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, WeekGame, WeekSeries } from "./types";
 
@@ -71,7 +71,7 @@ function weekSeries(id: string, games: number[], coachResult?: number): WeekSeri
       counts: COUNTED[id]?.[i] ?? false,
       clock: live && i + 1 === s.liveGame ? s.clock : undefined,
     })),
-    points: games.filter((_, i) => COUNTED[id]?.[i]).reduce((a, b) => a + b, 0) + (coachResult ?? 0),
+    points: sum(games.filter((_, i) => COUNTED[id]?.[i])) + (coachResult ?? 0),
   };
 }
 
@@ -79,7 +79,7 @@ const WEEK3_COACH_SERIES = COACH.series.map((s) => weekSeries(s.id, s.games, s.c
 const WEEK3: CoachWeek = {
   week: 3,
   series: WEEK3_COACH_SERIES,
-  total: WEEK3_COACH_SERIES.reduce((sum, s) => sum + s.points, 0),
+  total: sum(WEEK3_COACH_SERIES.map((s) => s.points)),
   seriesWon: SERIES_WON,
   seriesLost: SERIES_LOST,
 };

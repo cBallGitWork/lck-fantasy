@@ -1,5 +1,6 @@
 // Every approved picture's state (docs/design/approved/<page>/), the dev URL that opens it and the
 // picture it is checked against. /dev/states lists them; the UI checks read them from here.
+import { LIVE_SERIES_ID } from "../fixtures/week3";
 import { DEV_STATE_PARAM } from "../parts";
 import { PATHS, pathTo, type Go } from "../paths";
 
@@ -85,9 +86,9 @@ export const DEV_STATES: readonly DevState[] = [
     { state: "down", go: { to: PATHS.live }, param: true },
   ]),
   ...page("series", [
-    { state: "series", go: series("w3-sat-2") },
+    { state: "series", go: series(LIVE_SERIES_ID) },
     { state: "f21", go: series("w3-sat-1"), picture: "1440-21.png" },
-    { state: "live", go: series("w3-sat-2"), param: true },
+    { state: "live", go: series(LIVE_SERIES_ID), param: true },
     { state: "next", go: series("w4-wed-1") },
   ]),
   ...page("compare", [

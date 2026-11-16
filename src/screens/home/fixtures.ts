@@ -6,6 +6,7 @@ import {
   COMPETITION,
   countdown,
   finalPickOf,
+  LIVE_SERIES_ID,
   livePointsOf,
   MANAGER,
   MY_WEEK3,
@@ -45,8 +46,8 @@ const SHARED: Omit<HomeShared, "countdown"> = {
   leagues: MY_LEAGUES.map(({ id, name, kind, rank, move }) => ({ id, name, kind, rank, move })),
 };
 
-const live = atPoints("w3-sat-2");
-if (!live.score || live.liveGame === undefined) throw new Error("w3-sat-2 is live at Points' moment, with its score and game");
+const live = atPoints(LIVE_SERIES_ID);
+if (!live.score || live.liveGame === undefined) throw new Error(`${LIVE_SERIES_ID} is live at Points' moment, with its score and game`);
 
 /** Home while T1 v DK game 2 is live (live.html). */
 export const HOME_LIVE: HomeLiveData = {

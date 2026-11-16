@@ -67,8 +67,8 @@ const TOWER_DRAKES_BARON = ["1st tower", "Drakes", "Baron"];
 
 /** T1 v DK, Week 3, Saturday: T1 2–0, final, as the LCK hub's Results show it. */
 const T1_DK_FINAL: PlayedSeries = {
-  id: "w3-sat-2",
-  when: when(WEEK3_SERIES_FINAL, "w3-sat-2", 3),
+  id: LIVE_SERIES_ID,
+  when: when(WEEK3_SERIES_FINAL, LIVE_SERIES_ID, 3),
   games: [
     { winner: "T1", length: "31:42", vod: VOD },
     { winner: "T1", length: "27:10", vod: VOD },

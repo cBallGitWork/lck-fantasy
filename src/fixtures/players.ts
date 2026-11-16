@@ -50,12 +50,47 @@ export const STATS_PLAYERS: StatsPlayer[] = [
   { role: "mid", name: "Bdd", team: "KT", priceEok: 5.0, move: 0, ownedPct: 5, points: 16 },
 ];
 
+/** Made up past the Stats picture's first page, players then coaches: every page's figures for them. */
+export const OFF_PAGE_PLAYERS: StatsPlayer[] = [
+  { role: "top", name: "Kingen", team: "NS", priceEok: 6.5, move: 1, ownedPct: 3, points: 24 },
+  { role: "mid", name: "Clozer", team: "BRO", priceEok: 5.0, move: 1, ownedPct: 2, points: 28 },
+  { role: "bot", name: "Teddy", team: "BRO", priceEok: 10.0, move: 0, ownedPct: 4, points: 28 },
+  { role: "sup", name: "Peter", team: "KT", priceEok: 7.5, move: 0, ownedPct: 2, points: 27 },
+  { role: "top", name: "PerfecT", team: "KT", priceEok: 7.0, move: 0, ownedPct: 3, points: 27 },
+  { role: "mid", name: "Ucal", team: "KRX", priceEok: 10.5, move: -1, ownedPct: 3, points: 26 },
+  { role: "jng", name: "Lucid", team: "DK", priceEok: 9.0, move: 1, ownedPct: 5, points: 26 },
+  { role: "bot", name: "deokdam", team: "KT", priceEok: 9.5, move: 0, ownedPct: 2, points: 25 },
+  { role: "sup", name: "BeryL", team: "DK", priceEok: 8.5, move: 0, ownedPct: 4, points: 25 },
+  { role: "top", name: "Rich", team: "KRX", priceEok: 8.5, move: 0, ownedPct: 1, points: 24 },
+  { role: "jng", name: "Willer", team: "KRX", priceEok: 8.0, move: 0, ownedPct: 1, points: 23 },
+  { role: "top", name: "DuDu", team: "DNS", priceEok: 6.0, move: -1, ownedPct: 2, points: 23 },
+  { role: "bot", name: "Berserker", team: "DNS", priceEok: 10.0, move: 0, ownedPct: 3, points: 22 },
+  { role: "sup", name: "Andil", team: "KRX", priceEok: 7.0, move: 0, ownedPct: 1, points: 21 },
+  { role: "sup", name: "Life", team: "DNS", priceEok: 7.0, move: 0, ownedPct: 1, points: 20 },
+  { role: "jng", name: "GIDEON", team: "BRO", priceEok: 7.5, move: 0, ownedPct: 1, points: 19 },
+  { role: "mid", name: "Scout", team: "NS", priceEok: 8.0, move: -1, ownedPct: 1, points: 18 },
+  { role: "bot", name: "Taeyoon", team: "NS", priceEok: 8.5, move: 0, ownedPct: 2, points: 18 },
+  { role: "sup", name: "Lehends", team: "NS", priceEok: 7.0, move: 0, ownedPct: 1, points: 17 },
+  { role: "top", name: "Casting", team: "BRO", priceEok: 7.0, move: 0, ownedPct: 1, points: 16 },
+  { role: "jng", name: "Sponge", team: "NS", priceEok: 6.5, move: 0, ownedPct: 1, points: 15 },
+  { role: "bot", name: "Hype", team: "KRX", priceEok: 5.5, move: 1, ownedPct: 1, points: 15 },
+  { role: "sup", name: "Pollu", team: "BRO", priceEok: 4.5, move: 0, ownedPct: 1, points: 14 },
+  { role: "top", name: "Clear", team: "BFX", priceEok: 5.5, move: -1, ownedPct: 1, points: 14 },
+  { role: "jng", name: "Raptor", team: "BFX", priceEok: 6.5, move: 0, ownedPct: 1, points: 13 },
+  { role: "mid", name: "VicLa", team: "BFX", priceEok: 7.5, move: 0, ownedPct: 1, points: 13 },
+  { role: "bot", name: "Diable", team: "BFX", priceEok: 7.0, move: -1, ownedPct: 1, points: 12 },
+  { role: "sup", name: "Kellin", team: "BFX", priceEok: 6.0, move: 0, ownedPct: 1, points: 11 },
+  { role: "coach", name: "DanDy", team: "NS", priceEok: 5.0, move: -1, ownedPct: 1, points: 7 },
+  { role: "coach", name: "Edgar", team: "BRO", priceEok: 4.5, move: -1, ownedPct: 1, points: 4 },
+  { role: "coach", name: "Mowgli", team: "BFX", priceEok: 4.5, move: 0, ownedPct: 1, points: 3 },
+];
+
 /** Form, the last 4 weeks' average, is season points ÷ 3 until Week 4 is final. */
 export const formOf = (points: number) => Math.round((points / 3) * 10) / 10;
 
-/** A player in the Stats list; one missing from it is a broken fixture. */
+/** A player or coach in the Stats list; one missing from it is a broken fixture. */
 export function statsOf(name: string): StatsPlayer {
-  const found = STATS_PLAYERS.find((p) => p.name === name);
+  const found = [...STATS_PLAYERS, ...OFF_PAGE_PLAYERS].find((p) => p.name === name);
   if (!found) throw new Error(`${name} is not in the Stats list`);
   return found;
 }

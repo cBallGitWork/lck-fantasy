@@ -38,6 +38,7 @@ export { PageFrame } from "./frame/PageFrame";
 export { PageHead, type HeadFigure, type WeekNav } from "./frame/PageHead";
 export { Placeholder } from "./frame/Placeholder";
 export { chooseOnKey, selectable } from "./util/selectable";
+export { sum } from "./util/sum";
 export { SectionHead } from "./frame/SectionHead";
 export { SeriesList, type SeriesRow, type SeriesState } from "./display/SeriesList";
 export { beyondStrip, SeriesStrip, type StripNext, type StripPast } from "./display/SeriesStrip";

@@ -80,7 +80,7 @@ describe("List view (Craig, 16 Nov 2026)", () => {
       "Next",
       "Top",
       "Zeus HLE14₩14.0m16.048v DK×",
-      "Kingen NS13₩6.5m12.738v DNS×",
+      "Kingen NS8₩6.5m8.024v DNS×",
       "Jungle",
       "Canyon GEN",
       "Cuzz KT",

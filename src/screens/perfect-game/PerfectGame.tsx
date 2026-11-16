@@ -1,5 +1,5 @@
 import { MANAGER } from "../../fixtures/week3";
-import { FinalTag, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, ViewToggle, type WeekNav } from "../../parts";
+import { FinalTag, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, sum, ViewToggle, type WeekNav } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays, Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
@@ -70,7 +70,7 @@ export function PerfectGame({
   /** The week before and after; the route takes no week yet. */
   weekNav?: Omit<WeekNav, "label">;
 } & Selection) {
-  const total = game.players.reduce((sum, p) => sum + p.points, 0);
+  const total = sum(game.players.map((p) => p.points));
   const tapped = game.players.find((p) => p.slot === selected);
   const viewProps = { game, selected, onSelect };
   return (

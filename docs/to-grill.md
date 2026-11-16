@@ -50,7 +50,8 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
   Overall's name per tab; where a row's › goes.
 - League forms: what Copy link copies; Join with a bad code; the 25-league cap message; Remove's
   confirm text.
-- Stats: a `+` on each row that opens Transfers with that player chosen, so a scout isn't a dead end (design panel, 16 Nov 2026).
+- Stats: a `+` on each row that opens Transfers with that player chosen, so a scout isn't a dead
+  end (design panel, 16 Nov 2026).
 - Stats: second click flips the sort; Max price steps; 0.0 or — for no games; an empty result.
 - Live: can a greyed stream be picked; the remembered stream when idle.
 - Series: VOD as ↗ or ›; an unknown series id; a coach's empty game as — or 0.

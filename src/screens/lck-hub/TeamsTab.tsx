@@ -13,14 +13,14 @@ function RosterTable({ roster }: { roster: Roster }) {
         <tbody>
           {roster.members.map((m) => (
             <tr key={m.id} className={cx(m.role === "coach" && "lck-hub__roster-coach")}>
-              <td className="lck-hub__role">
+              <td className="lck-hub__role quiet">
                 <RoleIcon role={m.role} className="lck-hub__role-icon" />
                 {ROLE_NAME[m.role]}
               </td>
               <td>
                 <GoLink className="lck-hub__person" go={cardGo(m.id, m.role === "coach")}>
                   <b>{m.name}</b>{" "}
-                  <small className="lck-hub__hangul" lang="ko">
+                  <small className="lck-hub__hangul quiet" lang="ko">
                     {m.hangul}
                   </small>
                 </GoLink>

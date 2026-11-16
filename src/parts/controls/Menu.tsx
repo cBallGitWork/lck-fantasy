@@ -18,7 +18,7 @@ export function Menu({ label, items, className, startOpen = false }: { label: Re
     <span className="menu" onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>
       <button
         type="button"
-        className={cx("menu__key", className)}
+        className={cx("menu__key key-bare", className)}
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen(!open)}
@@ -28,7 +28,7 @@ export function Menu({ label, items, className, startOpen = false }: { label: Re
       {open && (
         <span id={id} className="menu__list">
           {items.map((item) => {
-            const cls = cx("menu__item", item.apart && "menu__item--apart");
+            const cls = cx("menu__item key-bare", item.apart && "menu__item--apart");
             return "go" in item ? (
               <GoLink key={item.label} className={cls} go={item.go}>
                 {item.label}

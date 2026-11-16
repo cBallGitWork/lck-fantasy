@@ -16,7 +16,7 @@ export function Crest({ team, size = "crest" }: { team: string; size?: MeasureKe
   return url ? (
     <img className="crest" src={url} alt={`${team} crest`} style={box} />
   ) : (
-    <span className={cx("crest", "crest--none")} style={box}>
+    <span className={cx("crest", "crest--none quiet")} style={box}>
       {team}
     </span>
   );

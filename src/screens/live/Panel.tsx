@@ -8,7 +8,7 @@ import { dot, WORDS } from "./words";
 function GameLine({ player }: { player: PanelPlayer }) {
   const games = player.games.map((g, i) => `${WORDS.gameShort}${i + 1} ${g ?? NONE}`).join(dot);
   return (
-    <span className="live__games num">
+    <span className="live__games quiet num">
       {games}
       {player.won !== undefined && `${dot}${WORDS.won} +${player.won}`}
       {player.liveGame && <LiveTag />}
@@ -24,7 +24,7 @@ function PlayerRow({ player }: { player: PanelPlayer }) {
       <span>
         <span className="live__name">
           {player.name}
-          <small className="live__team">{player.team}</small>
+          <small className="live__team quiet">{player.team}</small>
           {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}
         </span>
         <GameLine player={player} />
@@ -40,7 +40,7 @@ function RestRow({ player }: { player: RestPlayer }) {
       <span className="live__rest-name">
         <RoleIcon role={player.role} className="live__rest-icon" />
         {player.name}
-        <small className="live__team">{player.team}</small>
+        <small className="live__team quiet">{player.team}</small>
         {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}
       </span>
       <span className="live__points num">{player.points}</span>

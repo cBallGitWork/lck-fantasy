@@ -2,7 +2,5 @@
   white-space: nowrap;
 }
 .time__kst {
-  color: var(--mid);
-  font-size: var(--size-small);
   margin-left: var(--s-1);
 }

@@ -24,11 +24,7 @@
   align-self: flex-start;
   min-width: var(--m-target);
   min-height: var(--m-target);
-  font: inherit;
-  background: none;
-  border: 0;
   color: var(--mid);
-  cursor: pointer;
 }
 .player-panel__close:hover {
   color: var(--text);
@@ -61,10 +57,7 @@
   align-items: center;
   padding: var(--s-1) 0;
 }
-.player-panel__game-no {
-  color: var(--mid);
-  font-size: var(--size-small);
-}
+
 .player-panel__game-points {
   text-align: right;
   font-weight: var(--w-semi);
@@ -80,10 +73,7 @@
 .player-panel__game--dropped .player-panel__game-points {
   font-weight: var(--w-regular);
 }
-.player-panel__counted {
-  border: var(--m-rule) solid var(--text);
-  padding: 0 var(--s-1);
-}
+
 .player-panel__sum {
   display: flex;
   justify-content: space-between;
@@ -91,10 +81,7 @@
   padding: var(--s-2) var(--s-4);
   border-bottom: var(--m-rule) solid var(--line);
 }
-.player-panel__sum-label {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
+
 .player-panel__sum-figure {
   font-size: var(--size-head);
 }

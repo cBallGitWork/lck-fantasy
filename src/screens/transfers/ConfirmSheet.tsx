@@ -72,7 +72,7 @@ export function ConfirmSheet({
         </button>
         <MainAction onClick={onConfirm}>Confirm</MainAction>
       </div>
-      <p className="transfers__sheet-deadline">
+      <p className="transfers__sheet-deadline quiet">
         Deadline <Time {...deadline} />
       </p>
     </Modal>

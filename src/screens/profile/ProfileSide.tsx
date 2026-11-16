@@ -39,7 +39,7 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
           {trucks.list.map((truck) => (
             <div key={truck.from} className="profile__truck">
               <p className="profile__led">{truck.line}</p>
-              <p className="profile__truck-by">
+              <p className="profile__truck-by quiet">
                 {TRUCK_KIND[truck.kind]} from <b>{truck.from}</b>
               </p>
             </div>

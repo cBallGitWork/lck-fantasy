@@ -14,7 +14,7 @@ test("columns hold the main then the side, with the page's own class", () => {
 });
 
 test("a section head is an h2 with its note, if any, in a small", () => {
-  expect(html(<SectionHead note="Gen.G">GEN</SectionHead>)).toBe('<h2 class="section-head">GEN<small class="section-head__note">Gen.G</small></h2>');
+  expect(html(<SectionHead note="Gen.G">GEN</SectionHead>)).toBe('<h2 class="section-head">GEN<small class="section-head__note quiet">Gen.G</small></h2>');
   expect(html(<SectionHead className="live__apart">The rest</SectionHead>)).toBe('<h2 class="section-head live__apart">The rest</h2>');
 });
 
@@ -32,7 +32,7 @@ test("a series strip holds the last series with points, the rule, then the next 
     />,
   );
   expect(out).toMatch(/^<div class="series-strip">/);
-  expect(out).toContain('<span class="series-strip__when">W3 · Wed</span><b class="series-strip__points num">12</b><span class="series-strip__when">v HLE</span>');
+  expect(out).toContain('<span class="series-strip__when quiet">W3 · Wed</span><b class="series-strip__points num">12</b><span class="series-strip__when quiet">v HLE</span>');
   expect(out).toContain('<b class="series-strip__points num">10<span class="tag tag--live">Live</span></b>');
   expect(out.indexOf("v DK")).toBeLessThan(out.indexOf('<span class="series-strip__now"></span>'));
   expect(out).toContain('W4 · Wed · Bo3</span><span class="series-strip__next num series-strip__next--first">v KT</span>');

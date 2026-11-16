@@ -22,7 +22,7 @@ export function Tabs<T extends string>({
         <button
           key={tab}
           type="button"
-          className={cx("tabs__tab", tab === chosen && "tabs__tab--on")}
+          className={cx("tabs__tab key-bare", tab === chosen && "tabs__tab--on")}
           aria-pressed={tab === chosen}
           onClick={() => onChoose?.(tab)}
         >

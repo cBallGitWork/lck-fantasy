@@ -9,7 +9,7 @@ const ALWAYS_SHOWN_COLUMNS = 6;
 
 /** A rank's move: ▲ or ▼ in `--text` and the places, or `—` when it held. */
 export function Move({ move }: { move: number | null }) {
-  if (move === null || move === 0) return <span className="leagues__nil">{NONE}</span>;
+  if (move === null || move === 0) return <span className="leagues__nil quiet">{NONE}</span>;
   return <RankMove move={move} />;
 }
 

@@ -15,7 +15,7 @@ function FeedRow({ item, onTruck }: { item: FeedItem; onTruck?: (item: FeedItem)
         <Led line={item.line} />
         <div>
           <b>Truck from {item.from}</b>
-          <small className="home__feed-small">Week {item.week}</small>
+          <small className="home__feed-small quiet">Week {item.week}</small>
         </div>
       </div>
     );
@@ -26,9 +26,9 @@ function FeedRow({ item, onTruck }: { item: FeedItem; onTruck?: (item: FeedItem)
     <div className="home__feed-row">
       <div>
         <b>{item.manager}</b> · {what}
-        <small className="home__feed-small">{small}</small>
+        <small className="home__feed-small quiet">{small}</small>
       </div>
-      <button type="button" className="home__truck" onClick={() => onTruck?.(item)}>
+      <button type="button" className="home__truck key-bare" onClick={() => onTruck?.(item)}>
         Truck ›
       </button>
     </div>

@@ -69,9 +69,9 @@ export function LineupCard(p: LineupCardProps) {
         {p.name}
         {p.me && <MeDot />}
       </div>
-      <div className="pcard__team">{p.team}</div>
+      <div className="pcard__team quiet">{p.team}</div>
       {p.next !== undefined && <div className="pcard__next">{p.next}</div>}
-      {p.footer !== undefined && <div className="pcard__foot">{p.footer}</div>}
+      {p.footer !== undefined && <div className="pcard__foot quiet">{p.footer}</div>}
     </div>
   );
 }

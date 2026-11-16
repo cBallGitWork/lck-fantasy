@@ -22,7 +22,7 @@ export function CappedInput({ label, value, onChange }: { label: string; value: 
   return (
     <span className="settings__input">
       <input className="settings__input-text" aria-label={label} value={value} onChange={(e) => onChange(capName(e.target.value))} />
-      <span className="settings__count num">{counter(value)}</span>
+      <span className="quiet num">{counter(value)}</span>
     </span>
   );
 }

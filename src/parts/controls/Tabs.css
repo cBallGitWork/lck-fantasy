@@ -5,12 +5,8 @@
   border-bottom: var(--m-rule) solid var(--line);
 }
 .tabs__tab {
-  font: inherit;
-  background: none;
-  border: 0;
   padding: var(--s-2) var(--s-4);
   color: var(--mid);
-  cursor: pointer;
 }
 .tabs__tab--on {
   color: var(--text);

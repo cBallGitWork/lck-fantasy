@@ -141,7 +141,7 @@ export function DisplayTab({ draft, onChange, browserZone, zones, deadlineAt }: 
     <section>
       <Row label="Time zone">
         <Select label="Time zone" value={draft.timeZone} options={zoneOptions} onChange={(timeZone) => onChange({ timeZone })} />
-        <p className="settings__sub">
+        <p className="settings__sub quiet">
           Deadline <Time {...deadline} />
         </p>
       </Row>
@@ -169,7 +169,7 @@ export function EmailsTab({ draft, onChange, account, reminderHours }: SettingsP
     <section>
       <OnOffRow label="Deadline reminder" when={hoursBefore(reminderHours)} on={draft.deadlineReminder} onChoose={(deadlineReminder) => onChange({ deadlineReminder })} />
       <OnOffRow label="Weekly recap" when="Once the week is final" on={draft.weeklyRecap} onChoose={(weeklyRecap) => onChange({ weeklyRecap })} />
-      <p className="settings__sub settings__sent-to">Sent to {account.email}</p>
+      <p className="settings__sub quiet settings__sent-to">Sent to {account.email}</p>
     </section>
   );
 }
@@ -186,7 +186,7 @@ export function AccountTab({ account, onSignOut, onDownload, onDelete }: Setting
                 <ProviderMark provider={account.provider} />
                 {account.email}
               </span>
-              <span className="settings__count">from {account.provider}</span>
+              <span className="quiet">from {account.provider}</span>
             </span>
             <OutlinedKey onClick={onSignOut}>Sign out</OutlinedKey>
           </span>
@@ -207,7 +207,7 @@ export function AccountTab({ account, onSignOut, onDownload, onDelete }: Setting
 
 function LegalFoot() {
   return (
-    <div className="settings__foot">
+    <div className="settings__foot quiet">
       <LegalNames />
       <Placeholder word="privacy email" />
     </div>

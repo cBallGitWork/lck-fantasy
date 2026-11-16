@@ -22,11 +22,11 @@ export function Fixtures({
   onPrev?: () => void;
   onNext?: () => void;
 }) {
-  const record = (team: TeamCode) => <small className="lck-hub__record num">{records[team] ?? NONE}</small>;
+  const record = (team: TeamCode) => <small className="lck-hub__record quiet num">{records[team] ?? NONE}</small>;
   return (
     <section>
       <WeekTitle week={week} bestOf={bestOf} onPrev={onPrev} onNext={onNext} />
-      <div className="lck-hub__time-heads">
+      <div className="lck-hub__time-heads quiet">
         <span>Yours</span>
         <span>KST</span>
       </div>

@@ -5,5 +5,5 @@ export function weekStarts(rows: { id: string; week: number }[]): Set<string> {
 
 /** A week's number on its first row, ruled above; blank on the rest. */
 export function WeekCell({ week, starts }: { week: number; starts: boolean }) {
-  return starts ? <span className="player-card__week-start player-card__quiet">{week}</span> : null;
+  return starts ? <span className="player-card__week-start player-card__quiet quiet">{week}</span> : null;
 }

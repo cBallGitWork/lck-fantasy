@@ -3,8 +3,6 @@
   align-items: center;
   justify-content: center;
   border: var(--m-rule) dashed var(--soft);
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .placeholder--fill {
   width: 100%;

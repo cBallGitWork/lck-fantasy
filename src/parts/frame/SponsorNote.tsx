@@ -4,5 +4,5 @@ import "./SponsorNote.css";
 export const SPONSOR_NOTE = "All sponsors are made up.";
 
 export function SponsorNote() {
-  return <p className="sponsor-note">{SPONSOR_NOTE}</p>;
+  return <p className="sponsor-note quiet">{SPONSOR_NOTE}</p>;
 }

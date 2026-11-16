@@ -78,7 +78,5 @@
 }
 .home__stream-platform {
   margin-left: var(--s-1);
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
-  color: var(--mid);
 }

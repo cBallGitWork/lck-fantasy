@@ -9,6 +9,4 @@
   justify-content: center;
   border-radius: 50%;
   border: var(--m-rule) dashed var(--soft);
-  color: var(--mid);
-  font-size: var(--size-small);
 }

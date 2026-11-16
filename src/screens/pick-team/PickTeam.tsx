@@ -57,7 +57,7 @@ function ChangeBar({ data, state, dispatch }: ViewProps) {
               {changes} {changes === 1 ? "change" : "changes"}
             </b>
           </span>
-          <button type="button" className="pick-team__reset" onClick={() => dispatch({ type: "reset" })}>
+          <button type="button" className="pick-team__reset key-bare" onClick={() => dispatch({ type: "reset" })}>
             Reset
           </button>
         </>

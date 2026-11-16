@@ -31,17 +31,11 @@
 }
 .leagues__back {
   margin-right: var(--s-2);
-  font: inherit;
   color: var(--text);
   text-decoration: underline;
-  background: none;
-  border: 0;
-  cursor: pointer;
 }
 .leagues__count {
   margin-top: var(--s-4);
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .leagues__sheet-sub {
   color: var(--mid);

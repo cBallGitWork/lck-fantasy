@@ -6,7 +6,7 @@ import "./Placeholder.css";
 export function Placeholder({ word, width, height, fill }: { word: string; width?: MeasureKey; height?: MeasureKey; fill?: boolean }) {
   return (
     <span
-      className={cx("placeholder", fill && "placeholder--fill")}
+      className={cx("placeholder quiet", fill && "placeholder--fill")}
       style={{ width: width && measureVar(width), height: height && measureVar(height) }}
     >
       {word}

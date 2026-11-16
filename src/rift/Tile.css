@@ -109,8 +109,6 @@
 }
 .tile__line {
   background: var(--bg);
-  color: var(--mid);
-  font-size: var(--size-small);
   padding: 0 var(--s-1) var(--s-1);
   white-space: nowrap;
   overflow: hidden;

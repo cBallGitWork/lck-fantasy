@@ -6,7 +6,7 @@ export function SeasonRail({ season }: { season: PlayerCardData["season"] }) {
   return (
     <aside className="player-card__rail">
       <h3 className="player-card__rail-head">
-        Season <span className="player-card__quiet">{season.games} games</span>
+        Season <span className="player-card__quiet quiet">{season.games} games</span>
       </h3>
       <Table
         label="Season"
@@ -15,7 +15,7 @@ export function SeasonRail({ season }: { season: PlayerCardData["season"] }) {
         columns={[
           { key: "line", head: "", cell: (l) => l.line },
           { key: "total", head: "Total", figure: true, cell: (l) => l.total },
-          { key: "perGame", head: "Per game", figure: true, cell: (l) => <span className="player-card__quiet">{perGame(l.total, season.games)}</span> },
+          { key: "perGame", head: "Per game", figure: true, cell: (l) => <span className="player-card__quiet quiet">{perGame(l.total, season.games)}</span> },
           { key: "points", head: "Pts", figure: true, cell: (l) => <b>{signed(l.points)}</b> },
         ]}
       />

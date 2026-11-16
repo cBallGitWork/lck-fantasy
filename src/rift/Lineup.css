@@ -78,8 +78,6 @@
   text-overflow: ellipsis;
 }
 .pcard__team {
-  font-size: var(--size-small);
-  color: var(--mid);
   padding: 0 var(--s-2) var(--s-2);
 }
 .pcard__next {
@@ -95,8 +93,6 @@
   display: flex;
   justify-content: space-between;
   padding: var(--s-1) var(--s-2);
-  font-size: var(--size-small);
-  color: var(--mid);
   font-family: var(--font-mono);
   white-space: nowrap;
 }

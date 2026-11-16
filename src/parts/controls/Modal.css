@@ -40,12 +40,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font: inherit;
   font-size: var(--size-lead);
-  background: none;
-  border: 0;
   color: var(--text);
-  cursor: pointer;
 }
 .modal__title {
   font-size: var(--size-head);

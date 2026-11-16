@@ -159,7 +159,7 @@ function TruckCell({ item, week, data, onTruck }: { item: FeedItem; week: FeedWe
   const sent = data.sent[item.manager.id];
   if (sent) return <span className="following__sent">{TRUCK_WORD[sent]} sent</span>;
   return (
-    <button type="button" className="following__truck" onClick={() => onTruck(item.manager.id)}>
+    <button type="button" className="following__truck key-bare" onClick={() => onTruck(item.manager.id)}>
       Truck ›
     </button>
   );
@@ -169,7 +169,7 @@ function Truck({ truck }: { truck: ReceivedTruck }) {
   return (
     <div className="following__parked">
       <Led>{truck.text}</Led>
-      <div className="following__by">
+      <div className="following__by quiet">
         {truck.kind === "sponsor" ? (
           <>
             <span>
@@ -198,7 +198,7 @@ function People({ people, actions }: { people: Manager[]; actions: { label: stri
           <Who manager={m} />
           <span className="following__acts">
             {actions.map((a) => (
-              <button key={a.label} type="button" className="following__act" onClick={() => a.on(m.id)}>
+              <button key={a.label} type="button" className="following__act key-bare" onClick={() => a.on(m.id)}>
                 {a.label}
               </button>
             ))}

@@ -80,7 +80,7 @@ export function Tile(p: TileProps) {
         {p.birthday && " 🎂"}
       </div>
       {p.points !== undefined && <div className="tile__points num">{p.points}</div>}
-      {p.line !== undefined && <div className={cx("tile__line", p.points === undefined && "tile__line--fixtures")}>{p.line}</div>}
+      {p.line !== undefined && <div className={cx("tile__line quiet", p.points === undefined && "tile__line--fixtures")}>{p.line}</div>}
     </div>
   );
 }

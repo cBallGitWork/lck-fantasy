@@ -7,7 +7,7 @@ export function SideSection({ title, note, children }: { title: string; note?: R
     <section className="side-section">
       <h2 className="side-section__title">
         {title}
-        {note !== undefined && <span className="side-section__note">{note}</span>}
+        {note !== undefined && <span className="side-section__note quiet">{note}</span>}
       </h2>
       {children}
     </section>

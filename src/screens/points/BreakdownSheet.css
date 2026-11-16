@@ -39,8 +39,6 @@
 .points__breakdown-total-note {
   display: block;
   margin-top: var(--s-1);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 
 .points__breakdown-series {
@@ -64,9 +62,7 @@
 }
 .points__breakdown-day {
   margin-right: var(--s-1);
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
-  color: var(--mid);
 }
 .points__breakdown-result {
   font-weight: var(--w-regular);
@@ -85,10 +81,7 @@
   min-height: var(--m-row-sheet);
   border-top: var(--m-rule) solid var(--line);
 }
-.points__breakdown-game-no {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
+
 .points__breakdown-game-what {
   display: flex;
   gap: var(--s-1);
@@ -97,19 +90,14 @@
 .points__breakdown-kda {
   text-align: right;
 }
-.points__breakdown-lines {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
+
 .points__breakdown-points {
   text-align: right;
 }
 .points__breakdown-counted {
   display: inline-block;
   min-width: var(--m-target);
-  padding: 0 var(--s-1);
   text-align: center;
-  border: var(--m-rule) solid var(--text);
   font-weight: var(--w-bold);
 }
 .points__breakdown-game--dropped .points__breakdown-game-what b,

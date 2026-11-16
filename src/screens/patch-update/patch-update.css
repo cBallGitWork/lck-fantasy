@@ -49,8 +49,6 @@
   text-decoration: underline;
 }
 .patch-update__meta {
-  color: var(--mid);
-  font-size: var(--size-small);
   margin-left: var(--s-2);
 }
 .patch-update__was {

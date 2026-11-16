@@ -47,7 +47,7 @@ function StreamPicker({ streams, picked, onPick }: { streams: Stream[]; picked: 
           onClick={() => onPick(s.id)}
         >
           {s.name}
-          <small className="home__stream-platform">{s.platform}</small>
+          <small className="home__stream-platform quiet">{s.platform}</small>
         </button>
       ))}
       {more.length > 0 && (
@@ -85,7 +85,7 @@ export function HomeLive({ data, onPickStream, ...actions }: { data: HomeLiveDat
           <PlayerList players={data.inSeries} label="In this series" />
           <h3 className="home__sub">
             Still to play
-            {data.stillToPlay.length === 0 && <span className="home__sub-note">None</span>}
+            {data.stillToPlay.length === 0 && <span className="home__sub-note quiet">None</span>}
           </h3>
           {data.stillToPlay.length > 0 && <PlayerList players={data.stillToPlay} label="Still to play" />}
           <div className="home__more">

@@ -48,7 +48,7 @@ export function TopBar({
         </GoLink>
       ))}
       <span className="top-bar__space" />
-      <span className="top-bar__presented">
+      <span className="top-bar__presented quiet">
         presented by <Placeholder word="Sponsor" width="sponsorTopW" height="target" />
       </span>
       {account === null ? (

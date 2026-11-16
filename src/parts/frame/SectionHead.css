@@ -9,7 +9,5 @@
   font-weight: var(--w-bold);
 }
 .section-head__note {
-  color: var(--mid);
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
 }

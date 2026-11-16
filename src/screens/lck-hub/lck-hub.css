@@ -23,8 +23,6 @@
   display: grid;
   grid-template-columns: calc(var(--s-7) + var(--s-6) + var(--s-2)) calc(var(--s-7) + var(--s-4)) calc(var(--s-7) + var(--s-4));
   padding-bottom: var(--s-1);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .lck-hub__time-heads span:first-child {
   grid-column: 2;
@@ -40,9 +38,7 @@
 }
 .lck-hub__day-date {
   display: block;
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
-  color: var(--mid);
 }
 .lck-hub__series {
   display: grid;
@@ -79,8 +75,6 @@
 }
 .lck-hub__record {
   margin: 0 var(--s-2);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .lck-hub__versus {
   text-align: center;
@@ -144,8 +138,6 @@
 }
 .lck-hub__role {
   width: var(--m-col-role);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .lck-hub__role-icon {
   width: 1em;
@@ -160,8 +152,6 @@
   font-weight: var(--w-semi);
 }
 .lck-hub__hangul {
-  font-size: var(--size-small);
-  color: var(--mid);
   margin-left: var(--s-1);
 }
 .lck-hub__price {
@@ -189,10 +179,7 @@
 .lck-hub__story:hover .lck-hub__headline {
   text-decoration: underline;
 }
-.lck-hub__story-date {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
+
 .lck-hub__more {
   margin-top: var(--s-3);
   font-weight: var(--w-semi);

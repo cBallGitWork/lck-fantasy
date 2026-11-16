@@ -14,7 +14,7 @@ export function ThisWeek({ week }: { week: CardWeek }) {
           <h3 className="player-card__section">
             <span>
               {s.day} · v {s.opponent}{" "}
-              <span className="player-card__quiet">{seriesResult(s.score, s.state === "live")}</span>
+              <span className="player-card__quiet quiet">{seriesResult(s.score, s.state === "live")}</span>
             </span>
             <b className="num">{seriesPoints(s)}</b>
           </h3>
@@ -22,9 +22,9 @@ export function ThisWeek({ week }: { week: CardWeek }) {
             <tbody>
               {s.games.map((g, i) => (
                 <tr key={i} className={cx(!g.counts && "player-card__dropped")}>
-                  <td className="player-card__quiet">G{i + 1}</td>
+                  <td className="player-card__quiet quiet">G{i + 1}</td>
                   <td>
-                    {g.champion} <span className="player-card__quiet">· {g.outcome ?? g.clock}</span>
+                    {g.champion} <span className="player-card__quiet quiet">· {g.outcome ?? g.clock}</span>
                   </td>
                   <td className="player-card__right num">{g.kda}</td>
                   <td className="player-card__right player-card__points num">{g.points}</td>
@@ -38,7 +38,7 @@ export function ThisWeek({ week }: { week: CardWeek }) {
         <tbody>
           <tr>
             <td colSpan={2}>Week {week.week}</td>
-            <td className="player-card__right player-card__quiet num">{week.carry !== undefined && `${raw} × ${week.carry} Carry`}</td>
+            <td className="player-card__right player-card__quiet quiet num">{week.carry !== undefined && `${raw} × ${week.carry} Carry`}</td>
             <td className="player-card__right player-card__points num">{week.total}</td>
           </tr>
         </tbody>

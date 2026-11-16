@@ -26,7 +26,7 @@ function SeriesResult({ s }: { s: PointsSeries }) {
 function GameRow({ g }: { g: PointsGame }) {
   return (
     <div className={cx("points__breakdown-game", !g.counted && "points__breakdown-game--dropped")}>
-      <span className="points__breakdown-game-no num">G{g.game}</span>
+      <span className="quiet num">G{g.game}</span>
       <span className="points__breakdown-game-what">
         {g.champion && <b>{g.champion}</b>}
         {g.clock ? (
@@ -38,8 +38,8 @@ function GameRow({ g }: { g: PointsGame }) {
         )}
       </span>
       <span className="points__breakdown-kda num">{g.kda?.join("/")}</span>
-      <span className="points__breakdown-lines">{g.lines.join(" · ")}</span>
-      <span className="points__breakdown-points num">{g.counted ? <b className="points__breakdown-counted">{g.points}</b> : g.points}</span>
+      <span className="quiet">{g.lines.join(" · ")}</span>
+      <span className="points__breakdown-points num">{g.counted ? <b className="points__breakdown-counted counted">{g.points}</b> : g.points}</span>
     </div>
   );
 }
@@ -70,7 +70,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
       </div>
       <div className="points__breakdown-total">
         <b className="num">{player.points ?? NONE}</b>
-        <span className="points__breakdown-total-note">
+        <span className="points__breakdown-total-note quiet">
           {!final && <NotFinalTag />}
           {!final && player.carry && " · "}
           {player.carry && `Average ${MARK_NAME.C} ${player.carry.average}`}
@@ -84,7 +84,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
         <section key={s.id} className="points__breakdown-series" aria-label={`v ${s.opponent}`}>
           <h3 className="points__breakdown-series-head">
             <GoLink go={{ to: PATHS.series, params: { seriesId: s.id } }} className="points__breakdown-series-go">
-              <span className="points__breakdown-day">{s.day}</span> v {s.opponent} <SeriesResult s={s} /> ›
+              <span className="points__breakdown-day quiet">{s.day}</span> v {s.opponent} <SeriesResult s={s} /> ›
             </GoLink>
             <b className="points__breakdown-series-points num">{s.points}</b>
           </h3>

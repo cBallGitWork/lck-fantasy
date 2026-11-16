@@ -12,7 +12,7 @@ export function News({ news }: { news: HubNews }) {
           </span>
           <span>
             <b className="lck-hub__headline">{h.headline}</b>
-            <small className="lck-hub__story-date">{h.date} ↗</small>
+            <small className="quiet">{h.date} ↗</small>
           </span>
         </a>
       ))}

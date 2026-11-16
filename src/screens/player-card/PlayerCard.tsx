@@ -57,12 +57,12 @@ export function PlayerCard({
             {card.name}
             <span className="player-card__hangul">{card.hangul}</span>
           </h1>
-          <p className="player-card__quiet">{card.legalName}</p>
+          <p className="player-card__quiet quiet">{card.legalName}</p>
         </div>
         <div className="player-card__side">
           <p className="player-card__hero">
             <b className="num">{card.season.points}</b>
-            <span className="player-card__quiet">
+            <span className="player-card__quiet quiet">
               Season · {placeOf(card.season.place, card.season.field)}
             </span>
           </p>
@@ -73,16 +73,16 @@ export function PlayerCard({
         </div>
       </header>
       <div className="player-card__meta">
-        <span className="player-card__quiet">
+        <span className="player-card__quiet quiet">
           <b className="player-card__figure num">{eok(card.priceEok)}</b>price <PriceMove eok={card.priceMove} />
         </span>
-        <span className="player-card__quiet">
+        <span className="player-card__quiet quiet">
           <b className="player-card__figure num">{oneDecimal(card.form)}</b>form · {ordinal(card.formPlace)}
         </span>
-        <span className="player-card__quiet">
+        <span className="player-card__quiet quiet">
           <b className="player-card__figure num">{pct(card.ownedPct)}</b>owned · {ordinal(card.ownedPlace)}
         </span>
-        <span className="player-card__quiet">{inOut(card.transfersIn, card.transfersOut)} this week</span>
+        <span className="player-card__quiet quiet">{inOut(card.transfersIn, card.transfersOut)} this week</span>
       </div>
       <div className="player-card__body">
         <div className="player-card__main">

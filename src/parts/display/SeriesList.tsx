@@ -51,7 +51,7 @@ export function SeriesList({ series, go }: { series: readonly SeriesRow[]; go?: 
         );
         return (
           <div key={s.id} className="series-list__row">
-            <span className="series-list__day">{s.day}</span>
+            <span className="quiet">{s.day}</span>
             <span>{go ? <GoLink go={go(s)}>{teams}</GoLink> : teams}</span>
             <span className="series-list__result num">
               <Result s={s} />

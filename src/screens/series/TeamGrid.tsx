@@ -13,7 +13,7 @@ function Name({ person, go }: { person: Person; go: Go }) {
     <td className="series__name">
       <GoLink go={go}>
         <b>{person.name}</b>
-        <small className="series__hangul" lang="ko">
+        <small className="series__hangul quiet" lang="ko">
           {person.hangul}
         </small>
       </GoLink>
@@ -24,7 +24,7 @@ function Name({ person, go }: { person: Person; go: Go }) {
 
 function Role({ icon, label }: { icon: IconKey; label: string }) {
   return (
-    <td className="series__role">
+    <td className="series__role quiet">
       <RoleIcon role={icon} className="series__role-icon" />
       {label}
     </td>
@@ -35,7 +35,7 @@ function Points({ points, counts, pog }: { points: number; counts: boolean; pog?
   return (
     <span className="series__points num">
       {pog && <Tag>POG</Tag>}
-      <span className={cx(counts && "series__box")}>{points}</span>
+      <span className={cx(counts && "counted")}>{points}</span>
     </span>
   );
 }

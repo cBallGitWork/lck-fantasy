@@ -36,9 +36,7 @@
 }
 .home__tier-hangul {
   margin-left: var(--s-2);
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
-  color: var(--mid);
 }
 .home__tier-rank b {
   margin-right: var(--s-2);
@@ -74,9 +72,7 @@
   font-weight: var(--w-bold);
 }
 .home__deadline-competition {
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
-  color: var(--mid);
 }
 .home__deadline-left {
   display: flex;
@@ -161,9 +157,7 @@
   margin-top: var(--s-4);
 }
 .home__sub-note {
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
-  color: var(--mid);
 }
 .home__players {
   list-style: none;
@@ -212,18 +206,12 @@
 }
 .home__feed-small {
   display: block;
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .home__truck {
   display: inline-flex;
   align-items: center;
   min-height: var(--m-target);
-  font: inherit;
   color: var(--text);
-  background: none;
-  border: 0;
-  cursor: pointer;
 }
 .home__truck:hover {
   text-decoration: underline;

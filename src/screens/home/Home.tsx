@@ -23,7 +23,7 @@ function HomeHead({ team, hangul, overall }: { team: string; hangul: string; ove
         <div>
           <div className="home__tier-name">
             {overall.tier}
-            <span className="home__tier-hangul" lang="ko">
+            <span className="home__tier-hangul quiet" lang="ko">
               {overall.hangul}
             </span>
           </div>
@@ -59,7 +59,7 @@ function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions
   return (
     <section className="home__deadline">
       <h2 className="home__deadline-title">
-        Week {deadline.week} deadline <span className="home__deadline-competition">{deadline.competition}</span>
+        Week {deadline.week} deadline <span className="home__deadline-competition quiet">{deadline.competition}</span>
       </h2>
       <div className="home__deadline-left">
         <CountdownFigure countdown={data.countdown} />

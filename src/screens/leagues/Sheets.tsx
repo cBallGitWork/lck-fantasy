@@ -11,7 +11,7 @@ import "./Sheets.css";
 function SheetKeys({ onBack, children }: { onBack: () => void; children: ReactNode }) {
   return (
     <div className="leagues__sheet-keys">
-      <button type="button" className="leagues__back" onClick={onBack}>
+      <button type="button" className="leagues__back key-bare" onClick={onBack}>
         Back
       </button>
       {children}
@@ -25,7 +25,7 @@ interface PrivateCount {
   cap: number;
 }
 
-const CountLine = ({ count, cap }: PrivateCount) => <p className="leagues__count">{privateCountLine(count, cap)}</p>;
+const CountLine = ({ count, cap }: PrivateCount) => <p className="leagues__count quiet">{privateCountLine(count, cap)}</p>;
 
 const weekLabel = ({ week, starts }: ScoringWeek) => `Week ${week} · ${starts}`;
 

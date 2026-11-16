@@ -16,7 +16,7 @@ export interface SignUpAnswers {
 }
 
 function Step({ of }: { of: 1 | 2 }) {
-  return <span className="settings__step num">{of} of 2</span>;
+  return <span className="settings__step quiet num">{of} of 2</span>;
 }
 
 /** Step 1, over Pick Team on Save: sign in with Google or Discord. */
@@ -41,7 +41,7 @@ export function SignUpStepOne({
           </OutlinedKey>
         ))}
       </div>
-      <p className="settings__warn">
+      <p className="settings__warn quiet">
         No password is stored. <LegalNames />
       </p>
     </Modal>
@@ -88,7 +88,7 @@ export function SignUpStepTwo({
           <Select label="Country" value={answers.country} options={plainOptions(countries)} onChange={(country) => onChange({ country })} />
         </label>
       </div>
-      <p className="settings__sub">
+      <p className="settings__sub quiet">
         Both lock at your first deadline: <Time {...deadline} />
       </p>
       <label className="settings__tick">

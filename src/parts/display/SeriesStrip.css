@@ -11,9 +11,7 @@
   padding: 0 var(--s-3);
 }
 .series-strip__when {
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
-  color: var(--mid);
 }
 .series-strip__points {
   display: flex;

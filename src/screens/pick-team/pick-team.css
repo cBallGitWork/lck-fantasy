@@ -20,12 +20,8 @@
   color: var(--text);
 }
 .pick-team__reset {
-  font: inherit;
   min-height: var(--m-target);
   color: var(--text);
-  background: none;
-  border: 0;
-  cursor: pointer;
 }
 .pick-team__reset:hover {
   text-decoration: underline;

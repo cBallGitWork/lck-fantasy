@@ -14,8 +14,6 @@
   background: var(--paper);
   border: var(--m-rule) solid var(--line);
   border-top: var(--m-rule-heavy) solid var(--text);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .transfers__figure b {
   font-size: var(--size-head);

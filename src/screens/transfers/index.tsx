@@ -34,6 +34,6 @@ export function TransfersScreen() {
     if (prior) setWeek(prior);
   };
 
-  const initialPlan = selling ? remove(squad, EMPTY_PLAN, selling).plan : undefined;
+  const initialPlan = selling ? remove(squad, EMPTY_PLAN, selling).plan : TRANSFERS_PICTURE.initialPlan;
   return <TransfersPage {...TRANSFERS_PICTURE} {...week} initialPlan={initialPlan} reviewing={reviewing} onConfirm={onConfirm} onUndo={onUndo} />;
 }

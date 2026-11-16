@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { PATHS } from "../../paths";
-import { expectInOrder, html, htmlAt, noop, text } from "../../testing/render";
+import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
 import { CoachCard, EMPTY_TAB } from "./CoachCard";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
 import { CoachCardPage, FIRST_TAB, TRANSFER_OUT } from "./index";
@@ -23,7 +23,9 @@ describe("the page", () => {
     const soldTile = /class="tile tile--selected tile--dim"(?:(?!class="tile ).)*title="kkOma"/;
     expect(TRANSFER_OUT).toBe("/transfers?sell=coach");
     expect(await htmlAt(TRANSFER_OUT)).toMatch(soldTile);
-    expect(await htmlAt(PATHS.transfers)).not.toContain("tile--dim");
+    const unsold = await htmlAt(PATHS.transfers);
+    expect(unsold).not.toContain("tile--dim");
+    expect(plain(unsold)).toContain("Siwoo ₩11.5m → Kingen ₩6.5m");
     expect(await htmlAt("/transfers?sell=nobody")).not.toContain("tile--dim");
   });
 

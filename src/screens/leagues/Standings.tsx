@@ -7,12 +7,6 @@ import type { StandingRow, Standings as StandingsData } from "./types";
 /** Rank, move, team, week, total and `›`; Carry and the split come and go. */
 const ALWAYS_SHOWN_COLUMNS = 6;
 
-/** A rank's move: ▲ or ▼ in `--text` and the places, or `—` when it held. */
-export function Move({ move }: { move: number | null }) {
-  if (move === null || move === 0) return <span className="leagues__nil quiet">{NONE}</span>;
-  return <RankMove move={move} />;
-}
-
 /**
  * A league's table: rank, move, team and manager (your row on fill, with its chase tag), Carry once
  * the deadline has passed, the week's points, the split's on a group's table, the total, and `›` to the
@@ -57,7 +51,7 @@ function Row({ row, carryShown, splitColumn }: { row: StandingRow; carryShown: b
     <tr className={row.mine ? "leagues__mine" : undefined}>
       <td className="leagues__rank num">{count(row.rank)}</td>
       <td className="leagues__move">
-        <Move move={row.move} />
+        <RankMove move={row.move} />
       </td>
       <td className="leagues__name" title={`${row.team} · ${row.manager}`}>
         {row.team}

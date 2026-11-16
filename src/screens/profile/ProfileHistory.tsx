@@ -8,19 +8,13 @@ const COLUMNS: Column<HistoryRow>[] = [
   { key: "total", head: "Total", figure: true, cell: (r) => countOrNone(r.total) },
   { key: "weekRank", head: "Week rank", figure: true, cell: (r) => countOrNone(r.weekRank) },
   { key: "overall", head: "Overall", figure: true, cell: (r) => countOrNone(r.overall) },
-  { key: "move", head: "Move", figure: true, cell: (r) => <Move places={r.move} /> },
+  { key: "move", head: "Move", figure: true, cell: (r) => <RankMove move={r.move} /> },
   { key: "transfers", head: "Transfers", figure: true, cell: (r) => countOrNone(r.transfers) },
   { key: "hits", head: "Hits", figure: true, cell: (r) => countOrNone(r.hits) },
   { key: "bank", head: "Bank", figure: true, cell: (r) => money(r.bankM) },
   { key: "value", head: "Value", figure: true, cell: (r) => money(r.valueM) },
   { key: "buff", head: "Buff", cell: (r) => r.buff ?? NONE },
 ];
-
-/** A rank's move, in `--text` with ▲ or ▼; `—` when there is none. */
-export function Move({ places }: { places: number | undefined }) {
-  if (!places) return <>{NONE}</>;
-  return <RankMove move={places} />;
-}
 
 /** History: each week's points, total, ranks, transfers, hits, bank, value and buff; then the buffs left. */
 export function ProfileHistory({ rows, buffsLeft, onOpenWeek }: { rows: HistoryRow[]; buffsLeft: string[]; onOpenWeek: (week: number) => void }) {

@@ -186,12 +186,12 @@ test("‹ › are keys by the router: Week 1's ‹ is off, the latest's › is o
   expect([...POINTS_WEEKS.keys()]).toEqual([1, 2, 3]);
   expect(LATEST_WEEK).toBe(3);
   const head = (n: number) => html(<PointsPage data={week(n)} />).split('class="page-head__key-line"')[0] ?? "";
-  expect(head(1)).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week before" disabled="">‹</button>');
+  expect(head(1)).toContain('<button type="button" class="week-arrow key-off" aria-label="Week before" disabled="">‹</button>');
   expect(head(1)).toContain('href="/points/2"');
   expect(head(2)).toContain('href="/points/1"');
   expect(head(2)).toContain('href="/points/3"');
   expect(head(3)).toContain('href="/points/2"');
-  expect(head(3)).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">›</button>');
+  expect(head(3)).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
 });
 
 test("a path names its week: /points the latest, /points/2 Week 2, anything else no week", () => {
@@ -279,4 +279,11 @@ test("the sheet shows the picture: Faker's crest, name, hangul and C, his 25, th
     "G2SylasLive 14:201/0/2Solo1",
     "Full stats ›",
   ]);
+});
+
+test("a held league rank is RankMove's grey —, never ▲ 0", () => {
+  const held = { ...POINTS_FIXTURE, leagues: POINTS_FIXTURE.leagues.map((l) => ({ ...l, move: 0 })) };
+  const markup = html(<PointsPage data={held} />);
+  expect(markup.split('class="rank-held"').length - 1).toBe(held.leagues.length);
+  expect(markup).not.toMatch(/rank-(up|down)/);
 });

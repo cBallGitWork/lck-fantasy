@@ -57,9 +57,6 @@
   padding: 0;
   color: var(--text);
 }
-.compare__go:hover {
-  text-decoration: underline;
-}
 
 /* The head-to-head: the top table, then the lines, each side mirrored about the line's name. */
 .compare__body {

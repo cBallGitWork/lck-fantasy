@@ -36,9 +36,6 @@
 .following__item .following__name {
   font-weight: var(--w-bold);
 }
-.following__name:hover {
-  text-decoration: underline;
-}
 .following__team,
 .following__sub,
 .following__deadline,
@@ -87,9 +84,6 @@
 .following__truck {
   font-weight: var(--w-semi);
   color: var(--text);
-}
-.following__truck:hover {
-  text-decoration: underline;
 }
 .following__sent {
   color: var(--mid);
@@ -141,9 +135,6 @@
   min-height: var(--m-target);
   font-size: var(--size-small);
   color: var(--text);
-}
-.following__act:hover {
-  text-decoration: underline;
 }
 
 /* The truck picker. */

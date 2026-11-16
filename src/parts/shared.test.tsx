@@ -6,7 +6,7 @@ import { Columns, Led, SectionHead, SeriesStrip, TierShield, WeekArrow } from ".
 test("a week arrow is a key: it links, steps, or sits off as a disabled key", () => {
   expect(html(<WeekArrow label="Week before" go={{ to: "/points" }}>‹</WeekArrow>)).toMatch(/<a[^>]*class="week-arrow"[^>]*aria-label="Week before"[^>]*>‹<\/a>/);
   expect(html(<WeekArrow label="Week after" onStep={() => {}}>›</WeekArrow>)).toBe('<button type="button" class="week-arrow" aria-label="Week after">›</button>');
-  expect(html(<WeekArrow label="Week after">›</WeekArrow>)).toBe('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">›</button>');
+  expect(html(<WeekArrow label="Week after">›</WeekArrow>)).toBe('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
 });
 
 test("columns hold the main then the side, with the page's own class", () => {

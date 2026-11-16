@@ -48,7 +48,8 @@ What shows a fact: tags, tables, lists, crests, states.
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `TierShield.tsx`: Overall's tier shield, filled and outlined, no text on it (spec/08); the page sizes it through its class name.
 - `Led.tsx`: a truck's line on its dotted LED panel, in capitals, drawn as Home's; `big` for the truck picker's preview.
-- `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
+- `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904, or a mid grey `—` when it held), the one rank move on every screen; no CSS of its own, base.css draws them.
+>>>>>>> origin/main
 
 ## text/
 

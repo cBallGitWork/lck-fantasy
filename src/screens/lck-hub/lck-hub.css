@@ -143,9 +143,6 @@
   vertical-align: -0.1em;
   margin-right: var(--s-2);
 }
-.lck-hub__person:hover b {
-  text-decoration: underline;
-}
 .lck-hub__person b {
   font-weight: var(--w-semi);
 }
@@ -173,9 +170,6 @@
 .lck-hub__headline {
   display: block;
   font-weight: var(--w-semi);
-}
-.lck-hub__story:hover .lck-hub__headline {
-  text-decoration: underline;
 }
 
 .lck-hub__more {

@@ -36,9 +36,6 @@
   width: calc(var(--s-7) + var(--s-4));
   height: var(--m-target);
 }
-.home__move-none {
-  color: var(--mid);
-}
 
 /* Deadline bar: full width under the head, its keys on the side column's line. */
 .home__deadline {
@@ -189,10 +186,6 @@
   align-items: center;
   min-height: var(--m-target);
   color: var(--text);
-}
-.home__truck:hover {
-  text-decoration: underline;
-  text-underline-offset: var(--s-1);
 }
 
 .home__sponsor {

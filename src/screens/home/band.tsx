@@ -1,6 +1,5 @@
-import { count, Led, LinkGo, ordinal, SideSection, Table } from "../../parts";
+import { count, Led, LinkGo, ordinal, RankMove, SideSection, Table } from "../../parts";
 import { PATHS } from "../../paths";
-import { Move } from "./format";
 import type { FeedItem, HomeLeague } from "./types";
 
 function FeedRow({ item, onTruck }: { item: FeedItem; onTruck?: (item: FeedItem) => void }) {
@@ -23,7 +22,7 @@ function FeedRow({ item, onTruck }: { item: FeedItem; onTruck?: (item: FeedItem)
         <b>{item.manager}</b> · {what}
         <small className="home__feed-small quiet">{small}</small>
       </div>
-      <button type="button" className="home__truck key-bare" onClick={() => onTruck?.(item)}>
+      <button type="button" className="home__truck key-bare hover-line" onClick={() => onTruck?.(item)}>
         Truck ›
       </button>
     </div>
@@ -54,7 +53,7 @@ export function Leagues({ leagues }: { leagues: HomeLeague[] }) {
         columns={[
           { key: "name", head: "League", cell: (l) => l.name, fullText: (l) => l.name },
           { key: "rank", head: "Rank", figure: true, cell: (l) => (l.kind === "private" ? ordinal(l.rank) : count(l.rank)) },
-          { key: "move", head: "Move", figure: true, width: "goCol", cell: (l) => <Move move={l.move} /> },
+          { key: "move", head: "Move", figure: true, width: "goCol", cell: (l) => <RankMove move={l.move} /> },
         ]}
       />
       <div className="home__more">

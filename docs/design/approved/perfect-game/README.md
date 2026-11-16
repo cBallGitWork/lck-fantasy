@@ -18,7 +18,7 @@ After using the built page; these override the picture.
 - Tiles as FPL's: the shirt on a faint lighter card, C or V at its top right and a news flag `!` at its top left, a white name plate, then a dark band (fixtures, or points and series). No role icon on a tile: his place on the Rift says it; the Flex's and Coach's place is a label over the shirt (`FLEX`, `Coach 감독`), and nothing goes under a Flex's tile: no `Flex · plays Top`, no `Not starting` tag (his flag `!` stays at the shirt's corner, the words in his card). No team crests on the tiles.
 - Nothing said twice: the week's series carry no Final note; the Carry's games say `T1 · Mid`, his C and his sum's label already name him.
 
-- No `Final` tag and no `Cap 2` (Craig, 16 Nov 2026): a result is already final, and the cap is the same every week. The head keeps `Not final` while the week isn't.
+- No `Cap 2` (Craig, 16 Nov 2026): the cap is the same every week. The head's tag is `Final`, or `Not final` while the week isn't.
 
 ## Borrowed
 

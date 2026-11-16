@@ -202,13 +202,14 @@ test("a path names its week: /points the latest, /points/2 Week 2, anything else
   for (const bad of ["0", "4", "02x", "two", ""]) expect(weekOf(bad)).toBeUndefined();
 });
 
-test("a final week shows its result alone: no Final, no Not final, no Live, no live bar", () => {
+test("a final week says Final once, as the head's tag (Craig, 16 Nov 2026): no Not final, no Live, no live bar", () => {
   for (const n of [1, 2]) {
     const data = week(n);
     expect(data.final).toBe(true);
     const out = text(<PointsPage data={data} open="Faker" />);
     expect(out).toContain(`LCK Cup · Week ${n}`);
-    expect(out).not.toMatch(/[Ff]inal|Watch/);
+    expect(out.match(/Final/g)).toHaveLength(1);
+    expect(out).not.toMatch(/Not final|· final|Watch/);
     // Only the top bar's Live item.
     expect(out.match(/Live/g)).toHaveLength(1);
   }

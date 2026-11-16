@@ -56,7 +56,7 @@ export function PointsPage({
         hangul={data.hangul}
         week={data.week}
         figure={data.total}
-        tags={!data.final && <Tag kind="notFinal">Not final</Tag>}
+        tags={data.final ? <Tag>Final</Tag> : <Tag kind="notFinal">Not final</Tag>}
         figures={[
           { label: "Average", value: data.average },
           { label: "Highest", value: data.highest, go: { to: PATHS.perfectGame } },

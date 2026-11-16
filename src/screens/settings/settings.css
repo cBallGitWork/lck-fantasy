@@ -50,10 +50,7 @@
   border: 0;
   outline: none;
 }
-.settings__count {
-  color: var(--mid);
-  font-size: var(--size-small);
-}
+
 .settings__select {
   width: 100%;
   height: var(--m-row);
@@ -65,8 +62,6 @@
 }
 .settings__sub {
   margin-top: var(--s-2);
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .settings__sent-to {
   padding-top: var(--s-2);
@@ -172,8 +167,6 @@
   align-items: center;
   gap: var(--s-5);
   margin-top: var(--s-5);
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .settings__go {
   display: inline-flex;

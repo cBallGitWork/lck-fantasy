@@ -36,20 +36,20 @@ export function SeriesStrip({ past, next }: { past: readonly StripPast[]; next: 
     <div className="series-strip">
       {past.map((s) => (
         <div key={cellKey(s)} className="series-strip__cell">
-          <span className="series-strip__when">
+          <span className="series-strip__when quiet">
             W{s.week} · {s.day}
           </span>
           <b className="series-strip__points num">
             {s.points}
             {s.live && <LiveTag />}
           </b>
-          <span className="series-strip__when">v {s.opponent}</span>
+          <span className="series-strip__when quiet">v {s.opponent}</span>
         </div>
       ))}
       <span className="series-strip__now" />
       {next.map((s, i) => (
         <div key={cellKey(s)} className="series-strip__cell">
-          <span className="series-strip__when">
+          <span className="series-strip__when quiet">
             W{s.week} · {s.day} · {bestOf(s.bestOf)}
           </span>
           <span className={cx("series-strip__next num", i === 0 && "series-strip__next--first")}>v {s.opponent}</span>

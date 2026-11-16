@@ -68,7 +68,7 @@ export function Modal({
     <div className="modal">
       <div className="modal__dim" onClick={onClose} />
       <div ref={box} className={cx("modal__box", `modal__box--${kind}`, strong && "modal__box--strong")} role="dialog" aria-modal="true" aria-label={title}>
-        <button type="button" className="modal__close" aria-label="Close" onClick={onClose}>
+        <button type="button" className="modal__close key-bare" aria-label="Close" onClick={onClose}>
           ✕
         </button>
         {kind === "sheet" && (head ?? <h2 className="modal__title">{title}</h2>)}

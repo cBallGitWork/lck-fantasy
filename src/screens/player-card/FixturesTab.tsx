@@ -28,7 +28,7 @@ export function FixturesTab({ team, rows }: { team: TeamCode; rows: FixtureRow[]
             ),
           },
           { key: "local", head: "Your time", figure: true, cell: (r) => r.local },
-          { key: "kst", head: "KST", figure: true, cell: (r) => <span className="player-card__quiet">{r.kst}</span> },
+          { key: "kst", head: "KST", figure: true, cell: (r) => <span className="player-card__quiet quiet">{r.kst}</span> },
         ]}
       />
     </div>

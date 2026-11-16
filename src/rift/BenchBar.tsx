@@ -47,7 +47,7 @@ export function BenchTile({
 }) {
   return (
     <div className="bench-slot">
-      <span className="bench-slot__role">
+      <span className="bench-slot__role quiet">
         {order}. {ROLE_NAME[role]}
       </span>
       <Tile

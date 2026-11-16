@@ -27,7 +27,7 @@ export function PlayerPanel({
           <b className="player-panel__name">{name}</b>
           <span className="player-panel__meta">{meta}</span>
         </div>
-        <button type="button" className="player-panel__close" aria-label="Close" onClick={onClose}>
+        <button type="button" className="player-panel__close key-bare" aria-label="Close" onClick={onClose}>
           ✕
         </button>
       </header>
@@ -59,12 +59,12 @@ export function PanelSeries({ title, result, go, children }: { title: string; re
 export function PanelGame({ no, what, points, counted, live }: { no: number; what: ReactNode; points: number; counted: boolean; live?: ReactNode }) {
   return (
     <div className={cx("player-panel__game", !counted && "player-panel__game--dropped")}>
-      <span className="player-panel__game-no">G{no}</span>
+      <span className="quiet">G{no}</span>
       <span className="player-panel__game-what">
         {what}
         {live}
       </span>
-      <span className="player-panel__game-points num">{counted ? <span className="player-panel__counted">{points}</span> : points}</span>
+      <span className="player-panel__game-points num">{counted ? <span className="counted">{points}</span> : points}</span>
     </div>
   );
 }
@@ -81,7 +81,7 @@ export function PanelSum({ lines, figure }: { lines: ReactNode; figure: ReactNod
 
 /** A label inside the sum's lines, in mid grey: `Your Carry`. */
 export function PanelSumLabel({ children }: { children: ReactNode }) {
-  return <span className="player-panel__sum-label">{children}</span>;
+  return <span className="quiet">{children}</span>;
 }
 
 /** `Full stats ›`, to the player's card. */

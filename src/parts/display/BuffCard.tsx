@@ -33,8 +33,8 @@ export function BuffCard({
   return (
     <div className={cx("buff-card", state !== "ready" && `buff-card--${state}`)}>
       <b>{name}</b>
-      <p className="buff-card__does">{does}</p>
-      <div className="buff-card__foot">
+      <p className="buff-card__does quiet">{does}</p>
+      <div className="buff-card__foot quiet">
         <span>{left}</span>
         {control}
       </div>

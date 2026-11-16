@@ -29,8 +29,6 @@
   padding: var(--s-2) var(--s-3);
 }
 .stats__select-label {
-  color: var(--mid);
-  font-size: var(--size-small);
   margin-right: var(--s-2);
 }
 .stats__select-input {
@@ -79,11 +77,7 @@
   font-weight: var(--w-semi);
 }
 .stats__sort {
-  font: inherit;
   color: inherit;
-  background: none;
-  border: 0;
-  cursor: pointer;
   white-space: nowrap;
 }
 .stats__lead-head {
@@ -116,8 +110,6 @@
   text-decoration: underline;
 }
 .stats__team {
-  color: var(--mid);
-  font-size: var(--size-small);
   margin-left: var(--s-2);
 }
 .stats td:has(> .stats__move) {

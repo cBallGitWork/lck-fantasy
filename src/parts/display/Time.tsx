@@ -4,7 +4,7 @@ import "./Time.css";
 export function Time({ local, kst }: { local: string; kst: string }) {
   return (
     <span className="time num">
-      {local} <span className="time__kst">{kst} KST</span>
+      {local} <span className="time__kst quiet">{kst} KST</span>
     </span>
   );
 }

@@ -52,8 +52,6 @@
 }
 .points__tier {
   margin-top: var(--s-2);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .points__tier b {
   color: var(--text);

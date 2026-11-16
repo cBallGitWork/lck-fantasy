@@ -57,3 +57,20 @@ a {
     animation: none !important;
   }
 }
+/* Secondary words: mid grey, 12px. */
+.quiet {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+/* A key drawn as its words alone: no box, the page's type. */
+.key-bare {
+  font: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+/* A counted figure, boxed: a game's points that count. */
+.counted {
+  border: var(--m-rule) solid var(--text);
+  padding: 0 var(--s-1);
+}

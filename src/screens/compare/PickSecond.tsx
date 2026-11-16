@@ -41,7 +41,7 @@ export function PickSecond({
       />
       {groups.map((group) => (
         <section key={group.role}>
-          <h3 className="compare__group">{ROLE_PLURAL[group.role]}</h3>
+          <h3 className="compare__group quiet">{ROLE_PLURAL[group.role]}</h3>
           <table className="compare__results">
             <colgroup>
               <col />
@@ -55,7 +55,7 @@ export function PickSecond({
                 return (
                   <tr key={row.name} className={cx(pick && "compare__result--pick")} {...selectable(pick)}>
                     <td className="compare__result-name">{row.name}</td>
-                    <td className="compare__result-team">{row.team}</td>
+                    <td className="quiet">{row.team}</td>
                     <td className="compare__result-price">{eok(row.priceEok)}</td>
                     <td className="compare__result-points">{row.points}</td>
                   </tr>
@@ -66,7 +66,7 @@ export function PickSecond({
         </section>
       ))}
       {showMore && (
-        <button type="button" className="compare__go compare__more" onClick={() => setWide(true)}>
+        <button type="button" className="compare__go key-bare compare__more" onClick={() => setWide(true)}>
           All {ROLE_PLURAL[first.role].toLowerCase()} · Other roles ›
         </button>
       )}

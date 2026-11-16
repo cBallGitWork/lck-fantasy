@@ -55,11 +55,7 @@
   min-height: var(--m-target);
   margin-top: var(--s-1);
   padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
   color: var(--text);
-  cursor: pointer;
 }
 .compare__go:hover {
   text-decoration: underline;
@@ -191,9 +187,7 @@
 }
 .compare__group {
   padding: var(--s-3) 0 var(--s-1);
-  font-size: var(--size-small);
   font-weight: var(--w-semi);
-  color: var(--mid);
 }
 .compare__team-col {
   width: var(--m-col-figure);
@@ -218,10 +212,7 @@
 .compare__result-name {
   font-weight: var(--w-semi);
 }
-.compare__result-team {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
+
 .compare__result-price {
   font-family: var(--font-mono);
 }

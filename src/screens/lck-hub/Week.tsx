@@ -32,7 +32,7 @@ export function ByDay({ series, row }: { series: readonly Series[]; row: (s: Ser
         <div key={d.date} className="lck-hub__day">
           <b className="lck-hub__day-name">
             {d.day}
-            <small className="lck-hub__day-date">{d.date}</small>
+            <small className="lck-hub__day-date quiet">{d.date}</small>
           </b>
           <div>{d.series.map(row)}</div>
         </div>

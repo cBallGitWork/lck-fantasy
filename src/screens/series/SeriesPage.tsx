@@ -23,11 +23,11 @@ function Scorebug({ home, away, middle, loser }: { home: Side; away: Side; middl
     <div className="series__bug">
       <div className={cx("series__bug-team", loser === "home" && "series__bug-team--lost")}>
         <b className="series__bug-code">{home.code}</b>
-        <small className="series__bug-record num">{named(home) ? `${home.name} · ${home.record}` : home.record}</small>
+        <small className="quiet num">{named(home) ? `${home.name} · ${home.record}` : home.record}</small>
       </div>
       <div className={cx("series__bug-score num", middle === "v" && "series__bug-score--v")}>{middle}</div>
       <div className={cx("series__bug-team series__bug-team--away", loser === "away" && "series__bug-team--lost")}>
-        <small className="series__bug-record num">{named(away) ? `${away.record} · ${away.name}` : away.record}</small>
+        <small className="quiet num">{named(away) ? `${away.record} · ${away.name}` : away.record}</small>
         <b className="series__bug-code">{away.code}</b>
       </div>
     </div>

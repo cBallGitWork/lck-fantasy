@@ -28,7 +28,7 @@ export function ErrorState({ title, line, onRetry }: { title: string; line: stri
       <b className="state__title">{title}</b>
       <p className="state__line">{line}</p>
       {onRetry && (
-        <button type="button" className="state__retry" onClick={onRetry}>
+        <button type="button" className="state__retry key-bare" onClick={onRetry}>
           Try again ›
         </button>
       )}

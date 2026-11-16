@@ -23,10 +23,6 @@
   color: var(--mid);
 }
 .state__retry {
-  font: inherit;
   color: var(--text);
-  background: none;
-  border: 0;
   padding: 0;
-  cursor: pointer;
 }

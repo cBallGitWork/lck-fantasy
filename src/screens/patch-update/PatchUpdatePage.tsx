@@ -20,7 +20,7 @@ const COLUMNS: Column<PriceMove>[] = [
           {row.name}
         </GoLink>
         {row.mine && <MeDot />}
-        <small className="patch-update__meta">
+        <small className="patch-update__meta quiet">
           {row.team} · {ROLE_NAME[row.role]}
         </small>
       </>

@@ -22,13 +22,13 @@ export function History({ history, shown }: { history: CardHistory; shown: Histo
           { key: "series", head: "Series", cell: (r) => `${r.day} · ${result(r.score)} ${r.opponent}` },
           { key: "games", head: "Games", figure: true, cell: (r) => r.games },
           { key: "kda", head: "K / D / A", figure: true, cell: (r) => r.kda },
-          { key: "price", head: "Price", figure: true, cell: (r) => <span className="player-card__quiet">{onStart(r, eok(r.priceEok))}</span> },
+          { key: "price", head: "Price", figure: true, cell: (r) => <span className="player-card__quiet quiet">{onStart(r, eok(r.priceEok))}</span> },
           { key: "points", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },
           { key: "weekPoints", head: "Week", figure: true, cell: (r) => <b>{onStart(r, weekPoints(r.week))}</b> },
         ]}
       />
       <h3 className="player-card__section">
-        Past seasons <span className="player-card__quiet">LCK, scored by Flol</span>
+        Past seasons <span className="player-card__quiet quiet">LCK, scored by Flol</span>
       </h3>
       <Table
         label="Past seasons"
@@ -39,7 +39,7 @@ export function History({ history, shown }: { history: CardHistory; shown: Histo
           { key: "gap", head: "", cell: () => null },
           { key: "games", head: "Games", figure: true, cell: (s) => s.games },
           { key: "kda", head: "K / D / A", figure: true, cell: (s) => s.kda },
-          { key: "perGame", head: "Per game", figure: true, cell: (s) => <span className="player-card__quiet">{perGame(s.points, s.games)}</span> },
+          { key: "perGame", head: "Per game", figure: true, cell: (s) => <span className="player-card__quiet quiet">{perGame(s.points, s.games)}</span> },
           { key: "points", head: "Pts", figure: true, cell: (s) => <b>{s.points}</b> },
           { key: "end", head: "", cell: () => null },
         ]}

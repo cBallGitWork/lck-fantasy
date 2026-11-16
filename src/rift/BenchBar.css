@@ -20,8 +20,6 @@
   gap: var(--s-1);
 }
 .bench-slot__role {
-  font-size: var(--size-small);
   font-weight: var(--w-semi);
-  color: var(--mid);
   line-height: var(--lh-snug);
 }

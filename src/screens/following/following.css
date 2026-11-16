@@ -85,12 +85,8 @@
   min-height: var(--m-target);
 }
 .following__truck {
-  font: inherit;
   font-weight: var(--w-semi);
   color: var(--text);
-  background: none;
-  border: 0;
-  cursor: pointer;
 }
 .following__truck:hover {
   text-decoration: underline;
@@ -117,8 +113,6 @@
   display: flex;
   justify-content: space-between;
   padding: var(--s-2) var(--s-3);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .following__by b,
 .following__by .following__name {
@@ -145,12 +139,8 @@
   display: inline-flex;
   align-items: center;
   min-height: var(--m-target);
-  font: inherit;
   font-size: var(--size-small);
   color: var(--text);
-  background: none;
-  border: 0;
-  cursor: pointer;
 }
 .following__act:hover {
   text-decoration: underline;
@@ -218,6 +208,4 @@
 }
 .following__foot-note {
   flex: 1;
-  color: var(--mid);
-  font-size: var(--size-small);
 }

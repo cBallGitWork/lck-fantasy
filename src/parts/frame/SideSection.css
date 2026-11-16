@@ -12,7 +12,5 @@
   font-weight: var(--w-bold);
 }
 .side-section__note {
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
-  color: var(--mid);
 }

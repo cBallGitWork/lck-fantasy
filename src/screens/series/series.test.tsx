@@ -109,7 +109,7 @@ describe("final, 2–1 (1440-21.png)", () => {
   test("greys and unboxes a dropped game", () => {
     const kiin = (out.split("Kiin")[1] ?? "").split("</tr>")[0]!;
     expect(kiin).toMatch(/<td class="series__dropped">.*Jax.*>-1<\/span>/);
-    expect(kiin).toContain('class="series__box">3<');
+    expect(kiin).toContain('class="counted">3<');
   });
 
   test("shows a dash where a player sat out, and the sub on his own row", () => {

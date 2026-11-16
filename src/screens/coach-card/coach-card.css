@@ -30,8 +30,6 @@
 }
 .coach-card__legal {
   margin-top: var(--s-1);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .coach-card__side {
   display: flex;
@@ -51,10 +49,7 @@
   font-weight: var(--w-semi);
   line-height: var(--lh-tight);
 }
-.coach-card__hero-label {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
+
 .coach-card__acts {
   display: flex;
   align-items: center;
@@ -70,10 +65,7 @@
   padding: 0 var(--s-5) var(--s-4);
   border-bottom: var(--m-rule) solid var(--line);
 }
-.coach-card__kv {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
+
 .coach-card__kv-figure {
   font-size: var(--size-head);
   font-weight: var(--w-semi);

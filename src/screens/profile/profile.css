@@ -170,8 +170,6 @@
 }
 .profile__truck-by {
   padding: var(--s-1) var(--s-3);
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .profile__truck-by b {
   color: var(--text);

@@ -3,8 +3,6 @@
   position: absolute;
   top: var(--s-5);
   right: var(--s-7);
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .settings__lead {
   margin-bottom: var(--s-4);
@@ -23,14 +21,9 @@
 .settings__list-what {
   font-weight: var(--w-semi);
 }
-.settings__list-detail {
-  color: var(--mid);
-  font-size: var(--size-small);
-}
+
 .settings__warn {
   margin-top: var(--s-4);
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 .settings__inline-key {
   font-size: var(--size-small);

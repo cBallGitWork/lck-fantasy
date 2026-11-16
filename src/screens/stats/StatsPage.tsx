@@ -131,7 +131,7 @@ function Select({
 }) {
   return (
     <label className="stats__select">
-      <span className="stats__select-label">{label}</span>
+      <span className="stats__select-label quiet">{label}</span>
       <select className="stats__select-input" value={value} onChange={(e: ChangeEvent<HTMLSelectElement>) => onChange(e.target.value)}>
         {options.map((o) => (
           <option key={o.value} value={o.value}>
@@ -162,7 +162,7 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
   const sortable = (key: SortKey, head: string, cell: Column<Ranked>["cell"], group = false): Column<Ranked> => ({
     key,
     head: (
-      <button type="button" className="stats__sort" onClick={() => onChange({ sort: key })}>
+      <button type="button" className="stats__sort key-bare" onClick={() => onChange({ sort: key })}>
         {head}
       </button>
     ),
@@ -207,7 +207,7 @@ function Lead({ row }: { row: Ranked }) {
       <GoLink go={cardGo(row.id, row.role === "coach")} className="stats__name">
         {row.name}
       </GoLink>
-      <small className="stats__team num">{row.team}</small>
+      <small className="stats__team quiet num">{row.team}</small>
       {row.mine && <MeDot />}
     </span>
   );

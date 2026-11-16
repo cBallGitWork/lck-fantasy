@@ -24,11 +24,11 @@ export function DeleteSheet({
         {rows.map((row) => (
           <li key={row.what} className="settings__list-row">
             <b className="settings__list-what">{row.what}</b>
-            {row.detail && <span className="settings__list-detail">{row.detail}</span>}
+            {row.detail && <span className="quiet">{row.detail}</span>}
           </li>
         ))}
       </ul>
-      <p className="settings__warn">
+      <p className="settings__warn quiet">
         Backups clear within 30 days.{" "}
         <button type="button" className="settings__inline-key" onClick={onDownload}>
           Download my data

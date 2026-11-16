@@ -118,9 +118,7 @@
   font-weight: var(--w-semi);
 }
 .leagues__nil {
-  color: var(--mid);
   font-family: var(--font-mono);
-  font-size: var(--size-small);
 }
 .leagues__name small {
   color: var(--mid);

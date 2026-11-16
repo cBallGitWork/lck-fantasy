@@ -86,7 +86,4 @@
 .home__plate-name {
   font-size: var(--size-lead);
 }
-.home__plate-role {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
+

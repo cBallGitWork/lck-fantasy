@@ -1,8 +1,6 @@
 /* The full player card, drawn to docs/design/approved/player-card/ and the plate's values. */
 
 .player-card__quiet {
-  color: var(--mid);
-  font-size: var(--size-small);
   font-weight: var(--w-regular);
 }
 .player-card__figure {

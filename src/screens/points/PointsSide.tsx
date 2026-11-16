@@ -35,7 +35,7 @@ export function Leagues({ leagues, nextTier }: Pick<PointsData, "leagues" | "nex
           </div>
         ))}
       </div>
-      <p className="points__tier">
+      <p className="points__tier quiet">
         <b>≈{nextTier.points} pts</b> to {nextTier.tier}
       </p>
       <LinkGo go={{ to: PATHS.leagues }}>All leagues</LinkGo>

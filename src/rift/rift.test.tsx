@@ -154,11 +154,11 @@ test("the panel's body: a series head, its games with the counted boxed, the sum
   expect(out).toContain('<h4 class="player-panel__series-head">Wed · v HLE<span>W 2–1</span></h4>');
   const linked = html(<PanelSeries title="v HLE" result={<span>W 2–1</span>} go={{ to: "/series/$seriesId", params: { seriesId: "w3-wed-1" } }} />);
   expect(linked).toMatch(/<a [^>]*href="\/series\/w3-wed-1"[^>]*>v HLE<\/a>/);
-  expect(out).toContain('<span class="player-panel__counted">5</span>');
-  expect(out.match(/player-panel__counted/g)).toHaveLength(1);
+  expect(out).toContain('<span class="counted">5</span>');
+  expect(out.match(/class="counted"/g)).toHaveLength(1);
   expect(out).toContain('class="player-panel__game player-panel__game--dropped"');
   expect(out).toContain("Ahri · L<i>Live</i>");
-  expect(out).toContain('<span class="player-panel__sum-label">Carry</span>');
+  expect(out).toContain('<span class="quiet">Carry</span>');
   expect(out).toContain('<b class="player-panel__sum-figure num">40</b>');
   expect(out).toContain('href="/player/faker"');
   expect(text(<PanelFoot go={{ to: "/points" }} />)).toBe("Full stats ›");

@@ -23,7 +23,7 @@ function Face({ player, right, onChange }: { player: ComparePlayer; right?: bool
           <span className="compare__hangul">{player.hangul}</span>
         </h2>
         {onChange && (
-          <button type="button" className="compare__go" onClick={onChange}>
+          <button type="button" className="compare__go key-bare" onClick={onChange}>
             Change ›
           </button>
         )}

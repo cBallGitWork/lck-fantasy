@@ -30,10 +30,7 @@
 .series__bug-team--lost .series__bug-code {
   font-weight: var(--w-regular);
 }
-.series__bug-record {
-  color: var(--mid);
-  font-size: var(--size-small);
-}
+
 .series__bug-score {
   display: flex;
   align-items: center;
@@ -127,8 +124,6 @@
   border-top: var(--m-rule) solid var(--line);
 }
 .series__role {
-  color: var(--mid);
-  font-size: var(--size-small);
   white-space: nowrap;
 }
 .series__role-icon {
@@ -145,8 +140,6 @@
 }
 .series__hangul {
   margin-left: var(--s-2);
-  color: var(--mid);
-  font-size: var(--size-small);
 }
 
 /* A game: champion and K/D/A at the left, POG over the points at the right. */
@@ -176,10 +169,7 @@
   min-width: calc(var(--s-5) + var(--s-1));
   font-weight: var(--w-semi);
 }
-.series__box {
-  padding: 0 var(--s-1);
-  border: var(--m-rule) solid var(--text);
-}
+
 /* A dropped game, outside the best 2: grey and unboxed. */
 .series__dropped .series__game,
 .series__dropped .series__champ small {

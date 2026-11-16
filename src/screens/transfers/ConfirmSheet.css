@@ -49,6 +49,4 @@
 .transfers__sheet-deadline {
   margin-top: var(--s-2);
   text-align: right;
-  font-size: var(--size-small);
-  color: var(--mid);
 }

@@ -1,3 +1,5 @@
+// The base styles load first, so each part's and screen's own CSS wins over them.
+import "../theme/base.css";
 import { createRoot } from "react-dom/client";
 import { appTree } from "./app";
 

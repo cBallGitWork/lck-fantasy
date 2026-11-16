@@ -132,13 +132,13 @@ export function TransfersPage(props: TransfersPageProps) {
         }
       >
         <div className="transfers__figures">
-          <span className="transfers__figure">
+          <span className="transfers__figure quiet">
             Free transfers <b className="num">{freeLeft(rules, made)}</b>
           </span>
-          <span className="transfers__figure">
+          <span className="transfers__figure quiet">
             Cost <b className="num">{signed(-hit)}</b>
           </span>
-          <span className={cx("transfers__figure", bank < 0 && "transfers__figure--over")}>
+          <span className={cx("transfers__figure quiet", bank < 0 && "transfers__figure--over")}>
             Bank <b className="num">{formatEok(bank)}</b>
           </span>
         </div>

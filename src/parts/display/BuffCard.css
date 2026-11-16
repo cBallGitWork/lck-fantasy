@@ -7,8 +7,6 @@
 }
 .buff-card__does {
   margin-top: var(--s-1);
-  color: var(--mid);
-  font-size: var(--size-small);
   line-height: var(--lh-mid);
 }
 .buff-card__foot {
@@ -17,8 +15,6 @@
   align-items: center;
   margin-top: auto;
   padding-top: var(--s-2);
-  font-size: var(--size-small);
-  color: var(--mid);
 }
 .buff-card__play,
 .buff-card__foot button {

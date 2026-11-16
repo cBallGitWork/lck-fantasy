@@ -3,11 +3,7 @@
   display: flex;
 }
 .menu__key {
-  font: inherit;
   color: inherit;
-  background: none;
-  border: 0;
-  cursor: pointer;
 }
 .menu__list {
   position: absolute;
@@ -24,13 +20,9 @@
   display: block;
   width: 100%;
   padding: var(--s-3) var(--s-4);
-  font: inherit;
   color: var(--text);
   text-align: left;
-  background: none;
-  border: 0;
   border-bottom: var(--m-rule) solid var(--fill);
-  cursor: pointer;
 }
 .menu__item:last-child {
   border-bottom: 0;

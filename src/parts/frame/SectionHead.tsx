@@ -7,7 +7,7 @@ export function SectionHead({ note, className, children }: { note?: ReactNode; c
   return (
     <h2 className={cx("section-head", className)}>
       {children}
-      {note !== undefined && <small className="section-head__note">{note}</small>}
+      {note !== undefined && <small className="section-head__note quiet">{note}</small>}
     </h2>
   );
 }

@@ -34,12 +34,12 @@ export function CoachCard({
             {head.name}
             <span className="coach-card__hangul">{head.hangul}</span>
           </h1>
-          <p className="coach-card__legal">{head.legal}</p>
+          <p className="coach-card__legal quiet">{head.legal}</p>
         </div>
         <div className="coach-card__side">
           <p className="coach-card__hero">
             <b className="coach-card__hero-figure num">{season.points}</b>
-            <span className="coach-card__hero-label">
+            <span className="quiet">
               Season · {placeOf(season.rank, `${season.of} coaches`)}
             </span>
           </p>
@@ -55,7 +55,7 @@ export function CoachCard({
         </Figure>
         <Figure figure={oneDecimal(meta.form)}>form · {ordinal(meta.formRank)}</Figure>
         <Figure figure={pct(meta.ownedPct)}>owned · {ordinal(meta.ownedRank)}</Figure>
-        <span className="coach-card__kv">{inOut(meta.transfersIn, meta.transfersOut)} this week</span>
+        <span className="quiet">{inOut(meta.transfersIn, meta.transfersOut)} this week</span>
       </div>
       <div className="coach-card__body">
         <div className="coach-card__left">
@@ -93,7 +93,7 @@ function TabPanel({ data, tab }: { data: CoachCardData; tab: CoachTab }) {
 
 function Figure({ figure, children }: { figure: string; children: ReactNode }) {
   return (
-    <span className="coach-card__kv">
+    <span className="quiet">
       <b className="coach-card__kv-figure num">{figure}</b>
       {children}
     </span>

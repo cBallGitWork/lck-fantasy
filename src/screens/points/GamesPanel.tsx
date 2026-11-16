@@ -1,5 +1,5 @@
-import { carryWorking, outcome, result, score, Tag } from "../../parts";
-import { cardGo } from "../../paths";
+import { outcome, result, score, Tag } from "../../parts";
+import { cardGo, PATHS } from "../../paths";
 import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PointsPlayer, PointsSeries, PointsStarter } from "./types";
 
@@ -16,14 +16,14 @@ function SeriesResult({ s }: { s: PointsSeries }) {
   return <span>{`${done} · final`}</span>;
 }
 
-/** The tapped player's games: each series and its games, the counted ones boxed; the Carry's sum; Full stats. */
+/** The tapped player's games: each series (opening its Series page) and its games, the counted ones boxed; the Carry's result; Full stats. */
 export function GamesPanel({ player, onClose }: { player: PointsPlayer & Partial<Pick<PointsStarter, "plays" | "carry">>; onClose: () => void }) {
   const meta = [player.team, ROLE_NAME[player.plays ?? player.role], player.mark && MARK_NAME[player.mark]].filter(Boolean).join(" · ");
   const carry = player.carry;
   return (
     <PlayerPanel name={player.name} meta={meta} onClose={onClose}>
       {player.series.map((s) => (
-        <PanelSeries key={s.id} title={`${s.day} · v ${s.opponent}`} result={<SeriesResult s={s} />}>
+        <PanelSeries key={s.id} title={`v ${s.opponent}`} result={<SeriesResult s={s} />} go={{ to: PATHS.series, params: { seriesId: s.id } }}>
           {s.games.map((g) => (
             // A live game shows its clock and Live.
             <PanelGame
@@ -42,8 +42,6 @@ export function GamesPanel({ player, onClose }: { player: PointsPlayer & Partial
           lines={
             <>
               <PanelSumLabel>Your {MARK_NAME.C}</PanelSumLabel>
-              <br />
-              {carryWorking(player.series.map((s) => s.points), carry.raw, carry.multiplier)}
               <br />
               <PanelSumLabel>
                 Average {MARK_NAME.C} {carry.average}

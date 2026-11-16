@@ -1,12 +1,10 @@
 import { MANAGER } from "../../fixtures/week3";
-import { carrySum, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle, type WeekNav } from "../../parts";
+import { PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle, type WeekNav } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays, Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
 import "./PerfectGame.css";
-import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectPlayer, type PerfectView, type Selection } from "./types";
-
-const carried = (p: PerfectPlayer, times: number) => (p.carry && p.raw !== undefined ? carrySum(p.raw, times) : undefined);
+import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectView, type Selection } from "./types";
 
 /** Rift view: the seven on the Rift, each with his points and series, C on the Carry. */
 export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGameData } & Selection) {
@@ -23,7 +21,6 @@ export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGam
           mark={p.carry ? "C" : undefined}
           me={p.mine}
           points={p.points}
-          carrySum={carried(p, game.carryTimes)}
           line={p.line}
           selected={selected === p.slot}
           onSelect={onSelect && (() => onSelect(p.slot))}
@@ -50,12 +47,7 @@ export function PerfectGameCards({ game, selected, onSelect }: { game: PerfectGa
               {series}
             </span>
           )),
-          footer: (
-            <>
-              <span>{carried(p, game.carryTimes)}</span>
-              <b className="perfect-game__card-points">{p.points}</b>
-            </>
-          ),
+          footer: <b className="perfect-game__card-points">{p.points}</b>,
           selected: selected === p.slot,
           onSelect: onSelect && (() => onSelect(p.slot)),
         }))}
@@ -89,7 +81,7 @@ export function PerfectGame({
       account={MANAGER.team}
       side={
         <>
-          {tapped && <GamesPanel player={tapped} week={game.series} carryTimes={game.carryTimes} onClose={onSelect && (() => onSelect(undefined))} />}
+          {tapped && <GamesPanel player={tapped} week={game.series} onClose={onSelect && (() => onSelect(undefined))} />}
           <SideSection title={game.seriesTitle} note={game.final ? "Final" : "Not final"}>
             <SeriesList series={game.series} />
           </SideSection>

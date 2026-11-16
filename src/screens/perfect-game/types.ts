@@ -29,8 +29,6 @@ export interface PerfectGameData {
   final: boolean;
   /** The team cap the pick was made under. */
   cap: number;
-  /** The Carry's multiplier. */
-  carryTimes: number;
   average: number;
   highest: number;
   /** Your own points this week. */

@@ -6,15 +6,19 @@ import type { SlotKey } from "./roles";
  */
 export type RiftPoint = readonly [x: number, y: number];
 
-/** Where each starter stands on Points and Perfect game (points.html, perfect.html). */
+/**
+ * Where each starter stands on Points and Perfect game (points.html, perfect.html). Coach stands under
+ * Top and Flex under Jungle; Coach and Flex carry a tag the others don't, so Support and Bot stand a
+ * little higher to keep the bottom row's shirts on one line (Craig, 16 Nov 2026).
+ */
 export const RIFT_SLOTS: Record<SlotKey, RiftPoint> = {
   top: [104, 70],
   jng: [280, 262],
   mid: [500, 260],
-  coach: [92, 468],
-  flex: [252, 468],
-  sup: [650, 486],
-  bot: [846, 486],
+  coach: [104, 468],
+  flex: [280, 468],
+  sup: [650, 457],
+  bot: [846, 457],
 };
 
 /** Where each starter stands on Pick Team, whose narrower tiles sit a little further right (pick.html). */

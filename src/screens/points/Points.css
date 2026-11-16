@@ -17,16 +17,10 @@
   color: var(--on-ink);
 }
 
-/* Card view's footer: the points, the Carry's sum small after them. */
+/* Card view's footer: the points. */
 .points__card-points {
   font-size: var(--size-head);
   font-weight: var(--w-semi);
-}
-.points__card-points small {
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  color: var(--mid);
-  margin-left: var(--s-1);
 }
 
 /* Your week: Star, Flop, Killer. */

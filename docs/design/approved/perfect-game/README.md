@@ -18,7 +18,7 @@ The gameweek's best team: the 7 starter slots, one of them the Carry, under the 
 ## Layout
 
 - **Header:** Perfect game and hangul; ‹ week ›; the total, Final or Not final, Cap 2; Average, Highest, Your points ›.
-- **Left:** Rift view | Card view (Card view is the broadcast lineup, no bench: redrawn 15 Nov 2026 from a table); each player's points and series; C on the Carry with its ×1.5; the dot after each player you own; Flex shows the role it plays; Coach 감독.
+- **Left:** Rift view | Card view (Card view is the broadcast lineup, no bench: redrawn 15 Nov 2026 from a table); each player's points and series; C on the Carry, his points the result only (Craig, 16 Nov 2026, on Points); the dot after each player you own; Flex shows the role it plays; Coach 감독.
 - **Right:** the tapped player's games, the week's series, the sponsor slot.
 
 ## Controls

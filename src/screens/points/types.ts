@@ -15,7 +15,6 @@ export interface PointsGame {
 /** One series a player played this week, from his team's side. */
 export interface PointsSeries {
   id: string;
-  day: string;
   opponent: string;
   /** Games won, his team's first. */
   score: Score;
@@ -33,8 +32,6 @@ export interface PointsPlayer {
   cardId: string;
   mark?: Mark;
   birthday?: boolean;
-  /** Who he came on for. */
-  subbedInFor?: string;
   /** The week's points; absent when he didn't play. */
   points?: number;
   series: PointsSeries[];
@@ -44,8 +41,8 @@ export interface PointsStarter extends PointsPlayer {
   slot: SlotKey;
   /** The role a Flex plays. */
   plays?: RoleKey;
-  /** The Carry's week: his points before the multiplier, the multiplier, and the average Carry's points. */
-  carry?: { raw: number; multiplier: number; average: number };
+  /** The Carry's week: the average Carry's points. His own points are already the result. */
+  carry?: { average: number };
 }
 
 /** A line of Your week: Star, Flop or Killer. */

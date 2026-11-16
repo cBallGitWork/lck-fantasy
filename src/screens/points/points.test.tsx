@@ -34,28 +34,24 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "Card view",
     "Zeus14v T1 7 · v GEN 7",
     "Canyon14v KT 7 · v HLE 7",
-    "Faker2517×1.5v HLE 12 · v DK 5Live",
+    "Faker25v HLE 12 · v DK 5Live",
     "Ruler14v KT 7 · v HLE 7",
     "Delight 🎂9v T1 5 · v GEN 4",
-    "Siwoo8v NS 5 · v T1 3LiveSubbed in for BddFlex · plays Top",
+    "Siwoo8v NS 5 · v T1 3LiveFlex · plays Top",
     "kkOma10v HLE 8 · v DK 2LiveCoach 감독",
     "Bench",
     "1Bdd KT · Didn't play—",
     "2Cuzz KT9",
     "FakerT1 · Mid · Carry✕",
-    "Wed · v HLEW 2–1 · final",
+    "v HLEW 2–1 · final",
     "G1Azir · W5",
     "G2Taliyah · L2",
     "G3Galio · W7",
-    "Sat · v DK1–0 · game 2 live",
+    "v DK1–0 · game 2 live",
     "G1Orianna · W4",
     "G2Sylas · 14:20Live1",
-    "Your Carry12 + 5 = 17 × 1.5Average Carry 1925",
+    "Your CarryAverage Carry 1925",
     "Full stats ›",
-    "Your week",
-    "StarFaker25 · owned by 46%",
-    "FlopSiwoo8 · owned by 6%",
-    "KillerChovy15 · not owned · 41%",
     "Leagues",
     "Overall · Emerald I48,2116,904",
     "United Kingdom1,402233",
@@ -70,6 +66,10 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "SatT1 v DK1–0 Live",
     "SunKRX v BRO08:00 17:00 KST",
     "SunBFX v DNS10:30 19:30 KST",
+    "Your week",
+    "StarFaker25 · owned by 46%",
+    "FlopSiwoo8 · owned by 6%",
+    "KillerChovy15 · not owned · 41%",
     "Sponsor",
     "All sponsors are made up.",
   ]);
@@ -84,6 +84,20 @@ test("the picture's state boxes the counted games, greys the dropped one and mar
   // Rank moves: four up, one down.
   expect(out.match(/rank-up/g)).toHaveLength(4);
   expect(out.match(/rank-down/g)).toHaveLength(1);
+});
+
+test("the Carry shows only his result, and no one's tile, card or games show an auto-sub line", () => {
+  for (const view of ["Rift view", "Card view"] as const) {
+    const out = text(<PointsPage data={POINTS_FIXTURE} view={view} open="Faker" />);
+    expect(out).not.toMatch(/×|Subbed in/);
+  }
+});
+
+test("each series in a player's games opens its Series page, with no day before the opponent", () => {
+  const out = html(PICTURE);
+  expect(out).toMatch(/<a [^>]*href="\/series\/w3-wed-1"[^>]*>v HLE<\/a>/);
+  expect(out).toMatch(/<a [^>]*href="\/series\/w3-sat-2"[^>]*>v DK<\/a>/);
+  expect(text(PICTURE)).not.toMatch(/(Wed|Sat) · v/);
 });
 
 test("the links go where the README says: Highest, Watch, Full stats, All leagues", () => {
@@ -106,7 +120,7 @@ test("the Coach's games lead to his coach card and show no Carry sum", () => {
   expect(html(coach)).toContain('href="/coach/kkoma"');
   const out = text(coach);
   expect(out).not.toContain("Your Carry");
-  expectInOrder(out, ["kkOmaT1 · Coach✕", "G1W2", "G2L0", "G3W3", "Sat · v DK1–0 · game 2 live", "G1W2", "G214:20Live0"]);
+  expectInOrder(out, ["kkOmaT1 · Coach✕", "G1W2", "G2L0", "G3W3", "v DK1–0 · game 2 live", "G1W2", "G214:20Live0"]);
 });
 
 test("Card view shows the seven in the broadcast's order with their series and points, then the bench", () => {
@@ -118,8 +132,7 @@ test("Card view shows the seven in the broadcast's order with their series and p
     "14",
     "Faker",
     "v HLE 12 · v DK 5Live",
-    "2517×1.5",
-    "Subbed in for Bdd",
+    "25",
     "Siwoo",
     "kkOma",
     "10",
@@ -134,12 +147,12 @@ test("a bench player who didn't play can't be opened; one who played can", () =>
   expect(text(<PointsPage data={POINTS_FIXTURE} open="Cuzz" />)).toContain("CuzzKT · Jungle✕");
 });
 
-test("the fixture's total is its starters' points: 94, the Carry's 25 after ×1.5", () => {
+test("the fixture's total is its starters' points: 94, the Carry's 25 among them", () => {
   const { starters, total } = POINTS_FIXTURE;
   expect(total).toBe(94);
   expect(starters.map((p) => p.points)).toEqual([14, 14, 25, 14, 9, 8, 10]);
   const faker = starters.find((p) => p.mark === "C");
-  expect(faker?.carry).toEqual({ raw: 17, multiplier: 1.5, average: 19 });
+  expect(faker?.carry).toEqual({ average: 19 });
 });
 
 test("the view opens on Rift the first time, then on the one kept, and on Rift where storage fails", () => {

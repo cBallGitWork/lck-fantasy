@@ -10,7 +10,7 @@ import { DIDNT_PLAY, POINTS_VIEWS, type PointsData, type PointsView } from "./ty
 
 /**
  * Points: your week. The head and the live bar; Rift or Card view with the bench under it; on the
- * right the tapped player's games, your week, leagues, the week's series and the sponsor.
+ * right the tapped player's games, leagues, the week's series, your week and the sponsor.
  */
 export function PointsPage({
   data,
@@ -37,11 +37,11 @@ export function PointsPage({
   const side = (
     <>
       {opened && <GamesPanel player={opened} onClose={() => setOpen(undefined)} />}
-      <YourWeek picks={data.yourWeek} />
       <Leagues leagues={data.leagues} nextTier={data.nextTier} />
       <SideSection title="This week's series" note="your time · KST">
         <SeriesList series={data.series} />
       </SideSection>
+      <YourWeek picks={data.yourWeek} />
       <div className="points__sponsor">
         <Placeholder word="Sponsor" fill />
       </div>

@@ -23,7 +23,7 @@ function Starter({ starter }: { starter: LineupStarter }) {
       )}
       <div className="home__plate">
         <b className="home__plate-name">{starter.name}</b>
-        <span className="quiet">{plateRole(starter)}</span>
+        <span className="home__plate-role quiet">{plateRole(starter)}</span>
       </div>
     </li>
   );

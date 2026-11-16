@@ -35,6 +35,7 @@ export function Table<R>({
   rows,
   rowKey,
   selected,
+  ruleAbove,
   open,
   stickyHead,
   stickyFirst,
@@ -45,6 +46,8 @@ export function Table<R>({
   rowKey: (row: R) => string;
   /** The row drawn bold on `--fill`, such as yours in a league. */
   selected?: (row: R) => boolean;
+  /** A row with a `--line` rule above it, starting a group such as a new week. */
+  ruleAbove?: (row: R) => boolean;
   open?: RowOpen<R>;
   stickyHead?: boolean;
   stickyFirst?: boolean;
@@ -75,7 +78,7 @@ export function Table<R>({
       </thead>
       <tbody>
         {rows.map((row) => (
-          <tr key={rowKey(row)} className={cx(selected?.(row) && "table__row--selected")}>
+          <tr key={rowKey(row)} className={cx(selected?.(row) && "table__row--selected", ruleAbove?.(row) && "table__row--rule")}>
             {columns.map((c) => {
               const full = c.fullText?.(row);
               return (

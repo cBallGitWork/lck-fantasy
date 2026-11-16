@@ -36,3 +36,4 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `GoLink.tsx`: a link inside Flol through the router, typed by `src/paths.ts` (`Go`).
 - `selectable.ts`: makes a tile or card a key: click, Enter or Space.
 - `cx.ts`: joins class names.
+- `devState.ts`: `useDevState`, the approved picture's state a screen opens on `?state=` in dev only (`src/devStates.ts` lists them).

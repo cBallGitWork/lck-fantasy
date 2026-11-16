@@ -13,6 +13,7 @@ Only data two or more screens share lives here. A screen's own made-up data goes
 - `standings.ts`: the two groups' standings after Week 3, as the LCK hub, Series and Stats share them (`standingOf`, `recordOf`, `gamesOf`).
 - `t1Season.ts`: T1's series played and to come, and Faker's and kkOma's season figures, as their cards and Compare share them.
 - `myLeagues.ts`: Baron Steal FC's Overall rank and tier, his four other leagues, and his season total, as Home, Points and Leagues list them.
+- `streams.ts`: Split 1's streams list, as Home's and Live's pickers both show it, the one they open on, and a stream's label (`STREAMS`, `DEFAULT_STREAM`, `streamLabel`).
 - `series.ts`: a series by its id, a team's series, its opponent, and a series read from one team's side (`playedFromSide` for one played).
 - `rosters.ts`: the LCK teams' rosters in role order with hangul (`ROSTERS`, `hangulOf`), and T1's prices.
 - `managers.ts`: the made-up managers Minji, Jae and Dan, as Following, Profile, Leagues and Home show them, five more Following and the Pub League share, Minji's Weeks 1 to 3, and one Week 3 series each of the three, as Following's and Home's feeds show it (`FOLLOWED_WEEK3`).

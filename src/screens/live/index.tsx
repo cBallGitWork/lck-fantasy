@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDevState } from "../../parts";
-import { DEFAULT_STREAM, IDLE_STREAMS, LIVE_DOWN, LIVE_IDLE, LIVE_NOW, LIVE_STREAMS } from "./fixtures";
+import { DEFAULT_STREAM, STREAMS } from "../../fixtures/streams";
+import { IDLE_STREAMS, LIVE_DOWN, LIVE_IDLE, LIVE_NOW } from "./fixtures";
 import { LiveDown, LiveIdle, LiveNow } from "./Live";
 
 export { LiveDown, LiveIdle, LiveNow } from "./Live";
@@ -12,7 +13,7 @@ export { LiveDown, LiveIdle, LiveNow } from "./Live";
  */
 export function LiveScreen() {
   const [picked, setPicked] = useState(DEFAULT_STREAM);
-  const picker = { streams: LIVE_STREAMS, picked, onPick: setPicked };
+  const picker = { streams: STREAMS, picked, onPick: setPicked };
   const dev = useDevState({
     idle: <LiveIdle {...LIVE_IDLE} picker={{ ...picker, streams: IDLE_STREAMS }} />,
     down: <LiveDown {...LIVE_DOWN} picker={picker} />,

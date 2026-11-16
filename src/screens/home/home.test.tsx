@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { expectInOrder, html, text } from "../../testing/render";
+import { STREAMS } from "../../fixtures/streams";
 import { HOME_IDLE, HOME_LIVE } from "./fixtures";
 import { Home } from "./index";
 
@@ -52,7 +53,7 @@ describe("live", () => {
       "Game 2 · Bo3 · Split 1 Week 3",
       "Live ›",
       "LCK · English · Twitch",
-      ...["LCK · English", "Twitch", "LCK · English", "YouTube", "LCK · 한국어", "YouTube", "Caedrel · English", "Twitch", "Kameto · Français", "Twitch", "More ▾"],
+      ...["LCK · English", "Twitch", "LCK · English", "YouTube", "LCK · 한국어", "YouTube", "Caedrel · English", "Twitch", "LCK · Tiếng Việt", "YouTube", "More ▾"],
       ...["Your week", "Not final", "94", "Average 74", "Highest 121›"],
       ...["In this series", "Faker", "C", "T1", "1/0/2", "25", "Siwoo", "DK", "2/1/1", "8", "kkOma", "T1", "10"],
       ...["Still to play", "None", "Points ›"],
@@ -63,8 +64,14 @@ describe("live", () => {
   test("marks the remembered pick, greys out a stream not live, and shows the pick on the screen", () => {
     const markup = html(<Home data={HOME_LIVE} />);
     expect(markup).toMatch(/aria-pressed="true"[^>]*>LCK · English<small[^>]*>Twitch/);
-    expect(markup).toMatch(/home__stream--off" aria-pressed="false" disabled="">Kameto/);
-    expect(text(<Home data={{ ...HOME_LIVE, pickedStream: "caedrel-twitch" }} />)).toContain("Caedrel · English · Twitch");
+    expect(markup).toMatch(/home__stream--off" aria-pressed="false" disabled="">LCK · Tiếng Việt/);
+    expect(text(<Home data={{ ...HOME_LIVE, pickedStream: "caedrel" }} />)).toContain("Caedrel · English · Twitch");
+  });
+
+  test("shows Live's one streams list: Kameto sixth, under More ▾", () => {
+    expect(HOME_LIVE.streams).toBe(STREAMS);
+    expect(STREAMS[5]?.name).toBe("Kameto");
+    expect(out).not.toContain("日本語");
   });
 
   test("lists who is still to play when someone is", () => {

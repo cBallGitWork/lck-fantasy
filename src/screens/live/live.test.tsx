@@ -1,10 +1,11 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { expectInOrder, html, text } from "../../testing/render";
-import { DEFAULT_STREAM, IDLE_STREAMS, LIVE_DOWN, LIVE_IDLE, LIVE_NOW, LIVE_STREAMS } from "./fixtures";
+import { DEFAULT_STREAM, STREAMS } from "../../fixtures/streams";
+import { IDLE_STREAMS, LIVE_DOWN, LIVE_IDLE, LIVE_NOW } from "./fixtures";
 import { LiveDown, LiveIdle, LiveNow } from "./Live";
 
-const picker = { streams: LIVE_STREAMS, picked: DEFAULT_STREAM, onPick: () => {} };
+const picker = { streams: STREAMS, picked: DEFAULT_STREAM, onPick: () => {} };
 const idlePicker = { ...picker, streams: IDLE_STREAMS };
 
 const CHIPS = [
@@ -96,6 +97,6 @@ describe("nothing live", () => {
 
   test("greys every chip", () => {
     expect(page).not.toContain("live__chip--on");
-    expect(page.match(/live__chip--off/g)).toHaveLength(LIVE_STREAMS.length);
+    expect(page.match(/live__chip--off/g)).toHaveLength(STREAMS.length);
   });
 });

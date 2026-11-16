@@ -1,5 +1,6 @@
 // What Home shows, as the backend will feed it (issue #80's one query). Fixtures fill it until then.
 
+import type { Stream } from "../../fixtures/streams";
 import type { Score } from "../../parts";
 import type { IconKey, Mark, RoleKey, SlotKey } from "../../rift";
 
@@ -67,14 +68,6 @@ export interface HomeShared {
   freeTransfers: number;
   following: FeedItem[];
   leagues: HomeLeague[];
-}
-
-/** A stream on the picker (spec/12, Live): admin data; one not live is greyed out. */
-export interface Stream {
-  id: string;
-  name: string;
-  platform: string;
-  live: boolean;
 }
 
 export interface LiveSeries {

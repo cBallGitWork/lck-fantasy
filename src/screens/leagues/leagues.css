@@ -92,28 +92,7 @@
   bottom: var(--s-1);
 }
 
-/* The table: the Table part's (`.table`), save that its columns size to their content and its heads wrap. */
-.leagues .leagues__table {
-  table-layout: auto;
-}
-.leagues .leagues__table th {
-  white-space: normal;
-}
-.leagues__table .leagues__figure {
-  text-align: right;
-}
-.leagues__rank-col {
-  width: calc(var(--s-6) * 2);
-}
-.leagues__move-col {
-  width: var(--m-col-figure);
-}
-.leagues__carry-col {
-  width: calc(var(--s-7) * 3 + var(--s-2));
-}
-.leagues__go-col {
-  width: var(--m-go-col);
-}
+/* The table: the Table part's, its rank bold and the manager in mid grey after the team. */
 .leagues__rank {
   font-weight: var(--w-semi);
 }
@@ -124,31 +103,6 @@
 }
 .leagues__chase {
   margin-left: var(--s-2);
-}
-.leagues__table .leagues__mine td {
-  background: var(--fill);
-  font-weight: var(--w-bold);
-}
-.leagues__mine small {
-  font-weight: var(--w-regular);
-}
-.leagues__table .leagues__gap td {
-  height: auto;
-  padding: var(--s-1);
-  text-align: center;
-  color: var(--mid);
-}
-.leagues__table td.leagues__go {
-  padding: 0 var(--s-2) 0 0;
-  text-align: right;
-}
-.leagues__go a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: var(--m-target);
-  min-height: var(--m-target);
-  font-size: var(--size-lead);
 }
 
 /* The pager. */

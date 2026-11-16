@@ -35,7 +35,12 @@ describe("a league you made (league.html)", () => {
 
   test("lists all 12 rows in rank order, your row with its chase tag", () => {
     expectInOrder(out, [`1—${MANAGERS.minji.team}${MANAGERS.minji.name}Ruler93315`, `21${MANAGER.team}${MANAGER.name}13 pts to 1stFaker94302`, "Peanut Butter Gank", "Gank PlankRuth AdeFaker55223"]);
-    expect(html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />)).toMatch(/class="leagues__mine"[^]*Baron Steal FC/);
+  });
+
+  test("is the Table part's: your row selected, and each row ends in its centred ›", () => {
+    const out = html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />);
+    expect(out).toMatch(/class="table__row--selected"[^]*Baron Steal FC/);
+    expect(out).toMatch(/<td class="table__go"><a[^>]*aria-label="Open Baron Steal FC"/);
   });
 
   test("your week is Points' Week 3 so far, your total the season's, Minji's her profile's", () => {
@@ -66,6 +71,7 @@ describe("a league you're a member of (member.html)", () => {
 
   test("shows the top five, a gap, the rows round yours, then the pager", () => {
     expectInOrder(out, ["Canyon Diff", "T1 Til I Die", "⋯", "Bdd Wolf", "Siwoo Sweep", MANAGER.team, "2 pts to 13th", "Clid Was Here", "12Find me"]);
+    expect(html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />).match(/class="table__gap"/g)).toHaveLength(1);
   });
 
   test("scoring from Week 3, every total is Week 3's alone", () => {

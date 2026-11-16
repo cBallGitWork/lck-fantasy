@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
-import { cx, selectable } from "../parts";
 import "./BenchBar.css";
-import { RoleIcon } from "./RoleIcon";
-import type { IconKey } from "./roles";
+import type { PersonRole } from "./roles";
+import { ROLE_NAME } from "./roles";
+import { Tile } from "./Tile";
 
-/** The bench, under the Rift or the cards: one compact bar, `Bench` then a slim tile per player. */
+/** The bench, under the Rift or the cards: `Bench`, then each bench player's tile. */
 export function BenchBar({ children }: { children: ReactNode }) {
   return (
     <div className="bench-bar">
@@ -14,7 +14,10 @@ export function BenchBar({ children }: { children: ReactNode }) {
   );
 }
 
-/** One bench player: order, role icon, name, team, then a line of fixtures or his points. */
+/**
+ * One bench player: his order and role over his tile, as FPL's `1. DEF`, and the Rift's own tile under
+ * it, as FPL's bench shows the pitch's cards (Craig, 16 Nov 2026): fixtures, or his points and why not.
+ */
 export function BenchTile({
   order,
   role,
@@ -28,12 +31,12 @@ export function BenchTile({
   onSelect,
 }: {
   order: number;
-  role: IconKey;
+  role: PersonRole;
   name: string;
   team: string;
-  /** After the team, such as `Didn't play`. */
+  /** Under his points, such as `Didn't play`. */
   detail?: string;
-  /** A second, mono line: the week's fixtures. */
+  /** The week's fixtures. */
   line?: ReactNode;
   points?: ReactNode;
   /** `out` didn't play; `dim` while another is moved; `fit` where a move could go. */
@@ -43,18 +46,20 @@ export function BenchTile({
   onSelect?: () => void;
 }) {
   return (
-    <div className={cx("bench-tile", state && `bench-tile--${state}`, selected && "bench-tile--selected")} {...selectable(onSelect, selected)}>
-      <span className="bench-tile__order num">{order}</span>
-      <RoleIcon role={role} />
-      <span className="bench-tile__who">
-        <b title={name}>{name}</b>{" "}
-        <span>
-          {team}
-          {detail && ` · ${detail}`}
-        </span>
-        {line !== undefined && <small>{line}</small>}
+    <div className="bench-slot">
+      <span className="bench-slot__role">
+        {order}. {ROLE_NAME[role]}
       </span>
-      <span className="bench-tile__points num">{points}</span>
+      <Tile
+        slot={role}
+        name={name}
+        team={team}
+        points={points}
+        line={line ?? detail}
+        state={state === "out" ? "dim" : state}
+        selected={selected}
+        onSelect={onSelect}
+      />
     </div>
   );
 }

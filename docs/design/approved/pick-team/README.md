@@ -34,7 +34,7 @@ From his look at the built page; these bind over the pictures above.
 - One-tap swap, as FPL: tap a player and those he can swap with light up; tap one and they swap. No Swap with bench key.
 - A role starter swaps with the Flex when the result is valid: the Flex holds any role, each role slot its own (Zeus and a Flex who plays Top).
 - Role icons are bigger, everywhere (`roleBox`, `roleIcon`, `roleIconSmall` in the theme).
-- The Rift keeps its 984 × 560 shape at any width and the map is drawn in it, so nothing stretches, everywhere.
+- The Rift keeps its shape at any width and the map is drawn in it, so nothing stretches, everywhere.
 - With Dual Carry played the V is gold, as the C.
 - The card's form history is the last 3 series, not weeks.
 - A team crest in a player's card, never on the Rift's tiles or the bench (Craig, 16 Nov 2026).
@@ -42,6 +42,10 @@ From his look at the built page; these bind over the pictures above.
 - Fixture lines give only the opponents: `v DK, NS`.
 - The card drops its series rows: his tile already shows them, and the side lists the week's series.
 - The bar gives only the count (`1 change`); the buff's own card says it is on and unsaved.
+- Later that day: the Rift is square, 720 a side, centred in the main column, and the map redrawn for it: lanes, river, bases, towers and pits (`measure.rift`).
+- Each starter in his place: top in top lane, jungle in the jungle, mid in mid lane, Support over Bot together in bot lane, Coach and Flex by the blue base.
+- Tiles as FPL's: the shirt on a faint lighter card, C or V at its top right and a news flag `!` at its top left, a white name plate, then a dark band (fixtures, or points and series). No role icon on a tile: his place on the Rift says it; the Flex's and Coach's place is a label over the shirt (`FLEX`, `Coach 감독`), and nothing goes under a Flex's tile: no `Flex · plays Top`, no `Not starting` tag (his flag `!` stays at the shirt's corner, the words in his card). No team crests on the tiles.
+- The bench shows the Rift's own tiles (shirt on its card, name plate, fixtures or points band), each under its order and role, `1. Mid`, as FPL's bench and its `1. DEF`; swapping works as before.
 
 ## Placeholders
 

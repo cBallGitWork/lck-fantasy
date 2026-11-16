@@ -76,14 +76,14 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
     "Fakerv KT, GEN",
     "Rulerv BRO, T1",
     "Delightv DK, NS",
-    "Siwoov HLE, KTNot startingFlex · plays Top",
-    "kkOmav KT, GENCoach 감독",
+    "FlexDK!Siwoov HLE, KT",
+    "Coach 감독T1kkOmav KT, GEN",
     "Bench",
-    "1",
-    "Bdd KTv T1, DK",
+    "1. Mid",
+    "KTBddv T1, DK",
     "⇅ Swap",
-    "2",
-    "Cuzz KTv T1, DK",
+    "2. Jungle",
+    "KTCuzzv T1, DK",
     "No changes",
     "Deadline Wed 07:45 16:45 KST 9h 45m",
     "Save team",
@@ -96,9 +96,12 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expect(markup).toContain('title="Vice-carry">V');
   expect(markup.match(/tile--selected/g)).toHaveLength(1);
   // Faker tapped: Bdd, the bench mid, is lit to swap with him; the Flex plays Top, so isn't; the other six starters and Cuzz dim.
-  expect(markup.match(/bench-tile--fit/g)).toHaveLength(1);
+  expect(markup.match(/tile--bench tile--fit/g)).toHaveLength(1);
   expect(markup.match(/tile--dim/g)).toHaveLength(7);
-  expect(markup.match(/class="tile__flex"/g)).toHaveLength(1);
+  // His news is a flag at his shirt's corner, the word in his card; the Flex and Coach are labelled over the shirt, nothing under (Craig, 16 Nov 2026).
+  expect(markup.match(/class="tile__flag" role="img" aria-label="Not starting"/g)).toHaveLength(1);
+  expect(markup.match(/class="tile__slot/g)).toHaveLength(2);
+  expect(markup).not.toContain("plays Top</div>");
   // His card shows T1's crest; the Rift's tiles and the bench show none (Craig, 16 Nov 2026).
   expect(markup.match(/alt="T1 crest"/g)).toHaveLength(1);
   expect(markup).toMatch(/main-action__key"[^>]*disabled/);
@@ -170,8 +173,8 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
   expect(out).not.toContain("Bench Boost on");
   expect(out).not.toContain("Bo3");
   const markup = html(view(PICK_TEAM_STATES.swap));
-  expect(markup.match(/bench-tile--fit/g)).toHaveLength(2);
-  expect(markup.match(/"tile tile--narrow tile--fit"/g)).toHaveLength(1);
+  expect(markup.match(/tile--bench tile--fit/g)).toHaveLength(2);
+  expect(markup.match(/"tile tile--fit"/g)).toHaveLength(1);
   expect(markup.match(/tile--dim/g)).toHaveLength(5);
   expect(markup).toContain("buff-card--on");
   expect(markup.match(/buff-card--off/g)).toHaveLength(3);
@@ -209,7 +212,7 @@ test("Zeus and the Flex swap places, the V staying with Zeus: the swap and the V
   const s = run({ ...PICK_TEAM_STATES.rift, selected: undefined }, { type: "makeVice", id: "zeus" }, { type: "select", id: "zeus" }, { type: "select", id: "siwoo" });
   expect([s.draft.slots.top, s.draft.slots.flex, s.draft.vice]).toEqual(["siwoo", "zeus", "zeus"]);
   expect(changeCount(s.saved, s.draft)).toBe(2);
-  expect(text(view({ ...s, selected: undefined }))).toContain("Zeusv DK, NSFlex · plays Top");
+  expect(text(view({ ...s, selected: undefined }))).toContain("FlexHLEVZeusv DK, NS");
 });
 
 test("the coach can't swap; a Carry going to the bench hands his C to the player coming on", () => {

@@ -14,10 +14,14 @@ After using the built page; these override the picture.
 
 - The Carry shows only his result (`25`), never the working (`17×1.5`, `12 + 5 = 17 × 1.5`), on his tile, his card and his games. Perfect game follows.
 - No auto-sub line (`Subbed in for Bdd`) on a tile or a card.
-- The bottom row tidied: Coach stands under Top and Flex under Jungle, and Support and Bot stand a little higher, so the four shirts sit on one line. Perfect game shares the places.
+- The bottom row tidied: Coach stands under Top and Flex under Jungle, and Support and Bot stand a little higher, so the four shirts sit on one line. Perfect game shares the places. Replaced later that day by the square Rift's places, below.
 - Each series in a player's games opens its Series page.
 - Your week moves below Leagues and the week's series, above the sponsor.
 - A series in a player's games is its opponent alone: `v DK`, no day.
+- The Rift is square (later that day), 720 a side, centred in the main column, and the map redrawn for it: lanes, river, bases, towers and pits (`measure.rift`).
+- Each starter in his place: top in top lane, jungle in the jungle, mid in mid lane, Support over Bot together in bot lane, Coach and Flex by the blue base.
+- Tiles as FPL's: the shirt on a faint lighter card, C or V at its top right and a news flag `!` at its top left, a white name plate, then a dark band (fixtures, or points and series). No role icon on a tile: his place on the Rift says it; the Flex's and Coach's place is a label over the shirt (`FLEX`, `Coach 감독`), and nothing goes under a Flex's tile: no `Flex · plays Top`, no `Not starting` tag (his flag `!` stays at the shirt's corner, the words in his card). No team crests on the tiles. The points sit in the dark band, the series under them. Pick Team and Perfect game share the places.
+- The bench shows the Rift's own tiles (shirt on its card, name plate, points band, `Didn't play` under a dash), each under its order and role, `1. Mid`, as FPL's bench and its `1. DEF`.
 - Live said once per place: on the head's live bar, the open game's row and the week's series (a shared list, kept). A tile's or card's series line and a series result in a player's games drop it: `v DK 5`, `1–0`.
 
 ## Borrowed

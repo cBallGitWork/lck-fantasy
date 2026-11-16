@@ -18,6 +18,8 @@ He looked at the built page and asked for these; they overrule the pictures wher
 8. The head shows free transfers, cost and bank, as FPL's.
 9. Any role for any role: the squad keeps at least one of each role; past that any player can be sold for any player. A buy that would leave a role empty is refused with why. On confirm the squad is arranged by role, a starter keeping his place.
 10. Next in the player list drops the day: "v DK", not "Wed v DK".
+11. Later that day, Rift view: the Rift is square, 720 a side, centred in the main column, the map redrawn for it. The nine stand by role in rows along their lanes: tops along top lane, jungle and mid in rows in the jungle and on mid lane, Support over Bot along bot lane, the coach by the blue base; two or three of a role stand side by side in their row.
+12. Tiles as FPL's Transfers pitch: the price in a dark chip over the shirt (overrules 3), `×` to sell at the card's top left, the shirt on a faint card, a white name plate, then the next opponent (`v DK`) in a dark band. No role icon and no crest.
 
 | File | Shows |
 |---|---|

@@ -36,6 +36,9 @@ test("the map draws the river, three lanes, two bases and ten towers", () => {
   expect(out.match(/rift-map__lane/g)).toHaveLength(3);
   expect(out.match(/rift-map__base/g)).toHaveLength(2);
   expect(out.match(/<rect /g)).toHaveLength(11);
+  // Drawn in the Rift's own shape and never stretched to its box.
+  expect(out).toContain('viewBox="0 0 984 560"');
+  expect(out).not.toContain("preserveAspectRatio");
 });
 
 test("only a Flex plays a role: a mid there plays mid; elsewhere, and a coach, play none", () => {

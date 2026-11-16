@@ -5,7 +5,7 @@ import { RiftMap } from "./RiftMap";
 import { RoleIcon } from "./RoleIcon";
 import { Shirt } from "./Shirt";
 import type { RoleKey, SlotKey } from "./roles";
-import { slotIcon, slotTag } from "./roles";
+import { ROLE_NAME, slotIcon, slotTag } from "./roles";
 import type { RiftPoint } from "./slots";
 import "./Tile.css";
 
@@ -22,6 +22,10 @@ export interface TileProps {
   /** Where the tile's centre stands on the Rift. */
   at: RiftPoint;
   mark?: Mark;
+  /** Dual Carry is played: the V is gold as the C, as the Vice-carry scores ×1.5 too (spec/06). */
+  dual?: boolean;
+  /** A `Flex` label over the Flex's shirt, so his place reads at a glance (Pick Team). */
+  flexLabel?: boolean;
   /** One of your players. */
   me?: boolean;
   birthday?: boolean;
@@ -47,16 +51,20 @@ export function Tile(p: TileProps) {
   return (
     <div
       className={cx("tile", !hasPoints && "tile--narrow", p.selected && "tile--selected", p.state && `tile--${p.state}`)}
-      style={{ left: share(p.at[0], measure.riftW), top: share(p.at[1], measure.riftH) }}
+      style={{
+        left: share(p.at[0], measure.riftW),
+        top: share(p.at[1], measure.riftH),
+      }}
       {...selectable(p.onSelect, p.selected)}
     >
+      {p.flexLabel && p.slot === "flex" && <span className="tile__flex">{ROLE_NAME.flex}</span>}
       <div className="tile__kit">
         <Shirt team={p.team} />
         <span className="tile__role">
           <RoleIcon role={slotIcon(p.slot, p.plays)} />
         </span>
         {p.mark && (
-          <span className={cx("tile__mark", p.mark === "V" && "tile__mark--v")} title={MARK_NAME[p.mark]}>
+          <span className={cx("tile__mark", p.mark === "V" && !p.dual && "tile__mark--v")} title={MARK_NAME[p.mark]}>
             {p.mark}
           </span>
         )}

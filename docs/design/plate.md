@@ -58,6 +58,7 @@ The built look is navy with gold, from `src/theme/tokens.ts`; each token below i
 | `--gold-rule` | #785A28 | the banner's rule under that hangul |
 | `--rise` | #FF5C6C | a price rise, Korean red lightened for navy |
 | `--fall` | #6EA2FF | a price fall, Korean blue lightened for navy |
+| `--over` | #FF5C6C | the bank below zero, over the budget, with its − (Craig, 16 Nov 2026) |
 | `--teal` | #0AC8B9 | the second accent, sparingly: the live dot, the focus ring |
 | `--stage` | #000508 | Live's dark stage |
 | `--stage-text` | #A09B8C | grey text on the stage |
@@ -67,7 +68,7 @@ The built look is navy with gold, from `src/theme/tokens.ts`; each token below i
 - Gold is for two things only: the one main action on a screen (`--ink`) and the banner's hangul
   (`--gold`). Section rules, tabs, selected borders, links, marks, tags and a rank's move (▲/▼) are
   `--text` or grey (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
-- Colour is spent on meaning only, never to decorate: red and blue are prices only; a rank's move
+- Colour is spent on meaning only, never to decorate: red and blue are prices and the bank only; a rank's move
   stays `--text` (Craig, 16 Nov 2026).
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
 

@@ -60,11 +60,10 @@ describe("controls", () => {
     expect(cardOf(WEEK4_PRICES.falls.at(-1)!)).toEqual({ to: "/coach/$coachId", params: { coachId: "edgar" } });
   });
 
-  test("‹ and › are keys only where there is a week to go to", () => {
+  test("‹ and › step only where there is a week to go to; the other is a disabled key", () => {
     const latest = html(<PatchUpdatePage week={WEEK4_PRICES} onPrev={noop} />);
-    expect(latest).toContain('aria-label="Week before"');
-    expect(latest).not.toContain('aria-label="Week after"');
-    expect(latest).toContain("week-arrow--off");
+    expect(latest).toContain('<button type="button" class="week-arrow" aria-label="Week before">');
+    expect(latest).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">');
   });
 
   test("stepping stops at the first and the latest week", () => {

@@ -26,8 +26,6 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "LCK Cup · Week 3",
     "›",
     "142",
-    "Final",
-    "Cap 2",
     "Average 79",
     "Highest 136",
     "Your points 117›",
@@ -53,9 +51,9 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
   ]);
 });
 
-test("Final is the head's tag alone, and Carry is the sum's label alone", () => {
+test("a final week says neither Final nor its cap (Craig, 16 Nov 2026), and Carry is the sum's label alone", () => {
   const out = text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />);
-  expect(out.match(/Final/g)).toHaveLength(1);
+  expect(out).not.toMatch(/Final|Cap/);
   expect(out.match(/Carry/g)).toHaveLength(1);
 });
 

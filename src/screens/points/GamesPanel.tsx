@@ -3,7 +3,7 @@ import { cardGo, PATHS } from "../../paths";
 import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PointsPlayer, PointsSeries, PointsStarter } from "./types";
 
-/** `W 2–1 · final`, `1–0` while live (its game row says Live), or `W 2–1` and a Not final tag. */
+/** `W 2–1` (a result is final), `1–0` while live (its game row says Live), or `W 2–1` and a Not final tag. */
 function SeriesResult({ s }: { s: PointsSeries }) {
   if (s.state === "live") return <span>{score(s.score)}</span>;
   const done = result(s.score);
@@ -13,7 +13,7 @@ function SeriesResult({ s }: { s: PointsSeries }) {
         {done} <Tag kind="notFinal">Not final</Tag>
       </span>
     );
-  return <span>{`${done} · final`}</span>;
+  return <span>{done}</span>;
 }
 
 /** The tapped player's games: each series (opening its Series page) and its games, the counted ones boxed; the Carry's result; Full stats. */

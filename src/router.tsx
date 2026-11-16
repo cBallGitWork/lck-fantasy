@@ -42,6 +42,7 @@ const routeTree = rootRoute.addChildren([
   screen(PATHS.pickTeam, PickTeamScreen),
   screen(PATHS.transfers, TransfersScreen),
   screen(PATHS.points, PointsScreen),
+  screen(PATHS.pointsWeek, PointsScreen),
   screen(PATHS.leagues, LeaguesScreen),
   screen(PATHS.league, LeaguesScreen),
   screen(PATHS.stats, StatsScreen),

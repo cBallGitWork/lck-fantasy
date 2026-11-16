@@ -6,7 +6,7 @@ Only data two or more screens share lives here. A screen's own made-up data goes
 
 - `week3.ts`: the LCK Cup Week 3 the approved pictures share, and the three moments they catch. It re-exports the four files below, so a screen imports the week from one place.
 - `competition.ts`: the teams, the competition's values (the Carry's multiplier, series length, team cap, hit, buffs), the sample manager Baron Steal FC, and a card's id (`playerId`).
-- `weeks.ts`: Week 3's series at Points' moment and final, Week 4's fixtures, both deadlines, and a day's two series times.
+- `weeks.ts`: Weeks 1 and 2 final, Week 3's series at Points' moment and final, Week 4's fixtures, both deadlines, and a day's two series times.
 - `squads.ts`: Baron Steal FC's squads at the Points and Pick Team moments, his Week 3 totals, and Week 3's perfect game.
 - `players.ts`: the Stats picture's players and coaches with prices, owned % and points (`statsOf`).
 - `standings.ts`: the two groups' standings after Week 3, as the LCK hub, Series and Stats share them (`standingOf`, `recordOf`, `gamesOf`).

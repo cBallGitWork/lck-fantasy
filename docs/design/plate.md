@@ -79,7 +79,7 @@ Each part is drawn one way on every screen.
 
 - **Page head:** title and hangul; ‹ week ›; the key figure; its tags; then up to three
   figures beside it, in `--mid` with the figure in `--text` (Craig, 16 Nov 2026) (`Average 79  Highest 136 ›`).
-- **Tag:** a square box, 1px rule, 11px, sentence case: `Live`, `Not final`, `Final`, `Cap 2`.
+- **Tag:** a square box, 1px rule, 11px, sentence case: `Live`, `Not final`, `Final`. No team cap tag; on Points and Perfect game `Final` is the head's tag alone, never a result's note (Craig, 16 Nov 2026).
   `Live` is filled `--text` with `--bg` words (Craig, 16 Nov 2026). `Not final` is dashed.
 - **View toggle:** butted keys on `--fill`, the chosen one on `--paper`: `Rift view | Card view`.
 - **Tabs** (a page's or a card's sections): words in a row, the chosen one `--text` with a 2px

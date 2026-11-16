@@ -1,36 +1,36 @@
-// Points' own made-up data: Week 3 at the picture's moment (docs/design/approved/points/points.html),
-// built on src/fixtures/week3.ts. It stands in for the backend until a later issue wires real data
-// (series and games #36, live points #34, final points and ranks #33). The champions and each game's
-// winner are made up, to fit the week's scores.
+// Points' own made-up data: Weeks 1 and 2 final, and Week 3 at the picture's moment
+// (docs/design/approved/points/points.html), built on src/fixtures/week3.ts and the games in
+// games.ts. It stands in for the backend until a later issue wires real data (series and games #36,
+// live points #34, final points and ranks #33).
 
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { fromSide, seriesById } from "../../fixtures/series";
-import { COMPETITION, livePointsOf, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
+import {
+  CARRY_MULTIPLIER,
+  COMPETITION,
+  MANAGER,
+  playerId,
+  POINTS_SQUAD,
+  POINTS_WEEK,
+  WEEK1_SERIES,
+  WEEK2_SERIES,
+  WEEK3_SERIES_AT_POINTS,
+  type PointsPick,
+  type Series,
+} from "../../fixtures/week3";
 import { count, ordinal } from "../../parts";
 import { PATHS } from "../../paths";
-import { flexPlays, type SlotKey } from "../../rift";
-import type { PointsData, PointsPlayer, PointsSeries, PointsStarter } from "./types";
+import { flexPlays } from "../../rift";
+import { GAME_WINNERS, WEEK1_PLAYED, WEEK2_PLAYED, WEEK3_CHAMPIONS, type Played } from "./games";
+import type { PointsData, PointsPlayer, PointsSeries, PointsStarter, WeekPick } from "./types";
 
-/** Each game's winner, in each series of the week that a squad member played. */
-const GAME_WINNERS: Record<string, TeamCode[]> = {
-  "w3-wed-1": ["T1", "HLE", "T1"],
-  "w3-wed-2": ["GEN", "GEN"],
-  "w3-thu-1": ["DK", "DK"],
-  "w3-fri-1": ["KT", "BFX", "KT"],
-  "w3-sat-1": ["GEN", "HLE", "GEN"],
-  "w3-sat-2": ["T1"],
-};
-
-/** Each player's champions, series by series, in the order he played them. The Coach has none. */
-const CHAMPIONS: Record<string, string[][]> = {
-  Zeus: [["Jax", "Gnar", "Rumble"], ["Aatrox", "Renekton", "Jayce"]],
-  Canyon: [["Vi", "Sejuani"], ["Xin Zhao", "Maokai", "Lee Sin"]],
-  Faker: [["Azir", "Taliyah", "Galio"], ["Orianna", "Sylas"]],
-  Ruler: [["Kai'Sa", "Varus"], ["Ezreal", "Jinx", "Xayah"]],
-  Delight: [["Rakan", "Nautilus", "Alistar"], ["Rell", "Leona", "Braum"]],
-  Siwoo: [["Gragas", "Ornn"], ["K'Sante", "Rumble"]],
-  Cuzz: [["Viego", "Xin Zhao"], ["Sejuani", "Vi", "Maokai"]],
-};
+/** The same nine as Week 3, each with that week's series, and no birthday or auto-sub. */
+const squadIn = (played: Record<string, Played>): PointsPick[] =>
+  POINTS_SQUAD.map((pick) => {
+    const series = played[pick.name];
+    if (!series) throw new Error(`No series for ${pick.name}`);
+    return { slot: pick.slot, name: pick.name, team: pick.team, role: pick.role, mark: pick.mark, series };
+  });
 
 /** The games that count in a series: its best two (spec/05-scoring.md). The backend sends this later. */
 const COUNTED_PER_SERIES = 2;
@@ -43,10 +43,10 @@ function countedGames(games: number[]): Set<number> {
   return new Set(best.map((g) => g.index));
 }
 
-function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champions: string[] = []): PointsSeries {
-  const row = seriesById(WEEK3_SERIES_AT_POINTS, played.id);
+function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[number], champions: string[] = []): PointsSeries {
+  const row = seriesById(list, played.id);
   const side = fromSide(row, pick.team);
-  if (!side.score) throw new Error(`No played series ${played.id} in Week 3`);
+  if (!side.score) throw new Error(`No played series ${played.id}`);
   const counted = countedGames(played.games);
   const games = played.games.map((points, index) => {
     const live = row.state === "live" && index + 1 === row.liveGame;
@@ -71,8 +71,8 @@ function seriesOf(pick: PointsPick, played: PointsPick["series"][number], champi
   };
 }
 
-function playerOf(pick: PointsPick): PointsPlayer {
-  const series = pick.series.map((played, i) => seriesOf(pick, played, CHAMPIONS[pick.name]?.[i]));
+function playerOf(list: readonly Series[], pick: PointsPick, champions: Record<string, string[][]>): PointsPlayer {
+  const series = pick.series.map((played, i) => seriesOf(list, pick, played, champions[pick.name]?.[i]));
   return {
     name: pick.name,
     team: pick.team,
@@ -85,47 +85,119 @@ function playerOf(pick: PointsPick): PointsPlayer {
   };
 }
 
-/** The Carry's week as the picture shows it: 25 (17 before ×1.5), the average Carry 19. */
-const CARRY = { points: livePointsOf(playerId("Faker")), average: 19 } as const;
+/** Owned % of the players a week's Star or Flop can be. */
+const OWNED_PCT: Record<string, number> = { Faker: 46, Siwoo: 6, Delight: 18 };
 
-function starterOf(pick: PointsPick, slot: SlotKey): PointsStarter {
-  const player = playerOf(pick);
-  const plays = flexPlays(slot, pick.role);
-  if (pick.mark !== "C") return { ...player, slot, plays };
-  const { points, ...carry } = CARRY;
-  return { ...player, slot, plays, points, carry };
+function mine(label: string, p: PointsStarter): WeekPick {
+  const ownedPct = OWNED_PCT[p.name];
+  if (ownedPct === undefined || p.points === undefined) throw new Error(`No ${label} figures for ${p.name}`);
+  return { label, name: p.name, points: p.points, ownedPct, mine: true };
 }
 
-const starters = POINTS_SQUAD.flatMap((pick) => (pick.slot === "bench" ? [] : [starterOf(pick, pick.slot)]));
+/** What a week adds to its series and squad: its head's figures, the average Carry and the Killer. */
+interface WeekFacts {
+  week: number;
+  series: readonly Series[];
+  squad: PointsPick[];
+  average: number;
+  highest: number;
+  averageCarry: number;
+  killer: { name: string; points: number; ownedPct: number };
+  champions?: Record<string, string[][]>;
+}
 
-const pointsOf = (name: string) => starters.find((p) => p.name === name)?.points ?? 0;
-
-const live = WEEK3_SERIES_AT_POINTS.find((s) => s.state === "live");
-
-export const POINTS_FIXTURE: PointsData = {
-  team: MANAGER.team,
-  hangul: MANAGER.hangul,
-  week: {
-    label: `${COMPETITION} · Week ${POINTS_WEEK.week}`,
-    // There is no week in a Points path yet: the arrow leads to Points until a later issue adds one.
-    prev: { to: PATHS.points },
+/** The weeks Points can show, first to latest; the latest is where `/points` opens. */
+const WEEKS: WeekFacts[] = [
+  {
+    week: 1,
+    series: WEEK1_SERIES,
+    squad: squadIn(WEEK1_PLAYED),
+    average: 61,
+    highest: 118,
+    averageCarry: 20,
+    killer: { name: "Chovy", points: 22, ownedPct: 41 },
   },
-  total: starters.reduce((sum, p) => sum + (p.points ?? 0), 0),
-  final: false,
-  average: POINTS_WEEK.average,
-  highest: POINTS_WEEK.highest,
-  live: live?.liveGame ? { home: live.home, away: live.away, game: live.liveGame } : undefined,
-  starters,
-  bench: POINTS_SQUAD.filter((p) => p.slot === "bench").map(playerOf),
-  yourWeek: [
-    { label: "Star", name: "Faker", points: pointsOf("Faker"), ownedPct: 46, mine: true },
-    { label: "Flop", name: "Siwoo", points: pointsOf("Siwoo"), ownedPct: 6, mine: true },
-    { label: "Killer", name: "Chovy", points: 15, ownedPct: 41, mine: false },
-  ],
-  leagues: [
-    { name: `Overall · ${MY_OVERALL.tier}`, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
-    ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),
-  ],
-  nextTier: { points: 6, tier: "Diamond IV" },
-  series: WEEK3_SERIES_AT_POINTS,
-};
+  {
+    week: 2,
+    series: WEEK2_SERIES,
+    squad: squadIn(WEEK2_PLAYED),
+    average: 70,
+    highest: 124,
+    averageCarry: 23,
+    killer: { name: "Peyz", points: 19, ownedPct: 28 },
+  },
+  {
+    week: POINTS_WEEK.week,
+    series: WEEK3_SERIES_AT_POINTS,
+    squad: POINTS_SQUAD,
+    average: POINTS_WEEK.average,
+    highest: POINTS_WEEK.highest,
+    averageCarry: 19,
+    killer: { name: "Chovy", points: 15, ownedPct: 41 },
+    champions: WEEK3_CHAMPIONS,
+  },
+];
+
+/** The competition's first week: no ‹ before it. */
+const FIRST_WEEK = 1;
+
+/** The week's ‹ and ›, by the router: the week in the path (`/points/2`); none before Week 1 or past the latest. */
+function weekNav(week: number, latest: number) {
+  const to = (n: number) => ({ to: PATHS.pointsWeek, params: { week: String(n) } });
+  return {
+    label: `${COMPETITION} · Week ${week}`,
+    prev: week > FIRST_WEEK ? to(week - 1) : undefined,
+    next: week < latest ? to(week + 1) : undefined,
+  };
+}
+
+function pointsWeek(facts: WeekFacts, latest: number): PointsData {
+  const { series: list, squad, champions = {} } = facts;
+  const starters = squad.flatMap((pick): PointsStarter[] => {
+    if (pick.slot === "bench") return [];
+    const player = playerOf(list, pick, champions);
+    const plays = flexPlays(pick.slot, pick.role);
+    if (pick.mark !== "C") return [{ ...player, slot: pick.slot, plays }];
+    // The Carry's points ×1.5, rounded down (spec/05-scoring.md); his own are already the result.
+    const points = player.points === undefined ? undefined : Math.floor(player.points * CARRY_MULTIPLIER);
+    return [{ ...player, slot: pick.slot, plays, points, carry: { average: facts.averageCarry } }];
+  });
+  const played = starters.filter((p) => p.points !== undefined);
+  const byPoints = [...played].sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
+  const star = byPoints[0];
+  const flop = byPoints[byPoints.length - 1];
+  if (!star || !flop) throw new Error(`Week ${facts.week} has no starter who played`);
+  const live = list.find((s) => s.state === "live");
+  return {
+    team: MANAGER.team,
+    hangul: MANAGER.hangul,
+    week: weekNav(facts.week, latest),
+    total: starters.reduce((sum, p) => sum + (p.points ?? 0), 0),
+    final: list.every((s) => s.state === "final"),
+    average: facts.average,
+    highest: facts.highest,
+    live: live?.liveGame ? { home: live.home, away: live.away, game: live.liveGame } : undefined,
+    starters,
+    bench: squad.filter((p) => p.slot === "bench").map((p) => playerOf(list, p, champions)),
+    yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, mine: false }],
+    leagues: [
+      { name: `Overall · ${MY_OVERALL.tier}`, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
+      ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),
+    ],
+    nextTier: { points: 6, tier: "Diamond IV" },
+    series: list,
+  };
+}
+
+/** The latest week, where `/points` opens. */
+export const LATEST_WEEK = Math.max(...WEEKS.map((w) => w.week));
+
+/** Points by week number, Weeks 1 to the latest. */
+export const POINTS_WEEKS: ReadonlyMap<number, PointsData> = new Map(WEEKS.map((w) => [w.week, pointsWeek(w, LATEST_WEEK)]));
+
+/** The latest week: Week 3 at the picture's moment. */
+export const POINTS_FIXTURE: PointsData = (() => {
+  const latest = POINTS_WEEKS.get(LATEST_WEEK);
+  if (!latest) throw new Error("No latest Points week");
+  return latest;
+})();

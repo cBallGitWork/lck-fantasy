@@ -94,12 +94,7 @@ export function PerfectGame({
         hangul="퍼펙트 게임"
         week={{ label: game.week, ...weekNav }}
         figure={total}
-        tags={
-          <>
-            {game.final ? <Tag>Final</Tag> : <Tag kind="notFinal">Not final</Tag>}
-            <Tag>Cap {game.cap}</Tag>
-          </>
-        }
+        tags={game.final ? <Tag>Final</Tag> : <Tag kind="notFinal">Not final</Tag>}
         figures={[
           { label: "Average", value: game.average },
           { label: "Highest", value: game.highest },

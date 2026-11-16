@@ -6,7 +6,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `PageFrame.tsx`: the top bar, then the main column and the 360px side column.
 - `Columns.tsx`: the frame's two columns (main, then the 360px side) for a page whose head runs full width above them.
 - `PageHead.tsx`: title and hangul, ‹ week ›, the key figure, its tags, up to three figures, a link.
-- `WeekArrow.tsx`: a week's ‹ or ›: a link, or a key; off in the rule's grey where there is no week that way.
+- `WeekArrow.tsx`: a week's ‹ or ›, a 32px key: a link or a button; a disabled key where there is no week that way.
 - `Tag.tsx`: a tag: plain, `Live` filled, `Not final` dashed.
 - `ViewToggle.tsx`: butted keys, the chosen one on paper (`Rift view | Card view`).
 - `Tabs.tsx`: a page's or a card's sections, the chosen one underlined.

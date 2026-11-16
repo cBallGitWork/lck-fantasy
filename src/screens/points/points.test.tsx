@@ -1,8 +1,9 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
 import { html, text } from "../../testing/render";
-import { POINTS_FIXTURE } from "./fixtures";
-import { POINTS_VIEW_KEY, rememberedView } from "./index";
+import { MY_WEEK3 } from "../../fixtures/week3";
+import { LATEST_WEEK, POINTS_FIXTURE, POINTS_WEEKS } from "./fixtures";
+import { POINTS_VIEW_KEY, rememberedView, weekOf } from "./index";
 import { PointsPage } from "./PointsPage";
 
 /** Fails unless each piece appears in `out`, each after the one before it. */
@@ -43,7 +44,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "1. MidKTBdd—Didn't play",
     "2. JungleKTCuzz9",
     "FakerT1 · Mid · Carry✕",
-    "v HLEW 2–1 · final",
+    "v HLEW 2–1",
     "G1Azir · W5",
     "G2Taliyah · L2",
     "G3Galio · W7",
@@ -154,10 +155,11 @@ test("a bench player who didn't play can't be opened; one who played can", () =>
   expect(text(<PointsPage data={POINTS_FIXTURE} open="Cuzz" />)).toContain("CuzzKT · Jungle✕");
 });
 
-test("the fixture's total is its starters' points: 94, the Carry's 25 among them", () => {
+test("the fixture's total is its starters' points: 94, the Carry's 25 among them, as the shared Week 3 gives them", () => {
   const { starters, total } = POINTS_FIXTURE;
-  expect(total).toBe(94);
+  expect(total).toBe(MY_WEEK3.liveTotal);
   expect(starters.map((p) => p.points)).toEqual([14, 14, 25, 14, 9, 8, 10]);
+  expect(Object.fromEntries(starters.map((p) => [p.cardId, p.points]))).toEqual(MY_WEEK3.live);
   const faker = starters.find((p) => p.mark === "C");
   expect(faker?.carry).toEqual({ average: 19 });
 });
@@ -174,4 +176,53 @@ test("the view opens on Rift the first time, then on the one kept, and on Rift w
     },
   };
   expect(rememberedView(blocked)).toBe("Rift view");
+});
+
+const week = (n: number) => {
+  const data = POINTS_WEEKS.get(n);
+  if (!data) throw new Error(`No Week ${n}`);
+  return data;
+};
+
+test("‹ › are keys by the router: Week 1's ‹ is off, the latest's › is off, each other links its week", () => {
+  expect([...POINTS_WEEKS.keys()]).toEqual([1, 2, 3]);
+  expect(LATEST_WEEK).toBe(3);
+  const head = (n: number) => html(<PointsPage data={week(n)} />).split('class="page-head__key-line"')[0] ?? "";
+  expect(head(1)).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week before" disabled="">‹</button>');
+  expect(head(1)).toContain('href="/points/2"');
+  expect(head(2)).toContain('href="/points/1"');
+  expect(head(2)).toContain('href="/points/3"');
+  expect(head(3)).toContain('href="/points/2"');
+  expect(head(3)).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">›</button>');
+});
+
+test("a path names its week: /points the latest, /points/2 Week 2, anything else no week", () => {
+  expect(weekOf(undefined)).toBe(3);
+  expect(weekOf("2")).toBe(2);
+  for (const bad of ["0", "4", "02x", "two", ""]) expect(weekOf(bad)).toBeUndefined();
+});
+
+test("a final week says Final once, as the head's tag (Craig, 16 Nov 2026): no Not final, no Live, no live bar", () => {
+  for (const n of [1, 2]) {
+    const data = week(n);
+    expect(data.final).toBe(true);
+    const out = text(<PointsPage data={data} open="Faker" />);
+    expect(out).toContain(`LCK Cup · Week ${n}`);
+    expect(out.match(/Final/g)).toHaveLength(1);
+    expect(out).not.toMatch(/Not final|· final|Watch/);
+    // Only the top bar's Live item.
+    expect(out.match(/Live/g)).toHaveLength(1);
+  }
+});
+
+test("Weeks 1 and 2 add up: each total its starters', the Carry's ×1.5 rounded down, Star the top and Flop the lowest", () => {
+  const w1 = week(1);
+  expect(w1.starters.map((p) => p.points)).toEqual([15, 14, 27, 16, 9, 6, 9]);
+  expect(w1.total).toBe(96);
+  expect(w1.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual(["Star Faker 27", "Flop Siwoo 6", "Killer Chovy 22"]);
+  const w2 = week(2);
+  expect(w2.starters.map((p) => p.points)).toEqual([15, 15, 30, 15, 9, 13, 15]);
+  expect(w2.total).toBe(112);
+  expect(w2.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual(["Star Faker 30", "Flop Delight 9", "Killer Peyz 19"]);
+  expectInOrder(text(<PointsPage data={w2} open="kkOma" />), ["kkOmaT1 · Coach✕", "v DNSW 2–0", "G1W2", "G2W2", "v BFXW 2–1", "G1W2", "G2L0", "G3W3"]);
 });

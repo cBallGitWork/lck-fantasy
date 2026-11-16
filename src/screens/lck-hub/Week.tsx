@@ -12,11 +12,11 @@ export function WeekTitle({ week, bestOf, onPrev, onNext }: { week: HubWeek; bes
   return (
     <SectionHead className="lck-hub__title" note={`${week.dates} · ${bestOfLabel(bestOf)}`}>
       <span className="lck-hub__week">
-        <WeekArrow label="Week before" onStep={onPrev} button>
+        <WeekArrow label="Week before" onStep={onPrev}>
           ‹
         </WeekArrow>
         {week.label}
-        <WeekArrow label="Week after" onStep={onNext} button>
+        <WeekArrow label="Week after" onStep={onNext}>
           ›
         </WeekArrow>
       </span>

@@ -15,7 +15,7 @@ async function at(url: string) {
 
 /** What each picture shows that marks its state, as the page draws it. */
 const KEY: Record<string, string> = {
-  "home/live": "3/0/2",
+  "home/live": "1/0/2",
   "home/idle": "Week 4 lineup",
   "pick-team/pick": "Rift view",
   "pick-team/cards": "Photo",
@@ -35,7 +35,7 @@ const KEY: Record<string, string> = {
   "stats/stats": "Players",
   "stats/pergame": 'aria-pressed="true">Per game',
   "stats/coaches": "Most barons",
-  "live/live": "3/0/2",
+  "live/live": "1/0/2",
   "live/idle": "Next · Sunday",
   "live/down": "Live points down",
   "series/series": "Doran",

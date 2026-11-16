@@ -1,6 +1,6 @@
 import type { Score, SeriesRow, SeriesState, WeekNav } from "../../parts";
 import type { Mark, PersonRole, RoleKey, SlotKey } from "../../rift";
-import type { Kda, LineWord } from "./games";
+import type { Kda, LineWord } from "../../fixtures/week3";
 
 /** One game a player played: its champion, won or lost (neither while live), its points, and whether it counts. */
 export interface PointsGame {

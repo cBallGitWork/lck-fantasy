@@ -4,10 +4,10 @@
 import { hangulOf, ROSTERS, T1_PRICES_M } from "../../fixtures/rosters";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { KKOMA_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
-import { BEST_OF, COMPETITION_TITLE, MY_PLAYERS, pickedAt, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
+import { BEST_OF, COMPETITION_TITLE, countedGames, MY_PLAYERS, pickedAt, POINTS_SQUAD, seriesPoints, statsOf, WEEK3_SERIES_AT_POINTS, weekGamesOf, winnerOf } from "../../fixtures/week3";
 import { bestOf, type StripNext, type StripPast, sum } from "../../parts";
 import type { RoleKey } from "../../rift";
-import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, WeekGame, WeekSeries } from "./types";
+import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, WeekSeries } from "./types";
 
 const HEAD = { team: "T1", name: "kkOma", hangul: hangulOf("kkOma"), legal: "Kim Jeong-gyun" } as const;
 
@@ -38,18 +38,6 @@ const HISTORY_PRICES = [7.0, 7.0, 6.5, 6.5, 6.5, 6.5];
 
 const AT_PICK_TEAM = pickedAt(HEAD.name);
 
-/** Each game's result and the coach lines it scored, beside its points from week3.ts. */
-const GAME_LINES: Record<string, Pick<WeekGame, "result" | "lines">[]> = {
-  "w3-wed-1": [
-    { result: "W", lines: ["First tower", "Most drakes"] },
-    { result: "L", lines: [] },
-    { result: "W", lines: ["First tower", "Most drakes", "Most barons"] },
-  ],
-  "w3-sat-2": [{ result: "W", lines: ["First tower", "Most drakes"] }, { lines: [] }],
-};
-/** The best 2 games count (spec/05); the live game counts until it is played. */
-const COUNTED: Record<string, boolean[]> = { "w3-wed-1": [true, false, true], "w3-sat-2": [true, true] };
-
 const COACH = POINTS_SQUAD.find((p) => p.slot === "coach");
 if (!COACH?.series) throw new Error("Week 3's Points squad has no coach with series");
 
@@ -58,20 +46,26 @@ function weekSeries(id: string, games: number[], coachResult?: number): WeekSeri
   const side = fromSide(s, HEAD.team);
   if (!side.score) throw new Error(`Week 3 has no series ${id} with a score`);
   const live = s.state === "live";
+  const lines = weekGamesOf(HEAD.name, id);
+  const counted = countedGames(games);
   return {
     id,
     day: s.day,
     opponent: side.opponent,
     score: side.score,
     state: live ? "live" : "final",
-    games: games.map((points, i) => ({
-      result: GAME_LINES[id]?.[i]?.result,
-      lines: GAME_LINES[id]?.[i]?.lines ?? [],
-      points,
-      counts: COUNTED[id]?.[i] ?? false,
-      clock: live && i + 1 === s.liveGame ? s.clock : undefined,
-    })),
-    points: sum(games.filter((_, i) => COUNTED[id]?.[i])) + (coachResult ?? 0),
+    games: games.map((points, i) => {
+      const winner = winnerOf(id, i);
+      const playing = live && i + 1 === s.liveGame;
+      return {
+        result: playing || !winner ? undefined : winner === HEAD.team ? "W" : "L",
+        lines: [...(lines[i]?.lines ?? [])],
+        points,
+        counts: counted.has(i),
+        clock: playing ? s.clock : undefined,
+      };
+    }),
+    points: seriesPoints(games, coachResult),
   };
 }
 

@@ -1,23 +1,8 @@
 // The Series picture's own made-up data (docs/design/approved/series/series.html), built on the
 // shared Split 1 Week 3. Points, best 2 and coach lines are the picture's figures as drawn, save
-// Faker's, which are the shared squad's: the backend scores them (#30, #34).
+// Baron Steal FC's players', whose games are the shared ones: the backend scores them (#30, #34).
 
-import {
-  BEST_OF,
-  COMPETITION,
-  LIVE_SERIES_ID,
-  MY_PLAYERS,
-  playerId,
-  POINTS_SQUAD,
-  seriesPoints,
-  TEAMS,
-  WEEK3_FINAL_SQUAD,
-  WEEK3_SERIES_FINAL,
-  WEEK4_SERIES,
-  type PointsPick,
-  type Series,
-  type TeamCode,
-} from "../../fixtures/week3";
+import { BEST_OF, COMPETITION, countedGames, kdaText, LINE, LIVE_SERIES_ID, MY_PLAYERS, playerId, POINTS_SQUAD, seriesPoints, TEAMS, WEEK3_FINAL_SQUAD, WEEK3_SERIES_FINAL, WEEK4_SERIES, weekGamesOf, type Series, type TeamCode } from "../../fixtures/week3";
 import { ROSTERS, hangulOf } from "../../fixtures/rosters";
 import { seriesById } from "../../fixtures/series";
 import { recordOf } from "../../fixtures/standings";
@@ -28,7 +13,6 @@ import type { CoachCell, GameCell, NextSeries, PlayedSeries, PlayerLine, Roster,
 const FORMAT = bestOf(BEST_OF);
 /** Where VOD links go until #36 fetches each game's own (spec/12). */
 const VOD = "https://lolesports.com/vods";
-
 
 const person = (name: string, hangul = hangulOf(name)) => ({ id: playerId(name), name, hangul, mine: MY_PLAYERS.has(name) || undefined });
 
@@ -53,17 +37,31 @@ const player = (role: RoleKey, name: string, games: (GameCell | null)[], total: 
   sub,
 });
 
-/** Faker's T1 v DK games, live and final, from Baron Steal FC's shared squad: the same on Points, Live and his card. */
-function fakerIn(squad: PointsPick[]): [number, number] {
-  const games = squad.find((p) => p.name === "Faker")?.series.find((s) => s.id === LIVE_SERIES_ID)?.games;
-  if (games?.[0] === undefined || games[1] === undefined) throw new Error(`Faker has no two games in ${LIVE_SERIES_ID}`);
-  return [games[0], games[1]];
+/**
+ * A Baron Steal FC player's line: his games as every page shows them (src/fixtures/games.ts), the
+ * points his squad gives them, at Points' moment or once final. `pog` marks his player-of-the-game games.
+ */
+function squadLine(role: RoleKey, name: string, seriesId: string, final: boolean, pog: number[] = []): PlayerLine {
+  const played = (final ? WEEK3_FINAL_SQUAD : POINTS_SQUAD).find((p) => p.name === name)?.series.find((s) => s.id === seriesId);
+  if (!played) throw new Error(`${name} has no ${seriesId} in the squad`);
+  const counted = countedGames(played.games);
+  const games = weekGamesOf(name, seriesId, final).map((d, i) => {
+    if (!d.champion || !d.kda) throw new Error(`${name}'s game ${i + 1} in ${seriesId} has no champion or K/D/A`);
+    return g(d.champion, kdaText(d.kda), played.games[i] ?? 0, counted.has(i), pog.includes(i) || undefined);
+  });
+  return player(role, name, games, seriesPoints(played.games));
 }
-const FAKER_FINAL = fakerIn(WEEK3_FINAL_SQUAD);
-const FAKER_LIVE = fakerIn(POINTS_SQUAD);
 
-const TOWER_DRAKES = ["1st tower", "Drakes"];
-const TOWER_DRAKES_BARON = ["1st tower", "Drakes", "Baron"];
+/** A Baron Steal FC coach's games: his lines as every page shows them, the points his squad gives them. */
+function squadCoachGames(name: string, seriesId: string, final: boolean): CoachCell[] {
+  const played = (final ? WEEK3_FINAL_SQUAD : POINTS_SQUAD).find((p) => p.name === name)?.series.find((s) => s.id === seriesId);
+  if (!played) throw new Error(`${name} has no ${seriesId} in the squad`);
+  const counted = countedGames(played.games);
+  return weekGamesOf(name, seriesId, final).map((d, i) => c([...d.lines], played.games[i] ?? 0, counted.has(i)));
+}
+
+const { firstTower, drakes, baron } = LINE;
+const TOWER_DRAKES_BARON = [firstTower, drakes, baron];
 
 /** T1 v DK, Week 3, Saturday: T1 2–0, final, as the LCK hub's Results show it. */
 const T1_DK_FINAL: PlayedSeries = {
@@ -78,16 +76,16 @@ const T1_DK_FINAL: PlayedSeries = {
     players: [
       player("top", "Doran", [g("K'Sante", "2/1/7", 3), g("Rumble", "3/0/6", 4)], 7),
       player("jng", "Oner", [g("Viego", "3/2/9", 3), g("Xin Zhao", "2/2/8", 3)], 6),
-      player("mid", "Faker", [g("Orianna", "5/1/9", FAKER_FINAL[0], true, true), g("Sylas", "7/0/6", FAKER_FINAL[1], true, true)], seriesPoints(FAKER_FINAL)),
+      squadLine("mid", "Faker", LIVE_SERIES_ID, true, [0, 1]),
       player("bot", "Peyz", [g("Kalista", "6/1/5", 4), g("Varus", "5/0/7", 4)], 8),
       player("sup", "Keria", [g("Rell", "0/3/12", 2), g("Nautilus", "1/2/13", 3)], 5),
     ],
-    coach: { ...person("kkOma"), games: [c(TOWER_DRAKES, 2), c(TOWER_DRAKES_BARON, 3)], total: 8, result: 3 },
+    coach: { ...person("kkOma"), games: squadCoachGames("kkOma", LIVE_SERIES_ID, true), total: 8, result: 3 },
   },
   away: {
     ...side("DK", recordOf("DK")),
     players: [
-      player("top", "Siwoo", [g("Jax", "2/3/2", 2), g("Gnar", "1/2/3", 2)], 4),
+      squadLine("top", "Siwoo", LIVE_SERIES_ID, true),
       player("jng", "Lucid", [g("Sejuani", "1/3/4", -1), g("Maokai", "0/5/2", -1)], -2),
       player("mid", "ShowMaker", [g("Taliyah", "2/2/3", 0), g("Azir", "1/4/2", -1)], -1),
       player("bot", "Aiming", [g("Ezreal", "3/3/2", 0), g("Zeri", "2/4/1", -1)], -1),
@@ -110,9 +108,9 @@ const GEN_HLE_FINAL: PlayedSeries = {
     ...side("GEN", recordOf("GEN")),
     players: [
       player("top", "Kiin", [g("Rumble", "3/1/5", 3), g("Jax", "0/4/2", -1, false), g("K'Sante", "2/2/7", 2)], 5),
-      player("jng", "Canyon", [g("Vi", "2/2/9", 2, false), g("Lee Sin", "3/3/3", 3), g("Xin Zhao", "4/1/10", 4, true, true)], 7),
+      squadLine("jng", "Canyon", "w3-sat-1", true, [2]),
       player("mid", "Chovy", [g("Azir", "4/0/6", 4, true, true), g("Orianna", "1/4/3", -1, false), g("Sylas", "7/1/5", 4)], 8),
-      player("bot", "Ruler", [g("Kai'Sa", "6/1/4", 3), g("Jinx", "3/2/2", 1, false), g("Kalista", "7/1/5", 4)], 7),
+      squadLine("bot", "Ruler", "w3-sat-1", true),
       player("sup", "Duro", [g("Rell", "1/2/12", 2), g("Braum", "0/5/5", 0, false), g("Rakan", "1/2/15", 3)], 5),
     ],
     coach: { ...person("Ryu"), games: [c(TOWER_DRAKES_BARON, 3), c([], 0, false), c(TOWER_DRAKES_BARON, 3)], total: 9, result: 3 },
@@ -120,14 +118,14 @@ const GEN_HLE_FINAL: PlayedSeries = {
   away: {
     ...side("HLE", recordOf("HLE")),
     players: [
-      player("top", "Zeus", [g("Gnar", "2/3/2", 2), g("K'Sante", "4/1/6", 5, true, true), g("Renekton", "2/4/2", 0, false)], 7),
+      squadLine("top", "Zeus", "w3-sat-1", true, [1]),
       player("jng", "Kanavi", [g("Xin Zhao", "1/4/3", -1), g("Viego", "4/2/8", 3), g("Maokai", "1/6/3", -2, false)], 2),
       player("mid", "Zeka", [g("Taliyah", "2/3/2", -1), g("Ahri", "5/1/7", 3), null], 2),
       player("mid", "Kael", [null, null, g("Azir", "2/4/3", -1)], -1, true, "김태율"),
       player("bot", "Gumayusi", [g("Ezreal", "1/3/3", -1), g("Varus", "5/1/6", 3), g("Zeri", "2/4/2", -1, false)], 2),
-      player("sup", "Delight", [g("Nautilus", "0/3/5", 1, false), g("Alistar", "0/2/14", 2), g("Leona", "0/3/10", 2)], 4),
+      squadLine("sup", "Delight", "w3-sat-1", true),
     ],
-    coach: { ...person("Homme"), games: [c([], 0, false), c(TOWER_DRAKES_BARON, 3), c(["Drakes"], 1)], total: 3, result: -1 },
+    coach: { ...person("Homme"), games: [c([], 0, false), c(TOWER_DRAKES_BARON, 3), c([drakes], 1)], total: 3, result: -1 },
   },
 };
 
@@ -141,16 +139,16 @@ const T1_DK_LIVE: PlayedSeries = {
     players: [
       player("top", "Doran", [g("K'Sante", "2/1/7", 3), g("Rumble", "1/0/1", 0)], 3),
       player("jng", "Oner", [g("Viego", "3/2/9", 3), g("Xin Zhao", "1/0/2", 0)], 3),
-      player("mid", "Faker", [g("Orianna", "5/1/9", FAKER_LIVE[0], true, true), g("Sylas", "3/0/2", FAKER_LIVE[1])], seriesPoints(FAKER_LIVE)),
+      squadLine("mid", "Faker", LIVE_SERIES_ID, false, [0]),
       player("bot", "Peyz", [g("Kalista", "6/1/5", 4), g("Varus", "1/0/3", 0)], 4),
       player("sup", "Keria", [g("Rell", "0/3/12", 2), g("Nautilus", "0/1/4", 0)], 2),
     ],
-    coach: { ...person("kkOma"), games: [c(TOWER_DRAKES, 2), c([], 0)], total: 2 },
+    coach: { ...person("kkOma"), games: squadCoachGames("kkOma", LIVE_SERIES_ID, false), total: 2 },
   },
   away: {
     ...side("DK", "3–2"),
     players: [
-      player("top", "Siwoo", [g("Jax", "2/3/2", 2), g("Gnar", "1/0/1", 1)], 3),
+      squadLine("top", "Siwoo", LIVE_SERIES_ID, false),
       player("jng", "Lucid", [g("Sejuani", "1/3/4", -1), g("Maokai", "0/2/1", 0)], -1),
       player("mid", "ShowMaker", [g("Taliyah", "2/2/3", 0), g("Azir", "0/2/1", 0)], 0),
       player("bot", "Aiming", [g("Ezreal", "3/3/2", 0), g("Zeri", "0/1/0", 0)], 0),

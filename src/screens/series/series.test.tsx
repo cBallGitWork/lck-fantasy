@@ -77,10 +77,10 @@ describe("final, 2–0 (1440.png)", () => {
     expect(rows(out, 0).slice(1)).toEqual([
       "TopDoran최현준K'Sante2/1/73Rumble3/0/647",
       "JungleOner문현준Viego3/2/93Xin Zhao2/2/836",
-      "MidFaker이상혁Orianna5/1/9POG4Sylas7/0/6POG610",
+      "MidFaker이상혁Orianna5/2/8POG4Sylas7/0/6POG610",
       "BotPeyz김수환Kalista6/1/54Varus5/0/748",
       "SupportKeria류민석Rell0/3/122Nautilus1/2/1335",
-      "CoachkkOma김정균1st tower · Drakes21st tower · Drakes · Baron38W +3",
+      "CoachkkOma김정균First tower · Most barons2First tower · Most drakes · Most barons38W +3",
     ]);
     expect(rows(out, 1).at(-1)).toBe("CoachcvMax김대호—0—0-1L −1");
   });
@@ -114,13 +114,13 @@ describe("final, 2–1 (1440-21.png)", () => {
 
   test("shows a dash where a player sat out, and the sub on his own row", () => {
     expect(rows(out, 1).slice(1)).toEqual([
-      "TopZeus최우제Gnar2/3/22K'Sante4/1/6POG5Renekton2/4/207",
+      "TopZeus최우제Aatrox2/2/42Renekton5/1/5POG5Jayce1/2/207",
       "JungleKanavi서진혁Xin Zhao1/4/3-1Viego4/2/83Maokai1/6/3-22",
       "MidZeka김건우Taliyah2/3/2-1Ahri5/1/73—2",
       "Mid · subKael김태율——Azir2/4/3-1-1",
       "BotGumayusi이민형Ezreal1/3/3-1Varus5/1/63Zeri2/4/2-12",
-      "SupportDelight유환중Nautilus0/3/51Alistar0/2/142Leona0/3/1024",
-      "CoachHomme윤성영—01st tower · Drakes · Baron3Drakes13L −1",
+      "SupportDelight유환중Rell0/2/71Leona1/1/122Braum0/3/824",
+      "CoachHomme윤성영—0First tower · Most drakes · Most barons3Most drakes13L −1",
     ]);
   });
 });
@@ -142,7 +142,7 @@ describe("live (1440-live.png)", () => {
   });
 
   test("shows the live game's lines", () => {
-    expect(rows(out, 1)[1]).toBe("TopSiwoo전시우Jax2/3/22Gnar1/0/113");
+    expect(rows(out, 1)[1]).toBe("TopSiwoo전시우K'Sante2/2/42Rumble2/1/113");
   });
 });
 

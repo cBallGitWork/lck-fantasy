@@ -3,7 +3,7 @@
 // - from Pick Team: Week 4, Tuesday, before the deadline (History, Fixtures, Champions);
 // - from Points: Week 3, Saturday, T1 v DK game 2 live (This week).
 
-import { CARRY_MULTIPLIER, COMPETITION_TITLE, LIVE_SERIES_ID, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, type TeamCode } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, COMPETITION_TITLE, countedGames, kdaText, LIVE_SERIES_ID, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, weekGamesOf, winnerOf, type TeamCode } from "../../fixtures/week3";
 import { hangulOf } from "../../fixtures/rosters";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { FAKER_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
@@ -37,24 +37,20 @@ const HISTORY_KDA_PRICE: [kda: string, priceM: number][] = [
   ["7/9/10", 17.5],
 ];
 
-/** Week 3 at the Points picture's moment: his games from the shared squad, with champion and K/D/A. */
-const GAMES_AT_POINTS: Record<string, Omit<CardGame, "points">[]> = {
-  "w3-wed-1": [
-    { champion: "Azir", outcome: "W", kda: "6/1/7", counts: true },
-    { champion: "Taliyah", outcome: "L", kda: "3/2/5", counts: false },
-    { champion: "Galio", outcome: "W", kda: "9/0/8", counts: true },
-  ],
-  [LIVE_SERIES_ID]: [
-    { champion: "Orianna", outcome: "W", kda: "5/1/9", counts: true },
-    { champion: "Sylas", clock: seriesAtPoints(LIVE_SERIES_ID).clock, kda: "3/0/2", counts: true },
-  ],
-};
-
-const gameAtPoints = (id: string, index: number): Omit<CardGame, "points"> => {
-  const game = GAMES_AT_POINTS[id]?.[index];
-  if (!game) throw new Error(`Game ${index + 1} of ${id} has no champion in the card fixture`);
-  return game;
-};
+/** A game of his at the Points picture's moment, as every page shows it (src/fixtures/games.ts): W or L once over, the clock while live. */
+function gameAtPoints(id: string, index: number, counted: ReadonlySet<number>): Omit<CardGame, "points"> {
+  const detail = weekGamesOf(NAME, id)[index];
+  if (!detail?.champion || !detail.kda) throw new Error(`Game ${index + 1} of ${id} has no champion or K/D/A`);
+  const s = seriesAtPoints(id);
+  const live = s.state === "live" && index + 1 === s.liveGame;
+  const winner = winnerOf(id, index);
+  return {
+    champion: detail.champion,
+    kda: kdaText(detail.kda),
+    counts: counted.has(index),
+    ...(live ? { clock: s.clock } : winner ? { outcome: winner === TEAM ? "W" : "L" } : {}),
+  };
+}
 
 const WEEK3_AT_POINTS: CardWeek = {
   week: 3,
@@ -68,7 +64,7 @@ const WEEK3_AT_POINTS: CardWeek = {
       opponent: side.opponent,
       score: side.score,
       state: s.state === "live" ? "live" : "final",
-      games: games.map((points, i) => ({ ...gameAtPoints(id, i), points })),
+      games: games.map((points, i) => ({ ...gameAtPoints(id, i, countedGames(games)), points })),
     };
   }),
   carry: CARRY_MULTIPLIER,

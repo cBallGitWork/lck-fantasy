@@ -19,7 +19,10 @@ import {
   WEEK1_SERIES,
   WEEK2_PLAYED,
   WEEK2_SERIES,
+  WEEK3_GAMES,
   WEEK3_SERIES_AT_POINTS,
+  winnerOf,
+  type GameDetail,
   type Played,
   type PointsPick,
   type Series,
@@ -28,7 +31,6 @@ import { count, ordinal, sum } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays } from "../../rift";
 import { hangulOf } from "../../fixtures/rosters";
-import { GAME_WINNERS, WEEK3_GAMES, type GameDetail } from "./games";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter, WeekPick } from "./types";
 
 function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[number], details: GameDetail[] = []): PointsSeries {
@@ -38,7 +40,7 @@ function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[numb
   const counted = countedGames(played.games);
   const games = played.games.map((points, index) => {
     const live = row.state === "live" && index + 1 === row.liveGame;
-    const winner = GAME_WINNERS[played.id]?.[index];
+    const winner = winnerOf(played.id, index);
     return {
       game: index + 1,
       champion: details[index]?.champion,

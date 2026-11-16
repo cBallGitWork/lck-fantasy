@@ -39,8 +39,8 @@ describe("a series live", () => {
       ...CHIPS,
       "Your week", "Not final", "94", "Average 74", "Highest 121›",
       "T1 v DK",
-      "FakerT1C", "G1 4 · G2 1", "Live", "3/0/2", "25",
-      "SiwooDK", "G1 2 · G2 1", "Live", "1/0/1", "8",
+      "FakerT1C", "G1 4 · G2 1", "Live", "1/0/2", "25",
+      "SiwooDK", "G1 2 · G2 1", "Live", "2/1/1", "8",
       "kkOmaT1", "G1 2 · G2 0", "Live", "10",
       ...REST,
     ]);
@@ -76,7 +76,7 @@ describe("the live feed down", () => {
       "kkOmaT1", "G1 — · G2 —", "8",
       ...REST,
     ]);
-    expect(out).not.toContain("3/0/2");
+    expect(out).not.toContain("1/0/2");
   });
 });
 

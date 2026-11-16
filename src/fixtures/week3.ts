@@ -13,3 +13,4 @@ export * from "./competition";
 export * from "./weeks";
 export * from "./squads";
 export * from "./players";
+export * from "./games";

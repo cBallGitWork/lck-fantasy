@@ -138,7 +138,7 @@ describe("This week, from Points (1440-week.png)", () => {
       "G3WFirst tower · Most drakes · Most barons3",
       "Series won+3",
       "Sat · v DK 1–02",
-      "G1WFirst tower · Most drakes2",
+      "G1WFirst tower · Most barons2",
       "G214:200",
       "Series · +3 if won, −1 if lost—",
       "Week 310",

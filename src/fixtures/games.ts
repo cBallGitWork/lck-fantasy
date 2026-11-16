@@ -1,10 +1,12 @@
-// Points' made-up games, Weeks 1 to 3: each game's winner, and Week 3's games as the breakdown sheet
-// shows them. The squad's games in Weeks 1 and 2 are the shared ones (src/fixtures/squads.ts).
+// The made-up games, Weeks 1 to 3: each game's winner, and Week 3's games for Baron Steal FC's squad
+// (champion, K/D/A, the lines that scored) as every page shows them: Points' sheet, Series, Live,
+// Home and the cards. Their points are the squad's (squads.ts).
 
-import type { TeamCode } from "../../fixtures/week3";
+import type { TeamCode } from "./competition";
+import { LIVE_SERIES_ID, POINTS_SQUAD } from "./squads";
 
 /** Each game's winner, in each series that a squad member played, Weeks 1 to 3. */
-export const GAME_WINNERS: Record<string, TeamCode[]> = {
+const GAME_WINNERS: Record<string, TeamCode[]> = {
   "w1-wed-1": ["HLE", "KT", "HLE"],
   "w1-wed-2": ["GEN", "T1", "GEN"],
   "w1-thu-1": ["DK", "BRO", "DK"],
@@ -36,8 +38,8 @@ export const LINE = {
   deathless: "Deathless",
   steal: "Steal",
   firstTower: "First tower",
-  drakes: "Drakes",
-  baron: "Baron",
+  drakes: "Most drakes",
+  baron: "Most barons",
 } as const;
 
 export type LineWord = (typeof LINE)[keyof typeof LINE];
@@ -94,3 +96,31 @@ export const WEEK3_GAMES: Record<string, GameDetail[][]> = {
     [game("Sejuani", [3, 1, 9], gold), game("Vi", [2, 2, 5], gold), game("Maokai", [3, 0, 11], gold, deathless)],
   ],
 };
+
+/** T1 v DK's second game once over: Week 3's games are at Points' moment, with it live. */
+const LIVE_SERIES_LAST_GAME: Record<string, GameDetail> = {
+  Faker: game("Sylas", [7, 0, 6], gold, solo, deathless),
+  Siwoo: game("Rumble", [4, 2, 3]),
+  kkOma: coachGame(firstTower, drakes, baron),
+};
+
+/** T1 v DK's game winners once final: T1 2–0 (weeks.ts). */
+const LIVE_SERIES_FINAL_WINNERS: TeamCode[] = ["T1", "T1"];
+
+/** A game's winner, at Points' moment or once final; none for a game not yet won. */
+export const winnerOf = (seriesId: string, index: number, final = false) =>
+  (final && seriesId === LIVE_SERIES_ID ? LIVE_SERIES_FINAL_WINNERS : GAME_WINNERS[seriesId])?.[index];
+
+/** A squad member's games in a Week 3 series, at Points' moment or once final. */
+export function weekGamesOf(name: string, seriesId: string, final = false): GameDetail[] {
+  const index = POINTS_SQUAD.find((p) => p.name === name)?.series.findIndex((s) => s.id === seriesId) ?? -1;
+  const games = WEEK3_GAMES[name]?.[index];
+  if (!games) throw new Error(`${name} has no Week 3 games in ${seriesId}`);
+  if (!final || seriesId !== LIVE_SERIES_ID) return games;
+  const last = LIVE_SERIES_LAST_GAME[name];
+  if (!last) throw new Error(`${name} has no finished last game in ${seriesId}`);
+  return [...games.slice(0, -1), last];
+}
+
+/** K/D/A as every page writes it: `5/2/8`. */
+export const kdaText = (kda: Kda) => kda.join("/");

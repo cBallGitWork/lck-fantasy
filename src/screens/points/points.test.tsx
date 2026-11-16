@@ -5,7 +5,7 @@ import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { MY_EARLIER_WEEKS, MY_WEEK3 } from "../../fixtures/week3";
 import { LATEST_WEEK, POINTS_FIXTURE, POINTS_WEEKS } from "./fixtures";
 import { POINTS_VIEW_KEY, rememberedView, weekOf } from "./index";
-import { LINE, type Kda, type LineWord } from "./games";
+import { LINE, LIVE_SERIES_ID, WEEK3_FINAL_SQUAD, weekGamesOf, type Kda, type LineWord } from "../../fixtures/week3";
 import type { PointsPlayer } from "./types";
 import { PointsPage } from "./PointsPage";
 
@@ -130,11 +130,11 @@ test("the Coach's sheet (coach.png): his lines, the series' +3, no C or Average 
     "T1 · Coach",
     "10Not final",
     "Wed v HLE W 2–1 · +3 ›8",
-    "G1WFirst tower · Drakes2",
+    "G1WFirst tower · Most drakes2",
     "G2L0",
-    "G3WFirst tower · Drakes · Baron3",
+    "G3WFirst tower · Most drakes · Most barons3",
     "Sat v DK 1–0 ›2",
-    "G1WFirst tower · Baron2",
+    "G1WFirst tower · Most barons2",
     "G2Live 14:200",
   ]);
 });
@@ -263,6 +263,14 @@ test("each Week 3 game's points are what spec/05 gives its K/D/A and lines; a co
         if (p.role !== "coach") expect(g.kda, `${p.name}'s K/D/A`).toBeDefined();
       }
     }
+  }
+});
+
+test("T1 v DK's finished games score what Week 3's final squad gives them", () => {
+  for (const pick of WEEK3_FINAL_SQUAD.filter((p) => p.series.some((s) => s.id === LIVE_SERIES_ID))) {
+    const final = pick.series.find((s) => s.id === LIVE_SERIES_ID)!;
+    const worked = weekGamesOf(pick.name, LIVE_SERIES_ID, true).map((g) => (g.kda ? playerGame(pick.role, g.kda, g.lines, false) : g.lines.length));
+    expect(worked, pick.name).toEqual(final.games);
   }
 });
 

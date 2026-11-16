@@ -5,6 +5,7 @@ import {
   BEST_OF,
   COMPETITION,
   finalPickOf,
+  kdaText,
   LIVE_SERIES_ID,
   MY_WEEK3,
   playerId,
@@ -13,6 +14,7 @@ import {
   WEEK3_FINAL,
   WEEK3_SERIES_AT_POINTS,
   WEEK3_SERIES_FINAL,
+  weekGamesOf,
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
@@ -53,8 +55,11 @@ const WEEK_POINTS: Record<"live" | "down" | "idle", Readonly<Record<string, numb
   down: MY_WEEK3.down,
   idle: MY_WEEK3.final,
 };
-/** The live game's K/D/A, per player in it. */
-const LIVE_KDA: Record<string, string> = { faker: "3/0/2", siwoo: "1/0/1" };
+/** A player's K/D/A in the live game, as every page shows it (src/fixtures/games.ts). */
+const liveKda = (p: PointsPick) => {
+  const kda = weekGamesOf(p.name, LIVE_SERIES.id)[(LIVE_SERIES.liveGame ?? 0) - 1]?.kda;
+  return kda && kdaText(kda);
+};
 /** The finished T1 2–0 DK from the shared squad: each player's games, and a coach's series result. */
 const finalIn = (p: PointsPick) => {
   const series = finalPickOf(p.name).series.find((s) => s.id === LIVE_SERIES.id);
@@ -72,7 +77,7 @@ const rest = (moment: keyof typeof WEEK_POINTS): RestPlayer[] =>
 
 const livePlayers: PanelPlayer[] = starters
   .filter(playsIn)
-  .map((p) => ({ ...base(p), games: liveGames(p), liveGame: true, kda: LIVE_KDA[playerId(p.name)], points: points("live", p) }));
+  .map((p) => ({ ...base(p), games: liveGames(p), liveGame: true, kda: liveKda(p), points: points("live", p) }));
 const downPlayers: PanelPlayer[] = starters
   .filter(playsIn)
   .map((p) => ({ ...base(p), games: liveGames(p).map(() => null), points: points("down", p) }));

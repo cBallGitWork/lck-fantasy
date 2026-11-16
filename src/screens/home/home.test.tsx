@@ -65,7 +65,7 @@ describe("live", () => {
       "LCK · English · Twitch",
       ...["LCK · English", "Twitch", "LCK · English", "YouTube", "LCK · 한국어", "YouTube", "Caedrel · English", "Twitch", "Kameto · Français", "Twitch", "More ▾"],
       ...["Your week", "Not final", "94", "Average 74", "Highest 121›"],
-      ...["In this series", "Faker", "C", "T1", "3/0/2", "25", "Siwoo", "DK", "0/1/1", "8", "kkOma", "T1", "10"],
+      ...["In this series", "Faker", "C", "T1", "1/0/2", "25", "Siwoo", "DK", "2/1/1", "8", "kkOma", "T1", "10"],
       ...["Still to play", "None", "Points ›"],
       ...BAND,
     ]);

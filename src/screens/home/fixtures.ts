@@ -6,6 +6,7 @@ import {
   COMPETITION,
   countdown,
   finalPickOf,
+  kdaText,
   LIVE_SERIES_ID,
   livePointsOf,
   MANAGER,
@@ -20,6 +21,7 @@ import {
   WEEK4_DEADLINE,
   WEEK4_FREE_TRANSFERS,
   WEEK4_SERIES,
+  weekGamesOf,
   type Series,
 } from "../../fixtures/week3";
 import { MANAGERS } from "../../fixtures/managers";
@@ -49,6 +51,14 @@ const SHARED: Omit<HomeShared, "countdown"> = {
 const live = atPoints(LIVE_SERIES_ID);
 if (!live.score || live.liveGame === undefined) throw new Error(`${LIVE_SERIES_ID} is live at Points' moment, with its score and game`);
 
+/** A player's K/D/A in the live game, as every page shows it (src/fixtures/games.ts). */
+const LIVE_GAME = live.liveGame;
+function liveKda(name: string) {
+  const kda = weekGamesOf(name, LIVE_SERIES_ID)[LIVE_GAME - 1]?.kda;
+  if (!kda) throw new Error(`${name} has no K/D/A in game ${LIVE_GAME} of ${LIVE_SERIES_ID}`);
+  return kdaText(kda);
+}
+
 /** Home while T1 v DK game 2 is live (live.html). */
 export const HOME_LIVE: HomeLiveData = {
   ...SHARED,
@@ -66,8 +76,8 @@ export const HOME_LIVE: HomeLiveData = {
   pickedStream: "lck-en-twitch",
   week: { label: "Your week", final: false, points: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
   inSeries: [
-    { role: "mid", name: "Faker", team: "T1", mark: "C", stat: "3/0/2", points: livePointsOf("faker") },
-    { role: "top", name: "Siwoo", team: "DK", stat: "0/1/1", points: livePointsOf("siwoo") },
+    { role: "mid", name: "Faker", team: "T1", mark: "C", stat: liveKda("Faker"), points: livePointsOf("faker") },
+    { role: "top", name: "Siwoo", team: "DK", stat: liveKda("Siwoo"), points: livePointsOf("siwoo") },
     { role: "coach", name: "kkOma", team: "T1", stat: "", points: livePointsOf("kkoma") },
   ],
   stillToPlay: [],

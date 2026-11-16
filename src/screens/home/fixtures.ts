@@ -18,7 +18,7 @@ import {
 import { MANAGERS } from "../../fixtures/managers";
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
-import { isBench } from "../../rift";
+import { flexPlays, isBench } from "../../rift";
 import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./types";
 
 const atPoints = (id: string) => seriesById(WEEK3_SERIES_AT_POINTS, id);
@@ -69,7 +69,7 @@ export const HOME_LIVE: HomeLiveData = {
 const lineup: LineupStarter[] = PICK_TEAM_SQUAD.flatMap((p) =>
   isBench(p.slot)
     ? []
-    : [{ slot: p.slot, name: p.name, team: p.team, plays: p.slot === "flex" && p.role !== "coach" ? p.role : undefined, mark: p.mark }],
+    : [{ slot: p.slot, name: p.name, team: p.team, plays: flexPlays(p.slot, p.role), mark: p.mark }],
 );
 
 const next = seriesById(WEEK4_SERIES, "w4-wed-1");

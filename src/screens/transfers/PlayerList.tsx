@@ -1,4 +1,5 @@
 import { cx, Empty, formatEok, GoLink, Menu, pct, SideSection } from "../../parts";
+import { cardGo } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon } from "../../rift";
 import { listRows, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type Row, type SortKey, type SquadPlayer, type TransferRules } from "./plan";
 
@@ -103,14 +104,13 @@ export function PlayerList({
 /** One row: role, name and team (why he can't be bought under it), price, its move, points, owned, next, `+`. */
 function ListRow({ row, next, picked, canBuy, onBuy }: { row: Row; next?: Fixture; picked: boolean; canBuy: boolean; onBuy: (p: ListPlayer) => void }) {
   const { player: p, why } = row;
-  const card = p.role === "coach" ? ({ to: "/coach/$coachId", params: { coachId: p.id } } as const) : ({ to: "/player/$playerId", params: { playerId: p.id } } as const);
   return (
     <tr className={cx(why && "transfers__row--off", picked && "transfers__row--picked")}>
       <td>
         <RoleIcon role={p.role} />
       </td>
       <td className="transfers__name" title={p.name}>
-        <GoLink go={card}>
+        <GoLink go={cardGo(p.id, p.role === "coach")}>
           <b>{p.name}</b> {p.team}
         </GoLink>
         {why && <small className="transfers__why">{why}</small>}

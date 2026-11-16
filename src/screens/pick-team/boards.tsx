@@ -1,11 +1,8 @@
 import { eok, oneDecimal, Tag } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchSwap, BenchTile, Lineup, LINEUP_ORDER, RIFT_SLOTS_PICK, Rift, Tile, type LineupCardProps, type RoleKey } from "../../rift";
+import { BENCH_SLOTS, BenchBar, BenchSwap, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS_PICK, Rift, Tile, type LineupCardProps } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
 import { fitIds } from "./model";
-
-/** The role a Flex plays; the coach plays none. */
-const playsFor = (p: PickPlayer): RoleKey | undefined => (p.role === "coach" ? undefined : p.role);
 
 /** The starter in each slot, in the broadcast's order. */
 const starters = ({ data, state }: ViewProps) =>
@@ -23,7 +20,7 @@ export function RiftBoard(props: ViewProps) {
             <Tile
               key={slot}
               slot={slot}
-              plays={slot === "flex" ? playsFor(p) : undefined}
+              plays={flexPlays(slot, p.role)}
               name={p.name}
               team={p.team}
               at={RIFT_SLOTS_PICK[slot]}
@@ -47,7 +44,7 @@ export function CardBoard(props: ViewProps) {
   const { data, state, dispatch } = props;
   const cards: LineupCardProps[] = starters(props).map(({ slot, p }) => ({
     slot,
-    plays: slot === "flex" ? playsFor(p) : undefined,
+    plays: flexPlays(slot, p.role),
     name: p.name,
     team: p.team,
     mark: markOf(state, p.id),

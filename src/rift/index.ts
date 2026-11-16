@@ -7,6 +7,7 @@ export { RoleIcon } from "./RoleIcon";
 export {
   BENCH_SLOTS,
   COACH_HANGUL,
+  flexPlays,
   isBench,
   LINEUP_ORDER,
   ROLE_KEYS,

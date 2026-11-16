@@ -8,7 +8,7 @@ import { fromSide, seriesById } from "../../fixtures/series";
 import { CARRY_MULTIPLIER, COMPETITION, livePointsOf, MANAGER, playerId, POINTS_SQUAD, POINTS_WEEK, WEEK3_SERIES_AT_POINTS, type PointsPick, type TeamCode } from "../../fixtures/week3";
 import { count, ordinal } from "../../parts";
 import { PATHS } from "../../paths";
-import type { SlotKey } from "../../rift";
+import { flexPlays, type SlotKey } from "../../rift";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter } from "./types";
 
 /** Each game's winner, in each series of the week that a squad member played. */
@@ -93,7 +93,7 @@ const CARRY = { multiplier: CARRY_MULTIPLIER, points: livePointsOf(playerId("Fak
 
 function starterOf(pick: PointsPick, slot: SlotKey): PointsStarter {
   const player = playerOf(pick);
-  const plays = slot === "flex" && pick.role !== "coach" ? pick.role : undefined;
+  const plays = flexPlays(slot, pick.role);
   if (pick.mark !== "C") return { ...player, slot, plays };
   const { points, ...carry } = CARRY;
   return { ...player, slot, plays, points, carry: { raw: player.points ?? 0, ...carry } };

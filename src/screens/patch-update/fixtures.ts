@@ -5,7 +5,7 @@
 import { MY_PLAYERS, playerId, WEEK3_DEADLINE, type TeamCode } from "../../fixtures/week3";
 import type { PersonRole } from "../../rift";
 
-/** One player's or coach's price move, in 억. */
+/** One player's or coach's price move, in m. */
 export interface PriceMove {
   id: string;
   name: string;

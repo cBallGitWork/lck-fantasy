@@ -32,7 +32,7 @@ const PAST: StripPast[] = last3(KKOMA_SEASON).map(({ week, day, opponent, points
 /** T1's next series, as the player card's Fixtures draws them. */
 const FIXTURES: FixtureRow[] = T1_FIXTURES.map(({ week, day, opponent, local, kst }) => ({ week, day, opponent, format: FORMAT, local, kst }));
 
-/** His price in 억 in each of T1's series, in T1_PLAYED's order (newest first). */
+/** His price in m in each of T1's series, in T1_PLAYED's order (newest first). */
 const HISTORY_PRICES = [7.0, 7.0, 6.5, 6.5, 6.5, 6.5];
 
 const AT_PICK_TEAM = pickedAt(HEAD.name);

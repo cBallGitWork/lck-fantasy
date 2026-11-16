@@ -6,7 +6,7 @@ import { allPicks, pickKey } from "./squad";
 const EOK = 100_000_000;
 const BUDGET = 100 * EOK;
 
-/** Every pick of the valid squad at 10억, so the nine cost 90억. */
+/** Every pick of the valid squad at 10m, so the nine cost 90m. */
 function pricesAt(won: number) {
   return new Map(allPicks(validSquad()).map((pick) => [pickKey(pick), won]));
 }
@@ -53,7 +53,7 @@ describe("budgetProblems", () => {
 
 describe("bankAfterTransfers", () => {
   test("selling pays the full current price, buying costs the new pick's", () => {
-    // Bought at 7.5억, Chovy has risen to 9.0억: selling him pays all 9.0억.
+    // Bought at ₩7.5m, Chovy has risen to ₩9.0m: selling him pays all ₩9.0m.
     const prices = new Map([
       [pickKey(chovy), 9 * EOK],
       [pickKey(player("faker", "t1", "mid")), 8.5 * EOK],

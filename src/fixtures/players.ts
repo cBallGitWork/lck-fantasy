@@ -4,7 +4,7 @@
 import type { PersonRole } from "../rift";
 import type { TeamCode } from "./competition";
 
-/** A player in the Stats picture's list: Week 4 price in 억, its move, owned %, season points. */
+/** A player in the Stats picture's list: Week 4 price in m, its move, owned %, season points. */
 export interface StatsPlayer {
   name: string;
   team: TeamCode;

@@ -105,9 +105,9 @@ describe("lines that fit the receiver's week (spec/14, Truck lines)", () => {
 describe("a line fills in the receiver's own numbers (spec/14, Truck lines)", () => {
   const line = (id: string) => draft.find((one) => one.id === id)!;
 
-  test("a dear flop's price, in 억 as money shows everywhere", () => {
+  test("a dear flop's price, in m as money shows everywhere", () => {
     const flopWeek = receiver({ starters: [{ name: "Chovy", price: 12 * EOK, points: 1 }] });
-    expect(fillLine(line("p20"), flopWeek, SETTINGS)).toBe("₩12.0억 SPENT. WE DEMAND TO SEE THE SPREADSHEET.");
+    expect(fillLine(line("p20"), flopWeek, SETTINGS)).toBe("₩12.0M SPENT. WE DEMAND TO SEE THE SPREADSHEET.");
   });
 
   test("hits, rank moves, leagues, the Carry and the team", () => {

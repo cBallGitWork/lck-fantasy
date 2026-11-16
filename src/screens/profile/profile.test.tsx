@@ -90,9 +90,9 @@ describe("History", () => {
     inOrder(text(page("History")), [
       ...BANNER,
       "Week", "Pts", "Total", "Week rank", "Overall", "Move", "Transfers", "Hits", "Bank", "Value", "Buff",
-      "Week 3", "93", "250", "—", "21,804", "3,112", "5", "0", "0.5억", "100.9억", "Limitless", "›",
-      "Week 2", "98", "157", "4,211", "24,916", "9,870", "1", "0", "1.0억", "100.6억", "—", "›",
-      "Week 1", "59", "59", "34,786", "34,786", "—", "—", "—", "2.5억", "100.0억", "—", "›",
+      "Week 3", "93", "250", "—", "21,804", "3,112", "5", "0", "₩0.5m", "₩100.9m", "Limitless", "›",
+      "Week 2", "98", "157", "4,211", "24,916", "9,870", "1", "0", "₩1.0m", "₩100.6m", "—", "›",
+      "Week 1", "59", "59", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",
       "Buffs left: Remake · Bench Boost · Dual Carry",
       ...LEAGUES,
     ]);
@@ -111,13 +111,13 @@ describe("Transfers", () => {
       ...BANNER,
       "Slot", "Out", "In", "Pts gained",
       "Week 3", "Tue 09:00", "18:00 KST", "Limitless · 0 hits",
-      "Top", "Doran", "T1 · 13.0억", "→", "Kiin", "GEN · 13.5억", "+1",
-      "Bot", "Peyz", "T1 · 13.0억", "→", "Ruler", "GEN · 16.0억", "+4",
-      "Support", "Lehends", "NS · 10.0억", "→", "Keria", "T1 · 12.0억", "−1",
-      "Flex", "Siwoo", "DK · 11.0억", "→", "Kingen", "NS · 6.0억", "−4",
-      "Jungle", "Peanut", "NS · 15.5억", "→", "Canyon", "GEN · 15.5억", "+2",
+      "Top", "Doran", "T1 · ₩13.0m", "→", "Kiin", "GEN · ₩13.5m", "+1",
+      "Bot", "Peyz", "T1 · ₩13.0m", "→", "Ruler", "GEN · ₩16.0m", "+4",
+      "Support", "Lehends", "NS · ₩10.0m", "→", "Keria", "T1 · ₩12.0m", "−1",
+      "Flex", "Siwoo", "DK · ₩11.0m", "→", "Kingen", "NS · ₩6.0m", "−4",
+      "Jungle", "Peanut", "NS · ₩15.5m", "→", "Canyon", "GEN · ₩15.5m", "+2",
       "Week 2", "Mon 12:40", "21:40 KST", "1 free",
-      "Bot", "Smash", "T1 · 6.0억", "→", "Peyz", "T1 · 13.0억", "+6",
+      "Bot", "Smash", "T1 · ₩6.0m", "→", "Peyz", "T1 · ₩13.0m", "+6",
       ...LEAGUES,
     ]);
   });

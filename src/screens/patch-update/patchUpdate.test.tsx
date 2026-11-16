@@ -25,10 +25,10 @@ describe("Week 4 prices", () => {
   test("lists each move in the picture's order: name, team and role, was, now, owned", () => {
     const rises = out.slice(out.indexOf("Rises"), out.indexOf("Falls"));
     const falls = out.slice(out.indexOf("Falls"));
-    expect(rises).toContain("PlayerWasNowOwnedFakerT1 · Mid18.0억18.5억46%ChovyGEN · Mid17.0억17.5억41%");
-    expect(rises.endsWith("HypeKRX · Bot5.0억5.5억2%")).toBe(true);
-    expect(falls).toContain("PlayerWasNowOwnedGumayusiHLE · Bot16.0억15.5억26%");
-    expect(falls.endsWith("EdgarBRO · Coach5.0억4.5억1%")).toBe(true);
+    expect(rises).toContain("PlayerWasNowOwnedFakerT1 · Mid₩18.0m₩18.5m46%ChovyGEN · Mid₩17.0m₩17.5m41%");
+    expect(rises.endsWith("HypeKRX · Bot₩5.0m₩5.5m2%")).toBe(true);
+    expect(falls).toContain("PlayerWasNowOwnedGumayusiHLE · Bot₩16.0m₩15.5m26%");
+    expect(falls.endsWith("EdgarBRO · Coach₩5.0m₩4.5m1%")).toBe(true);
     expectInOrder(rises, ["Faker", "Chovy", "Peyz", "Siwoo", "BuLLDoG", "Lucid", "Kingen", "Ssong", "Hype"]);
     expectInOrder(falls, ["Gumayusi", "Aiming", "ShowMaker", "Doran", "DuDu", "Clear", "DanDy", "Edgar"]);
   });

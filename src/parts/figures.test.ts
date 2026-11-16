@@ -38,7 +38,7 @@ test("a place alone or among so many", () => {
   expect(placeOf(2, "10 mids")).toBe("2nd of 10 mids");
 });
 
-test("a price held in 억 reads as money and as won", () => {
-  expect(eok(18.5)).toBe("18.5억");
+test("a price held in m reads as money and as won", () => {
+  expect(eok(18.5)).toBe("₩18.5m");
   expect(eokToWon(7.5)).toBe(750_000_000);
 });

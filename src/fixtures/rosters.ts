@@ -15,7 +15,7 @@ export const ROSTERS: Record<TeamCode, readonly (readonly [name: string, hangul:
   BFX: [["Clear", "송현민"], ["Raptor", "전어진"], ["VicLa", "이대광"], ["Diable", "남대근"], ["Kellin", "김형규"], ["Mowgli", "이재하"]],
 };
 
-/** T1's prices in 억, in roster order, the coach's last: the LCK hub's and the coach card's Roster tab. */
+/** T1's prices in m, in roster order, the coach's last: the LCK hub's and the coach card's Roster tab. */
 export const T1_PRICES_EOK = [12.5, 14.0, 18.5, 15.0, 14.5, 7.0] as const;
 
 const HANGUL = new Map(Object.values(ROSTERS).flat());

@@ -19,7 +19,7 @@ export interface PickPlayer {
   team: TeamCode;
   role: PersonRole;
   priceEok: number;
-  /** His last price move in 억; absent before it first moves. */
+  /** His last price move in m; absent before it first moves. */
   priceMove?: number;
   form: number;
   formRank: Ranked;

@@ -26,7 +26,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
       "LCK Cup Week 4 · Deadline Wed 07:45 16:45 KST 9h 45m",
       "Free transfers 0",
       "Cost −6",
-      "Bank 1.5억",
+      "Bank ₩1.5m",
       "Rift view",
       "List view",
       "Remake",
@@ -37,7 +37,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
   });
 
   test("all nine on the Rift by role, no bench, each with his price; the two Tops together", () => {
-    expectInOrder(out, ["Zeus", "16.0억", "Kingen", "6.5억", "Canyon", "15.5억", "Cuzz", "4.0억", "Faker", "18.5억", "Bdd", "5.0억", "Ruler", "17.0억", "Delight", "9.0억", "kkOma", "7.0억"]);
+    expectInOrder(out, ["Zeus", "₩16.0m", "Kingen", "₩6.5m", "Canyon", "₩15.5m", "Cuzz", "₩4.0m", "Faker", "₩18.5m", "Bdd", "₩5.0m", "Ruler", "₩17.0m", "Delight", "₩9.0m", "kkOma", "₩7.0m"]);
     expect(page).not.toContain("bench-bar");
     expect(out).not.toContain("Siwoo DK");
   });
@@ -48,11 +48,11 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
   });
 
   test("the changes bar: each transfer, Reset, Review and confirm", () => {
-    expectInOrder(out, ["Siwoo 7.5억 → Kingen 6.5억", "Reset", "Review and confirm ›"]);
+    expectInOrder(out, ["Siwoo ₩7.5m → Kingen ₩6.5m", "Reset", "Review and confirm ›"]);
   });
 
   test("the list: everyone buyable, Next the opponent alone", () => {
-    expectInOrder(out, ["Players", "All roles", "Support", "Sort: Points ▾", "Team: All ▾", "Player", "Price", "Pts", "Owned", "Next", "Chovy GEN17.5억6141%v BRO+", "Keria T1"]);
+    expectInOrder(out, ["Players", "All roles", "Support", "Sort: Points ▾", "Team: All ▾", "Player", "Price", "Pts", "Owned", "Next", "Chovy GEN₩17.5m6141%v BRO+", "Keria T1"]);
     expect(out).not.toMatch(/v [A-Z0-9]+ (Mon|Tue|Wed|Thu|Fri|Sat|Sun)/);
   });
 
@@ -79,8 +79,8 @@ describe("List view (Craig, 16 Nov 2026)", () => {
       "Total",
       "Next",
       "Top",
-      "Zeus HLE1516.0억14.048v DK×",
-      "Kingen NS136.5억12.738v DNS×",
+      "Zeus HLE15₩16.0m14.048v DK×",
+      "Kingen NS13₩6.5m12.738v DNS×",
       "Jungle",
       "Canyon GEN",
       "Cuzz KT",
@@ -111,16 +111,16 @@ describe("the confirm sheet (confirm.html, changed by Craig 16 Nov 2026)", () =>
     const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={plan} reviewing />);
     expectInOrder(out, [
       "Confirm your transfers",
-      "Siwoo DK 7.5억",
+      "Siwoo DK ₩7.5m",
       "→",
-      "Kingen NS 6.5억",
-      "Bdd KT 5.0억",
+      "Kingen NS ₩6.5m",
+      "Bdd KT ₩5.0m",
       "→",
-      "Hype KRX 5.5억",
+      "Hype KRX ₩5.5m",
       "Cost",
       "−12",
       "Bank",
-      "0.5억 → 1.0억",
+      "₩0.5m → ₩1.0m",
       "Free transfers used",
       "0 of 0",
       "Back",
@@ -137,7 +137,7 @@ describe("the confirm sheet (confirm.html, changed by Craig 16 Nov 2026)", () =>
 describe("before any change", () => {
   test("the squad as it stands, no cost, and Review and confirm off with why", () => {
     const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />);
-    expectInOrder(out, ["Free transfers 0", "Cost 0", "Bank 0.5억", "Siwoo", "No changes", "Review and confirm ›", "Players"]);
+    expectInOrder(out, ["Free transfers 0", "Cost 0", "Bank ₩0.5m", "Siwoo", "No changes", "Review and confirm ›", "Players"]);
     expect(html(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />)).toMatch(/<button[^>]*disabled=""[^>]*>Review and confirm/);
   });
 });

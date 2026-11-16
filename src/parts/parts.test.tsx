@@ -26,6 +26,7 @@ import {
   Tabs,
   Tag,
   Time,
+  Toast,
   TopBar,
   ViewToggle,
 } from ".";
@@ -163,6 +164,17 @@ test("a modal names itself, has ✕, and is a card or a sheet", () => {
   expect(out).toContain("modal__box--sheet");
   expect(out).toContain("✕");
   expect(html(<Modal kind="card" title="Faker" onClose={() => {}}>x</Modal>)).toContain("modal__box--card");
+});
+
+test("a strong sheet stands out with its own frame", () => {
+  expect(html(<Modal kind="sheet" title="Confirm" onClose={() => {}} strong>x</Modal>)).toContain("modal__box--strong");
+  expect(html(<Modal kind="sheet" title="Confirm" onClose={() => {}}>x</Modal>)).not.toContain("modal__box--strong");
+});
+
+test("a toast is a polite status with its message", () => {
+  const out = html(<Toast message="Kingen added" n={1} onDone={() => {}} />);
+  expect(out).toContain('role="status"');
+  expect(out).toContain("Kingen added");
 });
 
 test("a form field has its label above and an error under it", () => {

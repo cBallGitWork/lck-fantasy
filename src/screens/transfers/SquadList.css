@@ -1,0 +1,48 @@
+/* Transfers' List view (Craig, 16 Nov 2026). Every value is a token. */
+
+/* List view: the nine by role. */
+.transfers__squad {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--paper);
+}
+.transfers__squad th,
+.transfers__squad td {
+  padding: var(--s-1) var(--s-2);
+  text-align: left;
+}
+.transfers__squad thead th {
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.transfers__squad td {
+  height: var(--m-row);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.transfers__squad .transfers__num {
+  width: var(--m-col-figure);
+  text-align: right;
+  white-space: nowrap;
+}
+.transfers__squad td:first-child {
+  width: var(--m-shirt-small-w);
+}
+.transfers__squad .transfers__next {
+  width: var(--m-col-price);
+}
+.transfers__group th {
+  padding-top: var(--s-3);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  color: var(--ink);
+  border-bottom: var(--m-rule) solid var(--ink);
+}
+.transfers__row--sold td {
+  color: var(--mid);
+}
+.transfers__row--sold b {
+  font-weight: var(--w-regular);
+  text-decoration: line-through;
+}

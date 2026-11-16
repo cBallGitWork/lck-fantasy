@@ -1,0 +1,54 @@
+/* Transfers' confirm sheet (confirm.html, changed 16 Nov 2026). Every value is a token. */
+
+/* The confirm sheet: the transfers large, one row each, then the figures. */
+.transfers__sheet-moves {
+  list-style: none;
+  margin: 0 0 var(--s-4);
+  padding: 0;
+  border-top: var(--m-rule-heavy) solid var(--ink);
+}
+.transfers__sheet-moves li {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--s-3);
+  align-items: baseline;
+  padding: var(--s-3) 0;
+  border-bottom: var(--m-rule) solid var(--line);
+  font-size: var(--size-lead);
+}
+.transfers__sheet-moves small {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.transfers__sheet-out {
+  color: var(--mid);
+  text-decoration: line-through;
+}
+.transfers__sheet {
+  width: 100%;
+  border-collapse: collapse;
+}
+.transfers__sheet th,
+.transfers__sheet td {
+  height: var(--m-row);
+  border-bottom: var(--m-rule) solid var(--line);
+  text-align: left;
+}
+.transfers__sheet th {
+  width: calc(var(--s-7) * 3);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.transfers__sheet-keys {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.transfers__sheet-deadline {
+  margin-top: var(--s-2);
+  text-align: right;
+  font-size: var(--size-small);
+  color: var(--mid);
+}

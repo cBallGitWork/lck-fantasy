@@ -1,29 +1,19 @@
 import { formatEok, MainAction, Modal, Time } from "../../parts";
-import { ROLE_NAME, type SquadSlot } from "../../rift";
 import { costLabel } from "./Confirmed";
 import type { ListPlayer, SquadPlayer } from "./plan";
+import "./ConfirmSheet.css";
 
 const SHEET_TITLE = "Confirm your transfers";
 
-/** A slot's name on the sheet: `Flex`, `Bench 1`. */
-const SLOT_NAME: Record<SquadSlot, string> = { ...ROLE_NAME, bench1: "Bench 1", bench2: "Bench 2" };
-
-/** `Flex, plays Top` for the Flex; the slot's name for the rest. */
-function slotFor(slot: SquadSlot, p: ListPlayer): string {
-  return slot === "flex" && p.role !== "coach" ? `${SLOT_NAME.flex}, plays ${ROLE_NAME[p.role]}` : SLOT_NAME[slot];
-}
-
-/** `−6 · no free transfers left`, `Free · 1 free transfer left`. */
-function costLine(hit: number, freeLeft: number): string {
-  const left = `${freeLeft === 0 ? "no" : freeLeft} free transfer${freeLeft === 1 ? "" : "s"} left`;
-  return `${costLabel(hit)} · ${left}`;
-}
-
-/** The confirm sheet (confirm.html): out, in, cost, bank; Back or Confirm, with the deadline. */
+/**
+ * The confirm sheet (confirm.html, changed by Craig 16 Nov 2026): one row per transfer, out → in with
+ * each price, then the cost, the bank and the free transfers used; Back or Confirm, with the deadline.
+ */
 export function ConfirmSheet({
   transfers,
   hit,
-  freeLeft,
+  freeUsed,
+  freeHad,
   bankFrom,
   bankTo,
   deadline,
@@ -32,7 +22,9 @@ export function ConfirmSheet({
 }: {
   transfers: { out: SquadPlayer; in: ListPlayer }[];
   hit: number;
-  freeLeft: number;
+  freeUsed: number;
+  /** Free transfers before these. */
+  freeHad: number;
   bankFrom: number;
   bankTo: number;
   deadline: { local: string; kst: string };
@@ -40,31 +32,36 @@ export function ConfirmSheet({
   onConfirm: () => void;
 }) {
   return (
-    <Modal kind="sheet" title={SHEET_TITLE} onClose={onBack}>
+    <Modal kind="sheet" title={SHEET_TITLE} onClose={onBack} strong>
+      <ol className="transfers__sheet-moves">
+        {transfers.map((t) => (
+          <li key={t.out.slot}>
+            <span className="transfers__sheet-out">
+              {t.out.name} <small>{t.out.team}</small> <span className="num">{formatEok(t.out.price)}</span>
+            </span>
+            <span aria-label="for">→</span>
+            <b>
+              {t.in.name} <small>{t.in.team}</small> <span className="num">{formatEok(t.in.price)}</span>
+            </b>
+          </li>
+        ))}
+      </ol>
       <table className="transfers__sheet">
         <tbody>
-          {transfers.map((t) => [
-            <tr key={`${t.out.slot}-out`}>
-              <th scope="row">Out</th>
-              <td>
-                <b>{t.out.name}</b> {t.out.team} · {SLOT_NAME[t.out.slot]} · {formatEok(t.out.price)}
-              </td>
-            </tr>,
-            <tr key={`${t.out.slot}-in`}>
-              <th scope="row">In</th>
-              <td>
-                <b>{t.in.name}</b> {t.in.team} · {slotFor(t.out.slot, t.in)} · {formatEok(t.in.price)}
-              </td>
-            </tr>,
-          ])}
           <tr>
             <th scope="row">Cost</th>
-            <td>{costLine(hit, freeLeft)}</td>
+            <td className="num">{costLabel(hit)}</td>
           </tr>
           <tr>
             <th scope="row">Bank</th>
-            <td>
+            <td className="num">
               {formatEok(bankFrom)} → <b>{formatEok(bankTo)}</b>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Free transfers used</th>
+            <td className="num">
+              {freeUsed} of {freeHad}
             </td>
           </tr>
         </tbody>

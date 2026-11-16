@@ -48,6 +48,7 @@ export { Table, type Column, type RowOpen } from "./Table";
 export { Tabs } from "./Tabs";
 export { Tag, type TagKind } from "./Tag";
 export { TierShield } from "./TierShield";
+export { Toast, TOAST_MS } from "./Toast";
 export { Time } from "./Time";
 export { TOP_BAR_ITEMS, TopBar, type TopBarItem } from "./TopBar";
 export { ViewToggle, type ToggleOption } from "./ViewToggle";

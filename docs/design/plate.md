@@ -70,7 +70,7 @@ The built look is navy with gold, from `src/theme/tokens.ts`; each token below i
   `--text` or grey (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
 - Two set exceptions: the Flol wordmark stays gold, and Overall's tier shield is a cream `--text`
   fill, one colour for every tier (Craig, 16 Nov 2026).
-- Colour is spent on meaning only, never to decorate: red and blue are prices only; a rank's move
+- Colour is spent on meaning only, never to decorate: red and blue are prices and the bank only; a rank's move
   stays `--text` (Craig, 16 Nov 2026).
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
 

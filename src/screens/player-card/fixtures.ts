@@ -3,9 +3,9 @@
 // - from Pick Team: Week 4, Tuesday, before the deadline (History, Fixtures, Champions);
 // - from Points: Week 3, Saturday, T1 v DK game 2 live (This week).
 
-import { CARRY_MULTIPLIER, COMPETITION_TITLE, countedGames, kdaText, LIVE_SERIES_ID, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, weekGamesOf, winnerOf, type TeamCode } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, COMPETITION_TITLE, countedGames, gameAt, kdaText, LIVE_SERIES_ID, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, weekGamesOf, type TeamCode } from "../../fixtures/week3";
 import { hangulOf } from "../../fixtures/rosters";
-import { fromSide, seriesById } from "../../fixtures/series";
+import { playedFromSide, seriesById } from "../../fixtures/series";
 import { FAKER_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
 import type { CardGame, CardWeek, FixtureRow, NextSeries, PastSeries, PlayerCardData, WeekSeries } from "./card";
 
@@ -41,14 +41,12 @@ const HISTORY_KDA_PRICE: [kda: string, priceM: number][] = [
 function gameAtPoints(id: string, index: number, counted: ReadonlySet<number>): Omit<CardGame, "points"> {
   const detail = weekGamesOf(NAME, id)[index];
   if (!detail?.champion || !detail.kda) throw new Error(`Game ${index + 1} of ${id} has no champion or K/D/A`);
-  const s = seriesAtPoints(id);
-  const live = s.state === "live" && index + 1 === s.liveGame;
-  const winner = winnerOf(id, index);
+  const { clock, won } = gameAt(seriesAtPoints(id), index, TEAM);
   return {
     champion: detail.champion,
     kda: kdaText(detail.kda),
     counts: counted.has(index),
-    ...(live ? { clock: s.clock } : winner ? { outcome: winner === TEAM ? "W" : "L" } : {}),
+    ...(clock ? { clock } : won !== undefined ? { outcome: won ? "W" : "L" } : {}),
   };
 }
 
@@ -56,8 +54,7 @@ const WEEK3_AT_POINTS: CardWeek = {
   week: 3,
   series: AT_POINTS.series.map(({ id, games }): WeekSeries => {
     const s = seriesAtPoints(id);
-    const side = fromSide(s, TEAM);
-    if (!side.score) throw new Error(`Series ${id} has no score in the shared Week 3 fixture`);
+    const side = playedFromSide(s, TEAM);
     return {
       id,
       day: s.day,

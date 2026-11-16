@@ -81,6 +81,23 @@ thead th {
   border: 0;
   cursor: pointer;
 }
+/* A link's or key's hover: a 1px underline, 4px below (plate, Hover). Put on words inside a link or
+   key, it draws when the link or key is hovered. */
+.hover-line:hover,
+a:hover .hover-line,
+button:hover .hover-line {
+  text-decoration: underline;
+  text-decoration-thickness: var(--m-rule);
+  text-underline-offset: var(--s-1);
+}
+/* A key that can't be pressed: mid on fill, no edge (plate, Disabled). Put on the disabled key;
+   `:disabled` lets it win over the key's own look, whose CSS loads later. */
+.key-off:disabled {
+  color: var(--mid);
+  background: var(--fill);
+  border-color: var(--fill);
+  cursor: default;
+}
 /* A counted figure, boxed: a game's points that count. */
 .counted {
   border: var(--m-rule) solid var(--text);

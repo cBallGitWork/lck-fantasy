@@ -7,12 +7,6 @@
   border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }
-.outlined-key:disabled {
-  color: var(--mid);
-  background: var(--fill);
-  border-color: var(--line);
-  cursor: default;
-}
 .outlined-key__off {
   display: inline-flex;
   align-items: center;

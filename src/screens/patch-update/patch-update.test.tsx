@@ -54,7 +54,7 @@ describe("controls", () => {
   test("‹ and › step only where there is a week to go to; the other is a disabled key", () => {
     const latest = html(<PatchUpdatePage week={WEEK4_PRICES} onPrev={noop} />);
     expect(latest).toContain('<button type="button" class="week-arrow" aria-label="Week before">');
-    expect(latest).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">');
+    expect(latest).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">');
   });
 
   test("stepping stops at the first and the latest week", () => {

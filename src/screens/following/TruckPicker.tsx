@@ -62,7 +62,7 @@ export function TruckPicker({
       )}
       <div className="following__foot">
         <small className="following__foot-note quiet">One truck to {first} a week.</small>
-        <button type="button" className="following__act key-bare" onClick={onClose}>
+        <button type="button" className="following__act key-bare hover-line" onClick={onClose}>
           Cancel
         </button>
         {/* With no line picked there is nothing to send; the picture draws no reason for it. */}

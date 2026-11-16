@@ -62,7 +62,7 @@ export function PickSecond({
         </section>
       ))}
       {showMore && (
-        <button type="button" className="compare__go key-bare compare__more" onClick={() => setWide(true)}>
+        <button type="button" className="compare__go key-bare hover-line compare__more" onClick={() => setWide(true)}>
           All {ROLE_PLURAL[first.role].toLowerCase()} · Other roles ›
         </button>
       )}

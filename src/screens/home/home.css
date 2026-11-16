@@ -202,10 +202,6 @@
   min-height: var(--m-target);
   color: var(--text);
 }
-.home__truck:hover {
-  text-decoration: underline;
-  text-underline-offset: var(--s-1);
-}
 .home__led {
   display: flex;
   align-items: center;

@@ -62,4 +62,4 @@ Helpers with no look of their own.
 
 - `cx.ts`: joins class names.
 - `selectable.ts`: makes a tile or card a key: click, Enter or Space.
-- `devState.ts`: `useDevState`, the approved picture's state a screen opens on `?state=` in dev only (`src/devStates.ts` lists them).
+- `devState.ts`: `useDevState`, the approved picture's state a screen opens on `?state=` in dev only (`src/app/devStates.ts` lists them).

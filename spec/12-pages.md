@@ -12,7 +12,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 - **Home**: a status page, not the Points page: the deadline, the last gameweek's points, free
   transfers and league ranks. See [Home](#home).
-- **Pick Team** and **Transfers**, as FPL's. See [Pick Team and Transfers](#pick-team-and-transfers).
+- **Pick Team** and **Transfers**, as FPL's. See [Pick Team and
+  Transfers](#pick-team-and-transfers).
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
   - Rift view and Card view, Rift on the first visit, then remembered, as Pick Team.
@@ -20,7 +21,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
     ownership. Home keeps the global star and flop.
   - The Carry's games show your Carry's points beside the average Carry's.
-  - Your Overall tier and ≈ points to promote, or to avoid demotion ([spec/08](08-leagues.md#overall-tiers)).
+  - Your Overall tier and ≈ points to promote, or to avoid demotion
+    ([spec/08](08-leagues.md#overall-tiers)).
   - Its layout is the approved picture (`docs/design/approved/points/`).
 - **Leagues** ([spec/08](08-leagues.md)).
 - **Stats**: every stat Flol holds, the scoring lines first ("Whatever stats we have with scoring
@@ -62,12 +64,14 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   6th role", Craig, 13 Nov 2026). See [The coach card](#the-coach-card).
 - **Manager profile**: public, as in FPL. Any manager's points, history and transfers open from a
   league table. Its tier shows by the team name, and History keeps each season's final tier and rank
-  ([spec/08](08-leagues.md#overall-tiers)). Its private leagues show too, as in FPL; a History row opens that week's team
-  (Craig, 14 Nov 2026). Its layout is the approved picture (`docs/design/approved/profile/`).
+  ([spec/08](08-leagues.md#overall-tiers)). Its private leagues show too, as in FPL; a History row
+  opens that week's team (Craig, 14 Nov 2026). Its layout is the approved picture
+  (`docs/design/approved/profile/`).
 - **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
   - The 7 starter slots, with one of them as Carry; the Carry's ×1.5 counts in its total. The cap
-    applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and ignores both.
+    applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and
+    ignores both.
   - It builds live, with a Not final tag until the week is final.
   - Reached from links on Points and Home.
   - Rift view or Card view, whichever is saved on Points. Your own players are marked
@@ -100,7 +104,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - If the live feed is down, the points panel says so; final points follow
     ([spec/11](11-live-points.md)).
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
-- **Following**: the feed, follows, requests and cheers and jeers received ([spec/14](14-following.md)).
+- **Following**: the feed, follows, requests and cheers and jeers received
+  ([spec/14](14-following.md)).
 - **Help**, with a Ranks section holding the tier cut-offs ([spec/08](08-leagues.md#overall-tiers)),
   and **Settings** ([below](#settings)).
 
@@ -200,8 +205,9 @@ Grilled 13 Nov 2026.
   Account ("maybe get differen tparts into tabs", Craig, 15 Nov 2026), saved with one Save
   button for every tab. The picture is `docs/design/approved/settings/`.
   The team name and the hangul banner are capped at 20 characters, as FPL's name is.
-- Emails, both opt-in and off by default: a deadline reminder 24 hours before, and a weekly
-  recap once the gameweek is final (points, rank moves in each league, best player, any jeer). No marketing. Off by default because Resend's free plan sends 100 emails a day.
+- Emails, both opt-in and off by default: a deadline reminder 24 hours before, and a weekly recap
+  once the gameweek is final (points, rank moves in each league, best player, any jeer). No
+  marketing. Off by default because Resend's free plan sends 100 emails a day.
 - Your data, as GDPR asks ("settings need to include gdrp concersn etc", Craig, 15 Nov 2026,
   taking every recommendation):
   - Download my data: a JSON file at once, of the team, squads, transfers, leagues, follows and
@@ -248,4 +254,3 @@ suggestions.
 | Remake, Limitless | Transfers' buff keys | the line on their Pick Team card |
 
 - Carry, Killer and the buff names stay; the hover explains them (Craig, 16 Nov 2026).
-

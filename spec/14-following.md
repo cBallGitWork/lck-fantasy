@@ -1,8 +1,9 @@
 # Following, cheers and jeers
 
-Craig's answers only, from the `/grill`s of 14 Nov 2026 and of 16 Nov 2026 (the words). Where this file is silent the rule is
-FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). FPL has no following, so most
-of this is Flol's own. Open questions are in [docs/to-grill.md](../docs/to-grill.md).
+Craig's answers only, from the `/grill`s of 14 Nov 2026 and of 16 Nov 2026 (the words). Where this
+file is silent the rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). FPL
+has no following, so most of this is Flol's own. Open questions are in
+[docs/to-grill.md](../docs/to-grill.md).
 
 **Contents:** [Following](#following) · [The feed](#the-feed) · [Cheers and jeers](#cheers-and-jeers) · [Lines](#lines) · [Where it shows](#where-it-shows)
 
@@ -60,8 +61,8 @@ truck hire as a sponsor").
   from the lines that fit the receiver's week. An admin adds lines, and Craig approves each
   before it goes live.
 - What the triggers mean (Craig, 15 Nov 2026). Every number is data:
-  - **Which week:** a line fits the receiver's last final gameweek, and the cheer or jeer parks for the
-    current one. Before the first week is final, only any-week lines show.
+  - **Which week:** a line fits the receiver's last final gameweek, and the cheer or jeer parks for
+    the current one. Before the first week is final, only any-week lines show.
   - **Carry blank:** a Carry on 2 or fewer after the ×1.5, as FPL counts a blank. **A dear
     player's flop:** the receiver's dearest starter on 2 or fewer; `{price}` is his price.
   - **High and low score:** the global top 10% and bottom 10% of the gameweek.
@@ -70,8 +71,8 @@ truck hire as a sponsor").
   - **Green and red arrow:** the gameweek's move in overall rank. **Buff wasted:** played, and
     the week ends below the global average; otherwise **buff played**.
 - Lines fill in the receiver's own numbers. Example: WE DID NOT PAY ₩12M FOR A BENCH WARMER.
-- A jeer's line never names a real player; it mocks the manager's own picks, in the protest
-  trucks' formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CARRY PICK. A cheer's line may praise
+- A jeer's line never names a real player; it mocks the manager's own picks, in the protest trucks'
+  formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CARRY PICK. A cheer's line may praise
   real players.
 - Lines use FPL's lingo (green arrow, hit, bench headache, template) and LCK's, in UK English.
 - The first draft set, written 14 Nov 2026 and not yet approved, is in
@@ -80,5 +81,5 @@ truck hire as a sponsor").
 ## Where it shows
 
 - Home's Following card shows the latest feed items ([spec/12](12-pages.md#home)).
-- **Following ›** opens the Following page: the feed, who the manager follows, requests, and
-  the cheers and jeers received. Its layout is the approved picture (`docs/design/approved/following/`).
+- **Following ›** opens the Following page: the feed, who the manager follows, requests, and the
+  cheers and jeers received. Its layout is the approved picture (`docs/design/approved/following/`).

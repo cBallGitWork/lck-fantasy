@@ -1,6 +1,7 @@
 // Who follows whom (spec/14-following.md, Following): by request and one-way, so a follow shows
 // in the follower's feed once the followed manager accepts. Either side can end it, and a block
 // ends both ways and keeps them apart.
+import { refuseFirst, Refused } from "./refused";
 
 export interface Follow {
   follower: string;
@@ -25,12 +26,8 @@ export type FollowProblem =
   | { rule: "noRequest" }
   | { rule: "notFollowing" };
 
-/** Thrown by a follow change that breaks a rule, never applied silently. */
-export class FollowError extends Error {
-  constructor(readonly problem: FollowProblem) {
-    super(`Follow refused: ${problem.rule}.`);
-  }
-}
+/** What a follow change refuses as (`Refused`). */
+const FOLLOW = "Follow";
 
 function findFollow(state: Follows, follower: string, followed: string): Follow | undefined {
   return state.follows.find((follow) => follow.follower === follower && follow.followed === followed);
@@ -57,21 +54,20 @@ export function requestProblems(state: Follows, follower: string, followed: stri
 
 /** A manager asks to follow another; nothing shows until it is accepted. */
 export function requestFollow(state: Follows, follower: string, followed: string): Follows {
-  const [problem] = requestProblems(state, follower, followed);
-  if (problem) throw new FollowError(problem);
+  refuseFirst(FOLLOW, requestProblems(state, follower, followed));
   return { ...state, follows: [...state.follows, { follower, followed, accepted: false }] };
 }
 
 /** The followed manager accepts a request waiting for them. */
 export function acceptFollow(state: Follows, manager: string, follower: string): Follows {
   const request = findFollow(state, follower, manager);
-  if (!request || request.accepted) throw new FollowError({ rule: "noRequest" });
+  if (!request || request.accepted) throw new Refused<FollowProblem>(FOLLOW, { rule: "noRequest" });
   return { ...state, follows: [...without(state, follower, manager), { ...request, accepted: true }] };
 }
 
 /** The follower stops following, or withdraws a request not yet accepted. */
 export function unfollow(state: Follows, follower: string, followed: string): Follows {
-  if (!findFollow(state, follower, followed)) throw new FollowError({ rule: "notFollowing" });
+  if (!findFollow(state, follower, followed)) throw new Refused<FollowProblem>(FOLLOW, { rule: "notFollowing" });
   return { ...state, follows: without(state, follower, followed) };
 }
 
@@ -82,7 +78,7 @@ export function removeFollower(state: Follows, manager: string, follower: string
 
 /** A block ends any follow between the two, either way, and stops either asking again. */
 export function block(state: Follows, blocker: string, blocked: string): Follows {
-  if (blocker === blocked) throw new FollowError({ rule: "followSelf" });
+  if (blocker === blocked) throw new Refused<FollowProblem>(FOLLOW, { rule: "followSelf" });
   const between = (follow: Follow) =>
     (follow.follower === blocker && follow.followed === blocked) || (follow.follower === blocked && follow.followed === blocker);
   const already = state.blocks.some((row) => row.blocker === blocker && row.blocked === blocked);

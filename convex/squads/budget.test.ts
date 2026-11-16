@@ -1,14 +1,14 @@
 import { WON_PER_M } from "../../src/parts/text/money";
 import { describe, expect, test } from "vitest";
 import { bankAfterTransfers, budgetProblems } from "./budget";
-import { chovy, coach, ktCoach, player, validSquad } from "./fixtures";
+import { byPick, chovy, coach, faker, ktCoach, player, validSquad } from "./fixtures";
 import { allPicks, pickKey } from "./squad";
 
 const BUDGET = 100 * WON_PER_M;
 
-/** Every pick of the valid squad at 10m, so the nine cost 90m. */
+/** Every pick of the valid squad at one price, in won. */
 function pricesAt(won: number) {
-  return new Map(allPicks(validSquad()).map((pick) => [pickKey(pick), won]));
+  return byPick(allPicks(validSquad()).map((pick) => [pick, won]));
 }
 
 describe("budgetProblems", () => {
@@ -54,18 +54,18 @@ describe("budgetProblems", () => {
 describe("bankAfterTransfers", () => {
   test("selling pays the full current price, buying costs the new pick's", () => {
     // Bought at ₩7.5m, Chovy has risen to ₩9.0m: selling him pays all ₩9.0m.
-    const prices = new Map([
-      [pickKey(chovy), 9 * WON_PER_M],
-      [pickKey(player("faker", "t1", "mid")), 8.5 * WON_PER_M],
+    const prices = byPick([
+      [chovy, 9 * WON_PER_M],
+      [faker, 8.5 * WON_PER_M],
     ]);
-    const bank = bankAfterTransfers(0.5 * WON_PER_M, [{ out: chovy, in: player("faker", "t1", "mid") }], prices);
+    const bank = bankAfterTransfers(0.5 * WON_PER_M, [{ out: chovy, in: faker }], prices);
     expect(bank).toBe(1 * WON_PER_M);
   });
 
   test("swapping the coach moves the bank like a player", () => {
-    const prices = new Map([
-      [pickKey(ktCoach), 6 * WON_PER_M],
-      [pickKey(coach("t1")), 7 * WON_PER_M],
+    const prices = byPick([
+      [ktCoach, 6 * WON_PER_M],
+      [coach("t1"), 7 * WON_PER_M],
     ]);
     expect(bankAfterTransfers(0, [{ out: ktCoach, in: coach("t1") }], prices)).toBe(-1 * WON_PER_M);
   });

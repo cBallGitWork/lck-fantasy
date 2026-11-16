@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import {
-  chovy, coach, confirmed, confirmedTransfers as transfers, ktCoach, player, TRANSFER_SETTINGS as SETTINGS,
+  chovy, coach, confirmed, confirmedTransfers as transfers, doran, faker, ktCoach, player, showmaker, TRANSFER_SETTINGS as SETTINGS, zeus,
 } from "./fixtures";
 import {
   freeTransfersFor, netTransfers, settleTransfers, transfersOf, transfersOpen, undoConfirm, type Confirm, type TransferGameweek,
@@ -60,8 +60,6 @@ describe("settleTransfers", () => {
 });
 
 describe("undoing a transfer", () => {
-  const faker = player("faker", "t1", "mid");
-  const showmaker = player("showmaker", "dk", "mid");
   const kingen = player("kingen", "kt", "top");
   const siwoo = player("siwoo", "dk", "top");
 
@@ -88,8 +86,6 @@ describe("undoing a transfer", () => {
   });
 
   // Two confirms: Chovy → Faker, then Siwoo → Kingen and Doran → Zeus, one free transfer: −12.
-  const doran = player("doran", "hle", "top");
-  const zeus = player("zeus", "hle", "top");
   const first: Confirm = { transfers: [confirmed(chovy, faker, { outPrice: 20, inPrice: 19 })], underBuff: false };
   const latest: Confirm = { transfers: [confirmed(siwoo, kingen), confirmed(doran, zeus)], underBuff: false };
 

@@ -1,8 +1,8 @@
 import { WON_PER_M } from "../../src/parts/text/money";
 import { describe, expect, test } from "vitest";
 import { budgetProblems } from "../squads/budget";
-import { coach, player, REGULAR_SETTINGS, validSquad } from "../squads/fixtures";
-import { allPicks, pickKey, PLAYER_ROLES, squadProblems, type Pick, type Squad } from "../squads/squad";
+import { byPick, coach, player, REGULAR_SETTINGS, validSquad } from "../squads/fixtures";
+import { allPicks, pickKey, PLAYER_ROLES, squadProblems, type Pick, type Squad, type SquadPick } from "../squads/squad";
 import { autoFill, type Chooser } from "./autoFill";
 
 const first: Chooser = (candidates) => candidates[0]!;
@@ -11,7 +11,7 @@ const dearestFirst: Chooser = (candidates) => [...candidates].sort((a, b) => pri
 // A pool of six teams: for each, a coach and one player per role. Team "a" is dearest.
 const TEAMS = ["a", "b", "c", "d", "e", "f"];
 const pool: Pick[] = TEAMS.flatMap((team) => [coach(team), ...PLAYER_ROLES.map((role) => player(`${team}-${role}`, team, role))]);
-const prices = new Map(pool.map((pick) => [pickKey(pick), (pick.teamId === "a" ? 20 : 8) * WON_PER_M]));
+const prices = byPick(pool.map((pick) => [pick, (pick.teamId === "a" ? 20 : 8) * WON_PER_M]));
 const emptySquad: Squad = { starters: [], bench: [] };
 
 function expectValid(squad: Squad, budget: number | null) {
@@ -53,13 +53,14 @@ describe("autoFill", () => {
     expect(() => autoFill(emptySquad, pool, prices, REGULAR_SETTINGS, 50 * WON_PER_M, first)).toThrow(/Auto-fill found no pick/);
   });
 
+  /** The starters free, and each pick of `benchPool` at its price in m. */
+  const freeStartersAnd = (starters: readonly SquadPick[], benchPool: readonly [Pick, number][]) =>
+    byPick([...starters.map((s) => [s.pick, 0] as const), ...benchPool.map(([pick, money]) => [pick, money * WON_PER_M] as const)]);
+
   /** The valid squad's starters, free, with the bench to fill from `benchPool`. */
   function fillBench(benchPool: [Pick, number][], budgetM: number) {
     const starters = validSquad().starters;
-    const thinPrices = new Map<string, number>([
-      ...starters.map((s) => [pickKey(s.pick), 0] as [string, number]),
-      ...benchPool.map(([pick, money]) => [pickKey(pick), money * WON_PER_M] as [string, number]),
-    ]);
+    const thinPrices = freeStartersAnd(starters, benchPool);
     const thinPool = benchPool.map(([pick]) => pick);
     const priceOfPick = (pick: Pick) => thinPrices.get(pickKey(pick))!;
     const dearest: Chooser = (candidates) => [...candidates].sort((a, b) => priceOfPick(b) - priceOfPick(a))[0]!;
@@ -77,10 +78,7 @@ describe("autoFill", () => {
       [player("cheap", "x", "top"), 1], [player("mid8", "y", "mid"), 8],
       [player("bot15", "z", "bot"), 15], [player("sup20", "w", "support"), 20],
     ];
-    const prices24 = new Map<string, number>([
-      ...starters.map((s) => [pickKey(s.pick), 0] as [string, number]),
-      ...benchPool.map(([pick, money]) => [pickKey(pick), money * WON_PER_M] as [string, number]),
-    ]);
+    const prices24 = freeStartersAnd(starters, benchPool);
     const dearest: Chooser = (candidates) => [...candidates].sort((a, b) => prices24.get(pickKey(b))! - prices24.get(pickKey(a))!)[0]!;
     const squad = autoFill({ starters, bench: [] }, benchPool.map(([pick]) => pick), prices24, REGULAR_SETTINGS, 24 * WON_PER_M, dearest);
     expect(allPicks(squad).filter((pick) => pick.teamId !== "kt" && prices24.get(pickKey(pick))! > 0).map((p) => p.id).sort())

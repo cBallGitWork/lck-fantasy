@@ -1,5 +1,6 @@
 // League tables (spec/08-leagues.md, Tables; Legend and Rise). Every league ranks on total points
 // over a run of gameweeks: the season, or one split, from the league's start.
+import { sum } from "../../src/parts/util/sum";
 
 export interface EntryGameweek {
   gameweek: number;
@@ -54,8 +55,8 @@ export function leagueTable(
     return {
       entryId: member.entryId,
       gameweekPoints: latestPoints(member, to),
-      total: counted.reduce((sum, gw) => sum + gw.points, 0),
-      transfers: counted.reduce((sum, gw) => sum + gw.transfers, 0),
+      total: sum(counted.map((gw) => gw.points)),
+      transfers: sum(counted.map((gw) => gw.transfers)),
     };
   });
   rows.sort((a, b) => b.total - a.total || a.transfers - b.transfers);

@@ -3,7 +3,7 @@
 // squad by role itself, as FPL does.
 import type { Transfer } from "./budget";
 import {
-  allPicks, fitsSlot, pickKey, roleShortfalls, squadProblems,
+  allPicks, fitsSlot, pickKey, pickKeysOf, roleShortfalls, squadProblems,
   type Pick, type Squad, type SquadProblem, type SquadSettings, type StarterSlot,
 } from "./squad";
 
@@ -16,7 +16,7 @@ export type TransferProblem =
  *  are the gameweek's netted ones (`netTransfers`), so each pick out is in the squad now. */
 export function transferProblems(squad: Squad, transfers: readonly Transfer[], settings: SquadSettings): TransferProblem[] {
   const problems: TransferProblem[] = [];
-  const unsold = new Set(allPicks(squad).map(pickKey));
+  const unsold = pickKeysOf(squad);
   for (const { out, in: pickIn } of transfers) {
     if (!unsold.delete(pickKey(out))) problems.push({ rule: "notInSquad", pickId: out.id });
     if ((out.role === "coach") !== (pickIn.role === "coach")) {

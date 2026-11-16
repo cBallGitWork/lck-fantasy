@@ -1,12 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { bdd, chovy, coach, ktCoach, lucid, oner, player, REGULAR_SETTINGS, ruler, validSquad, withStarter, zeus } from "./fixtures";
+import {
+  bdd, canyon, chovy, coach, doran, faker, ktCoach, lucid, oner, peyz, REGULAR_SETTINGS, ruler, showmaker, validSquad, withStarter, zeus,
+} from "./fixtures";
 import { arrangeByRole, transferProblems } from "./squadAfterTransfers";
 import type { Squad, StarterSlot } from "./squad";
-
-const faker = player("faker", "t1", "mid");
-const canyon = player("canyon", "dk", "jungle");
-const showmaker = player("showmaker", "dk", "mid");
-const peyz = player("peyz", "dk", "bot");
 
 const starterIn = (squad: Squad, slot: StarterSlot) => squad.starters.find((s) => s.slot === slot)!.pick;
 
@@ -93,7 +90,7 @@ describe("a transfer of any role for any role", () => {
 
   test("the team cap still holds after the squad is arranged", () => {
     // T1 has Oner and Keria; a T1 top laner for Zeus makes three.
-    const transfers = [{ out: zeus, in: player("doran", "t1", "top") }];
+    const transfers = [{ out: zeus, in: doran }];
     expect(transferProblems(validSquad(), transfers, REGULAR_SETTINGS)).toEqual([
       { rule: "overTeamCap", teamId: "t1", cap: 2, actual: 3 },
     ]);

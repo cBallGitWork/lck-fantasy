@@ -1,6 +1,6 @@
 import { WON_PER_M } from "../../src/parts/text/money";
 import { describe, expect, test } from "vitest";
-import { chovy, coach, ktCoach, oner, player, REGULAR_SETTINGS, validSquad, withStarter } from "./fixtures";
+import { byPick, chovy, coach, ktCoach, oner, player, REGULAR_SETTINGS, validSquad, withStarter } from "./fixtures";
 import { bankAtSplitStart, fixSquadForSplit } from "./splitBreak";
 import { allPicks, pickKey, squadProblems, type Pick } from "./squad";
 
@@ -13,7 +13,7 @@ const pool: Pick[] = [cheapMid, cheaperMidOverCap, cheapCoach, player("dearmid",
 
 /** Every pick at 10m, then the overrides in m. */
 function pricesWith(picks: Pick[], overrides: [Pick, number][]) {
-  const prices = new Map(picks.map((pick) => [pickKey(pick), 10 * WON_PER_M]));
+  const prices = byPick(picks.map((pick) => [pick, 10 * WON_PER_M]));
   for (const [pick, money] of overrides) prices.set(pickKey(pick), money * WON_PER_M);
   return prices;
 }

@@ -6,6 +6,7 @@ import { leagueTable, type LeagueMember } from "../leagues/tables";
 import { linesThatFit, pickWeighted, type LineSettings, type Receiver } from "./fit";
 import { followedBy, type Follows } from "./follows";
 import type { TruckKind, TruckLine } from "./lines";
+import { refuseFirst, Refused } from "./refused";
 
 export interface Truck {
   kind: TruckKind;
@@ -26,12 +27,8 @@ export type TruckProblem =
   | { rule: "alreadySent" }
   | { rule: "lineDoesNotFit"; lineId: string };
 
-/** Thrown by a truck that breaks a rule, never sent silently. */
-export class TruckError extends Error {
-  constructor(readonly problem: TruckProblem) {
-    super(`Truck refused: ${problem.rule}.`);
-  }
-}
+/** What a truck refuses as (`Refused`). */
+const TRUCK = "Truck";
 
 export interface TruckSend {
   from: string;
@@ -69,10 +66,9 @@ export function sendTruck(
   receiver: Receiver,
   settings: LineSettings,
 ): Truck[] {
-  const [problem] = truckProblems(trucks, follows, send, lines, receiver, settings);
-  if (problem) throw new TruckError(problem);
+  refuseFirst(TRUCK, truckProblems(trucks, follows, send, lines, receiver, settings));
   const fitting = linesThatFit(lines, send.kind, receiver, settings).find((one) => one.line.id === send.lineId);
-  if (!fitting) throw new TruckError({ rule: "lineDoesNotFit", lineId: send.lineId }); // narrows only
+  if (!fitting) throw new Refused<TruckProblem>(TRUCK, { rule: "lineDoesNotFit", lineId: send.lineId }); // narrows only
   const { from, to, kind, lineId, gameweek } = send;
   return [...trucks, { kind, from, to, gameweek, lineId, text: fitting.text }];
 }

@@ -61,7 +61,7 @@ Each folder has a README saying what goes in it.
 | `convex/gameweeks/` | Gameweeks, deadlines and settling a gameweek. |
 | `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, buffs, prices. |
 | `convex/leagues/` | Global, supporter and private leagues, and their tables. |
-| `convex/following/` | Follow requests, blocks, the feed of followed managers, and trucks. |
+| `convex/following/` | Follow requests, blocks, the feed of followed managers, and cheers and jeers. |
 | `convex/achievements/` | The achievement book: the pages, the rules that award them, the awards. |
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |

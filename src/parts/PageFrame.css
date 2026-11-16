@@ -2,6 +2,3 @@
 .page-frame {
   padding: var(--s-5) var(--s-6) var(--s-7);
 }
-.page-frame--side-first .page-frame__side {
-  order: -1;
-}

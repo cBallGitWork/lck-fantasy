@@ -1,7 +1,7 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
-import { Modal, PageFrame } from "../../parts";
+import { Modal, PageFrame, useDevState } from "../../parts";
 import { PATHS } from "../../paths";
 import { CoachCard } from "./CoachCard";
 import "./CoachCard.css";
@@ -15,8 +15,20 @@ export const FIRST_TAB: Record<CoachFrom, CoachTab> = { pickTeam: "History", poi
 const OPENER = { pickTeam: PATHS.pickTeam, points: PATHS.points } as const;
 
 /** The coach card as a page: the card over the page that opened it, its tabs working on the data. */
-export function CoachCardPage({ data, from, onClose, onTransferOut }: { data: CoachCardData; from: CoachFrom; onClose: () => void; onTransferOut?: () => void }) {
-  const [tab, setTab] = useState<CoachTab>(FIRST_TAB[from]);
+export function CoachCardPage({
+  data,
+  from,
+  initialTab = FIRST_TAB[from],
+  onClose,
+  onTransferOut,
+}: {
+  data: CoachCardData;
+  from: CoachFrom;
+  initialTab?: CoachTab;
+  onClose: () => void;
+  onTransferOut?: () => void;
+}) {
+  const [tab, setTab] = useState<CoachTab>(initialTab);
   return (
     <PageFrame screen="coach-card" active={from} account={MANAGER.team}>
       <Modal kind="card" title={`${data.head.name}, coach`} onClose={onClose}>
@@ -26,7 +38,7 @@ export function CoachCardPage({ data, from, onClose, onTransferOut }: { data: Co
   );
 }
 
-/** The coach card route, on Week 3's made-up data until the backend feeds it. `?from=points` opens it as Points does. */
+/** The coach card route, on Week 3's made-up data until the backend feeds it. `?from=points` opens it as Points does; in dev, `?state=roster` on Roster. */
 export function CoachCardScreen() {
   const search: { from?: unknown } = useSearch({ strict: false });
   const from: CoachFrom = search.from === "points" ? "points" : "pickTeam";
@@ -35,6 +47,7 @@ export function CoachCardScreen() {
     <CoachCardPage
       data={from === "points" ? FROM_POINTS : FROM_PICK_TEAM}
       from={from}
+      initialTab={useDevState<CoachTab>({ roster: "Roster" })}
       onClose={() => void navigate({ to: OPENER[from] })}
     />
   );

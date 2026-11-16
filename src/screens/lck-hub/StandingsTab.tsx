@@ -1,4 +1,3 @@
-import { TEAMS } from "../../fixtures/week3";
 import { cx, NONE, pct, SectionHead, signed, Table, type Column } from "../../parts";
 import type { StandingsGroup, StandingsRow } from "./types";
 
@@ -12,11 +11,7 @@ const columns = (group: StandingsGroup): Column<StandingsRow>[] => [
   {
     key: "team",
     head: "Team",
-    cell: (r) => (
-      <>
-        <b className="lck-hub__code num">{r.team}</b> <small className="lck-hub__team-name">{TEAMS[r.team]}</small>
-      </>
-    ),
+    cell: (r) => <b className="lck-hub__code num">{r.team}</b>,
   },
   { key: "w", head: "W", figure: true, cell: (r) => r.won },
   { key: "l", head: "L", figure: true, cell: (r) => r.lost },

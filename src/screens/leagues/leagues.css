@@ -1,4 +1,4 @@
-/* Leagues (docs/design/approved/leagues/): the list left, the open league's table right. */
+/* Leagues (docs/design/approved/leagues/): the open league's table, then the list on the right. */
 .leagues {
   margin-top: var(--s-2);
 }

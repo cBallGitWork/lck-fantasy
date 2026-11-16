@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, LinkGo } from "../parts";
+import { cx, GoLink, LinkGo } from "../parts";
 import type { Go } from "../paths";
 import { Shirt } from "./Shirt";
 import "./PlayerPanel.css";
@@ -36,12 +36,18 @@ export function PlayerPanel({
   );
 }
 
-/** One series in the panel: `Wed · v HLE`, then its result (a span, in mid grey), then its games. */
-export function PanelSeries({ title, result, children }: { title: string; result: ReactNode; children?: ReactNode }) {
+/** One series in the panel: `v HLE`, a link to its Series page when given `go`, then its result (a span, in mid grey), then its games. */
+export function PanelSeries({ title, result, go, children }: { title: string; result: ReactNode; go?: Go; children?: ReactNode }) {
   return (
     <div className="player-panel__series">
       <h4 className="player-panel__series-head">
-        {title}
+        {go ? (
+          <GoLink go={go} className="player-panel__series-go">
+            {title}
+          </GoLink>
+        ) : (
+          title
+        )}
         {result}
       </h4>
       {children}

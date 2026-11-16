@@ -9,10 +9,10 @@ export type MenuItem = { label: string; apart?: boolean } & ({ go: Go } | { onCh
 
 /**
  * A key that opens a list of links and actions under it (the account menu, a league's Admin menu).
- * Esc or a choice closes it.
+ * Esc or a choice closes it. `startOpen` opens it at once, as a picture draws it.
  */
-export function Menu({ label, items, className }: { label: ReactNode; items: MenuItem[]; className?: string }) {
-  const [open, setOpen] = useState(false);
+export function Menu({ label, items, className, startOpen = false }: { label: ReactNode; items: MenuItem[]; className?: string; startOpen?: boolean }) {
+  const [open, setOpen] = useState(startOpen);
   const id = useId();
   return (
     <span className="menu" onKeyDown={(e) => e.key === "Escape" && setOpen(false)}>

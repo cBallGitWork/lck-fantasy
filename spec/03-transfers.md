@@ -15,6 +15,23 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   gameweek, then 1 a week up to 3.
 - All these numbers are data per competition, never code.
 
+## Roles in a transfer
+
+- A transfer may sell any role and buy any role in one go, as long as the squad still holds one
+  of each role ([spec/01](01-squad-and-slots.md)). Example: sell your starting jungler for a mid
+  while a jungler sits on your bench, with no need to bench him first (Craig, 16 Nov 2026).
+- The coach is swapped only for a coach (Craig, 16 Nov 2026).
+- After transfers Flol arranges the squad by role, as FPL does: each role slot takes a player of
+  that role; where there's a choice, the player already starting keeps his place; new players
+  fill what is left, the flex or the bench. Example: in the swap above, the bench jungler starts
+  at jungle and the new mid takes his bench spot (Craig, 16 Nov 2026).
+- An empty role slot takes a new player of that role first, then the bench in bench order (bench
+  1 before bench 2), and the flex only last. New players left over fill the flex before the
+  bench (Craig, 16 Nov 2026).
+- Crossed transfers each fill the other's role slot. Example: sell your jungler for a mid and
+  your mid for a jungler; the new jungler starts at jungle, the new mid at mid, and the bench is
+  left alone (Craig, 16 Nov 2026).
+
 ## Undoing a transfer
 
 Grilled 14 Nov 2026.

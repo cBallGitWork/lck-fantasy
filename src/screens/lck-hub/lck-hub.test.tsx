@@ -97,7 +97,7 @@ describe("each state renders from the fixture, in the picture's order", () => {
     expect(html(page("Results"))).not.toMatch(/lck-hub__loser">T1</);
   });
 
-  test("Standings: the two groups, each team's W, L, sets, +/−, Win % and last 5", () => {
+  test("Standings: the two groups, each team named once by its code, its W, L, sets, +/−, Win % and last 5", () => {
     const out = text(page("Standings"));
     expectInOrder(out, [
       ...HEAD,
@@ -106,20 +106,21 @@ describe("each state renders from the fixture, in the picture's order", () => {
       "Baron group",
       "바론 그룹",
       "TeamWLSets WSets L+/−Win %Last 5",
-      "1T1 T151114+783%WWWWW",
-      "2DK Dplus KIA3387+150%WLWWL",
-      "3KRX Kiwoom DRX3378−150%LWLWW",
-      "4NS Nongshim RedForce2458−333%WWLLL",
-      "5BRO HANJIN BRION15411−717%WLLLL",
+      "1T151114+783%WWWWW",
+      "2DK3387+150%WLWWL",
+      "3KRX3378−150%LWLWW",
+      "4NS2458−333%WWLLL",
+      "5BRO15411−717%WLLLL",
       "Elder group",
       "장로 그룹",
-      "1GEN Gen.G51115+683%LWWWW",
-      "2HLE Hanwha Life4296+367%WWWLL",
-      "3DNS DN SOOPers338805",
-      "4KT KT Rolster3378−150%LWLLW",
-      "5BFX BNK FEARX1549−517%LWLLL",
+      "1GEN51115+683%LWWWW",
+      "2HLE4296+367%WWWLL",
+      "3DNS338805",
+      "4KT3378−150%LWLLW",
+      "5BFX1549−517%LWLLL",
       ...NEWS,
     ]);
+    expect(out).not.toContain("Dplus KIA");
   });
 
   test("Teams: the picker, T1's roster in role order with prices, beside its academy; no stage toggle", () => {

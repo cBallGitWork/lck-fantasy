@@ -4,6 +4,8 @@ Every league a manager is in, and one league's table. Reached from **Leagues** i
 
 **Approved:** Craig, 14 Nov 2026. In the first round (13 Nov) he picked the list and table (A) "and some of the elements of B": Overall's top rows, a gap, your neighbourhood, Legend, Rise and All in Split 2, and a pager with Find me; he liked the Carry column and said yes to the chase tag. On 14 Nov he took every recommendation on the panel's calls, then "Yes, save it". Names, teams and numbers are a made-up Split 2 Week 14, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn.
 
+**Changed by Craig, 16 Nov 2026:** the list of leagues moves to the side column on the right, as on every page; the open league's table is the main column. The pictures still show the list on the left.
+
 | File | Shows |
 |---|---|
 | `1440.png`, `league.html` | A private league you made: code, Copy link, Admin, Season/Split tabs, your row with the chase tag |
@@ -24,7 +26,7 @@ Every league a manager is in, and one league's table. Reached from **Leagues** i
 
 ## Controls
 
-- **A league in the list**: opens its table on the right.
+- **A league in the list**: opens its table in the main column.
 - **Season | Split 1 | Split 2**: which table. On Legend and Rise in Split 2, Total is season points, with a Split 2 column beside it (spec/08).
 - **Legend | Rise | All**: Overall in Split 2 only. The pager counts the group shown.
 - **A row**: opens that manager's team (›).

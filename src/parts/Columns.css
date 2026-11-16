@@ -3,6 +3,3 @@
   grid-template-columns: minmax(0, 1fr) var(--m-side);
   gap: var(--s-6);
 }
-.columns--side-first {
-  grid-template-columns: var(--m-side) minmax(0, 1fr);
-}

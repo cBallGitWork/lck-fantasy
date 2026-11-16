@@ -1,6 +1,6 @@
 import { fromSide, seriesById } from "../../fixtures/series";
 import type { Series } from "../../fixtures/week3";
-import { carryWorking, outcome, result } from "../../parts";
+import { outcome, result } from "../../parts";
 import { cardGo } from "../../paths";
 import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PerfectPlayer, PlayerSeries } from "./types";
@@ -12,22 +12,20 @@ function seriesHead(team: string, s: PlayerSeries, week: readonly Series[]) {
   return { title: `${series.day} · v ${side.opponent}`, outcome: side.score && result(side.score) };
 }
 
-/** A tapped starter's games: each series, each game boxed if it counted, then his sum and Full stats. */
+/** A tapped starter's games: each series, each game boxed if it counted, then his sum (the Carry's result only) and Full stats. */
 export function GamesPanel({
   player,
   week,
-  carryTimes,
   onClose,
 }: {
   player: PerfectPlayer;
   week: readonly Series[];
-  carryTimes: number;
   onClose?: () => void;
 }) {
   const role = ROLE_NAME[player.slot];
-  const meta = [player.team, role, player.carry && MARK_NAME.C].filter(Boolean).join(" · ");
-  const points = player.series.map((s) => s.points);
-  const sum = points.join(" + ");
+  // The Carry is named by his C and his sum's label, so the meta leaves it out.
+  const meta = `${player.team} · ${role}`;
+  const sum = player.series.map((s) => s.points).join(" + ");
   return (
     <PlayerPanel name={player.name} meta={meta} onClose={onClose}>
       {player.series.map((s) => {
@@ -49,20 +47,7 @@ export function GamesPanel({
           </PanelSeries>
         );
       })}
-      <PanelSum
-        lines={
-          <>
-            {player.carry && (
-              <>
-                <PanelSumLabel>{MARK_NAME.C}</PanelSumLabel>
-                <br />
-              </>
-            )}
-            {player.carry && player.raw !== undefined ? carryWorking(points, player.raw, carryTimes) : sum}
-          </>
-        }
-        figure={player.points}
-      />
+      <PanelSum lines={player.carry ? <PanelSumLabel>{MARK_NAME.C}</PanelSumLabel> : sum} figure={player.points} />
       <PanelFoot go={cardGo(player.id, player.slot === "coach")} />
     </PlayerPanel>
   );

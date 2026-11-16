@@ -4,6 +4,7 @@ export { Crest } from "./Crest";
 export { Columns } from "./Columns";
 export { cx } from "./cx";
 export { Deadline } from "./Deadline";
+export { DEV_STATE_PARAM, useDevState } from "./devState";
 export { Field } from "./Field";
 export { GoLink } from "./GoLink";
 export { LinkGo } from "./LinkGo";
@@ -13,8 +14,6 @@ export { Menu, type MenuItem } from "./Menu";
 export { Modal, wrapFocus } from "./Modal";
 export {
   bestOf,
-  carrySum,
-  carryWorking,
   count,
   inOut,
   MINUS,

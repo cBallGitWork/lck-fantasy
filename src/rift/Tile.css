@@ -70,11 +70,6 @@
   font-weight: var(--w-semi);
   line-height: var(--lh-body);
 }
-.tile__points small {
-  font-size: var(--size-small);
-  font-weight: var(--w-regular);
-  margin-left: var(--s-1);
-}
 .tile__line {
   background: var(--paper);
   border: var(--m-rule) solid var(--line);

@@ -3,8 +3,8 @@
 Parts shared by two or more screens, each drawn one way everywhere (`docs/design/plate.md`, Parts and States). Each has its own CSS file, using theme tokens only. Import them from `src/parts` (`index.ts`). Parts never import `src/rift`; the Rift builds on the parts.
 
 - `TopBar.tsx`: the top bar: Flol, the eight items with `active`, the sponsor, the account menu or `Sign in`.
-- `PageFrame.tsx`: the top bar, then the main column and the 360px side column (`sideFirst` for Leagues).
-- `Columns.tsx`: the frame's two columns (main, then the 360px side; `sideFirst`) for a page whose head runs full width above them.
+- `PageFrame.tsx`: the top bar, then the main column and the 360px side column.
+- `Columns.tsx`: the frame's two columns (main, then the 360px side) for a page whose head runs full width above them.
 - `PageHead.tsx`: title and hangul, ‹ week ›, the key figure, its tags, up to three figures, a link.
 - `WeekArrow.tsx`: a week's ‹ or ›: a link, or a key; off in the rule's grey where there is no week that way.
 - `Tag.tsx`: a tag: plain, `Live` filled, `Not final` dashed.
@@ -31,8 +31,9 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `TierShield.tsx`: Overall's tier shield with its division (spec/08); the page sizes and colours it through its class names.
 - `SponsorNote.tsx`: `All sponsors are made up.`
 - `money.ts`: an amount as ₩ and m (`eok` for a price held in m, `eokToWon`) (spec/02).
-- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`), per-game and one-decimal figures, per cents, `Bo3`, the Carry's `22×1.5` and absence (`—`), written one way everywhere.
+- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`), per-game and one-decimal figures, per cents, `Bo3` and absence (`—`), written one way everywhere.
 - `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
 - `GoLink.tsx`: a link inside Flol through the router, typed by `src/paths.ts` (`Go`).
 - `selectable.ts`: makes a tile or card a key: click, Enter or Space.
 - `cx.ts`: joins class names.
+- `devState.ts`: `useDevState`, the approved picture's state a screen opens on `?state=` in dev only (`src/devStates.ts` lists them).

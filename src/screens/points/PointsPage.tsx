@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LinkGo, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle } from "../../parts";
 import { PATHS } from "../../paths";
 import { BenchBar, BenchTile } from "../../rift";
-import { GamesPanel } from "./GamesPanel";
+import { BreakdownSheet } from "./BreakdownSheet";
 import "./Points.css";
 import { Leagues, YourWeek } from "./PointsSide";
 import { PointsCards, PointsRift } from "./PointsTeam";
@@ -10,7 +10,8 @@ import { DIDNT_PLAY, POINTS_VIEWS, type PointsData, type PointsView } from "./ty
 
 /**
  * Points: your week. The head and the live bar; Rift or Card view with the bench under it; on the
- * right the tapped player's games, leagues, the week's series, your week and the sponsor.
+ * right leagues, the week's series, your week and the sponsor. A tapped player's breakdown opens
+ * as a sheet over the page.
  */
 export function PointsPage({
   data,
@@ -23,7 +24,7 @@ export function PointsPage({
   view?: PointsView;
   /** Called with each view the manager chooses, so it can be remembered. */
   onView?: (view: PointsView) => void;
-  /** The player whose games are open, by name; none until a tap. */
+  /** The player whose breakdown is open, by name; none until a tap. */
   open?: string;
 }) {
   const [view, setView] = useState(firstView);
@@ -36,7 +37,6 @@ export function PointsPage({
 
   const side = (
     <>
-      {opened && <GamesPanel player={opened} onClose={() => setOpen(undefined)} />}
       <Leagues leagues={data.leagues} nextTier={data.nextTier} />
       <SideSection title="This week's series" note="your time · KST">
         <SeriesList series={data.series} />
@@ -97,6 +97,7 @@ export function PointsPage({
           );
         })}
       </BenchBar>
+      {opened && <BreakdownSheet player={opened} onClose={() => setOpen(undefined)} />}
     </PageFrame>
   );
 }

@@ -27,10 +27,11 @@ import {
 import { count, ordinal } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays } from "../../rift";
-import { GAME_WINNERS, WEEK3_CHAMPIONS } from "./games";
+import { hangulOf } from "../../fixtures/rosters";
+import { GAME_WINNERS, WEEK3_GAMES, type GameDetail } from "./games";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter, WeekPick } from "./types";
 
-function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[number], champions: string[] = []): PointsSeries {
+function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[number], details: GameDetail[] = []): PointsSeries {
   const row = seriesById(list, played.id);
   const side = fromSide(row, pick.team);
   if (!side.score) throw new Error(`No played series ${played.id}`);
@@ -40,7 +41,9 @@ function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[numb
     const winner = GAME_WINNERS[played.id]?.[index];
     return {
       game: index + 1,
-      champion: champions[index],
+      champion: details[index]?.champion,
+      kda: details[index]?.kda,
+      lines: details[index]?.lines ?? [],
       won: live || !winner ? undefined : winner === pick.team,
       clock: live ? row.clock : undefined,
       points,
@@ -49,18 +52,21 @@ function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[numb
   });
   return {
     id: row.id,
+    day: row.day,
     opponent: side.opponent,
     score: side.score,
     state: row.state,
+    coachResult: played.coachResult,
     points: seriesPoints(played.games, played.coachResult),
     games,
   };
 }
 
-function playerOf(list: readonly Series[], pick: PointsPick, champions: Record<string, string[][]>): PointsPlayer {
-  const series = pick.series.map((played, i) => seriesOf(list, pick, played, champions[pick.name]?.[i]));
+function playerOf(list: readonly Series[], pick: PointsPick, games: Record<string, GameDetail[][]>): PointsPlayer {
+  const series = pick.series.map((played, i) => seriesOf(list, pick, played, games[pick.name]?.[i]));
   return {
     name: pick.name,
+    hangul: hangulOf(pick.name),
     team: pick.team,
     role: pick.role,
     cardId: playerId(pick.name),
@@ -89,7 +95,8 @@ interface WeekFacts {
   highest: number;
   averageCarry: number;
   killer: { name: string; points: number; ownedPct: number };
-  champions?: Record<string, string[][]>;
+  /** Each game's champion, K/D/A and lines, where the week has them. */
+  games?: Record<string, GameDetail[][]>;
 }
 
 /** The weeks Points can show, first to latest; the latest is where `/points` opens. */
@@ -120,7 +127,7 @@ const WEEKS: WeekFacts[] = [
     highest: POINTS_WEEK.highest,
     averageCarry: 19,
     killer: { name: "Chovy", points: 15, ownedPct: 41 },
-    champions: WEEK3_CHAMPIONS,
+    games: WEEK3_GAMES,
   },
 ];
 
@@ -138,10 +145,10 @@ function weekNav(week: number, latest: number) {
 }
 
 function pointsWeek(facts: WeekFacts, latest: number): PointsData {
-  const { series: list, squad, champions = {} } = facts;
+  const { series: list, squad, games = {} } = facts;
   const starters = squad.flatMap((pick): PointsStarter[] => {
     if (pick.slot === "bench") return [];
-    const player = playerOf(list, pick, champions);
+    const player = playerOf(list, pick, games);
     const plays = flexPlays(pick.slot, pick.role);
     if (pick.mark !== "C") return [{ ...player, slot: pick.slot, plays }];
     // The Carry's points ×1.5, a minus towards zero (spec/05-scoring.md); his own are already the result.
@@ -164,7 +171,7 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     highest: facts.highest,
     live: live?.liveGame ? { home: live.home, away: live.away, game: live.liveGame } : undefined,
     starters,
-    bench: squad.filter((p) => p.slot === "bench").map((p) => playerOf(list, p, champions)),
+    bench: squad.filter((p) => p.slot === "bench").map((p) => playerOf(list, p, games)),
     yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, mine: false }],
     leagues: [
       { name: `Overall · ${MY_OVERALL.tier}`, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },

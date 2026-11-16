@@ -5,6 +5,8 @@ import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { MY_EARLIER_WEEKS, MY_WEEK3 } from "../../fixtures/week3";
 import { LATEST_WEEK, POINTS_FIXTURE, POINTS_WEEKS } from "./fixtures";
 import { POINTS_VIEW_KEY, rememberedView, weekOf } from "./index";
+import { LINE, type Kda, type LineWord } from "./games";
+import type { PointsPlayer } from "./types";
 import { PointsPage } from "./PointsPage";
 
 /** Fails unless each piece appears in `out`, each after the one before it. */
@@ -17,7 +19,7 @@ function expectInOrder(out: string, pieces: string[]) {
   }
 }
 
-// The picture's moment: Saturday, T1 v DK live, Faker's games open (points.html).
+// The picture's moment: Saturday, T1 v DK live, Faker's breakdown open (points.html, breakdown.html).
 const PICTURE = <PointsPage data={POINTS_FIXTURE} open="Faker" />;
 
 test("the picture's state holds its head, Rift, bench and side column, in its order", () => {
@@ -44,14 +46,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "Bench",
     "1. MidKTBdd—Didn't play",
     "2. JungleKTCuzz9",
-    "FakerT1 · Mid · Carry✕",
-    "v HLEW 2–1",
-    "G1Azir · W5",
-    "G2Taliyah · L2",
-    "G3Galio · W7",
-    "v DK1–0G1Orianna · W4",
-    "G2Sylas · 14:20Live1",
-    "Your CarryAverage Carry 1925",
+    "✕Faker",
     "Full stats ›",
     "Leagues",
     "Overall · Emerald I48,2116,904",
@@ -78,8 +73,9 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
 
 test("the picture's state boxes the counted games, greys the dropped one and marks Faker chosen", () => {
   const out = html(PICTURE);
-  expect(out.match(/player-panel__counted/g)).toHaveLength(4);
-  expect(out.match(/player-panel__game--dropped/g)).toHaveLength(1);
+  expect(out.match(/points__breakdown-counted/g)).toHaveLength(4);
+  expect(out.match(/points__breakdown-game--dropped/g)).toHaveLength(1);
+  expect(out).toContain('role="dialog"');
   expect(out.match(/tile--selected/g)).toHaveLength(1);
   expect(out).toContain('aria-pressed="true"');
   // Rank moves: four up, one down.
@@ -98,15 +94,15 @@ test("Live shows on the head's bar, the open game's row and the week's series, n
   const out = text(PICTURE);
   // The top bar's Live item, then the three.
   expect(out.match(/Live/g)).toHaveLength(4);
-  expectInOrder(out, ["Live", "T1 v DK, game 2", "v DK1–0G1", "G2Sylas · 14:20Live", "SatT1 v DK1–0 Live"]);
+  expectInOrder(out, ["Live", "T1 v DK, game 2", "Sat v DK 1–0 ›", "G2SylasLive 14:20", "SatT1 v DK1–0 Live"]);
   expect(out).not.toMatch(/game \d live/);
 });
 
-test("each series in a player's games opens its Series page, with no day before the opponent", () => {
+test("each series on the sheet opens its Series page: day, opponent and result, then ›", () => {
   const out = html(PICTURE);
-  expect(out).toMatch(/<a [^>]*href="\/series\/w3-wed-1"[^>]*>v HLE<\/a>/);
-  expect(out).toMatch(/<a [^>]*href="\/series\/w3-sat-2"[^>]*>v DK<\/a>/);
-  expect(text(PICTURE)).not.toMatch(/(Wed|Sat) · v/);
+  expect(out).toContain('href="/series/w3-wed-1"');
+  expect(out).toContain('href="/series/w3-sat-2"');
+  expectInOrder(text(PICTURE), ["Wed v HLE W 2–1 ›", "Sat v DK 1–0 ›"]);
 });
 
 test("the links go where the README says: Highest, Watch, Full stats, All leagues", () => {
@@ -117,19 +113,30 @@ test("the links go where the README says: Highest, Watch, Full stats, All league
   expect(out).toContain('href="/leagues"');
 });
 
-test("the games stay closed until a player is tapped", () => {
+test("the sheet stays closed until a player is tapped", () => {
   const out = text(<PointsPage data={POINTS_FIXTURE} />);
   expect(out).not.toContain("Full stats");
-  expect(out).not.toContain("Your Carry");
+  expect(html(<PointsPage data={POINTS_FIXTURE} />)).not.toContain('role="dialog"');
   expectInOrder(out, ["Bench", "Cuzz9", "Your week"]);
 });
 
-test("the Coach's games lead to his coach card and show no Carry sum", () => {
+test("the Coach's sheet (coach.png): his lines, the series' +3, no C or Average Carry, and his coach card", () => {
   const coach = <PointsPage data={POINTS_FIXTURE} open="kkOma" />;
   expect(html(coach)).toContain('href="/coach/kkoma"');
   const out = text(coach);
-  expect(out).not.toContain("Your Carry");
-  expectInOrder(out, ["kkOmaT1 · Coach✕", "G1W2", "G2L0", "G3W3", "v DK1–0G1W2", "G214:20Live0"]);
+  expect(out).not.toContain("Average Carry");
+  expectInOrder(out, [
+    "kkOma김정균",
+    "T1 · Coach",
+    "10Not final",
+    "Wed v HLE W 2–1 · +3 ›8",
+    "G1WFirst tower · Drakes2",
+    "G2L0",
+    "G3WFirst tower · Drakes · Baron3",
+    "Sat v DK 1–0 ›2",
+    "G1WFirst tower · Baron2",
+    "G2Live 14:200",
+  ]);
 });
 
 test("Card view shows the seven in the broadcast's order with their series and points, then the bench", () => {
@@ -153,7 +160,7 @@ test("Card view shows the seven in the broadcast's order with their series and p
 test("a bench player who didn't play can't be opened; one who played can", () => {
   const bench = html(<PointsPage data={POINTS_FIXTURE} />).split('class="bench-bar"')[1] ?? "";
   expect(bench.match(/role="button"/g)).toHaveLength(1);
-  expect(text(<PointsPage data={POINTS_FIXTURE} open="Cuzz" />)).toContain("CuzzKT · Jungle✕");
+  expect(text(<PointsPage data={POINTS_FIXTURE} open="Cuzz" />)).toContain("KT · Jungle9Wed v GEN L 0–2 ›1");
 });
 
 test("the fixture's total is its starters' points: 94, the Carry's 25 among them, as the shared Week 3 gives them", () => {
@@ -225,10 +232,53 @@ test("Weeks 1 and 2 add up: each total its starters', the Carry's ×1.5 rounded 
   expect(w2.starters.map((p) => p.points)).toEqual([15, 15, 30, 15, 9, 13, 15]);
   expect(w2.total).toBe(112);
   expect(w2.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual(["Star Faker 30", "Flop Delight 9", "Killer Peyz 19"]);
-  expectInOrder(text(<PointsPage data={w2} open="kkOma" />), ["kkOmaT1 · Coach✕", "v DNSW 2–0", "G1W2", "G2W2", "v BFXW 2–1", "G1W2", "G2L0", "G3W3"]);
+  // A final week: no Not final on the sheet; Weeks 1 and 2 have no lines, so the rows show W or L and points.
+  const out = text(<PointsPage data={w2} open="kkOma" />);
+  expectInOrder(out, ["T1 · Coach15", "v DNS W 2–0 · +3 ›7", "G1W2", "G2W2", "v BFX W 2–1 · +3 ›8", "G1W2", "G2L0", "G3W3"]);
 });
 
 test("Leagues' season total is Points' weeks: Weeks 1 and 2 final, and Week 3 so far", () => {
   expect(MY_EARLIER_WEEKS).toEqual([week(1).total, week(2).total]);
   expect(MY_SEASON_TOTAL).toBe(week(1).total + week(2).total + POINTS_FIXTURE.total);
+});
+
+/** spec/05's player table, per game: kills per 2 for tops and supports, else per 3; assists per 5; deaths per 3, per 4 for supports. */
+function playerGame(role: string, [k, d, a]: Kda, lines: readonly LineWord[], live: boolean) {
+  const kills = Math.min(3, Math.floor(k / (role === "top" || role === "sup" ? 2 : 3)));
+  const assists = Math.min(3, Math.floor(a / 5));
+  const deaths = Math.min(3, Math.floor(d / (role === "sup" ? 4 : 3)));
+  // Deathless only once a game is over and he never died.
+  expect(lines.includes(LINE.deathless), `Deathless at ${k}/${d}/${a}`).toBe(d === 0 && !live);
+  return kills + assists - deaths + lines.length;
+}
+
+test("each Week 3 game's points are what spec/05 gives its K/D/A and lines; a coach's, his lines", () => {
+  const squad: (PointsPlayer & { plays?: string })[] = [...POINTS_FIXTURE.starters, ...POINTS_FIXTURE.bench];
+  for (const p of squad) {
+    for (const s of p.series) {
+      for (const g of s.games) {
+        const live = g.clock !== undefined;
+        const worked = g.kda ? playerGame(p.plays ?? p.role, g.kda, g.lines, live) : g.lines.length;
+        expect(worked, `${p.name} v ${s.opponent} G${g.game}`).toBe(g.points);
+        if (p.role !== "coach") expect(g.kda, `${p.name}'s K/D/A`).toBeDefined();
+      }
+    }
+  }
+});
+
+test("the sheet shows the picture: Faker's crest, name, hangul and C, his 25, then each series over its games", () => {
+  expect(html(PICTURE)).toContain('alt="T1 crest"');
+  expectInOrder(text(PICTURE), [
+    "Faker이상혁C",
+    "T1 · Mid",
+    "25Not final · Average Carry 19",
+    "Wed v HLE W 2–1 ›12",
+    "G1AzirW6/1/9Gold · Solo5",
+    "G2TaliyahL2/4/5Gold · First blood2",
+    "G3GalioW4/0/14Gold · First blood · Solo · Deathless7",
+    "Sat v DK 1–0 ›5",
+    "G1OriannaW5/2/8Gold · First blood4",
+    "G2SylasLive 14:201/0/2Solo1",
+    "Full stats ›",
+  ]);
 });

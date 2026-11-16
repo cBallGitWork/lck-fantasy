@@ -1,10 +1,15 @@
 import type { Score, SeriesRow, SeriesState, WeekNav } from "../../parts";
 import type { Mark, PersonRole, RoleKey, SlotKey } from "../../rift";
+import type { Kda, LineWord } from "./games";
 
 /** One game a player played: its champion, won or lost (neither while live), its points, and whether it counts. */
 export interface PointsGame {
   game: number;
   champion?: string;
+  /** His K/D/A; a coach has none. */
+  kda?: Kda;
+  /** The scoring lines that gave points, as words; empty when none did or none are known. */
+  lines: readonly LineWord[];
   won?: boolean;
   /** The live game's clock. */
   clock?: string;
@@ -15,16 +20,21 @@ export interface PointsGame {
 /** One series a player played this week, from his team's side. */
 export interface PointsSeries {
   id: string;
+  /** `Wed`. */
+  day: string;
   opponent: string;
   /** Games won, his team's first. */
   score: Score;
   state: SeriesState;
+  /** The coach's +3 for a series won or −1 for one lost, once it's over. */
+  coachResult?: number;
   points: number;
   games: PointsGame[];
 }
 
 export interface PointsPlayer {
   name: string;
+  hangul: string;
   team: string;
   role: PersonRole;
   /** The id his player or coach card is reached by. */

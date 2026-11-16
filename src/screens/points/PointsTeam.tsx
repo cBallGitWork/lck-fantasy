@@ -18,7 +18,7 @@ export function SeriesLine({ series }: { series: PointsSeries[] }) {
 
 interface TeamProps {
   starters: PointsStarter[];
-  /** The player whose games are open. */
+  /** The player whose breakdown is open. */
   open?: string;
   onOpen: (name: string) => void;
 }

@@ -21,7 +21,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px `--text` rule, the next 3 with `Bo3`, the first in `--text` (player card, coach card).
 - `Menu.tsx`: a key that opens a list of links and actions (a league's Admin menu; the account menu once its items are settled).
 - `States.tsx`: `Loading` (fill bars), `Empty` (a title, one line), `ErrorState` (a title, one line, `Try again ›`).
-- `Modal.tsx`: a card (1056) or sheet (544) over a dimmed page; ✕, Esc, focus kept inside.
+- `Modal.tsx`: a card (1056) or sheet (544) over a dimmed page; ✕, Esc, focus kept inside. A sheet shows its title, or its own `head` (Points' breakdown).
 - `Field.tsx`: a form field: label above, 40px, an error line under.
 - `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
 - `Toast.tsx`: a short message at the foot of the page that goes by itself after `TOAST_MS` (`Kingen added`, `Team full: 2 from T1`).

@@ -1,11 +1,11 @@
-// The Stats picture's players and coaches (stats.html), at Week 4's Tuesday, Weeks 1 to 3 final, and
-// the rest of Baron Steal FC's squad: every page's price, owned % and season points for them.
+// The Stats picture's players and coaches (stats.html), and the made-up rest of the LCK: every
+// page's price, owned %, season points and form for them, at Week 4's Tuesday, Weeks 1 to 3 final.
 // Every name and number is an example.
 
 import type { PersonRole } from "../rift";
 import type { TeamCode } from "./competition";
 
-/** A player in the Stats picture's list: Week 4 price in m, its move, owned %, season points. */
+/** A player or coach in the Stats list: Week 4 price in m, its move, owned %, season points. */
 export interface StatsPlayer {
   name: string;
   team: TeamCode;
@@ -17,7 +17,10 @@ export interface StatsPlayer {
   points: number;
 }
 
-/** The Stats picture's players and coaches (stats.html), then Baron Steal FC's two off its first page. */
+/**
+ * The Stats picture's players and its first seven coaches, then Baron Steal FC's two off its first
+ * page.
+ */
 export const STATS_PLAYERS: StatsPlayer[] = [
   { role: "mid", name: "Chovy", team: "GEN", priceM: 17.5, move: 1, ownedPct: 41, points: 61 },
   { role: "mid", name: "Faker", team: "T1", priceM: 18.5, move: 1, ownedPct: 46, points: 58 },
@@ -50,7 +53,7 @@ export const STATS_PLAYERS: StatsPlayer[] = [
   { role: "mid", name: "Bdd", team: "KT", priceM: 5.0, move: 0, ownedPct: 5, points: 16 },
 ];
 
-/** Made up past the Stats picture's first page, players then coaches: every page's figures for them. */
+/** Made up past the picture's first page, then the picture's last three coaches. */
 export const OFF_PAGE_PLAYERS: StatsPlayer[] = [
   { role: "top", name: "Kingen", team: "NS", priceM: 6.5, move: 1, ownedPct: 3, points: 24 },
   { role: "mid", name: "Clozer", team: "BRO", priceM: 5.0, move: 1, ownedPct: 2, points: 28 },

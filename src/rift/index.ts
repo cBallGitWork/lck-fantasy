@@ -22,6 +22,6 @@ export {
 } from "./roles";
 export { Shirt } from "./Shirt";
 export { RIFT_SLOTS, type RiftPoint } from "./slots";
-export { MARK_NAME, MarkBadge, markKey, type Mark } from "./MarkBadge";
+export { MARK_NAME, MarkBadge, markKey, markNews, type Mark } from "./MarkBadge";
 export { Rift, Tile } from "./Tile";
 export { RIFT_VIEW, VIEWS, type BoardView } from "./views";

@@ -141,6 +141,10 @@
   background: var(--fill);
   color: var(--mid);
 }
-.tile--dim .shirt {
-  opacity: 0.5;
+/* Only the drawing dims: the team code stays mid, 4.5:1 or more (plate, Accessibility). */
+.tile--dim .shirt__svg {
+  opacity: var(--opacity-dim);
+}
+.tile--dim .shirt__code {
+  color: var(--mid);
 }

@@ -9,16 +9,19 @@ import "./OutlinedKey.css";
 export function OutlinedKey({
   children,
   onClick,
+  label,
   disabledReason,
 }: {
   children: ReactNode;
   onClick?: () => void;
+  /** The key's name for a screen reader where its words repeat down a list (`Accept Ella Wong`). */
+  label?: string;
   /** Set when the action can't be taken, as the reason. */
   disabledReason?: string;
 }) {
   const off = disabledReason !== undefined;
   const key = (
-    <button type="button" className={cx("outlined-key", off && "key-off")} disabled={off} onClick={onClick}>
+    <button type="button" className={cx("outlined-key", off && "key-off")} disabled={off} onClick={onClick} aria-label={label}>
       {children}
     </button>
   );

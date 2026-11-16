@@ -1,11 +1,11 @@
 import { useReducer } from "react";
-import { Deadline, MainAction, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, TIME_NOTE, ViewToggle } from "../../parts";
+import { Deadline, MainAction, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, TIME_NOTE, useAnnounce, ViewToggle } from "../../parts";
 import { VIEWS as BOARD_VIEWS } from "../../rift";
 import { CardBoard, RiftBoard } from "./boards";
 import { Buffs } from "./Buffs";
 import type { PickTeamData } from "./fixtures";
 import type { ViewProps } from "./format";
-import { changeCount, pickReducer, type PickAction, type PickState, type PickTeam, type PickView } from "./model";
+import { changeCount, pickNews, pickReducer, type PickAction, type PickState, type PickTeam, type PickView } from "./model";
 import { PlayerCard } from "./PlayerCard";
 import "./pick-team.css";
 
@@ -88,17 +88,19 @@ export function PickTeamPage({
   /** The backend remembers each manager's view (spec/12). */
   onView?: (view: PickView) => void;
 }) {
-  const [state, dispatch] = useReducer(
-    pickReducer((id) => {
-      const player = data.players[id];
-      if (!player) throw new Error(`No player with id ${id}`);
-      return player.role;
-    }),
-    initial,
-  );
+  const playerOf = (id: string) => {
+    const player = data.players[id];
+    if (!player) throw new Error(`No player with id ${id}`);
+    return player;
+  };
+  const reduce = pickReducer((id) => playerOf(id).role);
+  const [state, dispatch] = useReducer(reduce, initial);
+  const announce = useAnnounce();
   const send = (action: PickAction) => {
     if (action.type === "save") onSave?.(state.draft);
     if (action.type === "view") onView?.(action.view);
+    const news = pickNews(action, state, reduce(state, action), (id) => playerOf(id).name);
+    if (news) announce(news);
     dispatch(action);
   };
   return <PickTeamView data={data} state={state} dispatch={send} />;

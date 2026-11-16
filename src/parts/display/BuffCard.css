@@ -5,6 +5,10 @@
   background: var(--paper);
   border: var(--m-rule) solid var(--text);
 }
+.buff-card__name {
+  font-size: inherit;
+  font-weight: var(--w-bold);
+}
 .buff-card__does {
   margin-top: var(--s-1);
   line-height: var(--lh-mid);

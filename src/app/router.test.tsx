@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
-import { PATHS, pathTo, type Go, type ScreenKey } from "../paths";
+import { pageTitle, PATHS, pathTo, PRODUCT, SCREEN_NAME, type Go, type ScreenKey } from "../paths";
 import { htmlAt } from "../testing/render";
 
 // Each route, with its params, and the screen folder it renders. A screen's own content is
@@ -33,6 +33,22 @@ test.each(Object.keys(PATHS) as ScreenKey[])("the %s route renders its screen wi
   expect(out).toContain('class="top-bar"');
   expect(out).toContain(`data-screen="${folder}"`);
   expect(out).toContain("--ink:");
+});
+
+test.each(Object.keys(PATHS) as ScreenKey[])("the %s route has its own title, a skip link before the top bar, and the live region", async (key) => {
+  const [go] = ROUTES[key];
+  const out = await htmlAt(pathTo(go));
+  expect(out).toContain(`<title>${SCREEN_NAME[key]} · ${PRODUCT}</title>`);
+  expect(out.indexOf('href="#main">Skip to content</a>')).toBeLessThan(out.indexOf('class="top-bar"'));
+  expect(out).toContain('<main id="main"');
+  expect(out.match(/aria-live="polite"/g)).toHaveLength(1);
+});
+
+test("a page's title names it: Pick Team · Flol; any other route is Flol", () => {
+  expect(pageTitle(PATHS.pickTeam)).toBe("Pick Team · Flol");
+  expect(pageTitle(PATHS.playerCard)).toBe("Player · Flol");
+  expect(pageTitle("/dev/states")).toBe("Flol");
+  expect(pageTitle(undefined)).toBe("Flol");
 });
 
 test("a path takes its params, escaped", () => {

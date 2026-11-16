@@ -2,7 +2,8 @@
 // Pick Team; the picture's README, Controls). Swaps, the Carry, the Vice-carry and buffs change
 // only the draft; Save makes the draft the saved team, Reset drops it.
 
-import { isBench, type PersonRole, type SquadSlot } from "../../rift";
+import { SAVED_NEWS } from "../../parts";
+import { isBench, markNews, type PersonRole, type SquadSlot } from "../../rift";
 
 /** The two buffs played on this page; Remake and Limitless are played on Transfers. */
 export type PickBuff = "benchBoost" | "dualCarry";
@@ -105,6 +106,18 @@ function swap(draft: PickTeam, a: string, b: string): PickTeam {
   const slots = { ...draft.slots, [aSlot]: b, [bSlot]: a };
   const pass = (mark: string) => (mark === a && isBench(bSlot) ? b : mark === b && isBench(aSlot) ? a : mark);
   return { ...draft, slots, carry: pass(draft.carry), viceCarry: pass(draft.viceCarry) };
+}
+
+/**
+ * What the live region says after an action: `Saved` for a save, the new Carry (or else Vice-carry)
+ * when a mark key moved one (`Faker is your Carry`); nothing else.
+ */
+export function pickNews(action: PickAction, before: PickState, after: PickState, nameOf: (id: string) => string): string | undefined {
+  if (action.type === "save") return SAVED_NEWS;
+  if (action.type !== "makeCarry" && action.type !== "makeViceCarry") return undefined;
+  if (after.draft.carry !== before.draft.carry) return markNews(nameOf(after.draft.carry), "C");
+  if (after.draft.viceCarry !== before.draft.viceCarry) return markNews(nameOf(after.draft.viceCarry), "V");
+  return undefined;
 }
 
 /** The page's state after one action; the roles say who can swap with whom. */

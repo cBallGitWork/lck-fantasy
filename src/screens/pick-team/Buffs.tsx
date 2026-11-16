@@ -15,7 +15,7 @@ export function Buffs({ data, state, dispatch }: ViewProps) {
         const common = { name: b.name, does: b.does };
         if (b.here !== undefined && b.here === played) {
           const cancel = (
-            <button type="button" onClick={() => dispatch({ type: "cancelBuff" })}>
+            <button type="button" aria-label={`Cancel ${b.name}`} onClick={() => dispatch({ type: "cancelBuff" })}>
               Cancel
             </button>
           );

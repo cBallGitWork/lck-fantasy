@@ -25,6 +25,38 @@ export const PATHS = {
 
 export type ScreenKey = keyof typeof PATHS;
 
+/** Each screen's name: the top bar's label and the tab's title (`Pick Team · Flol`). */
+export const SCREEN_NAME: Record<ScreenKey, string> = {
+  home: "Home",
+  pickTeam: "Pick Team",
+  transfers: "Transfers",
+  points: "Points",
+  pointsWeek: "Points",
+  leagues: "Leagues",
+  league: "Leagues",
+  stats: "Stats",
+  live: "Live",
+  series: "Series",
+  compare: "Compare",
+  perfectGame: "Perfect game",
+  priceChanges: "Price changes",
+  settings: "Settings",
+  lckHub: "LCK",
+  playerCard: "Player",
+  coachCard: "Coach",
+  profile: "Manager",
+  following: "Following",
+};
+
+/** The product's name, the tab's title on a page with none of its own. */
+export const PRODUCT = "Flol";
+
+/** The tab's title for a route (`/pick-team` gives `Pick Team · Flol`); the product's name alone for any other. */
+export function pageTitle(routeId: string | undefined): string {
+  const key = (Object.keys(PATHS) as ScreenKey[]).find((k) => PATHS[k] === routeId);
+  return key ? `${SCREEN_NAME[key]} · ${PRODUCT}` : PRODUCT;
+}
+
 /** The `$params` a path names: `"/series/$seriesId"` gives `"seriesId"`. */
 type ParamName<P extends string> = P extends `${string}$${infer Name}/${infer Rest}`
   ? Name | ParamName<Rest>

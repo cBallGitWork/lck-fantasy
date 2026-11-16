@@ -3,7 +3,7 @@
 Seed data held per competition and season: teams, kit colours, stages. Data, never constants in code.
 
 - `lck/crests/<code>.svg`: each LCK team's crest, by team code (docs/design/approved/crests/). `src/parts/Crest.tsx` draws them.
-- `lck/teams.json`: each team's kit colours (primary body, secondary pattern, accent trim) and shirt pattern, by team code. Proposed in docs/design/proposals/2026-11-16-team-shirts/, not approved yet.
+- `lck/teams.json`: each team's kit colours (primary body, secondary pattern, accent trim) and shirt pattern, by team code. Approved in docs/design/proposals/2026-11-16-team-shirts/ (Craig, 16 Nov 2026): shirts on the Rift, the bench, Transfers list rows and Stats rows; crests on the player panel head and the Following feed; a colour stripe on standings and the scorebug.
 
 ## Kit colour sources
 

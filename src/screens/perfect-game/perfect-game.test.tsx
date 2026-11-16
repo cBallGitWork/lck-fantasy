@@ -59,14 +59,15 @@ test("Final is the head's tag alone, and Carry is the sum's label alone", () => 
   expect(out.match(/Carry/g)).toHaveLength(1);
 });
 
-test("the Rift's tiles carry each starter's points (the Carry's result only), series, your dots and the Flex and Coach tags", () => {
+test("the Rift's tiles carry each starter's points (the Carry's result only), series, your dots and the Flex and Coach labels", () => {
   const out = html(<PerfectGameRift game={PERFECT_WEEK3} selected="mid" />);
   for (const p of PERFECT_GAME) expect(out).toContain(p.line);
   expect(out).toContain('class="tile__points num">40</div>');
   expect(text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />)).not.toContain("×");
   expect(out).toContain('title="Carry">C');
   expect(out.match(/aria-label="Your player"/g)).toHaveLength(4);
-  expect(out).toContain("Flex · plays Mid");
+  expect(out).toContain('class="tile__slot tile__slot--flex">Flex<');
+  expect(out).not.toContain("plays Mid");
   expect(out).toContain("Coach 감독");
   expect(out.match(/tile--selected/g)).toHaveLength(1);
 });

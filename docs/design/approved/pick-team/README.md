@@ -20,7 +20,7 @@ Where a manager sets his starters, bench order, Carry and Vice-carry, and plays 
 
 - **Rift view | Card view**: Rift on the first visit, then remembered (spec/12).
 - **A player**: opens his card on the right: crest, team, price and last move, form, owned and season with ranks, last 3 series, and Make Carry (or ✓ Carry), Make Vice-carry, Full card ›. The coach's card has no Carry buttons (spec/01, spec/04). Those he can swap with are outlined and the rest dimmed; tap one and they swap (FPL's one-tap swap), tap him again to let go.
-- **Bench bar**: one row under the pitch (and under the lineup in Card view): `Bench`, then each bench player as a compact tile (order, role icon, name, team, the two fixtures), with **⇅ Swap** between them, which swaps bench 1 and 2. Redrawn 15 Nov 2026 from the grey band of two shirts.
+- **Bench bar**: one row under the pitch (and under the lineup in Card view): `Bench`, then each bench player as a compact tile (order, role icon, name, team, the two fixtures). No swap key: tap one bench player, then the other, to swap bench 1 and 2, as FPL (Craig, 16 Nov 2026). Redrawn 15 Nov 2026 from the grey band of two shirts.
 - **Card view**: one row of seven equal cards, Top, Jungle, Mid, Bot, Support, Flex ("plays Top"), Coach, each with role and icon, photo (the coach a crest), name, team, the two fixtures, form and price; C and V on the photo.
 - **Buffs**: four boxes of one size and style in one row above the Rift, each its name, one line from spec/06 (Bench Boost: Your bench players score this week too; Dual Carry: Your Vice-carry scores ×1.5 too; Remake: Unlimited free transfers; your new squad stays; Limitless: One week, no budget or team cap; then your squad returns) and `1 left`. Bench Boost and Dual Carry show Play, then Cancel until the deadline; once one is chosen the others grey (one a week, spec/06). Remake and Limitless link to Transfers.
 - **Bar under the pitch**: how many changes, Reset, the deadline and its countdown, Save team. Save is disabled with no changes; swaps, Carry, Vice-carry and buffs take effect only on Save (spec/12).
@@ -34,7 +34,7 @@ From his look at the built page; these bind over the pictures above.
 - One-tap swap, as FPL: tap a player and those he can swap with light up; tap one and they swap. No Swap with bench key.
 - A role starter swaps with the Flex when the result is valid: the Flex holds any role, each role slot its own (Zeus and a Flex who plays Top).
 - Role icons are bigger, everywhere (`roleBox`, `roleIcon`, `roleIconSmall` in the theme).
-- The Rift keeps its 984 × 560 shape at any width and the map is drawn in it, so nothing stretches, everywhere.
+- The Rift keeps its shape at any width and the map is drawn in it, so nothing stretches, everywhere.
 - With Dual Carry played the V is gold, as the C.
 - The card's form history is the last 3 series, not weeks.
 - A team crest in a player's card, never on the Rift's tiles or the bench (Craig, 16 Nov 2026).
@@ -42,6 +42,10 @@ From his look at the built page; these bind over the pictures above.
 - Fixture lines give only the opponents: `v DK, NS`.
 - The card drops its series rows: his tile already shows them, and the side lists the week's series.
 - The bar gives only the count (`1 change`); the buff's own card says it is on and unsaved.
+- Later that day: the Rift is square, 720 a side, centred in the main column, and the map redrawn for it: lanes, river, bases, towers and pits (`measure.rift`).
+- Each starter in his place: top in top lane, jungle in the jungle, mid in mid lane, Bot over Support (Craig, 16 Nov 2026) together in bot lane, Coach and Flex by the blue base.
+- Tiles as FPL's: the shirt on a faint lighter card, C or V at its top right and a news flag `!` at its top left, a white name plate, then a dark band (fixtures, or points and series). No role icon on a tile: his place on the Rift says it; the Flex's and Coach's place is a label over the shirt (`FLEX`, `Coach 감독`), and nothing goes under a Flex's tile: no `Flex · plays Top`, no `Not starting` tag (his flag `!` stays at the shirt's corner, the words in his card). No team crests on the tiles.
+- The bench shows the Rift's own tiles (shirt on its card, name plate, fixtures or points band), each under its order and role, `1. Mid`, as FPL's bench and its `1. DEF`; swapping works as before.
 
 ## Placeholders
 

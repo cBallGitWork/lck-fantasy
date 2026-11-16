@@ -16,12 +16,12 @@
 }
 .shirt__body {
   fill: var(--paper);
-  stroke: var(--ink);
+  stroke: var(--text);
   stroke-width: var(--stroke-shirt);
 }
 .shirt__collar {
   fill: none;
-  stroke: var(--ink);
+  stroke: var(--text);
   stroke-width: var(--stroke-shirt);
 }
 .shirt__code {

@@ -64,6 +64,7 @@ The built look is navy with gold, from `src/theme/tokens.ts`; each token below i
 | `--stage-text` | #A09B8C | grey text on the stage |
 | `--dim` | rgba(1, 10, 19, 0.72) | the page behind a modal |
 | `--map-ground`, `--map-river`, `--map-lane`, `--map-base`, `--map-tower` | #0B1A2C, #0D2B3E, #1A2C42, #22374F, #5B5A56 | the Rift map's ground, river, lanes, bases and towers |
+| `--tile-card`, `--tile-plate`, `--on-tile-plate` | rgba(240, 230, 210, 0.12), #FFFFFF, #010A13 | a Rift tile's faint card, its white name plate and the words on it (Craig, 16 Nov 2026) |
 
 - Gold is for two things only: the one main action on a screen (`--ink`) and the banner's hangul
   (`--gold`). Section rules, tabs, selected borders, links, marks, tags and a rank's move (▲/▼) are
@@ -97,14 +98,17 @@ Each part is drawn one way on every screen.
 - **Table:** name far left (after its slot, where a table lists a team) with team after it, figures right-aligned, 40px rows, 12px heads
   in `--mid`. No action column: what you can do to a row goes in its panel on the right. Two exceptions,
   each a page's one job: Transfers' `+`, and a row's `›` where the row opens something.
-- **The bench**, under the Rift or the cards: one compact bar, `Bench` then a slim tile per
-  bench player (order, role icon, name, team, then fixtures or points). Never a band of big shirts.
+- **The Rift**: square, 720 a side, centred in the main column (Craig, 16 Nov 2026). Each tile as FPL's: the
+  shirt on a faint card with a rounded top, the one rounded shape; C or V and a news flag at its top corners; `FLEX` or `Coach 감독` over a Flex's or Coach's shirt, nothing under it; a white
+  name plate; a dark band of fixtures, or points and series; on Transfers the price in a dark chip over it.
+- **The bench**, under the Rift or the cards: one bar, `Bench` then the Rift's own tile per bench
+  player under its order and role (`1. Mid`), as FPL's bench under the pitch (Craig, 16 Nov 2026).
 - **Card view**: the 7 starters in one row, as the LCK broadcast's lineup (Top, Jungle, Mid, Bot,
   Support, Flex, Coach), then the bench bar.
 - **Wide table** (Stats): the head and the name column stick; the table scrolls under them.
 - **Long names** end in `…` at their column's width; the full name shows on hover and in the panel.
 - **Marks:** C and V are round, and so are the live dot, your-player dot (8px, after the name)
-  and a radio button. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0.
+  and a radio button. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
 - **Your players** are marked by that dot, on every screen.
 - **Modal** (a card, a sheet): a dimmed page behind, `✕` top right, Esc closes, focus stays
   inside. A card is 1056 wide; a sheet 544.

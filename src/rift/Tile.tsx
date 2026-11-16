@@ -1,11 +1,10 @@
 import type { ReactNode } from "react";
-import { cx, MeDot, selectable, Tag } from "../parts";
+import { cx, MeDot, selectable } from "../parts";
 import { measure } from "../theme/tokens";
 import { RiftMap } from "./RiftMap";
-import { RoleIcon } from "./RoleIcon";
 import { Shirt } from "./Shirt";
-import type { RoleKey, SlotKey } from "./roles";
-import { ROLE_NAME, slotIcon, slotTag } from "./roles";
+import type { SlotKey } from "./roles";
+import { slotLabel } from "./roles";
 import type { RiftPoint } from "./slots";
 import "./Tile.css";
 
@@ -14,79 +13,84 @@ export type Mark = "C" | "V";
 export const MARK_NAME: Record<Mark, string> = { C: "Carry", V: "Vice-carry" };
 
 export interface TileProps {
+  /** His slot; a Flex's tile says Flex, never the role he plays, which his card says (Craig, 16 Nov 2026). */
   slot: SlotKey;
-  /** The role a Flex plays. */
-  plays?: RoleKey;
   name: string;
   team: string;
-  /** Where the tile's centre stands on the Rift. */
-  at: RiftPoint;
+  /** Where the tile's centre stands on the Rift; a bench tile stands in its bar. */
+  at?: RiftPoint;
   mark?: Mark;
-  /** Dual Carry is played: the V is gold as the C, as the Vice-carry scores ×1.5 too (spec/06). */
+  /** Dual Carry is played: the V filled as the C, as the Vice-carry scores ×1.5 too (spec/06). */
   dual?: boolean;
-  /** A `Flex` label over the Flex's shirt, so his place reads at a glance (Pick Team). */
-  flexLabel?: boolean;
+  /** His news flag (`Not starting`): a `!` at the shirt's top left, the word in his card. */
+  flag?: string;
   /** One of your players. */
   me?: boolean;
   birthday?: boolean;
-  /** The week's points; Pick Team's tiles have none. */
+  /** His price in a dark chip over the card (Transfers). */
+  price?: ReactNode;
+  /** A `×` at the card's top left: tapping the tile sells him (Transfers). */
+  sell?: boolean;
+  /** The week's points, in the dark band under the name (Points, Perfect game). */
   points?: ReactNode;
-  /** The series line: `v HLE 12 · v DK 5`, or the week's fixtures. */
+  /** The band's line: the week's fixtures (Pick Team, Transfers), or each series' points under the points. */
   line?: ReactNode;
-  /** Tags under the tile, after the Flex's or Coach's own. */
-  tags?: ReactNode;
   selected?: boolean;
-  /** `dim` while another tile is being moved; `fit` where it could go. */
+  /** `dim` while another tile is being moved, a sold one's empty place, or a bench player who didn't play; `fit` where it could go. */
   state?: "dim" | "fit";
   onSelect?: () => void;
 }
 
-/** A point on the 984 × 560 Rift as a share of it, so the tiles stay on their lanes at any width. */
-const share = (px: number, of: number) => `${(px / of) * 100}%`;
+/** A point on the square Rift as a share of it, so the tiles stay on their lanes at any width. */
+const share = (px: number) => `${(px / measure.rift) * 100}%`;
 
-/** One starter on the Rift: shirt, team code, role icon, C or V, name, points, series line, tags. */
+/**
+ * One player on the Rift or the bench, as FPL's tile (Craig, 16 Nov 2026): his price chip on Transfers,
+ * the Flex's or Coach's label, his shirt on a faint card with C or V and his flag at its top corners, a
+ * white name plate, then a band: his points and series, or his fixtures.
+ */
 export function Tile(p: TileProps) {
-  const slotLabel = slotTag(p.slot, p.plays);
-  const hasPoints = p.points !== undefined;
+  const label = slotLabel(p.slot);
   return (
     <div
-      className={cx("tile", !hasPoints && "tile--narrow", p.selected && "tile--selected", p.state && `tile--${p.state}`)}
-      style={{
-        left: share(p.at[0], measure.riftW),
-        top: share(p.at[1], measure.riftH),
-      }}
+      className={cx("tile", !p.at && "tile--bench", p.selected && "tile--selected", p.state && `tile--${p.state}`)}
+      style={p.at && { left: share(p.at[0]), top: share(p.at[1]) }}
       {...selectable(p.onSelect, p.selected)}
     >
-      {p.flexLabel && p.slot === "flex" && <span className="tile__flex">{ROLE_NAME.flex}</span>}
-      <div className="tile__kit">
-        <Shirt team={p.team} />
-        <span className="tile__role">
-          <RoleIcon role={slotIcon(p.slot, p.plays)} />
-        </span>
-        {p.mark && (
-          <span className={cx("tile__mark", p.mark === "V" && !p.dual && "tile__mark--v")} title={MARK_NAME[p.mark]}>
-            {p.mark}
+      {p.price !== undefined && <div className="tile__price num">{p.price}</div>}
+      {label && <div className={cx("tile__slot", p.slot === "flex" && "tile__slot--flex")}>{label}</div>}
+      <div className="tile__card">
+        {p.sell && (
+          <span className="tile__sell" aria-hidden="true">
+            ×
           </span>
         )}
+        <div className="tile__kit">
+          <Shirt team={p.team} />
+          {p.flag && (
+            <span className="tile__flag" role="img" aria-label={p.flag} title={p.flag}>
+              !
+            </span>
+          )}
+          {p.mark && (
+            <span className={cx("tile__mark", p.mark === "V" && !p.dual && "tile__mark--v")} title={MARK_NAME[p.mark]}>
+              {p.mark}
+            </span>
+          )}
+        </div>
       </div>
       <div className="tile__name" title={p.name}>
         {p.name}
         {p.me && <MeDot />}
         {p.birthday && " 🎂"}
       </div>
-      {hasPoints && (
-        <div className="tile__points num">
-          {p.points}
-        </div>
-      )}
-      {p.line !== undefined && <div className={cx("tile__line", !hasPoints && "tile__line--fixtures")}>{p.line}</div>}
-      {p.tags}
-      {slotLabel && <Tag>{slotLabel}</Tag>}
+      {p.points !== undefined && <div className="tile__points num">{p.points}</div>}
+      {p.line !== undefined && <div className={cx("tile__line", p.points === undefined && "tile__line--fixtures")}>{p.line}</div>}
     </div>
   );
 }
 
-/** The Rift: the map, with the starters' tiles stood on it. */
+/** The Rift: the square map, centred in the main column, with the starters' tiles stood on it. */
 export function Rift({ children }: { children: ReactNode }) {
   return (
     <div className="rift">

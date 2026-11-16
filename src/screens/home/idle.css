@@ -1,6 +1,6 @@
 /* Home with nothing live (idle.html). Every value is a token. */
 
-/* Idle: the lineup on a broadcast stage, the full main column at the Rift's 984 × 552. */
+/* Idle: the lineup on a broadcast stage, the full main column, its own 984 × 552 stage. */
 .home__stage {
   position: relative;
   aspect-ratio: 41 / 23;

@@ -36,8 +36,8 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
     expect(out).not.toContain("Card view");
   });
 
-  test("all nine on the Rift by role, no bench, each with his price; the two Tops together", () => {
-    expectInOrder(out, ["Zeus", "₩16.0m", "Kingen", "₩6.5m", "Canyon", "₩15.5m", "Cuzz", "₩4.0m", "Faker", "₩18.5m", "Bdd", "₩5.0m", "Ruler", "₩17.0m", "Delight", "₩9.0m", "kkOma", "₩7.0m"]);
+  test("all nine on the Rift by role, no bench, each with his price over his shirt; the two Tops together", () => {
+    expectInOrder(out, ["₩16.0m", "Zeus", "₩6.5m", "Kingen", "₩15.5m", "Canyon", "₩4.0m", "Cuzz", "₩18.5m", "Faker", "₩5.0m", "Bdd", "₩17.0m", "Ruler", "₩9.0m", "Delight", "₩7.0m", "kkOma"]);
     expect(page).not.toContain("bench-bar");
     expect(out).not.toContain("Siwoo DK");
   });

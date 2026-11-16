@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import type { BuffName } from "../../fixtures/week3";
-import { cx, Deadline, formatEok, MainAction, MINUS, OutlinedKey, PageFrame, PageHead, Toast, ViewToggle } from "../../parts";
+import { cx, Deadline, formatEok, MainAction, MINUS, NONE, OutlinedKey, PageFrame, PageHead, Toast, ViewToggle } from "../../parts";
 import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
@@ -12,6 +12,7 @@ import {
   freeLeft,
   freeUsed,
   moves,
+  nextAgainst,
   pendingHit,
   remove,
   restore,
@@ -164,7 +165,9 @@ export function TransfersPage(props: TransfersPageProps) {
                 team={s.p.team}
                 at={spotOf(role, i, standing.length)}
                 mark={s.mark}
-                line={formatEok(s.p.price)}
+                price={formatEok(s.p.price)}
+                sell={!s.empty}
+                line={nextAgainst(fixtures, s.p.team) || NONE}
                 selected={plan.replacing === s.slot}
                 state={s.empty ? "dim" : undefined}
                 onSelect={() => tap(s)}

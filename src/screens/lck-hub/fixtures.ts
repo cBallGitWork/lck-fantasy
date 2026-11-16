@@ -15,7 +15,7 @@ const row = ({ last5, ...rest }: Standing): StandingsRow => ({ ...rest, last5: [
 
 const ROLE_ORDER: readonly PersonRole[] = [...ROLE_KEYS, "coach"];
 
-/** A roster in role order, Top to Support then the coach: game name, hangul, and price in 억 where set. */
+/** A roster in role order, Top to Support then the coach: game name, hangul, and price in m where set. */
 const roster = (name: string, league: string, people: readonly (readonly [string, string])[], pricesEok?: readonly number[]): Roster => ({
   name,
   league,

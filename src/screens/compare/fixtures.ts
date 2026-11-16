@@ -42,7 +42,7 @@ export interface ComparePlayer {
   season: { points: number; rank: number; among: number };
   form: number;
   priceEok: number;
-  /** This week's price rise in 억, if any. */
+  /** This week's price rise in m, if any. */
   riseEok?: number;
   ownedPct: number;
   last3: PastSeries[];
@@ -148,7 +148,7 @@ export const RYU: ComparePlayer = {
 /** Every player Compare has lines for, by name. */
 export const COMPARE_PLAYERS: Record<string, ComparePlayer> = Object.fromEntries([FAKER, CHOVY, KKOMA, RYU].map((p) => [p.name, p]));
 
-/** A row of the second player's search: name, team, price in 억, season points. */
+/** A row of the second player's search: name, team, price in m, season points. */
 export interface SearchRow {
   name: string;
   team: TeamCode;

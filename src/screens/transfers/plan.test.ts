@@ -42,10 +42,10 @@ describe("selling and buying", () => {
 });
 
 describe("the top strip's figures", () => {
-  test("the picture's one transfer, past no free ones, costs −6 and leaves 1.5억 in the bank", () => {
+  test("the picture's one transfer, past no free ones, costs −6 and leaves 1.5m in the bank", () => {
     expect(pendingHit(RULES, 1)).toBe(6);
     expect(freeLeft(RULES, 1)).toBe(0);
-    expect(formatEok(bankNow(SQUAD, PICTURE_PLAN, RULES.bank))).toBe("1.5억");
+    expect(formatEok(bankNow(SQUAD, PICTURE_PLAN, RULES.bank))).toBe("1.5m");
   });
 
   test("free transfers cover what they can and the rest cost the hit each", () => {
@@ -55,7 +55,7 @@ describe("the top strip's figures", () => {
   });
 
   test("a sale with no buy yet puts his price in the bank", () => {
-    expect(formatEok(bankNow(SQUAD, sell(EMPTY_PLAN, "flex"), RULES.bank))).toBe("8.0억");
+    expect(formatEok(bankNow(SQUAD, sell(EMPTY_PLAN, "flex"), RULES.bank))).toBe("8.0m");
   });
 });
 

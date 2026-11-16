@@ -88,7 +88,7 @@ describe("autoFill", () => {
   });
 
   test("the reserve respects the team cap", () => {
-    // T1 is at the cap of 2, so its 1억 player can't be counted on: the 20 would leave 5 for the
+    // T1 is at the cap of 2, so its 1m player can't be counted on: the 20 would leave 5 for the
     // last slot, which only the capped player fits. The fill takes 12 and 8 instead.
     expect(fillBench([[player("cheapt1", "t1", "top"), 1], [player("y8", "y", "mid"), 8],
       [player("e12", "e", "bot"), 12], [player("d20", "w", "support"), 20]], 25)).toEqual(["e12", "y8"]);

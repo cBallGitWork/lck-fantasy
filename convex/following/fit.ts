@@ -137,7 +137,7 @@ function placeholderValue(
       return week ? String(week.benchPoints) : undefined;
     case "price": {
       const player = week && flop(week, settings);
-      return player ? `₩${formatEok(player.price)}` : undefined;
+      return player ? formatEok(player.price).toUpperCase() : undefined;
     }
     case "points":
       return week ? String(week.points) : undefined;

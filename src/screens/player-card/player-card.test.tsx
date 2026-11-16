@@ -20,7 +20,7 @@ const HEAD = ["Mid · T1", "Faker", "이상혁", "Lee Sang-hyeok"];
 const STRIP_NEXT = ["W4 · Wed · Bo3", "v KT", "W4 · Sat · Bo3", "v GEN", "W5 · Thu · Bo3", "v BRO"];
 const TABS = ["This week", "Fixtures", "History", "Champions"];
 const PICK_TEAM_KEYS = ["✓ Carry", "Make Vice-carry", "Swap with bench", "Transfer out", "Compare ›"];
-const PICK_TEAM_META = ["18.5억", "0.5", "19.3", "form · 2nd", "46%", "owned · 1st", "+1,204 / −310 this week"];
+const PICK_TEAM_META = ["18.5m", "0.5", "19.3", "form · 2nd", "46%", "owned · 1st", "+1,204 / −310 this week"];
 const PICK_TEAM_STRIP = ["W2 · Fri", "10", "v BFX", "W3 · Wed", "12", "v HLE", "W3 · Sat", "10", "v DK", ...STRIP_NEXT];
 const PICK_TEAM_SEASON = ["Season", "15 games", "Total", "Per game", "Pts", "Kills", "73", "4.9", "+22", "Deaths", "26", "1.7", "−4", "Steals", "2", "0.1", "+2"];
 
@@ -38,11 +38,11 @@ describe("History, opened from Pick Team", () => {
       ...TABS,
       "LCK Cup 2027",
       "Week", "Series", "Games", "K / D / A", "Price", "Pts", "Week",
-      "3", "Sat · W 2–0 DK", "2", "12/1/15", "18.5억", "10", "22",
+      "3", "Sat · W 2–0 DK", "2", "12/1/15", "18.5m", "10", "22",
       "Wed · W 2–1 HLE", "3", "18/3/20", "12",
-      "2", "Fri · W 2–1 BFX", "13/6/14", "18.0억", "10", "22",
+      "2", "Fri · W 2–1 BFX", "13/6/14", "18.0m", "10", "22",
       "Wed · W 2–0 DNS", "14/4/16", "12",
-      "1", "Sat · W 2–0 NS", "9/3/11", "17.5억", "11", "14",
+      "1", "Sat · W 2–0 NS", "9/3/11", "17.5m", "11", "14",
       "Wed · L 1–2 GEN", "7/9/10", "3",
       "Past seasons", "LCK, scored by Flol",
       "Season", "Games", "K / D / A", "Per game", "Pts",
@@ -53,8 +53,8 @@ describe("History, opened from Pick Team", () => {
   });
 
   test("shows each week's price and total once, on its first row", () => {
-    expect(out.match(/18\.5억/g)).toHaveLength(2);
-    expect(out.match(/18\.0억/g)).toHaveLength(1);
+    expect(out.match(/18\.5m/g)).toHaveLength(2);
+    expect(out.match(/18\.0m/g)).toHaveLength(1);
   });
 
   test("marks History as the chosen tab", () => {
@@ -72,7 +72,7 @@ describe("This week, opened from Points with T1 v DK game 2 live", () => {
       "36",
       "Season · 2nd of 10 mids",
       "Compare ›",
-      "18.5억", "0.5", "18.0", "form · 1st", "46%", "owned · 1st", "+842 / −126 this week",
+      "18.5m", "0.5", "18.0", "form · 1st", "46%", "owned · 1st", "+842 / −126 this week",
       "W2 · Fri", "10", "v BFX", "W3 · Wed", "12", "v HLE", "W3 · Sat", "5", "Live", "v DK",
       ...STRIP_NEXT,
       ...TABS,

@@ -43,7 +43,7 @@ test("the Carry's sum and working", () => {
   expect(carryWorking([8, 9], 17, 1.5)).toBe("8 + 9 = 17 × 1.5");
 });
 
-test("a price held in 억 reads as money and as won", () => {
-  expect(eok(18.5)).toBe("18.5억");
+test("a price held in m reads as money and as won", () => {
+  expect(eok(18.5)).toBe("18.5m");
   expect(eokToWon(7.5)).toBe(750_000_000);
 });

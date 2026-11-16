@@ -1,18 +1,15 @@
-// One way to show money: in 억, to one decimal, as the approved Transfers picture does ("7.5억").
+// One way to show money: in m, to one decimal, as FPL does ("7.5m"; Craig, 16 Nov 2026).
 import { MINUS } from "./figures";
 
 export const WON_PER_EOK = 100_000_000;
 
-/** The one-line note for overseas players (spec/02, Money). */
-export const EOK_NOTE = "1억 = 100 million won, game money only";
-
 export function formatEok(won: number): string {
   const amount = (Math.abs(won) / WON_PER_EOK).toFixed(1);
-  return `${won < 0 ? MINUS : ""}${amount}억`;
+  return `${won < 0 ? MINUS : ""}${amount}m`;
 }
 
-/** A price held in 억, written as every page writes money: `18.5억`. */
+/** A price held in m, written as every page writes money: `18.5m`. */
 export const eok = (priceEok: number) => formatEok(priceEok * WON_PER_EOK);
 
-/** A price held in 억, as won. */
+/** A price held in m, as won. */
 export const eokToWon = (priceEok: number) => Math.round(priceEok * WON_PER_EOK);

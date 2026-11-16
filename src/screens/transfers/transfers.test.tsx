@@ -25,7 +25,7 @@ describe("Rift view mid-transfer (transfers.html)", () => {
       "LCK Cup Week 4 · Deadline Wed 07:45 16:45 KST 9h 45m",
       "Free transfers 0",
       "Pending hit −6",
-      "Bank 1.5억",
+      "Bank 1.5m",
       "Remake",
       "Limitless",
       "Rift view",
@@ -50,7 +50,7 @@ describe("Rift view mid-transfer (transfers.html)", () => {
       "Bench",
       "Bdd",
       "Cuzz",
-      "1 transfer · −6 · Siwoo 7.5억 → Kingen 6.5억 · bank 0.5억 → 1.5억",
+      "1 transfer · −6 · Siwoo 7.5m → Kingen 6.5m · bank 0.5m → 1.5m",
       "Reset",
       "Review and confirm ›",
     ]);
@@ -69,13 +69,13 @@ describe("Rift view mid-transfer (transfers.html)", () => {
       "Pts",
       "Owned",
       "Next",
-      "Kingen NS6.5억389%v DNS Thu✓",
-      "DuDu DNS6.0억336%v NS Thu+",
+      "Kingen NS6.5m389%v DNS Thu✓",
+      "DuDu DNS6.0m336%v NS Thu+",
       "Hype KRX",
       "Clear BFX",
       "Clozer BRO",
       "Pollu BRO",
-      "Chovy GENTeam full17.5억",
+      "Chovy GENTeam full17.5m",
       "Keria T1Team full",
       "Aiming DKOver budget",
       "ShowMaker DKOver budget",
@@ -110,13 +110,13 @@ describe("the confirm sheet (confirm.html)", () => {
     expectInOrder(out, [
       "Confirm your transfers",
       "Out",
-      "Siwoo DK · Flex · 7.5억",
+      "Siwoo DK · Flex · 7.5m",
       "In",
-      "Kingen NS · Flex, plays Top · 6.5억",
+      "Kingen NS · Flex, plays Top · 6.5m",
       "Cost",
       "−6 · no free transfers left",
       "Bank",
-      "0.5억 → 1.5억",
+      "0.5m → 1.5m",
       "Back",
       "Confirm",
       "Deadline Wed 07:45 16:45 KST",
@@ -128,7 +128,7 @@ describe("before any change", () => {
   const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />);
 
   test("the squad as it stands, no hit, and Review and confirm off with why", () => {
-    expectInOrder(out, ["Free transfers 0", "Pending hit 0", "Bank 0.5억", "Siwoo", "Flex · plays Top", "No changes", "Review and confirm ›", "Players"]);
+    expectInOrder(out, ["Free transfers 0", "Pending hit 0", "Bank 0.5m", "Siwoo", "Flex · plays Top", "No changes", "Review and confirm ›", "Players"]);
     expect(html(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />)).toMatch(/<button[^>]*disabled=""[^>]*>Review and confirm/);
   });
 });
@@ -149,6 +149,6 @@ describe("Rift view or Card view", () => {
 test("Show puts fixtures, price or owned under a player", () => {
   const zeus = SQUAD[0]!;
   expect(under("Fixtures", zeus, TRANSFERS_PICTURE.fixtures)).toBe("v DK · v NS");
-  expect(under("Price", zeus, TRANSFERS_PICTURE.fixtures)).toBe("16.0억");
+  expect(under("Price", zeus, TRANSFERS_PICTURE.fixtures)).toBe("16.0m");
   expect(under("Owned", zeus, TRANSFERS_PICTURE.fixtures)).toBe("31%");
 });

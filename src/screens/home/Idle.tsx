@@ -48,14 +48,11 @@ function NextOnStream({ next }: { next: NextSeries }) {
   );
 }
 
-/** The week's seven starters as an LCK lineup reveal, the next series on stream, Pick Team ›. */
+/** The week's seven starters as an LCK lineup reveal and the next series on stream (Pick Team is the deadline bar's). */
 function LineupStage({ data }: { data: HomeIdleData }) {
   return (
     <div className="home__stage">
       <h2 className="home__stage-title">Week {data.lineupWeek} lineup</h2>
-      <span className="home__stage-go">
-        <LinkGo go={{ to: PATHS.pickTeam }}>Pick Team</LinkGo>
-      </span>
       <NextOnStream next={data.next} />
       <span className="home__floor" />
       <ol className="home__starters" aria-label={`Week ${data.lineupWeek} lineup`}>
@@ -77,12 +74,11 @@ export function HomeIdle({ data, ...actions }: { data: HomeIdleData } & HomeActi
       side={
         <SideSection title={data.week.label} note={<WeekTag final={data.week.final} />}>
           <WeekTotal week={data.week} />
-          <h3 className="home__sub">Star and flop</h3>
           <PlayerList
             label="Star and flop"
             players={[
-              { ...data.star, stat: "star" },
-              { ...data.flop, stat: "flop" },
+              { ...data.star, stat: "Star" },
+              { ...data.flop, stat: "Flop" },
             ]}
           />
           <div className="home__more">

@@ -3,7 +3,7 @@
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
 import { MANAGERS } from "../../fixtures/managers";
-import { seriesById } from "../../fixtures/series";
+import { fromSide, seriesById } from "../../fixtures/series";
 import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
 import { score } from "../../parts";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
@@ -34,7 +34,7 @@ export interface ProfilePick extends ProfilePlayer {
   mark?: Mark;
   /** The week's points, Carry's ×1.5 in; absent when he didn't play. */
   points?: number;
-  /** The week's series he played, as his line shows them: `GEN 2–0 KT · Wed`. */
+  /** The week's series he played, from his team's side as Points shows them: `v KT 2–0 · Wed`. */
   series: string[];
   /** Why he has no series, in place of them. */
   note?: string;
@@ -117,16 +117,17 @@ export interface ProfileData {
 
 const player = (name: string, team: TeamCode): ProfilePlayer => ({ id: playerId(name), name, team });
 
-/** A series as a player's line shows it: `GEN 2–0 KT · Wed`. */
-function seriesLine(id: string): string {
+/** A series from his team's side, as Points shows it: `v KT 2–0 · Wed` (the row already names his team). */
+function seriesLine(team: TeamCode, id: string): string {
   const s = seriesById(WEEK3_SERIES_FINAL, id);
-  if (!s.score) throw new Error(`No final Week 3 series ${id}`);
-  return `${s.home} ${score(s.score)} ${s.away} · ${s.day}`;
+  const side = fromSide(s, team);
+  if (!side.score) throw new Error(`No final Week 3 series ${id}`);
+  return `v ${side.opponent} ${score(side.score)} · ${s.day}`;
 }
 
-const lines = (...ids: string[]) => ids.map(seriesLine);
-const GEN_WEEK = lines("w3-wed-2", "w3-sat-1");
-const T1_WEEK = lines("w3-wed-1", "w3-sat-2");
+const lines = (team: TeamCode, ...ids: string[]) => ids.map((id) => seriesLine(team, id));
+const GEN_WEEK = lines("GEN", "w3-wed-2", "w3-sat-1");
+const T1_WEEK = lines("T1", "w3-wed-1", "w3-sat-2");
 
 const WEEK3_TEAM: ProfilePick[] = [
   { slot: "top", ...player("Kiin", "GEN"), points: 11, series: GEN_WEEK },
@@ -134,10 +135,10 @@ const WEEK3_TEAM: ProfilePick[] = [
   { slot: "mid", ...player("Chovy", "GEN"), mark: "V", points: 17, series: GEN_WEEK },
   { slot: "bot", ...player("Ruler", "GEN"), mark: "C", points: 21, series: GEN_WEEK },
   { slot: "sup", ...player("Keria", "T1"), points: 9, series: T1_WEEK },
-  { slot: "flex", ...player("Kingen", "NS"), plays: "top", points: 5, series: lines("w3-thu-1", "w3-fri-2") },
+  { slot: "flex", ...player("Kingen", "NS"), plays: "top", points: 5, series: lines("NS", "w3-thu-1", "w3-fri-2") },
   { slot: "coach", ...player("kkOma", "T1"), points: 16, series: T1_WEEK },
   { slot: "bench1", ...player("Bdd", "KT"), plays: "mid", series: [], note: "Not in KT's lineup" },
-  { slot: "bench2", ...player("Cuzz", "KT"), plays: "jng", points: 9, series: lines("w3-wed-2", "w3-fri-1") },
+  { slot: "bench2", ...player("Cuzz", "KT"), plays: "jng", points: 9, series: lines("KT", "w3-wed-2", "w3-fri-1") },
 ];
 
 export const PROFILE: ProfileData = {

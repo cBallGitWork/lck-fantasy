@@ -42,9 +42,9 @@ test("a series strip holds the last series with points, the rule, then the next 
 });
 
 test("the tier shield draws its body, band and division under the page's class", () => {
-  const out = html(<TierShield className="home__shield" division="I" />);
+  const out = html(<TierShield className="home__shield" />);
   expect(out).toContain('<svg class="home__shield" viewBox="0 0 40 46" aria-hidden="true">');
   expect(out).toContain('class="home__shield-body"');
   expect(out).toContain('<path class="home__shield-band" d="M5 15 H35"></path>');
-  expect(out).toContain('<text class="home__shield-division" x="20" y="31" text-anchor="middle">I</text>');
+  expect(out).not.toContain("<text");
 });

@@ -68,7 +68,6 @@ const WEEK3_AT_POINTS: CardWeek = {
       opponent: side.opponent,
       score: side.score,
       state: s.state === "live" ? "live" : "final",
-      liveGame: s.liveGame,
       games: games.map((points, i) => ({ ...gameAtPoints(id, i), points })),
     };
   }),

@@ -44,7 +44,7 @@ export const LOCKED = true;
 
 /** What the Delete sheet lists for Baron Steal FC. */
 export const DELETE_ROWS: DeleteRow[] = [
-  { what: "Team and squad", detail: MANAGER.team },
+  { what: "Team and squad" },
   { what: "Points and history", detail: "Weeks 1–3 · 187 pts" },
   { what: "Ranks in 5 leagues", detail: "Overall, United Kingdom, T1, 2 private" },
   { what: "Follows", detail: "12 following · 9 followers" },

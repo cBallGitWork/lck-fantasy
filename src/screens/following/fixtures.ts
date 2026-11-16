@@ -3,7 +3,7 @@
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
 import { MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
-import { BEST_OF, CARRY_MULTIPLIER, HIT_POINTS, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
+import { CARRY_MULTIPLIER, HIT_POINTS, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
 import type { FollowingData, Manager, SeriesItem } from "./feed";
 
 const { minji: MINJI, jae: JAE, dan: DAN } = MANAGERS;
@@ -14,14 +14,14 @@ const SAM: Manager = { id: "sam", name: "Sam Hill", team: "Guma Gang" };
 const PRIYA: Manager = { id: "priya", name: "Priya Shah", team: "Zeus Juice" };
 
 /** A Week 3 series' teams and score, as the shared fixture holds them. */
-function week3(seriesId: string): Pick<SeriesItem, "home" | "away" | "score" | "bestOf"> {
+function week3(seriesId: string): Pick<SeriesItem, "home" | "away" | "score"> {
   const s = seriesById(WEEK3_SERIES_AT_POINTS, seriesId);
   if (!s.score) throw new Error(`No Week 3 series ${seriesId} with a score.`);
-  return { home: s.home, away: s.away, score: s.score, bestOf: BEST_OF };
+  return { home: s.home, away: s.away, score: s.score };
 }
 
 const DEADLINE = { local: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.time}`, kst: WEEK3_DEADLINE.kst };
-const WEEK2_GEN_DNS = { home: "GEN", away: "DNS", score: [2, 0], bestOf: BEST_OF } as const;
+const WEEK2_GEN_DNS = { home: "GEN", away: "DNS", score: [2, 0] } as const;
 const WEEK2_ENDED = { local: "Sun 12:30", kst: "21:30" } as const;
 
 export const FOLLOWING: FollowingData = {
@@ -32,6 +32,7 @@ export const FOLLOWING: FollowingData = {
     {
       week: 3,
       notFinal: true,
+      deadline: DEADLINE,
       truckable: true,
       items: [
         {
@@ -86,7 +87,6 @@ export const FOLLOWING: FollowingData = {
             { out: "Oner", in: "Canyon", soFar: 2 },
             { out: "Bdd", in: "Chovy", soFar: 3 },
           ],
-          at: DEADLINE,
         },
         {
           kind: "deadline",
@@ -98,9 +98,8 @@ export const FOLLOWING: FollowingData = {
             { out: "Lucid", in: "Oner", soFar: 0 },
             { out: "Chovy", in: "Faker", soFar: 24 },
           ],
-          at: DEADLINE,
         },
-        { kind: "deadline", id: "f6", manager: JAE, transfers: 0, swaps: [], at: DEADLINE },
+        { kind: "deadline", id: "f6", manager: JAE, transfers: 0, swaps: [] },
       ],
     },
     {

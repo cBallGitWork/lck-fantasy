@@ -17,6 +17,9 @@
   font-size: var(--size-lead);
   font-weight: var(--w-bold);
 }
+.following__deadline {
+  margin: 0 0 var(--s-2);
+}
 .following__item {
   display: grid;
   grid-template-columns: calc(var(--s-7) * 4) minmax(0, 1fr) calc(var(--s-6) * 4);
@@ -38,7 +41,7 @@
 }
 .following__team,
 .following__sub,
-.following__bo,
+.following__deadline,
 .following__so-far {
   color: var(--mid);
   font-size: var(--size-small);

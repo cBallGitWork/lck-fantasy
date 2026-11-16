@@ -28,7 +28,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `OutlinedKey.tsx`: any other key; disabled with its reason.
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `Placeholder.tsx`: a dashed box with one word (sponsor, photo).
-- `TierShield.tsx`: Overall's tier shield with its division (spec/08); the page sizes and colours it through its class names.
+- `TierShield.tsx`: Overall's tier shield, no text on it (spec/08); the page sizes and colours it through its class names.
 - `SponsorNote.tsx`: `All sponsors are made up.`
 - `money.ts`: an amount in 억 (`eok` for a price held in 억, `eokToWon`), and the note for overseas players (spec/02).
 - `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`), per-game and one-decimal figures, per cents, `Bo3`, the Carry's `22×1.5` and absence (`—`), written one way everywhere.

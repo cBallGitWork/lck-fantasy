@@ -4,6 +4,8 @@ Every stat Flol holds, players and coaches, in one sortable list (spec/12, Stats
 
 **Approved:** Craig, 16 Nov 2026, "looks good", then "save". Along the way he set every line as a count, with the toggle dividing them by games ("we have a toggle for count/per game count"), and took the panel's calls. The names, teams and numbers are a made-up LCK Cup at the Pick Team picture's moment (Week 4, Tuesday, Weeks 1 to 3 final), not roster data. Games and series match the [LCK hub](../lck-hub/)'s standings, and form is points ÷ 3. There is no `plate.md` yet, so this binds layout, content and order, not colour or type. The only exception is the price arrows: a rise in red and a fall in blue, set for every screen. The source is [docs/design/proposals/2026-11-16-stats/](../../proposals/2026-11-16-stats/) (`stats.html`, `brief.md`, `references.md`).
 
+**Changed by Craig, 16 Nov 2026:** no role icon on the Coaches tab's rows (the tab and column say Coach).
+
 | File | Shows |
 |---|---|
 | `1440.png`, `stats.html` | Players, season totals, sorted by points |

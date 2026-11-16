@@ -32,6 +32,7 @@ export {
   type Score,
 } from "./text/figures";
 export { money, mToWon, formatWon, WON_PER_M } from "./text/money";
+export { browserZone, timeIn } from "./text/time";
 export { PriceMove, RankMove } from "./display/Move";
 export { OutlinedKey } from "./controls/OutlinedKey";
 export { PageFrame } from "./frame/PageFrame";

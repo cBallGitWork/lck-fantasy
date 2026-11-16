@@ -4,10 +4,11 @@ import { cx, Deadline, formatWon, MainAction, NONE, OutlinedKey, PageFrame, Page
 import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
-import { arrange, byRole, type Standing } from "./lineup";
+import { byRole, lineupIds, type Standing } from "./lineup";
 import {
   add,
   bankNow,
+  CONFIRMED,
   EMPTY_PLAN,
   freeLeft,
   freeUsed,
@@ -91,12 +92,13 @@ export function TransfersPage(props: TransfersPageProps) {
   const done = moves(squad, plan).filter((m): m is { out: SquadPlayer; in: ListPlayer } => m.in !== null);
   const groups = byRole(squad, plan);
 
+  const say = (message: string) => setToast({ message, n: (toast?.n ?? 0) + 1 });
   const take = (step: Step) => {
     if (step.plan !== plan && step.plan.replacing && step.plan.replacing !== plan.replacing) {
       setFilters({ ...filters, role: roleFilterFor(squad, step.plan.replacing) });
     }
     setPlan(step.plan);
-    setToast({ message: step.toast, n: (toast?.n ?? 0) + 1 });
+    say(step.toast);
   };
   /** Tapping one of the nine: an empty slot gets its player back; anyone else is taken out. */
   const tap = (s: Standing) => take(s.empty ? restore(squad, plan, s.slot) : remove(squad, plan, s.slot));
@@ -212,13 +214,13 @@ export function TransfersPage(props: TransfersPageProps) {
           deadline={props.deadline}
           onBack={() => setReviewing(false)}
           onConfirm={() => {
-            const lineup = Object.fromEntries(Object.entries(arrange(squad, plan)).map(([slot, p]) => [slot, p.id])) as Record<SquadSlot, string>;
             props.onConfirm?.(
               done.map((m) => ({ out: m.out.id, in: m.in.id })),
-              lineup,
+              lineupIds(squad, plan),
             );
             setReviewing(false);
             reset();
+            say(CONFIRMED);
           }}
         />
       )}

@@ -37,5 +37,11 @@ export function expectInOrder(out: string, pieces: readonly string[]) {
   }
 }
 
+/** Fails unless `out` draws its deadline as the Deadline part, its local time in the part's bold, and no countdown. */
+export function expectDeadlinePart(out: string, local: string) {
+  expect(out).toContain(`<span class="deadline">Deadline <b class="num">${local}</b>`);
+  expect(out).not.toContain("deadline__count");
+}
+
 /** A handler that does nothing, for props a test doesn't press. */
 export const noop = () => {};

@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { timeIn } from "../../parts";
-import { expectInOrder, html, noop, text } from "../../testing/render";
+import { expectDeadlinePart, expectInOrder, html, noop, text } from "../../testing/render";
 import { DeleteSheet } from "./DeleteSheet";
 import { BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, DRAFT, REMINDER_HOURS, SAVED, SIGN_UP, SQUAD_SIZE } from "./fixtures";
 import { Settings } from "./index";
@@ -55,6 +55,10 @@ describe("Settings, each tab as its picture draws it", () => {
     expectInOrder(out, [">Team •<", 'aria-selected="true"', ">Display<", "Time zone", "Browser · Europe/London", "Deadline", "Wed 07:45", "16:45 KST", "Theme"]);
     expectInOrder(text(<Settings firstTab="Display" {...PICTURE} />), ["DeviceLightDark", ...SAVE_BAR, ...FOOT]);
     expect(out).toMatch(/aria-pressed="true">Device</);
+  });
+
+  test("Display's deadline is the Deadline part, as on Pick Team", () => {
+    expectDeadlinePart(settingsOn("Display"), "Wed 07:45");
   });
 
   test("Emails: both off by default (spec/12), the reminder's lead time, and the address they go to", () => {

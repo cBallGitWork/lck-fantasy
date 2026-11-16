@@ -14,8 +14,6 @@ export { Menu, type MenuItem } from "./Menu";
 export { Modal, wrapFocus } from "./Modal";
 export {
   bestOf,
-  carrySum,
-  carryWorking,
   count,
   inOut,
   MINUS,

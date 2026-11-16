@@ -31,7 +31,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `TierShield.tsx`: Overall's tier shield with its division (spec/08); the page sizes and colours it through its class names.
 - `SponsorNote.tsx`: `All sponsors are made up.`
 - `money.ts`: an amount in 억 (`eok` for a price held in 억, `eokToWon`), and the note for overseas players (spec/02).
-- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`), per-game and one-decimal figures, per cents, `Bo3`, the Carry's `22×1.5` and absence (`—`), written one way everywhere.
+- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`), per-game and one-decimal figures, per cents, `Bo3` and absence (`—`), written one way everywhere.
 - `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
 - `GoLink.tsx`: a link inside Flol through the router, typed by `src/paths.ts` (`Go`).
 - `selectable.ts`: makes a tile or card a key: click, Enter or Space.

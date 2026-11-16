@@ -65,9 +65,9 @@ export const font = {
   mono: '"IBM Plex Mono", monospace',
 } as const;
 
-/** Type sizes in px. Nothing under 12, save a tag's 11. */
+/** Type sizes in px. Nothing under 12. */
 export const size = {
-  tag: 11,
+  /** Table heads, notes and every tag. */
   small: 12,
   body: 14,
   lead: 16,

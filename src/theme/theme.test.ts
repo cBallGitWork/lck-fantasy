@@ -2,7 +2,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { expect, test } from "vitest";
-import { color, themeCss, themeVars } from "./tokens";
+import { color, size, themeCss, themeVars } from "./tokens";
 
 const SRC = join(import.meta.dirname, "..");
 const THEME = import.meta.dirname + sep;
@@ -72,6 +72,14 @@ test("every var(--name) the app uses is a token", () => {
 
 const BASE = code(join(THEME, "base.css"));
 const rule = (selector: string) => BASE.match(new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^{]*\\{([^}]*)\\}`))?.[1] ?? "";
+
+test("no type size is under the plate's smallest, so every tag is 12px", () => {
+  expect(Math.min(...Object.values(size))).toBe(size.small);
+  expect(size.small).toBe(12);
+  const underSmallest = new RegExp(String.raw`\b${size.small - 1}px\b`);
+  expect(SOURCES.filter((path) => underSmallest.test(code(path))).map((path) => relative(SRC, path))).toEqual([]);
+  expect(themeCss()).not.toMatch(underSmallest);
+});
 
 test("a hover underline has one look, .hover-line: 1px, 4px below, and no page draws its own", () => {
   expect(rule(".hover-line:hover")).toContain("text-decoration-thickness: var(--m-rule)");

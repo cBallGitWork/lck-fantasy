@@ -25,6 +25,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   that role; where there's a choice, the player already starting keeps his place; new players
   fill what is left, the flex or the bench. Example: in the swap above, the bench jungler starts
   at jungle and the new mid takes his bench spot (Craig, 16 Nov 2026).
+- An empty role slot takes a new player of that role first, then the bench in bench order (bench
+  1 before bench 2), and the flex only last. New players left over fill the flex before the
+  bench (Craig, 16 Nov 2026).
+- Crossed transfers each fill the other's role slot. Example: sell your jungler for a mid and
+  your mid for a jungler; the new jungler starts at jungle, the new mid at mid, and the bench is
+  left alone (Craig, 16 Nov 2026).
 
 ## Undoing a transfer
 

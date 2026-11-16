@@ -8,7 +8,7 @@ of this is Flol's own. Open questions are in [docs/to-grill.md](../docs/to-grill
 
 ## Following
 
-- In the LCK Cup beta.
+- In the beta, Split 1 (Craig, 16 Nov 2026).
 - By request, one-way: a manager asks to follow Minji, she accepts, and Minji's week shows in his
   feed. She sees his only if she asks too.
 - A manager can unfollow, and can remove or block a follower.

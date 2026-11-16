@@ -1,5 +1,7 @@
 import { createRootRoute, createRoute, createRouter, Outlet, type RouterHistory } from "@tanstack/react-router";
 import type { ReactElement } from "react";
+import { DEV_STATES_PATH } from "./devStates";
+import { DevStatesPage } from "./DevStatesPage";
 import { PATHS, type ScreenKey } from "./paths";
 import { CoachCardScreen } from "./screens/coach-card";
 import { CompareScreen } from "./screens/compare";
@@ -20,7 +22,7 @@ import { StatsScreen } from "./screens/stats";
 import { TransfersScreen } from "./screens/transfers";
 import { ThemeStyle } from "./theme";
 
-// One route per approved screen (docs/design/approved/), each its folder's index.tsx.
+// One route per approved screen (docs/design/approved/), each its folder's index.tsx; in dev also /dev/states.
 function Root() {
   return (
     <>
@@ -54,6 +56,8 @@ const routeTree = rootRoute.addChildren([
   screen(PATHS.coachCard, CoachCardScreen),
   screen(PATHS.profile, ProfileScreen),
   screen(PATHS.following, FollowingScreen),
+  // Dev only: a build drops it with the page.
+  ...(import.meta.env.DEV ? [createRoute({ getParentRoute: () => rootRoute, path: DEV_STATES_PATH, component: DevStatesPage })] : []),
 ]);
 
 /** The app's router; tests pass a memory history. */

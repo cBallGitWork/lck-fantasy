@@ -1,6 +1,7 @@
 import { useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
+import { useDevState } from "../../parts";
 import { PATHS, pathTo } from "../../paths";
 import {
   COMPETITION,
@@ -44,9 +45,20 @@ function copy(what: string, words: string) {
 /** Remove a manager picks a row then confirms (README); no picture draws either yet. */
 const removeManager = () => console.warn("Remove a manager: no picture of its row pick or confirm yet");
 
-/** Leagues and one league's table (`/leagues/$leagueId`), on the picture's made-up Split 2 Week 14, with the league forms as sheets over it. */
+/**
+ * Leagues and one league's table (`/leagues/$leagueId`), on the picture's made-up Split 2 Week 14, with the league forms as sheets over it.
+ * In dev, `?state=` opens a picture's sheet over the league (`create`, `created`, `join`, `delete`, `leave`) or its Admin menu (`admin`).
+ */
 export function LeaguesScreen() {
   const { leagueId = OPEN_LEAGUE_ID } = useParams({ strict: false });
+  const dev = useDevState<{ form?: OpenForm; adminOpen?: true }>({
+    admin: { adminOpen: true },
+    create: { form: { kind: "create" } },
+    created: { form: { kind: "created", league: makeLeague(NEW_LEAGUE.name, SCORING_WEEKS[0].week, NEW_LEAGUE.code, NEW_TABLE).view } },
+    join: { form: { kind: "join" } },
+    delete: { form: { kind: "delete", id: leagueId } },
+    leave: { form: { kind: "leave", id: leagueId } },
+  });
   const [mine, setMineState] = useState(kept);
   const setMine = (next: MyLeagues) => {
     kept = next;
@@ -61,7 +73,7 @@ export function LeaguesScreen() {
   const page = pages[league.id] ?? FIRST_PAGE;
   const setPage = (next: number) => setPages({ ...pages, [league.id]: next });
   // A sheet belongs to the league it opened over, so Open league, moving to another, closes it.
-  const [sheet, setSheet] = useState<{ on: string; form: OpenForm }>({ on: leagueId, form: null });
+  const [sheet, setSheet] = useState<{ on: string; form: OpenForm }>({ on: leagueId, form: dev?.form ?? null });
   const form = sheet.on === leagueId ? sheet.form : null;
   const open = (next: OpenForm) => setSheet({ on: leagueId, form: next });
   const close = () => open(null);
@@ -128,7 +140,7 @@ export function LeaguesScreen() {
           {...table}
         />
       ) : (
-        <LeagueTable key={league.id} league={league} nameMax={LEAGUE_NAME_MAX} actions={actions} {...table} />
+        <LeagueTable key={league.id} league={league} nameMax={LEAGUE_NAME_MAX} actions={actions} adminOpen={dev?.adminOpen} {...table} />
       )}
 
       {form?.kind === "create" && (

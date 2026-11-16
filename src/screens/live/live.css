@@ -187,20 +187,7 @@
   color: var(--mid);
 }
 .live__mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--m-mark);
-  height: var(--m-mark);
   margin-left: var(--s-1);
-  border: var(--m-rule) solid var(--text);
-  border-radius: 50%;
-  font-size: var(--size-small);
-  font-weight: var(--w-bold);
-}
-.live__mark--c {
-  background: var(--text);
-  color: var(--bg);
 }
 .live__games {
   display: flex;

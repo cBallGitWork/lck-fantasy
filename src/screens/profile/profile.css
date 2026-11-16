@@ -35,30 +35,13 @@
 /* Points' head: ‹ Week 3 ›, the points, Average and Highest, the tags. */
 .profile__week {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: var(--s-3);
   margin-bottom: var(--s-3);
 }
 .profile__week-name {
   font-size: var(--size-head);
   font-weight: var(--w-bold);
-}
-.profile__arrow {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--m-target);
-  height: var(--m-target);
-  font: inherit;
-  font-size: var(--size-lead);
-  color: var(--text);
-  background: none;
-  border: 0;
-  cursor: pointer;
-}
-.profile__arrow--off {
-  color: var(--line);
-  cursor: default;
 }
 .profile__week-points {
   margin-left: var(--s-2);
@@ -120,25 +103,9 @@
   width: 26.4%;
 }
 
-/* C and V: round, C filled, V outlined. */
 .profile__mark {
-  display: inline-block;
-  width: var(--m-mark);
-  height: var(--m-mark);
   margin-left: var(--s-2);
-  border-radius: 50%;
-  background: var(--text);
-  color: var(--bg);
-  font-size: var(--size-small);
-  font-weight: var(--w-bold);
-  line-height: var(--m-mark);
-  text-align: center;
-}
-.profile__mark--v {
-  background: var(--paper);
-  color: var(--text);
-  border: var(--m-rule) solid var(--text);
-  line-height: calc(var(--m-mark) - var(--m-rule-heavy));
+  vertical-align: middle;
 }
 
 .profile__left {

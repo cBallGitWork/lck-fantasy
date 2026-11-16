@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LinkGo, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle } from "../../parts";
+import { FinalTag, LinkGo, LiveTag, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, ViewToggle } from "../../parts";
 import { PATHS } from "../../paths";
 import { BenchBar, BenchTile } from "../../rift";
 import { BreakdownSheet } from "./BreakdownSheet";
@@ -56,7 +56,7 @@ export function PointsPage({
         hangul={data.hangul}
         week={data.week}
         figure={data.total}
-        tags={data.final ? <Tag>Final</Tag> : <Tag kind="notFinal">Not final</Tag>}
+        tags={<FinalTag final={data.final} />}
         figures={[
           { label: "Average", value: data.average },
           { label: "Highest", value: data.highest, go: { to: PATHS.perfectGame } },
@@ -64,7 +64,7 @@ export function PointsPage({
       >
         {data.live && (
           <div className="points__live">
-            <Tag kind="live">Live</Tag>
+            <LiveTag />
             <b>
               {data.live.home} v {data.live.away}, game {data.live.game}
             </b>

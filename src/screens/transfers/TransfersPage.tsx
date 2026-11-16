@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import type { BuffName } from "../../fixtures/week3";
-import { cx, Deadline, formatEok, MainAction, MINUS, NONE, OutlinedKey, PageFrame, PageHead, Toast, ViewToggle } from "../../parts";
+import { cx, Deadline, formatEok, MainAction, NONE, OutlinedKey, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
 import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
@@ -69,7 +69,6 @@ export interface TransfersPageProps {
   onBuff?: (buff: BuffName) => void;
 }
 
-const hitLabel = (hit: number) => (hit > 0 ? `${MINUS}${hit}` : "0");
 
 /** Transfers (transfers.html, changed by Craig 16 Nov 2026): the nine by role, the changes, the list and the week's confirms. */
 export function TransfersPage(props: TransfersPageProps) {
@@ -137,7 +136,7 @@ export function TransfersPage(props: TransfersPageProps) {
             Free transfers <b className="num">{freeLeft(rules, made)}</b>
           </span>
           <span className="transfers__figure">
-            Cost <b className="num">{hitLabel(hit)}</b>
+            Cost <b className="num">{signed(-hit)}</b>
           </span>
           <span className={cx("transfers__figure", bank < 0 && "transfers__figure--over")}>
             Bank <b className="num">{formatEok(bank)}</b>

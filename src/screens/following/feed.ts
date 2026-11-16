@@ -1,7 +1,7 @@
 // What the Following page shows, as plain data and plain functions, so each control is tested
 // without a browser. The backend feeds `FollowingData` later (#89, #90); the page takes it as props.
 import type { BuffName, TeamCode } from "../../fixtures/week3";
-import { MINUS, type Score } from "../../parts";
+import { type Score, signed } from "../../parts";
 
 export interface Manager {
   id: string;
@@ -114,7 +114,7 @@ export const SWAPS_SHOWN = 3;
 /** `Limitless, 5 transfers`, `2 transfers, −6`, `no transfers`. */
 export function movesSummary(item: DeadlineItem): string {
   const transfers = item.transfers === 0 ? "no transfers" : `${item.transfers} transfer${item.transfers === 1 ? "" : "s"}`;
-  return [item.buff, transfers, item.hit ? `${MINUS}${item.hit}` : undefined].filter(Boolean).join(", ");
+  return [item.buff, transfers, item.hit ? signed(-item.hit) : undefined].filter(Boolean).join(", ");
 }
 
 /** `Kiin 5 · ucal 2 (Carry) · Faker 18 (12 × 1.5)`. */

@@ -59,12 +59,12 @@ describe("Points", () => {
     ]);
   });
 
-  test("is the profile screen, Points chosen, the week before a key and the week after off", () => {
+  test("is the profile screen, Points chosen, the week before a key and the week after a disabled key", () => {
     const markup = html(page("Points"));
     expect(markup).toContain('data-screen="profile"');
     expect(markup).toMatch(/aria-pressed="true"[^>]*>Points</);
     expect(markup).toContain('aria-label="Week before"');
-    expect(markup).not.toContain('aria-label="Week after"');
+    expect(markup).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">›</button>');
   });
 
   test("links each player to his card, the coach to the coach card, Highest to Perfect game and each league to its table", () => {

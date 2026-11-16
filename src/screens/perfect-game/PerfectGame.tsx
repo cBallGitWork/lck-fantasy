@@ -1,5 +1,5 @@
 import { MANAGER } from "../../fixtures/week3";
-import { PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, Tag, ViewToggle, type WeekNav } from "../../parts";
+import { FinalTag, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, ViewToggle, type WeekNav } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays, Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
@@ -94,7 +94,7 @@ export function PerfectGame({
         hangul="퍼펙트 게임"
         week={{ label: game.week, ...weekNav }}
         figure={total}
-        tags={game.final ? <Tag>Final</Tag> : <Tag kind="notFinal">Not final</Tag>}
+        tags={<FinalTag final={game.final} />}
         figures={[
           { label: "Average", value: game.average },
           { label: "Highest", value: game.highest },

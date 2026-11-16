@@ -1,4 +1,4 @@
-import { Columns, GoLink, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
+import { Columns, GoLink, NotFinalTag, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
 import { PATHS, type Go } from "../../paths";
 import {
@@ -90,7 +90,7 @@ function Week({ week, data, onTruck }: { week: FeedWeek; data: FollowingData; on
     <section className="following__week">
       <h2 className="following__week-head">
         Week {week.week}
-        {week.notFinal && <Tag kind="notFinal">Not final</Tag>}
+        {week.notFinal && <NotFinalTag />}
       </h2>
       {week.deadline && (
         <p className="following__deadline">

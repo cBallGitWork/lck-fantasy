@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { bestOf, cx, LinkGo, Menu, score, SideSection, Tag } from "../../parts";
+import { bestOf, cx, FinalTag, LinkGo, LiveTag, Menu, score, SideSection } from "../../parts";
 import { PATHS } from "../../paths";
 import { HomeFrame, type HomeActions } from "./Home";
 import "./Live.css";
-import { PlayerList, WeekTag, WeekTotal } from "./side";
+import { PlayerList, WeekTotal } from "./side";
 import type { HomeLiveData, LiveSeries, Stream } from "./types";
 
 /** The picker's rows before `More ▾`, as the picture draws them. */
@@ -16,7 +16,7 @@ function StreamScreen({ series, stream }: { series: LiveSeries; stream: Stream |
   return (
     <div className="home__screen">
       <div className="home__screen-bar">
-        <Tag kind="live">Live</Tag>
+        <LiveTag />
         <b>
           {series.home} {score(series.score)} {series.away}
         </b>
@@ -79,7 +79,7 @@ export function HomeLive({ data, onPickStream, ...actions }: { data: HomeLiveDat
         </div>
       }
       side={
-        <SideSection title={data.week.label} note={<WeekTag final={data.week.final} />}>
+        <SideSection title={data.week.label} note={<FinalTag final={data.week.final} />}>
           <WeekTotal week={data.week} />
           <h3 className="home__sub">In this series</h3>
           <PlayerList players={data.inSeries} label="In this series" />

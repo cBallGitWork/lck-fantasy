@@ -1,5 +1,5 @@
 import { MANAGER } from "../../fixtures/week3";
-import { cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, pct, Table, Time, WeekArrow, type Column } from "../../parts";
+import { type Column, cx, Empty, eok, GoLink, LinkGo, MeDot, PageFrame, PageHead, pct, Table, Time, WeekStep } from "../../parts";
 import { cardGo, type Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { PriceMove, PriceWeek } from "./fixtures";
@@ -60,15 +60,9 @@ export function PatchUpdatePage({
     <PageFrame screen="patch-update" active="stats" account={MANAGER.team}>
       <div className="patch-update__head">
         <PageHead title="Patch update" hangul="패치 노트" />
-        <div className="patch-update__week">
-          <WeekArrow onStep={onPrev} label="Week before">
-            ‹
-          </WeekArrow>
+        <WeekStep prev={onPrev} next={onNext} className="patch-update__week">
           Week {week.week} prices
-          <WeekArrow onStep={onNext} label="Week after">
-            ›
-          </WeekArrow>
-        </div>
+        </WeekStep>
       </div>
       {(week.set || howPricesMove) && (
         <div className="patch-update__when">

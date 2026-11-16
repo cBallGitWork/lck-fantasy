@@ -68,16 +68,6 @@
   position: absolute;
   top: calc(var(--s-6) * -1 - var(--m-rule));
   right: var(--s-3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--m-target);
-  height: var(--m-target);
-  border-radius: 50%;
-  border: var(--m-rule) solid var(--text);
-  background: var(--paper);
-  font-size: var(--size-small);
-  font-weight: var(--w-bold);
 }
 .home__plate {
   padding: var(--s-2) 0 var(--s-1);

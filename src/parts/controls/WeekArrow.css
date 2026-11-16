@@ -25,3 +25,9 @@
   border-color: var(--line);
   cursor: default;
 }
+/* ‹ week ›: the arrows either side of the week; the page sets its type. */
+.week-step {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}

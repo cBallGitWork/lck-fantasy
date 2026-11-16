@@ -67,20 +67,6 @@
   position: absolute;
   right: var(--s-1);
   top: var(--s-1);
-  width: var(--m-mark-card);
-  height: var(--m-mark-card);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--text);
-  color: var(--bg);
-  font-weight: var(--w-bold);
-}
-.pcard__mark--v {
-  background: var(--paper);
-  color: var(--text);
-  border: var(--m-rule) solid var(--text);
 }
 .pcard__name {
   font-size: var(--size-head);

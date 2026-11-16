@@ -1,6 +1,6 @@
-import { GoLink, Loading, NONE, Tag } from "../../parts";
+import { GoLink, Loading, NONE, NotFinalTag, Tag, WeekStep } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
-import { isBench, MARK_NAME, ROLE_NAME, SQUAD_SIZE } from "../../rift";
+import { isBench, MarkBadge, ROLE_NAME, SQUAD_SIZE } from "../../rift";
 import type { PointsWeek, ProfilePick } from "./fixtures";
 
 const BENCH = "Bench";
@@ -24,13 +24,9 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
   return (
     <section className="profile__points" aria-label={`Week ${week.week}`}>
       <div className="profile__week">
-        <WeekArrow on={hasPrev} label="Week before" onClick={() => onWeek?.(week.week - 1)}>
-          ‹
-        </WeekArrow>
-        <h2 className="profile__week-name">Week {week.week}</h2>
-        <WeekArrow on={hasNext} label="Week after" onClick={() => onWeek?.(week.week + 1)}>
-          ›
-        </WeekArrow>
+        <WeekStep prev={hasPrev ? () => onWeek?.(week.week - 1) : undefined} next={hasNext ? () => onWeek?.(week.week + 1) : undefined}>
+          <h2 className="profile__week-name">Week {week.week}</h2>
+        </WeekStep>
         <b className="profile__week-points num">{week.points}</b>
         {week.average !== undefined && (
           <span className="profile__week-fig">
@@ -42,7 +38,7 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
             Highest <b className="num">{week.highest}</b> ›
           </GoLink>
         )}
-        {!week.final && <Tag kind="notFinal">Not final</Tag>}
+        {!week.final && <NotFinalTag />}
         {week.buff && <Tag>{week.buff}</Tag>}
       </div>
       {week.team ? (
@@ -93,9 +89,7 @@ function PickRow({ pick }: { pick: ProfilePick }) {
           {pick.name}
         </GoLink>
         {pick.mark && (
-          <span className={pick.mark === "V" ? "profile__mark profile__mark--v" : "profile__mark"} title={MARK_NAME[pick.mark]}>
-            {pick.mark}
-          </span>
+          <MarkBadge mark={pick.mark} className="profile__mark" />
         )}{" "}
         <small>{pick.team}</small>
       </td>
@@ -111,17 +105,5 @@ function PickRow({ pick }: { pick: ProfilePick }) {
         </small>
       </td>
     </tr>
-  );
-}
-
-function WeekArrow({ on, label, onClick, children }: { on: boolean; label: string; onClick: () => void; children: string }) {
-  return on ? (
-    <button type="button" className="profile__arrow" aria-label={label} onClick={onClick}>
-      {children}
-    </button>
-  ) : (
-    <span className="profile__arrow profile__arrow--off" aria-hidden="true">
-      {children}
-    </span>
   );
 }

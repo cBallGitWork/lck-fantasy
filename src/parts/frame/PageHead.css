@@ -18,9 +18,6 @@
   margin-left: var(--s-2);
 }
 .page-head__week {
-  display: flex;
-  gap: var(--s-2);
-  align-items: center;
   margin: var(--s-1) 0 var(--s-3);
   font-size: var(--size-head);
   font-weight: var(--w-semi);

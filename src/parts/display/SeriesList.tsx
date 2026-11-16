@@ -2,7 +2,7 @@ import type { Go } from "../../paths";
 import { score, type Score } from "../text/figures";
 import { GoLink } from "../controls/GoLink";
 import "./SeriesList.css";
-import { Tag } from "./Tag";
+import { LiveTag, NotFinalTag } from "./Tag";
 import { Time } from "./Time";
 
 export type SeriesState = "final" | "notFinal" | "live" | "next";
@@ -27,13 +27,13 @@ function Result({ s }: { s: SeriesRow }) {
   if (s.state === "live")
     return (
       <>
-        {games} <Tag kind="live">Live</Tag>
+        {games} <LiveTag />
       </>
     );
   if (s.state === "notFinal")
     return (
       <>
-        {games} <Tag kind="notFinal">Not final</Tag>
+        {games} <NotFinalTag />
       </>
     );
   return <>{games}</>;

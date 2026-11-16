@@ -34,6 +34,9 @@ export const outcome = (won: boolean) => (won ? "W" : "L");
 /** A finished series from the first side: `W 2–1`, `L 1–2`. */
 export const result = (s: Score) => `${outcome(s[0] > s[1])} ${score(s)}`;
 
+/** A series' score as a player's or coach's week shows it: `1–0` while live (no W or L yet), else `W 2–1`. */
+export const seriesResult = (s: Score, live: boolean) => (live ? score(s) : result(s));
+
 /** A figure to one decimal: form, an average. `9.0`. */
 export const oneDecimal = (n: number) => n.toFixed(1);
 

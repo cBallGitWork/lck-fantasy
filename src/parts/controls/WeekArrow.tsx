@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { Go } from "../../paths";
 import { cx } from "../util/cx";
 import { GoLink } from "./GoLink";
@@ -18,5 +19,25 @@ export function WeekArrow({ label, go, onStep, children }: { label: string; go?:
     <button type="button" className={cx("week-arrow", !onStep && "week-arrow--off")} aria-label={label} disabled={!onStep} onClick={onStep}>
       {children}
     </button>
+  );
+}
+
+/** Where a week arrow goes: a path (`/points/2`), a step on the page, or nowhere. */
+export type WeekWay = Go | (() => void) | undefined;
+
+const arrowTo = (way: WeekWay) => (typeof way === "function" ? { onStep: way } : { go: way });
+
+/** `‹ Week 3 ›`: the week between its two arrows, drawn one way on every page that steps through weeks. */
+export function WeekStep({ prev, next, className, children }: { prev: WeekWay; next: WeekWay; className?: string; children: ReactNode }) {
+  return (
+    <div className={cx("week-step", className)}>
+      <WeekArrow label="Week before" {...arrowTo(prev)}>
+        ‹
+      </WeekArrow>
+      {children}
+      <WeekArrow label="Week after" {...arrowTo(next)}>
+        ›
+      </WeekArrow>
+    </div>
   );
 }

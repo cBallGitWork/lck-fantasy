@@ -1,8 +1,8 @@
-import { cx, MINUS, SideSection } from "../../parts";
+import { cx, SideSection, signed } from "../../parts";
 import type { Confirm } from "./plan";
 
 /** The hit a transfer cost, or `Free`. */
-export const costLabel = (hit: number) => (hit > 0 ? `${MINUS}${hit}` : "Free");
+export const costLabel = (hit: number) => (hit > 0 ? signed(-hit) : "Free");
 
 /** This week's confirms, newest first; only the newest has Undo, and none made under a buff (spec/03). */
 export function Confirmed({ week, confirms, onUndo }: { week: string; confirms: Confirm[]; onUndo: (id: string) => void }) {

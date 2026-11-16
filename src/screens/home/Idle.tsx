@@ -1,9 +1,9 @@
-import { LinkGo, SideSection, Time } from "../../parts";
+import { FinalTag, LinkGo, SideSection, Time } from "../../parts";
 import { PATHS } from "../../paths";
-import { MARK_NAME, ROLE_NAME, Shirt } from "../../rift";
+import { MarkBadge, ROLE_NAME, Shirt } from "../../rift";
 import { HomeFrame, type HomeActions } from "./Home";
 import "./Idle.css";
-import { PlayerList, WeekTag, WeekTotal } from "./side";
+import { PlayerList, WeekTotal } from "./side";
 import type { HomeIdleData, LineupStarter, NextSeries } from "./types";
 
 /** Under a starter's name: his role; a Flex's own role after it (`Flex · Top`). */
@@ -19,9 +19,7 @@ function Starter({ starter }: { starter: LineupStarter }) {
         <Shirt team={starter.team} />
       </span>
       {starter.mark && (
-        <span className="home__starter-mark" title={MARK_NAME[starter.mark]}>
-          {starter.mark}
-        </span>
+        <MarkBadge mark={starter.mark} size="card" className="home__starter-mark" />
       )}
       <div className="home__plate">
         <b className="home__plate-name">{starter.name}</b>
@@ -72,7 +70,7 @@ export function HomeIdle({ data, ...actions }: { data: HomeIdleData } & HomeActi
       actions={actions}
       hero={<LineupStage data={data} />}
       side={
-        <SideSection title={data.week.label} note={<WeekTag final={data.week.final} />}>
+        <SideSection title={data.week.label} note={<FinalTag final={data.week.final} />}>
           <WeekTotal week={data.week} />
           <PlayerList
             label="Star and flop"

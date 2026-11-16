@@ -102,7 +102,7 @@ export const DEV_STATES: readonly DevState[] = [
   ]),
   ...page("patch-update", [{ state: "patch", go: { to: PATHS.patchUpdate } }]),
   ...page("settings", [
-    { state: "settings", go: { to: PATHS.settings } },
+    { state: "settings", go: { to: PATHS.settings }, param: true },
     { state: "display", go: { to: PATHS.settings }, param: true },
     { state: "emails", go: { to: PATHS.settings }, param: true },
     { state: "account", go: { to: PATHS.settings }, param: true },

@@ -1,5 +1,5 @@
 // The Settings picture's made-up data (docs/design/approved/settings/): Baron Steal FC on Week 4's
-// Tuesday, before the deadline, with one unsaved change to the hangul banner. Not roster data.
+// Tuesday, before the deadline. Not roster data.
 // Both emails are off, as spec/12 sets them by default.
 
 import { MANAGER, WEEK4_DEADLINE } from "../../fixtures/week3";
@@ -19,7 +19,7 @@ export const SAVED: SettingsValues = {
   weeklyRecap: false,
 };
 
-/** The picture's moment: the banner typed, not yet saved. */
+/** The pictures' moment, opened by `?state=` in dev: the banner typed, not yet saved. */
 export const DRAFT: SettingsValues = { ...SAVED, banner: MANAGER.hangul };
 
 export const ACCOUNT: Account = { email: "barons.steal.fc@gmail.com", provider: "Google" };

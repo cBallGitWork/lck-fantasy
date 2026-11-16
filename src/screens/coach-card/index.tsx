@@ -2,7 +2,7 @@ import { useNavigate, useSearch } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { Modal, PageFrame, useDevState } from "../../parts";
-import { PATHS } from "../../paths";
+import { PATHS, transfersSelling } from "../../paths";
 import { CoachCard } from "./CoachCard";
 import "./coach-card.css";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
@@ -13,6 +13,9 @@ export const FIRST_TAB: Record<CoachFrom, CoachTab> = { pickTeam: "History", poi
 
 /** Where ✕ goes back to. */
 const OPENER = { pickTeam: PATHS.pickTeam, points: PATHS.points } as const;
+
+/** Where Transfer out goes: Transfers with the coach sold. */
+export const TRANSFER_OUT = transfersSelling("coach");
 
 /** The coach card as a page: the card over the page that opened it, its tabs working on the data. */
 export function CoachCardPage({
@@ -49,6 +52,7 @@ export function CoachCardScreen() {
       from={from}
       initialTab={useDevState<CoachTab>({ roster: "Roster" })}
       onClose={() => void navigate({ to: OPENER[from] })}
+      onTransferOut={() => void navigate({ href: TRANSFER_OUT })}
     />
   );
 }

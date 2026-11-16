@@ -60,7 +60,7 @@ export const OFF_PAGE_PLAYERS: StatsPlayer[] = [
   { role: "bot", name: "Teddy", team: "BRO", priceM: 10.0, move: 0, ownedPct: 4, points: 28 },
   { role: "sup", name: "Peter", team: "KT", priceM: 7.5, move: 0, ownedPct: 2, points: 27 },
   { role: "top", name: "PerfecT", team: "KT", priceM: 7.0, move: 0, ownedPct: 3, points: 27 },
-  { role: "mid", name: "Ucal", team: "KRX", priceM: 10.5, move: -1, ownedPct: 3, points: 26 },
+  { role: "mid", name: "ucal", team: "KRX", priceM: 10.5, move: -1, ownedPct: 3, points: 26 },
   { role: "jng", name: "Lucid", team: "DK", priceM: 9.0, move: 1, ownedPct: 5, points: 26 },
   { role: "bot", name: "deokdam", team: "KT", priceM: 9.5, move: 0, ownedPct: 2, points: 25 },
   { role: "sup", name: "BeryL", team: "DK", priceM: 8.5, move: 0, ownedPct: 4, points: 25 },

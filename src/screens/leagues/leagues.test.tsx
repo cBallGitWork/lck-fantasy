@@ -4,8 +4,10 @@ import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { MANAGER, MY_WEEK3, SEASON } from "../../fixtures/week3";
 import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
-import { COMPETITION, LEAGUE_NAME_MAX, LEAGUES } from "./fixtures";
+import { COMPETITION, LEAGUE_LIST, LEAGUE_NAME_MAX, LEAGUES, NEW_LEAGUE, NEW_TABLE } from "./fixtures";
 import { chaseText } from "./format";
+import { makeLeague } from "./forms";
+import { LeagueList } from "./LeagueList";
 import { adminItems, LeagueTable, type LeagueActions, type TableProps } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
 import { tableKey, type LeagueView } from "./types";
@@ -122,6 +124,13 @@ describe("the page", () => {
     expect(out).toContain('data-screen="leagues"');
     expectInOrder(plain(out), ["Leagues", "리그", "Pub League", "PUB-7K2Q", "General", "Overall", "48,211", "6,904", "of 212,480", "United Kingdom", "T1 supporters", "Private", "Pub League", "2nd", "12 managers", "Flol Discord", "14th", "86 managers", "Create a league", "Join a league", "All sponsors are made up."]);
     expect(out).toMatch(/leagues__list-row--on[^>]*>.*?Pub League/);
+  });
+
+  test("a new league, its maker alone, reads 1 manager", () => {
+    const made = makeLeague(NEW_LEAGUE.name, 3, NEW_LEAGUE.code, NEW_TABLE);
+    const out = plain(html(<LeagueList leagues={[...LEAGUE_LIST, made.summary]} openId={made.summary.id} onCreate={noop} onJoin={noop} />));
+    expectInOrder(out, ["Office Rift", "1st", "1 manager", "Create a league"]);
+    expect(out).not.toContain("1 managers");
   });
 
   test("a league in the list opens its table", async () => {

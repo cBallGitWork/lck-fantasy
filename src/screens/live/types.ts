@@ -54,8 +54,8 @@ export interface WeekTotal {
 
 export interface Panel {
   week: WeekTotal;
-  /** The series the panel's players are in; its score once it is final. */
-  series: { home: TeamCode; away: TeamCode; score?: Score };
+  /** The series the panel's players are in; the scorebug carries its score. */
+  series: { home: TeamCode; away: TeamCode };
   players: PanelPlayer[];
   rest: RestPlayer[];
 }

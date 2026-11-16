@@ -81,7 +81,7 @@ export function SettingsPage(props: SettingsProps) {
   );
 }
 
-/** Your team's banner as Profile shows it, redrawn as you type. */
+/** Your team's banner as Profile shows it, redrawn as you type: the hangul and the team name (favourite team and country are the rows below). */
 function Banner({ values }: { values: SettingsValues }) {
   return (
     <div className="settings__banner">
@@ -90,10 +90,7 @@ function Banner({ values }: { values: SettingsValues }) {
           {values.banner}
         </span>
       )}
-      <span className="settings__banner-sub">
-        <b className="settings__banner-name">{values.teamName}</b>
-        {TEAMS[values.favouriteTeam]} · {values.country}
-      </span>
+      <b className="settings__banner-name">{values.teamName}</b>
     </div>
   );
 }

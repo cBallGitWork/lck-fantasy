@@ -4,6 +4,8 @@ The Series page: one series, its games and each player's lines in each game (spe
 
 **Approved:** Craig, 16 Nov 2026, "Save". Along the way he asked for POG ("series seems basic"), cut the draft strip ("i dont think we need draft info overload") and cut the Your players total ("its fluff"). The names, teams and numbers are a made-up LCK Cup Week 3 (Saturday 16 Jan), opened at the LCK hub's moment (Week 4, Tuesday). They match the Points, Live and hub pictures. There is no `plate.md` yet, so this picture binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-16-series/](../../proposals/2026-11-16-series/) (`brief.md`, `panel.md`).
 
+**Changed by Craig, 16 Nov 2026:** the page says each thing once. Each grid is headed by its team's code (the scorebug names the teams); each game's length, VOD and live clock show once, in the left grid's heads, with W or L still on both; no Live tag in the G2 heads (the meta line says it).
+
 | File | Shows |
 |---|---|
 | `1440.png`, `series.html` | Final, 2–0: T1 v DK |

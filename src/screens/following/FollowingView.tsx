@@ -1,4 +1,4 @@
-import { bestOf, Columns, GoLink, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
+import { Columns, GoLink, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
 import { PATHS, type Go } from "../../paths";
 import {
@@ -47,7 +47,7 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
               </div>
             ))}
           </SideSection>
-          <SideSection title={`Trucks · Week ${data.week}`}>
+          <SideSection title="Trucks">
             {data.trucks.map((t) => (
               <Truck key={t.id} truck={t} />
             ))}
@@ -92,6 +92,11 @@ function Week({ week, data, onTruck }: { week: FeedWeek; data: FollowingData; on
         Week {week.week}
         {week.notFinal && <Tag kind="notFinal">Not final</Tag>}
       </h2>
+      {week.deadline && (
+        <p className="following__deadline">
+          Deadline <Time {...week.deadline} />
+        </p>
+      )}
       {week.items.map((item) => (
         <div key={item.id} className="following__item">
           <Who manager={item.manager} />
@@ -109,7 +114,7 @@ function Series({ item, multiplier }: { item: SeriesItem; multiplier: number }) 
   return (
     <>
       <span className="following__pts num">{item.points}</span>
-      {item.home} {score(item.score)} {item.away} <span className="following__bo">{bestOf(item.bestOf)}</span>
+      {item.home} {score(item.score)} {item.away}
       {item.bigCarry && (
         <>
           {" "}
@@ -129,7 +134,7 @@ function Moves({ item }: { item: DeadlineItem }) {
   const more = item.swaps.length - shown.length;
   return (
     <>
-      Deadline: {movesSummary(item)}
+      {movesSummary(item)}
       {item.swaps.length > 0 && <span className="following__so-far">so far</span>}
       {shown.length > 0 && (
         <span className="following__swaps num">
@@ -144,9 +149,6 @@ function Moves({ item }: { item: DeadlineItem }) {
         </span>
       )}
       {more > 0 && <small className="following__sub">+ {more} more</small>}
-      <span className="following__when">
-        <Time {...item.at} />
-      </span>
     </>
   );
 }

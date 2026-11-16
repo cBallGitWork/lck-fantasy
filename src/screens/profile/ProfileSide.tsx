@@ -19,7 +19,7 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
                   {league.name}
                   {league.tier && (
                     <>
-                      <TierShield className="profile__tier" division={league.tier.division} />
+                      <TierShield className="profile__tier" />
                       <b>
                         {league.tier.name} {league.tier.division}
                       </b>

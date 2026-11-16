@@ -27,7 +27,7 @@ const matchup = (s: Series) => `${s.home} v ${s.away}`;
 const SHARED: Omit<HomeShared, "countdown"> = {
   team: MANAGER.team,
   hangul: MANAGER.hangul,
-  overall: { tier: MY_OVERALL.tier, hangul: MY_OVERALL.hangul, division: MY_OVERALL.division, rank: MY_OVERALL.rank, move: MY_OVERALL.move },
+  overall: { tier: MY_OVERALL.tier, hangul: MY_OVERALL.hangul, rank: MY_OVERALL.rank, move: MY_OVERALL.move },
   deadline: { week: 4, competition: COMPETITION, local: WEEK4_DEADLINE.local, kst: WEEK4_DEADLINE.kst },
   freeTransfers: 1,
   following: [
@@ -59,9 +59,9 @@ export const HOME_LIVE: HomeLiveData = {
   pickedStream: "lck-en-twitch",
   week: { label: "Your week", final: false, points: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
   inSeries: [
-    { role: "mid", name: "Faker", team: "T1", mark: "C", stat: "G2 · 3/0/2", points: livePointsOf("faker") },
-    { role: "top", name: "Siwoo", team: "DK", stat: "G2 · 0/1/1", points: livePointsOf("siwoo") },
-    { role: "coach", name: "kkOma", team: "T1", stat: "G2", points: livePointsOf("kkoma") },
+    { role: "mid", name: "Faker", team: "T1", mark: "C", stat: "3/0/2", points: livePointsOf("faker") },
+    { role: "top", name: "Siwoo", team: "DK", stat: "0/1/1", points: livePointsOf("siwoo") },
+    { role: "coach", name: "kkOma", team: "T1", stat: "", points: livePointsOf("kkoma") },
   ],
   stillToPlay: [],
 };

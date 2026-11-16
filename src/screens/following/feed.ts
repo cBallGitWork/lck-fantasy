@@ -33,7 +33,6 @@ export interface SeriesItem {
   home: TeamCode;
   away: TeamCode;
   score: Score;
-  bestOf: number;
   bigCarry?: boolean;
   players: SeriesPlayer[];
   ended: When;
@@ -56,7 +55,6 @@ export interface DeadlineItem {
   /** Points taken for extra transfers (6 shows as −6). */
   hit?: number;
   swaps: Swap[];
-  at: When;
 }
 
 export type FeedItem = SeriesItem | DeadlineItem;
@@ -64,6 +62,8 @@ export type FeedItem = SeriesItem | DeadlineItem;
 export interface FeedWeek {
   week: number;
   notFinal?: boolean;
+  /** The week's deadline, once, under its head, when it has deadline rows. */
+  deadline?: When;
   /** Its rows can be trucked: the live week, or last week's until the next starts (spec/14). */
   truckable: boolean;
   /** Newest first. */

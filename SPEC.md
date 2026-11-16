@@ -101,5 +101,5 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | division | A step within a tier, IV (lowest) to I. | |
 | rank | A manager's place in a table. Example: 48,211th. | tier |
 | buff | A one-off a manager plays in a gameweek, such as Remake: FPL's chip (Craig, 14 Nov 2026). | chip, boost |
-| Card view | The team as a grid of cards, on Pick Team, Points and Perfect game (Craig, 16 Nov 2026). | List view |
-| List view | Transfers' table of the squad with prices and fixtures (Craig, 16 Nov 2026). | Card view |
+| Card view | The starters as the LCK broadcast's lineup, on Pick Team, Points and Perfect game (Craig, 16 Nov 2026). | List view |
+| List view | Transfers' squad as FPL's list: rows grouped by role, with prices and fixtures (Craig, 16 Nov 2026). | Card view |

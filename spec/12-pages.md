@@ -137,7 +137,7 @@ Grilled 14 Nov 2026.
   remembered (Craig, 16 Nov 2026, the view `/grill`):
   - Pick Team, Points and Perfect game share one choice: Card view picked on Points opens Pick
     Team and Perfect game on Card view too.
-  - Transfers remembers its own. Its List view, a table with prices and fixtures, is a different
+  - Transfers remembers its own. Its List view, FPL's list with prices and fixtures, is a different
     thing from Card view.
   - The choice is kept in the browser, so per device, and a guest's is kept too.
 - On Pick Team, swaps, the Carry, the Vice-carry and buffs take effect only when the manager

@@ -5,17 +5,49 @@
 
 import { fromSide, seriesOf } from "../../fixtures/series";
 import { gamesOf, standingOf } from "../../fixtures/standings";
-import { MY_PLAYERS, playerId, STATS_PLAYERS, WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
+import { FAKER_SEASON, KKOMA_SEASON, type T1MemberSeason } from "../../fixtures/t1Season";
+import { formOf, MY_PLAYERS, playerId, STATS_PLAYERS, WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
 import type { RoleKey } from "../../rift";
 import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
 
 /** A price move is 0.5m in the picture. */
 const MOVE_EOK = 0.5;
 
-/** The picture's player lines, by name, in PLAYER_LINES' order. */
+/** Each season line's key in a row's `lines`, by the name the cards give it. */
+const LINE_KEYS: Record<string, string> = {
+  Kills: "kills",
+  Deaths: "deaths",
+  Assists: "assists",
+  "Gold lead at 15": "gd15",
+  "Solo kills": "soloKills",
+  "First bloods": "firstBlood",
+  Deathless: "deathless",
+  "Quadra kills": "quadra",
+  Steals: "steals",
+  "First tower": "firstTower",
+  "Most drakes": "drakes",
+  "Most barons": "barons",
+  "Most elders": "elders",
+  "Quick win": "quickWins",
+};
+
+/** A T1 member's season totals from his card's lines, in `lines`' order; a line with no key is a broken fixture. */
+function fromCard(season: T1MemberSeason, lines: readonly { key: string }[]): number[] {
+  const totals = new Map(
+    season.lines.flatMap((l) => {
+      if (l.series) return [];
+      const key = LINE_KEYS[l.line];
+      if (!key) throw new Error(`No Stats column for ${season.name}'s ${l.line}`);
+      return [[key, l.total] as const];
+    }),
+  );
+  return lines.map((l) => totals.get(l.key) ?? 0);
+}
+
+/** The picture's player lines, by name, in PLAYER_LINES' order; Faker's are his card's. */
 const PICTURE_LINES: Record<string, number[]> = {
   Chovy: [70, 9, 74, 11, 8, 3, 4, 1, 0],
-  Faker: [66, 16, 87, 10, 6, 3, 3, 1, 0],
+  Faker: fromCard(FAKER_SEASON, PLAYER_LINES),
   Ruler: [83, 11, 60, 10, 3, 2, 4, 1, 0],
   Peyz: [75, 15, 66, 8, 3, 2, 3, 1, 0],
   Keria: [10, 18, 144, 8, 0, 2, 3, 0, 0],
@@ -34,11 +66,13 @@ const PICTURE_LINES: Record<string, number[]> = {
   Kanavi: [29, 16, 66, 6, 2, 3, 2, 0, 1],
   Aiming: [53, 18, 42, 5, 2, 0, 2, 0, 0],
   Pyosik: [34, 22, 69, 6, 2, 3, 0, 0, 1],
+  Cuzz: [24, 17, 51, 5, 2, 2, 1, 0, 1],
+  Bdd: [33, 19, 36, 4, 2, 1, 0, 0, 0],
 };
 
-/** The picture's coach lines, by name, in COACH_LINES' order. */
+/** The picture's coach lines, by name, in COACH_LINES' order; kkOma's are his card's. */
 const PICTURE_COACH_LINES: Record<string, number[]> = {
-  kkOma: [6, 5, 5, 0, 2],
+  kkOma: fromCard(KKOMA_SEASON, COACH_LINES),
   Ryu: [6, 5, 4, 0, 2],
   Homme: [5, 4, 3, 0, 1],
   Ssong: [5, 4, 3, 0, 1],
@@ -55,7 +89,6 @@ type Made = [RoleKey, string, TeamCode, number, -1 | 0 | 1, number, number, numb
 /** Made up past the picture's first page, each below its last row by points and per game: [role, name, team, price, move, owned %, points, lines]. */
 const MORE_PLAYERS: Made[] = [
   ["top", "Kingen", "NS", 9.5, 0, 3, 24, [30, 18, 33, 5, 6, 1, 1, 0, 0]],
-  ["jng", "Cuzz", "KT", 4.0, 0, 7, 23, [24, 17, 51, 5, 2, 2, 1, 0, 1]],
   ["mid", "Clozer", "BRO", 9.0, 1, 2, 28, [41, 24, 30, 4, 4, 1, 0, 0, 0]],
   ["bot", "Teddy", "KRX", 10.0, 0, 4, 28, [47, 17, 38, 5, 1, 1, 2, 0, 0]],
   ["sup", "Peter", "KT", 7.5, 0, 2, 27, [7, 20, 88, 5, 0, 0, 1, 0, 0]],
@@ -70,7 +103,6 @@ const MORE_PLAYERS: Made[] = [
   ["bot", "Berserker", "DNS", 10.0, 0, 3, 22, [46, 21, 33, 4, 1, 0, 1, 0, 0]],
   ["sup", "Andil", "KRX", 7.0, 0, 1, 21, [6, 21, 80, 4, 0, 0, 1, 0, 0]],
   ["sup", "Life", "DNS", 7.0, 0, 1, 20, [6, 23, 82, 4, 0, 0, 0, 0, 0]],
-  ["mid", "Bdd", "KT", 5.0, 0, 5, 16, [33, 19, 36, 4, 2, 1, 0, 0, 0]],
   ["jng", "GIDEON", "NS", 7.5, 0, 1, 19, [20, 19, 48, 3, 1, 2, 0, 0, 0]],
   ["mid", "Calix", "NS", 8.0, -1, 1, 18, [30, 18, 31, 3, 3, 0, 0, 0, 0]],
   ["bot", "Jiwoo", "NS", 8.5, 0, 2, 18, [36, 17, 27, 3, 1, 0, 1, 0, 0]],
@@ -96,10 +128,6 @@ const ACADEMY: [RoleKey, string, TeamCode, number][] = [
 
 const byKeys = (keys: readonly { key: string }[], counts: readonly number[]) =>
   Object.fromEntries(keys.map((l, i) => [l.key, counts[i] ?? 0]));
-
-
-/** Form, the last 4 weeks' average, is points ÷ 3 until Week 4 is final. */
-const formOf = (points: number) => Math.round((points / 3) * 10) / 10;
 
 function row(
   role: StatsRow["role"],

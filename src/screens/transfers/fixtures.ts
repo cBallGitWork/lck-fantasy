@@ -3,7 +3,22 @@
 // (src/fixtures/week3.ts); the list's players and the week's confirms are the picture's own.
 
 import { opponent, seriesOf } from "../../fixtures/series";
-import { COMPETITION, HIT_POINTS, MANAGER, PICK_TEAM_SQUAD, playerId, POINTS_SQUAD, STATS_PLAYERS, TEAM_CAP, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
+import {
+  COMPETITION,
+  finalPickOf,
+  HIT_POINTS,
+  MANAGER,
+  PICK_TEAM_SQUAD,
+  playerId,
+  rawWeekOf,
+  statsOf,
+  STATS_PLAYERS,
+  TEAM_CAP,
+  WEEK4_DEADLINE,
+  WEEK4_FREE_TRANSFERS,
+  WEEK4_SERIES,
+  type TeamCode,
+} from "../../fixtures/week3";
 import { eokToWon } from "../../parts";
 import type { Confirm, Fixture, ListPlayer, Plan, SquadPlayer, TransferRules } from "./plan";
 import type { TransfersPageProps } from "./TransfersPage";
@@ -19,19 +34,7 @@ const FIXTURES: Record<string, Fixture[]> = Object.fromEntries(
   ]),
 );
 
-/** Owned % for the squad: Stats' figure where Stats shows him, else the picture's made-up one. */
-const SQUAD_OWNED: Record<string, number> = { Bdd: 5, Cuzz: 7 };
-const ownedOf = (name: string) => STATS_PLAYERS.find((p) => p.name === name)?.ownedPct ?? SQUAD_OWNED[name] ?? 0;
-/** Season points for the squad: Stats' figure where Stats shows him, else the made-up one. */
-const SQUAD_TOTAL: Record<string, number> = { Bdd: 19, Cuzz: 24 };
-const totalOf = (name: string) => STATS_PLAYERS.find((p) => p.name === name)?.points ?? SQUAD_TOTAL[name] ?? 0;
-/** Week 3's points, game by game summed, as Points shows them before the Carry's ×1.5. */
-function week3Of(name: string): number {
-  const pick = POINTS_SQUAD.find((p) => p.name === name);
-  return (pick?.series ?? []).reduce((sum, s) => sum + s.games.reduce((a, b) => a + b, 0) + (s.coachResult ?? 0), 0);
-}
-
-/** Baron Steal FC before this week's unconfirmed changes (pick.html's squad and prices). */
+/** Baron Steal FC before this week's unconfirmed changes (pick.html's squad and prices); owned %, season and Week 3 as Stats and Points give them. */
 export const SQUAD: SquadPlayer[] = PICK_TEAM_SQUAD.map((p) => ({
   slot: p.slot,
   id: playerId(p.name),
@@ -39,10 +42,10 @@ export const SQUAD: SquadPlayer[] = PICK_TEAM_SQUAD.map((p) => ({
   team: p.team,
   role: p.role,
   price: eokToWon(p.priceEok),
-  weekPoints: week3Of(p.name),
+  weekPoints: rawWeekOf(finalPickOf(p.name)),
   form: p.form,
-  points: totalOf(p.name),
-  ownedPct: ownedOf(p.name),
+  points: statsOf(p.name).points,
+  ownedPct: statsOf(p.name).ownedPct,
   mark: p.mark,
 }));
 
@@ -59,12 +62,18 @@ const player = (role: ListPlayer["role"], name: string, team: TeamCode, priceEok
   ownedPct,
 });
 
-/** The picture's list, and Stats' coaches so the Coach can be sold too. */
+/** A player in Stats' list, with its price, season points and owned %. */
+const listed = (name: string) => {
+  const p = statsOf(name);
+  return player(p.role, p.name, p.team, p.priceEok, p.points, p.ownedPct);
+};
+
+/** The picture's list (Stats' figures where Stats lists him), and Stats' coaches so the Coach can be sold too. */
 export const PLAYERS: ListPlayer[] = [
-  player("mid", "Chovy", "GEN", 17.5, 61, 41),
-  player("sup", "Keria", "T1", 12.0, 52, 47),
-  player("bot", "Aiming", "DK", 11.5, 46, 14),
-  player("mid", "ShowMaker", "DK", 10.5, 44, 18),
+  listed("Chovy"),
+  listed("Keria"),
+  listed("Aiming"),
+  listed("ShowMaker"),
   player("jng", "Lucid", "DK", 9.0, 41, 11),
   player("top", "Kingen", "NS", 6.5, 38, 9),
   player("top", "PerfecT", "KT", 7.0, 36, 4),
@@ -77,8 +86,6 @@ export const PLAYERS: ListPlayer[] = [
     player("coach", p.name, p.team, p.priceEok, p.points, p.ownedPct),
   ),
 ];
-
-export const RULES: TransferRules = { freeTransfers: 0, hitPoints: HIT_POINTS, teamCap: TEAM_CAP, bank: eokToWon(0.5) };
 
 /** The week's confirms, newest first. */
 export const CONFIRMS: Confirm[] = [
@@ -94,6 +101,11 @@ export const CONFIRMS: Confirm[] = [
     hit: 0,
   },
 ];
+
+/** Free transfers left: the week's, less every move confirmed so far. */
+const freeLeft = Math.max(0, WEEK4_FREE_TRANSFERS - CONFIRMS.reduce((n, c) => n + c.moves.length, 0));
+
+export const RULES: TransferRules = { freeTransfers: freeLeft, hitPoints: HIT_POINTS, teamCap: TEAM_CAP, bank: eokToWon(0.5) };
 
 /** Siwoo sold, Kingen in. */
 export const PICTURE_PLAN: Plan = { sold: { flex: PLAYERS.find((p) => p.name === "Kingen") ?? null }, replacing: null };

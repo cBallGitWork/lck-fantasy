@@ -24,7 +24,7 @@ const KEY: Record<string, string> = {
   "transfers/confirm": "Confirm your transfers",
   "points/points": "Zeus",
   "leagues/league": "Pub League",
-  "leagues/overall": "Legend",
+  "leagues/overall": "Unkillable FC",
   "leagues/admin": "Remove a manager",
   "leagues/create": "Scoring starts",
   "leagues/created": "OFF-9R3D",

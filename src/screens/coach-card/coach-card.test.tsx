@@ -66,7 +66,7 @@ describe("History, from Pick Team (1440.png)", () => {
       "price 0.5",
       "9.0",
       "form · 1st",
-      "22%",
+      "24%",
       "owned · 2nd",
       "+310 / −95 this week",
       "W2 · Fri",
@@ -181,12 +181,12 @@ describe("Roster (1440-roster.png)", () => {
     const out = text(card(FROM_PICK_TEAM, "pickTeam", "Roster"));
     inOrder(out, [
       "RolePlayerPriceSeasonOwned",
-      "TopDoran₩12.5m3812%",
-      "JungleOner₩14.0m4421%",
+      "TopDoran₩12.5m4518%",
+      "JungleOner₩14.0m4322%",
       "MidFaker",
       "₩18.5m5846%",
-      "BotPeyz₩15.0m4730%",
-      "SupportKeria₩14.5m4125%",
+      "BotPeyz₩15.0m5233%",
+      "SupportKeria₩12.0m5247%",
       "Season",
     ]);
     expect(html(card(FROM_PICK_TEAM, "pickTeam", "Roster")).match(/aria-label="Your player"/g)).toHaveLength(1);

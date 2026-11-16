@@ -25,11 +25,11 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "‹",
     "LCK Cup · Week 3",
     "›",
-    "142",
+    "130",
     "Final",
     "Average 79",
-    "Highest 136",
-    "Your points 117›",
+    "Highest 128",
+    "Your points 109›",
     "Rift view",
     "Card view",
     ...SEVEN,
@@ -41,8 +41,8 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "G3Galio · W7",
     "Sat · v DK W 2–0",
     "G1Orianna · W4",
-    "G2Sylas · W11",
-    "Carry40",
+    "G2Sylas · W6",
+    "Carry33",
     "Full stats ›",
     "Week 3 series",
     "WedT1 v HLE2–1",
@@ -62,7 +62,7 @@ test("Final is the head's tag alone, no cap tag (Craig, 16 Nov 2026), and Carry 
 test("the Rift's tiles carry each starter's points (the Carry's result only), series, your dots and the Flex and Coach labels", () => {
   const out = html(<PerfectGameRift game={PERFECT_WEEK3} selected="mid" />);
   for (const p of PERFECT_GAME) expect(out).toContain(p.line);
-  expect(out).toContain('class="tile__points num">40</div>');
+  expect(out).toContain('class="tile__points num">33</div>');
   expect(text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />)).not.toContain("×");
   expect(out).toContain('title="Carry">C');
   expect(out.match(/aria-label="Your player"/g)).toHaveLength(4);
@@ -76,7 +76,7 @@ test("Card view: the seven as the broadcast lineup, each with his series and poi
   const out = text(<PerfectGame game={PERFECT_WEEK3} view="Card view" />);
   inOrder(out, ["Rift view", "Card view", "Top", "Zeus", "Jungle", "Pyosik", "Mid", "C", "Faker"]);
   inOrder(out, ["Zeus", "HLE", "v T1 7", "v GEN 7", "14"]);
-  inOrder(out, ["Faker", "T1", "v HLE 12", "v DK 15", "40"]);
+  inOrder(out, ["Faker", "T1", "v HLE 12", "v DK 10", "33"]);
   expect(out).not.toContain("×");
   inOrder(out, ["Flex", "plays Mid", "BuLLDoG", "DNS", "v BRO 9", "v BFX 12", "21"]);
   inOrder(out, ["Coach", "감독", "kkOma", "T1", "v HLE 8", "v DK 8", "16"]);

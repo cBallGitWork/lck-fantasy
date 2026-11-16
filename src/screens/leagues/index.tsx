@@ -46,7 +46,7 @@ function copy(what: string, words: string) {
 const removeManager = () => console.warn("Remove a manager: no picture of its row pick or confirm yet");
 
 /**
- * Leagues and one league's table (`/leagues/$leagueId`), on the picture's made-up Split 2 Week 14, with the league forms as sheets over it.
+ * Leagues and one league's table (`/leagues/$leagueId`), on the shared Week 3 of Split 1, with the league forms as sheets over it.
  * In dev, `?state=` opens a picture's sheet over the league (`create`, `created`, `join`, `delete`, `leave`) or its Admin menu (`admin`).
  */
 export function LeaguesScreen() {

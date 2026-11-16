@@ -1,7 +1,8 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
 import { html, text } from "../../testing/render";
-import { MY_WEEK3 } from "../../fixtures/week3";
+import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
+import { MY_EARLIER_WEEKS, MY_WEEK3 } from "../../fixtures/week3";
 import { LATEST_WEEK, POINTS_FIXTURE, POINTS_WEEKS } from "./fixtures";
 import { POINTS_VIEW_KEY, rememberedView, weekOf } from "./index";
 import { PointsPage } from "./PointsPage";
@@ -27,7 +28,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "94",
     "Not final",
     "Average 74",
-    "Highest 131",
+    "Highest 121",
     "Live",
     "T1 v DK, game 2",
     "Watch ›",
@@ -225,4 +226,9 @@ test("Weeks 1 and 2 add up: each total its starters', the Carry's ×1.5 rounded 
   expect(w2.total).toBe(112);
   expect(w2.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual(["Star Faker 30", "Flop Delight 9", "Killer Peyz 19"]);
   expectInOrder(text(<PointsPage data={w2} open="kkOma" />), ["kkOmaT1 · Coach✕", "v DNSW 2–0", "G1W2", "G2W2", "v BFXW 2–1", "G1W2", "G2L0", "G3W3"]);
+});
+
+test("Leagues' season total is Points' weeks: Weeks 1 and 2 final, and Week 3 so far", () => {
+  expect(MY_EARLIER_WEEKS).toEqual([week(1).total, week(2).total]);
+  expect(MY_SEASON_TOTAL).toBe(week(1).total + week(2).total + POINTS_FIXTURE.total);
 });

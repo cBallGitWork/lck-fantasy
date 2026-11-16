@@ -6,42 +6,29 @@
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { fromSide, seriesById } from "../../fixtures/series";
 import {
-  CARRY_MULTIPLIER,
+  carried,
   COMPETITION,
+  countedGames,
   MANAGER,
   playerId,
   POINTS_SQUAD,
   POINTS_WEEK,
+  seriesPoints,
+  squadIn,
+  WEEK1_PLAYED,
   WEEK1_SERIES,
+  WEEK2_PLAYED,
   WEEK2_SERIES,
   WEEK3_SERIES_AT_POINTS,
+  type Played,
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
 import { count, ordinal } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays } from "../../rift";
-import { GAME_WINNERS, WEEK1_PLAYED, WEEK2_PLAYED, WEEK3_CHAMPIONS, type Played } from "./games";
+import { GAME_WINNERS, WEEK3_CHAMPIONS } from "./games";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter, WeekPick } from "./types";
-
-/** The same nine as Week 3, each with that week's series, and no birthday or auto-sub. */
-const squadIn = (played: Record<string, Played>): PointsPick[] =>
-  POINTS_SQUAD.map((pick) => {
-    const series = played[pick.name];
-    if (!series) throw new Error(`No series for ${pick.name}`);
-    return { slot: pick.slot, name: pick.name, team: pick.team, role: pick.role, mark: pick.mark, series };
-  });
-
-/** The games that count in a series: its best two (spec/05-scoring.md). The backend sends this later. */
-const COUNTED_PER_SERIES = 2;
-
-function countedGames(games: number[]): Set<number> {
-  const best = games
-    .map((points, index) => ({ points, index }))
-    .sort((a, b) => b.points - a.points)
-    .slice(0, COUNTED_PER_SERIES);
-  return new Set(best.map((g) => g.index));
-}
 
 function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[number], champions: string[] = []): PointsSeries {
   const row = seriesById(list, played.id);
@@ -60,13 +47,12 @@ function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[numb
       counted: counted.has(index),
     };
   });
-  const gamePoints = games.filter((g) => g.counted).reduce((sum, g) => sum + g.points, 0);
   return {
     id: row.id,
     opponent: side.opponent,
     score: side.score,
     state: row.state,
-    points: gamePoints + (played.coachResult ?? 0),
+    points: seriesPoints(played.games, played.coachResult),
     games,
   };
 }
@@ -158,8 +144,8 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     const player = playerOf(list, pick, champions);
     const plays = flexPlays(pick.slot, pick.role);
     if (pick.mark !== "C") return [{ ...player, slot: pick.slot, plays }];
-    // The Carry's points ×1.5, rounded down (spec/05-scoring.md); his own are already the result.
-    const points = player.points === undefined ? undefined : Math.floor(player.points * CARRY_MULTIPLIER);
+    // The Carry's points ×1.5, a minus towards zero (spec/05-scoring.md); his own are already the result.
+    const points = player.points === undefined ? undefined : carried(player.points);
     return [{ ...player, slot: pick.slot, plays, points, carry: { average: facts.averageCarry } }];
   });
   const played = starters.filter((p) => p.points !== undefined);

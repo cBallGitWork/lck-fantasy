@@ -111,9 +111,6 @@ export const FAKER_SEASON: T1MemberSeason = {
   ],
 };
 
-/** kkOma's owned % on his card and Compare; the Stats picture has its own. */
-export const KKOMA_OWNED_PCT = 22;
-
 export const KKOMA_SEASON: T1MemberSeason = {
   name: "kkOma",
   games: gamesOf(T1),

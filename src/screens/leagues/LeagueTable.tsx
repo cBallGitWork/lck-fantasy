@@ -51,7 +51,7 @@ export function TableBody({ league, table, page, onPage, onFindMe }: { league: L
 
 /**
  * A league that isn't Overall: name and when its scoring starts; for a private league its code,
- * Copy link, and Admin ▾ for the maker or Leave for a member; Season, Split 1 and Split 2; the table.
+ * Copy link, and Admin ▾ for the maker or Leave for a member; the competition's tabs; the table.
  */
 export function LeagueTable({
   league,

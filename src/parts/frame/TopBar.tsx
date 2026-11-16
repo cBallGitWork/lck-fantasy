@@ -1,22 +1,13 @@
-import { PATHS } from "../../paths";
+import { PATHS, PRODUCT, SCREEN_NAME } from "../../paths";
 import { GoLink } from "../controls/GoLink";
 import { Menu, type MenuItem } from "../controls/Menu";
 import { cx } from "../util/cx";
 import { Placeholder } from "./Placeholder";
 import "./TopBar.css";
 
-const TOP_BAR_ITEMS = [
-  ["home", "Home"],
-  ["pickTeam", "Pick Team"],
-  ["transfers", "Transfers"],
-  ["points", "Points"],
-  ["leagues", "Leagues"],
-  ["stats", "Stats"],
-  ["lckHub", "LCK"],
-  ["live", "Live"],
-] as const;
+const TOP_BAR_ITEMS = ["home", "pickTeam", "transfers", "points", "leagues", "stats", "lckHub", "live"] as const;
 
-export type TopBarItem = (typeof TOP_BAR_ITEMS)[number][0];
+export type TopBarItem = (typeof TOP_BAR_ITEMS)[number];
 
 /**
  * The same on every screen: Flol, the eight items (Live's dot always shown), `presented by` the
@@ -33,18 +24,18 @@ export function TopBar({
   accountMenu?: MenuItem[];
 }) {
   return (
-    <nav className="top-bar" aria-label="Flol">
+    <nav className="top-bar" aria-label={PRODUCT}>
       <GoLink className="top-bar__word" go={{ to: PATHS.home }}>
-        Flol
+        {PRODUCT}
       </GoLink>
-      {TOP_BAR_ITEMS.map(([key, label]) => (
+      {TOP_BAR_ITEMS.map((key) => (
         <GoLink
           key={key}
           go={{ to: PATHS[key] }}
           className={cx("top-bar__item", key === active && "top-bar__item--on", key === "live" && "top-bar__item--live")}
           current={key === active}
         >
-          {label}
+          {SCREEN_NAME[key]}
         </GoLink>
       ))}
       <span className="top-bar__space" />

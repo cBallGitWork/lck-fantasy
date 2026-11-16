@@ -87,8 +87,10 @@
 .transfers__tool {
   padding: var(--s-1) var(--s-2);
   background: var(--paper);
-  border: var(--m-rule) solid var(--line);
   font-size: var(--size-small);
+}
+.transfers__tool {
+  border: var(--m-rule) solid var(--line);
 }
 .transfers__chip--on {
   background: var(--text);

@@ -111,7 +111,7 @@ describe("History, from Pick Team (1440.png)", () => {
 
   test("marks the price's rise and links Compare", () => {
     const out = html(card(FROM_PICK_TEAM, "pickTeam", "History"));
-    expect(out).toContain('<span class="rise">0.5</span>');
+    expect(out).toContain('<span class="rise" role="img" aria-label="up 0.5">0.5</span>');
     expect(out).toContain('href="/compare"');
   });
 

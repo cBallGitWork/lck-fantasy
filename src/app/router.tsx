@@ -1,7 +1,8 @@
-import { createRootRoute, createRoute, createRouter, Outlet, type RouterHistory } from "@tanstack/react-router";
+import { createRootRoute, createRoute, createRouter, Outlet, useRouterState, type RouterHistory } from "@tanstack/react-router";
 import type { ReactElement } from "react";
 import { DEV_STATES_PATH } from "./devStates";
 import { DevStatesPage } from "./DevStatesPage";
+import { AppFrame } from "../parts";
 import { PATHS, type ScreenKey } from "../paths";
 import { CoachCardScreen } from "../screens/coach-card";
 import { CompareScreen } from "../screens/compare";
@@ -24,11 +25,13 @@ import { ThemeStyle } from "../theme";
 
 // One route per approved screen (docs/design/approved/), each its folder's index.tsx; in dev also /dev/states.
 function Root() {
+  const routeId = useRouterState({ select: (s) => s.matches.at(-1)?.routeId });
+  const path = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <>
+    <AppFrame routeId={routeId} path={path}>
       <ThemeStyle />
       <Outlet />
-    </>
+    </AppFrame>
   );
 }
 

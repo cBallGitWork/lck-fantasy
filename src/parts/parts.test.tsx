@@ -204,9 +204,10 @@ test("a strong sheet stands out with its own frame", () => {
   expect(html(<Modal kind="sheet" title="Confirm" onClose={() => {}}>x</Modal>)).not.toContain("modal__box--strong");
 });
 
-test("a toast is a polite status with its message", () => {
+test("a toast shows its message, and leaves saying it to the page's one live region", () => {
   const out = html(<Toast message="Kingen added" n={1} onDone={() => {}} />);
-  expect(out).toContain('role="status"');
+  expect(out).not.toContain('role="status"');
+  expect(out).toContain('aria-hidden="true"');
   expect(out).toContain("Kingen added");
 });
 

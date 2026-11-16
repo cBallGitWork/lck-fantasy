@@ -61,6 +61,19 @@ a {
     animation: none !important;
   }
 }
+/* Read by a screen reader, never seen: the live region, Live's h1. */
+.unseen {
+  position: absolute;
+  width: var(--m-rule);
+  height: var(--m-rule);
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* A search field's edge: mid, 3:1 or more on its ground, as a field must be (plate, Accessibility); never --line. */
+input[type="search"] {
+  border: var(--m-rule) solid var(--mid);
+}
 /* Every table: full width, collapsed rules; its head cells in mid grey over a --line rule. */
 table {
   width: 100%;

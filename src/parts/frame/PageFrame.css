@@ -2,3 +2,18 @@
 .page-frame {
   padding: var(--s-5) var(--s-6) var(--s-7);
 }
+/* `Skip to content`: unseen until focused, then over the top bar's left. */
+.page-frame__skip {
+  position: absolute;
+  left: var(--s-2);
+  top: var(--s-2);
+  z-index: 30;
+  padding: var(--s-2) var(--s-3);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: var(--w-semi);
+  transform: translateY(-200%);
+}
+.page-frame__skip:focus {
+  transform: none;
+}

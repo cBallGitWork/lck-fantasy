@@ -6,16 +6,14 @@ export { RiftMap } from "./RiftMap";
 export { RoleIcon } from "./RoleIcon";
 export {
   BENCH_SLOTS,
-  COACH_HANGUL,
   flexPlays,
   isBench,
   LINEUP_ORDER,
+  PERSON_ROLES,
   ROLE_KEYS,
   ROLE_NAME,
-  slotIcon,
   slotLabel,
   SQUAD_SIZE,
-  type BenchSlot,
   type IconKey,
   type PersonRole,
   type RoleKey,
@@ -24,6 +22,6 @@ export {
 } from "./roles";
 export { Shirt } from "./Shirt";
 export { RIFT_SLOTS, type RiftPoint } from "./slots";
-export { MARK_NAME, MarkBadge, type Mark } from "./MarkBadge";
-export { Rift, Tile, type TileProps } from "./Tile";
+export { MARK_NAME, MarkBadge, markKey, type Mark } from "./MarkBadge";
+export { Rift, Tile } from "./Tile";
 export { RIFT_VIEW, VIEWS, type BoardView } from "./views";

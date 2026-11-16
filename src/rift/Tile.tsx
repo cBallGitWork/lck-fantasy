@@ -9,7 +9,7 @@ import type { RiftPoint } from "./slots";
 import { MarkBadge, type Mark } from "./MarkBadge";
 import "./Tile.css";
 
-export interface TileProps {
+interface TileProps {
   /** His slot; a Flex's tile says Flex, never the role he plays, which his card says (Craig, 16 Nov 2026). */
   slot: SlotKey;
   name: string;

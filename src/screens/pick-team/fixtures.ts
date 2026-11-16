@@ -29,7 +29,7 @@ export interface PickPlayer {
   season: number;
   seasonRank: Ranked;
   /** His points in each of his last three series, oldest first. */
-  lastThree: readonly number[];
+  last3: readonly number[];
   /** The admin's flag and its note: `Not starting` `Wed`. */
   news?: { flag: string; note: string };
 }
@@ -62,7 +62,7 @@ const T1_SEASONS: Record<string, T1MemberSeason> = { Faker: FAKER_SEASON, kkOma:
 const BEFORE_WEEK3: Record<string, number[]> = { Zeus: [12], Canyon: [15], Ruler: [14], Delight: [8], Siwoo: [6], Bdd: [4, 6, 6], Cuzz: [9] };
 
 /** His points in his last three series, oldest first (spec/12, the player card's front). */
-function lastThreeOf(name: string): number[] {
+function last3Of(name: string): number[] {
   const t1 = T1_SEASONS[name];
   if (t1) return last3(t1).map((s) => s.points);
   const before = BEFORE_WEEK3[name];
@@ -71,7 +71,7 @@ function lastThreeOf(name: string): number[] {
 }
 
 /** Each player's card figures, by name; owned % and season points are Stats'. */
-const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceM" | "form" | "ownedPct" | "season" | "lastThree">> = {
+const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceM" | "form" | "ownedPct" | "season" | "last3">> = {
   Zeus: { formRank: { place: 3, of: "10 tops" }, ownedRank: { place: 4 }, seasonRank: { place: 7 } },
   Canyon: { formRank: { place: 2, of: "10 junglers" }, ownedRank: { place: 5 }, seasonRank: { place: 6 } },
   Faker: { priceMove: 0.5, formRank: { place: 1, of: "10 mids" }, ownedRank: { place: 1 }, seasonRank: { place: 2 } },
@@ -92,7 +92,7 @@ const player = (p: PickTeamPick): PickPlayer => {
   const card = CARDS[p.name];
   if (!card) throw new Error(`No card figures for ${p.name}`);
   const { ownedPct, points } = statsOf(p.name);
-  return { id: playerId(p.name), name: p.name, team: p.team, role: p.role, priceM: p.priceM, form: p.form, ownedPct, season: points, lastThree: lastThreeOf(p.name), ...card };
+  return { id: playerId(p.name), name: p.name, team: p.team, role: p.role, priceM: p.priceM, form: p.form, ownedPct, season: points, last3: last3Of(p.name), ...card };
 };
 
 export const PICK_TEAM_DATA: PickTeamData = {
@@ -119,7 +119,7 @@ const markOf = (mark: Mark) => {
 export const SAVED_TEAM: PickTeam = {
   slots: Object.fromEntries(PICK_TEAM_SQUAD.map((p) => [p.slot, playerId(p.name)])) as Record<SquadSlot, string>,
   carry: markOf("C"),
-  vice: markOf("V"),
+  viceCarry: markOf("V"),
 };
 
 /** The three states the picture folder draws. */

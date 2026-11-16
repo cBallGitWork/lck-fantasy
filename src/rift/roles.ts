@@ -5,7 +5,7 @@ export type SlotKey = RoleKey | "flex" | "coach";
 /** The role a player plays, or coach. */
 export type PersonRole = RoleKey | "coach";
 /** The squad's two bench places, after the seven starters (spec/01). */
-export type BenchSlot = "bench1" | "bench2";
+type BenchSlot = "bench1" | "bench2";
 export const BENCH_SLOTS: readonly BenchSlot[] = ["bench1", "bench2"];
 /** Any of the nine places in a squad. */
 export type SquadSlot = SlotKey | BenchSlot;
@@ -28,6 +28,9 @@ export const COACH_HANGUL = "감독";
 
 /** The five player roles, in lineup order. */
 export const ROLE_KEYS: readonly RoleKey[] = ["top", "jng", "mid", "bot", "sup"];
+
+/** The five player roles, then the coach. */
+export const PERSON_ROLES: readonly PersonRole[] = [...ROLE_KEYS, "coach"];
 
 /** The seven starters in the LCK broadcast's lineup order. */
 export const LINEUP_ORDER: readonly SlotKey[] = [...ROLE_KEYS, "flex", "coach"];

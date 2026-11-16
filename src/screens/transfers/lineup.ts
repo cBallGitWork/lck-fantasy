@@ -1,29 +1,26 @@
 // The nine after the plan, by role: how the views group them, and how the squad is arranged on confirm
 // (the squad rule, Craig 16 Nov 2026: at least one of each role, any role for any role past that).
 
-import { BENCH_SLOTS, ROLE_KEYS, type Mark, type PersonRole, type SquadSlot } from "../../rift";
+import { BENCH_SLOTS, PERSON_ROLES, ROLE_KEYS, type Mark, type PersonRole, type SquadSlot } from "../../rift";
 import { inSlot, outOf, SQUAD_SLOTS, type ListPlayer, type Plan, type SquadPlayer } from "./plan";
 
-/** One of the nine as the views draw him: his slot, who stands there (the sold one while empty), and whether it is empty. */
-export interface Standing {
+/** One of the nine as the views draw him: his slot, who holds it (the sold one while empty), and whether it is empty. */
+export interface SlotHolder {
   slot: SquadSlot;
-  p: ListPlayer;
+  player: ListPlayer;
   empty: boolean;
   mark?: Mark;
 }
 
-/** The order the views group the nine in: the five roles, then the coach. */
-export const GROUP_ORDER: readonly PersonRole[] = [...ROLE_KEYS, "coach"];
-
 /** The nine grouped by role, the coach last; inside a role, the one in its own slot first, then squad order. */
-export function byRole(squad: SquadPlayer[], plan: Plan): { role: PersonRole; standing: Standing[] }[] {
-  const nine = SQUAD_SLOTS.map((slot): Standing => {
+export function byRole(squad: SquadPlayer[], plan: Plan): { role: PersonRole; holders: SlotHolder[] }[] {
+  const nine = SQUAD_SLOTS.map((slot): SlotHolder => {
     const now = inSlot(squad, plan, slot);
     const before = outOf(squad, slot);
-    return { slot, p: now ?? before, empty: now === null, mark: now?.id === before.id ? before.mark : undefined };
+    return { slot, player: now ?? before, empty: now === null, mark: now?.id === before.id ? before.mark : undefined };
   });
-  const own = (s: Standing) => (s.slot === s.p.role ? 0 : 1);
-  return GROUP_ORDER.map((role) => ({ role, standing: nine.filter((s) => s.p.role === role).sort((a, b) => own(a) - own(b)) })).filter((g) => g.standing.length > 0);
+  const own = (h: SlotHolder) => (h.slot === h.player.role ? 0 : 1);
+  return PERSON_ROLES.map((role) => ({ role, holders: nine.filter((h) => h.player.role === role).sort((a, b) => own(a) - own(b)) })).filter((g) => g.holders.length > 0);
 }
 
 /**

@@ -104,7 +104,7 @@ function Locked({ children }: { children: ReactNode }) {
 }
 
 /** Team: name, hangul banner and its preview, favourite team, country. */
-export function TeamTab({ draft, onChange, locked, countries }: SettingsProps) {
+function TeamTab({ draft, onChange, locked, countries }: SettingsProps) {
   return (
     <section>
       <Row label="Team name">
@@ -133,7 +133,7 @@ export function TeamTab({ draft, onChange, locked, countries }: SettingsProps) {
 }
 
 /** Display: time zone, with the next deadline in it and in KST; theme. */
-export function DisplayTab({ draft, onChange, browserZone, zones, deadlineAt }: SettingsProps) {
+function DisplayTab({ draft, onChange, browserZone, zones, deadlineAt }: SettingsProps) {
   const zoneOptions = [{ value: BROWSER, label: `Browser · ${browserZone}` }, ...plainOptions(zones)];
   const deadline = timeIn(deadlineAt, zoneOf(draft.timeZone, browserZone));
   return (
@@ -163,7 +163,7 @@ function OnOffRow({ label, when, on, onChoose }: { label: string; when: string; 
 }
 
 /** Emails: the deadline reminder and the weekly recap, and the address they go to. */
-export function EmailsTab({ draft, onChange, account, reminderHours }: SettingsProps) {
+function EmailsTab({ draft, onChange, account, reminderHours }: SettingsProps) {
   return (
     <section>
       <OnOffRow label="Deadline reminder" when={hoursBefore(reminderHours)} on={draft.deadlineReminder} onChoose={(deadlineReminder) => onChange({ deadlineReminder })} />
@@ -174,7 +174,7 @@ export function EmailsTab({ draft, onChange, account, reminderHours }: SettingsP
 }
 
 /** Account: the email and Sign out, what is public, Download my data, then Delete account. */
-export function AccountTab({ account, onSignOut, onDownload, onDelete }: SettingsProps) {
+function AccountTab({ account, onSignOut, onDownload, onDelete }: SettingsProps) {
   return (
     <>
       <section>

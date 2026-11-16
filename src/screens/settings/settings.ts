@@ -13,7 +13,7 @@ export type ThemeChoice = (typeof THEMES)[number];
 export const BROWSER = "browser";
 
 /** Team name and hangul banner are capped, as FPL's name is. */
-export const NAME_LIMIT = 20;
+const NAME_MAX = 20;
 
 export interface SettingsValues {
   teamName: string;
@@ -67,13 +67,13 @@ export function dirtyTabs(changed: (keyof SettingsValues)[]): Set<SettingsTab> {
 }
 
 /** Characters as a reader counts them, hangul syllables one each. */
-export const charCount = (text: string) => [...text].length;
+const charCount = (text: string) => [...text].length;
 
 /** Text cut to the name cap. */
-export const capName = (text: string) => [...text].slice(0, NAME_LIMIT).join("");
+export const capName = (text: string) => [...text].slice(0, NAME_MAX).join("");
 
 /** The counter beside a capped field: `14/20`. */
-export const counter = (text: string) => `${charCount(text)}/${NAME_LIMIT}`;
+export const counter = (text: string) => `${charCount(text)}/${NAME_MAX}`;
 
 /** The zone a time shows in: the browser's, or the one picked. */
 export const zoneOf = (timeZone: string, browserZone: string) => (timeZone === BROWSER ? browserZone : timeZone);

@@ -5,6 +5,7 @@ import { CONFIRMS, PICTURE_PLAN, PLAYERS, RULES, SQUAD, TRANSFERS_PICTURE } from
 import { arrange, byRole, lineupIds } from "./lineup";
 import {
   add,
+  ALL,
   bankNow,
   confirmTransfers,
   EMPTY_PLAN,
@@ -23,12 +24,12 @@ import {
   type Plan,
 } from "./plan";
 import { spotOf, STEP } from "./spots";
-import { formatWon } from "../../parts";
+import { formatWon, WON_PER_M } from "../../parts";
 import type { SquadSlot } from "../../rift";
 
-const ALL: ListFilters = { role: "all", search: "", team: "all", sort: "points" };
+const UNFILTERED: ListFilters = { role: ALL, search: "", team: ALL, sort: "points" };
 const named = (name: string) => PLAYERS.find((p) => p.name === name)!;
-const names = (plan: Plan, filters: Partial<ListFilters> = {}) => listRows(SQUAD, plan, PLAYERS, { ...ALL, ...filters }).map((p) => p.name);
+const names = (plan: Plan, filters: Partial<ListFilters> = {}) => listRows(SQUAD, plan, PLAYERS, { ...UNFILTERED, ...filters }).map((p) => p.name);
 /** Removes each slot in turn, from no changes. */
 const removed = (...slots: SquadSlot[]) => slots.reduce((plan, slot) => remove(SQUAD, plan, slot).plan, EMPTY_PLAN);
 /** Adds each player in turn. */
@@ -51,10 +52,10 @@ describe("removing and restoring", () => {
 
   test("selling a player and buying him back cancels out: no transfer, no hit, his old price kept", () => {
     const flex = SQUAD.find((p) => p.slot === "flex")!;
-    const back = { ...flex, price: flex.price + 1_000_000 };
+    const back = { ...flex, priceWon: flex.priceWon + WON_PER_M };
     const plan = add(SQUAD, removed("flex"), back, RULES).plan;
     expect(transfersMade(SQUAD, plan)).toBe(0);
-    expect(pendingHit(RULES, 0)).toBe(0);
+    expect(pendingHit(RULES, transfersMade(SQUAD, plan))).toBe(0);
     expect(bankNow(SQUAD, plan, RULES.bank)).toBe(RULES.bank);
   });
 });
@@ -165,7 +166,7 @@ describe("the list", () => {
 
 describe("the nine by role", () => {
   test("grouped by role, the coach last; the one in his own slot first", () => {
-    expect(byRole(SQUAD, PICTURE_PLAN).map((g) => [g.role, g.standing.map((s) => s.p.name)])).toEqual([
+    expect(byRole(SQUAD, PICTURE_PLAN).map((g) => [g.role, g.holders.map((h) => h.player.name)])).toEqual([
       ["top", ["Zeus", "Kingen"]],
       ["jng", ["Canyon", "Cuzz"]],
       ["mid", ["Faker", "Bdd"]],
@@ -175,9 +176,9 @@ describe("the nine by role", () => {
     ]);
   });
 
-  test("an empty slot still stands, as the one sold, marked empty", () => {
+  test("an empty slot is still held, by the one sold, marked empty", () => {
     const top = byRole(SQUAD, removed("top"))[0]!;
-    expect(top.standing.find((s) => s.slot === "top")).toMatchObject({ empty: true, p: { name: "Zeus" } });
+    expect(top.holders.find((h) => h.slot === "top")).toMatchObject({ empty: true, player: { name: "Zeus" } });
   });
 
   test("a role's several tiles stand a tile apart; a single one at its spot", () => {
@@ -192,7 +193,7 @@ describe("a confirm applied (#215)", () => {
   const after = confirmTransfers(SQUAD, PLAYERS, RULES, transfers, lineupIds(SQUAD, PICTURE_PLAN));
 
   test("Kingen stands in Siwoo's place at his list price; the rest keep their slots and their C and V", () => {
-    expect(after.squad.find((p) => p.slot === "flex")).toMatchObject({ name: "Kingen", price: named("Kingen").price });
+    expect(after.squad.find((p) => p.slot === "flex")).toMatchObject({ name: "Kingen", priceWon: named("Kingen").priceWon });
     expect(after.squad.map((p) => p.name)).not.toContain("Siwoo");
     expect(after.squad.find((p) => p.name === "Faker")!.mark).toBe("C");
     expect(after.squad.find((p) => p.name === "Ruler")!.mark).toBe("V");

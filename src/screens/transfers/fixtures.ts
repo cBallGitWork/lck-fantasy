@@ -6,6 +6,7 @@ import { opponent, seriesOf } from "../../fixtures/series";
 import {
   COMPETITION,
   finalPickOf,
+  formOf,
   HIT_POINTS,
   MANAGER,
   PICK_TEAM_SQUAD,
@@ -19,7 +20,7 @@ import {
   WEEK4_SERIES,
   type TeamCode,
 } from "../../fixtures/week3";
-import { mToWon } from "../../parts";
+import { mToWon, sum } from "../../parts";
 import type { Confirm, Fixture, ListPlayer, Plan, SquadPlayer, TransferRules } from "./plan";
 import type { TransfersPageProps } from "./TransfersPage";
 
@@ -30,7 +31,7 @@ const TEAMS_PLAYING = [...new Set(WEEK4_SERIES.flatMap((s) => [s.home, s.away]))
 const FIXTURES: Record<string, Fixture[]> = Object.fromEntries(
   TEAMS_PLAYING.map((team) => [
     team,
-    seriesOf(WEEK4_SERIES, team).map((s) => ({ against: opponent(s, team), day: s.day })),
+    seriesOf(WEEK4_SERIES, team).map((s) => ({ opponent: opponent(s, team), day: s.day })),
   ]),
 );
 
@@ -41,7 +42,7 @@ export const SQUAD: SquadPlayer[] = PICK_TEAM_SQUAD.map((p) => ({
   name: p.name,
   team: p.team,
   role: p.role,
-  price: mToWon(p.priceM),
+  priceWon: mToWon(p.priceM),
   weekPoints: rawWeekOf(finalPickOf(p.name)),
   form: p.form,
   points: statsOf(p.name).points,
@@ -55,9 +56,9 @@ const player = (role: ListPlayer["role"], name: string, team: TeamCode, priceM: 
   name,
   team,
   role,
-  price: mToWon(priceM),
+  priceWon: mToWon(priceM),
   weekPoints: Math.round(points / 3),
-  form: Math.round((points / 3) * 10) / 10,
+  form: formOf(points),
   points,
   ownedPct,
 });
@@ -103,7 +104,7 @@ export const CONFIRMS: Confirm[] = [
 ];
 
 /** Free transfers left: the week's, less every move confirmed so far. */
-const freeLeft = Math.max(0, WEEK4_FREE_TRANSFERS - CONFIRMS.reduce((n, c) => n + c.moves.length, 0));
+const freeLeft = Math.max(0, WEEK4_FREE_TRANSFERS - sum(CONFIRMS.map((c) => c.moves.length)));
 
 export const RULES: TransferRules = { freeTransfers: freeLeft, hitPoints: HIT_POINTS, teamCap: TEAM_CAP, bank: mToWon(0.5) };
 
@@ -115,7 +116,7 @@ export const TRANSFERS_PICTURE: TransfersPageProps = {
   account: MANAGER.team,
   competition: COMPETITION,
   week: "Week 4",
-  lastWeek: "Wk 3",
+  lastWeek: 3,
   deadline: WEEK4_DEADLINE,
   squad: SQUAD,
   players: PLAYERS,

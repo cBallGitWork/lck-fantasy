@@ -80,9 +80,9 @@ function Past({ series }: { series: PastSeries[] }) {
   return (
     <span className="compare__strip">
       {series.map((s) => (
-        <span key={s.when + s.opp} className="compare__series">
+        <span key={s.when + s.opponent} className="compare__series">
           {s.when}
-          <b className="compare__series-points">{s.points}</b>v {s.opp}
+          <b className="compare__series-points">{s.points}</b>v {s.opponent}
         </span>
       ))}
     </span>
@@ -94,9 +94,9 @@ function Next({ series }: { series: NextSeries[] }) {
   return (
     <span className="compare__strip">
       {series.map((s, i) => (
-        <span key={s.when + s.opp} className="compare__series">
+        <span key={s.when + s.opponent} className="compare__series">
           {s.when}
-          <em className={cx("compare__series-opp", i === 0 && "compare__series-opp--first")}>v {s.opp}</em>
+          <em className={cx("compare__series-opp", i === 0 && "compare__series-opp--first")}>v {s.opponent}</em>
         </span>
       ))}
     </span>

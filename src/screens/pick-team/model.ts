@@ -12,7 +12,7 @@ export interface PickTeam {
   /** Each slot's player id. */
   slots: Record<SquadSlot, string>;
   carry: string;
-  vice: string;
+  viceCarry: string;
   buff?: PickBuff;
 }
 
@@ -31,7 +31,7 @@ export type PickAction =
   | { type: "close" }
   | { type: "view"; view: PickView }
   | { type: "makeCarry"; id: string }
-  | { type: "makeVice"; id: string }
+  | { type: "makeViceCarry"; id: string }
   | { type: "playBuff"; buff: PickBuff }
   | { type: "cancelBuff" }
   | { type: "reset" }
@@ -89,8 +89,8 @@ export function changeCount(saved: PickTeam, draft: PickTeam): number {
     swaps += Math.max(length - 1, 0);
   }
   // A mark counts when both its player and his slot change, so a swap that hands it on, or one that moves him, is one change.
-  const moved = (mark: "carry" | "vice") => Number(saved[mark] !== draft[mark] && slotOf(saved, saved[mark]) !== slotOf(draft, draft[mark]));
-  return swaps + moved("carry") + moved("vice") + Number(saved.buff !== draft.buff);
+  const moved = (mark: "carry" | "viceCarry") => Number(saved[mark] !== draft[mark] && slotOf(saved, saved[mark]) !== slotOf(draft, draft[mark]));
+  return swaps + moved("carry") + moved("viceCarry") + Number(saved.buff !== draft.buff);
 }
 
 const withDraft = (state: PickState, draft: PickTeam): PickState => ({
@@ -104,7 +104,7 @@ function swap(draft: PickTeam, a: string, b: string): PickTeam {
   const bSlot = slotOf(draft, b) as SquadSlot;
   const slots = { ...draft.slots, [aSlot]: b, [bSlot]: a };
   const pass = (mark: string) => (mark === a && isBench(bSlot) ? b : mark === b && isBench(aSlot) ? a : mark);
-  return { ...draft, slots, carry: pass(draft.carry), vice: pass(draft.vice) };
+  return { ...draft, slots, carry: pass(draft.carry), viceCarry: pass(draft.viceCarry) };
 }
 
 /** The page's state after one action; the roles say who can swap with whom. */
@@ -129,13 +129,13 @@ export function pickReducer(roleOf: (id: string) => PersonRole) {
       case "makeCarry": {
         if (!isMarkable(draft, action.id) || draft.carry === action.id) return state;
         // As FPL's armband: making the Vice-carry the Carry hands the old Carry the V.
-        const vice = draft.vice === action.id ? draft.carry : draft.vice;
-        return withDraft(state, { ...draft, carry: action.id, vice });
+        const viceCarry = draft.viceCarry === action.id ? draft.carry : draft.viceCarry;
+        return withDraft(state, { ...draft, carry: action.id, viceCarry });
       }
-      case "makeVice": {
-        if (!isMarkable(draft, action.id) || draft.vice === action.id) return state;
-        const carry = draft.carry === action.id ? draft.vice : draft.carry;
-        return withDraft(state, { ...draft, vice: action.id, carry });
+      case "makeViceCarry": {
+        if (!isMarkable(draft, action.id) || draft.viceCarry === action.id) return state;
+        const carry = draft.carry === action.id ? draft.viceCarry : draft.carry;
+        return withDraft(state, { ...draft, viceCarry: action.id, carry });
       }
       case "playBuff":
         return draft.buff ? state : withDraft(state, { ...draft, buff: action.buff });

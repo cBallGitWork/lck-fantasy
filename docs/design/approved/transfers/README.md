@@ -29,18 +29,15 @@ He looked at the built page and asked for these; they overrule the pictures wher
 ## Borrowed
 
 - **FPL's Transfers**: the squad beside a player list with role, search, sort and team filters, then a confirm step. A player sells at his full current price (spec/02).
-- **FPL's squad toggle**: one switch for what sits under every player.
-- **Greyed but listed**, not refused at confirm: a player Flol can't buy stays in the list with why (over the budget, or his team is full), sorted last.
+- **FPL's refusals**: every row can be bought; a buy Flol refuses says why in a short message, and over the budget turns the bank red (Craig, 16 Nov 2026).
 - Research on other games: [docs/research/transfers-page-references.md](../../../research/transfers-page-references.md).
 
 ## Controls
 
-- **Rift view | Card view**: the same choice as Pick Team. Not in the spec yet; in [to-grill](../../../to-grill.md).
-- **Show ▾**: what sits under each player: Fixtures (the default: one row, both of the week's opponents, as "v T1 · v GEN"), Price or Owned.
-- **A player on the squad**: sells him; the list filters to his slot (his role, or any role for the Flex) and what the bank allows. Any of the nine, coach included, can be sold.
-- **A row's +**: buys that player into the empty slot. A greyed row opens his card but can't be bought.
+- **Rift view | List view** (Craig, 16 Nov 2026): all nine on the Rift with each one's price, or grouped by role in a list.
+- **A player on the squad**: sells him; the list filters to his role, or any role while the squad keeps one of each (spec/03). Any of the nine, coach included, can be sold.
+- **A row's +**: buys that player; a refused buy says why.
 - **Top strip**: free transfers left, the pending hit (−6 each), the bank.
-- **Price ▲/▼**: the player's last price move, in its own column; nothing before a first move. The card shows the amount (spec/12).
 - **Confirmed · Week 4**: each confirm this week, newest first, with what it used (free or −6). Only the latest has **Undo**, until the deadline (spec/03). Undo also clears any unconfirmed changes. A confirm under Remake or Limitless is listed with no Undo.
 - **Bottom bar**: the transfers so far, Reset, and Review and confirm.
 - **Confirm sheet**: what changes, the cost and the bank. Back or Confirm, with the deadline.
@@ -61,4 +58,4 @@ He looked at the built page and asked for these; they overrule the pictures wher
 
 ## Cut on 14 Nov
 
-"Play" on the buffs; the map's lane, Baron and Dragon labels; 벤치 beside Bench; "Pick a replacement for" (now "Replacing Siwoo"). Kept as new to an FPL manager: "Flex · plays Top", "Coach 감독", why a greyed player can't be bought.
+"Play" on the buffs; the map's lane, Baron and Dragon labels; 벤치 beside Bench; "Pick a replacement for" (now "Replacing Siwoo"). Kept as new to an FPL manager: "Flex · plays Top", "Coach 감독", why a buy is refused.

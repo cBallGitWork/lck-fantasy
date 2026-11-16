@@ -23,7 +23,7 @@ export function WeekArrow({ label, go, onStep, children }: { label: string; go?:
 }
 
 /** Where a week arrow goes: a path (`/points/2`), a step on the page, or nowhere. */
-export type WeekWay = Go | (() => void) | undefined;
+type WeekWay = Go | (() => void) | undefined;
 
 const arrowTo = (way: WeekWay) => (typeof way === "function" ? { onStep: way } : { go: way });
 

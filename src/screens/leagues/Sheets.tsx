@@ -2,7 +2,7 @@
 // Leagues page. Each is fed by props; the screen (index.tsx) holds the leagues.
 import { useId, useState, type ReactNode } from "react";
 import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf } from "../../parts";
-import { PATHS } from "../../paths";
+import { leagueGo } from "../../paths";
 import { capReason, privateCountLine } from "./forms";
 import type { PrivateLeague, ScoringWeek, ScoringWeeks } from "./types";
 import "./Sheets.css";
@@ -95,7 +95,7 @@ export function CreatedSheet({
         <OutlinedKey onClick={onCopyLink}>Copy link</OutlinedKey>
       </div>
       <div className="leagues__sheet-keys">
-        <GoLink className="leagues__open" go={{ to: PATHS.league, params: { leagueId: league.id } }}>
+        <GoLink className="leagues__open" go={leagueGo(league.id)}>
           Open league
         </GoLink>
       </div>

@@ -47,3 +47,12 @@ export function pathTo(go: Go): string {
 export function cardGo(id: string, coach: boolean): Go {
   return coach ? { to: PATHS.coachCard, params: { coachId: id } } : { to: PATHS.playerCard, params: { playerId: id } };
 }
+
+/** A league's page. */
+export const leagueGo = (id: string): Go => ({ to: PATHS.league, params: { leagueId: id } });
+
+/** A series' page. */
+export const seriesGo = (id: string): Go => ({ to: PATHS.series, params: { seriesId: id } });
+
+/** A manager's profile. */
+export const profileGo = (id: string): Go => ({ to: PATHS.profile, params: { managerId: id } });

@@ -1,4 +1,4 @@
-import { cx, seriesResult, sum } from "../../parts";
+import { cx, gameNo, seriesResult, seriesTitle, sum } from "../../parts";
 import type { CardWeek, WeekSeries } from "./card";
 
 /** A series' points: the games that count. */
@@ -13,7 +13,7 @@ export function ThisWeek({ week }: { week: CardWeek }) {
         <section key={s.id}>
           <h3 className="player-card__section">
             <span>
-              {s.day} · v {s.opponent}{" "}
+              {seriesTitle(s.day, s.opponent)}{" "}
               <span className="player-card__quiet quiet">{seriesResult(s.score, s.state === "live")}</span>
             </span>
             <b className="num">{seriesPoints(s)}</b>
@@ -22,7 +22,7 @@ export function ThisWeek({ week }: { week: CardWeek }) {
             <tbody>
               {s.games.map((g, i) => (
                 <tr key={i} className={cx(!g.counts && "player-card__dropped")}>
-                  <td className="player-card__quiet quiet">G{i + 1}</td>
+                  <td className="player-card__quiet quiet">{gameNo(i + 1)}</td>
                   <td>
                     {g.champion} <span className="player-card__quiet quiet">· {g.outcome ?? g.clock}</span>
                   </td>

@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { MANAGER, WEEK3_SERIES_AT_POINTS, WEEK4_DEADLINE } from "../fixtures/week3";
+import { MANAGER, TEAMS, WEEK3_SERIES_AT_POINTS, WEEK4_DEADLINE } from "../fixtures/week3";
 import { html, text } from "../testing/render";
 import {
   BuffCard,
@@ -223,7 +223,7 @@ test("a placeholder is one word; the sponsor note is the spec's line", () => {
 });
 
 test("every LCK team has its crest; a team without one shows its code in a dashed box", () => {
-  for (const team of ["T1", "GEN", "HLE", "KT", "DK", "NS", "BFX", "DNS", "BRO", "KRX"]) {
+  for (const team of Object.keys(TEAMS)) {
     expect(html(<Crest team={team} />)).toMatch(new RegExp(`<img[^>]+src="[^"]+"[^>]+alt="${team} crest"`));
   }
   expect(html(<Crest team="T1" size="cardHead" />)).toContain("width:var(--m-card-head)");

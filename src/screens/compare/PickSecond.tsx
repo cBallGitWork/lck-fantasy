@@ -14,18 +14,14 @@ export function PickSecond({
   rows,
   canPick,
   onPick,
-  initialQuery = "",
-  initialWide = false,
 }: {
   first: ComparePlayer;
   rows: readonly SearchRow[];
   canPick: (name: string) => boolean;
   onPick: (name: string) => void;
-  initialQuery?: string;
-  initialWide?: boolean;
 }) {
-  const [query, setQuery] = useState(initialQuery);
-  const [wide, setWide] = useState(initialWide);
+  const [query, setQuery] = useState("");
+  const [wide, setWide] = useState(false);
   const groups = searchGroups(rows, first, query, wide);
   // A coach is listed only against a coach, so a coach's list already holds every coach.
   const showMore = first.role !== "coach" && !wide && !query.trim();

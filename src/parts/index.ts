@@ -15,6 +15,7 @@ export { Modal, wrapFocus } from "./controls/Modal";
 export {
   bestOf,
   count,
+  gameNo,
   inOut,
   MINUS,
   NONE,
@@ -28,6 +29,7 @@ export {
   result,
   score,
   seriesResult,
+  seriesTitle,
   signed,
   type Score,
 } from "./text/figures";
@@ -36,7 +38,7 @@ export { browserZone, timeIn } from "./text/time";
 export { PriceMove, RankMove } from "./display/Move";
 export { OutlinedKey } from "./controls/OutlinedKey";
 export { PageFrame } from "./frame/PageFrame";
-export { PageHead, type HeadFigure, type WeekNav } from "./frame/PageHead";
+export { PageHead, type WeekNav } from "./frame/PageHead";
 export { Placeholder } from "./frame/Placeholder";
 export { chooseOnKey, selectable } from "./util/selectable";
 export { sum } from "./util/sum";
@@ -44,14 +46,14 @@ export { SectionHead } from "./frame/SectionHead";
 export { SeriesList, type SeriesRow, type SeriesState } from "./display/SeriesList";
 export { beyondStrip, SeriesStrip, type StripNext, type StripPast } from "./display/SeriesStrip";
 export { SideSection } from "./frame/SideSection";
-export { SPONSOR_NOTE, SponsorNote } from "./frame/SponsorNote";
+export { SponsorNote } from "./frame/SponsorNote";
 export { Empty, ErrorState, Loading } from "./display/States";
-export { Table, type Column, type RowOpen } from "./display/Table";
+export { Table, type Column } from "./display/Table";
 export { Tabs } from "./controls/Tabs";
-export { FinalTag, LiveTag, NotFinalTag, Tag, TAG_WORD, type TagKind } from "./display/Tag";
+export { FinalTag, LiveTag, NotFinalTag, Tag } from "./display/Tag";
 export { TierShield } from "./display/TierShield";
-export { Toast, TOAST_MS } from "./controls/Toast";
-export { Time } from "./display/Time";
-export { TOP_BAR_ITEMS, TopBar, type TopBarItem } from "./frame/TopBar";
-export { ViewToggle, type ToggleOption } from "./controls/ViewToggle";
-export { WeekArrow, WeekStep, type WeekWay } from "./controls/WeekArrow";
+export { Toast } from "./controls/Toast";
+export { Time, TIME_NOTE, YOUR_TIME } from "./display/Time";
+export { TopBar } from "./frame/TopBar";
+export { ViewToggle } from "./controls/ViewToggle";
+export { WeekArrow, WeekStep } from "./controls/WeekArrow";

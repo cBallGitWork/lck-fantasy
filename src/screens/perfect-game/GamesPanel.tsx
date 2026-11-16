@@ -1,6 +1,6 @@
 import { fromSide, seriesById } from "../../fixtures/series";
 import type { Series } from "../../fixtures/week3";
-import { outcome, result } from "../../parts";
+import { outcome, result, seriesTitle } from "../../parts";
 import { cardGo } from "../../paths";
 import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PerfectPlayer, PlayerSeries } from "./types";
@@ -9,7 +9,7 @@ import type { PerfectPlayer, PlayerSeries } from "./types";
 function seriesHead(team: string, s: PlayerSeries, week: readonly Series[]) {
   const series = seriesById(week, s.id);
   const side = fromSide(series, team);
-  return { title: `${series.day} · v ${side.opponent}`, outcome: side.score && result(side.score) };
+  return { title: seriesTitle(series.day, side.opponent), outcome: side.score && result(side.score) };
 }
 
 /** A tapped starter's games: each series, each game boxed if it counted, then his sum (the Carry's result only) and Full stats. */

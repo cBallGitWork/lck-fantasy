@@ -45,11 +45,6 @@
   font-weight: var(--w-regular);
   color: var(--mid);
 }
-.player-panel__series-go:hover {
-  text-decoration: underline;
-  text-decoration-thickness: var(--m-rule);
-  text-underline-offset: var(--s-1);
-}
 .player-panel__game {
   display: grid;
   grid-template-columns: var(--s-6) 1fr var(--m-go-col);

@@ -1,6 +1,6 @@
 # src/parts
 
-Parts shared by two or more screens, each drawn one way everywhere (`docs/design/plate.md`, Parts and States). Each has its own CSS file, using theme tokens only. Import them from `src/parts` (`index.ts`), never from a folder inside it; the server (`convex/`) reads `text/money.ts` alone. Parts never import `src/rift`; the Rift builds on the parts.
+Parts shared by two or more screens, each drawn one way everywhere (`docs/design/plate.md`, Parts and States). Each has its own CSS file, using theme tokens only. Import them from `src/parts` (`index.ts`), never from a folder inside it; the server (`convex/`) reads `text/money.ts`, `text/figures.ts` and `util/sum.ts` alone. Parts never import `src/rift`; the Rift builds on the parts.
 
 
 ## frame/
@@ -38,7 +38,7 @@ What shows a fact: tags, tables, lists, crests, states.
 
 - `Tag.tsx`: a tag: plain, `Live` filled, `Not final` dashed; `LiveTag`, `NotFinalTag` and `FinalTag` (Final or Not final) say the states one way everywhere.
 - `Deadline.tsx`: `Deadline Wed 07:45  16:45 KST` and the countdown.
-- `Time.tsx`: your time, then KST in mid grey.
+- `Time.tsx`: your time, then KST in mid grey; the words over such times (`YOUR_TIME`, `TIME_NOTE`).
 - `MeDot.tsx`: your player's dot.
 - `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a row's `›` (`open`); sticky head and name column for the wide table.
 - `SeriesList.tsx`: the week's series: day, teams, then score and state, or the time.
@@ -54,7 +54,7 @@ What shows a fact: tags, tables, lists, crests, states.
 How figures and money are written.
 
 - `money.ts`: money as ₩ and m (spec/02): `formatWon` for an amount in won, `money` for a price held in m, `mToWon` between them.
-- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`, `seriesResult` for a week's series), per-game and one-decimal figures, per cents, `Bo3` and absence (`—`), written one way everywhere.
+- `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`, `seriesResult` for a week's series), per-game and one-decimal figures, per cents, `Bo3`, a game (`G2`), a series' title (`Wed · v HLE`) and absence (`—`), written one way everywhere.
 
 ## util/
 
@@ -62,4 +62,5 @@ Helpers with no look of their own.
 
 - `cx.ts`: joins class names.
 - `selectable.ts`: makes a tile or card a key: click, Enter or Space.
+- `sum.ts`: numbers added up; none gives 0.
 - `devState.ts`: `useDevState`, the approved picture's state a screen opens on `?state=` in dev only (`src/app/devStates.ts` lists them).

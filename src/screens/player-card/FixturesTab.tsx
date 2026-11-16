@@ -1,4 +1,4 @@
-import { bestOf, Table } from "../../parts";
+import { bestOf, Table, YOUR_TIME } from "../../parts";
 import type { TeamCode } from "../../fixtures/week3";
 import type { FixtureRow } from "./card";
 import { WeekCell, weekStarts } from "./WeekCell";
@@ -27,7 +27,7 @@ export function FixturesTab({ team, rows }: { team: TeamCode; rows: FixtureRow[]
               </>
             ),
           },
-          { key: "local", head: "Your time", figure: true, cell: (r) => r.local },
+          { key: "local", head: YOUR_TIME, figure: true, cell: (r) => r.local },
           { key: "kst", head: "KST", figure: true, cell: (r) => <span className="player-card__quiet quiet">{r.kst}</span> },
         ]}
       />

@@ -129,10 +129,10 @@ describe("players, totals (1440.png)", () => {
     ]);
     const faker = out.split("<tr").find((r) => r.includes(">Faker<")) ?? "";
     expect(faker).toContain('aria-label="Your player"');
-    expect(faker).toContain('class="rise"');
+    expect(faker).toContain('class="rise stats__move"');
     expect(faker).toContain('href="/player/faker"');
     const doran = out.split("<tr").find((r) => r.includes(">Doran<")) ?? "";
-    expect(doran).toContain('class="fall"');
+    expect(doran).toContain('class="fall stats__move"');
     expect(doran).not.toContain("Your player");
   });
 

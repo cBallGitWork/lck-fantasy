@@ -1,4 +1,4 @@
-import { cx, SideSection, signed } from "../../parts";
+import { cx, SideSection, signed, TIME_NOTE } from "../../parts";
 import type { Confirm } from "./plan";
 
 /** The hit a transfer cost, or `Free`. */
@@ -8,7 +8,7 @@ export const costLabel = (hit: number) => (hit > 0 ? signed(-hit) : "Free");
 export function Confirmed({ week, confirms, onUndo }: { week: string; confirms: Confirm[]; onUndo: (id: string) => void }) {
   if (confirms.length === 0) return null;
   return (
-    <SideSection title={`Confirmed · ${week}`} note="your time · KST">
+    <SideSection title={`Confirmed · ${week}`} note={TIME_NOTE}>
       {confirms.map((c, i) => {
         const undo = i === 0 && c.buff === undefined;
         return (

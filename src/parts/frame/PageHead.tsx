@@ -5,7 +5,7 @@ import { LinkGo } from "../controls/LinkGo";
 import "./PageHead.css";
 import { WeekStep } from "../controls/WeekArrow";
 
-export interface HeadFigure {
+interface HeadFigure {
   label: string;
   value: ReactNode;
   /** Where the figure leads (`Highest 131 ›`). */

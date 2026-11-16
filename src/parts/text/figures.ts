@@ -55,6 +55,12 @@ export const NONE = "—";
 /** A series' length: `Bo3`. */
 export const bestOf = (n: number) => `Bo${n}`;
 
+/** A game of a series: `G2`. */
+export const gameNo = (n: number) => `G${n}`;
+
+/** A series by its day and the other side: `Wed · v HLE`. */
+export const seriesTitle = (day: string, opponent: string) => `${day} · v ${opponent}`;
+
 /** A place, alone or among so many: `2nd`, `2nd of 10 mids`. */
 export const placeOf = (place: number, of?: string) => (of === undefined ? ordinal(place) : `${ordinal(place)} of ${of}`);
 

@@ -1,5 +1,5 @@
 import { eok, oneDecimal } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchSwap, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS, Rift, Tile, type LineupCardProps } from "../../rift";
+import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS, Rift, Tile, type LineupCardProps } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
 import { swapIds } from "./model";
@@ -82,7 +82,7 @@ export function CardBoard(props: ViewProps) {
   );
 }
 
-/** The bench bar: each bench player, with ⇅ Swap between them. Lit when the tapped player can swap with him. */
+/** The bench bar: each bench player; tap one then the other to swap their order. Lit when the tapped player can swap with him. */
 function Bench(props: ViewProps) {
   const { data, state, dispatch } = props;
   const swap = swapState(props);
@@ -105,7 +105,6 @@ function Bench(props: ViewProps) {
   return (
     <BenchBar>
       {first}
-      <BenchSwap onSwap={() => dispatch({ type: "swapBench" })} />
       {second}
     </BenchBar>
   );

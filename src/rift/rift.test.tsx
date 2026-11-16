@@ -6,7 +6,6 @@ import { measure } from "../theme/tokens";
 import {
   BENCH_SLOTS,
   BenchBar,
-  BenchSwap,
   BenchTile,
   flexPlays,
   isBench,
@@ -165,15 +164,14 @@ test("the panel's body: a series head, its games with the counted boxed, the sum
   expect(text(<PanelFoot go={{ to: "/points" }} />)).toBe("Full stats ›");
 });
 
-test("the bench bar holds the Rift's tiles, each under its order and role, and the swap key; a bench tile can be chosen", () => {
+test("the bench bar holds the Rift's tiles, each under its order and role, with no swap key; a bench tile can be chosen", () => {
   const out = text(
     <BenchBar>
       <BenchTile order={1} role="mid" name="Bdd" team="KT" detail="Didn't play" points="—" state="out" />
-      <BenchSwap />
       <BenchTile order={2} role="jng" name="Cuzz" team="KT" line="v DK · v T1" />
     </BenchBar>,
   );
-  expect(out).toBe("Bench1. MidKTBdd—Didn't play⇅ Swap2. JungleKTCuzzv DK · v T1");
+  expect(out).toBe("Bench1. MidKTBdd—Didn't play2. JungleKTCuzzv DK · v T1");
   // The bench shows the Rift's own tiles, as FPL's bench under the pitch (Craig, 16 Nov 2026).
   const chosen = html(<BenchTile order={1} role="mid" name="Bdd" team="KT" selected onSelect={() => {}} />);
   expect(chosen).toContain("tile tile--bench tile--selected");

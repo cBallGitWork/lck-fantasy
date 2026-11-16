@@ -63,12 +63,3 @@ export function BenchTile({
     </div>
   );
 }
-
-/** The key between bench tiles that swaps their order. */
-export function BenchSwap({ onSwap }: { onSwap?: () => void }) {
-  return (
-    <button type="button" className="bench-swap" onClick={onSwap}>
-      ⇅ Swap
-    </button>
-  );
-}

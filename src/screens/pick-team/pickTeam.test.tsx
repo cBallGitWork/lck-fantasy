@@ -81,7 +81,6 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
     "Bench",
     "1. Mid",
     "KTBddv T1, DK",
-    "⇅ Swap",
     "2. Jungle",
     "KTCuzzv T1, DK",
     "No changes",
@@ -126,7 +125,6 @@ test("Card view: the seven starters as the broadcast lineup, the bench bar, then
     "kkOmaT1v KT, GENForm 9.0₩7.0m",
     "Bench",
     "Bdd",
-    "⇅ Swap",
     "Cuzz",
     "No changes",
     "Save team",
@@ -196,7 +194,7 @@ test("tap a player, then one lit up, and they swap: a role starter with the benc
   expect(swapIds(SAVED_TEAM, "canyon", roleOf)).toEqual(new Set(["cuzz"]));
   expect(swapIds(SAVED_TEAM, "zeus", roleOf)).toEqual(new Set(["siwoo"]));
   expect(swapIds(SAVED_TEAM, "siwoo", roleOf)).toEqual(new Set(["zeus", "bdd", "cuzz"]));
-  expect(swapIds(SAVED_TEAM, "bdd", roleOf)).toEqual(new Set(["faker", "siwoo"]));
+  expect(swapIds(SAVED_TEAM, "bdd", roleOf)).toEqual(new Set(["faker", "siwoo", "cuzz"]));
   expect(swapIds(SAVED_TEAM, "kkoma", roleOf)).toEqual(new Set());
   // One tap each: Canyon, then Cuzz.
   const done = run(PICK_TEAM_STATES.rift, { type: "select", id: "canyon" }, { type: "select", id: "cuzz" });
@@ -238,8 +236,8 @@ test("making the Vice-carry the Carry hands the old Carry the V, as FPL's armban
   expect(run(PICK_TEAM_STATES.rift, { type: "makeCarry", id: "kkoma" }).draft.carry).toBe("faker");
 });
 
-test("⇅ Swap swaps bench 1 and 2; one buff a week; Reset drops the draft and Save keeps it", () => {
-  const s = run(PICK_TEAM_STATES.rift, { type: "swapBench" }, { type: "playBuff", buff: "benchBoost" }, { type: "playBuff", buff: "dualCarry" });
+test("tapping one bench player then the other swaps bench 1 and 2, as FPL; one buff a week; Reset drops the draft and Save keeps it", () => {
+  const s = run(PICK_TEAM_STATES.rift, { type: "select", id: "faker" }, { type: "select", id: "bdd" }, { type: "select", id: "cuzz" }, { type: "playBuff", buff: "benchBoost" }, { type: "playBuff", buff: "dualCarry" });
   expect([s.draft.slots.bench1, s.draft.slots.bench2]).toEqual(["cuzz", "bdd"]);
   expect(s.draft.buff).toBe("benchBoost");
   expect(changeCount(s.saved, s.draft)).toBe(2);

@@ -6,11 +6,8 @@
   background: var(--paper);
   border: var(--m-rule) solid var(--line);
 }
-.bench-bar__title,
-.bench-swap {
-  align-self: center;
-}
 .bench-bar__title {
+  align-self: center;
   width: var(--m-bench-title-w);
   font-size: var(--size-body);
   font-weight: var(--w-semi);
@@ -27,14 +24,4 @@
   font-weight: var(--w-semi);
   color: var(--mid);
   line-height: var(--lh-snug);
-}
-.bench-swap {
-  font: inherit;
-  font-size: var(--size-small);
-  font-weight: var(--w-semi);
-  color: var(--text);
-  background: var(--paper);
-  border: var(--m-rule) solid var(--text);
-  padding: var(--s-1) var(--s-2);
-  cursor: pointer;
 }

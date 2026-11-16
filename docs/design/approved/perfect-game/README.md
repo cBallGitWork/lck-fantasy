@@ -14,7 +14,7 @@ The gameweek's best team: the 7 starter slots, one of them the Carry, under the 
 After using the built page; these override the picture.
 
 - The Rift is square, as Points, 720 a side, centred in the main column, and the map redrawn for it: lanes, river, bases, towers and pits (`measure.rift`).
-- Each starter in his place: top in top lane, jungle in the jungle, mid in mid lane, Support over Bot together in bot lane, Coach and Flex by the blue base.
+- Each starter in his place: top in top lane, jungle in the jungle, mid in mid lane, Bot over Support (Craig, 16 Nov 2026) together in bot lane, Coach and Flex by the blue base.
 - Tiles as FPL's: the shirt on a faint lighter card, C or V at its top right and a news flag `!` at its top left, a white name plate, then a dark band (fixtures, or points and series). No role icon on a tile: his place on the Rift says it; the Flex's and Coach's place is a label over the shirt (`FLEX`, `Coach 감독`), and nothing goes under a Flex's tile: no `Flex · plays Top`, no `Not starting` tag (his flag `!` stays at the shirt's corner, the words in his card). No team crests on the tiles.
 - Nothing said twice: Final is the head's tag alone, not also the week's series' note; the Carry's games say `T1 · Mid`, his C and his sum's label already name him.
 

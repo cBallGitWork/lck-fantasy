@@ -46,7 +46,8 @@ What shows a fact: tags, tables, lists, crests, states.
 - `States.tsx`: `Loading` (fill bars), `Empty` (a title, one line), `ErrorState` (a title, one line, `Try again ›`).
 - `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
-- `TierShield.tsx`: Overall's tier shield, no text on it (spec/08); the page sizes and colours it through its class names.
+- `TierShield.tsx`: Overall's tier shield, filled and outlined, no text on it (spec/08); the page sizes it through its class name.
+- `Led.tsx`: a truck's line on its dotted LED panel, in capitals, drawn as Home's; `big` for the truck picker's preview.
 - `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
 
 ## text/

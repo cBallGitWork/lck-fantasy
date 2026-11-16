@@ -1,4 +1,4 @@
-import { count, GoLink, ordinal, SideSection, TierShield } from "../../parts";
+import { count, GoLink, Led, ordinal, SideSection, TierShield } from "../../parts";
 import { leagueGo } from "../../paths";
 import type { LeagueRow, Truck } from "./fixtures";
 import { Move } from "./ProfileHistory";
@@ -37,7 +37,7 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
         <SideSection title={`Trucks · Week ${trucks.week}`} note={trucks.list.length}>
           {trucks.list.map((truck) => (
             <div key={truck.from} className="profile__truck">
-              <p className="profile__led">{truck.line}</p>
+              <Led>{truck.line}</Led>
               <p className="profile__truck-by quiet">
                 {TRUCK_KIND[truck.kind]} from <b>{truck.from}</b>
               </p>

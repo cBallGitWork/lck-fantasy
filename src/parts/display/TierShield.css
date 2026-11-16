@@ -1,0 +1,15 @@
+/* Overall's tier shield, filled and outlined as Home's; the page gives it its width. */
+.tier-shield {
+  display: block;
+  aspect-ratio: 40 / 46;
+}
+.tier-shield__body {
+  fill: var(--text);
+  stroke: var(--text);
+  stroke-width: var(--stroke-shirt);
+}
+.tier-shield__band {
+  stroke: var(--bg);
+  stroke-width: var(--m-rule);
+  opacity: var(--opacity-tier-band);
+}

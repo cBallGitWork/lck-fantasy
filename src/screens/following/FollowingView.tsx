@@ -1,4 +1,4 @@
-import { Columns, GoLink, NotFinalTag, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
+import { Columns, GoLink, Led, NotFinalTag, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
 import { profileGo } from "../../paths";
 import {
@@ -14,7 +14,6 @@ import {
   type ReceivedTruck,
   type SeriesItem,
 } from "./feed";
-import { Led } from "./Led";
 import "./following.css";
 
 export interface FollowingActions {

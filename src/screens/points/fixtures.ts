@@ -14,25 +14,21 @@ import {
   POINTS_SQUAD,
   POINTS_WEEK,
   seriesPoints,
+  squadIn,
+  WEEK1_PLAYED,
   WEEK1_SERIES,
+  WEEK2_PLAYED,
   WEEK2_SERIES,
   WEEK3_SERIES_AT_POINTS,
+  type Played,
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
 import { count, ordinal } from "../../parts";
 import { PATHS } from "../../paths";
 import { flexPlays } from "../../rift";
-import { GAME_WINNERS, WEEK1_PLAYED, WEEK2_PLAYED, WEEK3_CHAMPIONS, type Played } from "./games";
+import { GAME_WINNERS, WEEK3_CHAMPIONS } from "./games";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter, WeekPick } from "./types";
-
-/** The same nine as Week 3, each with that week's series, and no birthday or auto-sub. */
-const squadIn = (played: Record<string, Played>): PointsPick[] =>
-  POINTS_SQUAD.map((pick) => {
-    const series = played[pick.name];
-    if (!series) throw new Error(`No series for ${pick.name}`);
-    return { slot: pick.slot, name: pick.name, team: pick.team, role: pick.role, mark: pick.mark, series };
-  });
 
 function seriesOf(list: readonly Series[], pick: PointsPick, played: Played[number], champions: string[] = []): PointsSeries {
   const row = seriesById(list, played.id);

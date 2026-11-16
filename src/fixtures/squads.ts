@@ -90,6 +90,41 @@ const startersWeek = (squad: PointsPick[], without?: string): Readonly<Record<st
 
 const sum = (byId: Readonly<Record<string, number>>) => Object.values(byId).reduce((a, b) => a + b, 0);
 
+export type Played = PointsPick["series"];
+
+/** Weeks 1 and 2: each squad member's series and points game by game; the coach's +3 or −1 a series. */
+export const WEEK1_PLAYED: Record<string, Played> = {
+  Zeus: [{ id: "w1-wed-1", games: [4, 2, 3] }, { id: "w1-sat-2", games: [5, 3] }],
+  Canyon: [{ id: "w1-wed-2", games: [3, 1, 4] }, { id: "w1-fri-2", games: [4, 3] }],
+  Faker: [{ id: "w1-wed-2", games: [6, 1, 3] }, { id: "w1-sat-1", games: [5, 4] }],
+  Ruler: [{ id: "w1-wed-2", games: [2, 3, 5] }, { id: "w1-fri-2", games: [4, 4] }],
+  Delight: [{ id: "w1-wed-1", games: [2, 1, 2] }, { id: "w1-sat-2", games: [3, 2] }],
+  Siwoo: [{ id: "w1-thu-1", games: [2, 3, 1] }, { id: "w1-fri-2", games: [1, 0] }],
+  kkOma: [{ id: "w1-wed-2", games: [1, 0, 2], coachResult: -1 }, { id: "w1-sat-1", games: [2, 2], coachResult: 3 }],
+  Bdd: [{ id: "w1-wed-1", games: [2, 1, 3] }, { id: "w1-sun-1", games: [3, 2, 1] }],
+  Cuzz: [{ id: "w1-wed-1", games: [1, 3, 0] }, { id: "w1-sun-1", games: [2, 2, 4] }],
+};
+
+export const WEEK2_PLAYED: Record<string, Played> = {
+  Zeus: [{ id: "w2-thu-2", games: [3, 4] }, { id: "w2-sat-2", games: [2, 5, 3] }],
+  Canyon: [{ id: "w2-wed-2", games: [5, 3] }, { id: "w2-sat-1", games: [1, 4, 3] }],
+  Faker: [{ id: "w2-wed-1", games: [5, 4] }, { id: "w2-fri-2", games: [4, 7, 2] }],
+  Ruler: [{ id: "w2-wed-2", games: [4, 2] }, { id: "w2-sat-1", games: [2, 3, 6] }],
+  Delight: [{ id: "w2-thu-2", games: [2, 2] }, { id: "w2-sat-2", games: [1, 3, 2] }],
+  Siwoo: [{ id: "w2-thu-1", games: [4, 1, 3] }, { id: "w2-sat-2", games: [2, 4, 1] }],
+  kkOma: [{ id: "w2-wed-1", games: [2, 2], coachResult: 3 }, { id: "w2-fri-2", games: [2, 0, 3], coachResult: 3 }],
+  Bdd: [{ id: "w2-thu-1", games: [3, 2, 2] }, { id: "w2-sun-1", games: [4, 3] }],
+  Cuzz: [{ id: "w2-thu-1", games: [2, 1, 3] }, { id: "w2-sun-1", games: [3, 2] }],
+};
+
+/** The same nine as Week 3, each with that week's series, and no birthday or auto-sub. */
+export const squadIn = (played: Record<string, Played>): PointsPick[] =>
+  POINTS_SQUAD.map((pick) => {
+    const series = played[pick.name];
+    if (!series) throw new Error(`No series for ${pick.name}`);
+    return { slot: pick.slot, name: pick.name, team: pick.team, role: pick.role, mark: pick.mark, series };
+  });
+
 /**
  * Baron Steal FC's Week 3 as Home, Live, Points and the cards give it, worked from the squad: each
  * starter's points at Points' moment, by card id (the Carry's after ×1.5), the same with the live
@@ -101,6 +136,9 @@ export const MY_WEEK3 = (() => {
   const final = startersWeek(WEEK3_FINAL_SQUAD);
   return { live, liveTotal: sum(live), down, downTotal: sum(down), final, finalTotal: sum(final) };
 })();
+
+/** Baron Steal FC's Weeks 1 and 2, final, worked from their games as Points shows them. */
+export const MY_EARLIER_WEEKS = [WEEK1_PLAYED, WEEK2_PLAYED].map((played) => sum(startersWeek(squadIn(played))));
 
 /** A starter's points at Points' moment, by card id; a missing one is a broken fixture. */
 export function livePointsOf(id: string): number {

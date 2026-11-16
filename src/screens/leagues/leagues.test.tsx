@@ -55,7 +55,7 @@ describe("a league you made (league.html)", () => {
   });
 
   test("lists all 12 rows in rank order, your row with its chase tag", () => {
-    expectInOrder(out, [`1—${MANAGERS.minji.team}${MANAGERS.minji.name}Ruler93250`, `21${MANAGER.team}${MANAGER.name}13 pts to 1stFaker94237`, "Peanut Butter Gank", "Gank PlankRuth AdeFaker55158"]);
+    expectInOrder(out, [`1—${MANAGERS.minji.team}${MANAGERS.minji.name}Ruler93315`, `21${MANAGER.team}${MANAGER.name}13 pts to 1stFaker94302`, "Peanut Butter Gank", "Gank PlankRuth AdeFaker55223"]);
     expect(html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />)).toMatch(/class="leagues__mine"[^]*Baron Steal FC/);
   });
 
@@ -110,7 +110,7 @@ describe("Overall in Split 1 (overall.html's layout)", () => {
   });
 
   test("shows the top 7, a gap, your neighbourhood, and a pager to the last page with Find me", () => {
-    expectInOrder(out, ["1—Unkillable FCHa-eun SeoFaker112341", "Viper's Nest", "⋯", "48,209", "Rookie Mistake", `48,2116,904${MANAGER.team}`, "Moss Rock", "123⋯1,063Find me"]);
+    expectInOrder(out, ["1—Unkillable FCHa-eun SeoFaker112352", "Viper's Nest", "⋯", "48,209", "Rookie Mistake", `48,2116,904${MANAGER.team}`, "Moss Rock", "123⋯1,063Find me"]);
   });
 
   test("Season and Split 1 are one table until Split 2 starts", () => {

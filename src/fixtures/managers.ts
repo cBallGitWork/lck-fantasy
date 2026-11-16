@@ -15,5 +15,9 @@ export const MANAGERS = {
   dan: { id: "dan", name: "Dan Okafor", first: "Dan", team: "Peanut Butter Gank" },
 } as const satisfies Record<string, MadeUpManager>;
 
+/** Minji's Weeks 1 and 2, final: her profile shows them. */
+export const MINJI_EARLIER_WEEKS = [110, 112] as const;
+
 /** Minji's Week 3 at Points' moment, not final, and her season total then: her profile and Pub League show them. */
-export const MINJI_WEEK3 = { points: 93, total: 250 } as const;
+const MINJI_WEEK3_POINTS = 93;
+export const MINJI_WEEK3 = { points: MINJI_WEEK3_POINTS, total: MINJI_EARLIER_WEEKS[0] + MINJI_EARLIER_WEEKS[1] + MINJI_WEEK3_POINTS } as const;

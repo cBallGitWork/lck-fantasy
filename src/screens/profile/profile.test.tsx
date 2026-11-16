@@ -78,7 +78,7 @@ describe("Points", () => {
 
   test("an earlier week shows its points, its team loading until the backend feeds it, and no trucks", () => {
     const week2 = text(page("Points", PROFILE, 2));
-    inOrder(week2, ["Week 2", "98"]);
+    inOrder(week2, ["Week 2", "112"]);
     expect(week2).not.toContain("Not final");
     expect(week2).not.toContain("Trucks");
     expect(html(page("Points", PROFILE, 2))).toContain("Week 2&#x27;s team");
@@ -90,9 +90,9 @@ describe("History", () => {
     inOrder(text(page("History")), [
       ...BANNER,
       "Week", "Pts", "Total", "Week rank", "Overall", "Move", "Transfers", "Hits", "Bank", "Value", "Buff",
-      "Week 3", "93", "250", "—", "21,804", "3,112", "5", "0", "₩0.5m", "₩100.9m", "Limitless", "›",
-      "Week 2", "98", "157", "4,211", "24,916", "9,870", "1", "0", "₩1.0m", "₩100.6m", "—", "›",
-      "Week 1", "59", "59", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",
+      "Week 3", "93", "315", "—", "21,804", "3,112", "5", "0", "₩0.5m", "₩100.9m", "Limitless", "›",
+      "Week 2", "112", "222", "4,211", "24,916", "9,870", "1", "0", "₩1.0m", "₩100.6m", "—", "›",
+      "Week 1", "110", "110", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",
       "Buffs left: Remake · Bench Boost · Dual Carry",
       ...LEAGUES,
     ]);

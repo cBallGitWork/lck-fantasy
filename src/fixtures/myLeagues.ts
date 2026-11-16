@@ -1,10 +1,7 @@
 // Baron Steal FC's leagues, as Home, Points and Leagues share them: rank, places moved and size,
 // and his season at Points' moment. Every number is an example.
 
-import { MY_WEEK3 } from "./squads";
-
-/** His Weeks 1 and 2, final. */
-export const MY_EARLIER_WEEKS = [64, 79] as const;
+import { MY_EARLIER_WEEKS, MY_WEEK3 } from "./squads";
 
 /** His season total at Points' moment: Weeks 1 and 2, and Week 3 so far. */
 export const MY_SEASON_TOTAL = MY_EARLIER_WEEKS.reduce((sum, w) => sum + w, 0) + MY_WEEK3.liveTotal;

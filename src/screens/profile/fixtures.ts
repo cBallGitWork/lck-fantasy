@@ -2,7 +2,7 @@
 // LCK Cup Week 3 on the Sunday before its last two series, so Week 3 is not final. Her series are
 // Week 3's, final from Wednesday to Saturday (WEEK3_SERIES_FINAL). Not roster data.
 
-import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
+import { MANAGERS, MINJI_EARLIER_WEEKS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
 import { score } from "../../parts";
@@ -141,12 +141,14 @@ const WEEK3_TEAM: ProfilePick[] = [
   { slot: "bench2", ...player("Cuzz", "KT"), plays: "jng", points: 9, series: lines("KT", "w3-wed-2", "w3-fri-1") },
 ];
 
+const [W1, W2] = MINJI_EARLIER_WEEKS;
+
 export const PROFILE: ProfileData = {
   manager: { id: MANAGERS.minji.id, name: MANAGERS.minji.name, team: MANAGERS.minji.team, hangul: "쵸비는 바로 거기 있었다", follow: "following" },
   currentWeek: 3,
   weeks: [
-    { week: 1, points: 59, final: true, trucks: [] },
-    { week: 2, points: 98, final: true, trucks: [] },
+    { week: 1, points: W1, final: true, trucks: [] },
+    { week: 2, points: W2, final: true, trucks: [] },
     {
       week: 3,
       points: MINJI_WEEK3.points,
@@ -162,8 +164,8 @@ export const PROFILE: ProfileData = {
   ],
   history: [
     { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, hits: 0, bankEok: 0.5, valueEok: 100.9, buff: "Limitless" },
-    { week: 2, points: 98, total: 157, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, hits: 0, bankEok: 1.0, valueEok: 100.6 },
-    { week: 1, points: 59, total: 59, weekRank: 34_786, overall: 34_786, bankEok: 2.5, valueEok: 100.0 },
+    { week: 2, points: W2, total: W1 + W2, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, hits: 0, bankEok: 1.0, valueEok: 100.6 },
+    { week: 1, points: W1, total: W1, weekRank: 34_786, overall: 34_786, bankEok: 2.5, valueEok: 100.0 },
   ],
   buffsLeft: ["Remake", "Bench Boost", "Dual Carry"],
   transfers: [

@@ -24,9 +24,18 @@ describe("squadProblems", () => {
     ]);
   });
 
+  test("a squad short of a role's minimum is refused, wherever its players sit", () => {
+    // validSquad holds two bot laners, Gumayusi at bot and Ruler in flex.
+    const settings = { ...REGULAR_SETTINGS, minPerRole: { ...REGULAR_SETTINGS.minPerRole, bot: 3 } };
+    expect(squadProblems(validSquad(), settings)).toEqual([{ rule: "roleShort", role: "bot", min: 3, actual: 2 }]);
+  });
+
   test("a player in the wrong role slot is refused", () => {
     const squad = withStarter(validSquad(), "top", player("canyon", "dk", "jungle"));
-    expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([{ rule: "wrongRole", slot: "top", pickId: "canyon" }]);
+    expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([
+      { rule: "wrongRole", slot: "top", pickId: "canyon" },
+      { rule: "roleShort", role: "top", min: 1, actual: 0 }, // Zeus was the only top laner
+    ]);
   });
 
   test("the flex takes a player of any role, so two bot laners is valid", () => {

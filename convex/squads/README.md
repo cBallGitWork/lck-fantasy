@@ -7,6 +7,7 @@ A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, buffs, p
 - `autoSubs.ts`: the line-up that scores, after auto-subs (spec/01).
 - `carry.ts`: the Carry and Vice-carry, and each slot's points with the multiplier (spec/04).
 - `transfers.ts`: free transfers, their bank, hits, netting buy-backs, undoing a confirm, unlimited and locked windows, top-ups (spec/03).
+- `squadAfterTransfers.ts`: any role for any role while the squad keeps one of each, and Flol arranging it by role after (spec/03).
 - `splitBreak.ts`: the raise coming off at Split 2, and Flol's fix of a squad still over (spec/03).
 - `buffs.ts`: buffs as data, when one may be played, and the four effects (spec/06).
 - `fixtures.ts`: test picks and settings, shared by this folder's tests.

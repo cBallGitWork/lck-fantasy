@@ -19,6 +19,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - On Pick Team, tap a player, then one of those lit up, to swap them, as in FPL. A role starter
   swaps with a bench player or the Flex of his role. Example: Zeus at top and a top laner in flex
   trade places (Craig, 16 Nov 2026).
+- The two bench players swap their order the same way: tap one, then the other, as in FPL. There
+  is no swap key (Craig, 16 Nov 2026).
 - There is no bench coach.
 - The sizes are data per competition, like every value Craig may tune ([CLAUDE.md](../CLAUDE.md)).
 

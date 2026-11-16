@@ -37,11 +37,11 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "Faker25v HLE 12 · v DK 5",
     "Ruler14v KT 7 · v HLE 7",
         "Delight 🎂9v T1 5 · v GEN 4",
-    "Siwoo8v NS 5 · v T1 3Flex · plays Top",
-    "kkOma10v HLE 8 · v DK 2Coach 감독",
+    "FlexDKSiwoo8v NS 5 · v T1 3",
+    "Coach 감독T1kkOma10v HLE 8 · v DK 2",
     "Bench",
-    "1Bdd KT · Didn't play—",
-    "2Cuzz KT9",
+    "1. MidKTBdd—Didn't play",
+    "2. JungleKTCuzz9",
     "FakerT1 · Mid · Carry✕",
     "v HLEW 2–1 · final",
     "G1Azir · W5",
@@ -119,7 +119,7 @@ test("the games stay closed until a player is tapped", () => {
   const out = text(<PointsPage data={POINTS_FIXTURE} />);
   expect(out).not.toContain("Full stats");
   expect(out).not.toContain("Your Carry");
-  expectInOrder(out, ["Bench", "Cuzz KT9", "Your week"]);
+  expectInOrder(out, ["Bench", "Cuzz9", "Your week"]);
 });
 
 test("the Coach's games lead to his coach card and show no Carry sum", () => {

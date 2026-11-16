@@ -45,9 +45,9 @@ export function slotIcon(slot: SlotKey, plays?: RoleKey): IconKey {
   return slot === "flex" && plays ? plays : slot;
 }
 
-/** The tag under a Flex or Coach: `Flex · plays Top`, `Coach 감독`. */
-export function slotTag(slot: SlotKey, plays?: RoleKey): string | undefined {
-  if (slot === "flex") return plays ? `${ROLE_NAME.flex} · plays ${ROLE_NAME[plays]}` : ROLE_NAME.flex;
+/** The label over a Flex's or Coach's shirt on the Rift, marking his place: `Flex`, `Coach 감독` (Craig, 16 Nov 2026). */
+export function slotLabel(slot: SlotKey): string | undefined {
+  if (slot === "flex") return ROLE_NAME.flex;
   if (slot === "coach") return `${ROLE_NAME.coach} ${COACH_HANGUL}`;
   return undefined;
 }

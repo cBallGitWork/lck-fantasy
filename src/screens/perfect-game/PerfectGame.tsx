@@ -14,7 +14,6 @@ export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGam
         <Tile
           key={p.slot}
           slot={p.slot}
-          plays={flexPlays(p.slot, p.role)}
           name={p.name}
           team={p.team}
           at={RIFT_SLOTS[p.slot]}

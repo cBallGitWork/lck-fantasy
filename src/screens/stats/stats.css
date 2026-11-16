@@ -67,7 +67,7 @@
 
 /* The list: rank, role and name in the sticking column, then price and its move. */
 .stats col:nth-child(1) {
-  width: calc(var(--m-tile-w) + var(--s-7) * 2);
+  width: var(--m-col-name);
 }
 .stats col:nth-child(2) {
   width: calc(var(--s-7) + var(--s-5) + var(--s-1));

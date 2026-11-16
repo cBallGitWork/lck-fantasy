@@ -1,4 +1,4 @@
-import { count, cx, GoLink, MainAction, ordinal, OutlinedKey, SectionHead } from "../../parts";
+import { count, cx, GoLink, MainAction, ordinal, OutlinedKey, plural, SectionHead } from "../../parts";
 import { leagueGo } from "../../paths";
 import { Move } from "./Standings";
 import type { LeagueSummary } from "./types";
@@ -32,7 +32,7 @@ export function LeagueList({ leagues, openId, onCreate, onJoin }: { leagues: Lea
                 <span className="leagues__list-move">
                   <Move move={league.move} />
                 </span>
-                <small>{kind === "private" ? `${count(league.size)} managers` : `of ${count(league.size)}`}</small>
+                <small>{kind === "private" ? plural(league.size, "manager") : `of ${count(league.size)}`}</small>
               </GoLink>
             ))}
         </section>

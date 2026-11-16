@@ -48,6 +48,12 @@ export function cardGo(id: string, coach: boolean): Go {
   return coach ? { to: PATHS.coachCard, params: { coachId: id } } : { to: PATHS.playerCard, params: { playerId: id } };
 }
 
+/** The search key Transfers opens with a slot already sold under: `/transfers?sell=coach`. */
+export const SELL_SEARCH = "sell";
+
+/** Transfers with one of the nine already sold, as a card's Transfer out opens it. */
+export const transfersSelling = (slot: string) => `${PATHS.transfers}?${SELL_SEARCH}=${encodeURIComponent(slot)}`;
+
 /** A league's page. */
 export const leagueGo = (id: string): Go => ({ to: PATHS.league, params: { leagueId: id } });
 

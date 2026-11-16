@@ -27,7 +27,7 @@ final about three hours after it ends. We correct mistakes when we find them, an
 **The rules.** Prices, points and buffs are set for each competition and are on the Help page.
 We may change them between competitions, and say so before we do.
 
-**The beta.** The LCK Cup season is a test. Things may break or change, and the game is offered
+**The beta.** Split 1 of 2027 is a test. Things may break or change, and the game is offered
 as it is, with no promise that it will always be available.
 
 **Ending.** You can delete your account at any time in Settings. We may close an account that

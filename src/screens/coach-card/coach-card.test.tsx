@@ -1,9 +1,10 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, noop, text } from "../../testing/render";
+import { PATHS } from "../../paths";
+import { expectInOrder, html, htmlAt, noop, text } from "../../testing/render";
 import { CoachCard, EMPTY_TAB } from "./CoachCard";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
-import { CoachCardPage, FIRST_TAB } from "./index";
+import { CoachCardPage, FIRST_TAB, TRANSFER_OUT } from "./index";
 import type { CoachCardData, CoachFrom, CoachTab } from "./types";
 
 const card = (data: CoachCardData, from: CoachFrom, tab: CoachTab) => <CoachCard data={data} from={from} tab={tab} onTab={noop} />;
@@ -16,6 +17,14 @@ describe("the page", () => {
     expect(out).toMatch(/aria-current="page"[^>]*>Pick Team/);
     expect(out).toMatch(/aria-selected="true"[^>]*>History</);
     expect(FIRST_TAB).toEqual({ pickTeam: "History", points: "This week" });
+  });
+
+  test("Transfer out opens Transfers with the coach sold, his slot picked for the list to fill", async () => {
+    const soldTile = /class="tile tile--selected tile--dim"(?:(?!class="tile ).)*title="kkOma"/;
+    expect(TRANSFER_OUT).toBe("/transfers?sell=coach");
+    expect(await htmlAt(TRANSFER_OUT)).toMatch(soldTile);
+    expect(await htmlAt(PATHS.transfers)).not.toContain("tile--dim");
+    expect(await htmlAt("/transfers?sell=nobody")).not.toContain("tile--dim");
   });
 
   test("from Points, opens on This week with Points marked", () => {

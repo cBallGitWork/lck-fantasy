@@ -8,6 +8,9 @@ const EN_DASH = "–";
 /** A count or rank with thousands marked: `48,211`. */
 export const count = (n: number) => n.toLocaleString("en-GB");
 
+/** A count and its noun, one or many: `1 manager`, `12 managers`. */
+export const plural = (n: number, noun: string) => `${count(n)} ${noun}${n === 1 ? "" : "s"}`;
+
 const SUFFIX: Record<number, string> = { 1: "st", 2: "nd", 3: "rd" };
 
 /** A place: `1st`, `2nd`, `11th`, `1,402nd`. */

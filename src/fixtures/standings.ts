@@ -1,6 +1,7 @@
 // The made-up Split 1's group standings after Week 3, as the LCK hub, the Series page and Stats
 // share them. Every number is an example.
 
+import { score } from "../parts";
 import type { TeamCode } from "./competition";
 
 /** A team's series won and lost, sets won and lost, and its last five results, newest last. */
@@ -58,7 +59,7 @@ export function standingOf(team: TeamCode): Standing {
 /** A team's series record after Week 3: `5–1`. */
 export function recordOf(team: TeamCode): string {
   const { won, lost } = standingOf(team);
-  return `${won}–${lost}`;
+  return score([won, lost]);
 }
 
 /** The games a team has played, Weeks 1 to 3: its sets won and lost. */

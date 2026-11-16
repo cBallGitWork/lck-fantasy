@@ -3,8 +3,6 @@
 export const WORDS = {
   stream: "stream",
   game: "Game",
-  /** Before a game's number in a player's series line: `G1`. */
-  gameShort: "G",
   lastSeries: "Last series",
   next: "Next",
   yourWeek: "Your week",

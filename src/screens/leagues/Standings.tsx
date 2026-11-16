@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { count, GoLink, NONE, RankMove, Tag } from "../../parts";
-import { PATHS } from "../../paths";
+import { profileGo } from "../../paths";
 import { chaseText } from "./format";
 import type { StandingRow, Standings as StandingsData } from "./types";
 
@@ -73,7 +73,7 @@ function Row({ row, carryShown, splitColumn }: { row: StandingRow; carryShown: b
       {splitColumn && <td className="leagues__figure num">{row.split === undefined ? NONE : count(row.split)}</td>}
       <td className="leagues__figure num">{count(row.total)}</td>
       <td className="leagues__go">
-        <GoLink go={{ to: PATHS.profile, params: { managerId: row.managerId } }} label={`Open ${row.team}`}>
+        <GoLink go={profileGo(row.managerId)} label={`Open ${row.team}`}>
           ›
         </GoLink>
       </td>

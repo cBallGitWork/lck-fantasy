@@ -1,4 +1,4 @@
-import { money, perGame, result, Table } from "../../parts";
+import { money, perGame, result, sum, Table } from "../../parts";
 import type { CardHistory, HistoryRow } from "./card";
 import { WeekCell, weekStarts } from "./WeekCell";
 
@@ -8,7 +8,7 @@ import { WeekCell, weekStarts } from "./WeekCell";
  */
 export function History({ history, shown }: { history: CardHistory; shown: HistoryRow[] }) {
   const starts = weekStarts(shown);
-  const weekPoints = (week: number) => history.rows.filter((r) => r.week === week).reduce((sum, r) => sum + r.points, 0);
+  const weekPoints = (week: number) => sum(history.rows.filter((r) => r.week === week).map((r) => r.points));
   const onStart = (r: HistoryRow, figure: string | number) => (starts.has(r.id) ? figure : null);
   return (
     <div className="player-card__history">

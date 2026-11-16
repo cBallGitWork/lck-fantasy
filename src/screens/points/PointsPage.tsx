@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FinalTag, LinkGo, LiveTag, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, ViewToggle } from "../../parts";
+import { FinalTag, LinkGo, LiveTag, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, TIME_NOTE, ViewToggle } from "../../parts";
 import { PATHS } from "../../paths";
 import { BenchBar, BenchTile } from "../../rift";
 import { BreakdownSheet } from "./BreakdownSheet";
@@ -38,7 +38,7 @@ export function PointsPage({
   const side = (
     <>
       <Leagues leagues={data.leagues} nextTier={data.nextTier} />
-      <SideSection title="This week's series" note="your time · KST">
+      <SideSection title="This week's series" note={TIME_NOTE}>
         <SeriesList series={data.series} />
       </SideSection>
       <YourWeek picks={data.yourWeek} />

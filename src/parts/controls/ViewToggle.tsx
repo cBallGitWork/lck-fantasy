@@ -3,7 +3,7 @@ import { cx } from "../util/cx";
 import "./ViewToggle.css";
 
 /** A key: its value alone, or a value with what the key shows (a role icon and a word on Stats). */
-export type ToggleOption<T extends string> = T | { value: T; label: ReactNode };
+type ToggleOption<T extends string> = T | { value: T; label: ReactNode };
 
 const valueOf = <T extends string>(o: ToggleOption<T>): T => (typeof o === "string" ? o : o.value);
 

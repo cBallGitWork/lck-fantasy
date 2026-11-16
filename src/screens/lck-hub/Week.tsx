@@ -1,11 +1,7 @@
 import type { ReactNode } from "react";
 import type { Series } from "../../fixtures/week3";
 import { bestOf as bestOfLabel, SectionHead, WeekStep } from "../../parts";
-import { PATHS } from "../../paths";
 import type { HubWeek } from "./types";
-
-/** Every series row opens its Series page. */
-export const seriesGo = (s: Series) => ({ to: PATHS.series, params: { seriesId: s.id } });
 
 /** `‹ Week 4 ›  20–24 Jan · Bo3`: an arrow is off where there is no week that way. */
 export function WeekTitle({ week, bestOf, onPrev, onNext }: { week: HubWeek; bestOf: number; onPrev?: () => void; onNext?: () => void }) {

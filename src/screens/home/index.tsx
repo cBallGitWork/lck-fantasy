@@ -7,13 +7,13 @@ import { HomeLive } from "./Live";
 import type { HomeData } from "./types";
 
 /** Home in whichever state its data is in: a series live, or nothing live. */
-export function Home({ data, onPickStream }: { data: HomeData; onPickStream?: (id: string) => void }) {
+export function Home({ data }: { data: HomeData }) {
   const navigate = useNavigate();
   const actions = {
     onPickTeam: () => void navigate({ to: PATHS.pickTeam }),
     onTransfers: () => void navigate({ to: PATHS.transfers }),
   };
-  return data.state === "live" ? <HomeLive data={data} onPickStream={onPickStream} {...actions} /> : <HomeIdle data={data} {...actions} />;
+  return data.state === "live" ? <HomeLive data={data} {...actions} /> : <HomeIdle data={data} {...actions} />;
 }
 
 /** The route: made-up data until the backend's query feeds it (issue #80). `?state=idle` opens nothing live, in dev. */

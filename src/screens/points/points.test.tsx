@@ -280,3 +280,10 @@ test("the sheet shows the picture: Faker's crest, name, hangul and C, his 25, th
     "Full stats ›",
   ]);
 });
+
+test("a held league rank is RankMove's grey —, never ▲ 0", () => {
+  const held = { ...POINTS_FIXTURE, leagues: POINTS_FIXTURE.leagues.map((l) => ({ ...l, move: 0 })) };
+  const markup = html(<PointsPage data={held} />);
+  expect(markup.split('class="rank-held"').length - 1).toBe(held.leagues.length);
+  expect(markup).not.toMatch(/rank-(up|down)/);
+});

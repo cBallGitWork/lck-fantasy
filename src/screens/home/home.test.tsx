@@ -107,3 +107,10 @@ describe("idle", () => {
     expect(html(<Home data={HOME_IDLE} />)).toContain('href="/pick-team"');
   });
 });
+
+test("a held rank, Overall's or a league's, is RankMove's grey —", () => {
+  const held = { ...HOME_IDLE, overall: { ...HOME_IDLE.overall, move: 0 }, leagues: HOME_IDLE.leagues.map((l) => ({ ...l, move: 0 })) };
+  const markup = html(<Home data={held} />);
+  expect(markup.split('class="rank-held"').length - 1).toBe(held.leagues.length + 1);
+  expect(markup).not.toContain("rank-up");
+});

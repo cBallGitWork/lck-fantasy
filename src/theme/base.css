@@ -34,12 +34,16 @@ a {
   content: "▼";
   font-size: var(--size-small);
 }
-/* A rank's move stays --text, never gold: red and blue are for prices only. ▲ or ▼, a space, then the places. */
+/* A rank's move stays --text, never gold: red and blue are for prices only. ▲ or ▼, a space, then the places; a held rank's — in mid grey. */
 .rank-up,
-.rank-down {
+.rank-down,
+.rank-held {
   color: var(--text);
   font-family: var(--font-mono);
   font-size: var(--size-small);
+}
+.rank-held {
+  color: var(--mid);
 }
 .rank-up::before {
   content: "▲ ";

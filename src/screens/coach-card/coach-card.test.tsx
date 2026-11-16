@@ -14,14 +14,14 @@ describe("the page", () => {
     expect(out).toContain('data-screen="coach-card"');
     expect(out).toContain('role="dialog"');
     expect(out).toMatch(/aria-current="page"[^>]*>Pick Team/);
-    expect(out).toMatch(/aria-pressed="true"[^>]*>History</);
+    expect(out).toMatch(/aria-selected="true"[^>]*>History</);
     expect(FIRST_TAB).toEqual({ pickTeam: "History", points: "This week" });
   });
 
   test("from Points, opens on This week with Points marked", () => {
     const out = html(<CoachCardPage data={FROM_POINTS} from="points" onClose={noop} />);
     expect(out).toMatch(/aria-current="page"[^>]*>Points/);
-    expect(out).toMatch(/aria-pressed="true"[^>]*>This week</);
+    expect(out).toMatch(/aria-selected="true"[^>]*>This week</);
   });
 });
 

@@ -24,7 +24,8 @@ describe("Settings, each tab as its picture draws it", () => {
       "Baron Steal FC ▾",
       "Settings",
       "설정",
-      'aria-pressed="true">Team •<',
+      'aria-selected="true"',
+      ">Team •<",
       ">Display<",
       ">Emails<",
       ">Account<",
@@ -51,7 +52,7 @@ describe("Settings, each tab as its picture draws it", () => {
 
   test("Display: the browser's zone, the deadline in it and in KST, and the theme", () => {
     const out = settingsOn("Display");
-    expectInOrder(out, [">Team •<", 'aria-pressed="true">Display<', "Time zone", "Browser · Europe/London", "Deadline", "Wed 07:45", "16:45 KST", "Theme"]);
+    expectInOrder(out, [">Team •<", 'aria-selected="true"', ">Display<", "Time zone", "Browser · Europe/London", "Deadline", "Wed 07:45", "16:45 KST", "Theme"]);
     expectInOrder(text(<Settings firstTab="Display" {...PICTURE} />), ["DeviceLightDark", ...SAVE_BAR, ...FOOT]);
     expect(out).toMatch(/aria-pressed="true">Device</);
   });

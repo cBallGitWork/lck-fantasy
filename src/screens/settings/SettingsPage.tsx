@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
+import { useId, type ReactNode } from "react";
 import { TEAMS } from "../../fixtures/week3";
-import { MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, Tabs, Tag, Time, timeIn, ViewToggle } from "../../parts";
+import { MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, TabPanel, Tabs, Tag, Time, timeIn, ViewToggle } from "../../parts";
 import { CappedInput, LegalNames, plainOptions, ProviderMark, Row, Select, TEAM_OPTIONS } from "./form";
 import {
   BROWSER,
@@ -51,21 +51,23 @@ export function SettingsPage(props: SettingsProps) {
   const changed = changedFields(saved, draft);
   const dirty = dirtyTabs(changed);
   const tabLabel = (t: SettingsTab) => (dirty.has(t) ? `${t}${DIRTY_MARK}` : t);
+  const tabsId = useId();
   return (
     <PageFrame screen="settings" account={saved.teamName}>
       <PageHead title="Settings" hangul="설정" />
       <Tabs
+        id={tabsId}
         label="Settings"
         tabs={TABS.map(tabLabel)}
         chosen={tabLabel(tab)}
         onChoose={(label) => onTab(TABS.find((t) => tabLabel(t) === label) ?? tab)}
       />
-      <div className="settings__column">
+      <TabPanel id={tabsId} className="settings__column">
         {tab === "Team" && <TeamTab {...props} />}
         {tab === "Display" && <DisplayTab {...props} />}
         {tab === "Emails" && <EmailsTab {...props} />}
         {tab === "Account" && <AccountTab {...props} />}
-      </div>
+      </TabPanel>
       {tab !== "Account" && changed.length > 0 && (
         <div className="settings__save-bar">
           <span className="settings__save-line">{changeLine(changed)}</span>

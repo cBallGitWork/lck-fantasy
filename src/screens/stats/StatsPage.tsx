@@ -1,6 +1,6 @@
-import type { ChangeEvent, ReactNode } from "react";
+import { useId, type ChangeEvent, type ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
-import { cx, money, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, Tabs, ViewToggle, type Column } from "../../parts";
+import { cx, money, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, TabPanel, Tabs, ViewToggle, type Column } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import {
@@ -39,24 +39,27 @@ export function StatsPage({ account, view, rows, spans, onChange }: StatsPagePro
   const listed = listRows(rows, view);
   const pages = pageCount(listed.length);
   const page = Math.min(view.page, pages);
+  const tabsId = useId();
   return (
     <PageFrame screen="stats" active="stats" account={account}>
       <div className="stats">
         <PageHead title="Stats" hangul="통계" link={{ label: "Patch update", go: { to: PATHS.patchUpdate } }} />
-        <Tabs tabs={TABS} chosen={view.tab} onChoose={(tab) => onChange({ tab })} label="Players or coaches" />
-        <Controls view={view} rows={rows} spans={spans} onChange={onChange} />
-        <Table<Ranked>
-          columns={columns(view, onChange)}
-          rows={pageRows(listed, page)}
-          rowKey={(r) => r.id}
-          stickyHead
-          stickyFirst
-          label={view.tab}
-        />
-        <div className="stats__foot">
-          <span>{pageLabel(listed.length, page)}</span>
-          <Pages page={page} pages={pages} onPage={(p) => onChange({ page: p })} />
-        </div>
+        <Tabs id={tabsId} tabs={TABS} chosen={view.tab} onChoose={(tab) => onChange({ tab })} label="Players or coaches" />
+        <TabPanel id={tabsId}>
+          <Controls view={view} rows={rows} spans={spans} onChange={onChange} />
+          <Table<Ranked>
+            columns={columns(view, onChange)}
+            rows={pageRows(listed, page)}
+            rowKey={(r) => r.id}
+            stickyHead
+            stickyFirst
+            label={view.tab}
+          />
+          <div className="stats__foot">
+            <span>{pageLabel(listed.length, page)}</span>
+            <Pages page={page} pages={pages} onPage={(p) => onChange({ page: p })} />
+          </div>
+        </TabPanel>
       </div>
     </PageFrame>
   );

@@ -1,20 +1,9 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, text } from "../../testing/render";
 import { CARD_FROM_PICK_TEAM, CARD_FROM_POINTS, CARD_WITH_NEWS } from "./fixtures";
-import { inOut as transfers, ordinal, signed } from "../../parts";
 import { PlayerCardPage } from ".";
 import { weekStarts } from "./WeekCell";
-
-/** Each part appears after the one before it. */
-function expectInOrder(out: string, parts: string[]) {
-  let from = 0;
-  for (const part of parts) {
-    const at = out.indexOf(part, from);
-    expect(at, `"${part}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + part.length;
-  }
-}
 
 const HEAD = ["Mid · T1", "Faker", "이상혁", "Lee Sang-hyeok"];
 const STRIP_NEXT = ["W4 · Wed · Bo3", "v KT", "W4 · Sat · Bo3", "v GEN", "W5 · Thu · Bo3", "v BRO"];
@@ -177,13 +166,7 @@ describe("a tab whose data hasn't come", () => {
   });
 });
 
-describe("the card's figures", () => {
-  test("write places, signed points and transfers", () => {
-    expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 101].map(ordinal)).toEqual(["1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd", "101st"]);
-    expect([22, -4, 0].map(signed)).toEqual(["+22", "−4", "0"]);
-    expect(transfers(1204, 310)).toBe("+1,204 / −310");
-  });
-
+describe("the card's week rows", () => {
   test("open a week on its first row only", () => {
     const rows = [
       { id: "a", week: 4 },

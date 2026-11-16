@@ -2,7 +2,8 @@
 import { describe, expect, test } from "vitest";
 import { FAKER_SEASON, KKOMA_SEASON } from "../../fixtures/t1Season";
 import { MANAGER } from "../../fixtures/week3";
-import { html, text } from "../../testing/render";
+import { sum } from "../../parts";
+import { expectInOrder, html, plain, text } from "../../testing/render";
 import { SEASON_COACHES, SEASON_PLAYERS, SPANS, STATS_BY_SPAN } from "./fixtures";
 import { listRows, nextView, pageLabel, pageRows, priceChoices, START_VIEW, type StatsView } from "./stats";
 import { StatsPage } from "./StatsPage";
@@ -39,28 +40,19 @@ const PICTURE_TOTALS = [
 const names = (out: string) => [...out.matchAll(/class="stats__name"[^>]*>([^<]+)</g)].map((m) => m[1]);
 
 /** The text of each head cell, in order. */
-const heads = (out: string) => [...out.matchAll(/<th[^>]*>(.*?)<\/th>/g)].map((m) => (m[1] ?? "").replace(/<[^>]+>/g, ""));
+const heads = (out: string) => [...out.matchAll(/<th[^>]*>(.*?)<\/th>/g)].map((m) => plain(m[1] ?? ""));
+
+/** The markup of the named player's row. */
+const rowOf = (out: string, name: string) => out.split("<tr").find((r) => r.includes(`>${name}<`)) ?? "";
 
 /** The text of each cell in the row of the named player. */
-function cells(out: string, name: string): string[] {
-  const row = out.split("<tr").find((r) => r.includes(`>${name}<`)) ?? "";
-  return [...row.matchAll(/<td[^>]*>(.*?)<\/td>/g)].map((m) => (m[1] ?? "").replace(/<[^>]+>/g, ""));
-}
-
-const inOrder = (out: string, parts: string[]) => {
-  let at = 0;
-  for (const part of parts) {
-    const next = out.indexOf(part, at);
-    expect(next, `${part} after ${at}`).toBeGreaterThanOrEqual(0);
-    at = next + part.length;
-  }
-};
+const cells = (out: string, name: string) => [...rowOf(out, name).matchAll(/<td[^>]*>(.*?)<\/td>/g)].map((m) => plain(m[1] ?? ""));
 
 describe("players, totals (1440.png)", () => {
   const out = html(page({}));
 
   test("holds the head, tabs and controls in the picture's order", () => {
-    inOrder(text(page({})), [
+    expectInOrder(text(page({})), [
       "Stats",
       "통계",
       "Patch update ›",
@@ -127,11 +119,11 @@ describe("players, totals (1440.png)", () => {
       "1",
       "2",
     ]);
-    const faker = out.split("<tr").find((r) => r.includes(">Faker<")) ?? "";
+    const faker = rowOf(out, "Faker");
     expect(faker).toContain('aria-label="Your player"');
     expect(faker).toContain('class="rise stats__move"');
     expect(faker).toContain('href="/player/faker"');
-    const doran = out.split("<tr").find((r) => r.includes(">Doran<")) ?? "";
+    const doran = rowOf(out, "Doran");
     expect(doran).toContain('class="fall stats__move"');
     expect(doran).not.toContain("Your player");
   });
@@ -227,8 +219,9 @@ describe("the controls work on the list", () => {
 
   test("span shows one week, its games adding up to the season", () => {
     const weeks = SPANS.slice(1).map((s) => STATS_BY_SPAN[s.value]?.players.find((p) => p.name === "Faker"));
-    expect(weeks.reduce((n, w) => n + (w?.games ?? 0), 0)).toBe(15);
-    expect(weeks.reduce((n, w) => n + (w?.points ?? 0), 0)).toBe(58);
+    const season = SEASON_PLAYERS.find((p) => p.name === "Faker");
+    expect(sum(weeks.map((w) => w?.games ?? 0))).toBe(season?.games);
+    expect(sum(weeks.map((w) => w?.points ?? 0))).toBe(season?.points);
     expect(weeks[2]?.games).toBe(5);
     const coach = STATS_BY_SPAN["week-3"]?.coaches.find((c) => c.name === "kkOma");
     expect(coach?.series).toEqual([2, 0]);

@@ -1,9 +1,7 @@
 // @vitest-environment node
-import { createMemoryHistory, RouterProvider } from "@tanstack/react-router";
-import { renderToStaticMarkup } from "react-dom/server";
 import { expect, test } from "vitest";
 import { PATHS, pathTo, type Go, type ScreenKey } from "../paths";
-import { makeRouter } from "./router";
+import { htmlAt } from "../testing/render";
 
 // Each route, with its params, and the screen folder it renders. A screen's own content is
 // tested in its folder, so building a screen never touches this file.
@@ -31,9 +29,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
 
 test.each(Object.keys(PATHS) as ScreenKey[])("the %s route renders its screen with the top bar", async (key) => {
   const [go, folder] = ROUTES[key];
-  const router = makeRouter(createMemoryHistory({ initialEntries: [pathTo(go)] }));
-  await router.load();
-  const out = renderToStaticMarkup(<RouterProvider router={router} />);
+  const out = await htmlAt(pathTo(go));
   expect(out).toContain('class="top-bar"');
   expect(out).toContain(`data-screen="${folder}"`);
   expect(out).toContain("--ink:");

@@ -1,48 +1,27 @@
 // @vitest-environment node
-import { createMemoryHistory, RouterProvider } from "@tanstack/react-router";
-import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, test } from "vitest";
 import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { COMPETITION as COMPETITION_NAME, MANAGER, MY_WEEK3 } from "../../fixtures/week3";
-import { makeRouter } from "../../app/router";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
 import { COMPETITION, LEAGUE_NAME_MAX, LEAGUES } from "./fixtures";
-import { ordinal } from "../../parts";
 import { chaseText } from "./format";
 import { adminItems, LeagueTable, type LeagueActions, type TableProps } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
 import { tableKey, type LeagueView } from "./types";
 
-const none = () => {};
-const ACTIONS: LeagueActions = { onCopyLink: none, onRename: none, onRemoveManager: none, onDelete: none, onLeave: none };
+const ACTIONS: LeagueActions = { onCopyLink: noop, onRename: noop, onRemoveManager: noop, onDelete: noop, onLeave: noop };
 
 /** A league's table props on its opening tab, from the fixture. */
 function tableProps(league: LeagueView): TableProps {
   const group = league.kind === "overall" ? league.openGroup : undefined;
-  return { competition: COMPETITION, tab: league.openTab, onTab: none, table: league.tables[tableKey(COMPETITION, league.openTab, group)], page: 1, onPage: none, onFindMe: none };
+  return { competition: COMPETITION, tab: league.openTab, onTab: noop, table: league.tables[tableKey(COMPETITION, league.openTab, group)], page: 1, onPage: noop, onFindMe: noop };
 }
 
 function privateLeague(id: string) {
   const league = LEAGUES[id];
   if (league?.kind !== "private") throw new Error(`${id} is not a private league in the fixture`);
   return league;
-}
-
-/** Fails unless each piece appears in `out`, in this order. */
-function expectInOrder(out: string, pieces: string[]) {
-  let from = 0;
-  for (const piece of pieces) {
-    const at = out.indexOf(piece, from);
-    expect(at, `"${piece}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + piece.length;
-  }
-}
-
-async function renderRoute(path: string) {
-  const router = makeRouter(createMemoryHistory({ initialEntries: [path] }));
-  await router.load();
-  return renderToStaticMarkup(<RouterProvider router={router} />);
 }
 
 describe("a league you made (league.html)", () => {
@@ -70,7 +49,7 @@ describe("a league you made (league.html)", () => {
   });
 
   test("the Admin menu holds Rename, Remove a manager, then Delete league… set apart", () => {
-    const items = adminItems(ACTIONS, none);
+    const items = adminItems(ACTIONS, noop);
     expect(items.map((i) => i.label)).toEqual(["Rename", "Remove a manager", "Delete league…"]);
     expect(items.map((i) => i.apart ?? false)).toEqual([false, false, true]);
   });
@@ -99,7 +78,7 @@ describe("a league you're a member of (member.html)", () => {
 describe("Overall in Split 1 (overall.html's layout)", () => {
   const league = LEAGUES.overall!;
   if (league.kind !== "overall") throw new Error("overall is not Overall in the fixture");
-  const out = text(<OverallTable league={league} group={league.openGroup} onGroup={none} {...tableProps(league)} />);
+  const out = text(<OverallTable league={league} group={league.openGroup} onGroup={noop} {...tableProps(league)} />);
 
   test("opens on the split being played: the season and split, the three tabs, the sponsor, then the table head", () => {
     expectInOrder(out, ["Overall", `${COMPETITION_NAME} · Split 1`, "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Total"]);
@@ -126,40 +105,36 @@ describe("Overall in Split 2, Legend (overall.html)", () => {
   const props = { ...tableProps(league), tab: COMPETITION.groupedTab, table: league.tables[key] };
 
   test("heads with the season and split, Legend, Rise and All, the tabs, the sponsor and a Split 2 column", () => {
-    const grouped = text(<OverallTable league={league} group="Legend" onGroup={none} {...props} />);
+    const grouped = text(<OverallTable league={league} group="Legend" onGroup={noop} {...props} />);
     expectInOrder(grouped, ["Overall", `${COMPETITION_NAME} · Split 2`, "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Split 2", "Total"]);
   });
 });
 
 describe("the page", () => {
   test("/leagues opens Pub League, then the list on the right, the sponsor note last", async () => {
-    const out = await renderRoute("/leagues");
+    const out = await htmlAt("/leagues");
     expect(out).toContain('data-screen="leagues"');
-    expectInOrder(out.replace(/<[^>]+>/g, ""), ["Leagues", "리그", "Pub League", "PUB-7K2Q", "General", "Overall", "48,211", "6,904", "of 212,480", "United Kingdom", "T1 supporters", "Private", "Pub League", "2nd", "12 managers", "Flol Discord", "14th", "86 managers", "Create a league", "Join a league", "All sponsors are made up."]);
+    expectInOrder(plain(out), ["Leagues", "리그", "Pub League", "PUB-7K2Q", "General", "Overall", "48,211", "6,904", "of 212,480", "United Kingdom", "T1 supporters", "Private", "Pub League", "2nd", "12 managers", "Flol Discord", "14th", "86 managers", "Create a league", "Join a league", "All sponsors are made up."]);
     expect(out).toMatch(/leagues__list-row--on[^>]*>.*?Pub League/);
   });
 
   test("a league in the list opens its table", async () => {
-    expect(await renderRoute("/leagues/flol-discord")).toContain("FLOL-22XB");
-    expect(await renderRoute("/leagues/overall")).toContain("Unkillable FC");
+    expect(await htmlAt("/leagues/flol-discord")).toContain("FLOL-22XB");
+    expect(await htmlAt("/leagues/overall")).toContain("Unkillable FC");
   });
 
   test("a row opens that manager's team", async () => {
-    expect(await renderRoute("/leagues")).toContain('href="/manager/tom-reid"');
+    expect(await htmlAt("/leagues")).toContain('href="/manager/tom-reid"');
   });
 
   test("a table with no made-up data says so, never loads forever", async () => {
-    const out = await renderRoute("/leagues/united-kingdom");
+    const out = await htmlAt("/leagues/united-kingdom");
     expect(out).toContain("No table yet");
     expect(out).not.toContain("Loading");
   });
 });
 
 describe("words", () => {
-  test("ranks read as ordinals, teens included", () => {
-    expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 112].map(ordinal)).toEqual(["1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd", "112th"]);
-  });
-
   test("the chase tag reads points to the rank above, or the lead when 1st", () => {
     expect(chaseText({ kind: "chasing", points: 16, rank: 1 })).toBe("16 pts to 1st");
     expect(chaseText({ kind: "clear", points: 16 })).toBe("+16 clear");

@@ -1,25 +1,16 @@
 // @vitest-environment node
 import { expect, test, vi } from "vitest";
 import { PERFECT_GAME } from "../../fixtures/week3";
-import { html, text } from "../../testing/render";
+import { sum } from "../../parts";
+import { expectInOrder, html, text } from "../../testing/render";
 import { PERFECT_WEEK3 } from "./fixtures";
 import { PerfectGame, PerfectGameCards, PerfectGameRift } from "./PerfectGame";
-
-/** Each string appears in `out`, in this order. */
-function inOrder(out: string, parts: string[]) {
-  let from = 0;
-  for (const part of parts) {
-    const at = out.indexOf(part, from);
-    expect(at, `"${part}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + part.length;
-  }
-}
 
 const SEVEN = ["Zeus", "Pyosik", "Faker", "Ruler", "Duro", "BuLLDoG", "kkOma"];
 
 test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the week's series, the sponsor", () => {
   const out = text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" onSelect={() => {}} />);
-  inOrder(out, [
+  expectInOrder(out, [
     "Perfect game",
     "퍼펙트 게임",
     "‹",
@@ -74,12 +65,12 @@ test("the Rift's tiles carry each starter's points (the Carry's result only), se
 
 test("Card view: the seven as the broadcast lineup, each with his series and points, C on Faker", () => {
   const out = text(<PerfectGame game={PERFECT_WEEK3} view="Card view" />);
-  inOrder(out, ["Rift view", "Card view", "Top", "Zeus", "Jungle", "Pyosik", "Mid", "C", "Faker"]);
-  inOrder(out, ["Zeus", "HLE", "v T1 7", "v GEN 7", "14"]);
-  inOrder(out, ["Faker", "T1", "v HLE 12", "v DK 10", "33"]);
+  expectInOrder(out, ["Rift view", "Card view", "Top", "Zeus", "Jungle", "Pyosik", "Mid", "C", "Faker"]);
+  expectInOrder(out, ["Zeus", "HLE", "v T1 7", "v GEN 7", "14"]);
+  expectInOrder(out, ["Faker", "T1", "v HLE 12", "v DK 10", "33"]);
   expect(out).not.toContain("×");
-  inOrder(out, ["Flex", "plays Mid", "BuLLDoG", "DNS", "v BRO 9", "v BFX 12", "21"]);
-  inOrder(out, ["Coach", "감독", "kkOma", "T1", "v HLE 8", "v DK 8", "16"]);
+  expectInOrder(out, ["Flex", "plays Mid", "BuLLDoG", "DNS", "v BRO 9", "v BFX 12", "21"]);
+  expectInOrder(out, ["Coach", "감독", "kkOma", "T1", "v HLE 8", "v DK 8", "16"]);
   expect(out).not.toContain("Full stats");
   const cards = html(<PerfectGameCards game={PERFECT_WEEK3} />);
   expect(cards.match(/class="pcard( |")/g)).toHaveLength(7);
@@ -111,17 +102,16 @@ test("Full stats opens the player card, or the coach card for the Coach; Your po
 
 test("a starter without drawn games shows his series and sum; Not final shows dashed", () => {
   const out = text(<PerfectGame game={{ ...PERFECT_WEEK3, final: false }} view="Rift view" selected="top" />);
-  inOrder(out, ["Not final", "Zeus", "HLE · Top", "Wed · v T1 L 1–2", "Sat · v GEN L 1–2", "7 + 7", "14", "Full stats ›"]);
+  expectInOrder(out, ["Not final", "Zeus", "HLE · Top", "Wed · v T1 L 1–2", "Sat · v GEN L 1–2", "7 + 7", "14", "Full stats ›"]);
   expect(html(<PerfectGame game={{ ...PERFECT_WEEK3, final: false }} view="Rift view" />)).toContain("tag--not-final");
 });
 
 test("the fixture agrees with the shared Week 3: each series' points make the line and the total", () => {
   for (const p of PERFECT_WEEK3.players) {
-    const sum = p.series.reduce((s, x) => s + x.points, 0);
-    expect(sum, p.name).toBe(p.carry ? p.raw : p.points);
+    expect(sum(p.series.map((s) => s.points)), p.name).toBe(p.carry ? p.raw : p.points);
     for (const s of p.series) expect(p.line, p.name).toContain(` ${s.points}`);
     for (const s of p.series.filter((x) => x.games)) {
-      const counted = s.games?.filter((g) => g.counted).reduce((t, g) => t + g.points, 0);
+      const counted = sum((s.games ?? []).filter((g) => g.counted).map((g) => g.points));
       expect(counted, `${p.name} ${s.id}`).toBe(s.points);
     }
   }

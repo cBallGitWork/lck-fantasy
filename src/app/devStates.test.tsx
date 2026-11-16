@@ -1,17 +1,8 @@
 // @vitest-environment node
-import { createMemoryHistory, RouterProvider } from "@tanstack/react-router";
-import { renderToStaticMarkup } from "react-dom/server";
 import { afterEach, expect, test, vi } from "vitest";
 import { DEV_STATE_PARAM } from "../parts";
 import { DEV_STATES, DEV_STATES_PATH } from "./devStates";
-import { makeRouter } from "./router";
-
-/** The app's HTML at a URL, through the router as the browser opens it. */
-async function at(url: string) {
-  const router = makeRouter(createMemoryHistory({ initialEntries: [url] }));
-  await router.load();
-  return renderToStaticMarkup(<RouterProvider router={router} />);
-}
+import { htmlAt } from "../testing/render";
 
 /** What each picture shows that marks its state, as the page draws it. */
 const KEY: Record<string, string> = {
@@ -86,29 +77,29 @@ test("every listed state has its key content, and every key a state", () => {
 
 test.each(named)("$name opens at $url and shows its picture's key content", async ({ name, url, picture }) => {
   const warn = vi.spyOn(console, "warn");
-  expect(await at(url)).toContain(KEY[name]);
+  expect(await htmlAt(url)).toContain(KEY[name]);
   expect(warn).not.toHaveBeenCalled();
   expect(picture).toMatch(/^docs\/design\/approved\/[a-z-]+\/1440(-\w+)?\.png$/);
 });
 
 test.each(withParam)("$name is the param's doing: its route alone doesn't show it", async ({ name, url }) => {
-  expect(await at(url.split("?")[0]!)).not.toContain(KEY[name]);
+  expect(await htmlAt(url.split("?")[0]!)).not.toContain(KEY[name]);
 });
 
 test("a build ignores the param", async () => {
   vi.stubEnv("DEV", false);
   const idle = withParam.find((s) => s.name === "home/idle")!;
-  expect(await at(idle.url)).not.toContain(KEY["home/idle"]);
+  expect(await htmlAt(idle.url)).not.toContain(KEY["home/idle"]);
 });
 
 test("a state a screen can't open is said, not dropped", async () => {
   const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
-  expect(await at(`/?${DEV_STATE_PARAM}=nope`)).toContain(KEY["home/live"]);
+  expect(await htmlAt(`/?${DEV_STATE_PARAM}=nope`)).toContain(KEY["home/live"]);
   expect(warn).toHaveBeenCalledWith(expect.stringContaining('No dev state "nope"'));
 });
 
 test("/dev/states links every state", async () => {
-  const page = await at(DEV_STATES_PATH);
+  const page = await htmlAt(DEV_STATES_PATH);
   for (const { url, picture } of DEV_STATES) {
     expect(page).toContain(`href="${url.replace(/&/g, "&amp;")}"`);
     expect(page).toContain(picture);

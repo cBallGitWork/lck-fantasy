@@ -1,38 +1,27 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, noop, text } from "../../testing/render";
 import { JOINABLE, LEAGUE_LIST, LEAGUE_NAME_MAX, LEAGUES, NEW_LEAGUE, NEW_TABLE, PRIVATE_LEAGUE_CAP, SCORING_WEEKS } from "./fixtures";
 import { codeOf, findByCode, freeCode, makeLeague, privateCount, renameLeague, withLeague, withoutLeague, type MyLeagues } from "./forms";
 import { CreatedSheet, CreateSheet, DeleteSheet, JoinSheet, LeaveSheet } from "./Sheets";
 
-const none = () => {};
 const MINE: MyLeagues = { list: LEAGUE_LIST, views: LEAGUES };
 const TWO_OF_CAP = { count: privateCount(MINE), cap: PRIVATE_LEAGUE_CAP };
 const AT_CAP = { count: PRIVATE_LEAGUE_CAP, cap: PRIVATE_LEAGUE_CAP };
 const OFFICE_RIFT = makeLeague(NEW_LEAGUE.name, SCORING_WEEKS[0].week, NEW_LEAGUE.code, NEW_TABLE);
 
-/** Fails unless each piece appears in the rendered text, in this order. */
-function expectInOrder(rendered: string, pieces: string[]) {
-  let from = 0;
-  for (const piece of pieces) {
-    const at = rendered.indexOf(piece, from);
-    expect(at, `"${piece}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + piece.length;
-  }
-}
-
 const disabledKey = (out: string, label: string) => new RegExp(`<button[^>]*disabled=""[^>]*>${label}</button>`).test(out);
 
 describe("each sheet holds its picture's content in order", () => {
   test("create.html: name with its count, the week scoring starts, Back, Create, the private count", () => {
-    const sheet = <CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={TWO_OF_CAP} initialName={NEW_LEAGUE.name} onCreate={none} onClose={none} />;
+    const sheet = <CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={TWO_OF_CAP} initialName={NEW_LEAGUE.name} onCreate={noop} onClose={noop} />;
     expectInOrder(text(sheet), ["✕", "Create a league", "Name", "11 / 30", "Scoring starts", "Week 3 · Wed 13 Jan", "Back", "Create", "Private leagues: 2 of 25"]);
     expect(html(sheet)).toContain('value="Office Rift"');
     expect(html(sheet)).toContain('maxLength="30"');
   });
 
   test("create.html: this week is chosen first, and later weeks follow", () => {
-    expectInOrder(html(<CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={TWO_OF_CAP} onCreate={none} onClose={none} />), [
+    expectInOrder(html(<CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={TWO_OF_CAP} onCreate={noop} onClose={noop} />), [
       '<option value="3" selected="">Week 3',
       "Week 4 · Wed 20 Jan",
       "Week 5 · Wed 27 Jan",
@@ -40,44 +29,44 @@ describe("each sheet holds its picture's content in order", () => {
   });
 
   test("create.html: Create waits for a name", () => {
-    const empty = html(<CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={TWO_OF_CAP} onCreate={none} onClose={none} />);
+    const empty = html(<CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={TWO_OF_CAP} onCreate={noop} onClose={noop} />);
     expect(empty).toContain("No name");
     expect(disabledKey(empty, "Create")).toBe(true);
   });
 
   test("spec/08: at the cap, Create and Join refuse and say why", () => {
-    const create = html(<CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={AT_CAP} initialName="Full" onCreate={none} onClose={none} />);
+    const create = html(<CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={AT_CAP} initialName="Full" onCreate={noop} onClose={noop} />);
     expect(create).toContain("25 leagues already");
     expect(disabledKey(create, "Create")).toBe(true);
-    const join = html(<JoinSheet privates={AT_CAP} initialCode="GANK-4TQ1" onJoin={none} onClose={none} />);
+    const join = html(<JoinSheet privates={AT_CAP} initialCode="GANK-4TQ1" onJoin={noop} onClose={noop} />);
     expect(join).toContain("25 leagues already");
     expect(disabledKey(join, "Join")).toBe(true);
   });
 
   test("created.html: the name, its first week, the code with Copy code and Copy link, then Open league", () => {
-    const sheet = <CreatedSheet league={OFFICE_RIFT.view} onCopyCode={none} onCopyLink={none} onClose={none} />;
+    const sheet = <CreatedSheet league={OFFICE_RIFT.view} onCopyCode={noop} onCopyLink={noop} onClose={noop} />;
     expectInOrder(text(sheet), ["Office Rift", "Scoring from Week 3", "OFF-9R3D", "Copy code", "Copy link", "Open league"]);
     expect(html(sheet)).toContain('href="/leagues/off-9r3d"');
   });
 
   test("join.html: a code or link, Back, Join, the private count", () => {
-    const sheet = <JoinSheet privates={TWO_OF_CAP} initialCode="GANK-4TQ1" onJoin={none} onClose={none} />;
+    const sheet = <JoinSheet privates={TWO_OF_CAP} initialCode="GANK-4TQ1" onJoin={noop} onClose={noop} />;
     expectInOrder(text(sheet), ["Join a league", "Code or link", "Back", "Join", "Private leagues: 2 of 25"]);
     expect(html(sheet)).toContain('value="GANK-4TQ1"');
   });
 
   test("join.html: a code that finds nothing says so under the field", () => {
-    expect(text(<JoinSheet privates={TWO_OF_CAP} initialCode="NOPE" error="No league has that code" onJoin={none} onClose={none} />)).toContain(
+    expect(text(<JoinSheet privates={TWO_OF_CAP} initialCode="NOPE" error="No league has that code" onJoin={noop} onClose={noop} />)).toContain(
       "No league has that code",
     );
   });
 
   test("leave.html: the league, your rank of its size, Back, Leave", () => {
-    expectInOrder(text(<LeaveSheet name="Flol Discord" rank={14} size={86} onLeave={none} onClose={none} />), ["Leave Flol Discord?", "14th of 86", "Back", "Leave"]);
+    expectInOrder(text(<LeaveSheet name="Flol Discord" rank={14} size={86} onLeave={noop} onClose={noop} />), ["Leave Flol Discord?", "14th of 86", "Back", "Leave"]);
   });
 
   test("delete.html: the league, its size and first week, Back, Delete league", () => {
-    expectInOrder(text(<DeleteSheet name="Pub League" size={12} scoringFrom={1} onDelete={none} onClose={none} />), [
+    expectInOrder(text(<DeleteSheet name="Pub League" size={12} scoringFrom={1} onDelete={noop} onClose={noop} />), [
       "Delete Pub League?",
       "12 managers · scoring from Week 1",
       "Back",

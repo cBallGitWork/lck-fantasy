@@ -1,25 +1,14 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { MANAGER } from "../../fixtures/week3";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, text } from "../../testing/render";
 import { LCK_HUB } from "./fixtures";
 import { nextHub, startHub, type HubAction } from "./hubState";
 import { LckHub } from "./LckHub";
-import { signed } from "../../parts";
 import { winPct } from "./StandingsTab";
 import type { HubTab, LckHubData } from "./types";
 
 const page = (tab: HubTab, data: LckHubData = LCK_HUB) => <LckHub data={data} account={MANAGER.team} tab={tab} />;
-
-/** Each string appears in the text, in this order. */
-function expectInOrder(out: string, parts: string[]) {
-  let from = 0;
-  for (const part of parts) {
-    const at = out.indexOf(part, from);
-    expect(at, `"${part}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + part.length;
-  }
-}
 
 const HEAD = ["Split 1 2027", "스플릿 1", "Deadline", "Wed 07:45", "16:45 KST", "9h 45m"];
 const TABS = ["Fixtures", "Results", "Standings", "Teams"];
@@ -205,10 +194,6 @@ describe("controls", () => {
     expect(text(page("Fixtures", noGroups))).toContain("Not started");
     expect(text(page("Standings", noGroups))).toContain("Not started");
   });
-});
-
-test("a set difference is signed, zero bare", () => {
-  expect([signed(7), signed(0), signed(-1)]).toEqual(["+7", "0", "−1"]);
 });
 
 test("Win % is rounded, and a dash before a team's first series", () => {

@@ -1,21 +1,11 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { MANAGER } from "../../fixtures/week3";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, plain, text } from "../../testing/render";
 import { SERIES_BY_ID, SERIES_VIEWS } from "./fixtures";
 import { SeriesFinal, SeriesLive, SeriesNext } from "./SeriesPage";
 
 const account = MANAGER.team;
-
-/** Each of `parts` appears in `out`, in this order. */
-function expectInOrder(out: string, parts: string[]) {
-  let from = 0;
-  for (const part of parts) {
-    const at = out.indexOf(part, from);
-    expect(at, `"${part}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + part.length;
-  }
-}
 
 /** The rows of the n-th table, as text. */
 const rows = (out: string, n: number) =>
@@ -23,7 +13,7 @@ const rows = (out: string, n: number) =>
     .split("</table>")[0]!
     .split("<tr")
     .slice(1)
-    .map((row) => `<tr${row}`.replace(/<[^>]+>/g, "").replace(/&#x27;/g, "'"));
+    .map((row) => plain(`<tr${row}`));
 
 /** Whether the name's row carries your-player dot. */
 const dotted = (out: string, name: string) => ((out.split(`>${name}</b>`)[1] ?? "").split("</tr>")[0] ?? "").includes("me-dot");

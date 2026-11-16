@@ -1,33 +1,21 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { signed } from "../../parts";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, noop, text } from "../../testing/render";
 import { accept, decline, movesSummary, playersLine, receiverLine, removeFollower, sendTruck, unfollow, type DeadlineItem } from "./feed";
 import { FOLLOWING, PICKER_AS_DRAWN } from "./fixtures";
 import { FollowingScreen } from ".";
 import { FollowingView } from "./FollowingView";
 import { TruckPicker } from "./TruckPicker";
 
-const none = () => {};
 const view = (data = FOLLOWING) => (
-  <FollowingView data={data} onTruck={none} onAccept={none} onDecline={none} onUnfollow={none} onRemove={none} onBlock={none} />
+  <FollowingView data={data} onTruck={noop} onAccept={noop} onDecline={noop} onUnfollow={noop} onRemove={noop} onBlock={noop} />
 );
-
-/** Fails unless each part shows in `out`, in this order. */
-function inOrder(out: string, parts: string[]) {
-  let at = 0;
-  for (const part of parts) {
-    const found = out.indexOf(part, at);
-    expect(found, `"${part}" after position ${at}`).toBeGreaterThanOrEqual(0);
-    at = found + part.length;
-  }
-}
 
 describe("the page (1440.png)", () => {
   const out = text(view());
 
   test("shows the feed, newest first, under a head per gameweek", () => {
-    inOrder(out, [
+    expectInOrder(out, [
       "Following",
       "팔로잉",
       "Week 3",
@@ -77,7 +65,7 @@ describe("the page (1440.png)", () => {
   });
 
   test("shows requests, trucks, following and followers on the right, then the sponsor note", () => {
-    inOrder(out, [
+    expectInOrder(out, [
       "Requests2",
       "Ella Wong",
       "Ruler of None",
@@ -136,15 +124,15 @@ describe("the truck picker (1440-truck.png)", () => {
       lines={FOLLOWING.receivers.jae!.lines}
       kind={PICKER_AS_DRAWN.kind}
       picked={PICKER_AS_DRAWN.lineId}
-      onKind={none}
-      onPick={none}
-      onSend={none}
-      onClose={none}
+      onKind={noop}
+      onPick={noop}
+      onSend={noop}
+      onClose={noop}
     />
   );
 
   test("shows Jae's week, the kinds, the protest lines, the preview, then Cancel and Send truck", () => {
-    inOrder(text(picker), [
+    expectInOrder(text(picker), [
       "Truck Jae Kim",
       "Deft Tomorrow · Week 3 · 31 pts so far, no transfers",
       "Coffee 커피차",
@@ -169,7 +157,7 @@ describe("the truck picker (1440-truck.png)", () => {
   });
 
   test("Send truck waits for a line", () => {
-    const off = html(<TruckPicker receiver={jae} line="" lines={[]} kind="coffee" onKind={none} onPick={none} onSend={none} onClose={none} />);
+    const off = html(<TruckPicker receiver={jae} line="" lines={[]} kind="coffee" onKind={noop} onPick={noop} onSend={noop} onClose={noop} />);
     expect(off).toMatch(/<button[^>]*disabled=""[^>]*>Send truck/);
   });
 });
@@ -203,8 +191,7 @@ describe("the controls", () => {
   });
 });
 
-test("figures and summaries read as the picture writes them", () => {
-  expect([signed(9), signed(-1), signed(0)]).toEqual(["+9", "−1", "0"]);
+test("summaries read as the picture writes them", () => {
   const moves = (over: Partial<DeadlineItem>): DeadlineItem => ({ kind: "deadline", id: "x", manager: FOLLOWING.following[0]!, transfers: 0, swaps: [], ...over });
   expect(movesSummary(moves({ transfers: 1 }))).toBe("1 transfer");
   expect(movesSummary(moves({ buff: "Limitless", transfers: 5 }))).toBe("Limitless, 5 transfers");

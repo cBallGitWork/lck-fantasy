@@ -2,7 +2,7 @@
 import { describe, expect, test } from "vitest";
 import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
-import { COMPETITION as COMPETITION_NAME, MANAGER, MY_WEEK3 } from "../../fixtures/week3";
+import { MANAGER, MY_WEEK3, SEASON } from "../../fixtures/week3";
 import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
 import { COMPETITION, LEAGUE_NAME_MAX, LEAGUES } from "./fixtures";
 import { chaseText } from "./format";
@@ -35,7 +35,12 @@ describe("a league you made (league.html)", () => {
 
   test("lists all 12 rows in rank order, your row with its chase tag", () => {
     expectInOrder(out, [`1—${MANAGERS.minji.team}${MANAGERS.minji.name}Ruler93315`, `21${MANAGER.team}${MANAGER.name}13 pts to 1stFaker94302`, "Peanut Butter Gank", "Gank PlankRuth AdeFaker55223"]);
-    expect(html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />)).toMatch(/class="leagues__mine"[^]*Baron Steal FC/);
+  });
+
+  test("is the Table part's: your row selected, and each row ends in its centred ›", () => {
+    const out = html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />);
+    expect(out).toMatch(/class="table__row--selected"[^]*Baron Steal FC/);
+    expect(out).toMatch(/<td class="table__go"><a[^>]*aria-label="Open Baron Steal FC"/);
   });
 
   test("your week is Points' Week 3 so far, your total the season's, Minji's her profile's", () => {
@@ -66,6 +71,7 @@ describe("a league you're a member of (member.html)", () => {
 
   test("shows the top five, a gap, the rows round yours, then the pager", () => {
     expectInOrder(out, ["Canyon Diff", "T1 Til I Die", "⋯", "Bdd Wolf", "Siwoo Sweep", MANAGER.team, "2 pts to 13th", "Clid Was Here", "12Find me"]);
+    expect(html(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />).match(/class="table__gap"/g)).toHaveLength(1);
   });
 
   test("scoring from Week 3, every total is Week 3's alone", () => {
@@ -81,7 +87,7 @@ describe("Overall in Split 1 (overall.html's layout)", () => {
   const out = text(<OverallTable league={league} group={league.openGroup} onGroup={noop} {...tableProps(league)} />);
 
   test("opens on the split being played: the season and split, the three tabs, the sponsor, then the table head", () => {
-    expectInOrder(out, ["Overall", `${COMPETITION_NAME} · Split 1`, "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Total"]);
+    expectInOrder(out, ["Overall", `${SEASON} · Split 1`, "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Total"]);
   });
 
   test("hides the groups off Split 2", () => {
@@ -106,7 +112,7 @@ describe("Overall in Split 2, Legend (overall.html)", () => {
 
   test("heads with the season and split, Legend, Rise and All, the tabs, the sponsor and a Split 2 column", () => {
     const grouped = text(<OverallTable league={league} group="Legend" onGroup={noop} {...props} />);
-    expectInOrder(grouped, ["Overall", `${COMPETITION_NAME} · Split 2`, "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Split 2", "Total"]);
+    expectInOrder(grouped, ["Overall", `${SEASON} · Split 2`, "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Split 2", "Total"]);
   });
 });
 

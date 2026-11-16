@@ -45,9 +45,6 @@
 .price-changes__name {
   font-weight: var(--w-bold);
 }
-.price-changes__name:hover {
-  text-decoration: underline;
-}
 .price-changes__meta {
   margin-left: var(--s-2);
 }

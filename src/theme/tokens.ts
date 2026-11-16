@@ -133,6 +133,19 @@ export const measure = {
   colFigure: 72,
   colPrice: 80,
   colRole: 112,
+  /** A league table's rank, Carry, and points (the week's, the split's, Total) columns. */
+  colRank: 64,
+  colCarry: 152,
+  colScore: 120,
+  /** Profile Points' slot, player and Pts columns. */
+  colSlot: 150,
+  colPlayer: 230,
+  colPts: 60,
+  /** Profile Transfers' slot and Pts gained, Out, `→` and In columns. */
+  colSwap: 90,
+  colOut: 240,
+  colArrow: 30,
+  colIn: 260,
   /** A menu's list: the Admin menu. */
   menuW: 220,
   cardHead: 48,

@@ -75,7 +75,7 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
 function Who({ manager }: { manager: Manager }) {
   return (
     <span className="following__who">
-      <GoLink className="following__name" go={profileGo(manager.id)}>
+      <GoLink className="following__name hover-line" go={profileGo(manager.id)}>
         {manager.name}
       </GoLink>
       <small className="following__team">{manager.team}</small>
@@ -157,7 +157,7 @@ function TruckCell({ item, week, data, onTruck }: { item: FeedItem; week: FeedWe
   const sent = data.sent[item.manager.id];
   if (sent) return <span className="following__sent">{TRUCK_WORD[sent]} sent</span>;
   return (
-    <button type="button" className="following__truck key-bare" onClick={() => onTruck(item.manager.id)}>
+    <button type="button" className="following__truck key-bare hover-line" onClick={() => onTruck(item.manager.id)}>
       Truck ›
     </button>
   );
@@ -178,7 +178,7 @@ function Truck({ truck }: { truck: ReceivedTruck }) {
         ) : (
           <span>
             {TRUCK_WORD[truck.kind]} from{" "}
-            <GoLink className="following__name" go={profileGo(truck.from.id)}>
+            <GoLink className="following__name hover-line" go={profileGo(truck.from.id)}>
               {truck.from.name}
             </GoLink>
           </span>
@@ -196,7 +196,7 @@ function People({ people, actions }: { people: Manager[]; actions: { label: stri
           <Who manager={m} />
           <span className="following__acts">
             {actions.map((a) => (
-              <button key={a.label} type="button" className="following__act key-bare" onClick={() => a.on(m.id)}>
+              <button key={a.label} type="button" className="following__act key-bare hover-line" onClick={() => a.on(m.id)}>
                 {a.label}
               </button>
             ))}

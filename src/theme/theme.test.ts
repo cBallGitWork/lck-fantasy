@@ -70,6 +70,22 @@ test("every var(--name) the app uses is a token", () => {
   expect(unknown).toEqual([]);
 });
 
+const BASE = code(join(THEME, "base.css"));
+const rule = (selector: string) => BASE.match(new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^{]*\\{([^}]*)\\}`))?.[1] ?? "";
+
+test("a hover underline has one look, .hover-line: 1px, 4px below, and no page draws its own", () => {
+  expect(rule(".hover-line:hover")).toContain("text-decoration-thickness: var(--m-rule)");
+  expect(rule(".hover-line:hover")).toContain("text-underline-offset: var(--s-1)");
+  expect(themeVars()).toContainEqual(["--m-rule", "1px"]);
+  expect(themeVars()).toContainEqual(["--s-1", "4px"]);
+  expect(offenders(/:hover[^{]*\{[^}]*text-decoration/)).toEqual([]);
+});
+
+test("a key that can't be pressed has one look, .key-off: mid on fill, no edge, and no part draws its own", () => {
+  expect(rule(".key-off:disabled")).toMatch(/color: var\(--mid\);\s*background: var\(--fill\);\s*border-color: var\(--fill\);/);
+  expect(offenders(/:disabled\s*[,{]/)).toEqual([]);
+});
+
 function luminance(hex: string): number {
   const [r, g, b] = [1, 3, 5].map((i) => {
     const c = parseInt(hex.slice(i, i + 2), 16) / 255;

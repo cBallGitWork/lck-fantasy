@@ -106,4 +106,16 @@ describe("idle", () => {
     expect(out).not.toContain("Not final");
     expect(html(<Home data={HOME_IDLE} />)).toContain('href="/pick-team"');
   });
+
+  test("sets each starter's role upright on his slanted plate, as his name is", () => {
+    const markup = html(<Home data={HOME_IDLE} />);
+    expect(markup.match(/class="home__plate-role[ "]/g)).toHaveLength(HOME_IDLE.lineup.length);
+  });
+});
+
+test("a held rank, Overall's or a league's, is RankMove's grey —", () => {
+  const held = { ...HOME_IDLE, overall: { ...HOME_IDLE.overall, move: 0 }, leagues: HOME_IDLE.leagues.map((l) => ({ ...l, move: 0 })) };
+  const markup = html(<Home data={held} />);
+  expect(markup.split('class="rank-held"').length - 1).toBe(held.leagues.length + 1);
+  expect(markup).not.toContain("rank-up");
 });

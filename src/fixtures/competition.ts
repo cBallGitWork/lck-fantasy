@@ -19,6 +19,9 @@ export type TeamCode = keyof typeof TEAMS;
 /** The split the pictures show, Split 1 the beta (spec/10). */
 export const COMPETITION = "Split 1";
 
+/** The season the splits belong to, as Overall's head names it. */
+export const SEASON = "LCK 2027";
+
 /** The split with its year, as the LCK hub and the cards title it. */
 export const COMPETITION_TITLE = `${COMPETITION} 2027`;
 

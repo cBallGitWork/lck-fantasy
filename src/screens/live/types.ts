@@ -49,6 +49,8 @@ export interface WeekTotal {
   total: number;
   average: number;
   highest: number;
+  /** The id of the manager with the week's Highest: Highest › opens his Points, as FPL's does. */
+  highestBy: string;
   notFinal: boolean;
 }
 

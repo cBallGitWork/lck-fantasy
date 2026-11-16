@@ -7,13 +7,13 @@ import "./LinkGo.css";
 export function LinkGo({ children, ...to }: { children: ReactNode } & ({ go: Go } | { out: string })) {
   if ("out" in to) {
     return (
-      <a className="link-go" href={to.out} target="_blank" rel="noreferrer">
+      <a className="link-go hover-line" href={to.out} target="_blank" rel="noreferrer">
         {children} ↗
       </a>
     );
   }
   return (
-    <GoLink go={to.go} className="link-go">
+    <GoLink go={to.go} className="link-go hover-line">
       {children} ›
     </GoLink>
   );

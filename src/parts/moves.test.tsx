@@ -14,3 +14,7 @@ test("a rank move is rank-up or rank-down with its places marked", () => {
   expect(html(<RankMove move={6904} />)).toBe('<span class="rank-up">6,904</span>');
   expect(html(<RankMove move={-2} />)).toBe('<span class="rank-down">2</span>');
 });
+
+test("a held rank, or one with no move yet, is one rank-held —, never ▲ 0", () => {
+  for (const move of [0, null, undefined]) expect(html(<RankMove move={move} />)).toBe('<span class="rank-held">—</span>');
+});

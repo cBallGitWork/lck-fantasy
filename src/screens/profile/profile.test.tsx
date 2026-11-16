@@ -53,7 +53,11 @@ describe("Points", () => {
     expect(markup).toContain('data-screen="profile"');
     expect(markup).toMatch(/aria-selected="true"[^>]*>Points</);
     expect(markup).toContain('aria-label="Week before"');
-    expect(markup).toContain('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">›</button>');
+    expect(markup).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
+  });
+
+  test("her team is the Table part's, Bench a sub-row above the bench", () => {
+    expect(html(page("Points"))).toMatch(/<tr class="table__sub"><td colSpan="4">Bench<\/td><\/tr><tr><td><small>Bench 1 · Mid/);
   });
 
   test("links each player to his card, the coach to the coach card, Highest to Perfect game and each league to its table", () => {
@@ -110,6 +114,12 @@ describe("Transfers", () => {
       ...LEAGUES,
     ]);
   });
+
+  test("is the Table part's, each week a sub-row with its cost on the right", () => {
+    const markup = html(page("Transfers"));
+    expect(markup.match(/<tr class="table__sub"><td colSpan="6"><b>Week \d<\/b>/g)).toHaveLength(2);
+    expect(markup).toContain('<span class="table__sub-aside">Limitless · 0 hits</span>');
+  });
 });
 
 describe("the follow key", () => {
@@ -127,4 +137,12 @@ describe("the follow key", () => {
     expect(nextFollow("follow")).toBe("requested");
     expect(nextFollow("requested")).toBe("requested");
   });
+});
+
+test("a held rank, in Leagues or History, is RankMove's grey —", () => {
+  const held: ProfileData = { ...PROFILE, leagues: PROFILE.leagues.map((l) => ({ ...l, move: 0 })), history: PROFILE.history.map((r) => ({ ...r, move: 0 })) };
+  expect(html(page("Points", held))).toContain('<span class="rank-held">—</span>');
+  const history = html(page("History", held));
+  expect(history).toContain('<span class="rank-held">—</span>');
+  expect(history).not.toMatch(/rank-(up|down)/);
 });

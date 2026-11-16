@@ -15,15 +15,8 @@
   cursor: pointer;
   text-decoration: none;
 }
-.week-arrow:hover:not(.week-arrow--off) {
+.week-arrow:hover:not(:disabled) {
   border-color: var(--text);
-}
-/* No week that way: the disabled key's look (OutlinedKey), mid on fill with a line edge. */
-.week-arrow--off {
-  color: var(--mid);
-  background: var(--fill);
-  border-color: var(--line);
-  cursor: default;
 }
 /* ‹ week ›: the arrows either side of the week; the page sets its type. */
 .week-step {

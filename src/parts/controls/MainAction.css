@@ -15,8 +15,3 @@
   border: 0;
   cursor: pointer;
 }
-.main-action__key:disabled {
-  background: var(--fill);
-  color: var(--mid);
-  cursor: default;
-}

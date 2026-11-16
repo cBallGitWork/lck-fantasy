@@ -23,9 +23,6 @@
   min-height: var(--m-target);
   color: var(--text);
 }
-.pick-team__reset:hover {
-  text-decoration: underline;
-}
 .pick-team__deadline {
   flex: 1;
   text-align: right;
@@ -71,13 +68,6 @@
 }
 .pick-team__key--on {
   background: var(--paper);
-}
-.pick-team__key:disabled {
-  background: var(--fill);
-  border-color: var(--fill);
-  color: var(--mid);
-  font-weight: var(--w-regular);
-  cursor: default;
 }
 
 /* Buffs: four boxes of one size, in one row above the Rift. */

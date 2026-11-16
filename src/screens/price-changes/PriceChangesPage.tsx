@@ -16,7 +16,7 @@ const COLUMNS: Column<PriceMove>[] = [
     head: "Player",
     cell: (row) => (
       <>
-        <GoLink go={cardOf(row)} className="price-changes__name">
+        <GoLink go={cardOf(row)} className="price-changes__name hover-line">
           {row.name}
         </GoLink>
         {row.mine && <MeDot />}

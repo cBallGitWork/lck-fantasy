@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import type { Go } from "../../paths";
 import { measureVar, type MeasureKey } from "../../theme/tokens";
 import { cx } from "../util/cx";
@@ -22,6 +22,12 @@ export interface Column<R> {
   group?: boolean;
 }
 
+/**
+ * A sub-row above a row: a group's head (`Bench`, a week) in 12px `--mid` on `--bg`, with what is
+ * true of the whole group on its right; or `gap`, a centred `⋯` where rows are skipped.
+ */
+export type SubRow = { head: ReactNode; aside?: ReactNode } | "gap";
+
 /** A row that opens something ends with `›`: a link (`go`) or a key (`onOpen`), named for screen readers. */
 type RowOpen<R> = { name: (row: R) => string } & ({ go: (row: R) => Go } | { onOpen: (row: R) => void });
 
@@ -35,6 +41,8 @@ export function Table<R>({
   rows,
   rowKey,
   selected,
+  ruleAbove,
+  subAbove,
   open,
   stickyHead,
   stickyFirst,
@@ -45,6 +53,10 @@ export function Table<R>({
   rowKey: (row: R) => string;
   /** The row drawn bold on `--fill`, such as yours in a league. */
   selected?: (row: R) => boolean;
+  /** A row with a `--line` rule above it, starting a group such as a new week. */
+  ruleAbove?: (row: R) => boolean;
+  /** The sub-row drawn above a row, where it has one. */
+  subAbove?: (row: R) => SubRow | undefined;
   open?: RowOpen<R>;
   stickyHead?: boolean;
   stickyFirst?: boolean;
@@ -75,30 +87,51 @@ export function Table<R>({
       </thead>
       <tbody>
         {rows.map((row) => (
-          <tr key={rowKey(row)} className={cx(selected?.(row) && "table__row--selected")}>
-            {columns.map((c) => {
-              const full = c.fullText?.(row);
-              return (
-                <td
-                  key={c.key}
-                  className={cx(c.figure && "table__figure num", c.group && "table__group", full !== undefined && "table__truncate")}
-                  title={full}
-                >
-                  {c.cell(row)}
+          <Fragment key={rowKey(row)}>
+            <Sub sub={subAbove?.(row)} span={columns.length + (open ? 1 : 0)} />
+            <tr className={cx(selected?.(row) && "table__row--selected", ruleAbove?.(row) && "table__row--rule")}>
+              {columns.map((c) => {
+                const full = c.fullText?.(row);
+                return (
+                  <td
+                    key={c.key}
+                    className={cx(c.figure && "table__figure num", c.group && "table__group", full !== undefined && "table__truncate")}
+                    title={full}
+                  >
+                    {c.cell(row)}
+                  </td>
+                );
+              })}
+              {open && (
+                <td className="table__go">
+                  <OpenRow open={open} row={row} />
                 </td>
-              );
-            })}
-            {open && (
-              <td className="table__go">
-                <OpenRow open={open} row={row} />
-              </td>
-            )}
-          </tr>
+              )}
+            </tr>
+          </Fragment>
         ))}
       </tbody>
     </table>
   );
   return stickyHead || stickyFirst ? <div className="table__scroll">{table}</div> : table;
+}
+
+function Sub({ sub, span }: { sub?: SubRow; span: number }) {
+  if (sub === undefined) return null;
+  if (sub === "gap")
+    return (
+      <tr className="table__gap">
+        <td colSpan={span}>⋯</td>
+      </tr>
+    );
+  return (
+    <tr className="table__sub">
+      <td colSpan={span}>
+        {sub.head}
+        {sub.aside !== undefined && <span className="table__sub-aside">{sub.aside}</span>}
+      </td>
+    </tr>
+  );
 }
 
 function OpenRow<R>({ open, row }: { open: RowOpen<R>; row: R }) {

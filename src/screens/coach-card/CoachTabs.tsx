@@ -105,6 +105,7 @@ export function CoachHistoryTab({ history, shown, team }: { history: CoachHistor
         label={history.competition}
         rows={shown}
         rowKey={(r) => `${r.week}-${r.day}`}
+        ruleAbove={(r) => r !== shown[0] && firstOfWeek(shown, r)}
         columns={[
           { key: "week", head: "Week", width: "goCol", cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
           { key: "series", head: "Series", cell: (r) => `${r.day} · ${result(r.score)} ${r.opponent}` },

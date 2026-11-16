@@ -101,6 +101,13 @@ describe("the page (1440.png)", () => {
     ]);
   });
 
+  test("each repeated key names its manager for a screen reader", () => {
+    const markup = html(view());
+    for (const name of ['aria-label="Accept Ella Wong"', 'aria-label="Decline Ella Wong"', 'aria-label="Unfollow Minji Park"', 'aria-label="Remove Minji Park"', 'aria-label="Block Minji Park"', 'aria-label="Truck Minji Park"']) {
+      expect(markup).toContain(name);
+    }
+  });
+
   test("trucks only the live week: Week 2's rows have none", () => {
     const week2 = out.slice(out.indexOf("Week 2"));
     expect(week2).not.toContain("Truck ›");

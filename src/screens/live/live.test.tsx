@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import { expectInOrder, html, text } from "../../testing/render";
 import { DEFAULT_STREAM, STREAMS } from "../../fixtures/streams";
 import { IDLE_STREAMS, LIVE_DOWN, LIVE_IDLE, LIVE_NOW } from "./fixtures";
-import { LiveDown, LiveIdle, LiveNow } from "./Live";
+import { LiveDown, LiveIdle, liveNews, LiveNow } from "./Live";
 
 const picker = { streams: STREAMS, picked: DEFAULT_STREAM, onPick: () => {} };
 const idlePicker = { ...picker, streams: IDLE_STREAMS };
@@ -35,6 +35,15 @@ describe("a series live", () => {
       "kkOmaT1", "G1 2 · G2 0", "Live", "10",
       ...REST,
     ]);
+  });
+
+  test("has an h1 for a screen reader, and marks the Korean stream's language as Korean", () => {
+    expect(page).toContain('<h1 class="unseen">Live</h1>');
+    expect(page).toContain('<span lang="ko">한국어</span>');
+  });
+
+  test("the live region says the series score and your week, and never a countdown", () => {
+    expect(liveNews(LIVE_NOW.bug, LIVE_NOW.panel.week)).toBe("T1 1–0 DK · Your week 94");
   });
 
   test("fills the picked stream and dashes those not live", () => {

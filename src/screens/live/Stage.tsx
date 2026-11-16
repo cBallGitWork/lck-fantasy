@@ -1,5 +1,5 @@
 import { cx, FinalTag, LiveTag, Menu, score as scoreText, Time } from "../../parts";
-import { streamLabel } from "../../fixtures/streams";
+import { STREAM_DOT, streamLabel } from "../../fixtures/streams";
 import type { FinalBug, LiveBug, NextSeries, Picker } from "./types";
 import { dot, WORDS } from "./words";
 
@@ -22,7 +22,9 @@ export function StreamPicker({ streams, picked, onPick }: Picker) {
           aria-pressed={s.id === picked}
           onClick={() => onPick(s.id)}
         >
-          {streamLabel(s)}
+          {s.name}
+          {STREAM_DOT}
+          <span lang={s.lang}>{s.language}</span>
           <small className="live__chip-platform">{s.platform}</small>
         </button>
       ))}

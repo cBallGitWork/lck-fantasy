@@ -3,7 +3,7 @@ import { cx } from "../util/cx";
 import "./BuffCard.css";
 
 /**
- * A buff: its name, one line on what it does (spec/06), how many are left, and Play. `on` is
+ * A buff: its name (a heading, drawn as bold body text), one line on what it does (spec/06), how many are left, and Play. `on` is
  * played this week (filled); `off` can't be played now.
  */
 export function BuffCard({
@@ -26,13 +26,13 @@ export function BuffCard({
   const control =
     action ??
     (state === "ready" && (
-      <button type="button" className="buff-card__play" onClick={onPlay}>
+      <button type="button" className="buff-card__play" aria-label={`Play ${name}`} onClick={onPlay}>
         Play
       </button>
     ));
   return (
     <div className={cx("buff-card", state !== "ready" && `buff-card--${state}`)}>
-      <b>{name}</b>
+      <h2 className="buff-card__name">{name}</h2>
       <p className="buff-card__does quiet">{does}</p>
       <div className="buff-card__foot quiet">
         <span>{left}</span>

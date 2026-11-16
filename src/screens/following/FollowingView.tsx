@@ -42,8 +42,12 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
             {data.requests.map((m) => (
               <div key={m.id} className="following__request">
                 <Who manager={m} />
-                <OutlinedKey onClick={() => act.onAccept(m.id)}>Accept</OutlinedKey>
-                <OutlinedKey onClick={() => act.onDecline(m.id)}>Decline</OutlinedKey>
+                <OutlinedKey onClick={() => act.onAccept(m.id)} label={named("Accept", m)}>
+                  Accept
+                </OutlinedKey>
+                <OutlinedKey onClick={() => act.onDecline(m.id)} label={named("Decline", m)}>
+                  Decline
+                </OutlinedKey>
               </div>
             ))}
           </SideSection>
@@ -70,6 +74,12 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
     </PageFrame>
   );
 }
+
+/** A key's name for a screen reader, where the same key repeats down a list: `Accept Ella Wong`. */
+const named = (key: string, manager: Manager) => `${key} ${manager.name}`;
+
+/** The truck key's word; a screen reader hears it with the manager's name (`Truck Ella Wong`). */
+const TRUCK_KEY = "Truck";
 
 /** A manager's name, opening their profile, with their team under it. */
 function Who({ manager }: { manager: Manager }) {
@@ -157,8 +167,13 @@ function TruckCell({ item, week, data, onTruck }: { item: FeedItem; week: FeedWe
   const sent = data.sent[item.manager.id];
   if (sent) return <span className="following__sent">{TRUCK_WORD[sent]} sent</span>;
   return (
-    <button type="button" className="following__truck key-bare hover-line" onClick={() => onTruck(item.manager.id)}>
-      Truck ›
+    <button
+      type="button"
+      className="following__truck key-bare hover-line"
+      aria-label={named(TRUCK_KEY, item.manager)}
+      onClick={() => onTruck(item.manager.id)}
+    >
+      {TRUCK_KEY} ›
     </button>
   );
 }
@@ -196,7 +211,7 @@ function People({ people, actions }: { people: Manager[]; actions: { label: stri
           <Who manager={m} />
           <span className="following__acts">
             {actions.map((a) => (
-              <button key={a.label} type="button" className="following__act key-bare hover-line" onClick={() => a.on(m.id)}>
+              <button key={a.label} type="button" className="following__act key-bare hover-line" aria-label={named(a.label, m)} onClick={() => a.on(m.id)}>
                 {a.label}
               </button>
             ))}

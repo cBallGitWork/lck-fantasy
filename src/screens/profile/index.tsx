@@ -29,12 +29,15 @@ export function Profile({
   account,
   initialTab = "Points",
   initialWeek = data.currentWeek,
+  onFollow,
 }: {
   data: ProfileData;
   /** Your team's name, for the account menu; null for a visitor. */
   account: string | null;
   initialTab?: ProfileTab;
   initialWeek?: number;
+  /** Tells the backend the follow key was pressed, with the state it moves to. */
+  onFollow?: (next: FollowState) => void;
 }) {
   const [tab, setTab] = useState<ProfileTab>(initialTab);
   const [weekNo, setWeekNo] = useState(initialWeek);
@@ -43,7 +46,11 @@ export function Profile({
   if (!week) throw new Error(`No Week ${weekNo} on ${data.manager.name}'s profile`);
   const hasWeek = (n: number) => data.weeks.some((w) => w.week === n);
 
-  const pressFollow = () => setFollow(nextFollow(follow));
+  const pressFollow = () => {
+    const next = nextFollow(follow);
+    setFollow(next);
+    onFollow?.(next);
+  };
   const openWeek = (n: number) => {
     setWeekNo(n);
     setTab("Points");

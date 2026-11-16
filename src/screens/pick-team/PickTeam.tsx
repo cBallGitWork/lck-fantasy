@@ -5,7 +5,7 @@ import { CardBoard, RiftBoard } from "./boards";
 import { Buffs } from "./Buffs";
 import type { PickTeamData } from "./fixtures";
 import type { ViewProps } from "./format";
-import { changeCount, pickReducer, type PickState, type PickView } from "./model";
+import { changeCount, pickReducer, type PickAction, type PickState, type PickTeam, type PickView } from "./model";
 import { PlayerCard } from "./PlayerCard";
 import "./pick-team.css";
 
@@ -75,8 +75,19 @@ function ChangeBar({ data, state, dispatch }: ViewProps) {
   );
 }
 
-/** The page with its state: it starts from `initial`. */
-export function PickTeamPage({ data, initial }: { data: PickTeamData; initial: PickState }) {
+/** The page with its state: it starts from `initial`, and hands a saved team to `onSave` and a chosen view to `onView`. */
+export function PickTeamPage({
+  data,
+  initial,
+  onSave,
+  onView,
+}: {
+  data: PickTeamData;
+  initial: PickState;
+  onSave?: (team: PickTeam) => void;
+  /** The backend remembers each manager's view (spec/12). */
+  onView?: (view: PickView) => void;
+}) {
   const [state, dispatch] = useReducer(
     pickReducer((id) => {
       const player = data.players[id];
@@ -85,5 +96,10 @@ export function PickTeamPage({ data, initial }: { data: PickTeamData; initial: P
     }),
     initial,
   );
-  return <PickTeamView data={data} state={state} dispatch={dispatch} />;
+  const send = (action: PickAction) => {
+    if (action.type === "save") onSave?.(state.draft);
+    if (action.type === "view") onView?.(action.view);
+    dispatch(action);
+  };
+  return <PickTeamView data={data} state={state} dispatch={send} />;
 }

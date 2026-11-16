@@ -19,3 +19,10 @@
   font-size: var(--size-lead);
   font-weight: var(--w-bold);
 }
+.state__line {
+  color: var(--mid);
+}
+.state__retry {
+  color: var(--text);
+  padding: 0;
+}

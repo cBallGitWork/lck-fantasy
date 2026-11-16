@@ -46,7 +46,7 @@ export { SeriesList, type SeriesRow, type SeriesState } from "./display/SeriesLi
 export { beyondStrip, SeriesStrip, type StripNext, type StripPast } from "./display/SeriesStrip";
 export { SideSection } from "./frame/SideSection";
 export { SponsorNote } from "./frame/SponsorNote";
-export { Empty, Loading } from "./display/States";
+export { Empty, ErrorState, Loading } from "./display/States";
 export { Table, type Column } from "./display/Table";
 export { Tabs } from "./controls/Tabs";
 export { FinalTag, LiveTag, NotFinalTag, Tag } from "./display/Tag";

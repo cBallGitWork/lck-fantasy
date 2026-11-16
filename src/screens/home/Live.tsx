@@ -62,8 +62,12 @@ function StreamPicker({ streams, picked, onPick }: { streams: Stream[]; picked: 
 }
 
 /** Home while a series is live: the stream and its picker; your week, your players in this series, who is still to play. */
-export function HomeLive({ data, ...actions }: { data: HomeLiveData } & HomeActions) {
+export function HomeLive({ data, onPickStream, ...actions }: { data: HomeLiveData; onPickStream?: (id: string) => void } & HomeActions) {
   const [picked, setPicked] = useState(data.pickedStream);
+  const pick = (id: string) => {
+    setPicked(id);
+    onPickStream?.(id);
+  };
   return (
     <HomeFrame
       data={data}
@@ -71,7 +75,7 @@ export function HomeLive({ data, ...actions }: { data: HomeLiveData } & HomeActi
       hero={
         <div className="home__tv">
           <StreamScreen series={data.series} stream={data.streams.find((s) => s.id === picked)} />
-          <StreamPicker streams={data.streams} picked={picked} onPick={setPicked} />
+          <StreamPicker streams={data.streams} picked={picked} onPick={pick} />
         </div>
       }
       side={

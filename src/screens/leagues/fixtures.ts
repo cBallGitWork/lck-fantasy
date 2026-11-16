@@ -1,22 +1,27 @@
-// Leagues on the shared LCK Cup Week 3, at Points' moment (Saturday, T1 v DK game 2 live): after
+// Leagues on the shared Week 3 of Split 1, at Points' moment (Saturday, T1 v DK game 2 live): after
 // the deadline, so Carry shows. The pictures (docs/design/approved/leagues/) draw a made-up Split 2
-// Week 14; they bind the layout, and this file holds the Cup's figures. Names and numbers are
+// Week 14; they bind the layout, tabs and groups, and this file holds Week 3's figures. Names and numbers are
 // examples. The sample manager, Minji, Dan and Jae are the shared ones. The backend feeds each of
 // these once it is wired (#38).
 
 import { MANAGERS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
+import { seriesById } from "../../fixtures/series";
 import { COMPETITION as CUP, MANAGER, MY_WEEK3, POINTS_WEEK, WEEK3_DEADLINE, WEEK4_SERIES } from "../../fixtures/week3";
-import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, StandingRow } from "./types";
+import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, Standings, StandingRow } from "./types";
 
 const WEEK = POINTS_WEEK.week;
 
-/** The Cup's tables: the whole competition only, since it has no splits (spec/08, a table per split). */
+/** The season's tabs and Overall's groups, as the competition's data will hold them (spec/08). */
 export const COMPETITION: CompetitionTabs = {
-  tabs: ["Season"],
+  tabs: ["Season", "Split 1", "Split 2"],
   seasonTab: "Season",
-  groups: [],
+  groupedTab: "Split 2",
+  groups: ["Legend", "Rise", "All"],
 };
+
+/** The split being played at Week 3, where Overall opens. */
+const THIS_SPLIT = "Split 1";
 
 /** The league a bare /leagues opens, as the picture does. */
 export const OPEN_LEAGUE_ID = "pub-league";
@@ -116,6 +121,29 @@ const FLOL_DISCORD: LeagueView = {
   },
 };
 
+/** Overall at Week 3: the season and Split 1 are one table until Split 2 starts. */
+const OVERALL_STANDINGS: Standings = {
+  pages: 1063,
+  runs: [
+    rows([
+      [1, null, "Unkillable FC", "Ha-eun Seo", "Faker", 112, 341],
+      [2, 3, "Bang Bang Bot", "Marco Ruiz", "Ruler", 121, 338],
+      [3, -1, "Faker's Fan Club", "Yuna Choi", "Faker", 88, 336],
+      [4, -1, "Showmaker's Shadow", "Ben Price", "ShowMaker", 94, 333],
+      [5, 2, "GenG Got Game", "Kenji Sato", "Chovy", 109, 331],
+      [6, null, "Faker Ate My Homework", "Ollie Dunn", "Faker", 97, 329],
+      [7, -2, "Viper's Nest", "Mina Lee", "Viper", 80, 327],
+    ]),
+    rows([
+      [MY_OVERALL.rank - 2, 6880, "Rookie Mistake", "Jon Park", "Bdd", 97, MY_SEASON_TOTAL + 1],
+      [MY_OVERALL.rank - 1, 6901, "Smolder Shoulders", "Aisha Bello", "Aiming", 98, MY_SEASON_TOTAL],
+      me(MY_OVERALL.rank, MY_OVERALL.move, MY_SEASON_TOTAL),
+      [MY_OVERALL.rank + 1, -40, "Doran's Ring Bearer", "Tim Fox", "Doran", 52, MY_SEASON_TOTAL],
+      [MY_OVERALL.rank + 2, 2114, "Moss Rock", "Ivy Moss", "Chovy", 61, MY_SEASON_TOTAL - 1],
+    ]),
+  ],
+};
+
 const OVERALL: LeagueView = {
   kind: "overall",
   id: "overall",
@@ -123,29 +151,11 @@ const OVERALL: LeagueView = {
   season: CUP,
   week: WEEK,
   carryShown: true,
-  openTab: COMPETITION.seasonTab,
+  openTab: THIS_SPLIT,
+  openGroup: "Legend",
   tables: {
-    [COMPETITION.seasonTab]: {
-      pages: 1063,
-      runs: [
-        rows([
-          [1, null, "Unkillable FC", "Ha-eun Seo", "Faker", 112, 341],
-          [2, 3, "Bang Bang Bot", "Marco Ruiz", "Ruler", 121, 338],
-          [3, -1, "Faker's Fan Club", "Yuna Choi", "Faker", 88, 336],
-          [4, -1, "Showmaker's Shadow", "Ben Price", "ShowMaker", 94, 333],
-          [5, 2, "GenG Got Game", "Kenji Sato", "Chovy", 109, 331],
-          [6, null, "Faker Ate My Homework", "Ollie Dunn", "Faker", 97, 329],
-          [7, -2, "Viper's Nest", "Mina Lee", "Viper", 80, 327],
-        ]),
-        rows([
-          [MY_OVERALL.rank - 2, 6880, "Rookie Mistake", "Jon Park", "Bdd", 97, MY_SEASON_TOTAL + 1],
-          [MY_OVERALL.rank - 1, 6901, "Smolder Shoulders", "Aisha Bello", "Aiming", 98, MY_SEASON_TOTAL],
-          me(MY_OVERALL.rank, MY_OVERALL.move, MY_SEASON_TOTAL),
-          [MY_OVERALL.rank + 1, -40, "Doran's Ring Bearer", "Tim Fox", "Doran", 52, MY_SEASON_TOTAL],
-          [MY_OVERALL.rank + 2, 2114, "Moss Rock", "Ivy Moss", "Chovy", 61, MY_SEASON_TOTAL - 1],
-        ]),
-      ],
-    },
+    [COMPETITION.seasonTab]: OVERALL_STANDINGS,
+    [THIS_SPLIT]: OVERALL_STANDINGS,
   },
 };
 
@@ -164,10 +174,13 @@ export const PRIVATE_LEAGUE_CAP = 25;
 /** The longest league name, as the Create sheet counts it (create.html, `11 / 30`). */
 export const LEAGUE_NAME_MAX = 30;
 
+/** Week 4's first series, whose day its scoring starts on. */
+const WEEK4_FIRST = seriesById(WEEK4_SERIES, "w4-wed-1");
+
 /** This week on, this week first: scoring can start no earlier (spec/08). Week 5's day is made up. */
 export const SCORING_WEEKS: ScoringWeeks = [
   { week: WEEK, starts: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.date}` },
-  { week: WEEK + 1, starts: `${WEEK4_SERIES[0]?.day} ${WEEK4_SERIES[0]?.date}` },
+  { week: WEEK + 1, starts: `${WEEK4_FIRST.day} ${WEEK4_FIRST.date}` },
   { week: WEEK + 2, starts: "Wed 27 Jan" },
 ];
 

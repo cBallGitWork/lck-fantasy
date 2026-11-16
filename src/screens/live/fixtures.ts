@@ -4,6 +4,7 @@
 import {
   BEST_OF,
   COMPETITION,
+  finalPickOf,
   LIVE_SERIES_ID,
   MY_WEEK3,
   playerId,
@@ -11,7 +12,6 @@ import {
   POINTS_WEEK,
   WEEK3_FINAL,
   WEEK3_SERIES_AT_POINTS,
-  WEEK3_FINAL_SQUAD,
   WEEK3_SERIES_FINAL,
   type PointsPick,
   type Series,
@@ -56,7 +56,11 @@ const WEEK_POINTS: Record<"live" | "down" | "idle", Readonly<Record<string, numb
 /** The live game's K/D/A, per player in it. */
 const LIVE_KDA: Record<string, string> = { faker: "3/0/2", siwoo: "1/0/1" };
 /** The finished T1 2–0 DK from the shared squad: each player's games, and a coach's series result. */
-const finalIn = (p: PointsPick) => WEEK3_FINAL_SQUAD.find((f) => f.name === p.name)?.series.find((s) => s.id === LIVE_SERIES.id);
+const finalIn = (p: PointsPick) => {
+  const series = finalPickOf(p.name).series.find((s) => s.id === LIVE_SERIES.id);
+  if (!series) throw new Error(`${p.name} has no final ${LIVE_SERIES.id}`);
+  return series;
+};
 
 const points = (moment: keyof typeof WEEK_POINTS, p: PointsPick) => {
   const week = WEEK_POINTS[moment][playerId(p.name)];
@@ -74,7 +78,7 @@ const downPlayers: PanelPlayer[] = starters
   .map((p) => ({ ...base(p), games: liveGames(p).map(() => null), points: points("down", p) }));
 const finalPlayers: PanelPlayer[] = starters
   .filter(playsIn)
-  .map((p) => ({ ...base(p), games: finalIn(p)?.games ?? [], won: finalIn(p)?.coachResult, points: points("idle", p) }));
+  .map((p) => ({ ...base(p), games: finalIn(p).games, won: finalIn(p).coachResult, points: points("idle", p) }));
 
 const bug = (s: Series) => {
   if (!s.score) throw new Error(`Series ${s.id} has no score`);

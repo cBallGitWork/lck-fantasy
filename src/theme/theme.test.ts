@@ -118,23 +118,22 @@ test.each([
   expect(contrast(color[fg], color[bg])).toBeGreaterThanOrEqual(4.5);
 });
 
-/** The colour token a rule in a stylesheet draws a property with: `border: … var(--mid)` gives `mid`. */
-function tokenIn(css: string, selector: string, property: string): keyof typeof color {
+/** The colour a rule in a stylesheet draws a property with, from its token: `border: … var(--mid)` gives mid's hex. */
+function colourIn(css: string, selector: string, property: string): string {
   const body = css.match(new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\{([^}]*)\\}`))?.[1] ?? "";
-  const value = body.match(new RegExp(`(?:^|;|\\s)${property}:([^;]*)`))?.[1] ?? "";
-  const name = value.match(/var\(--([\w-]+)\)\s*$/)?.[1] ?? "";
-  const key = Object.keys(color).find((k) => k.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`) === name);
-  if (!key) throw new Error(`${selector} draws no colour token for ${property}`);
-  return key as keyof typeof color;
+  const name = body.match(new RegExp(`(?:^|;|\\s)${property}:[^;]*(var\\(--[\\w-]+\\))\\s*;`))?.[1]?.slice(4, -1);
+  const value = themeVars().find(([token]) => token === name)?.[1];
+  if (!value) throw new Error(`${selector} draws no colour token for ${property}`);
+  return value;
 }
 
 test("a search field's edge reads at 3:1 or more on its ground (WCAG 1.4.11)", () => {
-  expect(contrast(color[tokenIn(BASE, 'input[type="search"]', "border")], color.paper)).toBeGreaterThanOrEqual(3);
+  expect(contrast(colourIn(BASE, 'input[type="search"]', "border"), color.paper)).toBeGreaterThanOrEqual(3);
 });
 
 test("a dimmed tile's team code stays at 4.5:1 or more, and only the shirt's drawing dims (WCAG 1.4.3)", () => {
   const tile = code(join(SRC, "rift", "Tile.css"));
-  expect(contrast(color[tokenIn(tile, ".tile--dim .shirt__code", "color")], color.paper)).toBeGreaterThanOrEqual(4.5);
+  expect(contrast(colourIn(tile, ".tile--dim .shirt__code", "color"), color.paper)).toBeGreaterThanOrEqual(4.5);
   expect(tile).toContain(".tile--dim .shirt__svg {\n  opacity: var(--opacity-dim);");
   expect(tile).not.toMatch(/\.tile--dim \.shirt\s*\{/);
 });

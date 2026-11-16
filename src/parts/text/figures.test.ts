@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { bestOf, count, eok, eokToWon, inOut, MINUS, NONE, oneDecimal, ordinal, outcome, pct, perGame, perGameValue, placeOf, result, score, signed } from "..";
+import { bestOf, count, money, mToWon, inOut, MINUS, NONE, oneDecimal, ordinal, outcome, pct, perGame, perGameValue, placeOf, result, score, signed } from "..";
 
 test("a count marks its thousands", () => {
   expect([0, 999, 1204, 48211].map(count)).toEqual(["0", "999", "1,204", "48,211"]);
@@ -39,6 +39,6 @@ test("a place alone or among so many", () => {
 });
 
 test("a price held in m reads as money and as won", () => {
-  expect(eok(18.5)).toBe("₩18.5m");
-  expect(eokToWon(7.5)).toBe(750_000_000);
+  expect(money(18.5)).toBe("₩18.5m");
+  expect(mToWon(7.5)).toBe(7_500_000);
 });

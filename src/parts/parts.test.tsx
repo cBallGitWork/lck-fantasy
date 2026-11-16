@@ -56,7 +56,7 @@ test("page head shows title, hangul, week, key figure, tags and up to three figu
     <PageHead
       title={MANAGER.team}
       hangul={MANAGER.hangul}
-      week={{ label: "LCK Cup · Week 3", prev: { to: "/points" } }}
+      week={{ label: "Split 1 · Week 3", prev: { to: "/points" } }}
       figure={94}
       tags={<Tag kind="notFinal">Not final</Tag>}
       figures={[
@@ -66,7 +66,7 @@ test("page head shows title, hangul, week, key figure, tags and up to three figu
     />
   );
   const out = text(head);
-  for (const part of ["Baron Steal FC", "바론 스틸 FC", "LCK Cup · Week 3", "94", "Not final", "Average 74", "Highest 131›"]) {
+  for (const part of ["Baron Steal FC", "바론 스틸 FC", "Split 1 · Week 3", "94", "Not final", "Average 74", "Highest 131›"]) {
     expect(out).toContain(part);
   }
   const four = [1, 2, 3, 4].map((n) => ({ label: `F${n}`, value: n }));

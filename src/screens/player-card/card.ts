@@ -76,7 +76,7 @@ export interface HistoryRow {
   score: Score;
   games: number;
   kda: string;
-  priceEok: number;
+  priceM: number;
   points: number;
 }
 
@@ -119,7 +119,7 @@ export interface PlayerCardData {
   /** An admin's news line, shown as a bar over the card. */
   news?: string;
   season: { points: number; place: number; field: string; games: number; lines: SeasonLine[] };
-  priceEok: number;
+  priceM: number;
   /** The last move, in m. */
   priceMove: number;
   form: number;

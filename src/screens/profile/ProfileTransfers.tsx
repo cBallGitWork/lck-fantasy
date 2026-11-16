@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { eok, GoLink, signed, Time } from "../../parts";
+import { money, GoLink, signed, Time } from "../../parts";
 import { cardGo } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { Transfer, TransferWeek } from "./fixtures";
@@ -61,7 +61,7 @@ function SwapRow({ swap }: { swap: Transfer }) {
       <td>
         <GoLink go={cardGo(swap.out.id, coach)}>{swap.out.name}</GoLink>{" "}
         <small>
-          {swap.out.team} · {eok(swap.out.priceEok)}
+          {swap.out.team} · {money(swap.out.priceM)}
         </small>
       </td>
       <td>→</td>
@@ -70,7 +70,7 @@ function SwapRow({ swap }: { swap: Transfer }) {
           {swap.in.name}
         </GoLink>{" "}
         <small>
-          {swap.in.team} · {eok(swap.in.priceEok)}
+          {swap.in.team} · {money(swap.in.priceM)}
         </small>
       </td>
       <td />

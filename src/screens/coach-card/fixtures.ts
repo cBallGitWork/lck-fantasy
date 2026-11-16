@@ -1,10 +1,10 @@
-// kkOma's card on the made-up LCK Cup (docs/design/approved/coach-card/coach.html), at the two
+// kkOma's card on the made-up Split 1 (docs/design/approved/coach-card/coach.html), at the two
 // moments the picture draws: from Pick Team (Week 4, Tuesday) and from Points (Week 3 Saturday,
 // T1 v DK game 2 live). This week's series and points come from the shared Week 3 (week3.ts).
-import { hangulOf, ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
+import { hangulOf, ROSTERS, T1_PRICES_M } from "../../fixtures/rosters";
 import { fromSide, seriesById } from "../../fixtures/series";
 import { KKOMA_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
-import { BEST_OF, MY_PLAYERS, pickedAt, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
+import { BEST_OF, COMPETITION_TITLE, MY_PLAYERS, pickedAt, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS } from "../../fixtures/week3";
 import { bestOf, type StripNext, type StripPast, sum } from "../../parts";
 import type { RoleKey } from "../../rift";
 import type { CoachCardData, CoachWeek, FixtureRow, RosterRow, SeasonLine, WeekGame, WeekSeries } from "./types";
@@ -14,10 +14,10 @@ const HEAD = { team: "T1", name: "kkOma", hangul: hangulOf("kkOma"), legal: "Kim
 /** T1's player in roster place `i`, from the shared roster, with his price, points and owned % from Stats. */
 function t1Player(role: RoleKey, i: number): RosterRow {
   const name = ROSTERS.T1[i]?.[0];
-  const priceEok = T1_PRICES_EOK[i];
-  if (name === undefined || priceEok === undefined) throw new Error(`T1 has no rostered player ${i}`);
+  const priceM = T1_PRICES_M[i];
+  if (name === undefined || priceM === undefined) throw new Error(`T1 has no rostered player ${i}`);
   const { points, ownedPct } = statsOf(name);
-  return { role, name, priceEok, points, ownedPct, mine: MY_PLAYERS.has(name) || undefined };
+  return { role, name, priceM, points, ownedPct, mine: MY_PLAYERS.has(name) || undefined };
 }
 
 /** The series line's points (spec/05), held per competition. */
@@ -96,8 +96,8 @@ const lines = (counts: [number, number][]): SeasonLine[] =>
 export const FROM_PICK_TEAM: CoachCardData = {
   head: HEAD,
   meta: {
-    priceEok: AT_PICK_TEAM.priceEok,
-    moveEok: KKOMA_SEASON.riseEok,
+    priceM: AT_PICK_TEAM.priceM,
+    moveM: KKOMA_SEASON.riseM,
     form: AT_PICK_TEAM.form,
     formRank: 1,
     ownedPct: statsOf(HEAD.name).ownedPct,
@@ -116,11 +116,11 @@ export const FROM_PICK_TEAM: CoachCardData = {
   next: NEXT,
   fixtures: FIXTURES,
   history: {
-    competition: "LCK Cup 2027",
+    competition: COMPETITION_TITLE,
     rows: playedBy(KKOMA_SEASON).map(({ week, day, opponent, score, games, points, id }, i) => {
-      const priceEok = HISTORY_PRICES[i];
-      if (priceEok === undefined) throw new Error(`${HEAD.name} has no price for ${id}`);
-      return { week, day, opponent, score, games, priceEok, points };
+      const priceM = HISTORY_PRICES[i];
+      if (priceM === undefined) throw new Error(`${HEAD.name} has no price for ${id}`);
+      return { week, day, opponent, score, games, priceM, points };
     }),
     past: [
       { season: "LCK 2026", games: 98, points: 284 },
@@ -139,7 +139,7 @@ export const FROM_PICK_TEAM: CoachCardData = {
 /** Opened from Points: Week 3 Saturday, T1 v DK game 2 live. This week is the drawn tab. */
 export const FROM_POINTS: CoachCardData = {
   head: HEAD,
-  meta: { priceEok: 7.0, moveEok: 0.5, form: 5.5, formRank: 2, ownedPct: statsOf(HEAD.name).ownedPct, ownedRank: 2, transfersIn: 204, transfersOut: 58 },
+  meta: { priceM: 7.0, moveM: 0.5, form: 5.5, formRank: 2, ownedPct: statsOf(HEAD.name).ownedPct, ownedRank: 2, transfersIn: 204, transfersOut: 58 },
   season: {
     points: 11,
     rank: 3,

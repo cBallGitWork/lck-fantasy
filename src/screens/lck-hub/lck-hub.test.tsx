@@ -21,7 +21,7 @@ function expectInOrder(out: string, parts: string[]) {
   }
 }
 
-const HEAD = ["LCK Cup 2027", "LCK 컵", "Deadline", "Wed 07:45", "16:45 KST", "9h 45m"];
+const HEAD = ["Split 1 2027", "스플릿 1", "Deadline", "Wed 07:45", "16:45 KST", "9h 45m"];
 const TABS = ["Fixtures", "Results", "Standings", "Teams"];
 const STAGES = ["Groups", "Play-In", "Playoffs"];
 const NEWS = [

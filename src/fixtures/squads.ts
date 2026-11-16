@@ -163,15 +163,15 @@ export interface PickTeamPick {
   name: string;
   team: TeamCode;
   role: PersonRole;
-  priceEok: number;
+  priceM: number;
   form: number;
   mark?: Mark;
   news?: string;
 }
 
-const priced = (pick: Omit<PickTeamPick, "priceEok" | "form">): PickTeamPick => {
+const priced = (pick: Omit<PickTeamPick, "priceM" | "form">): PickTeamPick => {
   const stats = statsOf(pick.name);
-  return { ...pick, priceEok: stats.priceEok, form: formOf(stats.points) };
+  return { ...pick, priceM: stats.priceM, form: formOf(stats.points) };
 };
 
 /** Baron Steal FC at the Pick Team picture's moment (pick.html): prices and form are Stats'. */
@@ -185,7 +185,7 @@ export const PICK_TEAM_SQUAD: PickTeamPick[] = ([
   { slot: "coach", name: "kkOma", team: "T1", role: "coach" },
   { slot: "bench1", name: "Bdd", team: "KT", role: "mid" },
   { slot: "bench2", name: "Cuzz", team: "KT", role: "jng" },
-] satisfies Omit<PickTeamPick, "priceEok" | "form">[]).map(priced);
+] satisfies Omit<PickTeamPick, "priceM" | "form">[]).map(priced);
 
 /** A Pick Team squad member by name; a missing one is a broken fixture. */
 export function pickedAt(name: string): PickTeamPick {

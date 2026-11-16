@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { cx, eok, selectable } from "../../parts";
+import { cx, money, selectable } from "../../parts";
 import { ROLE_PLURAL, searchGroups } from "./rules";
 import type { ComparePlayer, SearchRow } from "./fixtures";
 
@@ -56,7 +56,7 @@ export function PickSecond({
                   <tr key={row.name} className={cx(pick && "compare__result--pick")} {...selectable(pick)}>
                     <td className="compare__result-name">{row.name}</td>
                     <td className="quiet">{row.team}</td>
-                    <td className="compare__result-price">{eok(row.priceEok)}</td>
+                    <td className="compare__result-price">{money(row.priceM)}</td>
                     <td className="compare__result-points">{row.points}</td>
                   </tr>
                 );

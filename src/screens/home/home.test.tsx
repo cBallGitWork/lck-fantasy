@@ -16,7 +16,7 @@ function expectInOrder(out: string, pieces: string[]) {
 }
 
 const HEAD = ["Baron Steal FC", "바론 스틸 FC", "Emerald I", "에메랄드 1", "48,211", "6,904", "Badge"];
-const deadline = (d: string, h: string, m: string) => ["Week 4 deadline", "LCK Cup", `${d}d${h}h${m}m`, "Wed 07:45", "16:45 KST", "Pick Team", "Transfers", "2 free transfers"];
+const deadline = (d: string, h: string, m: string) => ["Week 4 deadline", "Split 1", `${d}d${h}h${m}m`, "Wed 07:45", "16:45 KST", "Pick Team", "Transfers", "2 free transfers"];
 const BAND = [
   "Following",
   "Minji · GEN v HLE",
@@ -60,7 +60,7 @@ describe("live", () => {
       ...deadline("3", "19", "35"),
       "Live",
       "T1 1–0 DK",
-      "Game 2 · Bo3 · LCK Cup Week 3",
+      "Game 2 · Bo3 · Split 1 Week 3",
       "Live ›",
       "LCK · English · Twitch",
       ...["LCK · English", "Twitch", "LCK · English", "YouTube", "LCK · 한국어", "YouTube", "Caedrel · English", "Twitch", "Kameto · Français", "Twitch", "More ▾"],

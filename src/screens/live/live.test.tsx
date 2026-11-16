@@ -35,7 +35,7 @@ describe("a series live", () => {
     inOrder(out, [
       "Live",
       "stream",
-      "T1", "1–0", "DK", "Live", "Game 2", "Bo3 · LCK Cup Week 3",
+      "T1", "1–0", "DK", "Live", "Game 2", "Bo3 · Split 1 Week 3",
       ...CHIPS,
       "Your week", "Not final", "94", "Average 74", "Highest 121›",
       "T1 v DK",
@@ -86,8 +86,8 @@ describe("nothing live", () => {
 
   test("shows the next series and its countdown, the last series final, and the week final", () => {
     inOrder(out, [
-      "Next · Sunday · LCK Cup Week 3 · Bo3", "KRXvBRO", "08:00", "17:00 KST", "1h20m",
-      "T1", "2–0", "DK", "Final", "Last series", "Saturday · Bo3 · LCK Cup Week 3",
+      "Next · Sunday · Split 1 Week 3 · Bo3", "KRXvBRO", "08:00", "17:00 KST", "1h20m",
+      "T1", "2–0", "DK", "Final", "Last series", "Saturday · Bo3 · Split 1 Week 3",
       ...CHIPS,
       "Your week", "109", "Average 79", "Highest 128›",
       "T1 v DK",

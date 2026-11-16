@@ -53,7 +53,7 @@ What shows a fact: tags, tables, lists, crests, states.
 
 How figures and money are written.
 
-- `money.ts`: an amount as ₩ and m (`eok` for a price held in m, `eokToWon`) (spec/02).
+- `money.ts`: money as ₩ and m (spec/02): `formatWon` for an amount in won, `money` for a price held in m, `mToWon` between them.
 - `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`, `seriesResult` for a week's series), per-game and one-decimal figures, per cents, `Bo3` and absence (`—`), written one way everywhere.
 
 ## util/

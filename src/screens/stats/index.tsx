@@ -5,7 +5,7 @@ import { SPANS, STATS_BY_SPAN } from "./fixtures";
 import { nextView, START_VIEW } from "./stats";
 import { StatsPage } from "./StatsPage";
 
-/** Stats on the made-up LCK Cup Week 3 list, until the backend feeds it. `?state=pergame` or `coaches` opens those pictures, in dev. */
+/** Stats on the made-up Split 1 Week 3 list, until the backend feeds it. `?state=pergame` or `coaches` opens those pictures, in dev. */
 export function StatsScreen() {
   const devView = useDevState({ pergame: nextView(START_VIEW, { figures: "Per game" }), coaches: nextView(START_VIEW, { tab: "Coaches" }) });
   const [view, setView] = useState(devView ?? START_VIEW);

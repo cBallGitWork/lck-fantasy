@@ -1,4 +1,4 @@
-import { cx, Empty, formatEok, GoLink, Menu, pct, SideSection } from "../../parts";
+import { cx, Empty, formatWon, GoLink, Menu, pct, SideSection } from "../../parts";
 import { cardGo } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon } from "../../rift";
 import { listRows, nextAgainst, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
@@ -102,7 +102,7 @@ function ListRow({ p, next, onBuy }: { p: ListPlayer; next: string; onBuy: (p: L
           <b>{p.name}</b> {p.team}
         </GoLink>
       </td>
-      <td className="transfers__num num">{formatEok(p.price)}</td>
+      <td className="transfers__num num">{formatWon(p.price)}</td>
       <td className="transfers__num num">{p.points}</td>
       <td className="transfers__num num">{pct(p.ownedPct)}</td>
       <td className="transfers__next">{next}</td>

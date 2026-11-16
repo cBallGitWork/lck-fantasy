@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { hangulOf, ROSTERS, T1_PRICES_EOK } from "./rosters";
+import { hangulOf, ROSTERS, T1_PRICES_M } from "./rosters";
 import { fromSide, seriesById, seriesOf } from "./series";
 import { OFF_PAGE_PLAYERS, STATS_PLAYERS } from "./players";
 import { TEAMS, WEEK3_SERIES_FINAL } from "./week3";
@@ -8,7 +8,7 @@ test("every LCK team has six on its roster, and a rostered name gives its hangul
   for (const team of Object.keys(TEAMS) as (keyof typeof TEAMS)[]) expect(ROSTERS[team], team).toHaveLength(6);
   expect(hangulOf("Faker")).toBe("이상혁");
   expect(() => hangulOf("Nobody")).toThrow("Nobody is on no LCK roster");
-  expect(T1_PRICES_EOK).toHaveLength(ROSTERS.T1.length);
+  expect(T1_PRICES_M).toHaveLength(ROSTERS.T1.length);
 });
 
 test("a series is found by id and read from either team's side", () => {

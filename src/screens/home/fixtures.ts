@@ -1,4 +1,4 @@
-// Home's made-up data: the approved picture's own LCK Cup Week 3 (docs/design/approved/home/),
+// Home's made-up data: the approved picture's own Split 1 Week 3 (docs/design/approved/home/),
 // built on the shared Week 3 (src/fixtures/week3.ts). Every name and number is an example.
 
 import {

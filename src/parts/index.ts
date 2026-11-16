@@ -31,7 +31,7 @@ export {
   signed,
   type Score,
 } from "./text/figures";
-export { eok, eokToWon, formatEok, WON_PER_EOK } from "./text/money";
+export { money, mToWon, formatWon, WON_PER_M } from "./text/money";
 export { PriceMove, RankMove } from "./display/Move";
 export { OutlinedKey } from "./controls/OutlinedKey";
 export { PageFrame } from "./frame/PageFrame";

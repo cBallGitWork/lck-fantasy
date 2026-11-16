@@ -65,7 +65,7 @@ interface Bug {
   away: TeamCode;
   score: Score;
   format: string;
-  /** `LCK Cup Week 3`. */
+  /** `Split 1 Week 3`. */
   stage: string;
 }
 

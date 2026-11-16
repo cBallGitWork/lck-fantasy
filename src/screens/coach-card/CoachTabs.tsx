@@ -1,6 +1,6 @@
 // The coach card's tabs: This week, Fixtures, History and Roster (coach.html; Fixtures as the player card's).
 import { Fragment } from "react";
-import { eok, MeDot, NONE, pct, perGame, result, seriesResult, signed, Table } from "../../parts";
+import { money, MeDot, NONE, pct, perGame, result, seriesResult, signed, Table } from "../../parts";
 import { ROLE_NAME } from "../../rift";
 import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, RosterRow, WeekSeries } from "./types";
 
@@ -109,7 +109,7 @@ export function CoachHistoryTab({ history, shown, team }: { history: CoachHistor
           { key: "week", head: "Week", width: "goCol", cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
           { key: "series", head: "Series", cell: (r) => `${r.day} · ${result(r.score)} ${r.opponent}` },
           { key: "games", head: "Games", figure: true, cell: (r) => r.games },
-          { key: "price", head: "Price", figure: true, cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{eok(r.priceEok)}</span> : "") },
+          { key: "price", head: "Price", figure: true, cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{money(r.priceM)}</span> : "") },
           { key: "pts", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },
           { key: "weekPts", head: "Week", figure: true, cell: (r) => (firstOfWeek(shown, r) ? <b>{weekTotal(r.week)}</b> : "") },
         ]}
@@ -152,7 +152,7 @@ export function CoachRoster({ rows }: { rows: RosterRow[] }) {
               </>
             ),
           },
-          { key: "price", head: "Price", figure: true, cell: (r) => eok(r.priceEok) },
+          { key: "price", head: "Price", figure: true, cell: (r) => money(r.priceM) },
           { key: "season", head: "Season", figure: true, cell: (r) => <b>{r.points}</b> },
           { key: "owned", head: "Owned", figure: true, cell: (r) => <span className="coach-card__soft">{pct(r.ownedPct)}</span> },
         ]}

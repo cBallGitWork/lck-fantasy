@@ -1,4 +1,4 @@
-// T1's made-up LCK Cup at Week 4's Tuesday, Weeks 1 to 3 final (src/fixtures/weeks.ts), and the season figures of Faker and
+// T1's made-up Split 1 at Week 4's Tuesday, Weeks 1 to 3 final (src/fixtures/weeks.ts), and the season figures of Faker and
 // kkOma, as their cards and Compare share them. Every number is an example.
 
 import type { Score } from "../parts";
@@ -85,7 +85,7 @@ export interface T1MemberSeason {
   place: number;
   of: number;
   /** This week's price rise in m. */
-  riseEok: number;
+  riseM: number;
   /** His points in each of T1's series, in T1_PLAYED's order (newest first). */
   points: readonly number[];
   lines: readonly SeasonLine[];
@@ -96,7 +96,7 @@ export const FAKER_SEASON: T1MemberSeason = {
   games: gamesOf(T1),
   place: 2,
   of: 10,
-  riseEok: 0.5,
+  riseM: 0.5,
   points: [10, 12, 10, 12, 11, 3],
   lines: [
     { line: "Kills", total: 73, points: 22 },
@@ -116,7 +116,7 @@ export const KKOMA_SEASON: T1MemberSeason = {
   games: gamesOf(T1),
   place: 1,
   of: 10,
-  riseEok: 0.5,
+  riseM: 0.5,
   points: [8, 8, 4, 4, 3, 0],
   lines: [
     { line: "First tower", total: 8, points: 6 },

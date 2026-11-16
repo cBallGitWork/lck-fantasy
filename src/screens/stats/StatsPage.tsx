@@ -1,6 +1,6 @@
 import type { ChangeEvent, ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
-import { cx, eok, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, Tabs, ViewToggle, type Column } from "../../parts";
+import { cx, money, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, Tabs, ViewToggle, type Column } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import {
@@ -95,7 +95,7 @@ function Controls({ view, rows, spans, onChange }: Omit<StatsPageProps, "account
       <Select
         label="Max price"
         value={view.maxPrice === null ? ALL : String(view.maxPrice)}
-        options={[{ value: ALL, label: "Any" }, ...priceChoices(rows).map((p) => ({ value: String(p), label: eok(p) }))]}
+        options={[{ value: ALL, label: "Any" }, ...priceChoices(rows).map((p) => ({ value: String(p), label: money(p) }))]}
         onChange={(price) => onChange({ maxPrice: price === ALL ? null : Number(price) })}
       />
       <Select label="Span" value={view.span} options={spans} onChange={(span) => onChange({ span })} />
@@ -148,11 +148,11 @@ function Count({ n, games, figures }: { n: number; games: number; figures: Figur
   return <span className={cx(n === 0 && "stats__zero")}>{figures === "Per game" ? perGame(n, games) : n}</span>;
 }
 
-function Move({ moveEok }: { moveEok: number }) {
-  if (moveEok === 0) return null;
+function Move({ moveM }: { moveM: number }) {
+  if (moveM === 0) return null;
   return (
     <span className="stats__move">
-      <PriceMove eok={moveEok} />
+      <PriceMove money={moveM} />
     </span>
   );
 }
@@ -180,8 +180,8 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
       cell: (r) => <Lead row={r} />,
       fullText: (r) => r.name,
     },
-    sortable("priceEok", "Price", (r) => eok(r.priceEok)),
-    { key: "move", head: "", cell: (r) => <Move moveEok={r.moveEok} /> },
+    sortable("priceM", "Price", (r) => money(r.priceM)),
+    { key: "move", head: "", cell: (r) => <Move moveM={r.moveM} /> },
     sortable("form", "Form", (r) => oneDecimal(r.form)),
     sortable("ownedPct", "Owned", (r) => pct(r.ownedPct)),
     sortable("points", "Pts", (r) => <Count n={r.points} games={r.games} figures={view.figures} />),

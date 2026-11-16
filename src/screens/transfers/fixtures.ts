@@ -19,7 +19,7 @@ import {
   WEEK4_SERIES,
   type TeamCode,
 } from "../../fixtures/week3";
-import { eokToWon } from "../../parts";
+import { mToWon } from "../../parts";
 import type { Confirm, Fixture, ListPlayer, Plan, SquadPlayer, TransferRules } from "./plan";
 import type { TransfersPageProps } from "./TransfersPage";
 
@@ -41,7 +41,7 @@ export const SQUAD: SquadPlayer[] = PICK_TEAM_SQUAD.map((p) => ({
   name: p.name,
   team: p.team,
   role: p.role,
-  price: eokToWon(p.priceEok),
+  price: mToWon(p.priceM),
   weekPoints: rawWeekOf(finalPickOf(p.name)),
   form: p.form,
   points: statsOf(p.name).points,
@@ -50,12 +50,12 @@ export const SQUAD: SquadPlayer[] = PICK_TEAM_SQUAD.map((p) => ({
 }));
 
 /** A made-up list player; his form and last week's points follow from his season points. */
-const player = (role: ListPlayer["role"], name: string, team: TeamCode, priceEok: number, points: number, ownedPct: number): ListPlayer => ({
+const player = (role: ListPlayer["role"], name: string, team: TeamCode, priceM: number, points: number, ownedPct: number): ListPlayer => ({
   id: playerId(name),
   name,
   team,
   role,
-  price: eokToWon(priceEok),
+  price: mToWon(priceM),
   weekPoints: Math.round(points / 3),
   form: Math.round((points / 3) * 10) / 10,
   points,
@@ -65,7 +65,7 @@ const player = (role: ListPlayer["role"], name: string, team: TeamCode, priceEok
 /** A player in Stats' list, with its price, season points and owned %. */
 const listed = (name: string) => {
   const p = statsOf(name);
-  return player(p.role, p.name, p.team, p.priceEok, p.points, p.ownedPct);
+  return player(p.role, p.name, p.team, p.priceM, p.points, p.ownedPct);
 };
 
 /** The picture's list (Stats' figures where Stats lists him), and Stats' coaches so the Coach can be sold too. */
@@ -83,7 +83,7 @@ export const PLAYERS: ListPlayer[] = [
   listed("Clozer"),
   listed("Pollu"),
   ...STATS_PLAYERS.filter((p) => p.role === "coach" && !SQUAD.some((s) => s.name === p.name)).map((p) =>
-    player("coach", p.name, p.team, p.priceEok, p.points, p.ownedPct),
+    player("coach", p.name, p.team, p.priceM, p.points, p.ownedPct),
   ),
 ];
 
@@ -105,7 +105,7 @@ export const CONFIRMS: Confirm[] = [
 /** Free transfers left: the week's, less every move confirmed so far. */
 const freeLeft = Math.max(0, WEEK4_FREE_TRANSFERS - CONFIRMS.reduce((n, c) => n + c.moves.length, 0));
 
-export const RULES: TransferRules = { freeTransfers: freeLeft, hitPoints: HIT_POINTS, teamCap: TEAM_CAP, bank: eokToWon(0.5) };
+export const RULES: TransferRules = { freeTransfers: freeLeft, hitPoints: HIT_POINTS, teamCap: TEAM_CAP, bank: mToWon(0.5) };
 
 /** Siwoo sold, Kingen in. */
 export const PICTURE_PLAN: Plan = { sold: { flex: PLAYERS.find((p) => p.name === "Kingen") ?? null }, replacing: null };

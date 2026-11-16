@@ -2,7 +2,7 @@
 // (spec/14-following.md, Truck lines). What each trigger means is Craig's answer on issue #90:
 // the week read is the receiver's last final gameweek, and every number is the competition's data
 // (`LineSettings`).
-import { formatEok } from "../../src/parts/text/money";
+import { formatWon } from "../../src/parts/text/money";
 import { isOneOf, PLACEHOLDER_PATTERN, PLACEHOLDERS, type Placeholder, type TruckKind, type TruckLine, type Trigger } from "./lines";
 
 export interface LineSettings {
@@ -137,7 +137,7 @@ function placeholderValue(
       return week ? String(week.benchPoints) : undefined;
     case "price": {
       const player = week && flop(week, settings);
-      return player ? formatEok(player.price).toUpperCase() : undefined;
+      return player ? formatWon(player.price).toUpperCase() : undefined;
     }
     case "points":
       return week ? String(week.points) : undefined;

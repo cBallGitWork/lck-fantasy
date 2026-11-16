@@ -214,7 +214,7 @@ describe("the controls work on the list", () => {
     expect(list({ team: "T1" }).slice(0, 5)).toEqual(["Faker", "Peyz", "Keria", "Doran", "Oner"]);
     const upTo12 = listRows(SEASON_PLAYERS, { ...START_VIEW, maxPrice: 12 });
     expect(upTo12.length).toBeGreaterThan(0);
-    expect(upTo12.every((r) => r.priceEok <= 12)).toBe(true);
+    expect(upTo12.every((r) => r.priceM <= 12)).toBe(true);
     expect(list({ search: "  fAk " })).toEqual(["Faker"]);
     expect(priceChoices(SEASON_PLAYERS)[0]).toBe(18.5);
   });

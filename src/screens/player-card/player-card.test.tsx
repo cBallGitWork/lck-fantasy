@@ -36,7 +36,7 @@ describe("History, opened from Pick Team", () => {
       ...PICK_TEAM_META,
       ...PICK_TEAM_STRIP,
       ...TABS,
-      "LCK Cup 2027",
+      "Split 1 2027",
       "Week", "Series", "Games", "K / D / A", "Price", "Pts", "Week",
       "2", "Wed · W 2–0 DNS", "14/4/16", "₩18.0m", "12", "22",
       "1", "Sat · W 2–0 NS", "9/3/11", "₩17.5m", "11", "14",

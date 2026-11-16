@@ -19,7 +19,7 @@ export interface PickPlayer {
   name: string;
   team: TeamCode;
   role: PersonRole;
-  priceEok: number;
+  priceM: number;
   /** His last price move in m; absent before it first moves. */
   priceMove?: number;
   form: number;
@@ -46,7 +46,7 @@ export interface PickBuffInfo {
 export interface PickTeamData {
   /** The manager's team name, for the account menu. */
   account: string;
-  /** `LCK Cup Week 4`. */
+  /** `Split 1 Week 4`. */
   week: string;
   players: Record<string, PickPlayer>;
   series: readonly Series[];
@@ -71,7 +71,7 @@ function lastThreeOf(name: string): number[] {
 }
 
 /** Each player's card figures, by name; owned % and season points are Stats'. */
-const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceEok" | "form" | "ownedPct" | "season" | "lastThree">> = {
+const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceM" | "form" | "ownedPct" | "season" | "lastThree">> = {
   Zeus: { formRank: { place: 3, of: "10 tops" }, ownedRank: { place: 4 }, seasonRank: { place: 7 } },
   Canyon: { formRank: { place: 2, of: "10 junglers" }, ownedRank: { place: 5 }, seasonRank: { place: 6 } },
   Faker: { priceMove: 0.5, formRank: { place: 1, of: "10 mids" }, ownedRank: { place: 1 }, seasonRank: { place: 2 } },
@@ -92,7 +92,7 @@ const player = (p: PickTeamPick): PickPlayer => {
   const card = CARDS[p.name];
   if (!card) throw new Error(`No card figures for ${p.name}`);
   const { ownedPct, points } = statsOf(p.name);
-  return { id: playerId(p.name), name: p.name, team: p.team, role: p.role, priceEok: p.priceEok, form: p.form, ownedPct, season: points, lastThree: lastThreeOf(p.name), ...card };
+  return { id: playerId(p.name), name: p.name, team: p.team, role: p.role, priceM: p.priceM, form: p.form, ownedPct, season: points, lastThree: lastThreeOf(p.name), ...card };
 };
 
 export const PICK_TEAM_DATA: PickTeamData = {

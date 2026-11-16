@@ -4,6 +4,7 @@
 import {
   BEST_OF,
   COMPETITION,
+  MY_WEEK3,
   playerId,
   POINTS_SQUAD,
   POINTS_WEEK,
@@ -46,7 +47,7 @@ const liveGames = (p: PointsPick) => p.series.find((s) => s.id === LIVE_SERIES.i
 
 /** Each player's week points at each moment, as the picture gives them. */
 const WEEK_POINTS: Record<"live" | "down" | "idle", Record<string, number>> = {
-  live: { faker: 25, siwoo: 8, kkoma: 10, zeus: 14, canyon: 14, ruler: 14, delight: 9 },
+  live: MY_WEEK3.live,
   down: { faker: 18, siwoo: 5, kkoma: 8, zeus: 14, canyon: 14, ruler: 14, delight: 9 },
   idle: { faker: 33, siwoo: 9, kkoma: 16, zeus: 14, canyon: 14, ruler: 14, delight: 9 },
 };
@@ -83,7 +84,7 @@ const bug = (s: Series) => {
 export const LIVE_NOW: Omit<LiveNowProps, "picker"> = {
   bug: { ...bug(LIVE_SERIES), game: LIVE_SERIES.liveGame ?? 1, format: FORMAT, stage: STAGE },
   panel: {
-    week: { total: 94, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest, notFinal: true },
+    week: { total: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest, notFinal: true },
     series: { home: LIVE_SERIES.home, away: LIVE_SERIES.away },
     players: livePlayers,
     rest: rest("live"),
@@ -115,7 +116,7 @@ export const LIVE_IDLE: Omit<LiveIdleProps, "picker"> = {
   },
   last: { ...bug(LAST_SERIES), day: "Saturday", format: FORMAT, stage: STAGE },
   panel: {
-    week: { total: 109, ...WEEK3_FINAL, notFinal: false },
+    week: { total: MY_WEEK3.finalTotal, ...WEEK3_FINAL, notFinal: false },
     series: { home: LAST_SERIES.home, away: LAST_SERIES.away, score: LAST_SERIES.score },
     players: finalPlayers,
     rest: rest("idle"),

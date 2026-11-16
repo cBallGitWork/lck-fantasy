@@ -4,7 +4,9 @@
 import {
   BEST_OF,
   COMPETITION,
+  livePointsOf,
   MANAGER,
+  MY_WEEK3,
   PICK_TEAM_SQUAD,
   POINTS_WEEK,
   WEEK3_FINAL,
@@ -14,6 +16,7 @@ import {
   type Series,
 } from "../../fixtures/week3";
 import { MANAGERS } from "../../fixtures/managers";
+import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
 import { isBench } from "../../rift";
 import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./types";
@@ -24,7 +27,7 @@ const matchup = (s: Series) => `${s.home} v ${s.away}`;
 const SHARED: Omit<HomeShared, "countdown"> = {
   team: MANAGER.team,
   hangul: MANAGER.hangul,
-  overall: { tier: "Emerald I", hangul: "에메랄드 1", division: "I", rank: 48211, move: 6904 },
+  overall: { tier: MY_OVERALL.tier, hangul: MY_OVERALL.hangul, division: MY_OVERALL.division, rank: MY_OVERALL.rank, move: MY_OVERALL.move },
   deadline: { week: 4, competition: COMPETITION, local: WEEK4_DEADLINE.local, kst: WEEK4_DEADLINE.kst },
   freeTransfers: 1,
   following: [
@@ -33,12 +36,7 @@ const SHARED: Omit<HomeShared, "countdown"> = {
     { kind: "series", id: "jae-w3-fri-2", manager: MANAGERS.jae.first, series: matchup(atPoints("w3-fri-2")), points: 9 },
     { kind: "truck", id: "truck-minji-w3", line: "Sell your bot laner", from: MANAGERS.minji.first, week: 3 },
   ],
-  leagues: [
-    { id: "uk", name: "United Kingdom", kind: "country", rank: 1402, move: 233 },
-    { id: "t1", name: "T1 supporters", kind: "team", rank: 3118, move: 510 },
-    { id: "pub-league", name: "Pub League", kind: "private", rank: 2, move: 1 },
-    { id: "flol-discord", name: "Flol Discord", kind: "private", rank: 14, move: -2 },
-  ],
+  leagues: MY_LEAGUES.map(({ id, name, kind, rank, move }) => ({ id, name, kind, rank, move })),
 };
 
 const live = atPoints("w3-sat-2");
@@ -59,11 +57,11 @@ export const HOME_LIVE: HomeLiveData = {
     { id: "lck-ja-youtube", name: "LCK · 日本語", platform: "YouTube", live: true },
   ],
   pickedStream: "lck-en-twitch",
-  week: { label: "Your week", final: false, points: 94, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
+  week: { label: "Your week", final: false, points: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
   inSeries: [
-    { role: "mid", name: "Faker", team: "T1", mark: "C", stat: "G2 · 3/0/2", points: 25 },
-    { role: "top", name: "Siwoo", team: "DK", stat: "G2 · 0/1/1", points: 8 },
-    { role: "coach", name: "kkOma", team: "T1", stat: "G2", points: 10 },
+    { role: "mid", name: "Faker", team: "T1", mark: "C", stat: "G2 · 3/0/2", points: livePointsOf("faker") },
+    { role: "top", name: "Siwoo", team: "DK", stat: "G2 · 0/1/1", points: livePointsOf("siwoo") },
+    { role: "coach", name: "kkOma", team: "T1", stat: "G2", points: livePointsOf("kkoma") },
   ],
   stillToPlay: [],
 };
@@ -84,7 +82,7 @@ export const HOME_IDLE: HomeIdleData = {
   lineupWeek: 4,
   lineup,
   next: { home: next.home, away: next.away, day: next.day, local: next.local, kst: next.kst, startsIn: { days: 1, hours: 21 } },
-  week: { label: "Week 3", final: true, points: 109, ...WEEK3_FINAL },
+  week: { label: "Week 3", final: true, points: MY_WEEK3.finalTotal, ...WEEK3_FINAL },
   star: { role: "mid", name: "Faker", team: "T1", points: 22 },
   flop: { role: "sup", name: "Delight", team: "HLE", points: 9 },
 };

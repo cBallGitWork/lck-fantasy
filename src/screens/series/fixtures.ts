@@ -5,6 +5,7 @@
 import { BEST_OF, COMPETITION, MY_PLAYERS, playerId, TEAMS, WEEK3_SERIES_FINAL, WEEK4_SERIES, type Series, type TeamCode } from "../../fixtures/week3";
 import { ROSTERS, hangulOf } from "../../fixtures/rosters";
 import { seriesById } from "../../fixtures/series";
+import { recordOf } from "../../fixtures/standings";
 import { bestOf } from "../../parts";
 import { ROLE_KEYS, type RoleKey } from "../../rift";
 import type { CoachCell, GameCell, NextSeries, PlayedSeries, PlayerLine, Roster, SeriesView, SeriesWhen } from "./types";
@@ -49,7 +50,7 @@ const T1_DK_FINAL: PlayedSeries = {
     { winner: "T1", length: "27:10", vod: VOD },
   ],
   home: {
-    ...side("T1", "5–1"),
+    ...side("T1", recordOf("T1")),
     players: [
       player("top", "Doran", [g("K'Sante", "2/1/7", 3), g("Rumble", "3/0/6", 4)], 7),
       player("jng", "Oner", [g("Viego", "3/2/9", 3), g("Xin Zhao", "2/2/8", 3)], 6),
@@ -60,7 +61,7 @@ const T1_DK_FINAL: PlayedSeries = {
     coach: { ...person("kkOma"), games: [c(TOWER_DRAKES, 2), c(TOWER_DRAKES_BARON, 3)], total: 8, result: 3 },
   },
   away: {
-    ...side("DK", "3–3"),
+    ...side("DK", recordOf("DK")),
     players: [
       player("top", "Siwoo", [g("Jax", "2/3/2", 2), g("Gnar", "1/2/3", 2)], 4),
       player("jng", "Lucid", [g("Sejuani", "1/3/4", -1), g("Maokai", "0/5/2", -1)], -2),
@@ -82,7 +83,7 @@ const GEN_HLE_FINAL: PlayedSeries = {
     { winner: "GEN", length: "26:31", vod: VOD },
   ],
   home: {
-    ...side("GEN", "5–1"),
+    ...side("GEN", recordOf("GEN")),
     players: [
       player("top", "Kiin", [g("Rumble", "3/1/5", 3), g("Jax", "0/4/2", -1, false), g("K'Sante", "2/2/7", 2)], 5),
       player("jng", "Canyon", [g("Vi", "2/2/9", 2, false), g("Lee Sin", "3/3/3", 3), g("Xin Zhao", "4/1/10", 4, true, true)], 7),
@@ -93,7 +94,7 @@ const GEN_HLE_FINAL: PlayedSeries = {
     coach: { ...person("Ryu"), games: [c(TOWER_DRAKES_BARON, 3), c([], 0, false), c(TOWER_DRAKES_BARON, 3)], total: 9, result: 3 },
   },
   away: {
-    ...side("HLE", "4–2"),
+    ...side("HLE", recordOf("HLE")),
     players: [
       player("top", "Zeus", [g("Gnar", "2/3/2", 2), g("K'Sante", "4/1/6", 5, true, true), g("Renekton", "2/4/2", 0, false)], 7),
       player("jng", "Kanavi", [g("Xin Zhao", "1/4/3", -1), g("Viego", "4/2/8", 3), g("Maokai", "1/6/3", -2, false)], 2),
@@ -150,8 +151,8 @@ function roster(code: TeamCode, record: string): Roster {
 const HLE_DK_NEXT: NextSeries = {
   id: "w4-wed-1",
   when: when(WEEK4_SERIES, "w4-wed-1", 4),
-  home: roster("HLE", "4–2"),
-  away: roster("DK", "3–3"),
+  home: roster("HLE", recordOf("HLE")),
+  away: roster("DK", recordOf("DK")),
 };
 
 /** Each state the picture folder draws: `1440.png`, `1440-21.png`, `1440-live.png`, `1440-next.png`. */

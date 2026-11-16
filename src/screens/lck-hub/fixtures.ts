@@ -4,19 +4,14 @@
 // Esports' front page until #116 brings its LCK tag page.
 
 import { ROSTERS, T1_PRICES_EOK } from "../../fixtures/rosters";
+import { WEEK3_STANDINGS, type Standing } from "../../fixtures/standings";
 import { BEST_OF, COMPETITION, playerId, WEEK3_SERIES_FINAL, WEEK4_DEADLINE, WEEK4_SERIES, type TeamCode } from "../../fixtures/week3";
 import { eokToWon } from "../../parts";
 import { ROLE_KEYS, type PersonRole } from "../../rift";
 import type { LckHubData, Roster, RosterMember, StandingsRow, TeamRosters } from "./types";
 
-const row = (team: TeamCode, won: number, lost: number, setsWon: number, setsLost: number, last5: string): StandingsRow => ({
-  team,
-  won,
-  lost,
-  setsWon,
-  setsLost,
-  last5: [...last5].map((r) => (r === "W" ? "W" : "L")),
-});
+/** A standing as the table draws it: its last five as results. */
+const row = ({ last5, ...rest }: Standing): StandingsRow => ({ ...rest, last5: [...last5].map((r) => (r === "W" ? "W" : "L")) });
 
 const ROLE_ORDER: readonly PersonRole[] = [...ROLE_KEYS, "coach"];
 
@@ -52,30 +47,7 @@ export const LCK_HUB: LckHubData = {
       results: [{ label: "Week 3", dates: "13–17 Jan", series: WEEK3_SERIES_FINAL }],
       openFixtures: 0,
       openResults: 0,
-      groups: [
-        {
-          name: "Baron group",
-          hangul: "바론 그룹",
-          rows: [
-            row("T1", 5, 1, 11, 4, "WWWWW"),
-            row("DK", 3, 3, 8, 7, "WLWWL"),
-            row("KRX", 3, 3, 7, 8, "LWLWW"),
-            row("NS", 2, 4, 5, 8, "WWLLL"),
-            row("BRO", 1, 5, 4, 11, "WLLLL"),
-          ],
-        },
-        {
-          name: "Elder group",
-          hangul: "장로 그룹",
-          rows: [
-            row("GEN", 5, 1, 11, 5, "LWWWW"),
-            row("HLE", 4, 2, 9, 6, "WWWLL"),
-            row("DNS", 3, 3, 8, 8, "LWLWW"),
-            row("KT", 3, 3, 7, 8, "LWLLW"),
-            row("BFX", 1, 5, 4, 9, "LWLLL"),
-          ],
-        },
-      ],
+      groups: WEEK3_STANDINGS.map((g) => ({ ...g, rows: g.rows.map(row) })),
     },
     { name: "Play-In", fixtures: [], results: [], openFixtures: 0, openResults: 0, groups: [] },
     { name: "Playoffs", fixtures: [], results: [], openFixtures: 0, openResults: 0, groups: [] },

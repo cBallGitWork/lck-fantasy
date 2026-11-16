@@ -1,6 +1,6 @@
 // The LCK teams' rosters as the pictures share them: 2026's, a placeholder until real data. Each in
 // role order, Top to Support then the coach: game name, then hangul.
-import type { TeamCode } from "./week3";
+import type { TeamCode } from "./competition";
 
 export const ROSTERS: Record<TeamCode, readonly (readonly [name: string, hangul: string])[]> = {
   T1: [["Doran", "최현준"], ["Oner", "문현준"], ["Faker", "이상혁"], ["Peyz", "김수환"], ["Keria", "류민석"], ["kkOma", "김정균"]],

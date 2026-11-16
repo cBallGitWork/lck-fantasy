@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDevState } from "../../parts";
 import { DeleteSheet } from "./DeleteSheet";
 import { ACCOUNT, BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, DRAFT, LOCKED, REMINDER_HOURS, SAVED, ZONES } from "./fixtures";
 import type { Account, DeleteRow, SettingsTab, SettingsValues } from "./settings";
@@ -19,9 +20,15 @@ function saveJson(data: unknown) {
   URL.revokeObjectURL(url);
 }
 
-/** The Settings route, on the picture's made-up data until the backend (#42) feeds it. */
+/** The Settings route, on the picture's made-up data until the backend (#42) feeds it. `?state=` opens a tab or the Delete account sheet, in dev. */
 export function SettingsScreen() {
-  return <Settings />;
+  const dev = useDevState<{ firstTab: SettingsTab; deleting?: true }>({
+    display: { firstTab: "Display" },
+    emails: { firstTab: "Emails" },
+    account: { firstTab: "Account" },
+    delete: { firstTab: "Account", deleting: true },
+  });
+  return <Settings {...dev} />;
 }
 
 /** Settings (docs/design/approved/settings/), holding the draft until Save; the backend saves, signs out and deletes for real. */
@@ -37,6 +44,7 @@ export function Settings({
   countries = COUNTRIES,
   deleteRows = DELETE_ROWS,
   firstTab = "Team",
+  deleting: deletingAtStart = false,
   onSave = notConnected("Save"),
   onSignOut = notConnected("Sign out"),
   onDeleteAccount = notConnected("Delete account"),
@@ -52,6 +60,8 @@ export function Settings({
   countries?: string[];
   deleteRows?: DeleteRow[];
   firstTab?: SettingsTab;
+  /** The Delete account sheet opens at once. */
+  deleting?: boolean;
   onSave?: (values: SettingsValues) => void;
   onSignOut?: () => void;
   onDeleteAccount?: () => void;
@@ -59,7 +69,7 @@ export function Settings({
   const [tab, setTab] = useState<SettingsTab>(firstTab);
   const [saved, setSaved] = useState(savedAtStart);
   const [draft, setDraft] = useState(draftAtStart);
-  const [deleting, setDeleting] = useState(false);
+  const [deleting, setDeleting] = useState(deletingAtStart);
   const download = () => saveJson({ settings: saved, account });
   return (
     <>

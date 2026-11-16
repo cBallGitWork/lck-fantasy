@@ -31,8 +31,6 @@ export interface TileProps {
   birthday?: boolean;
   /** The week's points; Pick Team's tiles have none. */
   points?: ReactNode;
-  /** The Carry's sum before ×1.5, small after the points: `17×1.5`. */
-  carrySum?: string;
   /** The series line: `v HLE 12 · v DK 5`, or the week's fixtures. */
   line?: ReactNode;
   /** Tags under the tile, after the Flex's or Coach's own. */
@@ -79,7 +77,6 @@ export function Tile(p: TileProps) {
       {hasPoints && (
         <div className="tile__points num">
           {p.points}
-          {p.carrySum && <small>{p.carrySum}</small>}
         </div>
       )}
       {p.line !== undefined && <div className={cx("tile__line", !hasPoints && "tile__line--fixtures")}>{p.line}</div>}

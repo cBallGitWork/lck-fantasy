@@ -1,10 +1,10 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
-import { PageFrame } from "../../parts";
+import { PageFrame, useDevState } from "../../parts";
 import { PATHS } from "../../paths";
 import { CompareSheet, HeadToHead } from "./HeadToHead";
-import { CHOVY, COMPARE_PLAYERS, FAKER, SEARCH_ROWS, type ComparePlayer, type SearchRow } from "./fixtures";
+import { CHOVY, COMPARE_PLAYERS, FAKER, KKOMA, RYU, SEARCH_ROWS, type ComparePlayer, type SearchRow } from "./fixtures";
 import { PickSecond } from "./PickSecond";
 
 /**
@@ -46,7 +46,7 @@ export function ComparePage({
   );
 }
 
-/** The route: Faker v Chovy, from the fixture. */
+/** The route: Faker v Chovy, from the fixture. `?state=pick` or `coaches` opens those pictures, in dev. */
 export function CompareScreen() {
-  return <ComparePage />;
+  return <ComparePage {...useDevState({ pick: { right: null }, coaches: { left: KKOMA, right: RYU } })} />;
 }

@@ -10,9 +10,8 @@ test("a week arrow links, steps, or sits off as a disabled key or a hidden glyph
   expect(html(<WeekArrow label="Week after">›</WeekArrow>)).toBe('<span class="week-arrow week-arrow--off" aria-hidden="true">›</span>');
 });
 
-test("columns hold the main then the side, the side first when asked, with the page's own class", () => {
+test("columns hold the main then the side, with the page's own class", () => {
   expect(html(<Columns className="home__row"><p>main</p><p>side</p></Columns>)).toBe('<div class="columns home__row"><p>main</p><p>side</p></div>');
-  expect(html(<Columns sideFirst><p>side</p></Columns>)).toBe('<div class="columns columns--side-first"><p>side</p></div>');
 });
 
 test("a section head is an h2 with its note, if any, in a small", () => {

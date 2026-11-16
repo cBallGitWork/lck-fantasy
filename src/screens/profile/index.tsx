@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
-import { Columns, OutlinedKey, PageFrame, SponsorNote, Tabs } from "../../parts";
+import { Columns, OutlinedKey, PageFrame, SponsorNote, Tabs, useDevState } from "../../parts";
 import { PROFILE, type FollowState, type ProfileData, type ProfileManager } from "./fixtures";
 import "./profile.css";
 import { ProfileHistory } from "./ProfileHistory";
@@ -95,7 +95,7 @@ function Banner({ manager, follow, onFollow }: { manager: ProfileManager; follow
   );
 }
 
-/** The route (`/manager/$managerId`), on the made-up Week 3 until the backend feeds it. */
+/** The route (`/manager/$managerId`), on the made-up Week 3 until the backend feeds it. `?state=history` or `transfers` opens that tab, in dev. */
 export function ProfileScreen() {
-  return <Profile data={PROFILE} account={MANAGER.team} />;
+  return <Profile data={PROFILE} account={MANAGER.team} initialTab={useDevState<ProfileTab>({ history: "History", transfers: "Transfers" })} />;
 }

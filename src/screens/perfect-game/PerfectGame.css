@@ -9,7 +9,9 @@
   display: block;
   color: var(--mid);
 }
+/* The points at the card's foot, on its right. */
 .perfect-game__card-points {
+  margin-left: auto;
   font-size: var(--size-head);
   font-weight: var(--w-semi);
 }

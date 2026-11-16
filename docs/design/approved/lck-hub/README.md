@@ -4,6 +4,8 @@ The LCK's own fixtures, results, standings and team rosters, with Sheep Esports'
 
 **Approved:** Craig, 15 Nov 2026, "save". Along the way he asked for Sheep's LCK articles on the page, with thumbnails; "a full league tab, fixtures in its own tab, results in its own tab"; and Teams as its own tab, academy rosters included, "as they would be in the game too". The names, teams and numbers are a made-up LCK Cup at the Pick Team picture's moment (Week 4, Tuesday 22:00 London, after Week 3), not roster data. There is no `plate.md` yet, so this binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-15-lck-hub/](../../proposals/2026-11-15-lck-hub/) (`hub.html`, `brief.md`, `hub-references.md`).
 
+**Changed by Craig, 16 Nov 2026:** Standings names each team once, by its code, as Fixtures and Results do; the picture still shows the full name beside it.
+
 | File | Shows |
 |---|---|
 | `1440.png`, `hub.html` | Fixtures: Week 4 |
@@ -23,7 +25,7 @@ The LCK's own fixtures, results, standings and team rosters, with Sheep Esports'
 - **Tabs**: Fixtures, Results, Standings, Teams. The stage toggle sits under them, except on Teams.
 - **Fixtures**: the week by day; each series with its time (yours and KST) and each team's record. Bo3 shows once, in the header.
 - **Results**: the last week by day; the winner bold, the loser in plain weight. Each row's › follows the score; the whole row is the link.
-- **Standings**: one table per group: W, L, sets won, sets lost, +/−, Win % and Last 5 (oldest first).
+- **Standings**: one table per group: the team's code, W, L, sets won, sets lost, +/−, Win % and Last 5 (oldest first).
 - **Teams**: a team picker (a view toggle), then the LCK roster beside its academy (LCK CL) roster, role order, each player with his price. The LCK coach is last; there is no academy coach.
 - **News**: Sheep Esports' latest LCK headlines, each with a thumbnail and date, linking out; then **More on Sheep Esports ↗**.
 

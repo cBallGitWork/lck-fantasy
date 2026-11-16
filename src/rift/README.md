@@ -11,4 +11,4 @@ The Rift view and Card view: the map, the tiles, the shirts, the role icons, the
 - `roles.ts`: role names, the five player roles (`ROLE_KEYS`), the lineup order, the squad's size, each slot's icon and tag, the role a Flex plays (`flexPlays`); a player's role or coach (`PersonRole`), and the squad's nine places (`SquadSlot`, `BENCH_SLOTS`, `isBench`).
 - `views.ts`: the two views' names, `Rift view | Card view` (`VIEWS`, `RIFT_VIEW`, `BoardView`).
 - `BenchBar.tsx`: the bench bar, its slim tiles (`BenchTile`, which can be chosen) and the swap key (`BenchSwap`).
-- `PlayerPanel.tsx`: a tapped player's panel: shirt, name, meta, ✕, then the page's body. The body's pieces: `PanelSeries` (`Wed · v HLE`, its result, its games), `PanelGame` (a game, counted points boxed), `PanelSum` with `PanelSumLabel` (the sum), `PanelFoot` (`Full stats ›`).
+- `PlayerPanel.tsx`: a tapped player's panel: shirt, name, meta, ✕, then the page's body. The body's pieces: `PanelSeries` (`v HLE`, a link to its Series page when given `go`, its result, its games), `PanelGame` (a game, counted points boxed), `PanelSum` with `PanelSumLabel` (the sum), `PanelFoot` (`Full stats ›`).

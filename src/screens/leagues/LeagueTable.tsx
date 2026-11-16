@@ -57,8 +57,16 @@ export function LeagueTable({
   league,
   nameMax,
   actions,
+  adminOpen,
   ...table
-}: { league: Exclude<LeagueView, { kind: "overall" }>; /** The longest name Rename takes. */ nameMax: number; actions: LeagueActions } & TableProps) {
+}: {
+  league: Exclude<LeagueView, { kind: "overall" }>;
+  /** The longest name Rename takes. */
+  nameMax: number;
+  actions: LeagueActions;
+  /** The Admin menu opens at once (admin.html). */
+  adminOpen?: boolean;
+} & TableProps) {
   const [renaming, setRenaming] = useState(false);
   const name = renaming ? (
     <RenameField
@@ -79,7 +87,7 @@ export function LeagueTable({
           <span className="leagues__code num">{league.code}</span>
           <OutlinedKey onClick={actions.onCopyLink}>Copy link</OutlinedKey>
           {league.role === "maker" ? (
-            <Menu label="Admin ▾" className="leagues__admin" items={adminItems(actions, () => setRenaming(true))} />
+            <Menu label="Admin ▾" className="leagues__admin" items={adminItems(actions, () => setRenaming(true))} startOpen={adminOpen} />
           ) : (
             <OutlinedKey onClick={actions.onLeave}>Leave</OutlinedKey>
           )}

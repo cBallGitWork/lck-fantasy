@@ -82,7 +82,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Each row: player, team and role, the price before and after, and owned. A dot marks your
     own players. Titled by the gameweek the prices are for ("Gameweek 4 prices"), with when they
     were set; no next move, no filters, no explainer lines (Craig, 15 Nov 2026). The picture is
-    `docs/design/approved/patch-update/`.
+    `docs/design/approved/price-changes/`.
   - Before the first move: "No moves yet".
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).

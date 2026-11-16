@@ -1,4 +1,4 @@
-// Patch update's made-up data (docs/design/approved/patch-update/patch.html): the moves made at the
+// Price changes' made-up data (docs/design/approved/price-changes/patch.html): the moves made at the
 // Week 3 deadline, as Week 4's prices. The new prices, teams and owned % are the Stats list's
 // (statsOf); a dot marks the players in Baron Steal FC's squad (PICK_TEAM_SQUAD).
 

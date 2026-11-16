@@ -21,7 +21,7 @@ So each screen's issue touches only its own folder:
 - `series/`: one series (`/series/$seriesId`).
 - `compare/`: two players side by side.
 - `perfect-game/`: the week's best team.
-- `patch-update/`: the week's new prices.
+- `price-changes/`: the week's new prices.
 - `settings/`: Settings.
 - `lck-hub/`: the LCK hub: fixtures, results, standings, teams.
 - `player-card/`: the full player card (`/player/$playerId`).

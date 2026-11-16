@@ -45,9 +45,6 @@
 .patch-update__name {
   font-weight: var(--w-bold);
 }
-.patch-update__name:hover {
-  text-decoration: underline;
-}
 .patch-update__meta {
   margin-left: var(--s-2);
 }

@@ -28,7 +28,7 @@ function FeedRow({ item, onTruck }: { item: FeedItem; onTruck?: (item: FeedItem)
         <b>{item.manager}</b> · {what}
         <small className="home__feed-small quiet">{small}</small>
       </div>
-      <button type="button" className="home__truck key-bare" onClick={() => onTruck?.(item)}>
+      <button type="button" className="home__truck key-bare hover-line" onClick={() => onTruck?.(item)}>
         Truck ›
       </button>
     </div>

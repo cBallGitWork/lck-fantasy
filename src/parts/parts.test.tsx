@@ -207,10 +207,11 @@ test("the main action is one filled key, disabled with its reason", () => {
   expect(text(<MainAction>Save team</MainAction>)).toBe("Save team");
   const off = html(<MainAction disabledReason="No changes">Save team</MainAction>);
   expect(off).toContain("No changes");
-  expect(off).toContain("disabled");
+  expect(off).toContain('class="main-action__key key-off" disabled=""');
+  expect(html(<MainAction>Save team</MainAction>)).not.toContain("key-off");
   expect(text(<OutlinedKey>Join a league</OutlinedKey>)).toBe("Join a league");
   const keyOff = html(<OutlinedKey disabledReason="League full">Join a league</OutlinedKey>);
-  expect(keyOff).toContain("disabled");
+  expect(keyOff).toContain('class="outlined-key key-off" disabled=""');
   expect(text(<OutlinedKey disabledReason="League full">Join a league</OutlinedKey>)).toBe("Join a leagueLeague full");
 });
 

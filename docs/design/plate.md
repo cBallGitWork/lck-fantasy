@@ -125,9 +125,9 @@ Each part is drawn one way on every screen.
 
 Every screen part is drawn for each state it can be in.
 
-- **Hover:** a row gets `--fill`; a link or key its 1px `--text` underline or edge (Craig, 16 Nov 2026).
+- **Hover:** a row gets `--fill`; a link or key its 1px `--text` underline, 4px below (`.hover-line`), or edge (Craig, 16 Nov 2026).
 - **Focus:** a 2px `--teal` ring, always shown (Craig, 16 Nov 2026).
-- **Disabled:** text `--mid` on `--fill`, no edge, with the reason beside it (`No changes`).
+- **Disabled:** one look for every key, `.key-off`: text `--mid` on `--fill`, no edge, with the reason beside it (`No changes`).
 - **Loading:** the layout drawn with `--fill` bars where figures go; no spinners.
 - **Empty:** a title and at most one short line (`No moves yet`).
 - **Error:** a title and one line, and `Try again ›` where trying again can help.

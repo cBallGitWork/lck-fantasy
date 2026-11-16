@@ -55,11 +55,6 @@
 .points__breakdown-series-go {
   color: var(--text);
 }
-.points__breakdown-series-go:hover {
-  text-decoration: underline;
-  text-decoration-thickness: var(--m-rule);
-  text-underline-offset: var(--s-1);
-}
 .points__breakdown-day {
   margin-right: var(--s-1);
   font-weight: var(--w-regular);

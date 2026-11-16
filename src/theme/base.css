@@ -34,10 +34,10 @@ a {
   content: "▼";
   font-size: var(--size-small);
 }
-/* A rank's move stays ink: red and blue are for prices only. ▲ or ▼, a space, then the places. */
+/* A rank's move stays --text, never gold: red and blue are for prices only. ▲ or ▼, a space, then the places. */
 .rank-up,
 .rank-down {
-  color: var(--ink);
+  color: var(--text);
   font-family: var(--font-mono);
   font-size: var(--size-small);
 }

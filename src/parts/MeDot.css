@@ -3,7 +3,7 @@
   width: var(--m-dot);
   height: var(--m-dot);
   border-radius: 50%;
-  background: var(--ink);
+  background: var(--text);
   margin-left: var(--s-1);
   vertical-align: middle;
 }

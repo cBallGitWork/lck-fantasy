@@ -11,7 +11,7 @@
   margin-top: var(--s-4);
   padding: var(--s-2) var(--s-4);
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
 }
 .pick-team__changes {
   color: var(--mid);
@@ -70,7 +70,7 @@
   padding: var(--s-2) 0;
   color: var(--text);
   background: none;
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }
 .pick-team__key--on {

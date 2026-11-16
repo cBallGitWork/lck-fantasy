@@ -5,6 +5,8 @@ export const PATHS = {
   pickTeam: "/pick-team",
   transfers: "/transfers",
   points: "/points",
+  /** Points for one week, so a week can be linked: `/points/2`. */
+  pointsWeek: "/points/$week",
   leagues: "/leagues",
   league: "/leagues/$leagueId",
   stats: "/stats",

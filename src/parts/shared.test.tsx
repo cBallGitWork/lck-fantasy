@@ -3,11 +3,10 @@ import { expect, test } from "vitest";
 import { html } from "../testing/render";
 import { Columns, SectionHead, SeriesStrip, TierShield, WeekArrow } from ".";
 
-test("a week arrow links, steps, or sits off as a disabled key or a hidden glyph", () => {
+test("a week arrow is a key: it links, steps, or sits off as a disabled key", () => {
   expect(html(<WeekArrow label="Week before" go={{ to: "/points" }}>‹</WeekArrow>)).toMatch(/<a[^>]*class="week-arrow"[^>]*aria-label="Week before"[^>]*>‹<\/a>/);
   expect(html(<WeekArrow label="Week after" onStep={() => {}}>›</WeekArrow>)).toBe('<button type="button" class="week-arrow" aria-label="Week after">›</button>');
-  expect(html(<WeekArrow label="Week after" button>›</WeekArrow>)).toBe('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">›</button>');
-  expect(html(<WeekArrow label="Week after">›</WeekArrow>)).toBe('<span class="week-arrow week-arrow--off" aria-hidden="true">›</span>');
+  expect(html(<WeekArrow label="Week after">›</WeekArrow>)).toBe('<button type="button" class="week-arrow week-arrow--off" aria-label="Week after" disabled="">›</button>');
 });
 
 test("columns hold the main then the side, with the page's own class", () => {
@@ -19,7 +18,7 @@ test("a section head is an h2 with its note, if any, in a small", () => {
   expect(html(<SectionHead className="live__apart">The rest</SectionHead>)).toBe('<h2 class="section-head live__apart">The rest</h2>');
 });
 
-test("a series strip holds the last series with points, the rule, then the next with their length, the first in ink", () => {
+test("a series strip holds the last series with points, the rule, then the next with their length, the first in --text", () => {
   const out = html(
     <SeriesStrip
       past={[

@@ -27,7 +27,6 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "›",
     "130",
     "Final",
-    "Cap 2",
     "Average 79",
     "Highest 128",
     "Your points 109›",
@@ -53,9 +52,10 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
   ]);
 });
 
-test("Final is the head's tag alone, and Carry is the sum's label alone", () => {
+test("Final is the head's tag alone, no cap tag (Craig, 16 Nov 2026), and Carry is the sum's label alone", () => {
   const out = text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />);
   expect(out.match(/Final/g)).toHaveLength(1);
+  expect(out).not.toMatch(/Cap/);
   expect(out.match(/Carry/g)).toHaveLength(1);
 });
 

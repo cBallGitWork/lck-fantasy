@@ -27,7 +27,7 @@
   border-left: var(--m-rule) solid var(--line);
 }
 .table th.table__sorted {
-  color: var(--ink);
+  color: var(--text);
   font-weight: var(--w-bold);
 }
 .table th.table__sorted::after {
@@ -62,7 +62,7 @@
   min-width: var(--m-target);
   min-height: var(--m-target);
   font: inherit;
-  color: var(--ink);
+  color: var(--text);
   background: none;
   border: 0;
   cursor: pointer;

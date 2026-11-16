@@ -17,7 +17,7 @@
   border: var(--m-rule) solid var(--line);
 }
 .leagues__select:focus {
-  border-color: var(--ink);
+  border-color: var(--text);
 }
 .leagues__code-field input {
   font-family: var(--font-mono);

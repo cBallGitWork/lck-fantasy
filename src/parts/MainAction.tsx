@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import "./MainAction.css";
 
 /**
- * The screen's one main action, filled ink (`Save team`). Disabled, it is mid on fill, with the
+ * The screen's one main action, filled `--ink` gold (`Save team`). Disabled, it is mid on fill, with the
  * reason beside it (`No changes`).
  */
 export function MainAction({

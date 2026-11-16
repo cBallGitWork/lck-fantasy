@@ -69,6 +69,8 @@ The built look is navy with gold, from `src/theme/tokens.ts`; each token below i
 - Gold is for two things only: the one main action on a screen (`--ink`) and the banner's hangul
   (`--gold`). Section rules, tabs, selected borders, links, marks, tags and a rank's move (▲/▼) are
   `--text` or grey (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
+- Two set exceptions: the Flol wordmark stays gold, and Overall's tier shield is a cream `--text`
+  fill, one colour for every tier (Craig, 16 Nov 2026).
 - Colour is spent on meaning only, never to decorate: red and blue are prices and the bank only; a rank's move
   stays `--text` (Craig, 16 Nov 2026).
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
@@ -79,7 +81,7 @@ Each part is drawn one way on every screen.
 
 - **Page head:** title and hangul; ‹ week ›; the key figure; its tags; then up to three
   figures beside it, in `--mid` with the figure in `--text` (Craig, 16 Nov 2026) (`Average 79  Highest 136 ›`).
-- **Tag:** a square box, 1px rule, 11px, sentence case: `Live`, `Not final`, `Final`, `Cap 2`.
+- **Tag:** a square box, 1px rule, 11px, sentence case: `Live`, `Not final`, `Final`. No team cap tag; on Points and Perfect game `Final` is the head's tag alone, never a result's note (Craig, 16 Nov 2026).
   `Live` is filled `--text` with `--bg` words (Craig, 16 Nov 2026). `Not final` is dashed.
 - **View toggle:** butted keys on `--fill`, the chosen one on `--paper`: `Rift view | Card view`.
 - **Tabs** (a page's or a card's sections): words in a row, the chosen one `--text` with a 2px

@@ -27,8 +27,6 @@ export interface PerfectGameData {
   /** `LCK Cup · Week 3`. */
   week: string;
   final: boolean;
-  /** The team cap the pick was made under. */
-  cap: number;
   average: number;
   highest: number;
   /** Your own points this week. */

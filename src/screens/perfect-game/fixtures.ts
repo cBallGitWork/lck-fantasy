@@ -10,7 +10,6 @@ import {
   PERFECT_GAME,
   playerId,
   seriesPoints,
-  TEAM_CAP,
   WEEK3_FINAL,
   WEEK3_SERIES_FINAL,
   type PerfectPick,
@@ -69,7 +68,6 @@ export const PERFECT_PLAYERS: PerfectPlayer[] = PERFECT_GAME.map((pick) => ({ ..
 export const PERFECT_WEEK3: PerfectGameData = {
   week: `${COMPETITION} · Week 3`,
   final: true,
-  cap: TEAM_CAP,
   ...WEEK3_FINAL,
   yours: MY_WEEK3.finalTotal,
   seriesTitle: "Week 3 series",

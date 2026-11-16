@@ -74,7 +74,7 @@ test("page head shows title, hangul, week, key figure, tags and up to three figu
 });
 
 test("a tag is plain, Live filled, or Not final dashed", () => {
-  expect(html(<Tag>Cap 2</Tag>)).toBe('<span class="tag">Cap 2</span>');
+  expect(html(<Tag>Bo3</Tag>)).toBe('<span class="tag">Bo3</span>');
   expect(html(<Tag kind="live">Live</Tag>)).toContain("tag--live");
   expect(html(<Tag kind="notFinal">Not final</Tag>)).toContain("tag--not-final");
 });

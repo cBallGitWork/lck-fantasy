@@ -23,6 +23,8 @@ After using the built page; these override the picture.
 - Tiles as FPL's: the shirt on a faint lighter card, C or V at its top right and a news flag `!` at its top left, a white name plate, then a dark band (fixtures, or points and series). No role icon on a tile: his place on the Rift says it; the Flex's and Coach's place is a label over the shirt (`FLEX`, `Coach 감독`), and nothing goes under a Flex's tile: no `Flex · plays Top`, no `Not starting` tag (his flag `!` stays at the shirt's corner, the words in his card). No team crests on the tiles. The points sit in the dark band, the series under them. Pick Team and Perfect game share the places.
 - The bench shows the Rift's own tiles (shirt on its card, name plate, points band, `Didn't play` under a dash), each under its order and role, `1. Mid`, as FPL's bench and its `1. DEF`.
 - Live said once per place: on the head's live bar, the open game's row and the week's series (a shared list, kept). A tile's or card's series line and a series result in a player's games drop it: `v DK 5`, `1–0`.
+- `Final` on the head alone (Changed by Craig, 16 Nov 2026): a series result in a player's games is `W 2–1`, not `W 2–1 · final`; the head's tag is `Final`, or `Not final` while the week isn't, `Live` while a game is. Perfect game, reached by Highest ›, keeps its `Final` and drops `Cap 2`.
+- Week arrows as FPL's (Changed by Craig, 16 Nov 2026): ‹ and › are 32px keys, text on paper with a mid edge, beside the week. Each is a link by the router, the week in the path (`/points/2`; `/points` is the latest), so a week can be linked; › is a disabled key at the latest week and ‹ at Week 1. The made-up data has Weeks 1 and 2, final, to step back to.
 
 ## Borrowed
 
@@ -41,7 +43,7 @@ After using the built page; these override the picture.
 
 - **A player**: opens his games on the right; ✕ closes. Each series (`v HLE`) opens its Series page. Each game shows champion and W/L; the best 2 a series are boxed; the Carry's total shows his result and the average Carry.
 - **Full stats ›**: the player card.
-- **‹ ›**: the week before or after; no › past the current week.
+- **‹ ›**: the week before or after (`/points/2`); off at Week 1 and past the current week.
 - **Highest ›**: the top team's week. **All leagues ›**: Leagues.
 
 ## Placeholders

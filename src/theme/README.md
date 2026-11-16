@@ -4,4 +4,4 @@ Every colour, font, size, weight, gap and width, and nothing else holds one. A b
 
 - `tokens.ts`: the tokens, named by the plate's roles (`ink`, `mid`, `paper`…), and `themeCss()`, which makes them CSS custom properties (`--ink`, `--size-title`, `--s-4`, `--m-row`, `--lh-mid`, `--ratio-stream`). `measureVar()` gives a measure to a part that takes one as a prop.
 - `ThemeStyle.tsx`: applies the tokens at `:root`, once, at the app's root.
-- `base.css`: the page's base: body, links, figures, a price's rise and fall (`.rise`, `.fall`), a rank's move in ink (`.rank-up`, `.rank-down`), the focus ring.
+- `base.css`: the page's base: body, links, figures, a price's rise and fall (`.rise`, `.fall`), a rank's move in `--text` (`.rank-up`, `.rank-down`), the focus ring.

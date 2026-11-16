@@ -28,7 +28,7 @@
 .top-bar__item--on {
   color: var(--text);
   font-weight: var(--w-bold);
-  border-bottom-color: var(--ink);
+  border-bottom-color: var(--text);
 }
 .top-bar__item--live::before {
   content: "";

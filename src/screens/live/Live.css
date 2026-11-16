@@ -27,15 +27,15 @@
   align-items: center;
   padding: 0 var(--s-4);
   background: var(--text);
-  color: var(--on-ink);
+  color: var(--bg);
   font: var(--w-bold) var(--size-head) var(--font-sans);
 }
 .live__bug-figure {
   display: flex;
   align-items: center;
   padding: 0 var(--s-4);
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
   font-size: var(--size-head);
   font-weight: var(--w-semi);
   letter-spacing: var(--m-rule-heavy);
@@ -78,13 +78,13 @@
   color: var(--stage-text);
 }
 .live__chip--on {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--on-ink);
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
   font-weight: var(--w-semi);
 }
 .live__chip--on .live__chip-platform {
-  color: var(--on-ink);
+  color: var(--bg);
 }
 .live__chip--off {
   border-style: dashed;
@@ -132,8 +132,8 @@
 .live__down {
   margin-bottom: var(--s-4);
   padding: var(--s-2) var(--s-3);
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
   font-size: var(--size-small);
 }
 .live__down-title {
@@ -193,14 +193,14 @@
   width: var(--m-mark);
   height: var(--m-mark);
   margin-left: var(--s-1);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   border-radius: 50%;
   font-size: var(--size-small);
   font-weight: var(--w-bold);
 }
 .live__mark--c {
-  background: var(--ink);
-  color: var(--on-ink);
+  background: var(--text);
+  color: var(--bg);
 }
 .live__games {
   display: flex;

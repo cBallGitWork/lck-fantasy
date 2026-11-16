@@ -38,7 +38,7 @@
   gap: var(--s-3);
   height: var(--m-row);
   padding: 0 var(--s-3);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
   background: var(--paper);
 }
 .settings__input-text {
@@ -61,7 +61,7 @@
   font: inherit;
   color: var(--text);
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
 }
 .settings__sub {
   margin-top: var(--s-2);
@@ -149,7 +149,7 @@
   gap: var(--s-4);
   padding: var(--s-3) var(--s-4);
   background: var(--paper);
-  border: var(--m-rule) solid var(--ink);
+  border: var(--m-rule) solid var(--text);
 }
 .settings__save-line {
   flex: 1;

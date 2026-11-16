@@ -1,21 +1,11 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, text } from "../../testing/render";
 import { DEFAULT_STREAM, IDLE_STREAMS, LIVE_DOWN, LIVE_IDLE, LIVE_NOW, LIVE_STREAMS } from "./fixtures";
 import { LiveDown, LiveIdle, LiveNow } from "./Live";
 
 const picker = { streams: LIVE_STREAMS, picked: DEFAULT_STREAM, onPick: () => {} };
 const idlePicker = { ...picker, streams: IDLE_STREAMS };
-
-/** Each piece of text appears, in this order. */
-function inOrder(out: string, pieces: string[]) {
-  let at = 0;
-  for (const piece of pieces) {
-    const found = out.indexOf(piece, at);
-    expect(found, `"${piece}" after position ${at}`).toBeGreaterThanOrEqual(0);
-    at = found + piece.length;
-  }
-}
 
 const CHIPS = [
   "LCK · EnglishTwitch",
@@ -32,7 +22,7 @@ describe("a series live", () => {
   const page = html(<LiveNow {...LIVE_NOW} picker={picker} />);
 
   test("holds the picture's content in its order", () => {
-    inOrder(out, [
+    expectInOrder(out, [
       "Live",
       "stream",
       "T1", "1–0", "DK", "Live", "Game 2", "Bo3 · Split 1 Week 3",
@@ -65,7 +55,7 @@ describe("the live feed down", () => {
   const out = text(<LiveDown {...LIVE_DOWN} picker={picker} />);
 
   test("says so first, then the total without the live series and dashes for its games", () => {
-    inOrder(out, [
+    expectInOrder(out, [
       "T1", "1–0", "DK", "Game 2",
       ...CHIPS,
       "Live points down", "Final points follow",
@@ -85,7 +75,7 @@ describe("nothing live", () => {
   const page = html(<LiveIdle {...LIVE_IDLE} picker={idlePicker} />);
 
   test("shows the next series and its countdown, the last series final, and the week final", () => {
-    inOrder(out, [
+    expectInOrder(out, [
       "Next · Sunday · Split 1 Week 3 · Bo3", "KRXvBRO", "08:00", "17:00 KST", "1h20m",
       "T1", "2–0", "DK", "Final", "Last series", "Saturday · Bo3 · Split 1 Week 3",
       ...CHIPS,

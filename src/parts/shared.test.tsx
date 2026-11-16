@@ -39,7 +39,7 @@ test("a series strip holds the last series with points, the rule, then the next 
   expect(out).toContain('<span class="series-strip__next num">v GEN</span>');
 });
 
-test("the tier shield draws its body, band and division under the page's class", () => {
+test("the tier shield draws its body and band under the page's class, and no text", () => {
   const out = html(<TierShield className="home__shield" />);
   expect(out).toContain('<svg class="home__shield" viewBox="0 0 40 46" aria-hidden="true">');
   expect(out).toContain('class="home__shield-body"');

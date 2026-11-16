@@ -1,4 +1,5 @@
 import { expect, test } from "vitest";
+import { sum } from "../parts";
 import { playedBy, FAKER_SEASON } from "./t1Season";
 import {
   carried,
@@ -40,11 +41,11 @@ test("Faker's Week 3 is one set of games: Points, Live, his card's History and P
 test("the perfect game is a real best: its Carry tops every raw week, and its total tops the week's Highest", () => {
   const carry = PERFECT_GAME.find((p) => p.carry);
   for (const p of PERFECT_GAME) if (!p.carry) expect(p.points).toBeLessThanOrEqual(carry?.raw ?? 0);
-  expect(PERFECT_GAME.reduce((sum, p) => sum + p.points, 0)).toBeGreaterThanOrEqual(WEEK3_FINAL.highest);
+  expect(sum(PERFECT_GAME.map((p) => p.points))).toBeGreaterThanOrEqual(WEEK3_FINAL.highest);
   expect(WEEK3_FINAL.highest).toBeGreaterThanOrEqual(POINTS_WEEK.highest);
 });
 
-test("Baron Steal FC's week totals add up from his starters", () => {
+test("Baron Steal FC's week totals are the pictures' 94, 82 and 109", () => {
   expect([MY_WEEK3.liveTotal, MY_WEEK3.downTotal, MY_WEEK3.finalTotal]).toEqual([94, 82, 109]);
 });
 

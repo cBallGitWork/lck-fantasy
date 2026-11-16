@@ -1,19 +1,8 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, text } from "../../testing/render";
 import { HOME_IDLE, HOME_LIVE } from "./fixtures";
-import { ordinal as place } from "../../parts";
 import { Home } from "./index";
-
-/** Fails unless each piece appears in `out`, in this order. */
-function expectInOrder(out: string, pieces: string[]) {
-  let from = 0;
-  for (const piece of pieces) {
-    const at = out.indexOf(piece, from);
-    expect(at, `"${piece}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + piece.length;
-  }
-}
 
 const HEAD = ["Baron Steal FC", "바론 스틸 FC", "Emerald I", "에메랄드 1", "48,211", "6,904", "Badge"];
 const deadline = (d: string, h: string, m: string) => ["Week 4 deadline", "Split 1", `${d}d${h}h${m}m`, "Wed 07:45", "16:45 KST", "Pick Team", "Transfers", "2 free transfers"];
@@ -117,21 +106,4 @@ describe("idle", () => {
     expect(out).not.toContain("Not final");
     expect(html(<Home data={HOME_IDLE} />)).toContain('href="/pick-team"');
   });
-});
-
-test("a private league's rank reads as a place", () => {
-  expect([1, 2, 3, 4, 11, 12, 13, 14, 21, 22, 101, 111].map(place)).toEqual([
-    "1st",
-    "2nd",
-    "3rd",
-    "4th",
-    "11th",
-    "12th",
-    "13th",
-    "14th",
-    "21st",
-    "22nd",
-    "101st",
-    "111th",
-  ]);
 });

@@ -1,19 +1,10 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { STATS_PLAYERS } from "../../fixtures/week3";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, noop, text } from "../../testing/render";
 import { stepWeek } from ".";
 import { WEEK3_PRICES, WEEK4_PRICES } from "./fixtures";
 import { cardOf, NO_MOVES, PatchUpdatePage } from "./PatchUpdatePage";
-
-const noop = () => {};
-
-/** Every part appears in `out`, each after the one before. */
-function expectInOrder(out: string, parts: string[]) {
-  const at = parts.map((part) => out.indexOf(part));
-  expect(at).not.toContain(-1);
-  expect(at).toEqual([...at].sort((a, b) => a - b));
-}
 
 describe("Week 4 prices", () => {
   const out = text(<PatchUpdatePage week={WEEK4_PRICES} onPrev={noop} />);

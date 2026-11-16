@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, text } from "../../testing/render";
 import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { MY_EARLIER_WEEKS, MY_WEEK3 } from "../../fixtures/week3";
 import { LATEST_WEEK, POINTS_FIXTURE, POINTS_WEEKS } from "./fixtures";
@@ -8,16 +8,6 @@ import { POINTS_VIEW_KEY, rememberedView, weekOf } from "./index";
 import { LINE, LIVE_SERIES_ID, WEEK3_FINAL_SQUAD, weekGamesOf, type Kda, type LineWord } from "../../fixtures/week3";
 import type { PointsPlayer } from "./types";
 import { PointsPage } from "./PointsPage";
-
-/** Fails unless each piece appears in `out`, each after the one before it. */
-function expectInOrder(out: string, pieces: string[]) {
-  let from = 0;
-  for (const piece of pieces) {
-    const at = out.indexOf(piece, from);
-    expect(at, `"${piece}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + piece.length;
-  }
-}
 
 // The picture's moment: Saturday, T1 v DK live, Faker's breakdown open (points.html, breakdown.html).
 const PICTURE = <PointsPage data={POINTS_FIXTURE} open="Faker" />;

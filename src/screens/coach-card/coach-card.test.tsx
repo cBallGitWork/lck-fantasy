@@ -1,24 +1,12 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, noop, text } from "../../testing/render";
 import { CoachCard, EMPTY_TAB } from "./CoachCard";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
-import { ordinal, signed } from "../../parts";
 import { CoachCardPage, FIRST_TAB } from "./index";
 import type { CoachCardData, CoachFrom, CoachTab } from "./types";
 
-const noop = () => undefined;
 const card = (data: CoachCardData, from: CoachFrom, tab: CoachTab) => <CoachCard data={data} from={from} tab={tab} onTab={noop} />;
-
-/** Each piece appears, in this order. */
-function inOrder(out: string, pieces: string[]) {
-  let at = 0;
-  for (const piece of pieces) {
-    const found = out.indexOf(piece, at);
-    expect(found, `"${piece}" after position ${at}`).toBeGreaterThanOrEqual(0);
-    at = found + piece.length;
-  }
-}
 
 describe("the page", () => {
   test("is the coach-card screen: the card over the page, opened on the picture's tab", () => {
@@ -53,7 +41,7 @@ describe("History, from Pick Team (1440.png)", () => {
   const out = text(card(FROM_PICK_TEAM, "pickTeam", "History"));
 
   test("holds the header, meta, strip, tabs, history and season in the picture's order", () => {
-    inOrder(out, [
+    expectInOrder(out, [
       "Coach · T1",
       "kkOma",
       "김정균",
@@ -121,7 +109,7 @@ describe("This week, from Points (1440-week.png)", () => {
   const out = text(card(FROM_POINTS, "points", "This week"));
 
   test("holds each series, its games, the series line and the week, in order", () => {
-    inOrder(out, [
+    expectInOrder(out, [
       "11",
       "Season · 3rd of 10 coaches",
       "Compare ›",
@@ -179,7 +167,7 @@ describe("the strip's series show once", () => {
 describe("Roster (1440-roster.png)", () => {
   test("lists the team's players with role, price, season and owned; yours marked", () => {
     const out = text(card(FROM_PICK_TEAM, "pickTeam", "Roster"));
-    inOrder(out, [
+    expectInOrder(out, [
       "RolePlayerPriceSeasonOwned",
       "TopDoran₩12.5m4518%",
       "JungleOner₩14.0m4322%",
@@ -196,7 +184,7 @@ describe("Roster (1440-roster.png)", () => {
 describe("Fixtures (the player card's 1440-fixtures.png)", () => {
   test("lists T1's next series, each week's number once, your time and KST", () => {
     const out = text(card(FROM_PICK_TEAM, "pickTeam", "Fixtures"));
-    inOrder(out, [
+    expectInOrder(out, [
       "WeekSeriesYour timeKST",
       "5Sun · T1 v KRX · Bo310:3019:30",
       "6Wed · T1 v DK · Bo308:0017:00",
@@ -207,10 +195,5 @@ describe("Fixtures (the player card's 1440-fixtures.png)", () => {
 
 test("a news line shows above the header, as on the player card", () => {
   const out = text(card({ ...FROM_PICK_TEAM, news: "Out for Wednesday's series" }, "pickTeam", "History"));
-  inOrder(out, ["! Out for Wednesday's series", "Coach · T1"]);
-});
-
-test("figures read as the picture writes them", () => {
-  expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 101].map(ordinal)).toEqual(["1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd", "101st"]);
-  expect([6, 0, -1].map(signed)).toEqual(["+6", "0", "−1"]);
+  expectInOrder(out, ["! Out for Wednesday's series", "Coach · T1"]);
 });

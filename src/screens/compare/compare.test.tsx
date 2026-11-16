@@ -1,29 +1,17 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
-import { ordinal, perGame, signed } from "../../parts";
+import { expectInOrder, html, noop, text } from "../../testing/render";
+import { sum } from "../../parts";
 import { better, searchGroups } from "./rules";
-import { CHOVY, COMPARE_PLAYERS, FAKER, KKOMA, RYU, SEARCH_ROWS, type ComparePlayer } from "./fixtures";
+import { CHOVY, COMPARE_PLAYERS, FAKER, KKOMA, RYU, SEARCH_ROWS } from "./fixtures";
 import { ComparePage } from ".";
-
-const close = () => {};
-
-/** Each string's place in the text, in order; fails on the first one missing or out of order. */
-function expectInOrder(out: string, parts: string[]) {
-  let from = 0;
-  for (const part of parts) {
-    const at = out.indexOf(part, from);
-    expect(at, `"${part}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + part.length;
-  }
-}
 
 /** The text of each bold (better) cell, in order. */
 const bold = (out: string) => [...out.matchAll(/compare__better">([^<]*)/g)].map((m) => m[1]);
 
 describe("Faker v Chovy", () => {
-  const out = text(<ComparePage onClose={close} />);
-  const markup = html(<ComparePage onClose={close} />);
+  const out = text(<ComparePage onClose={noop} />);
+  const markup = html(<ComparePage onClose={noop} />);
 
   test("is the compare screen, a card with ✕", () => {
     expect(markup).toContain('data-screen="compare"');
@@ -68,13 +56,13 @@ describe("Faker v Chovy", () => {
 });
 
 describe("the second player not picked yet", () => {
-  const out = text(<ComparePage right={null} onClose={close} />);
+  const out = text(<ComparePage right={null} onClose={noop} />);
 
   test("shows Faker alone, then the search with mids first", () => {
     expectInOrder(out, ["Mid · T1", "Faker", "이상혁", "v", "Mids", "Chovy", "GEN", "₩17.5m", "61", "Zeka", "HLE", "₩15.0m", "41"]);
     expectInOrder(out, ["BuLLDoG", "DNS", "₩11.0m", "36", "ShowMaker", "DK", "₩13.0m", "33", "All mids · Other roles ›"]);
     expect(out).not.toContain("Change ›");
-    expect(html(<ComparePage right={null} onClose={close} />)).toContain('placeholder="Find a player"');
+    expect(html(<ComparePage right={null} onClose={noop} />)).toContain('placeholder="Find a player"');
   });
 
   test("lists his role only, never himself, and no coach", () => {
@@ -83,14 +71,14 @@ describe("the second player not picked yet", () => {
   });
 
   test("a row is a key only where Compare has his lines", () => {
-    const markup = html(<ComparePage right={null} onClose={close} />);
+    const markup = html(<ComparePage right={null} onClose={noop} />);
     expect(markup.match(/role="button"/g)).toHaveLength(1);
     expect(markup).toMatch(/role="button"[^>]*><td class="compare__result-name">Chovy/);
   });
 });
 
 describe("kkOma v Ryu", () => {
-  const out = text(<ComparePage left={KKOMA} right={RYU} onClose={close} />);
+  const out = text(<ComparePage left={KKOMA} right={RYU} onClose={noop} />);
 
   test("faces each other as coaches, then the top table", () => {
     expectInOrder(out, ["Coach · T1", "kkOma", "김정균", "v", "Coach · GEN", "Ryu", "류상욱", "Change ›"]);
@@ -111,7 +99,7 @@ describe("kkOma v Ryu", () => {
   });
 
   test("searching from a coach lists coaches only, with no Other roles", () => {
-    const pick = text(<ComparePage left={KKOMA} right={null} onClose={close} />);
+    const pick = text(<ComparePage left={KKOMA} right={null} onClose={noop} />);
     expectInOrder(pick, ["Coaches", "Ryu", "Homme", "Ssong", "cvMax", "Score", "Joker"]);
     expect(pick).not.toMatch(/Mids|Chovy|Other roles/);
   });
@@ -125,12 +113,6 @@ describe("the rules", () => {
     expect(better(3, 3)).toBeNull();
   });
 
-  test("points carry their sign; per game is to one decimal; ranks are ordinals", () => {
-    expect([signed(22), signed(-4), signed(0)]).toEqual(["+22", "−4", "0"]);
-    expect(perGame(73, 15)).toBe("4.9");
-    expect([1, 2, 3, 4, 11, 12, 13, 21, 22].map(ordinal)).toEqual(["1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd"]);
-  });
-
   test("Other roles lists his role first, then the rest in the broadcast's order", () => {
     expect(searchGroups(SEARCH_ROWS, FAKER, "", true).map((g) => g.role)).toEqual(["mid", "top", "jng", "bot", "sup"]);
   });
@@ -142,8 +124,7 @@ describe("the rules", () => {
   });
 
   test("each side's season is the sum of its line points", () => {
-    const sum = (p: ComparePlayer) => p.lines.reduce((s, l) => s + l.points, 0);
-    for (const p of Object.values(COMPARE_PLAYERS)) expect(sum(p), p.name).toBe(p.season.points);
+    for (const p of Object.values(COMPARE_PLAYERS)) expect(sum(p.lines.map((l) => l.points)), p.name).toBe(p.season.points);
     expect(Object.keys(COMPARE_PLAYERS)).toEqual([FAKER.name, CHOVY.name, KKOMA.name, RYU.name]);
   });
 });

@@ -1,23 +1,11 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, noop, text } from "../../testing/render";
 import { DeleteSheet } from "./DeleteSheet";
 import { BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, REMINDER_HOURS, SAVED, SIGN_UP, SQUAD_SIZE } from "./fixtures";
 import { Settings } from "./index";
 import { canSaveTeam, capName, changedFields, changeLine, counter, dirtyTabs, hoursBefore, timeIn, type SettingsTab } from "./settings";
 import { SignUpStepOne, SignUpStepTwo } from "./SignUp";
-
-const noop = () => {};
-
-/** Fails unless every piece is in the markup, each after the one before. */
-function expectInOrder(markup: string, pieces: string[]) {
-  let from = 0;
-  for (const piece of pieces) {
-    const at = markup.indexOf(piece, from);
-    expect(at, `"${piece}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + piece.length;
-  }
-}
 
 const settingsOn = (tab: SettingsTab, props: Partial<Parameters<typeof Settings>[0]> = {}) =>
   html(<Settings firstTab={tab} browserZone={BROWSER_ZONE} {...props} />);

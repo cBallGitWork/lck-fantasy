@@ -1,24 +1,13 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { MANAGER } from "../../fixtures/week3";
-import { html, text } from "../../testing/render";
+import { expectInOrder, html, text } from "../../testing/render";
 import { PROFILE, type ProfileData } from "./fixtures";
-import { ordinal } from "../../parts";
 import { nextFollow, Profile, type ProfileTab } from ".";
 
 const page = (tab: ProfileTab, data: ProfileData = PROFILE, week?: number) => (
   <Profile data={data} account={MANAGER.team} initialTab={tab} initialWeek={week} />
 );
-
-/** Each string appears in the text, in this order. */
-function inOrder(out: string, parts: string[]) {
-  let at = 0;
-  for (const part of parts) {
-    const found = out.indexOf(part, at);
-    expect(found, `"${part}" after position ${at}`).toBeGreaterThanOrEqual(0);
-    at = found + part.length;
-  }
-}
 
 const BANNER = ["쵸비는 바로 거기 있었다", "Chovy Was Right There", "Minji Park", "Following ✓", "Points", "History", "Transfers"];
 const LEAGUES = ["Leagues", "Overall", "Emerald I", "21,804", "3,112", "South Korea", "2,310", "402", "GEN supporters", "1,977", "288", "Pub League", "3rd", "1"];
@@ -27,7 +16,7 @@ describe("Points", () => {
   const out = text(page("Points"));
 
   test("shows the banner, the tabs, Week 3's head, her team in role order, the bench, leagues and trucks", () => {
-    inOrder(out, [
+    expectInOrder(out, [
       ...BANNER,
       "‹",
       "Week 3",
@@ -78,7 +67,7 @@ describe("Points", () => {
 
   test("an earlier week shows its points, its team loading until the backend feeds it, and no trucks", () => {
     const week2 = text(page("Points", PROFILE, 2));
-    inOrder(week2, ["Week 2", "112"]);
+    expectInOrder(week2, ["Week 2", "112"]);
     expect(week2).not.toContain("Not final");
     expect(week2).not.toContain("Trucks");
     expect(html(page("Points", PROFILE, 2))).toContain("Week 2&#x27;s team");
@@ -87,7 +76,7 @@ describe("Points", () => {
 
 describe("History", () => {
   test("shows each week's row, newest first, then the buffs left", () => {
-    inOrder(text(page("History")), [
+    expectInOrder(text(page("History")), [
       ...BANNER,
       "Week", "Pts", "Total", "Week rank", "Overall", "Move", "Transfers", "Hits", "Bank", "Value", "Buff",
       "Week 3", "93", "315", "—", "21,804", "3,112", "5", "0", "₩0.5m", "₩100.9m", "Limitless", "›",
@@ -107,7 +96,7 @@ describe("History", () => {
 
 describe("Transfers", () => {
   test("shows each week's swaps by slot, out → in with team and price, then points gained", () => {
-    inOrder(text(page("Transfers")), [
+    expectInOrder(text(page("Transfers")), [
       ...BANNER,
       "Slot", "Out", "In", "Pts gained",
       "Week 3", "Tue 09:00", "18:00 KST", "Limitless · 0 hits",
@@ -138,8 +127,4 @@ describe("the follow key", () => {
     expect(nextFollow("follow")).toBe("requested");
     expect(nextFollow("requested")).toBe("requested");
   });
-});
-
-test("a private league's place reads as one", () => {
-  expect([1, 2, 3, 4, 11, 12, 13, 21, 22, 103].map(ordinal)).toEqual(["1st", "2nd", "3rd", "4th", "11th", "12th", "13th", "21st", "22nd", "103rd"]);
 });

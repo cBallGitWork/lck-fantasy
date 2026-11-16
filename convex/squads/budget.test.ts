@@ -53,7 +53,7 @@ describe("budgetProblems", () => {
 
 describe("bankAfterTransfers", () => {
   test("selling pays the full current price, buying costs the new pick's", () => {
-    // Bought at 7.5m, Chovy has risen to 9.0m: selling him pays all 9.0m.
+    // Bought at ₩7.5m, Chovy has risen to ₩9.0m: selling him pays all ₩9.0m.
     const prices = new Map([
       [pickKey(chovy), 9 * EOK],
       [pickKey(player("faker", "t1", "mid")), 8.5 * EOK],

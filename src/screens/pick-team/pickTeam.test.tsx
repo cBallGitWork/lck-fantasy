@@ -49,7 +49,7 @@ const SIDE_TAIL = [
 
 const FAKER_CARD = [
   "Faker",
-  "T1 · Mid · 18.5m 0.5",
+  "T1 · Mid · ₩18.5m 0.5",
   "Form19.3 · 1st of 10 mids",
   "Owned46% · 1st",
   "Season58 · 2nd",
@@ -108,14 +108,14 @@ test("Card view: the seven starters as the broadcast lineup, the bench bar, then
   expectInOrder(out, [
     "Rift view",
     "Card view",
-    "TopPhotoZeusHLEv DK · v NSForm 14.016.0m",
-    "JunglePhotoCanyonGENv BRO · v T1Form 14.715.5m",
-    "MidPhotoCFakerT1v KT · v GENForm 19.318.5m",
-    "BotPhotoVRulerGENv BRO · v T1Form 15.317.0m",
-    "SupportPhotoDelightHLEv DK · v NSForm 9.39.0m",
-    "Flexplays TopPhotoNot startingSiwooDKv HLE · v KTForm 7.77.5m",
+    "TopPhotoZeusHLEv DK · v NSForm 14.0₩16.0m",
+    "JunglePhotoCanyonGENv BRO · v T1Form 14.7₩15.5m",
+    "MidPhotoCFakerT1v KT · v GENForm 19.3₩18.5m",
+    "BotPhotoVRulerGENv BRO · v T1Form 15.3₩17.0m",
+    "SupportPhotoDelightHLEv DK · v NSForm 9.3₩9.0m",
+    "Flexplays TopPhotoNot startingSiwooDKv HLE · v KTForm 7.7₩7.5m",
     "Coach감독",
-    "kkOmaT1v KT · v GENForm 9.07.0m",
+    "kkOmaT1v KT · v GENForm 9.0₩7.0m",
     "Bench",
     "Bdd",
     "⇅ Swap",
@@ -143,7 +143,7 @@ test("Mid-swap: Siwoo going out, both bench players fit, Bench Boost on and unsa
     "Deadline Wed 07:45 16:45 KST 9h 45m",
     "Save team",
     "Siwoo",
-    "DK · Flex · plays Top · 7.5m",
+    "DK · Flex · plays Top · ₩7.5m",
     "Not starting Wed",
     "Form7.7 · 7th of 10 tops",
     "Owned6% · 9th",
@@ -176,7 +176,7 @@ test("Mid-swap: Siwoo going out, both bench players fit, Bench Boost on and unsa
 
 test("the coach's card has no Carry or swap keys", () => {
   const out = text(view({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }));
-  expect(out).toContain("T1 · Coach · 7.0m");
+  expect(out).toContain("T1 · Coach · ₩7.0m");
   expect(out).not.toContain("Make Carry");
   expect(out).not.toContain("Swap with bench");
   expect(html(view({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }))).toContain('href="/coach/kkoma"');

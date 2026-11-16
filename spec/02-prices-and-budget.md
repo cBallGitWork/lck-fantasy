@@ -6,9 +6,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## Money
 
-- Money is shown in m, to one decimal, as FPL does (Craig, 16 Nov 2026; it was 억). As a guide: a
-  budget of about 100m, stars at about 18–22m, cheap picks at about 5m. The values are data per
-  competition, set before each split. The approved pictures still show 억; read it as m.
+- Money is shown as ₩ then m, to one decimal, as FPL shows £ and m: `₩18.5m` (Craig, 16 Nov 2026;
+  it was 억). As a guide: a budget of about ₩100m, stars at about ₩18–22m, cheap picks at about ₩5m. The values are data per
+  competition, set before each split. The approved pictures still show 억; read it as ₩ and m.
 - The coach (the team) has a price, like a player ([spec/01](01-squad-and-slots.md)).
 - Knockout stages can lift the budget through their stage settings
   ([spec/10](10-season-and-gameweeks.md)).

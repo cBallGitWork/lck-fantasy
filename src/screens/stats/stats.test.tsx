@@ -110,7 +110,7 @@ describe("players, totals (1440.png)", () => {
   test("Faker's row: rank, team, dot, price and rise, form, owned, Pts, games and lines", () => {
     expect(cells(out, "Faker")).toEqual([
       "2FakerT1",
-      "18.5m",
+      "₩18.5m",
       "0.5",
       "19.3",
       "46%",
@@ -151,7 +151,7 @@ describe("players, per game (1440-pergame.png)", () => {
     expect(names(out)).toEqual(perGame);
     expect(cells(out, "Faker")).toEqual([
       "1FakerT1",
-      "18.5m",
+      "₩18.5m",
       "0.5",
       "19.3",
       "46%",
@@ -193,7 +193,7 @@ describe("coaches (1440-coaches.png)", () => {
     expect(names(out)).toEqual(["kkOma", "Ryu", "Homme", "Ssong", "cvMax", "Score", "Joker", "DanDy", "Edgar", "Mowgli"]);
     expect(out).not.toContain(">Jungle<");
     expect(out).toContain('placeholder="Find a coach"');
-    expect(cells(out, "kkOma")).toEqual(["1kkOmaT1", "7.0m", "", "9.0", "24%", "27", "15", "5–1", "6", "5", "5", "0", "2"]);
+    expect(cells(out, "kkOma")).toEqual(["1kkOmaT1", "₩7.0m", "", "9.0", "24%", "27", "15", "5–1", "6", "5", "5", "0", "2"]);
     expect(out).toContain('href="/coach/kkoma"');
   });
 });

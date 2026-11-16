@@ -45,7 +45,7 @@ Craig, 13 Nov 2026:
   Wednesdays before.
 - The budget raise from Road to MSI ([spec/10](10-season-and-gameweeks.md)) comes back off every
   manager's bank when Split 2 starts, so a bank can fall below zero. Price rises earned in Split 1
-  are kept. Example: a raise of 5m and a bank of 1m leave −4m.
+  are kept. Example: a raise of ₩5m and a bank of ₩1m leave −₩4m.
 - In that window every squad must get back to a bank of zero or more and to the regular cap of 2
   per team, the coach included.
 - A squad still over at the deadline is fixed by Flol, at no points cost:

@@ -30,7 +30,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 - `Placeholder.tsx`: a dashed box with one word (sponsor, photo).
 - `TierShield.tsx`: Overall's tier shield with its division (spec/08); the page sizes and colours it through its class names.
 - `SponsorNote.tsx`: `All sponsors are made up.`
-- `money.ts`: an amount in m (`eok` for a price held in m, `eokToWon`) (spec/02).
+- `money.ts`: an amount as ₩ and m (`eok` for a price held in m, `eokToWon`) (spec/02).
 - `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`), per-game and one-decimal figures, per cents, `Bo3`, the Carry's `22×1.5` and absence (`—`), written one way everywhere.
 - `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904); no CSS of its own, base.css draws them.
 - `GoLink.tsx`: a link inside Flol through the router, typed by `src/paths.ts` (`Go`).

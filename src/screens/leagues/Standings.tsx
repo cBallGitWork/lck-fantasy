@@ -4,15 +4,15 @@ import { chaseText } from "./format";
 import type { StandingRow, Standings as StandingsData } from "./types";
 
 /**
- * A league's table: rank, move, team and manager (your row on fill, with its chase tag), Carry once
+ * A league's table: rank, move, team and manager (your row on fill, with its chase tag), Captain once
  * the deadline has passed, the week's points, the split's on a group's table, the total, and `›` to the
  * manager's team. Runs of rows have a `⋯` between them: the top rows, then the rows round yours.
  */
-export function Standings({ table, week, carryShown }: { table: StandingsData; week: number; carryShown: boolean }) {
+export function Standings({ table, week, captainShown }: { table: StandingsData; week: number; captainShown: boolean }) {
   const runStarts = new Set(table.runs.slice(1).map((run) => run[0]));
   return (
     <Table
-      columns={columns(week, carryShown, table.splitColumn)}
+      columns={columns(week, captainShown, table.splitColumn)}
       rows={table.runs.flat()}
       rowKey={(r) => String(r.rank)}
       selected={(r) => !!r.mine}
@@ -22,12 +22,12 @@ export function Standings({ table, week, carryShown }: { table: StandingsData; w
   );
 }
 
-function columns(week: number, carryShown: boolean, splitColumn?: string): Column<StandingRow>[] {
+function columns(week: number, captainShown: boolean, splitColumn?: string): Column<StandingRow>[] {
   return [
     { key: "rank", head: "Rank", width: "colRank", cell: (r) => <span className="leagues__rank num">{count(r.rank)}</span> },
     { key: "move", head: "", width: "colFigure", cell: (r) => <RankMove move={r.move} /> },
     { key: "name", head: "Team · Manager", fullText: (r) => `${r.team} · ${r.manager}`, cell: Name },
-    ...(carryShown ? [{ key: "carry", head: "Carry", width: "colCarry", cell: (r) => r.carry } satisfies Column<StandingRow>] : []),
+    ...(captainShown ? [{ key: "captain", head: "Captain", width: "colCaptain", cell: (r) => r.captain } satisfies Column<StandingRow>] : []),
     { key: "week", head: `Week ${week}`, figure: true, width: "colScore", cell: (r) => r.week },
     ...(splitColumn
       ? [{ key: "split", head: splitColumn, figure: true, width: "colScore", cell: (r) => (r.split === undefined ? NONE : count(r.split)) } satisfies Column<StandingRow>]

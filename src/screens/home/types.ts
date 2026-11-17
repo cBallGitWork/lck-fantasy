@@ -26,10 +26,10 @@ export interface HomeDeadline {
   kst: string;
 }
 
-/** A Following card item (spec/14): a manager's series points, a big Carry, or a truck received. */
+/** A Following card item (spec/14): a manager's series points, a big Captain, or a truck received. */
 export type FeedItem =
   | { kind: "series"; id: string; manager: string; series: string; points: number }
-  | { kind: "carry"; id: string; manager: string; player: string; series: string; points: number }
+  | { kind: "captain"; id: string; manager: string; player: string; series: string; points: number }
   | { kind: "truck"; id: string; line: string; from: string; week: number };
 
 /** One of your leagues: its rank and move. A private league's rank reads as a place (`2nd`). */
@@ -41,7 +41,7 @@ export interface HomeLeague {
   move: number;
 }
 
-/** A player or coach on a side list: role icon, name, C or V, team, a stat line, points. */
+/** A player or coach on a side list: role icon, name, C, team, a stat line, points. */
 export interface SidePlayer {
   role: IconKey;
   name: string;

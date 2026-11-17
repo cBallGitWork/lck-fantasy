@@ -43,7 +43,7 @@ export function TableBody({ league, table, page, onPage, onFindMe }: { league: L
   if (!table) return <Empty title="No table yet" />;
   return (
     <>
-      <Standings table={table} week={league.week} carryShown={league.carryShown} />
+      <Standings table={table} week={league.week} captainShown={league.captainShown} />
       {table.pages > 1 && <Pager pages={table.pages} page={page} onPage={onPage} onFindMe={onFindMe} />}
     </>
   );

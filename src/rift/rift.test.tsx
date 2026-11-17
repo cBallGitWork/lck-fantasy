@@ -53,7 +53,7 @@ test("each role has its icon, named for screen readers", () => {
   }
 });
 
-test("a Points tile shows team, C, name, your dot, points (the Carry's result only), line, and stands at its slot", () => {
+test("a Points tile shows team, C, name, your dot, points (the Captain's result only), line, and stands at its slot", () => {
   const out = html(
     <Rift>
       <Tile slot="mid" name="Faker" team="T1" at={RIFT_SLOTS.mid} mark="C" me points={25} line="v HLE 12 · v DK 5" selected />
@@ -61,7 +61,7 @@ test("a Points tile shows team, C, name, your dot, points (the Carry's result on
   );
   expect(out).toContain("rift-map");
   expect(out).toContain('class="shirt__code">T1');
-  expect(out).toContain('title="Carry">C');
+  expect(out).toContain('title="Captain">C');
   expect(out).toContain('aria-label="Your player"');
   expect(out).toContain('class="tile__points num">25</div>');
   expect(out).toContain("v HLE 12 · v DK 5");
@@ -73,17 +73,17 @@ test("a Points tile shows team, C, name, your dot, points (the Carry's result on
   expect(out).toContain('title="Faker"');
 });
 
-test("C and V read as Carry and Vice-carry, as the ! reads Not starting", () => {
+test("C reads as Captain, as the ! reads Not starting; the C is the only mark, never outlined", () => {
   const out = html(
     <>
       <Tile slot="mid" name="Faker" team="T1" mark="C" />
-      <Tile slot="bot" name="Gumayusi" team="T1" mark="V" flag="Not starting" />
+      <Tile slot="bot" name="Gumayusi" team="T1" flag="Not starting" />
     </>,
   );
-  expect(out).toContain('role="img" aria-label="Carry" title="Carry">C</span>');
-  expect(out).toContain('role="img" aria-label="Vice-carry" title="Vice-carry">V</span>');
+  expect(out).toContain('role="img" aria-label="Captain" title="Captain">C</span>');
+  expect(out).not.toContain("mark-badge--v");
   expect(out).toContain('role="img" aria-label="Not starting"');
-  expect(markNews("Faker", "C")).toBe("Faker is your Carry");
+  expect(markNews("Faker", "C")).toBe("Faker is your Captain");
 });
 
 test("a tile or a lineup card that can be chosen is a key the keyboard reaches", () => {
@@ -97,7 +97,7 @@ test("a tile or a lineup card that can be chosen is a key the keyboard reaches",
 
 test("a Flex tile is labelled Flex over his shirt, not the role he plays; a Coach tile its hangul", () => {
   expect(text(<Tile slot="flex" name="Siwoo" team="DK" at={RIFT_SLOTS.flex} line="v HLE · v KT" />)).toBe("FlexDKSiwoov HLE · v KT");
-  expect(text(<Tile slot="coach" name="kkOma" team="T1" at={RIFT_SLOTS.coach} mark="V" />)).toContain("Coach 감독");
+  expect(text(<Tile slot="coach" name="kkOma" team="T1" at={RIFT_SLOTS.coach} />)).toContain("Coach 감독");
 });
 
 test("the five roles lead the lineup, and the squad is the seven and the bench", () => {
@@ -115,7 +115,7 @@ test("the slots place all seven starters, inside the square Rift", () => {
   for (const [x, y] of Object.values(RIFT_SLOTS)) expect([x, y].every((v) => v > 0 && v < measure.rift)).toBe(true);
 });
 
-test("Card view shows the seven in broadcast order, with photo, crest, C and V, and footer", () => {
+test("Card view shows the seven in broadcast order, with photo, crest, C, and footer", () => {
   const starters = PICK_TEAM_SQUAD.filter((p): p is typeof p & { slot: SlotKey } => LINEUP_ORDER.includes(p.slot as SlotKey));
   // Given out of order, drawn in the broadcast's order.
   const cards = [...starters].reverse().map((p) => ({
@@ -137,17 +137,17 @@ test("Card view shows the seven in broadcast order, with photo, crest, C and V, 
   expect(out).toContain("Photo");
   expect(out).toContain("Not starting");
   expect(out).toContain("Form 19.3");
-  expect(html(<Lineup cards={cards} />)).toContain('title="Vice-carry">V');
+  expect(html(<Lineup cards={cards} />)).toContain('title="Captain">C');
 });
 
 test("the player panel shows name, meta, ✕ and its body", () => {
   const out = text(
-    <PlayerPanel name="Faker" meta="T1 · Mid · Carry">
+    <PlayerPanel name="Faker" meta="T1 · Mid · Captain">
       <p>Full stats</p>
     </PlayerPanel>,
   );
   expect(out).toContain("Faker");
-  expect(out).toContain("T1 · Mid · Carry");
+  expect(out).toContain("T1 · Mid · Captain");
   expect(out).toContain("✕");
   expect(out).toContain("Full stats");
 });
@@ -159,7 +159,7 @@ test("the panel's body: a series head, its games with the counted boxed, the sum
         <PanelGame no={1} what="Azir · W" points={5} counted />
         <PanelGame no={2} what="Ahri · L" points={2} counted={false} />
       </PanelSeries>
-      <PanelSum lines={<PanelSumLabel>Carry</PanelSumLabel>} figure={40} />
+      <PanelSum lines={<PanelSumLabel>Captain</PanelSumLabel>} figure={40} />
       <PanelFoot go={{ to: "/player/$playerId", params: { playerId: "faker" } }} />
     </PlayerPanel>,
   );
@@ -167,7 +167,7 @@ test("the panel's body: a series head, its games with the counted boxed, the sum
   expect(out).toContain('<span class="counted">5</span>');
   expect(out.match(/class="counted"/g)).toHaveLength(1);
   expect(out).toContain('class="player-panel__game player-panel__game--dropped"');
-  expect(out).toContain('<span class="quiet">Carry</span>');
+  expect(out).toContain('<span class="quiet">Captain</span>');
   expect(out).toContain('<b class="player-panel__sum-figure num">40</b>');
   expect(out).toContain('href="/player/faker"');
   expect(text(<PanelFoot go={{ to: "/points" }} />)).toBe("Full stats ›");

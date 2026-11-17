@@ -46,10 +46,10 @@ function GameRow({ g }: { g: PointsGame }) {
 
 /**
  * A tapped player's week, as FPL's points breakdown (Craig, 16 Nov 2026): a 544 sheet over the
- * page. Crest, name, hangul and C or V; his week's points; then each series (opening its Series
- * page) over its games, and Full stats. The Carry's total is his result, the ×1.5 hidden.
+ * page. Crest, name, hangul and C; his week's points; then each series (opening its Series
+ * page) over its games, and Full stats. The Captain's total is his result, the ×1.5 hidden.
  */
-export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Partial<Pick<PointsStarter, "plays" | "carry">>; onClose: () => void }) {
+export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Partial<Pick<PointsStarter, "plays" | "captain">>; onClose: () => void }) {
   const coach = player.role === "coach";
   const role = ROLE_NAME[player.plays ?? player.role];
   const final = player.series.every((s) => s.state === "final");
@@ -72,8 +72,8 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
         <b className="num">{player.points ?? NONE}</b>
         <span className="points__breakdown-total-note quiet">
           {!final && <NotFinalTag />}
-          {!final && player.carry && " · "}
-          {player.carry && `Average ${MARK_NAME.C} ${player.carry.average}`}
+          {!final && player.captain && " · "}
+          {player.captain && `Average ${MARK_NAME.C} ${player.captain.average}`}
         </span>
       </div>
     </header>

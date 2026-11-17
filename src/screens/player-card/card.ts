@@ -51,9 +51,9 @@ export interface WeekSeries {
 export interface CardWeek {
   week: number;
   series: WeekSeries[];
-  /** The Carry's multiplier, when he is your Carry. */
-  carry?: number;
-  /** The week's points, after the Carry. */
+  /** The Captain's multiplier, when he is your Captain. */
+  captain?: number;
+  /** The week's points, after the Captain. */
   total: number;
 }
 
@@ -138,7 +138,7 @@ export interface PlayerCardData {
   champions?: ChampionRow[];
 }
 
-/** Your Carry and Vice-carry marks, as Pick Team holds them. */
+/** Your Captain's C, as Pick Team holds it. */
 export type CardMark = Mark | undefined;
 
 /** The Pick Team keys, shown when the card opens from Pick Team; from Points there are none. */

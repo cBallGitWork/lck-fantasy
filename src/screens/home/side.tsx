@@ -20,7 +20,7 @@ export function WeekTotal({ week }: { week: WeekPoints }) {
 }
 
 
-/** A side list: role icon, name, C or V, team; a stat line; points. */
+/** A side list: role icon, name, C, team; a stat line; points. */
 export function PlayerList({ players, label }: { players: SidePlayer[]; label: string }) {
   return (
     <ul className="home__players" aria-label={label}>

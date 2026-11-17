@@ -3,7 +3,7 @@ import { PATHS } from "../../paths";
 import type { ViewProps } from "./format";
 
 /**
- * The four buffs (spec/06). Bench Boost and Dual Carry play here, then cancel until the deadline;
+ * The four buffs (spec/06). Bench Boost and Double Captain play here, then cancel until the deadline;
  * Remake and Limitless link to Transfers. One a week, so once one is chosen the rest grey. In one
  * row at the top of the page, above the Rift, as FPL's chips (Craig, 16 Nov 2026).
  */

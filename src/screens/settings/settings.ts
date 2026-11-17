@@ -61,7 +61,7 @@ export function changeLine(changed: (keyof SettingsValues)[]): string {
   return `${count} change${count === 1 ? "" : "s"}: ${changed.map((key) => FIELDS[key].name).join(", ")}`;
 }
 
-/** The tabs holding an unsaved change, which carry a dot. */
+/** The tabs holding an unsaved change, which captain a dot. */
 export function dirtyTabs(changed: (keyof SettingsValues)[]): Set<SettingsTab> {
   return new Set(changed.map((key) => FIELDS[key].tab));
 }

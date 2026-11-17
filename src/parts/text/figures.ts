@@ -1,6 +1,6 @@
 // How every page writes its figures, once each: counts, places, signed points and scores.
 
-/** The minus sign figures carry, never a hyphen: `−4`. */
+/** The minus sign figures take, never a hyphen: `−4`. */
 export const MINUS = "−";
 
 const EN_DASH = "–";

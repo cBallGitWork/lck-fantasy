@@ -38,7 +38,7 @@ export function ThisWeek({ week }: { week: CardWeek }) {
         <tbody>
           <tr>
             <td colSpan={2}>Week {week.week}</td>
-            <td className="player-card__right player-card__quiet quiet num">{week.carry !== undefined && `${raw} × ${week.carry} Carry`}</td>
+            <td className="player-card__right player-card__quiet quiet num">{week.captain !== undefined && `${raw} × ${week.captain} Captain`}</td>
             <td className="player-card__right player-card__points num">{week.total}</td>
           </tr>
         </tbody>

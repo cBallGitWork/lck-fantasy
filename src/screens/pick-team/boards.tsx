@@ -35,7 +35,6 @@ export function RiftBoard(props: ViewProps) {
             team={p.team}
             at={RIFT_SLOTS[slot]}
             mark={markOf(state, p.id)}
-            dual={state.draft.buff === "dualCarry"}
             line={fixtureLine(data.series, p.team)}
             flag={p.news?.flag}
             selected={p.id === state.selected}
@@ -59,7 +58,6 @@ export function CardBoard(props: ViewProps) {
     name: p.name,
     team: p.team,
     mark: markOf(state, p.id),
-    dual: state.draft.buff === "dualCarry",
     news: p.news?.flag,
     next: fixtureLine(data.series, p.team),
     footer: (

@@ -3,7 +3,7 @@
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
 import { FOLLOWED_WEEK3, MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
-import { CARRY_MULTIPLIER, HIT_POINTS, WEEK2_SERIES, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS, type Series } from "../../fixtures/week3";
+import { CAPTAIN_MULTIPLIER, HIT_POINTS, WEEK2_SERIES, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS, type Series } from "../../fixtures/week3";
 import type { FollowingData, SeriesItem } from "./feed";
 
 const { minji: MINJI, jae: JAE, dan: DAN, ella: ELLA, joe: JOE, tom: TOM, sam: SAM, priya: PRIYA } = MANAGERS;
@@ -24,7 +24,7 @@ const WEEK2_ENDED = { local: "Sun 12:30", kst: "21:30" } as const;
 export const FOLLOWING: FollowingData = {
   week: 3,
   followCap: 50,
-  carryMultiplier: CARRY_MULTIPLIER,
+  captainMultiplier: CAPTAIN_MULTIPLIER,
   feed: [
     {
       week: 3,
@@ -53,7 +53,7 @@ export const FOLLOWING: FollowingData = {
           ...week3(FOLLOWED_WEEK3.jae.seriesId),
           players: [
             { name: "Rich", points: 4 },
-            { name: "ucal", points: 2, carry: {} },
+            { name: "ucal", points: 2, captain: {} },
             { name: "Lehends", points: 3 },
           ],
           ended: { local: "Fri 13:00", kst: "22:00" },
@@ -66,7 +66,7 @@ export const FOLLOWING: FollowingData = {
           ...week3(FOLLOWED_WEEK3.dan.seriesId),
           players: [
             { name: "Oner", points: 11 },
-            { name: "Faker", points: 18, carry: { before: 12 } },
+            { name: "Faker", points: 18, captain: { before: 12 } },
             { name: "Keria", points: 5 },
           ],
           ended: { local: "Wed 10:20", kst: "19:20" },
@@ -109,8 +109,8 @@ export const FOLLOWING: FollowingData = {
           manager: JAE,
           points: 21,
           ...WEEK2_GEN_BRO,
-          bigCarry: true,
-          players: [{ name: "Ruler", points: 21, carry: { before: 14 } }],
+          bigCaptain: true,
+          players: [{ name: "Ruler", points: 21, captain: { before: 14 } }],
           ended: WEEK2_ENDED,
         },
         {
@@ -141,7 +141,7 @@ export const FOLLOWING: FollowingData = {
         { id: "c13", kind: "coffee", text: "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!" },
         { id: "c14", kind: "coffee", text: "THIS COFFEE IS KERIA-TIER SUPPORT." },
         { id: "c18", kind: "coffee", text: "AUTO-SUB SAVIOUR? NO, MATE. YOU ARE." },
-        { id: "p01", kind: "protest", text: "MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS." },
+        { id: "p01", kind: "protest", text: "MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS." },
         { id: "p15", kind: "protest", text: "NO TRANSFER AGAIN. IS ANYONE AT HEADQUARTERS?" },
         { id: "p16", kind: "protest", text: "SET AND FORGET IS NOT A PHILOSOPHY. IT'S A NAP." },
         { id: "p24", kind: "protest", text: "31 POINTS. WE ARE NOT ANGRY. WE ARE GUTTED." },

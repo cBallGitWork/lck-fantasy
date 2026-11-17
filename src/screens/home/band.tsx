@@ -14,8 +14,8 @@ function FeedRow({ item, onTruck }: { item: FeedItem; onTruck?: (item: FeedItem)
       </div>
     );
   }
-  const what = item.kind === "carry" ? `Carry ${item.player}` : item.series;
-  const small = item.kind === "carry" ? `${item.points} pts in ${item.series}` : `${item.points} pts`;
+  const what = item.kind === "captain" ? `Captain ${item.player}` : item.series;
+  const small = item.kind === "captain" ? `${item.points} pts in ${item.series}` : `${item.points} pts`;
   return (
     <div className="home__feed-row">
       <div>

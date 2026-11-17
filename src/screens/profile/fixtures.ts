@@ -32,7 +32,7 @@ export interface ProfilePick extends ProfilePlayer {
   /** The role he plays: the Flex's and the bench's, shown after the slot. */
   plays?: RoleKey;
   mark?: Mark;
-  /** The week's points, Carry's ×1.5 in; absent when he didn't play. */
+  /** The week's points, Captain's ×1.5 in; absent when he didn't play. */
   points?: number;
   /** The week's series he played, from his team's side as Points shows them: `v KT 2–0 · Wed`. */
   series: string[];
@@ -131,7 +131,7 @@ const T1_WEEK = lines("T1", "w3-wed-1", "w3-sat-2");
 const WEEK3_TEAM: ProfilePick[] = [
   { slot: "top", ...player("Kiin", "GEN"), points: 11, series: GEN_WEEK },
   { slot: "jng", ...player("Canyon", "GEN"), points: 14, series: GEN_WEEK },
-  { slot: "mid", ...player("Chovy", "GEN"), mark: "V", points: 17, series: GEN_WEEK },
+  { slot: "mid", ...player("Chovy", "GEN"), points: 17, series: GEN_WEEK },
   { slot: "bot", ...player("Ruler", "GEN"), mark: "C", points: 21, series: GEN_WEEK },
   { slot: "sup", ...player("Keria", "T1"), points: 9, series: T1_WEEK },
   { slot: "flex", ...player("Kingen", "NS"), plays: "top", points: 5, series: lines("NS", "w3-thu-1", "w3-fri-2") },
@@ -166,7 +166,7 @@ export const PROFILE: ProfileData = {
     { week: 2, points: W2, total: W1 + W2, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, hits: 0, bankM: 1.0, valueM: 100.6 },
     { week: 1, points: W1, total: W1, weekRank: 34_786, overall: 34_786, bankM: 2.5, valueM: 100.0 },
   ],
-  buffsLeft: ["Remake", "Bench Boost", "Dual Carry"],
+  buffsLeft: ["Remake", "Bench Boost", "Double Captain"],
   transfers: [
     {
       week: 3,

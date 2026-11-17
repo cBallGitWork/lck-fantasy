@@ -50,8 +50,8 @@ export interface PointsStarter extends PointsPlayer {
   slot: SlotKey;
   /** The role a Flex plays. */
   plays?: RoleKey;
-  /** The Carry's week: the average Carry's points. His own points are already the result. */
-  carry?: { average: number };
+  /** The Captain's week: the average Captain's points. His own points are already the result. */
+  captain?: { average: number };
 }
 
 /** A line of Your week: Star, Flop or Killer. */

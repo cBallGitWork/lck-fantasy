@@ -31,7 +31,7 @@ describe("a league you made (league.html)", () => {
   const out = text(<LeagueTable league={league} nameMax={LEAGUE_NAME_MAX} actions={ACTIONS} {...tableProps(league)} />);
 
   test("heads with the name, scoring week, code, Copy link and Admin, then the tabs and table head", () => {
-    expectInOrder(out, ["Pub League", "Scoring from Week 1", "PUB-7K2Q", "Copy link", "Admin ▾", "Season", "Split 1", "Split 2", "Rank", "Team · Manager", "Carry", "Week 3", "Total"]);
+    expectInOrder(out, ["Pub League", "Scoring from Week 1", "PUB-7K2Q", "Copy link", "Admin ▾", "Season", "Split 1", "Split 2", "Rank", "Team · Manager", "Captain", "Week 3", "Total"]);
     expect(out).not.toContain("Leave");
   });
 
@@ -89,7 +89,7 @@ describe("Overall in Split 1 (overall.html's layout)", () => {
   const out = text(<OverallTable league={league} group={league.openGroup} onGroup={noop} {...tableProps(league)} />);
 
   test("opens on the split being played: the season and split, the three tabs, the sponsor, then the table head", () => {
-    expectInOrder(out, ["Overall", `${SEASON} · Split 1`, "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Total"]);
+    expectInOrder(out, ["Overall", `${SEASON} · Split 1`, "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Captain", "Week 3", "Total"]);
   });
 
   test("hides the groups off Split 2", () => {
@@ -114,7 +114,7 @@ describe("Overall in Split 2, Legend (overall.html)", () => {
 
   test("heads with the season and split, Legend, Rise and All, the tabs, the sponsor and a Split 2 column", () => {
     const grouped = text(<OverallTable league={league} group="Legend" onGroup={noop} {...props} />);
-    expectInOrder(grouped, ["Overall", `${SEASON} · Split 2`, "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Carry", "Week 3", "Split 2", "Total"]);
+    expectInOrder(grouped, ["Overall", `${SEASON} · Split 2`, "Legend", "Rise", "All", "Season", "Split 1", "Split 2", "Sponsor", "Rank", "Captain", "Week 3", "Split 2", "Total"]);
   });
 });
 

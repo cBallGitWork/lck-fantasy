@@ -30,7 +30,7 @@ describe("the page (1440.png)", () => {
       "Truck ›",
       "Jae Kim",
       "NS 0–2 KRX",
-      "Rich 4 · ucal 2 (Carry) · Lehends 3",
+      "Rich 4 · ucal 2 (Captain) · Lehends 3",
       "Ended Fri 13:00 22:00 KST",
       "Truck ›",
       "Dan Okafor",
@@ -56,7 +56,7 @@ describe("the page (1440.png)", () => {
       "Week 2",
       "Jae Kim",
       "GEN 2–0 BRO",
-      "Big Carry",
+      "Big Captain",
       "Ruler 21 (14 × 1.5)",
       "Minji Park",
       "Chovy 21",
@@ -152,12 +152,12 @@ describe("the truck picker (1440-truck.png)", () => {
       "Deft Tomorrow · Week 3 · 31 pts so far, no transfers",
       "Coffee 커피차",
       "Protest 시위 트럭",
-      "MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS.",
+      "MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS.",
       "NO TRANSFER AGAIN. IS ANYONE AT HEADQUARTERS?",
       "SET AND FORGET IS NOT A PHILOSOPHY. IT'S A NAP.",
       "31 POINTS. WE ARE NOT ANGRY. WE ARE GUTTED.",
       "THE TEMPLATE WAS RIGHT THERE, MATE.",
-      "MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS.",
+      "MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS.",
       "One truck to Jae a week.",
       "Cancel",
       "Send truck",
@@ -169,7 +169,7 @@ describe("the truck picker (1440-truck.png)", () => {
     expect(out).toMatch(/aria-pressed="true"[^>]*>Protest/);
     expect(out.match(/checked=""/g)).toHaveLength(1);
     expect(out).not.toContain("KERIA-TIER");
-    expect(out).toContain('<div class="led led--big">MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS.</div>');
+    expect(out).toContain('<div class="led led--big">MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS.</div>');
   });
 
   test("Send truck waits for a line", () => {
@@ -211,5 +211,5 @@ test("summaries read as the picture writes them", () => {
   const moves = (over: Partial<DeadlineItem>): DeadlineItem => ({ kind: "deadline", id: "x", manager: FOLLOWING.following[0]!, transfers: 0, swaps: [], ...over });
   expect(movesSummary(moves({ transfers: 1 }))).toBe("1 transfer");
   expect(movesSummary(moves({ buff: "Limitless", transfers: 5 }))).toBe("Limitless, 5 transfers");
-  expect(playersLine([{ name: "Faker", points: 18, carry: { before: 12 } }], 1.5)).toBe("Faker 18 (12 × 1.5)");
+  expect(playersLine([{ name: "Faker", points: 18, captain: { before: 12 } }], 1.5)).toBe("Faker 18 (12 × 1.5)");
 });

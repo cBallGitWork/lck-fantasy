@@ -66,4 +66,3 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Coach card: This week before any series; mid-series History.
 - Profile: cancelling a follow request; how a week's transfer cost reads; place or number ranks;
   a sponsor cheer's credit line.
-- Transfers Undo: a confirm made under a buff has no Undo, so the confirm before it can't be undone.

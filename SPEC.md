@@ -35,16 +35,16 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 1 | [Squad and slots](spec/01-squad-and-slots.md) | A squad of 9: one player per role, a flex player of any role and the coach start; two on the bench. Auto-subs as in FPL, into the player's own role or the flex. The coach is the team: it scores the team's play, shown as its head coach. | partly built: rules, and Pick Team on made-up data; no storage yet |
 | 2 | [Prices and budget](spec/02-prices-and-budget.md) | Money as ₩ and m (`₩18.5m`), as FPL. First prices from a formula, adjusted by hand. Prices move weekly at the deadline, mostly on points, a little on demand, down when few own a player, above a floor; the formula is public. Sell at the full current price. | partly built: budget rules, and prices on Transfers, Stats and Price changes on made-up data; made-up prices and the budget stored from data/lck; no price moves yet |
 | 3 | [Transfers](spec/03-transfers.md) | One free transfer a week, banking to 3, each extra −6. Unlimited before the season's and Split 2's first deadline, then 2 free in the next gameweek. An admin can top banks up. Locked between the splits; Split 2's window opens 2 weeks before its first deadline, when the knockout budget raise comes back off and Flol fixes any squad left over. | partly built: rules, and Transfers on made-up data; no storage yet |
-| 4 | [Carry (captain)](spec/04-captain.md) | A Carry and Vice-carry (FPL's captain and vice) from the six starting players, never the coach. The Carry's points are multiplied; the Vice-carry takes over if the Carry plays no game. | partly built: rules, and the Carry on Pick Team on made-up data; no storage yet |
-| 5 | [Scoring](spec/05-scoring.md) | Per game, low whole numbers, about even for quick and long games; a series scores the best 2 games. Players score kills, assists and deaths (each capped at 3), gold lead at 15, solo kills, first blood, deathless games, multikills and steals. The coach scores first tower, most drakes, barons and elders, a quick win, +3 for a series win and −1 for a series loss. The Carry scores ×1.5, rounded down. | partly built: rules, and settled stats loaded and stored; the screens' points are made up |
-| 6 | [Buffs](spec/06-buffs.md) | Buffs are data: a name, an effect from the code's list, a count per split, the stages that allow it. One a gameweek. The buffs are Remake, Limitless (no budget or team cap for a week), Bench Boost and Dual Carry (the Vice-carry scores ×1.5 too): one each in the beta, one each per split, in every stage. | partly built: rules, and buffs on Pick Team on made-up data; no storage yet |
+| 4 | [Captain](spec/04-captain.md) | A Captain from the six starting players, never the coach, and no vice-captain (Craig, 17 Nov 2026). The Captain's points are multiplied; if he plays no game, nobody's are. | partly built: rules, and the Carry and Vice-carry on Pick Team on made-up data, to be renamed and the vice removed; no storage yet |
+| 5 | [Scoring](spec/05-scoring.md) | Per game, low whole numbers, about even for quick and long games; a series scores the best 2 games. Players score kills, assists and deaths (each capped at 3), gold lead at 15, solo kills, first blood, deathless games, multikills and steals. The coach scores first tower, most drakes, barons and elders, a quick win, +3 for a series win and −1 for a series loss. The Captain scores ×1.5, rounded down. | partly built: rules, and settled stats loaded and stored; the screens' points are made up |
+| 6 | [Buffs](spec/06-buffs.md) | Buffs are data: a name, an effect from the code's list, a count per split, the stages that allow it. One a gameweek. The buffs are Remake, Limitless (no budget or team cap for a week), Bench Boost and Double Captain (a second Captain for a week, both ×1.5): one each in the beta, one each per split, in every stage. | partly built: rules, and buffs on Pick Team on made-up data; no storage yet |
 | 8 | [Leagues](spec/08-leagues.md) | Every manager joins Overall, their country's league and their team's supporter league; the team is required at sign-up. Leagues rank on total points, with a season table and one per split. In Split 2, Overall splits into Legend (Split 1's top half) and Rise, points carried. Overall shows a LoL tier, Iron to Challenger, from percentile cut-offs. Private leagues by code or link, from any gameweek. | partly built: rules with Overall tiers, and the Leagues screen with its forms on made-up data; leagues stored (the three every manager joins, private leagues by code), not yet wired to the screen |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: a new visitor lands on the pick-a-team page, with Auto-fill, and the squad is kept in the browser. Sign-up comes on Save: Google or Discord, then team name, favourite team, country. Late joiners as in FPL. | partly built: rules, and the guest's squad kept in the browser; no screen or sign-in yet |
 | 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | Split 1 is the beta, the LCK Cup dropped; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series, knockouts included. In knockouts the team cap rises from 2 to 3, the budget is raised, transfers are unlimited and every series counts. | partly built: the 2027 season's settings and Split 1's gameweeks and deadlines stored from data/lck, made up; no stage rules yet |
 | 11 | [Live points](spec/11-live-points.md) | The beta has live points from Riot's unofficial feed, shown as provisional. A series turns final 3 hours after it ends, from Oracle's Elixir and Leaguepedia. Ranks move when a series is final; prices only at the deadline. | partly built: settled-stats rules, a series' final state, an admin's pasted Leaguepedia key and stored, re-runnable loads of series, games, lineups and stats; no live feed or fetching yet |
 | 12 | [Pages](spec/12-pages.md) | Home (a status page), Pick Team, Transfers, Points, Leagues, Stats, an LCK hub for the LCK's fixtures, standings and rosters, a series page, player and coach pop-ups, public manager profiles, Perfect game (the week's best team), Price changes (the new prices each gameweek), Live (a stream picker: official broadcasts and co-streamers beside live points), Help and Settings. | partly built: star and flop rules, and every page but Help built to its picture on made-up data; no backend wired yet |
 | 13 | [Korean touches](spec/13-korean-touches.md) | Made-up Korean sponsors from LCK memes, each explaining its meme on tap; cheers, jeers and sponsor cheers, each an LED truck from a made-up truck-hire sponsor ([spec/14](spec/14-following.md)); a birthday cake on a player's week; a hangul banner for your team; fun team shirts and crests, and where each shows. No points. | not built |
-| 14 | [Following, cheers and jeers](spec/14-following.md) | Follow other managers by request, one-way, in the beta. A feed of their series points, big Carries and transfers. Cheer or jeer anyone you follow once a gameweek, from a database of preset lines; a sponsor cheer to each private league's weekly top. | partly built: follows, the feed and cheers and jeers as rules, and the Following page on made-up data; no storage yet |
+| 14 | [Following, cheers and jeers](spec/14-following.md) | Follow other managers by request, one-way, in the beta. A feed of their series points, big Captains and transfers. Cheer or jeer anyone you follow once a gameweek, from a database of preset lines; a sponsor cheer to each private league's weekly top. | partly built: follows, the feed and cheers and jeers as rules, and the Following page on made-up data; no storage yet |
 
 ## Later
 
@@ -74,7 +74,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A gameweek per match day: "lots of transfers… more admin" (Craig, 11 Nov 2026).
 - FPL's selling price, keeping half of a rise: a player sells at his full current price (Craig, 12 Nov 2026).
 - A coach scored as the average of his players' points, CBLOL's 2026 way (Craig, 11 Nov 2026).
-- The coach as Carry or Vice-carry (Craig, 12 Nov 2026).
+- The coach as Captain (Craig, 12 Nov 2026).
+- A vice-captain (Craig, 17 Nov 2026): substitutes are rare in the LCK.
 - A point for a game won, for players or the coach; role quests; CS and vision lines (Craig, 12 Nov 2026).
 - Points for playing (Craig, 13 Nov 2026).
 - GRID as a data source: not asked (Craig, 13 Nov 2026).
@@ -82,7 +83,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A cup: "Cup is just head to head. We stick to points for now" (Craig, 13 Nov 2026).
 - A prizes page, and a price predictor (Craig, 13 Nov 2026).
 - A watchlist, and projected points on the player card (Craig, 13 Nov 2026).
-- Renaming Carry, Killer or the buffs: a hover explains them (Craig, 16 Nov 2026).
+- Renaming Killer or the other buffs: a hover explains them (Craig, 16 Nov 2026). Carry became
+  Captain, and Dual Carry Double Captain (Craig, 17 Nov 2026).
 - Keys, legends or explainer lines for a word ([spec/12](spec/12-pages.md#words)).
 
 ## Glossary
@@ -94,9 +96,9 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | game | One game within a series. | map |
 | stage | A part of a competition with its own settings: groups, Road to MSI, play-in, playoffs. | phase |
 | round | One round of a knockout bracket. | |
-| Carry | The player whose points are multiplied this gameweek: FPL's captain. Vice-carry is the vice-captain. | captain |
+| Captain | The player whose points are multiplied this gameweek, as in FPL. There is no vice-captain. | Carry |
 | table | A league's ranking: one for the season and one per split. | leaderboard |
-| Perfect game | The gameweek's best team under the squad rules: a Carry and 7 starters. | team of the week |
+| Perfect game | The gameweek's best team under the squad rules: a Captain and 7 starters. | team of the week |
 | LCK hub | The LCK's own fixtures, standings and rosters. | fixtures page |
 | coach | The slot that is a team, scoring the team's play, shown as its head coach. | team slot |
 | tier | An Overall place as a LoL ranked tier, Iron to Challenger (Craig, 14 Nov 2026). | league, rank |

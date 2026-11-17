@@ -17,10 +17,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
   - Rift view and Card view, Rift on the first visit, then remembered, as Pick Team.
-  - Your own week (Craig, 14 Nov 2026): your Star, the top starter after the Carry ×1.5; your
+  - Your own week (Craig, 14 Nov 2026): your Star, the top starter after the Captain ×1.5; your
     Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
     ownership. Home keeps the global star and flop.
-  - The Carry's games show your Carry's points beside the average Carry's.
+  - The Captain's games show your Captain's points beside the average Captain's.
   - Your Overall tier and ≈ points to promote, or to avoid demotion
     ([spec/08](08-leagues.md#overall-tiers)).
   - Its layout is the approved picture (`docs/design/approved/points/`).
@@ -67,9 +67,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   ([spec/08](08-leagues.md#overall-tiers)). Its private leagues show too, as in FPL; a History row
   opens that week's team (Craig, 14 Nov 2026). Its layout is the approved picture
   (`docs/design/approved/profile/`).
-- **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
+- **Perfect game**: the gameweek's best team, a Captain and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
-  - The 7 starter slots, with one of them as Carry; the Carry's ×1.5 counts in its total. The cap
+  - The 7 starter slots, with one of them as Captain; the Captain's ×1.5 counts in its total. The cap
     applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and
     ignores both.
   - It builds live, with a Not final tag until the week is final.
@@ -116,14 +116,14 @@ Craig's yes in the Home design round, grilled 14 Nov 2026. Its layout is the app
 
 - **A series live:** the stream, muted, with the Live page's picker and the manager's remembered
   pick. **Live ›** opens the Live page.
-- **Nothing live:** the manager's 7 starters for the week as a broadcast lineup, with C and V;
+- **Nothing live:** the manager's 7 starters for the week as a broadcast lineup, with C;
   the next series on stream and when; **Pick Team ›**.
 - **Star and flop** of the last gameweek, the same pair for every manager, each shown with its
   points and effective ownership.
-  - Effective ownership: the share of managers starting a player, a Carry counting 1.5. Example:
-    40% of managers start Faker and 20% of all managers make him Carry, so 50%.
+  - Effective ownership: the share of managers starting a player, a Captain counting 1.5. Example:
+    40% of managers start Faker and 20% of all managers make him Captain, so 50%.
   - It counts the team as it scored, as FPL sites do: an auto-sub and a Bench Boost bench count
-    as starting, and anyone taking the ×1.5 counts 1.5, the Vice-carry too under Dual Carry
+    as starting, and anyone taking the ×1.5 counts 1.5, both Captains under Double Captain
     (Craig, 15 Nov 2026).
   - Star: the most points × (1 − effective ownership). Example: Kiin, 15 points at 8%, beats
     Chovy, 18 at 45% (13.8 against 9.9).
@@ -146,7 +146,7 @@ Grilled 14 Nov 2026.
   - Transfers remembers its own. Its List view, FPL's list with prices and fixtures, is a different
     thing from Card view.
   - The choice is kept in the browser, so per device, and a guest's is kept too.
-- On Pick Team, swaps, the Carry, the Vice-carry and buffs take effect only when the manager
+- On Pick Team, swaps, the Captain and buffs take effect only when the manager
   presses Save (Craig, 13 Nov 2026). Reset clears what isn't saved.
 - On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in
   the list, greyed, with why, and sorts last.
@@ -178,7 +178,7 @@ F1 Fantasy, Sleeper and gol.gg).
   - Champions: each champion he has played this season, with games and average points.
 - **Season stats**: the scoring lines only ([spec/05](05-scoring.md)), as per-game averages and
   totals, beside every tab (Craig, 14 Nov 2026).
-- **Buttons**, as FPL's, by where it opened: transfer in or out, Make Carry, Make Vice-carry,
+- **Buttons**, as FPL's, by where it opened: transfer in or out, Make Captain,
   substitute.
 - **Compare**, in the beta: two players side by side, with header stats, form, scoring lines and
   next series.
@@ -236,7 +236,7 @@ team's players and prices, replaces Champions.
 ## Buffs
 
 Buffs confirm as in FPL: Remake and Limitless are final once confirmed, like FPL's Wildcard and
-Free Hit; Bench Boost and Dual Carry can be cancelled until the deadline
+Free Hit; Bench Boost and Double Captain can be cancelled until the deadline
 ([spec/06](06-buffs.md)).
 
 ## Words
@@ -255,8 +255,8 @@ suggestions.
 | Killer | Points, Your week | Top scorer you don't own |
 | Flex | Pick Team and Points, the slot's label | Any role |
 | Emerald I (any tier) | Home, Points, Leagues | Overall rank as a LoL tier |
-| C | the Carry's badge, everywhere | Scores ×1.5 this week |
-| V | the Vice-carry's badge, everywhere | Takes over if the Carry plays no game |
+| C | the Captain's badge, everywhere | Scores ×1.5 this week |
 | Remake, Limitless | Transfers' buff keys | the line on their Pick Team card |
 
-- Carry, Killer and the buff names stay; the hover explains them (Craig, 16 Nov 2026).
+- Killer and the buff names stay; the hover explains them (Craig, 16 Nov 2026). Captain replaced
+  Carry, and Double Captain Dual Carry (Craig, 17 Nov 2026).

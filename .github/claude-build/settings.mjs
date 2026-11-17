@@ -14,6 +14,8 @@
 //   tools      more tools the builder may use, comma-separated, as claude's --allowedTools takes them
 //   prompt     a file of this project's own instructions, added after the kit's prompt ({{ISSUE}}, {{PR}} filled in)
 //   autoMerge  false keeps the build's pull request for the owner to merge (default: true)
+//   unguardedMain  true builds although main has no ruleset (a free private repo): only the run's own guards then
+//              keep the builder off main, and a commit main gains with no pull request turns the run red (default: false)
 // This file is a kit file: change it in Forge.
 import { appendFileSync, existsSync, readFileSync } from "node:fs";
 import { randomUUID } from "node:crypto";
@@ -27,6 +29,7 @@ const DEFAULTS = {
   ruleDocs: "the docs it names (docs/decisions.md, and SPEC.md and spec/NN-*.md where they exist)",
   doneLabel: "lead:stale",
   autoMerge: true,
+  unguardedMain: false,
 };
 // every tool the builder needs is named, as the run is headless; the deny list is a speed bump: the real guard is
 // the main ruleset's required checks and lane-auto.yml's refusal to approve a build's change to the pipeline
@@ -39,6 +42,8 @@ const TOOLS = [
 ];
 const DENIED = [
   "Bash(gh pr merge:*)", "Bash(gh pr edit:*--remove-label*)", "Bash(gh api:*)", "Bash(git push --force:*)",
+  // what would get past the runner's guard on main: skipping git's hooks or changing git's settings or hooks
+  "Bash(git push*--no-verify*)", "Bash(git*core.hooksPath*)", "Bash(git config:*)", "Edit(.git/**)", "Write(.git/**)",
   "Edit(.github/**)", "Write(.github/**)", "Edit(.claude/**)", "Write(.claude/**)", "Edit(CLAUDE.md)", "Write(CLAUDE.md)",
   "ScheduleWakeup", "CronCreate", "CronDelete", "Monitor", "RemoteTrigger",
 ];
@@ -56,8 +61,8 @@ export function buildSettings(root) {
   }
   if (typeof build !== "object" || Array.isArray(build)) throw new Error(`${PROJECT} "build" must be an object`);
   for (const [key, value] of Object.entries(build)) {
-    const kind = key === "autoMerge" ? "boolean" : "string";
-    if (!["check", "ruleDocs", "doneLabel", "setup", "python", "before", "tools", "prompt", "autoMerge"].includes(key)) {
+    const kind = ["autoMerge", "unguardedMain"].includes(key) ? "boolean" : "string";
+    if (!["check", "ruleDocs", "doneLabel", "setup", "python", "before", "tools", "prompt", "autoMerge", "unguardedMain"].includes(key)) {
       throw new Error(`${PROJECT} "build" has an unknown key "${key}"`);
     }
     if (typeof value !== kind) throw new Error(`${PROJECT} "build.${key}" must be a ${kind}`);

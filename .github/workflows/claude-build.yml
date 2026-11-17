@@ -112,8 +112,18 @@ jobs:
           go=true
           # a refused read prints its error as the answer, so the read's own result is tested, then the count
           if ! rules=$(gh api "repos/$GH_REPO/rules/branches/$DEFAULT_BRANCH" --jq 'length' 2>/dev/null) || ! [ "$rules" -gt 0 ] 2>/dev/null; then
-            echo "::notice::No ruleset on $DEFAULT_BRANCH: nothing would stop the builder's account pushing to it, so nothing builds. Make the \`main\` ruleset first (it needs GitHub Pro on a private repo)."
-            go=false
+            # a project whose main can't have a ruleset (a free private repo) may build anyway with "build.unguardedMain"
+            # true: then only this run's own guards keep the builder off main (the "Guard main" step), and the run goes
+            # red and opens an issue if main moved without a pull request (the "Check main" step)
+            unguarded=$(gh api "repos/$GH_REPO/contents/.studio/project.json?ref=$GITHUB_SHA" --jq '.content' 2>/dev/null \
+              | base64 -d 2>/dev/null | jq -r '.build.unguardedMain // false' 2>/dev/null || echo false)
+            if [ "$unguarded" = true ]; then
+              echo "::notice::No ruleset on $DEFAULT_BRANCH: building with this run's own guards, as .studio/project.json allows (build.unguardedMain)."
+              echo "unguarded=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "::notice::No ruleset on $DEFAULT_BRANCH: nothing would stop the builder's account pushing to it, so nothing builds. Make the \`main\` ruleset first (it needs GitHub Pro on a private repo), or set build.unguardedMain in .studio/project.json."
+              go=false
+            fi
           fi
           if [ "$HAS_BUILD_TOKEN" != true ]; then
             echo "::notice::No BUILD_TOKEN secret: the builder has no account to push and open its pull request as, so nothing builds."
@@ -160,6 +170,31 @@ jobs:
         if: steps.gate.outputs.go == 'true'
         with:
           fetch-depth: 0
+      # Every build: git in this runner refuses a push to main (a pre-push hook outside the checkout, so nothing the
+      # build commits holds it), and the deny list keeps the builder from git's settings, its hooks and --no-verify.
+      # Where main has a ruleset, that is the real guard; where it has none (build.unguardedMain), these are the
+      # guard, and the "Check main" step catches what gets past them.
+      - name: Guard main in this runner
+        if: steps.gate.outputs.go == 'true'
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          hooks="$RUNNER_TEMP/git-hooks" && mkdir -p "$hooks"
+          cat > "$hooks/pre-push" <<'HOOK'
+          #!/bin/sh
+          # the remote ref of each pushed ref is the third word git gives a pre-push hook on stdin
+          while read -r _ _ remote_ref _; do
+            if [ "$remote_ref" = "refs/heads/MAIN_BRANCH" ]; then
+              echo "claude-build: a build never pushes to MAIN_BRANCH: push your own branch and open a pull request" >&2
+              exit 1
+            fi
+          done
+          exit 0
+          HOOK
+          sed -i "s/^ *//; s#MAIN_BRANCH#$DEFAULT_BRANCH#g" "$hooks/pre-push"
+          chmod +x "$hooks/pre-push"
+          git config core.hooksPath "$hooks"
+          echo "MAIN_AT_START=$(git rev-parse "origin/$DEFAULT_BRANCH")" >> "$GITHUB_ENV"
       # the project's settings (its .studio/project.json "build" block), the prompt and the builder's tools
       - id: project
         name: Read the project's build settings
@@ -383,6 +418,23 @@ jobs:
               "",
               "Last message: \(($r.result // "none") | tostring | split("\n")[0] | .[0:300])"
           ' "$file" | tee -a "$GITHUB_STEP_SUMMARY"
+      # Where main has no ruleset: every commit main gained during the run must have come through a pull request.
+      # One that didn't goes red here and opens an issue for Craig (revert it with a new commit; force-pushing is denied).
+      - name: Check main moved only through pull requests
+        if: always() && steps.gate.outputs.unguarded == 'true' && steps.subscription.outcome != 'skipped'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          git fetch -q origin "$DEFAULT_BRANCH"
+          bad=""
+          for sha in $(git rev-list "$MAIN_AT_START..origin/$DEFAULT_BRANCH"); do
+            [ "$(gh api "repos/$GH_REPO/commits/$sha/pulls" --jq 'map(select(.merged_at != null)) | length')" -gt 0 ] || bad="$bad $sha"
+          done
+          [ -z "$bad" ] && { echo "Main moved only through pull requests."; exit 0; }
+          gh issue create --title "A build may have pushed to main" --body "Run $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID: main gained commits with no merged pull request while it ran:$bad. Check them and revert with a new commit if they are the build's."
+          echo "::error::Main gained commits with no pull request during this build:$bad"; exit 1
       - name: Stop what the before-build command started
         if: always()
         run: for pid in "$RUNNER_TEMP"/*.pid; do [ -e "$pid" ] && kill "$(cat "$pid")" 2>/dev/null; done; true

@@ -36,7 +36,7 @@ import { SquadList } from "./SquadList";
 import "./transfers.css";
 
 /** Transfers' two views: the nine on the Rift, or listed by role (Craig, 16 Nov 2026). */
-const TRANSFER_VIEWS = [RIFT_VIEW, "List view"] as const;
+export const TRANSFER_VIEWS = [RIFT_VIEW, "List view"] as const;
 export type View = (typeof TRANSFER_VIEWS)[number];
 
 export interface TransfersPageProps {

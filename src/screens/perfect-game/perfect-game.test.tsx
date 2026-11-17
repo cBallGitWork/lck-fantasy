@@ -1,8 +1,10 @@
 // @vitest-environment node
 import { expect, test, vi } from "vitest";
 import { PERFECT_GAME } from "../../fixtures/week3";
-import { sum } from "../../parts";
-import { expectInOrder, html, text } from "../../testing/render";
+import { sum, VIEW_KEYS } from "../../parts";
+import { PATHS } from "../../paths";
+import { expectInOrder, html, htmlAt, text } from "../../testing/render";
+import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PERFECT_WEEK3 } from "./fixtures";
 import { PerfectGame, PerfectGameCards, PerfectGameRift } from "./PerfectGame";
 
@@ -115,4 +117,12 @@ test("the fixture agrees with the shared Week 3: each series' points make the li
       expect(counted, `${p.name} ${s.id}`).toBe(s.points);
     }
   }
+});
+
+test("Perfect game opens on Rift the first time, then on the view shared with Points, and on Rift where storage is blocked", async () => {
+  expect(chosenView(await htmlAt(PATHS.perfectGame))).toBe("Rift view");
+  stubStorage(keptStorage({ [VIEW_KEYS.board]: "Card view", [VIEW_KEYS.transfers]: "List view" }));
+  expect(chosenView(await htmlAt(PATHS.perfectGame))).toBe("Card view");
+  stubStorage(blockedStorage);
+  expect(chosenView(await htmlAt(PATHS.perfectGame))).toBe("Rift view");
 });

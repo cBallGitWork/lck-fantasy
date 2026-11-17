@@ -9,7 +9,8 @@ import { changeCount, pickNews, pickReducer, type PickAction, type PickState, ty
 import { PlayerCard } from "./PlayerCard";
 import "./pick-team.css";
 
-const VIEWS = [
+/** Pick Team's views, each with the shared board view it is kept as (spec/12). */
+export const VIEWS = [
   { value: "rift", label: BOARD_VIEWS[0] },
   { value: "cards", label: BOARD_VIEWS[1] },
 ] as const;
@@ -85,7 +86,7 @@ export function PickTeamPage({
   data: PickTeamData;
   initial: PickState;
   onSave?: (team: PickTeam) => void;
-  /** The backend remembers each manager's view (spec/12). */
+  /** The chosen view, for the browser to remember (spec/12). */
   onView?: (view: PickView) => void;
 }) {
   const playerOf = (id: string) => {

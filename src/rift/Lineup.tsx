@@ -5,6 +5,7 @@ import { RoleIcon } from "./RoleIcon";
 import type { RoleKey, SlotKey } from "./roles";
 import { COACH_HANGUL, LINEUP_ORDER, ROLE_NAME, slotIcon } from "./roles";
 import { MarkBadge, type Mark } from "./MarkBadge";
+import { SlotName } from "./SlotName";
 
 export interface LineupCardProps {
   slot: SlotKey;
@@ -32,7 +33,7 @@ function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
     <div className="pcard__role">
       <RoleIcon role={slotIcon(slot, plays)} />
       <span>
-        {ROLE_NAME[slot]}
+        <SlotName slot={slot} label={ROLE_NAME[slot]} />
         {small && <small>{small}</small>}
       </span>
     </div>

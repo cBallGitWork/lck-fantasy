@@ -40,6 +40,7 @@ What shows a fact: tags, tables, lists, crests, states.
 - `Deadline.tsx`: `Deadline Wed 07:45  16:45 KST` and the countdown.
 - `Time.tsx`: your time, then KST in mid grey; the words over such times (`YOUR_TIME`, `TIME_NOTE`).
 - `MeDot.tsx`: your player's dot.
+- `Hint.tsx`: a word's hover (spec/12, Words): one short line on hover, or on tap on the phone; the words-alone lines (`HINTS`) and C's (`captainHint`).
 - `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a rule above a row starting a group (`ruleAbove`), a row's `›` (`open`); sticky head and name column for the wide table.
 - `SeriesList.tsx`: the week's series: day, teams, then score and state, or the time.
 - `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px `--text` rule, the next 3 with `Bo3`, the first in `--text` (player card, coach card).

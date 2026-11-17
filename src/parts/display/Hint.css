@@ -1,0 +1,27 @@
+/* A word's hover (Hint.tsx). :where keeps the page's own class (a mark's corner) in charge of where the word stands. */
+:where(.hint) {
+  position: relative;
+}
+.hint {
+  cursor: help;
+}
+.hint__line {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 5;
+  margin-top: var(--s-1);
+  padding: var(--s-1) var(--s-2);
+  background: var(--text);
+  color: var(--bg);
+  font-family: var(--font-sans);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  text-transform: none;
+  white-space: nowrap;
+  visibility: hidden;
+}
+.hint:hover .hint__line,
+.hint:focus .hint__line {
+  visibility: visible;
+}

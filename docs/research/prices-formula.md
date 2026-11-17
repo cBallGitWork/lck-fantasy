@@ -71,7 +71,8 @@ A team's share of series won against its players' points per series (10+ series)
 Squads, all nine inside ₩100m, two academy players on the bench:
 
 - Chovy, Ruler and Peyz + the cheapest 6: ₩101.5m, just over. Three cheaper stars fit.
-- 2 stars + 2 mid-priced (₩15m) + the cheapest 5: ₩103m.
+- 2 stars + 2 mid-table players (KT or BNK FEARX, about ₩13m) + the cheapest 5: about ₩99m.
+  With T1 or Dplus Kia players at ₩15m instead: ₩103m.
 - The cheapest legal squad: ₩53m.
 
 Tops sit low because the data has no solo kills, which tops get most; Leaguepedia has them.

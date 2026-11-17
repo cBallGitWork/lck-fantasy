@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import type { BuffName } from "../../fixtures/week3";
-import { cx, Deadline, formatWon, MainAction, NONE, OutlinedKey, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
+import { cx, Deadline, formatWon, Hint, MainAction, NONE, OutlinedKey, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
 import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
@@ -57,8 +57,8 @@ export interface TransfersPageProps {
   fixtures: Record<string, Fixture[]>;
   /** The teams the Team filter offers. */
   teams: string[];
-  /** The transfer buffs the manager can still play. */
-  buffs: BuffName[];
+  /** The transfer buffs the manager can still play, each with its Pick Team card's line, the key's hover. */
+  buffs: { name: BuffName; does: string }[];
   initialPlan?: Plan;
   /** The manager's last choice; Rift view on his first visit (spec/12). */
   view?: View;
@@ -150,9 +150,9 @@ export function TransfersPage(props: TransfersPageProps) {
         <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={chooseView} label="View" />
         <span className="transfers__keys">
           {props.buffs.map((buff) => (
-            <OutlinedKey key={buff} onClick={() => props.onBuff?.(buff)}>
-              {buff}
-            </OutlinedKey>
+            <Hint key={buff.name} line={buff.does} onKey>
+              <OutlinedKey onClick={() => props.onBuff?.(buff.name)}>{buff.name}</OutlinedKey>
+            </Hint>
           ))}
         </span>
       </div>

@@ -2,7 +2,7 @@
 :where(.hint) {
   position: relative;
 }
-.hint {
+.hint[tabindex] {
   cursor: help;
 }
 .hint__line {
@@ -22,6 +22,6 @@
   visibility: hidden;
 }
 .hint:hover .hint__line,
-.hint:focus .hint__line {
+.hint:focus-within .hint__line {
   visibility: visible;
 }

@@ -6,7 +6,8 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 ## An LEC game, talk only (17 Nov 2026)
 
 - A second game for the LEC, which starts 15 Jan 2027 with three splits; its schedule differs
-  from the LCK's.
+  from the LCK's. Each split as last summer's: 8 weeks, some with 5 match days (Craig, from the
+  LEC's commissioner, 17 Nov 2026).
 - An Overall league that runs all year, across the three splits.
 - The same core as the LCK (budget and the like), with buffs and other settings tuned for it.
 

@@ -7,7 +7,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 ## Money
 
 - Money is shown as ₩ then m, to one decimal, as FPL shows £ and m: `₩18.5m` (Craig, 16 Nov 2026;
-  it was 억). As a guide: a budget of about ₩100m, stars at about ₩18–22m, cheap picks at about ₩5m. The values are data per
+  it was 억). As a guide: a budget of ₩100m, stars at about ₩21–23m, first-team picks from ₩6m, academy players ₩5m (Craig, 17 Nov 2026). The values are data per
   competition, set before each split. The approved pictures still show 억; read it as ₩ and m.
 - The coach (the team) has a price, like a player ([spec/01](01-squad-and-slots.md)).
 - Knockout stages can lift the budget through their stage settings
@@ -25,12 +25,17 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - The goal (Craig, 17 Nov 2026): a normal squad is 2 stars, 1 or 2 mid-priced and the rest cheap.
   Three stars force the rest to be the worst players. The
   [draft](../docs/research/prices-formula.md) is backtested against these squads.
-- Chovy is the dearest player, at about ₩25m: he is the bigger name. Faker is ₩15m (Craig, 17 Nov 2026).
-- Coaches can't be Captain, so they can't cost as much as the top players, and the bottom coaches
-  are spread out (Craig, 17 Nov 2026).
-- Nobody costs ₩18–22m: the stars sit above a gap (Craig, 17 Nov 2026).
-- The base weighs last season more than the one before (Craig, 17 Nov 2026).
-- Academy players start at ₩6m (Craig, 17 Nov 2026).
+- The top price is about ₩23m, and Chovy is the dearest: he is the bigger name. Faker is ₩15m
+  (Craig, 17 Nov 2026).
+- Coaches can't be Captain, so they can't cost as much as the top players (Craig, 17 Nov 2026).
+- Nobody costs around ₩18–22m: the stars sit above a gap (Craig, 17 Nov 2026).
+- More of a straight line than a curve; the base weighs last season more than the one before
+  (Craig, 17 Nov 2026).
+- Each role's ten starters, and the ten coaches, have different prices, ₩0.5m apart at least,
+  so the bottom teams are separated too (Craig, 17 Nov 2026).
+- The budget is ₩100m. The first-team floor is ₩6m; academy players are ₩5m, cheaper than every
+  first-teamer, and can fill the bench (Craig, 17 Nov 2026).
+- Tier lists and bookmakers' odds near the season's start refine the list (Craig, 17 Nov 2026).
 - The top coaches are priced a little higher than the others (Craig, 13 Nov 2026): in the 2026
   backtest Gen.G's coach scored 6.8 a series, among the top five picks, against 4.5–5.9 for the
   rest.

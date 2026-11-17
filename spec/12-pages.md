@@ -124,7 +124,7 @@ Craig's yes in the Home design round, grilled 14 Nov 2026. Its layout is the app
     40% of managers start Faker and 20% of all managers make him Captain, so 50%.
   - It counts the team as it scored, as FPL sites do: an auto-sub and a Bench Boost bench count
     as starting, and anyone taking the ×1.5 counts 1.5, both Captains under Double Captain
-    (Craig, 15 Nov 2026).
+    count 2 (Craig, 15 Nov 2026; ×2 from 17 Nov 2026).
   - Star: the most points × (1 − effective ownership). Example: Kiin, 15 points at 8%, beats
     Chovy, 18 at 45% (13.8 against 9.9).
   - Flop: the fewest points among the 10 highest by effective ownership. Example: Faker, 2 points
@@ -235,8 +235,7 @@ team's players and prices, replaces Champions.
 
 ## Buffs
 
-Buffs confirm as in FPL: Remake and Limitless are final once confirmed, like FPL's Wildcard and
-Free Hit; Bench Boost and Double Captain can be cancelled until the deadline
+Buffs confirm as in FPL's Bench Boost: each can be cancelled until the deadline
 ([spec/06](06-buffs.md)).
 
 ## Words
@@ -255,8 +254,7 @@ suggestions.
 | Killer | Points, Your week | Top scorer you don't own |
 | Flex | Pick Team and Points, the slot's label | Any role |
 | Emerald I (any tier) | Home, Points, Leagues | Overall rank as a LoL tier |
-| C | the Captain's badge, everywhere | Scores ×1.5 this week |
-| Remake, Limitless | Transfers' buff keys | the line on their Pick Team card |
+| C | the Captain's badge, everywhere | Scores ×1.5 this week (×2 under Double Captain) |
 
 - Killer and the buff names stay; the hover explains them (Craig, 16 Nov 2026). Captain replaced
   Carry, and Double Captain Dual Carry (Craig, 17 Nov 2026).

@@ -3,6 +3,13 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
+## An LEC game, talk only (17 Nov 2026)
+
+- A second game for the LEC, which starts 15 Jan 2027 with three splits; its schedule differs
+  from the LCK's.
+- An Overall league that runs all year, across the three splits.
+- The same core as the LCK (budget and the like), with buffs and other settings tuned for it.
+
 ## Leagues, parked (14 Nov 2026)
 
 - A chart of the league's ranks week by week.

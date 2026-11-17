@@ -20,5 +20,5 @@ rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
 - If the Captain plays no game in the gameweek, nobody takes the multiplier.
 - Benching the Captain passes the armband to the player who comes on: Faker (Captain) goes off
   for Bdd, so Bdd is the Captain (Craig, 15 Nov 2026).
-- Under the Double Captain buff a second Captain is picked by the same rules, and both wear C
-  ([spec/06](06-buffs.md)).
+- Under the Double Captain buff a second Captain is picked by the same rules, both wear C, and
+  both score ×2 that week ([spec/06](06-buffs.md)).

@@ -180,8 +180,6 @@ F1 Fantasy, Sleeper and gol.gg).
   totals, beside every tab (Craig, 14 Nov 2026).
 - **Buttons**, as FPL's, by where it opened: transfer in or out, Make Carry, Make Vice-carry,
   substitute.
-  - On the Vice-carry: ✓ Vice-carry and Make Carry, as the Carry's ✓ Carry; Make Carry swaps the
-    two, as FPL's captain and vice (Craig, 17 Nov 2026).
   - Swap with bench closes the card and lights the bench players he can swap with; Transfer out
     opens Transfers with him already sold. Both as FPL (Craig, 17 Nov 2026).
 - This week before any of his games lists the week's series with opponent and time, points as

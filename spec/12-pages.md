@@ -180,6 +180,13 @@ F1 Fantasy, Sleeper and gol.gg).
   totals, beside every tab (Craig, 14 Nov 2026).
 - **Buttons**, as FPL's, by where it opened: transfer in or out, Make Carry, Make Vice-carry,
   substitute.
+  - On the Vice-carry: ✓ Vice-carry and Make Carry, as the Carry's ✓ Carry; Make Carry swaps the
+    two, as FPL's captain and vice (Craig, 17 Nov 2026).
+  - Swap with bench closes the card and lights the bench players he can swap with; Transfer out
+    opens Transfers with him already sold. Both as FPL (Craig, 17 Nov 2026).
+- This week before any of his games lists the week's series with opponent and time, points as
+  —, filling in game by game (Craig, 17 Nov 2026).
+- History's week totals are his own points, never your Carry's ×1.5, as FPL (Craig, 17 Nov 2026).
 - **Compare**, in the beta: two players side by side, with header stats, form, scoring lines and
   next series.
   - A sheet over the card. The second player comes from a search, his role listed first. Any role

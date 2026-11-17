@@ -55,23 +55,11 @@
   color: var(--text);
 }
 
-/* Points' and Transfers' tables: the Table part's look, with a sub-row for the bench or a week. */
-.profile__table td small {
+/* Points' and Transfers' tables: the Table part's, a player's team and price in mid grey. */
+.profile__points td small,
+.profile__transfers td small {
   color: var(--mid);
   font-size: var(--size-small);
-}
-.profile__table .profile__figure {
-  text-align: right;
-}
-.profile__table .profile__sub td {
-  height: auto;
-  padding: var(--s-2) var(--s-3);
-  background: var(--bg);
-  color: var(--mid);
-  font-size: var(--size-small);
-}
-.profile__table .profile__sub td b {
-  color: var(--text);
 }
 .profile__series + .profile__series {
   margin-left: var(--s-4);
@@ -79,30 +67,6 @@
 .profile__name {
   font-weight: var(--w-bold);
 }
-/* The picture's columns, as shares of the 984 main column. */
-.profile__col-slot {
-  width: 15.25%;
-}
-.profile__col-player {
-  width: 23.4%;
-}
-.profile__col-pts {
-  width: 6.1%;
-}
-.profile__col-swap-slot,
-.profile__col-gained {
-  width: 9.15%;
-}
-.profile__col-out {
-  width: 24.4%;
-}
-.profile__col-arrow {
-  width: 3.05%;
-}
-.profile__col-in {
-  width: 26.4%;
-}
-
 .profile__mark {
   margin-left: var(--s-2);
   vertical-align: middle;
@@ -141,32 +105,11 @@
   font-weight: var(--w-semi);
 }
 .profile__tier {
-  display: block;
   width: var(--m-mark);
-}
-.profile__tier-body {
-  fill: var(--text);
-}
-.profile__tier-band {
-  stroke: var(--bg);
-  opacity: var(--opacity-tier-band);
 }
 .profile__truck {
   margin-bottom: var(--s-2);
   background: var(--paper);
-}
-/* A truck's LED panel: dotted, in capitals, the same on every screen (plate.md, Never). */
-.profile__led {
-  display: flex;
-  align-items: center;
-  min-height: calc(var(--s-6) + var(--s-3));
-  padding: var(--s-3);
-  background-color: var(--stage);
-  background-image: radial-gradient(circle, var(--soft) var(--m-rule), transparent var(--m-rule-heavy));
-  background-size: var(--s-1) var(--s-1);
-  color: var(--text);
-  font: var(--w-semi) var(--size-small) / var(--lh-mid) var(--font-mono);
-  text-transform: uppercase;
 }
 .profile__truck-by {
   padding: var(--s-1) var(--s-3);

@@ -159,6 +159,27 @@ test("a row that opens something ends with a named ›", () => {
   expect(keyed).toContain('<button type="button" aria-label="Open Chovy Was Right There">›</button>');
 });
 
+test("a table draws a sub-row above a row: a group's head with its aside, or a ⋯ gap", () => {
+  const rows = [
+    { slot: "Top", group: "Week 3" },
+    { slot: "Bot", group: "" },
+    { slot: "Mid", group: "gap" },
+  ];
+  const out = html(
+    <Table
+      rows={rows}
+      rowKey={(r) => r.slot}
+      columns={[{ key: "slot", head: "Slot", cell: (r) => r.slot }]}
+      subAbove={(r) => (r.group === "gap" ? "gap" : r.group ? { head: <b>{r.group}</b>, aside: "1 free" } : undefined)}
+      open={{ name: (r) => r.slot, onOpen: () => {} }}
+    />,
+  );
+  expect(out).toContain('<tr class="table__sub"><td colSpan="2"><b>Week 3</b><span class="table__sub-aside">1 free</span></td></tr><tr><td>Top</td>');
+  expect(out).toContain('<td>Bot</td>');
+  expect(out).toContain('<tr class="table__gap"><td colSpan="2">⋯</td></tr><tr><td>Mid</td>');
+  expect(out.match(/table__sub"/g)).toHaveLength(1);
+});
+
 test("a side section has its title and note", () => {
   expect(text(<SideSection title="This week's series" note="your time · KST">x</SideSection>)).toBe(
     "This week's seriesyour time · KSTx",
@@ -183,9 +204,10 @@ test("a strong sheet stands out with its own frame", () => {
   expect(html(<Modal kind="sheet" title="Confirm" onClose={() => {}}>x</Modal>)).not.toContain("modal__box--strong");
 });
 
-test("a toast is a polite status with its message", () => {
+test("a toast shows its message, and leaves saying it to the page's one live region", () => {
   const out = html(<Toast message="Kingen added" n={1} onDone={() => {}} />);
-  expect(out).toContain('role="status"');
+  expect(out).not.toContain('role="status"');
+  expect(out).toContain('aria-hidden="true"');
   expect(out).toContain("Kingen added");
 });
 
@@ -207,10 +229,11 @@ test("the main action is one filled key, disabled with its reason", () => {
   expect(text(<MainAction>Save team</MainAction>)).toBe("Save team");
   const off = html(<MainAction disabledReason="No changes">Save team</MainAction>);
   expect(off).toContain("No changes");
-  expect(off).toContain("disabled");
+  expect(off).toContain('class="main-action__key key-off" disabled=""');
+  expect(html(<MainAction>Save team</MainAction>)).not.toContain("key-off");
   expect(text(<OutlinedKey>Join a league</OutlinedKey>)).toBe("Join a league");
   const keyOff = html(<OutlinedKey disabledReason="League full">Join a league</OutlinedKey>);
-  expect(keyOff).toContain("disabled");
+  expect(keyOff).toContain('class="outlined-key key-off" disabled=""');
   expect(text(<OutlinedKey disabledReason="League full">Join a league</OutlinedKey>)).toBe("Join a leagueLeague full");
 });
 

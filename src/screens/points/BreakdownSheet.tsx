@@ -83,7 +83,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
       {player.series.map((s) => (
         <section key={s.id} className="points__breakdown-series" aria-label={`v ${s.opponent}`}>
           <h3 className="points__breakdown-series-head">
-            <GoLink go={seriesGo(s.id)} className="points__breakdown-series-go">
+            <GoLink go={seriesGo(s.id)} className="points__breakdown-series-go hover-line">
               <span className="points__breakdown-day quiet">{s.day}</span> v {s.opponent} <SeriesResult s={s} /> ›
             </GoLink>
             <b className="points__breakdown-series-points num">{s.points}</b>

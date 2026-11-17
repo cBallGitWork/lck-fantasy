@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, noop, text } from "../../testing/render";
+import { expectDeadlinePart, expectInOrder, html, noop, text } from "../../testing/render";
 import { accept, decline, movesSummary, playersLine, receiverLine, removeFollower, sendTruck, unfollow, type DeadlineItem } from "./feed";
 import { FOLLOWING, PICKER_AS_DRAWN } from "./fixtures";
 import { FollowingScreen } from ".";
@@ -64,6 +64,10 @@ describe("the page (1440.png)", () => {
     ]);
   });
 
+  test("a week's deadline is the Deadline part, as on Pick Team", () => {
+    expectDeadlinePart(html(view()), "Wed 07:45");
+  });
+
   test("shows requests, trucks, following and followers on the right, then the sponsor note", () => {
     expectInOrder(out, [
       "Requests2",
@@ -97,6 +101,13 @@ describe("the page (1440.png)", () => {
     ]);
   });
 
+  test("each repeated key names its manager for a screen reader", () => {
+    const markup = html(view());
+    for (const name of ['aria-label="Accept Ella Wong"', 'aria-label="Decline Ella Wong"', 'aria-label="Unfollow Minji Park"', 'aria-label="Remove Minji Park"', 'aria-label="Block Minji Park"', 'aria-label="Truck Minji Park"']) {
+      expect(markup).toContain(name);
+    }
+  });
+
   test("trucks only the live week: Week 2's rows have none", () => {
     const week2 = out.slice(out.indexOf("Week 2"));
     expect(week2).not.toContain("Truck ›");
@@ -108,6 +119,10 @@ describe("the page (1440.png)", () => {
     expect(page).toContain('data-screen="following"');
     expect(page).toContain('href="/manager/minji"');
     expect(page).toContain('href="/manager/priya"');
+  });
+
+  test("draws each truck received on the shared LED panel", () => {
+    expect(html(view())).toContain('<div class="led">THIS TRUCK WAS FUNDED BY YOUR −6.</div>');
   });
 
   test("the screen renders on its fixture", () => {
@@ -154,6 +169,7 @@ describe("the truck picker (1440-truck.png)", () => {
     expect(out).toMatch(/aria-pressed="true"[^>]*>Protest/);
     expect(out.match(/checked=""/g)).toHaveLength(1);
     expect(out).not.toContain("KERIA-TIER");
+    expect(out).toContain('<div class="led led--big">MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS.</div>');
   });
 
   test("Send truck waits for a line", () => {

@@ -27,6 +27,7 @@ import {
 import { FOLLOWED_WEEK3, MANAGERS } from "../../fixtures/managers";
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
+import { DEFAULT_STREAM, STREAMS } from "../../fixtures/streams";
 import { flexPlays, isBench } from "../../rift";
 import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./types";
 
@@ -71,15 +72,8 @@ export const HOME_LIVE: HomeLiveData = {
   state: "live",
   countdown: countdown(POINTS_AT, WEEK4_DEADLINE.at),
   series: { home: live.home, away: live.away, score: live.score, game: live.liveGame, bestOf: BEST_OF, label: `${COMPETITION} Week 3` },
-  streams: [
-    { id: "lck-en-twitch", name: "LCK · English", platform: "Twitch", live: true },
-    { id: "lck-en-youtube", name: "LCK · English", platform: "YouTube", live: true },
-    { id: "lck-ko-youtube", name: "LCK · 한국어", platform: "YouTube", live: true },
-    { id: "caedrel-twitch", name: "Caedrel · English", platform: "Twitch", live: true },
-    { id: "kameto-twitch", name: "Kameto · Français", platform: "Twitch", live: false },
-    { id: "lck-ja-youtube", name: "LCK · 日本語", platform: "YouTube", live: true },
-  ],
-  pickedStream: "lck-en-twitch",
+  streams: STREAMS,
+  pickedStream: DEFAULT_STREAM,
   week: { label: "Your week", final: false, points: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
   inSeries: [
     { role: "mid", name: "Faker", team: "T1", mark: "C", stat: liveKda("Faker"), points: livePointsOf("faker") },

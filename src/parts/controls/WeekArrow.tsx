@@ -16,7 +16,7 @@ export function WeekArrow({ label, go, onStep, children }: { label: string; go?:
       </GoLink>
     );
   return (
-    <button type="button" className={cx("week-arrow", !onStep && "week-arrow--off")} aria-label={label} disabled={!onStep} onClick={onStep}>
+    <button type="button" className={cx("week-arrow", !onStep && "key-off")} aria-label={label} disabled={!onStep} onClick={onStep}>
       {children}
     </button>
   );

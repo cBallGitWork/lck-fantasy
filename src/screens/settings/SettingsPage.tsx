@@ -1,6 +1,6 @@
 import { useId, type ReactNode } from "react";
 import { TEAMS } from "../../fixtures/week3";
-import { MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, TabPanel, Tabs, Tag, Time, timeIn, ViewToggle } from "../../parts";
+import { Deadline, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, TabPanel, Tabs, Tag, timeIn, ViewToggle } from "../../parts";
 import { CappedInput, LegalNames, plainOptions, ProviderMark, Row, Select, TEAM_OPTIONS } from "./form";
 import {
   BROWSER,
@@ -143,7 +143,7 @@ function DisplayTab({ draft, onChange, browserZone, zones, deadlineAt }: Setting
       <Row label="Time zone">
         <Select label="Time zone" value={draft.timeZone} options={zoneOptions} onChange={(timeZone) => onChange({ timeZone })} />
         <p className="settings__sub quiet">
-          Deadline <Time {...deadline} />
+          <Deadline {...deadline} />
         </p>
       </Row>
       <Row label="Theme">

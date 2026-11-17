@@ -12,6 +12,7 @@ import {
   Lineup,
   LineupCard,
   LINEUP_ORDER,
+  markNews,
   ROLE_KEYS,
   SQUAD_SIZE,
   VIEWS,
@@ -70,6 +71,19 @@ test("a Points tile shows team, C, name, your dot, points (the Carry's result on
   // FPL's tile: no role icon, a white name plate, the points in a dark band.
   expect(out).not.toContain("role-icon");
   expect(out).toContain('title="Faker"');
+});
+
+test("C and V read as Carry and Vice-carry, as the ! reads Not starting", () => {
+  const out = html(
+    <>
+      <Tile slot="mid" name="Faker" team="T1" mark="C" />
+      <Tile slot="bot" name="Gumayusi" team="T1" mark="V" flag="Not starting" />
+    </>,
+  );
+  expect(out).toContain('role="img" aria-label="Carry" title="Carry">C</span>');
+  expect(out).toContain('role="img" aria-label="Vice-carry" title="Vice-carry">V</span>');
+  expect(out).toContain('role="img" aria-label="Not starting"');
+  expect(markNews("Faker", "C")).toBe("Faker is your Carry");
 });
 
 test("a tile or a lineup card that can be chosen is a key the keyboard reaches", () => {

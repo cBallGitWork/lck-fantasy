@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { browserZone, useDevState } from "../../parts";
+import { browserZone, SAVED_NEWS, useAnnounce, useDevState } from "../../parts";
 import { DeleteSheet } from "./DeleteSheet";
 import { ACCOUNT, BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, DRAFT, LOCKED, REMINDER_HOURS, SAVED, ZONES } from "./fixtures";
 import type { Account, DeleteRow, SettingsTab, SettingsValues } from "./settings";
@@ -73,6 +73,7 @@ export function Settings({
 }) {
   const [tab, setTab] = useState<SettingsTab>(firstTab);
   const [saved, setSaved] = useState(savedAtStart);
+  const announce = useAnnounce();
   const [draft, setDraft] = useState(draftAtStart);
   const [deleting, setDeleting] = useState(deletingAtStart);
   const download = () => saveJson({ settings: saved, account });
@@ -88,6 +89,7 @@ export function Settings({
         onSave={() => {
           setSaved(draft);
           onSave(draft);
+          announce(SAVED_NEWS);
         }}
         account={account}
         locked={locked}

@@ -14,7 +14,7 @@ export const PATHS = {
   series: "/series/$seriesId",
   compare: "/compare",
   perfectGame: "/perfect-game",
-  patchUpdate: "/patch-update",
+  priceChanges: "/price-changes",
   settings: "/settings",
   lckHub: "/lck",
   playerCard: "/player/$playerId",
@@ -24,6 +24,38 @@ export const PATHS = {
 } as const;
 
 export type ScreenKey = keyof typeof PATHS;
+
+/** Each screen's name: the top bar's label and the tab's title (`Pick Team · Flol`). */
+export const SCREEN_NAME: Record<ScreenKey, string> = {
+  home: "Home",
+  pickTeam: "Pick Team",
+  transfers: "Transfers",
+  points: "Points",
+  pointsWeek: "Points",
+  leagues: "Leagues",
+  league: "Leagues",
+  stats: "Stats",
+  live: "Live",
+  series: "Series",
+  compare: "Compare",
+  perfectGame: "Perfect game",
+  priceChanges: "Price changes",
+  settings: "Settings",
+  lckHub: "LCK",
+  playerCard: "Player",
+  coachCard: "Coach",
+  profile: "Manager",
+  following: "Following",
+};
+
+/** The product's name, the tab's title on a page with none of its own. */
+export const PRODUCT = "Flol";
+
+/** The tab's title for a route (`/pick-team` gives `Pick Team · Flol`); the product's name alone for any other. */
+export function pageTitle(routeId: string | undefined): string {
+  const key = (Object.keys(PATHS) as ScreenKey[]).find((k) => PATHS[k] === routeId);
+  return key ? `${SCREEN_NAME[key]} · ${PRODUCT}` : PRODUCT;
+}
 
 /** The `$params` a path names: `"/series/$seriesId"` gives `"seriesId"`. */
 type ParamName<P extends string> = P extends `${string}$${infer Name}/${infer Rest}`
@@ -47,6 +79,12 @@ export function pathTo(go: Go): string {
 export function cardGo(id: string, coach: boolean): Go {
   return coach ? { to: PATHS.coachCard, params: { coachId: id } } : { to: PATHS.playerCard, params: { playerId: id } };
 }
+
+/** The search key Transfers opens with a slot already sold under: `/transfers?sell=coach`. */
+export const SELL_SEARCH = "sell";
+
+/** Transfers with one of the nine already sold, as a card's Transfer out opens it. */
+export const transfersSelling = (slot: string) => `${PATHS.transfers}?${SELL_SEARCH}=${encodeURIComponent(slot)}`;
 
 /** A league's page. */
 export const leagueGo = (id: string): Go => ({ to: PATHS.league, params: { leagueId: id } });

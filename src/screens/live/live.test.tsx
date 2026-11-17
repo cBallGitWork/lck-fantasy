@@ -1,10 +1,11 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { expectInOrder, html, text } from "../../testing/render";
-import { DEFAULT_STREAM, IDLE_STREAMS, LIVE_DOWN, LIVE_IDLE, LIVE_NOW, LIVE_STREAMS } from "./fixtures";
-import { LiveDown, LiveIdle, LiveNow } from "./Live";
+import { DEFAULT_STREAM, STREAMS } from "../../fixtures/streams";
+import { IDLE_STREAMS, LIVE_DOWN, LIVE_IDLE, LIVE_NOW } from "./fixtures";
+import { LiveDown, LiveIdle, liveNews, LiveNow } from "./Live";
 
-const picker = { streams: LIVE_STREAMS, picked: DEFAULT_STREAM, onPick: () => {} };
+const picker = { streams: STREAMS, picked: DEFAULT_STREAM, onPick: () => {} };
 const idlePicker = { ...picker, streams: IDLE_STREAMS };
 
 const CHIPS = [
@@ -36,6 +37,15 @@ describe("a series live", () => {
     ]);
   });
 
+  test("has an h1 for a screen reader, and marks the Korean stream's language as Korean", () => {
+    expect(page).toContain('<h1 class="unseen">Live</h1>');
+    expect(page).toContain('<span lang="ko">한국어</span>');
+  });
+
+  test("the live region says the series score and your week, and never a countdown", () => {
+    expect(liveNews(LIVE_NOW.bug, LIVE_NOW.panel.week)).toBe("T1 1–0 DK · Your week 94");
+  });
+
   test("fills the picked stream and dashes those not live", () => {
     expect(page.match(/live__chip--on/g)).toHaveLength(1);
     expect(page.match(/live__chip--off/g)).toHaveLength(2);
@@ -48,6 +58,10 @@ describe("a series live", () => {
     expect(page).toContain('href="/coach/kkoma"');
     expect(page).toContain('href="/player/delight"');
     expect(page).toContain('href="/points"');
+  });
+
+  test("links Highest › to the week's top manager's Points, his profile", () => {
+    expect(page).toMatch(new RegExp(`href="/manager/${LIVE_NOW.panel.week.highestBy}"[^>]*>Highest`));
   });
 });
 
@@ -92,6 +106,6 @@ describe("nothing live", () => {
 
   test("greys every chip", () => {
     expect(page).not.toContain("live__chip--on");
-    expect(page.match(/live__chip--off/g)).toHaveLength(LIVE_STREAMS.length);
+    expect(page.match(/live__chip--off/g)).toHaveLength(STREAMS.length);
   });
 });

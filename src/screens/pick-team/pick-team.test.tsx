@@ -2,7 +2,7 @@
 import { expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
-import { changeCount, pickReducer, swapIds, type PickAction, type PickState } from "./model";
+import { changeCount, pickNews, pickReducer, swapIds, type PickAction, type PickState } from "./model";
 import { PickTeamView } from "./PickTeam";
 
 const roleOf = (id: string) => (PICK_TEAM_DATA.players[id] as PickPlayer).role;
@@ -102,10 +102,10 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expect(markup).not.toContain("plays Top</div>");
   // His card shows T1's crest; the Rift's tiles and the bench show none (Craig, 16 Nov 2026).
   expect(markup.match(/alt="T1 crest"/g)).toHaveLength(1);
-  expect(markup).toMatch(/main-action__key"[^>]*disabled/);
+  expect(markup).toMatch(/main-action__key[^"]*"[^>]*disabled/);
   expect(markup).not.toContain("Reset");
   expect(markup.match(/buff-card__play/g)).toHaveLength(2);
-  expect(markup.match(/href="\/transfers"[^>]*class="link-go"|class="link-go"[^>]*href="\/transfers"/g)).toHaveLength(2);
+  expect(markup.match(/href="\/transfers"[^>]*class="link-go hover-line"|class="link-go hover-line"[^>]*href="\/transfers"/g)).toHaveLength(2);
   expect(markup).toContain('href="/player/faker"');
 });
 
@@ -176,7 +176,7 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
   expect(markup).toContain("buff-card--on");
   expect(markup.match(/buff-card--off/g)).toHaveLength(3);
   expect(markup).not.toContain("buff-card__play");
-  expect(markup).not.toMatch(/main-action__key"[^>]*disabled/);
+  expect(markup).not.toMatch(/main-action__key[^"]*"[^>]*disabled/);
 });
 
 test("the coach's card has no Carry or swap keys", () => {
@@ -233,6 +233,22 @@ test("making the Vice-carry the Carry hands the old Carry the V, as FPL's armban
   const t = run(PICK_TEAM_STATES.rift, { type: "makeViceCarry", id: "zeus" });
   expect([t.draft.carry, t.draft.viceCarry]).toEqual(["faker", "zeus"]);
   expect(run(PICK_TEAM_STATES.rift, { type: "makeCarry", id: "kkoma" }).draft.carry).toBe("faker");
+});
+
+test("the live region says Saved on a save and the new Carry or Vice-carry on a mark key; nothing else", () => {
+  const nameOf = (id: string) => (PICK_TEAM_DATA.players[id] as PickPlayer).name;
+  const news = (action: PickAction, state = PICK_TEAM_STATES.rift) => pickNews(action, state, reduce(state, action), nameOf);
+  expect(news({ type: "save" })).toBe("Saved");
+  expect(news({ type: "makeCarry", id: "ruler" })).toBe("Ruler is your Carry");
+  expect(news({ type: "makeViceCarry", id: "zeus" })).toBe("Zeus is your Vice-carry");
+  expect(news({ type: "makeCarry", id: "faker" })).toBeUndefined();
+  expect(news({ type: "view", view: "cards" })).toBeUndefined();
+});
+
+test("each buff is a heading, and Play names its buff", () => {
+  const out = html(view(PICK_TEAM_STATES.rift));
+  expect(out).toContain('<h2 class="buff-card__name">Bench Boost</h2>');
+  expect(out).toContain('aria-label="Play Dual Carry"');
 });
 
 test("tapping one bench player then the other swaps bench 1 and 2, as FPL; one buff a week; Reset drops the draft and Save keeps it", () => {

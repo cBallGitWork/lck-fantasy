@@ -43,7 +43,7 @@ export function StatsPage({ account, view, rows, spans, onChange }: StatsPagePro
   return (
     <PageFrame screen="stats" active="stats" account={account}>
       <div className="stats">
-        <PageHead title="Stats" hangul="통계" link={{ label: "Patch update", go: { to: PATHS.patchUpdate } }} />
+        <PageHead title="Stats" hangul="통계" link={{ label: "Price changes", go: { to: PATHS.priceChanges } }} />
         <Tabs id={tabsId} tabs={TABS} chosen={view.tab} onChoose={(tab) => onChange({ tab })} label="Players or coaches" />
         <TabPanel id={tabsId}>
           <Controls view={view} rows={rows} spans={spans} onChange={onChange} />
@@ -198,7 +198,7 @@ function Lead({ row }: { row: Ranked }) {
     <span className="stats__lead">
       <span className="stats__rank num">{row.rank}</span>
       {row.role !== "coach" && <RoleIcon role={row.role} className="stats__lead-icon" />}
-      <GoLink go={cardGo(row.id, row.role === "coach")} className="stats__name">
+      <GoLink go={cardGo(row.id, row.role === "coach")} className="stats__name hover-line">
         {row.name}
       </GoLink>
       <small className="stats__team quiet num">{row.team}</small>
@@ -208,19 +208,22 @@ function Lead({ row }: { row: Ranked }) {
 }
 
 function Pages({ page, pages, onPage }: { page: number; pages: number; onPage: (page: number) => void }) {
-  const key = (to: number, body: ReactNode, label: string, on = false) => (
-    <button
-      key={label}
-      type="button"
-      className={cx("stats__page num", on && "stats__page--on")}
-      aria-label={label}
-      aria-current={on ? "page" : undefined}
-      disabled={to < 1 || to > pages}
-      onClick={() => onPage(to)}
-    >
-      {body}
-    </button>
-  );
+  const key = (to: number, body: ReactNode, label: string, on = false) => {
+    const off = to < 1 || to > pages;
+    return (
+      <button
+        key={label}
+        type="button"
+        className={cx("stats__page num", on && "stats__page--on", off && "key-off")}
+        aria-label={label}
+        aria-current={on ? "page" : undefined}
+        disabled={off}
+        onClick={() => onPage(to)}
+      >
+        {body}
+      </button>
+    );
+  };
   return (
     <span className="stats__pages">
       {key(page - 1, "‹", "Page before")}

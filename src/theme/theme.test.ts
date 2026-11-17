@@ -2,7 +2,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { expect, test } from "vitest";
-import { color, themeCss, themeVars } from "./tokens";
+import { color, size, themeCss, themeVars } from "./tokens";
 
 const SRC = join(import.meta.dirname, "..");
 const THEME = import.meta.dirname + sep;
@@ -70,6 +70,30 @@ test("every var(--name) the app uses is a token", () => {
   expect(unknown).toEqual([]);
 });
 
+const BASE = code(join(THEME, "base.css"));
+const rule = (selector: string) => BASE.match(new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}[^{]*\\{([^}]*)\\}`))?.[1] ?? "";
+
+test("no type size is under the plate's smallest, so every tag is 12px", () => {
+  expect(Math.min(...Object.values(size))).toBe(size.small);
+  expect(size.small).toBe(12);
+  const underSmallest = new RegExp(String.raw`\b${size.small - 1}px\b`);
+  expect(SOURCES.filter((path) => underSmallest.test(code(path))).map((path) => relative(SRC, path))).toEqual([]);
+  expect(themeCss()).not.toMatch(underSmallest);
+});
+
+test("a hover underline has one look, .hover-line: 1px, 4px below, and no page draws its own", () => {
+  expect(rule(".hover-line:hover")).toContain("text-decoration-thickness: var(--m-rule)");
+  expect(rule(".hover-line:hover")).toContain("text-underline-offset: var(--s-1)");
+  expect(themeVars()).toContainEqual(["--m-rule", "1px"]);
+  expect(themeVars()).toContainEqual(["--s-1", "4px"]);
+  expect(offenders(/:hover[^{]*\{[^}]*text-decoration/)).toEqual([]);
+});
+
+test("a key that can't be pressed has one look, .key-off: mid on fill, no edge, and no part draws its own", () => {
+  expect(rule(".key-off:disabled")).toMatch(/color: var\(--mid\);\s*background: var\(--fill\);\s*border-color: var\(--fill\);/);
+  expect(offenders(/:disabled\s*[,{]/)).toEqual([]);
+});
+
 function luminance(hex: string): number {
   const [r, g, b] = [1, 3, 5].map((i) => {
     const c = parseInt(hex.slice(i, i + 2), 16) / 255;
@@ -100,6 +124,26 @@ test.each([
   ["onTilePlate", "tilePlate"],
 ] as const)("%s reads on %s at 4.5:1 or more", (fg, bg) => {
   expect(contrast(color[fg], color[bg])).toBeGreaterThanOrEqual(4.5);
+});
+
+/** The colour a rule in a stylesheet draws a property with, from its token: `border: … var(--mid)` gives mid's hex. */
+function colourIn(css: string, selector: string, property: string): string {
+  const body = css.match(new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\{([^}]*)\\}`))?.[1] ?? "";
+  const name = body.match(new RegExp(`(?:^|;|\\s)${property}:[^;]*(var\\(--[\\w-]+\\))\\s*;`))?.[1]?.slice(4, -1);
+  const value = themeVars().find(([token]) => token === name)?.[1];
+  if (!value) throw new Error(`${selector} draws no colour token for ${property}`);
+  return value;
+}
+
+test("a search field's edge reads at 3:1 or more on its ground (WCAG 1.4.11)", () => {
+  expect(contrast(colourIn(BASE, 'input[type="search"]', "border"), color.paper)).toBeGreaterThanOrEqual(3);
+});
+
+test("a dimmed tile's team code stays at 4.5:1 or more, and only the shirt's drawing dims (WCAG 1.4.3)", () => {
+  const tile = code(join(SRC, "rift", "Tile.css"));
+  expect(contrast(colourIn(tile, ".tile--dim .shirt__code", "color"), color.paper)).toBeGreaterThanOrEqual(4.5);
+  expect(tile).toContain(".tile--dim .shirt__svg {\n  opacity: var(--opacity-dim);");
+  expect(tile).not.toMatch(/\.tile--dim \.shirt\s*\{/);
 });
 
 test("the plate's colour roles all stay as tokens", () => {

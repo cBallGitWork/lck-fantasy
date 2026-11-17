@@ -72,6 +72,7 @@ describe("each sheet holds its picture's content in order", () => {
       "Back",
       "Delete league",
     ]);
+    expect(text(<DeleteSheet name="Office Rift" size={1} scoringFrom={3} onDelete={noop} onClose={noop} />)).toContain("1 manager · scoring from Week 3");
   });
 });
 

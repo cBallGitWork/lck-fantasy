@@ -4,9 +4,13 @@ import { cx } from "../util/cx";
 import "./PageFrame.css";
 import { TopBar, type TopBarItem } from "./TopBar";
 
+/** The main column's id, which `Skip to content` jumps to. */
+export const MAIN_ID = "main";
+
 /**
- * The top bar, then the page: the main column and, when given, the 360px side column, 32px apart.
- * The side column is on the right on every page. The columns are Columns.css's.
+ * `Skip to content` (unseen until focused), the top bar, then the page: the main column and, when
+ * given, the 360px side column, 32px apart. The side column is on the right on every page. The
+ * columns are Columns.css's.
  */
 export function PageFrame({
   screen,
@@ -25,9 +29,14 @@ export function PageFrame({
 }) {
   return (
     <>
+      <a className="page-frame__skip" href={`#${MAIN_ID}`}>
+        Skip to content
+      </a>
       <TopBar active={active} account={account} />
       <div className={cx("page-frame", side !== undefined && "page-frame--two columns")} data-screen={screen}>
-        <main className="page-frame__main">{children}</main>
+        <main id={MAIN_ID} className="page-frame__main" tabIndex={-1}>
+          {children}
+        </main>
         {side !== undefined && <aside className="page-frame__side">{side}</aside>}
       </div>
     </>

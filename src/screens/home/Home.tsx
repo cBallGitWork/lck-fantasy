@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
-import { Columns, count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SectionHead, SponsorNote, TierShield, Time } from "../../parts";
+import { Columns, count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, RankMove, SectionHead, SponsorNote, TierShield, Time } from "../../parts";
 import { Following, Leagues } from "./band";
-import { Move } from "./format";
 import "./home.css";
 import type { Countdown, FeedItem, HomeShared, OverallTier } from "./types";
 
@@ -29,7 +28,7 @@ function HomeHead({ team, hangul, overall }: { team: string; hangul: string; ove
           </div>
           <div className="home__tier-rank">
             <b className="num">{count(overall.rank)}</b>
-            <Move move={overall.move} />
+            <RankMove move={overall.move} />
           </div>
         </div>
         <span className="home__badge">

@@ -1,7 +1,8 @@
-import { createRootRoute, createRoute, createRouter, Outlet, type RouterHistory } from "@tanstack/react-router";
+import { createRootRoute, createRoute, createRouter, Outlet, useRouterState, type RouterHistory } from "@tanstack/react-router";
 import type { ReactElement } from "react";
 import { DEV_STATES_PATH } from "./devStates";
 import { DevStatesPage } from "./DevStatesPage";
+import { AppFrame } from "../parts";
 import { PATHS, type ScreenKey } from "../paths";
 import { CoachCardScreen } from "../screens/coach-card";
 import { CompareScreen } from "../screens/compare";
@@ -10,11 +11,11 @@ import { HomeScreen } from "../screens/home";
 import { LckHubScreen } from "../screens/lck-hub";
 import { LeaguesScreen } from "../screens/leagues";
 import { LiveScreen } from "../screens/live";
-import { PatchUpdateScreen } from "../screens/patch-update";
 import { PerfectGameScreen } from "../screens/perfect-game";
 import { PickTeamScreen } from "../screens/pick-team";
 import { PlayerCardScreen } from "../screens/player-card";
 import { PointsScreen } from "../screens/points";
+import { PriceChangesScreen } from "../screens/price-changes";
 import { ProfileScreen } from "../screens/profile";
 import { SeriesScreen } from "../screens/series";
 import { SettingsScreen } from "../screens/settings";
@@ -24,11 +25,13 @@ import { ThemeStyle } from "../theme";
 
 // One route per approved screen (docs/design/approved/), each its folder's index.tsx; in dev also /dev/states.
 function Root() {
+  const routeId = useRouterState({ select: (s) => s.matches.at(-1)?.routeId });
+  const path = useRouterState({ select: (s) => s.location.pathname });
   return (
-    <>
+    <AppFrame routeId={routeId} path={path}>
       <ThemeStyle />
       <Outlet />
-    </>
+    </AppFrame>
   );
 }
 
@@ -50,7 +53,7 @@ const routeTree = rootRoute.addChildren([
   screen(PATHS.series, SeriesScreen),
   screen(PATHS.compare, CompareScreen),
   screen(PATHS.perfectGame, PerfectGameScreen),
-  screen(PATHS.patchUpdate, PatchUpdateScreen),
+  screen(PATHS.priceChanges, PriceChangesScreen),
   screen(PATHS.settings, SettingsScreen),
   screen(PATHS.lckHub, LckHubScreen),
   screen(PATHS.playerCard, PlayerCardScreen),

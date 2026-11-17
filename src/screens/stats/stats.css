@@ -54,7 +54,6 @@
   width: calc(var(--s-7) * 4 + var(--s-2));
   min-width: 0;
   font: inherit;
-  border: var(--m-rule) solid var(--line);
   background: var(--paper);
   color: var(--text);
   padding: var(--s-2) var(--s-3);
@@ -106,9 +105,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.stats__name:hover {
-  text-decoration: underline;
-}
 .stats__team {
   margin-left: var(--s-2);
 }
@@ -151,8 +147,4 @@
 .stats__page--on {
   background: var(--fill);
   font-weight: var(--w-bold);
-}
-.stats__page:disabled {
-  color: var(--mid);
-  cursor: default;
 }

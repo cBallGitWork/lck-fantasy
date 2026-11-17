@@ -1,7 +1,6 @@
-import { count, GoLink, ordinal, SideSection, TierShield } from "../../parts";
+import { count, GoLink, Led, ordinal, RankMove, SideSection, TierShield } from "../../parts";
 import { leagueGo } from "../../paths";
 import type { LeagueRow, Truck } from "./fixtures";
-import { Move } from "./ProfileHistory";
 
 const TRUCK_KIND: Record<Truck["kind"], string> = { coffee: "Coffee", protest: "Protest" };
 
@@ -26,7 +25,7 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
                   )}
                 </span>
                 <span>
-                  <b className="num">{league.ordinal ? ordinal(league.rank) : count(league.rank)}</b> <Move places={league.move} />
+                  <b className="num">{league.ordinal ? ordinal(league.rank) : count(league.rank)}</b> <RankMove move={league.move} />
                 </span>
               </GoLink>
             </li>
@@ -37,7 +36,7 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
         <SideSection title={`Trucks · Week ${trucks.week}`} note={trucks.list.length}>
           {trucks.list.map((truck) => (
             <div key={truck.from} className="profile__truck">
-              <p className="profile__led">{truck.line}</p>
+              <Led>{truck.line}</Led>
               <p className="profile__truck-by quiet">
                 {TRUCK_KIND[truck.kind]} from <b>{truck.from}</b>
               </p>

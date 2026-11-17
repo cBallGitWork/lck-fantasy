@@ -1,8 +1,9 @@
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
-import { Modal, PageFrame, useDevState } from "../../parts";
+import { Modal, PageFrame, useAnnounce, useDevState } from "../../parts";
 import { PATHS } from "../../paths";
+import { markNews, type Mark } from "../../rift";
 import type { CardMark, CardTab, PlayerCardData } from "./card";
 import { CARD_FROM_PICK_TEAM, CARD_FROM_POINTS, CARD_WITH_NEWS, MARK_AT_PICK_TEAM } from "./fixtures";
 import { PlayerCard } from "./PlayerCard";
@@ -33,11 +34,15 @@ export function PlayerCardPage({
   const router = useRouter();
   const navigate = useNavigate();
   const [mark, setMark] = useState<CardMark>(initialMark);
+  const announce = useAnnounce();
   const actions =
     openedFrom === "pickTeam"
       ? {
           mark,
-          onMark: setMark,
+          onMark: (next: Mark) => {
+            if (next !== mark) announce(markNews(card.name, next));
+            setMark(next);
+          },
           onSwap: () => void navigate({ to: PATHS.pickTeam }),
           onTransferOut: () => void navigate({ to: PATHS.transfers }),
         }

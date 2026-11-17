@@ -1,17 +1,8 @@
 // What the Live page takes. The fixture feeds it until the backend does (#33, #34, #36).
+import type { Stream } from "../../fixtures/streams";
 import type { TeamCode } from "../../fixtures/week3";
 import type { Score } from "../../parts";
 import type { IconKey, Mark } from "../../rift";
-
-/** One stream in the picker: admin data (spec/12). Twitch and YouTube only in the beta. */
-export interface Stream {
-  id: string;
-  name: string;
-  language: string;
-  platform: "Twitch" | "YouTube";
-  channel: string;
-  live: boolean;
-}
 
 /** The picker: the streams, the manager's pick, and what a chip or More ▾ does. */
 export interface Picker {
@@ -49,6 +40,8 @@ export interface WeekTotal {
   total: number;
   average: number;
   highest: number;
+  /** The id of the manager with the week's Highest: Highest › opens his Points, as FPL's does. */
+  highestBy: string;
   notFinal: boolean;
 }
 

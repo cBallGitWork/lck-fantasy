@@ -1,11 +1,54 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
-import { PLAYER_ROLES } from "./squads/squad";
+import { BUFF_EFFECTS } from "./squads/buffs";
+import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
 
 // Tables arrive with the features that need them (docs/data-model.md holds the model).
 
 /** A source's row as it sent it: column name to text (ARCHITECTURE.md, Data). */
 export const rawRow = v.record(v.string(), v.string());
+
+const literals = <T extends string>(values: readonly [T, T, ...T[]]) =>
+  v.union(...values.map((value) => v.literal(value)));
+
+/** A number for each of `keys`: slot sizes, role minimums. */
+const countPer = <K extends string>(keys: readonly K[]) =>
+  v.object(Object.fromEntries(keys.map((key) => [key, v.number()])) as Record<K, ReturnType<typeof v.number>>);
+
+const playerRole = literals(PLAYER_ROLES);
+
+/** A season's rules, every value Craig may tune (spec/01, 02, 03, 04, 06, 09): data, never code. */
+export const seasonSettings = v.object({
+  /** convex/squads/squad.ts's SquadSettings. */
+  squad: v.object({
+    starterSlots: countPer(STARTER_SLOTS),
+    benchSize: v.number(),
+    minPerRole: countPer(PLAYER_ROLES),
+    teamCap: v.union(v.number(), v.null()),
+  }),
+  /** In won; null for no budget (spec/10). */
+  budget: v.union(v.number(), v.null()),
+  /** convex/squads/transfers.ts's TransferSettings. */
+  transfers: v.object({ freePerGameweek: v.number(), bankCap: v.number(), hitPoints: v.number(), freeAfterUnlimited: v.number() }),
+  carryMultiplier: v.number(),
+  /** Each buff and how many a manager gets per split (spec/06). */
+  buffs: v.array(v.object({ name: v.string(), effect: literals(BUFF_EFFECTS), perSplit: v.number() })),
+  teamNameMaxLength: v.number(),
+});
+
+/** A gameweek's state (docs/data-model.md, Gameweeks). */
+export const gameweekState = literals(["toCome", "live", "final"]);
+
+export const competitionFields = { name: v.string(), region: v.string(), timeZone: v.string() };
+export const split = v.object({ number: v.number(), name: v.string() });
+
+/** A price's pick, by team code: a player by role and handle, or the team's coach, which is the team
+ *  and has no handle (spec/01). */
+export const pricedPick = {
+  team: v.string(),
+  role: v.union(playerRole, v.literal("coach")),
+  handle: v.optional(v.string()),
+};
 
 /** One side of a game: its team's lines for the coach (spec/05, The coach). */
 const teamLine = v.object({
@@ -20,6 +63,28 @@ const teamLine = v.object({
 
 export default defineSchema({
   // The real world (convex/lck): filled by feeds, corrected by an admin, never written by the game.
+  competitions: defineTable(competitionFields).index("by_name", ["name"]),
+  seasons: defineTable({
+    competition: v.id("competitions"),
+    year: v.number(),
+    splits: v.array(split),
+    settings: seasonSettings,
+    /** Made-up values, held until the real ones are known (spec/10). */
+    madeUp: v.boolean(),
+  }).index("by_competition", ["competition", "year"]),
+  gameweeks: defineTable({
+    season: v.id("seasons"),
+    number: v.number(),
+    split: v.number(),
+    /** In ms since the epoch, UTC. */
+    deadline: v.number(),
+    state: gameweekState,
+  }).index("by_season", ["season", "number"]),
+  /** A pick's price in won from a gameweek on, until its next row (docs/data-model.md, `prices`). */
+  prices: defineTable({ season: v.id("seasons"), fromGameweek: v.number(), ...pricedPick, won: v.number() }).index("by_season", [
+    "season",
+    "fromGameweek",
+  ]),
   teams: defineTable({ name: v.string(), oeId: v.string() }).index("by_oeId", ["oeId"]),
   players: defineTable({ handle: v.string(), oeId: v.string() }).index("by_oeId", ["oeId"]),
   series: defineTable({
@@ -60,7 +125,7 @@ export default defineSchema({
     game: v.id("games"),
     player: v.id("players"),
     team: v.id("teams"),
-    role: v.union(...PLAYER_ROLES.map((role) => v.literal(role))),
+    role: playerRole,
     champion: v.string(),
   }).index("by_game", ["game"]),
 

@@ -1,9 +1,10 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, noop, text } from "../../testing/render";
+import { PATHS } from "../../paths";
+import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
 import { CoachCard, EMPTY_TAB } from "./CoachCard";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
-import { CoachCardPage, FIRST_TAB } from "./index";
+import { CoachCardPage, FIRST_TAB, TRANSFER_OUT } from "./index";
 import type { CoachCardData, CoachFrom, CoachTab } from "./types";
 
 const card = (data: CoachCardData, from: CoachFrom, tab: CoachTab) => <CoachCard data={data} from={from} tab={tab} onTab={noop} />;
@@ -16,6 +17,16 @@ describe("the page", () => {
     expect(out).toMatch(/aria-current="page"[^>]*>Pick Team/);
     expect(out).toMatch(/aria-selected="true"[^>]*>History</);
     expect(FIRST_TAB).toEqual({ pickTeam: "History", points: "This week" });
+  });
+
+  test("Transfer out opens Transfers with the coach sold, his slot picked for the list to fill", async () => {
+    const soldTile = /class="tile tile--selected tile--dim"(?:(?!class="tile ).)*title="kkOma"/;
+    expect(TRANSFER_OUT).toBe("/transfers?sell=coach");
+    expect(await htmlAt(TRANSFER_OUT)).toMatch(soldTile);
+    const unsold = await htmlAt(PATHS.transfers);
+    expect(unsold).not.toContain("tile--dim");
+    expect(plain(unsold)).toContain("Siwoo ₩11.5m → Kingen ₩6.5m");
+    expect(await htmlAt("/transfers?sell=nobody")).not.toContain("tile--dim");
   });
 
   test("from Points, opens on This week with Points marked", () => {
@@ -100,8 +111,14 @@ describe("History, from Pick Team (1440.png)", () => {
 
   test("marks the price's rise and links Compare", () => {
     const out = html(card(FROM_PICK_TEAM, "pickTeam", "History"));
-    expect(out).toContain('<span class="rise">0.5</span>');
+    expect(out).toContain('<span class="rise" role="img" aria-label="up 0.5">0.5</span>');
     expect(out).toContain('href="/compare"');
+  });
+
+  test("draws a rule above each new week, none above the first", () => {
+    const rows = html(card(FROM_PICK_TEAM, "pickTeam", "History")).match(/<tr[^>]*>.*?<\/tr>/g) ?? [];
+    const ruled = rows.filter((r) => r.includes("table__row--rule")).map((r) => r.replace(/<[^>]+>/g, ""));
+    expect(ruled).toEqual(["1Sat · W 2–0 NS2₩6.5m33"]);
   });
 });
 

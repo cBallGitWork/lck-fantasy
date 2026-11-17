@@ -1,4 +1,4 @@
-import { formatWon, MainAction, Modal, Time } from "../../parts";
+import { Deadline, formatWon, MainAction, Modal } from "../../parts";
 import { costLabel } from "./Confirmed";
 import type { ListPlayer, SquadPlayer } from "./plan";
 import "./ConfirmSheet.css";
@@ -73,7 +73,7 @@ export function ConfirmSheet({
         <MainAction onClick={onConfirm}>Confirm</MainAction>
       </div>
       <p className="transfers__sheet-deadline quiet">
-        Deadline <Time {...deadline} />
+        <Deadline local={deadline.local} kst={deadline.kst} />
       </p>
     </Modal>
   );

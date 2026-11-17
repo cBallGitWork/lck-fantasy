@@ -6,8 +6,3 @@
   color: var(--text);
   white-space: pre;
 }
-.link-go:hover {
-  text-decoration: underline;
-  text-decoration-thickness: var(--m-rule);
-  text-underline-offset: var(--s-1);
-}

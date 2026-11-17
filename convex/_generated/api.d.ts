@@ -24,6 +24,7 @@ import type * as following_follows from "../following/follows.js";
 import type * as following_lines from "../following/lines.js";
 import type * as following_trucks from "../following/trucks.js";
 import type * as gameweeks_starAndFlop from "../gameweeks/starAndFlop.js";
+import type * as lck_season from "../lck/season.js";
 import type * as lck_series from "../lck/series.js";
 import type * as leagues_membership from "../leagues/membership.js";
 import type * as leagues_store from "../leagues/store.js";
@@ -63,6 +64,7 @@ declare const fullApi: ApiFromModules<{
   "following/lines": typeof following_lines;
   "following/trucks": typeof following_trucks;
   "gameweeks/starAndFlop": typeof gameweeks_starAndFlop;
+  "lck/season": typeof lck_season;
   "lck/series": typeof lck_series;
   "leagues/membership": typeof leagues_membership;
   "leagues/store": typeof leagues_store;

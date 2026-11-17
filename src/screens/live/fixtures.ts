@@ -18,24 +18,17 @@ import {
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
+import { MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
+import { STREAMS, type Stream } from "../../fixtures/streams";
 import { bestOf } from "../../parts";
-import type { LiveDownProps, LiveIdleProps, LiveNowProps, PanelPlayer, RestPlayer, Stream } from "./types";
-
-/** The streams list: admin data (spec/12). The first is the official English stream it opens on. */
-export const LIVE_STREAMS: Stream[] = [
-  { id: "lck-en-twitch", name: "LCK", language: "English", platform: "Twitch", channel: "twitch.tv/lck", live: true },
-  { id: "lck-en-youtube", name: "LCK", language: "English", platform: "YouTube", channel: "youtube.com/@LCKglobal", live: true },
-  { id: "lck-ko-youtube", name: "LCK", language: "한국어", platform: "YouTube", channel: "youtube.com/@LCK", live: true },
-  { id: "caedrel", name: "Caedrel", language: "English", platform: "Twitch", channel: "twitch.tv/caedrel", live: true },
-  { id: "lck-vi-youtube", name: "LCK", language: "Tiếng Việt", platform: "YouTube", channel: "youtube.com/@LCKVietnam", live: false },
-  { id: "kameto", name: "Kameto", language: "Français", platform: "Twitch", channel: "twitch.tv/kamet0", live: false },
-];
+import type { LiveDownProps, LiveIdleProps, LiveNowProps, PanelPlayer, RestPlayer } from "./types";
 
 /** With nothing live, every stream is greyed. */
-export const IDLE_STREAMS: Stream[] = LIVE_STREAMS.map((s) => ({ ...s, live: false }));
+export const IDLE_STREAMS: Stream[] = STREAMS.map((s) => ({ ...s, live: false }));
 
-export const DEFAULT_STREAM = LIVE_STREAMS[0]!.id;
+/** The made-up manager with the week's Highest at every moment: Highest › opens his Points. */
+const TOP_MANAGER = MANAGERS.priya.id;
 
 const STAGE = `${COMPETITION} Week ${POINTS_WEEK.week}`;
 const FORMAT = bestOf(BEST_OF);
@@ -90,7 +83,7 @@ const bug = (s: Series) => {
 export const LIVE_NOW: Omit<LiveNowProps, "picker"> = {
   bug: { ...bug(LIVE_SERIES), game: LIVE_SERIES.liveGame ?? 1, format: FORMAT, stage: STAGE },
   panel: {
-    week: { total: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest, notFinal: true },
+    week: { total: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest, highestBy: TOP_MANAGER, notFinal: true },
     series: { home: LIVE_SERIES.home, away: LIVE_SERIES.away },
     players: livePlayers,
     rest: rest("live"),
@@ -101,7 +94,7 @@ export const LIVE_NOW: Omit<LiveNowProps, "picker"> = {
 export const LIVE_DOWN: Omit<LiveDownProps, "picker"> = {
   bug: LIVE_NOW.bug,
   panel: {
-    week: { total: MY_WEEK3.downTotal, average: 66, highest: 118, notFinal: true },
+    week: { total: MY_WEEK3.downTotal, average: 66, highest: 118, highestBy: TOP_MANAGER, notFinal: true },
     series: LIVE_NOW.panel.series,
     players: downPlayers,
     rest: rest("down"),
@@ -122,7 +115,7 @@ export const LIVE_IDLE: Omit<LiveIdleProps, "picker"> = {
   },
   last: { ...bug(LAST_SERIES), day: "Saturday", format: FORMAT, stage: STAGE },
   panel: {
-    week: { total: MY_WEEK3.finalTotal, ...WEEK3_FINAL, notFinal: false },
+    week: { total: MY_WEEK3.finalTotal, ...WEEK3_FINAL, highestBy: TOP_MANAGER, notFinal: false },
     series: { home: LAST_SERIES.home, away: LAST_SERIES.away },
     players: finalPlayers,
     rest: rest("idle"),

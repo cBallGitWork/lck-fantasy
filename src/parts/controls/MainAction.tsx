@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { cx } from "../util/cx";
 import "./MainAction.css";
 
 /**
@@ -15,10 +16,11 @@ export function MainAction({
   /** Set when the action can't be taken, as the reason. */
   disabledReason?: string;
 }) {
+  const off = disabledReason !== undefined;
   return (
     <span className="main-action">
-      {disabledReason !== undefined && <span className="main-action__reason">{disabledReason}</span>}
-      <button type="button" className="main-action__key" disabled={disabledReason !== undefined} onClick={onClick}>
+      {off &&<span className="main-action__reason">{disabledReason}</span>}
+      <button type="button" className={cx("main-action__key", off && "key-off")} disabled={off} onClick={onClick}>
         {children}
       </button>
     </span>

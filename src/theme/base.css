@@ -34,12 +34,16 @@ a {
   content: "▼";
   font-size: var(--size-small);
 }
-/* A rank's move stays --text, never gold: red and blue are for prices only. ▲ or ▼, a space, then the places. */
+/* A rank's move stays --text, never gold: red and blue are for prices only. ▲ or ▼, a space, then the places; a held rank's — in mid grey. */
 .rank-up,
-.rank-down {
+.rank-down,
+.rank-held {
   color: var(--text);
   font-family: var(--font-mono);
   font-size: var(--size-small);
+}
+.rank-held {
+  color: var(--mid);
 }
 .rank-up::before {
   content: "▲ ";
@@ -56,6 +60,19 @@ a {
     transition: none !important;
     animation: none !important;
   }
+}
+/* Read by a screen reader, never seen: the live region, Live's h1. */
+.unseen {
+  position: absolute;
+  width: var(--m-rule);
+  height: var(--m-rule);
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+/* A search field's edge: mid, 3:1 or more on its ground, as a field must be (plate, Accessibility); never --line. */
+input[type="search"] {
+  border: var(--m-rule) solid var(--mid);
 }
 /* Every table: full width, collapsed rules; its head cells in mid grey over a --line rule. */
 table {
@@ -80,6 +97,23 @@ thead th {
   background: none;
   border: 0;
   cursor: pointer;
+}
+/* A link's or key's hover: a 1px underline, 4px below (plate, Hover). Put on words inside a link or
+   key, it draws when the link or key is hovered. */
+.hover-line:hover,
+a:hover .hover-line,
+button:hover .hover-line {
+  text-decoration: underline;
+  text-decoration-thickness: var(--m-rule);
+  text-underline-offset: var(--s-1);
+}
+/* A key that can't be pressed: mid on fill, no edge (plate, Disabled). Put on the disabled key;
+   `:disabled` lets it win over the key's own look, whose CSS loads later. */
+.key-off:disabled {
+  color: var(--mid);
+  background: var(--fill);
+  border-color: var(--fill);
+  cursor: default;
 }
 /* A counted figure, boxed: a game's points that count. */
 .counted {

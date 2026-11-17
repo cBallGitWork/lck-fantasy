@@ -1,6 +1,5 @@
-import { cx, MainAction, Modal, ViewToggle } from "../../parts";
+import { cx, Led, MainAction, Modal, ViewToggle } from "../../parts";
 import { TRUCK_HANGUL, TRUCK_KINDS, TRUCK_WORD, type Manager, type SentKind, type TruckLine } from "./feed";
-import { Led } from "./Led";
 import "./following.css";
 
 const KIND_OPTIONS = TRUCK_KINDS.map((kind) => ({
@@ -62,7 +61,7 @@ export function TruckPicker({
       )}
       <div className="following__foot">
         <small className="following__foot-note quiet">One truck to {first} a week.</small>
-        <button type="button" className="following__act key-bare" onClick={onClose}>
+        <button type="button" className="following__act key-bare hover-line" onClick={onClose}>
           Cancel
         </button>
         {/* With no line picked there is nothing to send; the picture draws no reason for it. */}

@@ -74,7 +74,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     ignores both.
   - It builds live, with a Not final tag until the week is final.
   - Reached from links on Points and Home.
-  - Rift view or Card view, whichever is saved on Points. Your own players are marked
+  - Rift view or Card view, the shared remembered view (see [Pick Team and Transfers](#pick-team-and-transfers)). Your own players are marked
     (Craig, 15 Nov 2026).
 - **Price changes** (Craig, 16 Nov 2026: back from Patch update, which all five QA testers read as
   LoL patch notes): the new prices for a
@@ -87,7 +87,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Each row: player, team and role, the price before and after, and owned. A dot marks your
     own players. Titled by the gameweek the prices are for ("Gameweek 4 prices"), with when they
     were set; no next move, no filters, no explainer lines (Craig, 15 Nov 2026). The picture is
-    `docs/design/approved/patch-update/`.
+    `docs/design/approved/price-changes/`.
   - Before the first move: "No moves yet".
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).
@@ -138,8 +138,14 @@ Craig's yes in the Home design round, grilled 14 Nov 2026. Its layout is the app
 
 Grilled 14 Nov 2026.
 
-- Both have Rift view and Card view (FPL's Pitch View and List View). The first visit opens on
-  Rift view; after that each manager's last choice is remembered.
+- Pick Team has Rift view and Card view, Transfers Rift view and List view (FPL's Pitch View and
+  List View). The first visit opens on Rift view; after that each manager's last choice is
+  remembered (Craig, 16 Nov 2026, the view `/grill`):
+  - Pick Team, Points and Perfect game share one choice: Card view picked on Points opens Pick
+    Team and Perfect game on Card view too.
+  - Transfers remembers its own. Its List view, FPL's list with prices and fixtures, is a different
+    thing from Card view.
+  - The choice is kept in the browser, so per device, and a guest's is kept too.
 - On Pick Team, swaps, the Carry, the Vice-carry and buffs take effect only when the manager
   presses Save (Craig, 13 Nov 2026). Reset clears what isn't saved.
 - On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in

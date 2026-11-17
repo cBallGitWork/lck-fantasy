@@ -65,9 +65,9 @@ export const font = {
   mono: '"IBM Plex Mono", monospace',
 } as const;
 
-/** Type sizes in px. Nothing under 12, save a tag's 11. */
+/** Type sizes in px. Nothing under 12. */
 export const size = {
-  tag: 11,
+  /** Table heads, notes and every tag. */
   small: 12,
   body: 14,
   lead: 16,
@@ -133,6 +133,19 @@ export const measure = {
   colFigure: 72,
   colPrice: 80,
   colRole: 112,
+  /** A league table's rank, Carry, and points (the week's, the split's, Total) columns. */
+  colRank: 64,
+  colCarry: 152,
+  colScore: 120,
+  /** Profile Points' slot, player and Pts columns. */
+  colSlot: 150,
+  colPlayer: 230,
+  colPts: 60,
+  /** Profile Transfers' slot and Pts gained, Out, `→` and In columns. */
+  colSwap: 90,
+  colOut: 240,
+  colArrow: 30,
+  colIn: 260,
   /** A menu's list: the Admin menu. */
   menuW: 220,
   cardHead: 48,
@@ -148,8 +161,8 @@ export const measure = {
   sponsorTopW: 120,
 } as const;
 
-/** Opacities: the band across a tier shield. */
-export const opacity = { tierBand: 0.45 } as const;
+/** Opacities: the band across a tier shield; a dimmed tile's shirt drawing, never its words. */
+export const opacity = { tierBand: 0.45, dim: 0.5 } as const;
 
 /** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
 export const stroke = { shirt: 1.6, dash: 3 } as const;

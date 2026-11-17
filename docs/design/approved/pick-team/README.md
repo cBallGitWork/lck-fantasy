@@ -23,7 +23,7 @@ Where a manager sets his starters, bench order, Carry and Vice-carry, and plays 
 - **Bench bar**: one row under the pitch (and under the lineup in Card view): `Bench`, then each bench player as a compact tile (order, role icon, name, team, the two fixtures). No swap key: tap one bench player, then the other, to swap bench 1 and 2, as FPL (Craig, 16 Nov 2026). Redrawn 15 Nov 2026 from the grey band of two shirts.
 - **Card view**: one row of seven equal cards, Top, Jungle, Mid, Bot, Support, Flex ("plays Top"), Coach, each with role and icon, photo (the coach a crest), name, team, the two fixtures, form and price; C and V on the photo.
 - **Buffs**: four boxes of one size and style in one row above the Rift, each its name, one line from spec/06 (Bench Boost: Your bench players score this week too; Dual Carry: Your Vice-carry scores ×1.5 too; Remake: Unlimited free transfers; your new squad stays; Limitless: One week, no budget or team cap; then your squad returns) and `1 left`. Bench Boost and Dual Carry show Play, then Cancel until the deadline; once one is chosen the others grey (one a week, spec/06). Remake and Limitless link to Transfers.
-- **Bar under the pitch**: how many changes, Reset, the deadline and its countdown, Save team. Save is disabled with no changes; swaps, Carry, Vice-carry and buffs take effect only on Save (spec/12).
+- **Bar under the pitch**: how many changes, Reset, the deadline and its countdown, Save team. Save is disabled with no changes; swaps, Carry, Vice-carry and buffs take effect only on Save (spec/12). The bar sticks to the bottom of the window while the pitch scrolls behind it, so Save is always in view (Craig, 16 Nov 2026, after the design panel found it below the fold).
 
 ## Changed by Craig, 16 Nov 2026
 

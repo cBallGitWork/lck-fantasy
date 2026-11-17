@@ -1,6 +1,6 @@
 # Transfers
 
-Craig's answers only, from the `/grill`s of 12 and 14 Nov 2026. Where this file is silent the rule is
+Craig's answers only, from the `/grill`s of 12, 14 and 17 Nov 2026. Where this file is silent the rule is
 FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questions are in
 [docs/to-grill.md](../docs/to-grill.md).
 
@@ -32,6 +32,19 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   your mid for a jungler; the new jungler starts at jungle, the new mid at mid, and the bench is
   left alone (Craig, 16 Nov 2026).
 
+## While choosing
+
+Grilled 17 Nov 2026.
+
+- A sold player's slot shows as a dashed empty slot with his role and `+`, as the front door's,
+  and ↺ to put him back.
+- With no one sold, the list shows every player; a `+` is refused with "Remove a player first",
+  as FPL.
+- Over the budget is not a refusal while choosing (Craig, 16 Nov 2026), so a buy that is over
+  budget and over the team cap is refused only as "Team full: 2 from T1".
+- Selling the Carry or Vice-carry gives the C or V to the player bought in his place, as FPL. The
+  manager can change it on Pick Team.
+
 ## Undoing a transfer
 
 Grilled 14 Nov 2026.
@@ -49,6 +62,8 @@ Grilled 14 Nov 2026.
   are dropped. It isn't offered for transfers made under Remake or Limitless.
 - Undo also clears any changes the manager hasn't confirmed yet. A confirm made under Remake or
   Limitless is still listed, with no Undo (Craig, 14 Nov 2026).
+- So once a confirm under Remake or Limitless goes through, the confirms before it can't be
+  undone either: Undo is only ever on the latest (Craig, 17 Nov 2026).
 - Playing Remake or Limitless wipes that gameweek's −6s, as FPL's Wildcard and Free Hit do
   ([spec/06](06-buffs.md)).
 

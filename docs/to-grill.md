@@ -39,8 +39,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 
 - Home: can a stream that isn't live be picked? How many streams before More ▾ (built 5)? Do star
   and flop show effective ownership, as spec/12 says (Faker 22 · 31%)?
-- Transfers: how a sold slot looks before a buy; what the list shows when no one is sold; which
-  reason shows when over budget and team full; does a Carry's replacement take the C; Coach chip.
 - Following: empty lines for no requests, cheers or follows; does Block confirm first; is cheer
   or jeer, or a line, picked when the picker opens?
 - Pick Team: what counts as one change in the bar; Make Carry on a player not starting; can a swap
@@ -66,4 +64,3 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Coach card: This week before any series; mid-series History.
 - Profile: cancelling a follow request; how a week's transfer cost reads; place or number ranks;
   a sponsor cheer's credit line.
-- Transfers Undo: a confirm made under a buff has no Undo, so the confirm before it can't be undone.

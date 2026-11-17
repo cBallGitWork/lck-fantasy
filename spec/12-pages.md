@@ -70,7 +70,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and ignores both.
   - It builds live, with a Not final tag until the week is final.
   - Reached from links on Points and Home.
-  - Rift view or Card view, whichever is saved on Points. Your own players are marked
+  - Rift view or Card view, the shared remembered view (see [Pick Team and Transfers](#pick-team-and-transfers)). Your own players are marked
     (Craig, 15 Nov 2026).
 - **Patch update** (Craig, 15 Nov 2026; spec once called it Price changes): the new prices for a
   gameweek, set once the deadline before it passes ("just shows the new prices, thats it really").
@@ -132,8 +132,14 @@ Craig's yes in the Home design round, grilled 14 Nov 2026. Its layout is the app
 
 Grilled 14 Nov 2026.
 
-- Both have Rift view and Card view (FPL's Pitch View and List View). The first visit opens on
-  Rift view; after that each manager's last choice is remembered.
+- Pick Team has Rift view and Card view, Transfers Rift view and List view (FPL's Pitch View and
+  List View). The first visit opens on Rift view; after that each manager's last choice is
+  remembered (Craig, 16 Nov 2026, the view `/grill`):
+  - Pick Team, Points and Perfect game share one choice: Card view picked on Points opens Pick
+    Team and Perfect game on Card view too.
+  - Transfers remembers its own. Its List view, FPL's list with prices and fixtures, is a different
+    thing from Card view.
+  - The choice is kept in the browser, so per device, and a guest's is kept too.
 - On Pick Team, swaps, the Carry, the Vice-carry and buffs take effect only when the manager
   presses Save (Craig, 13 Nov 2026). Reset clears what isn't saved.
 - On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in

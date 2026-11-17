@@ -45,7 +45,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
   or jeer, or a line, picked when the picker opens?
 - Pick Team: what counts as one change in the bar; Make Carry on a player not starting; can a swap
   start from the bench, as FPL allows?
-- Points: a Series win row for the Coach; a week total under non-Carry players; bench taps.
 - Leagues: what a bare /leagues opens; the default tab; page size and Find me; the line under
   Overall's name per tab; where a row's › goes.
 - League forms: what Copy link copies; Join with a bad code; the 25-league cap message; Remove's

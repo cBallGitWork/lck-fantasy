@@ -21,6 +21,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
     ownership. Home keeps the global star and flop.
   - The Carry's games show your Carry's points beside the average Carry's.
+  - A player's breakdown shows his total alone; only the Carry's has the average Carry under it,
+    as FPL (Craig, 17 Nov 2026).
+  - The coach's breakdown ends each series with its own row under its games: `Series win +3` or
+    `Series loss −1` (Craig, 17 Nov 2026).
+  - A bench player opens his breakdown too, as FPL: his points in grey when they don't count (no
+    Bench Boost, no auto-sub), `Didn't play` when he has no games (Craig, 17 Nov 2026).
   - Your Overall tier and ≈ points to promote, or to avoid demotion
     ([spec/08](08-leagues.md#overall-tiers)).
   - Its layout is the approved picture (`docs/design/approved/points/`).

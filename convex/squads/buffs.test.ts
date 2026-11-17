@@ -1,9 +1,8 @@
 import { describe, expect, test } from "vitest";
 import { budgetProblems } from "./budget";
-import { lineupPoints } from "./carry";
 import { buffLineup, buffProblems, buffSquadRules, squadAfterGameweek, transfersUnlimited, type Buff } from "./buffs";
 import {
-  byPick, CARRY_MULTIPLIER, chovy, confirmedTransfers, faker, fourFromT1, playedExcept, REGULAR_SETTINGS, TRANSFER_SETTINGS, validSquad, withStarter,
+  byPick, chovy, confirmedTransfers, faker, fourFromT1, playedExcept, REGULAR_SETTINGS, TRANSFER_SETTINGS, validSquad, withStarter,
 } from "./fixtures";
 import { allPicks, squadProblems } from "./squad";
 import { settleTransfers } from "./transfers";
@@ -12,7 +11,7 @@ import { settleTransfers } from "./transfers";
 const remake: Buff = { id: "remake", name: "Remake", effect: "remake", perSplit: 1, stageIds: ["groups", "playoffs"] };
 const benchBoost: Buff = { id: "bb", name: "Bench Boost", effect: "benchBoost", perSplit: 1, stageIds: ["groups"] };
 const gameweek = { id: "gw5", splitId: "split1", stageId: "groups" };
-const armband = { carry: "chovy", viceCarry: "keria" };
+const armband = { captain: "chovy" };
 
 describe("buffs are data", () => {
   test("an admin's buff, from a name, an effect, a count and stages, can be played", () => {
@@ -92,19 +91,10 @@ describe("Bench Boost", () => {
   });
 });
 
-describe("Dual Carry", () => {
-  test("the Vice-carry scores ×1.5 too: 12 and 10 give 18 and 15", () => {
-    const squad = validSquad();
-    const points = new Map([["player:chovy", 12], ["player:keria", 10]]);
-    const { lineup, carrying } = buffLineup("dualCarry", squad, armband, playedExcept(squad));
-    const scored = lineupPoints(lineup, points, carrying, CARRY_MULTIPLIER);
-    expect(scored.find((s) => s.pick.id === "chovy")?.points).toBe(18);
-    expect(scored.find((s) => s.pick.id === "keria")?.points).toBe(15);
-  });
-
-  test("if the Carry plays no game, nobody else steps in", () => {
+describe("Double Captain", () => {
+  test("if the Captain plays no game, nobody steps in", () => {
     const squad = validSquad();
     const { carrying } = buffLineup("dualCarry", squad, armband, playedExcept(squad, chovy));
-    expect(carrying).toEqual(new Set(["keria"]));
+    expect(carrying).toEqual(new Set());
   });
 });

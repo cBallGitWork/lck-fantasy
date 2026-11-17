@@ -5,7 +5,7 @@ import { expectDeadlinePart, expectInOrder, html, noop, text } from "../../testi
 import { DeleteSheet } from "./DeleteSheet";
 import { BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, DRAFT, REMINDER_HOURS, SAVED, SIGN_UP, SQUAD_SIZE } from "./fixtures";
 import { Settings } from "./index";
-import { canSaveTeam, capName, changedFields, changeLine, counter, dirtyTabs, hoursBefore, type SettingsTab } from "./settings";
+import { canSaveTeam, capName, changedFields, changeLine, counter, dirtyTabs, hoursBefore, joinedCheer, type SettingsTab } from "./settings";
 import { SignUpStepOne, SignUpStepTwo } from "./SignUp";
 
 const PICTURE = { draft: DRAFT, browserZone: BROWSER_ZONE };
@@ -180,6 +180,11 @@ describe("sign-up", () => {
 });
 
 describe("the rules", () => {
+  test("Save team cheers the new team by its name", () => {
+    expect(joinedCheer("Baron Steal FC")).toBe("Baron Steal FC is in. 화이팅!");
+    expect(joinedCheer("  Baron Steal FC ")).toBe("Baron Steal FC is in. 화이팅!");
+  });
+
   test("the save bar names every change, and their tabs carry the dot", () => {
     const draft = { ...SAVED, banner: "바론", theme: "Dark" as const, weeklyRecap: true };
     const changed = changedFields(SAVED, draft);

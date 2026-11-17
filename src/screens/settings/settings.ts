@@ -84,3 +84,6 @@ export const hoursBefore = (hours: number) => `${hours} hour${hours === 1 ? "" :
 /** Save team is offered once the team is named (spaces alone are no name), a favourite team picked and the 16+ box ticked (spec/09). */
 export const canSaveTeam = (teamName: string, favouriteTeam: TeamCode | null, ticked: boolean) =>
   teamName.trim() !== "" && favouriteTeam !== null && ticked;
+
+/** The cheer a new manager sees on Save team: `Baron Steal FC is in. 화이팅!` (spec/09, Signing up). */
+export const joinedCheer = (teamName: string) => `${teamName.trim()} is in. 화이팅!`;

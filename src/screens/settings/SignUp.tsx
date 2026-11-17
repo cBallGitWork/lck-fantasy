@@ -2,7 +2,7 @@ import type { TeamCode } from "../../fixtures/week3";
 import { Field, GoLink, MainAction, Modal, OutlinedKey, Time } from "../../parts";
 import { PATHS } from "../../paths";
 import { LegalNames, plainOptions, ProviderMark, Select, TEAM_OPTIONS } from "./form";
-import { canSaveTeam, capName, counter, type Account } from "./settings";
+import { canSaveTeam, capName, counter, joinedCheer, type Account } from "./settings";
 import "./settings.css";
 
 const PROVIDERS: Account["provider"][] = ["Google", "Discord"];
@@ -64,7 +64,8 @@ export function SignUpStepTwo({
   /** The manager's first deadline, when favourite team and country lock. */
   deadline: { local: string; kst: string };
   onBack: () => void;
-  onSave: () => void;
+  /** Makes the account; the host shows `cheer` in its toast. */
+  onSave: (cheer: string) => void;
   onClose: () => void;
 }) {
   const ready = canSaveTeam(answers.teamName, answers.favouriteTeam, answers.ticked);
@@ -108,7 +109,7 @@ export function SignUpStepTwo({
         <button type="button" className="settings__text-key" onClick={onBack}>
           Back
         </button>
-        <MainAction onClick={onSave} disabledReason={ready ? undefined : ""}>
+        <MainAction onClick={() => onSave(joinedCheer(answers.teamName))}disabledReason={ready ? undefined : ""}>
           Save team
         </MainAction>
       </div>

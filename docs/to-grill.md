@@ -54,8 +54,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
   end (design panel, 16 Nov 2026).
 - Stats: second click flips the sort; Max price steps; 0.0 or — for no games; an empty result.
 - Live: can a greyed stream be picked; the remembered stream when idle.
-- Series: VOD as ↗ or ›; an unknown series id; a coach's empty game as — or 0.
-- Compare: the search's role groups and caps; what /compare opens with no players.
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
 - Price changes: the Set line before the first move; sort order; the week in the URL.
 - Settings: an empty hangul banner; the save bar's list; Save team's rules; Privacy and Terms

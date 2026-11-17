@@ -192,11 +192,10 @@ describe("a confirm applied (#215)", () => {
   const transfers = [{ out: SQUAD.find((p) => p.name === "Siwoo")!.id, in: named("Kingen").id }];
   const after = confirmTransfers(SQUAD, PLAYERS, RULES, transfers, lineupIds(SQUAD, PICTURE_PLAN));
 
-  test("Kingen stands in Siwoo's place at his list price; the rest keep their slots and their C and V", () => {
+  test("Kingen stands in Siwoo's place at his list price; the rest keep their slots and the C", () => {
     expect(after.squad.find((p) => p.slot === "flex")).toMatchObject({ name: "Kingen", priceWon: named("Kingen").priceWon });
     expect(after.squad.map((p) => p.name)).not.toContain("Siwoo");
     expect(after.squad.find((p) => p.name === "Faker")!.mark).toBe("C");
-    expect(after.squad.find((p) => p.name === "Ruler")!.mark).toBe("V");
   });
 
   test("the bank, free transfers and the hit are what the changes showed", () => {

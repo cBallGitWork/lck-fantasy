@@ -29,8 +29,8 @@ function expectInOrder(out: string, pieces: string[]) {
 const BUFFS = [
   "Bench Boost",
   "Your bench players score this week too",
-  "Dual Carry",
-  "Your Vice-carry scores ×1.5 too",
+  "Double Captain",
+  "A second Captain; both score ×1.5",
   "Remake",
   "Unlimited free transfers; your new squad stays",
   "Limitless",
@@ -61,8 +61,7 @@ const FAKER_CARD = [
   "Owned46% · 1st",
   "Season58 · 2nd",
   "Last 3 series10 · 12 · 10",
-  "✓ Carry",
-  "Make Vice-carry",
+  "✓ Captain",
   "Full card ›",
 ];
 
@@ -95,8 +94,8 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   ]);
   const markup = html(view(PICK_TEAM_STATES.rift));
   expect(markup).toContain('data-screen="pick-team"');
-  expect(markup).toContain('title="Carry">C');
-  expect(markup).toContain('title="Vice-carry">V');
+  expect(markup).toContain('title="Captain">C');
+  expect(markup.match(/class="mark-badge /g)).toHaveLength(1);
   expect(markup.match(/tile--selected/g)).toHaveLength(1);
   // Faker tapped: Bdd, the bench mid, is lit to swap with him; the Flex plays Top, so isn't; the other six starters and Cuzz dim.
   expect(markup.match(/tile--bench tile--fit/g)).toHaveLength(1);
@@ -122,7 +121,7 @@ test("Card view: the seven starters as the broadcast lineup, the bench bar, then
     "TopPhotoZeusHLEv DK, NSForm 16.0₩14.0m",
     "JunglePhotoCanyonGENv BRO, T1Form 16.7₩15.5m",
     "MidPhotoCFakerT1v KT, GENForm 19.3₩18.5m",
-    "BotPhotoVRulerGENv BRO, T1Form 18.7₩16.0m",
+    "BotPhotoRulerGENv BRO, T1Form 18.7₩16.0m",
     "SupportPhotoDelightHLEv DK, NSForm 12.7₩10.0m",
     "Flexplays TopPhotoNot startingSiwooDKv HLE, KTForm 11.7₩11.5m",
     "Coach감독",
@@ -157,7 +156,7 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
     "Bench Boost",
     "On · unsaved",
     "Cancel",
-    "Dual Carry",
+    "Double Captain",
     "1 left",
     "Remake",
     "Siwoo",
@@ -175,8 +174,7 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
     "Owned12% · 9th",
     "Season35 · 8th",
     "Last 3 series6 · 5 · 4",
-    "Make Carry",
-    "Make Vice-carry",
+    "Make Captain",
     "Full card ›",
     ...SIDE_TAIL,
   ]);
@@ -194,10 +192,10 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
   expect(markup).not.toMatch(/main-action__key[^"]*"[^>]*disabled/);
 });
 
-test("the coach's card has no Carry or swap keys", () => {
+test("the coach's card has no Captain or swap keys", () => {
   const out = text(view({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }));
   expect(out).toContain("T1 · Coach · ₩7.0m");
-  expect(out).not.toContain("Make Carry");
+  expect(out).not.toContain("Make Captain");
   // He can swap with nobody, so nothing lights or dims.
   expect(html(view({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }))).not.toMatch(/tile--(fit|dim)/);
   expect(html(view({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }))).toContain('href="/coach/kkoma"');
@@ -220,50 +218,41 @@ test("tap a player, then one lit up, and they swap: a role starter with the benc
   expect(run(picked, { type: "select", id: "faker" }).selected).toBeUndefined();
 });
 
-test("Zeus and the Flex swap places, the V staying with Zeus: the swap and the V counted once each", () => {
-  const s = run({ ...PICK_TEAM_STATES.rift, selected: undefined }, { type: "makeViceCarry", id: "zeus" }, { type: "select", id: "zeus" }, { type: "select", id: "siwoo" });
-  expect([s.draft.slots.top, s.draft.slots.flex, s.draft.viceCarry]).toEqual(["siwoo", "zeus", "zeus"]);
+test("Zeus and the Flex swap places, the C staying with Zeus: the swap and the C counted once each", () => {
+  const s = run({ ...PICK_TEAM_STATES.rift, selected: undefined }, { type: "makeCaptain", id: "zeus" }, { type: "select", id: "zeus" }, { type: "select", id: "siwoo" });
+  expect([s.draft.slots.top, s.draft.slots.flex, s.draft.captain]).toEqual(["siwoo", "zeus", "zeus"]);
   expect(changeCount(s.saved, s.draft)).toBe(2);
-  expect(text(view({ ...s, selected: undefined }))).toContain("FlexHLEVZeusv DK, NS");
+  expect(text(view({ ...s, selected: undefined }))).toContain("FlexHLECZeusv DK, NS");
 });
 
-test("the coach can't swap; a Carry going to the bench hands his C to the player coming on", () => {
+test("the coach can't swap; a Captain going to the bench hands his C to the player coming on", () => {
   const s = run(PICK_TEAM_STATES.rift, { type: "select", id: "bdd" });
-  expect([s.draft.slots.mid, s.draft.slots.bench1, s.draft.carry, s.draft.viceCarry]).toEqual(["bdd", "faker", "bdd", "ruler"]);
+  expect([s.draft.slots.mid, s.draft.slots.bench1, s.draft.captain]).toEqual(["bdd", "faker", "bdd"]);
   expect(changeCount(s.saved, s.draft)).toBe(1);
   expect(run({ ...PICK_TEAM_STATES.rift, selected: "kkoma" }, { type: "select", id: "bdd" }).draft).toBe(SAVED_TEAM);
 });
 
-test("with Dual Carry played the V is gold as the C", () => {
-  const plain = html(view(PICK_TEAM_STATES.rift));
-  expect(plain).toContain('mark-badge--v tile__mark"');
-  const dual = run(PICK_TEAM_STATES.rift, { type: "playBuff", buff: "dualCarry" });
-  expect(html(view(dual))).not.toContain("mark-badge--v");
-  expect(html(view({ ...dual, view: "cards" }))).not.toContain("mark-badge--v");
+test("Make Captain moves the one C, never to the coach; the old Captain is left with no mark", () => {
+  const s = run(PICK_TEAM_STATES.rift, { type: "makeCaptain", id: "ruler" });
+  expect(s.draft).toEqual({ ...SAVED_TEAM, captain: "ruler" });
+  expect(changeCount(s.saved, s.draft)).toBe(1);
+  expect(html(view({ ...s, view: "cards" })).match(/class="mark-badge /g)).toHaveLength(1);
+  expect(run(PICK_TEAM_STATES.rift, { type: "makeCaptain", id: "kkoma" }).draft.captain).toBe("faker");
 });
 
-test("making the Vice-carry the Carry hands the old Carry the V, as FPL's armband", () => {
-  const s = run(PICK_TEAM_STATES.rift, { type: "makeCarry", id: "ruler" });
-  expect([s.draft.carry, s.draft.viceCarry]).toEqual(["ruler", "faker"]);
-  const t = run(PICK_TEAM_STATES.rift, { type: "makeViceCarry", id: "zeus" });
-  expect([t.draft.carry, t.draft.viceCarry]).toEqual(["faker", "zeus"]);
-  expect(run(PICK_TEAM_STATES.rift, { type: "makeCarry", id: "kkoma" }).draft.carry).toBe("faker");
-});
-
-test("the live region says Saved on a save and the new Carry or Vice-carry on a mark key; nothing else", () => {
+test("the live region says Saved on a save and the new Captain on Make Captain; nothing else", () => {
   const nameOf = (id: string) => (PICK_TEAM_DATA.players[id] as PickPlayer).name;
   const news = (action: PickAction, state = PICK_TEAM_STATES.rift) => pickNews(action, state, reduce(state, action), nameOf);
   expect(news({ type: "save" })).toBe("Saved");
-  expect(news({ type: "makeCarry", id: "ruler" })).toBe("Ruler is your Carry");
-  expect(news({ type: "makeViceCarry", id: "zeus" })).toBe("Zeus is your Vice-carry");
-  expect(news({ type: "makeCarry", id: "faker" })).toBeUndefined();
+  expect(news({ type: "makeCaptain", id: "ruler" })).toBe("Ruler is your Captain");
+  expect(news({ type: "makeCaptain", id: "faker" })).toBeUndefined();
   expect(news({ type: "view", view: "cards" })).toBeUndefined();
 });
 
 test("each buff is a heading, and Play names its buff", () => {
   const out = html(view(PICK_TEAM_STATES.rift));
   expect(out).toContain('<h2 class="buff-card__name">Bench Boost</h2>');
-  expect(out).toContain('aria-label="Play Dual Carry"');
+  expect(out).toContain('aria-label="Play Double Captain"');
 });
 
 test("tapping one bench player then the other swaps bench 1 and 2, as FPL; one buff a week; Reset drops the draft and Save keeps it", () => {

@@ -101,11 +101,11 @@ export const measure = {
   modalSheet: 544,
   /** Your-player dot and the live dot. */
   dot: 8,
-  /** C and V on a Rift tile. */
+  /** The C on a Rift tile. */
   mark: 20,
-  /** C and V on a lineup card. */
+  /** The C on a lineup card. */
   markCard: 28,
-  /** C and V on a player's breakdown sheet (Craig, 16 Nov 2026: "make C bigger"). */
+  /** The C on a player's breakdown sheet (Craig, 16 Nov 2026: "make C bigger"). */
   markSheet: 32,
   roleIcon: 28,
   /** The role icon on a lineup card's head. */
@@ -133,9 +133,9 @@ export const measure = {
   colFigure: 72,
   colPrice: 80,
   colRole: 112,
-  /** A league table's rank, Carry, and points (the week's, the split's, Total) columns. */
+  /** A league table's rank, Captain, and points (the week's, the split's, Total) columns. */
   colRank: 64,
-  colCarry: 152,
+  colCaptain: 152,
   colScore: 120,
   /** Profile Points' slot, player and Pts columns. */
   colSlot: 150,

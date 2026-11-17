@@ -73,9 +73,9 @@ export interface BuffLineup {
 }
 
 /** Who scores and who is multiplied. Bench Boost: the bench scores too, so nobody is subbed, as in
- *  FPL. Dual Carry: the Vice-carry takes the multiplier too (spec/06). */
+ *  FPL. Double Captain's second Captain is not built yet (spec/06). */
 export function buffLineup(effect: BuffEffect | null, squad: Squad, armband: Armband, played: ReadonlySet<string>): BuffLineup {
-  const carrying = carryingPlayers(armband, played, effect === "dualCarry");
+  const carrying = carryingPlayers(armband, played);
   if (effect === "benchBoost") {
     const bench = squad.bench.map((pick): ScoringPick => ({ slot: "bench", pick }));
     return { lineup: [...squad.starters, ...bench], subs: [], carrying };

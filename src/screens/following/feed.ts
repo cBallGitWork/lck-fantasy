@@ -17,11 +17,11 @@ export interface When {
   kst: string;
 }
 
-/** A player's points in a series; `carry` when he took the multiplier, with his points before it. */
+/** A player's points in a series; `captain` when he took the multiplier, with his points before it. */
 export interface SeriesPlayer {
   name: string;
   points: number;
-  carry?: { before?: number };
+  captain?: { before?: number };
 }
 
 /** A followed manager's points at the end of a series, his players in role order. */
@@ -33,7 +33,7 @@ export interface SeriesItem {
   home: TeamCode;
   away: TeamCode;
   score: Score;
-  bigCarry?: boolean;
+  bigCaptain?: boolean;
   players: SeriesPlayer[];
   ended: When;
 }
@@ -97,8 +97,8 @@ export interface FollowingData {
   followers: Manager[];
   /** How many a manager may follow, data per competition (spec/14). */
   followCap: number;
-  /** The Carry's multiplier, data per competition. */
-  carryMultiplier: number;
+  /** The Captain's multiplier, data per competition. */
+  captainMultiplier: number;
   /** The truck you have sent each manager this week, by manager id. */
   sent: Record<string, SentKind>;
   receivers: Record<string, TruckReceiver>;
@@ -117,12 +117,12 @@ export function movesSummary(item: DeadlineItem): string {
   return [item.buff, transfers, item.hit ? signed(-item.hit) : undefined].filter(Boolean).join(", ");
 }
 
-/** `Kiin 5 · ucal 2 (Carry) · Faker 18 (12 × 1.5)`. */
+/** `Kiin 5 · ucal 2 (Captain) · Faker 18 (12 × 1.5)`. */
 export function playersLine(players: SeriesPlayer[], multiplier: number): string {
   return players
     .map((p) => {
-      if (!p.carry) return `${p.name} ${p.points}`;
-      const note = p.carry.before === undefined ? "Carry" : `${p.carry.before} × ${multiplier}`;
+      if (!p.captain) return `${p.name} ${p.points}`;
+      const note = p.captain.before === undefined ? "Captain" : `${p.captain.before} × ${multiplier}`;
       return `${p.name} ${p.points} (${note})`;
     })
     .join(" · ");

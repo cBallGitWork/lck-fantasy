@@ -1,4 +1,4 @@
-/* C and V (MarkBadge.tsx): round, C filled, V outlined. Each page places it. */
+/* The Captain's C (MarkBadge.tsx): round and filled. Each page places it. */
 .mark-badge {
   display: inline-flex;
   flex: none;
@@ -25,9 +25,4 @@
   height: var(--m-mark-sheet);
   font-family: var(--font-mono);
   font-size: var(--size-head);
-}
-.mark-badge--v {
-  background: var(--bg);
-  color: var(--text);
-  border: var(--m-rule) solid var(--text);
 }

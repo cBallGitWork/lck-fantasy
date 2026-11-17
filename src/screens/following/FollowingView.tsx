@@ -108,7 +108,7 @@ function Week({ week, data, onTruck }: { week: FeedWeek; data: FollowingData; on
         <div key={item.id} className="following__item">
           <Who manager={item.manager} />
           <div className="following__what">
-            {item.kind === "series" ? <Series item={item} multiplier={data.carryMultiplier} /> : <Moves item={item} />}
+            {item.kind === "series" ? <Series item={item} multiplier={data.captainMultiplier} /> : <Moves item={item} />}
           </div>
           <TruckCell item={item} week={week} data={data} onTruck={onTruck} />
         </div>
@@ -122,10 +122,10 @@ function Series({ item, multiplier }: { item: SeriesItem; multiplier: number }) 
     <>
       <span className="following__pts num">{item.points}</span>
       {item.home} {score(item.score)} {item.away}
-      {item.bigCarry && (
+      {item.bigCaptain && (
         <>
           {" "}
-          <Tag>Big Carry</Tag>
+          <Tag>Big Captain</Tag>
         </>
       )}
       <small className="following__sub">{playersLine(item.players, multiplier)}</small>

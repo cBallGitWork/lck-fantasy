@@ -19,7 +19,7 @@ export interface ListPlayer {
   ownedPct: number;
 }
 
-/** One of the nine: his slot, his sell price, his C or V. */
+/** One of the nine: his slot, his sell price, his C. */
 export interface SquadPlayer extends ListPlayer {
   slot: SquadSlot;
   mark?: Mark;
@@ -251,7 +251,7 @@ export interface AfterConfirm {
 
 /**
  * A confirm applied, as the page hands it over: each transfer by id and the nine by slot. A player kept
- * keeps his C or V; one bought comes at his list price. Free transfers and the bank are what is left.
+ * keeps his C; one bought comes at his list price. Free transfers and the bank are what is left.
  */
 export function confirmTransfers(
   squad: SquadPlayer[],

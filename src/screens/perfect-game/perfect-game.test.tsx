@@ -35,7 +35,7 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "Sat · v DK W 2–0",
     "G1Orianna · W4",
     "G2Sylas · W6",
-    "Carry33",
+    "Captain33",
     "Full stats ›",
     "Week 3 series",
     "WedT1 v HLE2–1",
@@ -45,19 +45,19 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
   ]);
 });
 
-test("Final is the head's tag alone, no cap tag (Craig, 16 Nov 2026), and Carry is the sum's label alone", () => {
+test("Final is the head's tag alone, no cap tag (Craig, 16 Nov 2026), and Captain is the sum's label alone", () => {
   const out = text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />);
   expect(out.match(/Final/g)).toHaveLength(1);
-  expect(out).not.toMatch(/Cap/);
-  expect(out.match(/Carry/g)).toHaveLength(1);
+  expect(out).not.toMatch(/Cap(?!tain)/);
+  expect(out.match(/Captain/g)).toHaveLength(1);
 });
 
-test("the Rift's tiles carry each starter's points (the Carry's result only), series, your dots and the Flex and Coach labels", () => {
+test("the Rift's tiles show each starter's points (the Captain's result only), series, your dots and the Flex and Coach labels", () => {
   const out = html(<PerfectGameRift game={PERFECT_WEEK3} selected="mid" />);
   for (const p of PERFECT_GAME) expect(out).toContain(p.line);
   expect(out).toContain('class="tile__points num">33</div>');
   expect(text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />)).not.toContain("×");
-  expect(out).toContain('title="Carry">C');
+  expect(out).toContain('title="Captain">C');
   expect(out.match(/aria-label="Your player"/g)).toHaveLength(4);
   expect(out).toContain('class="tile__slot tile__slot--flex">Flex<');
   expect(out).not.toContain("plays Mid");
@@ -110,7 +110,7 @@ test("a starter without drawn games shows his series and sum; Not final shows da
 
 test("the fixture agrees with the shared Week 3: each series' points make the line and the total", () => {
   for (const p of PERFECT_WEEK3.players) {
-    expect(sum(p.series.map((s) => s.points)), p.name).toBe(p.carry ? p.raw : p.points);
+    expect(sum(p.series.map((s) => s.points)), p.name).toBe(p.captain ? p.raw : p.points);
     for (const s of p.series) expect(p.line, p.name).toContain(` ${s.points}`);
     for (const s of p.series.filter((x) => x.games)) {
       const counted = sum((s.games ?? []).filter((g) => g.counted).map((g) => g.points));

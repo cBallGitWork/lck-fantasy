@@ -48,7 +48,7 @@ const SHARED: Omit<HomeShared, "countdown"> = {
   freeTransfers: WEEK4_FREE_TRANSFERS,
   following: [
     { kind: "series", ...followed("minji") },
-    { kind: "carry", ...followed("dan"), player: FOLLOWED_WEEK3.dan.carry },
+    { kind: "captain", ...followed("dan"), player: FOLLOWED_WEEK3.dan.captain },
     { kind: "series", ...followed("jae") },
     { kind: "truck", id: "truck-minji-w3", line: "Sell your bot laner", from: MANAGERS.minji.first, week: 3 },
   ],
@@ -95,7 +95,7 @@ const next = seriesById(WEEK4_SERIES, "w4-wed-1");
 const IDLE_AT = "2027-01-18T11:00:00Z";
 const startsIn = countdown(IDLE_AT, startOf(next));
 
-/** A squad member's final Week 3, before the Carry's ×1.5, as star and flop show it. */
+/** A squad member's final Week 3, before the Captain's ×1.5, as star and flop show it. */
 const week3Of = (name: string) => rawWeekOf(finalPickOf(name));
 
 /** Home with nothing live, Week 4 to come (idle.html). */

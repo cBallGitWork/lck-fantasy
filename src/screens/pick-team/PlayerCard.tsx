@@ -60,20 +60,17 @@ function Row({ k, children }: { k: string; children: ReactNode }) {
 }
 
 /**
- * The card's keys: Make Carry (or ✓ Carry), Make Vice-carry, Full card ›. A swap needs no key: the
- * players he can swap with are lit on the board. The coach, and a bench player, have only Full card.
+ * The card's keys: Make Captain (or ✓ Captain), Full card ›. A swap needs no key: the players he
+ * can swap with are lit on the board. The coach, and a bench player, have only Full card.
  */
 function CardKeys({ state, player: p, starter, dispatch }: Omit<ViewProps, "data"> & { player: PickPlayer; starter: boolean }) {
   const full = <LinkGo go={cardGo(p.id, p.role === "coach")}>Full card</LinkGo>;
   if (p.role === "coach" || !starter) return <div className="pick-team__keys">{full}</div>;
-  const { carry, viceCarry } = state.draft;
+  const on = state.draft.captain === p.id;
   return (
     <div className="pick-team__keys">
-      <CardKey on={carry === p.id} onClick={() => dispatch({ type: "makeCarry", id: p.id })}>
-        {markKey("C", carry === p.id)}
-      </CardKey>
-      <CardKey on={viceCarry === p.id} onClick={() => dispatch({ type: "makeViceCarry", id: p.id })}>
-        {markKey("V", viceCarry === p.id)}
+      <CardKey on={on} onClick={() => dispatch({ type: "makeCaptain", id: p.id })}>
+        {markKey("C", on)}
       </CardKey>
       {full}
     </div>

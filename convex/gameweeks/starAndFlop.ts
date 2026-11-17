@@ -5,12 +5,12 @@ import { isCarrying } from "../squads/carry";
 import { pickKey } from "../squads/squad";
 
 /** One manager's gameweek as it scored: the line-up after auto-subs or with a Bench Boost bench,
- *  and the players taking the Carry's multiplier, the Vice-carry too under Dual Carry (spec/12,
- *  Home: "as it scored", Craig, 15 Nov 2026). */
+ *  and the players taking the Captain's multiplier (spec/12, Home: "as it scored", Craig,
+ *  15 Nov 2026). */
 export type ManagerLineup = Pick<BuffLineup, "lineup" | "carrying">;
 
 export interface StarAndFlopSettings {
-  /** The Carry's multiplier, which also weighs a Carry in effective ownership. */
+  /** The Captain's multiplier, which also weighs a Captain in effective ownership. */
   carryMultiplier: number;
   /** How many picks, highest effective ownership first, the flop is picked from. */
   flopPoolSize: number;

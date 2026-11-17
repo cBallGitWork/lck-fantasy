@@ -32,7 +32,7 @@ describe("Points", () => {
       "Series",
       "Top", "Kiin", "GEN", "11", "v KT 2–0 · Wed", "v HLE 2–1 · Sat",
       "Jungle", "Canyon", "14",
-      "Mid", "Chovy", "V", "17",
+      "Mid", "Chovy", "17",
       "Bot", "Ruler", "C", "21",
       "Support", "Keria", "T1", "9", "v HLE 2–1 · Wed", "v DK 2–0 · Sat",
       "Flex · Top", "Kingen", "NS", "5", "v DK 0–2 · Thu", "v KRX 0–2 · Fri",
@@ -92,7 +92,7 @@ describe("History", () => {
       "Week 3", "93", "315", "—", "21,804", "3,112", "5", "0", "₩0.5m", "₩100.9m", "Limitless", "›",
       "Week 2", "112", "222", "4,211", "24,916", "9,870", "1", "0", "₩1.0m", "₩100.6m", "—", "›",
       "Week 1", "110", "110", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",
-      "Buffs left: Remake · Bench Boost · Dual Carry",
+      "Buffs left: Remake · Bench Boost · Double Captain",
       ...LEAGUES,
     ]);
   });

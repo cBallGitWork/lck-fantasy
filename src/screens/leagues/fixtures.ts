@@ -1,5 +1,5 @@
 // Leagues on the shared Week 3 of Split 1, at Points' moment (Saturday, T1 v DK game 2 live): after
-// the deadline, so Carry shows. The pictures (docs/design/approved/leagues/) draw a made-up Split 2
+// the deadline, so Captain shows. The pictures (docs/design/approved/leagues/) draw a made-up Split 2
 // Week 14; they bind the layout, tabs and groups, and this file holds Week 3's figures. Names and numbers are
 // examples. The sample manager and the Pub League's managers in MANAGERS are the shared ones. The backend feeds each of
 // these once it is wired (#38).
@@ -31,15 +31,15 @@ export const LEAGUE_LIST: LeagueSummary[] = [
   ...MY_LEAGUES.map(({ id, name, kind, rank, move, size }): LeagueSummary => ({ id, name, kind: kind === "private" ? "private" : "general", rank, move, size })),
 ];
 
-type Line = [rank: number, move: number | null, team: string, manager: string, carry: string, week: number, total: number, split?: number];
+type Line = [rank: number, move: number | null, team: string, manager: string, captain: string, week: number, total: number, split?: number];
 
 /** A table's rows from its lines; the sample manager's row is marked yours, and with `chasing` tagged with the points to the row above. */
 function rows(lines: Line[], chasing = false): StandingRow[] {
-  return lines.map(([rank, move, team, manager, carry, week, total, split], i) => {
+  return lines.map(([rank, move, team, manager, captain, week, total, split], i) => {
     const mine = team === MANAGER.team;
     const above = lines[i - 1];
     const chase: StandingRow["chase"] = mine && chasing && above ? { kind: "chasing", points: above[6] - total, rank: above[0] } : null;
-    return { rank, move, team, manager, managerId: manager.toLowerCase().replace(/\W+/g, "-"), carry, week, total, split, mine, chase };
+    return { rank, move, team, manager, managerId: manager.toLowerCase().replace(/\W+/g, "-"), captain, week, total, split, mine, chase };
   });
 }
 
@@ -51,10 +51,10 @@ function me(leagueId: MyLeague["id"] | "overall", total: number): Line {
 }
 
 /** A made-up manager's row: his team and name from MANAGERS. */
-const theirs = ({ team, name }: MadeUpManager, rank: number, move: number | null, carry: string, week: number, total: number): Line => [rank, move, team, name, carry, week, total];
+const theirs = ({ team, name }: MadeUpManager, rank: number, move: number | null, captain: string, week: number, total: number): Line => [rank, move, team, name, captain, week, total];
 
 /** A row whose total counts only this week: a league scoring from Week 3. */
-const fromThisWeek = (rank: number, move: number | null, team: string, manager: string, carry: string, week: number): Line => [rank, move, team, manager, carry, week, week];
+const fromThisWeek = (rank: number, move: number | null, team: string, manager: string, captain: string, week: number): Line => [rank, move, team, manager, captain, week, week];
 
 const PUB_LEAGUE: LeagueView = {
   kind: "private",
@@ -64,7 +64,7 @@ const PUB_LEAGUE: LeagueView = {
   code: "PUB-7K2Q",
   role: "maker",
   week: WEEK,
-  carryShown: true,
+  captainShown: true,
   openTab: "Season",
   tables: {
     Season: {
@@ -100,7 +100,7 @@ const FLOL_DISCORD: LeagueView = {
   code: "FLOL-22XB",
   role: "member",
   week: WEEK,
-  carryShown: true,
+  captainShown: true,
   openTab: "Season",
   tables: {
     Season: {
@@ -157,7 +157,7 @@ const OVERALL: LeagueView = {
   name: "Overall",
   season: SEASON,
   week: WEEK,
-  carryShown: true,
+  captainShown: true,
   openTab: THIS_SPLIT,
   openGroup: "Legend",
   tables: {
@@ -169,8 +169,8 @@ const OVERALL: LeagueView = {
 /** Each league the list opens, by its id. The two general leagues past Overall have no picture yet. */
 export const LEAGUES: Record<string, LeagueView> = {
   overall: OVERALL,
-  "united-kingdom": { kind: "general", id: "united-kingdom", name: "United Kingdom", week: WEEK, carryShown: true, openTab: "Season", tables: {} },
-  "t1-supporters": { kind: "general", id: "t1-supporters", name: "T1 supporters", week: WEEK, carryShown: true, openTab: "Season", tables: {} },
+  "united-kingdom": { kind: "general", id: "united-kingdom", name: "United Kingdom", week: WEEK, captainShown: true, openTab: "Season", tables: {} },
+  "t1-supporters": { kind: "general", id: "t1-supporters", name: "T1 supporters", week: WEEK, captainShown: true, openTab: "Season", tables: {} },
   "pub-league": PUB_LEAGUE,
   "flol-discord": FLOL_DISCORD,
 };
@@ -195,7 +195,7 @@ export const SCORING_WEEKS: ScoringWeeks = [
 export const NEW_LEAGUE = { name: "Office Rift", code: "OFF-9R3D" } as const;
 
 /** How a new or joined league's table opens: this week, Season, no rows yet. */
-export const NEW_TABLE: NewTable = { week: WEEK, carryShown: true, openTab: COMPETITION.seasonTab };
+export const NEW_TABLE: NewTable = { week: WEEK, captainShown: true, openTab: COMPETITION.seasonTab };
 
 /** A league the Join picture's code finds (join.html). Its rank and size are made up. */
 export const JOINABLE: PrivateEntry[] = [

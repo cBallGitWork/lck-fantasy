@@ -1,0 +1,178 @@
+/* The LCK hub, drawn to docs/design/approved/lck-hub/. Every value is a theme token. */
+
+/* The head: the competition at the left, the deadline at the right. */
+.lck-hub__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.lck-hub__head > header {
+  margin-bottom: 0;
+}
+.lck-hub__stages,
+.lck-hub__picker {
+  margin: var(--s-4) 0 var(--s-5);
+}
+/* A main-column section's head (SectionHead), its note a little further off. */
+.lck-hub__title {
+  gap: var(--s-3);
+}
+
+/* Fixtures and Results: one week by day, a day's series on paper. */
+.lck-hub__time-heads {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-6) + var(--s-2)) calc(var(--s-7) + var(--s-4)) calc(var(--s-7) + var(--s-4));
+  padding-bottom: var(--s-1);
+}
+.lck-hub__time-heads span:first-child {
+  grid-column: 2;
+  padding-left: var(--s-4);
+}
+.lck-hub__day {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-6) + var(--s-2)) 1fr;
+  border-top: var(--m-rule) solid var(--line);
+}
+.lck-hub__day-name {
+  padding: var(--s-3) 0;
+}
+.lck-hub__day-date {
+  display: block;
+  font-weight: var(--w-regular);
+}
+.lck-hub__series {
+  display: grid;
+  grid-template-columns:
+    calc(var(--s-7) + var(--s-4)) calc(var(--s-7) + var(--s-4)) calc(var(--s-7) * 2 + var(--s-4)) var(--s-6)
+    calc(var(--s-7) * 2) var(--m-target) 1fr;
+  align-items: center;
+  height: var(--s-7);
+  padding: 0 var(--s-4);
+  background: var(--paper);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.lck-hub__series--result {
+  grid-template-columns: calc(var(--s-7) * 2 + var(--s-6) + var(--s-3)) calc(var(--s-7) + var(--s-6)) calc(var(--s-7) + var(--s-4)) var(--m-target) 1fr;
+}
+.lck-hub__series:last-child {
+  border-bottom: 0;
+}
+.lck-hub__series:hover {
+  background: var(--fill);
+}
+.lck-hub__kst {
+  color: var(--mid);
+}
+.lck-hub__home {
+  text-align: right;
+}
+.lck-hub__code {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+.lck-hub__loser {
+  font-weight: var(--w-regular);
+}
+.lck-hub__record {
+  margin: 0 var(--s-2);
+}
+.lck-hub__versus {
+  text-align: center;
+  color: var(--mid);
+}
+.lck-hub__score {
+  text-align: center;
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+.lck-hub__go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--size-lead);
+}
+
+/* Standings: one table per group. */
+.lck-hub__groups {
+  display: grid;
+  gap: var(--s-6);
+}
+.lck-hub__standings col:nth-child(n + 3) {
+  width: var(--m-col-figure);
+}
+.lck-hub__standings col:last-child {
+  width: calc(var(--s-7) * 3 + var(--s-4));
+}
+.lck-hub__rank {
+  color: var(--mid);
+}
+.lck-hub__form {
+  display: inline-block;
+  width: var(--s-4);
+  text-align: center;
+  font-weight: var(--w-semi);
+}
+.lck-hub__form--lost {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}
+
+/* Teams: the LCK roster beside its academy roster. */
+.lck-hub__two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+}
+.lck-hub__roster {
+  background: var(--paper);
+}
+.lck-hub__roster td {
+  height: var(--m-row);
+  padding: 0 var(--s-4);
+  border-top: var(--m-rule) solid var(--fill);
+}
+.lck-hub__roster-coach td {
+  border-top-color: var(--line);
+}
+.lck-hub__role {
+  width: var(--m-col-role);
+}
+.lck-hub__role-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.1em;
+  margin-right: var(--s-2);
+}
+.lck-hub__person b {
+  font-weight: var(--w-semi);
+}
+.lck-hub__hangul {
+  margin-left: var(--s-1);
+}
+.lck-hub__price {
+  text-align: right;
+}
+.lck-hub__price--none {
+  color: var(--mid);
+}
+
+/* News: each headline a link out, its thumbnail at the left. */
+.lck-hub__story {
+  display: grid;
+  grid-template-columns: var(--m-crest) 1fr;
+  gap: var(--s-3);
+  padding: var(--s-3) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.lck-hub__thumb {
+  height: calc(var(--s-7) + var(--s-4));
+}
+.lck-hub__headline {
+  display: block;
+  font-weight: var(--w-semi);
+}
+
+.lck-hub__more {
+  margin-top: var(--s-3);
+  font-weight: var(--w-semi);
+}

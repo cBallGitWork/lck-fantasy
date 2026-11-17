@@ -1,0 +1,63 @@
+/* Points (docs/design/approved/points/points.html). Every value is a theme token. */
+
+/* The live bar, under the head. */
+.points__live {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  border: var(--m-rule) solid var(--text);
+  background: var(--paper);
+}
+
+/* Card view's footer: the points. */
+.points__card-points {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+
+/* Your week: Star, Flop, Killer. */
+.points__pick {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-2)) 1fr auto;
+  gap: var(--s-2);
+  align-items: baseline;
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.points__pick-label,
+.points__pick-owned {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.points__pick-owned {
+  text-align: right;
+}
+
+/* Leagues: name, rank, its move. */
+.points__ranks {
+  display: grid;
+  gap: var(--s-1);
+}
+.points__rank {
+  display: grid;
+  grid-template-columns: 1fr auto var(--m-col-figure);
+  gap: var(--s-3);
+  align-items: center;
+}
+.points__rank-place,
+.points__rank > span:last-child {
+  text-align: right;
+}
+.points__tier {
+  margin-top: var(--s-2);
+}
+.points__tier b {
+  color: var(--text);
+}
+
+.points__sponsor {
+  height: var(--m-sponsor-h);
+  margin-bottom: var(--s-2);
+}

@@ -1,0 +1,17 @@
+/* Perfect game (docs/design/approved/perfect-game/perfect.html). Every value is a token. */
+.perfect-game__toggle {
+  margin-top: var(--s-4);
+}
+.perfect-game__cards {
+  margin-top: var(--s-3);
+}
+.perfect-game__card-series {
+  display: block;
+  color: var(--mid);
+}
+/* The points at the card's foot, on its right. */
+.perfect-game__card-points {
+  margin-left: auto;
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}

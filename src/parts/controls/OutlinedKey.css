@@ -1,0 +1,17 @@
+.outlined-key {
+  font: inherit;
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-4);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+  cursor: pointer;
+}
+.outlined-key__off {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.outlined-key__reason {
+  color: var(--mid);
+}

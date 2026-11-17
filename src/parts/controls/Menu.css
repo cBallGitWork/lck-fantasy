@@ -1,0 +1,32 @@
+.menu {
+  position: relative;
+  display: flex;
+}
+.menu__key {
+  color: inherit;
+}
+.menu__list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 4;
+  width: var(--m-menu-w);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+  font-size: var(--size-body);
+  font-weight: var(--w-regular);
+}
+.menu__item {
+  display: block;
+  width: 100%;
+  padding: var(--s-3) var(--s-4);
+  color: var(--text);
+  text-align: left;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.menu__item:last-child {
+  border-bottom: 0;
+}
+.menu__item--apart {
+  border-top: var(--m-rule) solid var(--text);
+}

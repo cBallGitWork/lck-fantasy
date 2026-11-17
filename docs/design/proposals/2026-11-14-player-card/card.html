@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Player card</title>
+<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1440px; min-height: 1000px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; position: relative; }
+iframe.under { position: absolute; inset: 0; width: 1440px; height: 1000px; border: 0; }
+.dim { position: absolute; inset: 0; background: rgba(29,29,29,.55); }
+.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 11px; }
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 5px; font-size: 11px; font-weight: 600; line-height: 16px; color: var(--ink); }
+
+/* type scale: 40 name · 48 mono hero · 20 mono tier-2 · 14 body · 12 labels */
+.card { position: absolute; left: 220px; top: 44px; width: 1000px; background: var(--paper); border: 1px solid var(--ink); }
+.x { position: absolute; right: 18px; top: 10px; font-size: 16px; color: var(--mid); z-index: 1; }
+.x.on-bar { color: #fff; top: 7px; }
+.news { background: var(--ink); color: #fff; padding: 7px 24px; font-size: 13px; }
+
+/* band 1: the lower-third */
+.lt { display: grid; grid-template-columns: 80px 1fr auto; gap: 20px; padding: 28px 24px 16px; align-items: end; }
+.por { width: 80px; height: 80px; }
+.who .chip { display: inline-block; background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; padding: 2px 8px; margin-bottom: 6px; }
+.who h1 { font-size: 40px; letter-spacing: -1px; line-height: 1; display: flex; align-items: baseline; gap: 12px; }
+.who h1 i { font-style: normal; font-size: 40px; font-weight: 500; color: var(--mid); letter-spacing: 0; }
+.who .legal { font-size: 12px; color: var(--mid); margin-top: 6px; }
+.hero { text-align: right; padding-right: 28px; }
+.hero b { font: 600 48px "IBM Plex Mono", monospace; line-height: 1; display: block; }
+.hero span { font-size: 12px; color: var(--mid); font-weight: 500; }
+
+/* band 2: meta + actions */
+.meta { display: flex; align-items: center; gap: 24px; padding: 0 24px 16px; border-bottom: 1px solid var(--line); }
+.meta .kv { font-size: 13px; color: var(--mid); } .meta .kv b { font: 600 20px "IBM Plex Mono", monospace; color: var(--ink); margin-right: 6px; }
+.side { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 14px; align-self: stretch; }
+.lt { min-height: 132px; }
+.acts { display: flex; gap: 6px; align-items: center; white-space: nowrap; }
+.acts span { height: 32px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid var(--line); font-size: 13px; }
+.acts span.on { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 600; }
+.acts a { font-size: 13px; text-decoration: underline; margin-left: 8px; }
+
+/* body: left (weeks, tabs, content) + right rail (season) */
+.body { display: grid; grid-template-columns: 1fr 300px; }
+.left { padding: 0 24px 24px; } #main { min-height: 400px; }
+.rail { border-left: 1px solid var(--line); padding: 16px 24px 24px; }
+
+.weeks { display: grid; grid-template-columns: repeat(3, 1fr) 2px repeat(3, 1fr); padding: 14px 0; border-bottom: 1px solid var(--line); }
+.weeks .c { padding: 0 10px; }
+.weeks .w { font-size: 12px; color: var(--mid); font-weight: 500; display: block; }
+.weeks b { font: 600 20px "IBM Plex Mono", monospace; display: block; line-height: 1.2; }
+.weeks .o { font-size: 12px; color: var(--mid); }
+.weeks .n .o { color: var(--mid); font: 400 20px "IBM Plex Mono", monospace; display: block; line-height: 1.2; }
+.weeks .n.first .o { color: var(--ink); font-weight: 600; }
+.weeks .now { background: var(--ink); }
+
+.tabs { display: flex; border-bottom: 1px solid var(--line); margin-bottom: 16px; }
+.tabs span { padding: 12px 0 10px; margin-right: 26px; color: var(--mid); } .tabs span.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); margin-bottom: -1px; }
+
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+#main table.g { table-layout: fixed; } #main table.g td:nth-child(1) { width: 50px; } #main table.g td:nth-child(3) { width: 140px; } #main table.g td:nth-child(4) { width: 60px; }
+th { text-align: right; font-weight: 500; color: var(--mid); font-size: 12px; padding: 0 6px 6px; }
+td { text-align: right; padding: 0 6px; height: 36px; border-top: 1px solid var(--fill); }
+th.l, td.l { text-align: left; }
+td.n { font-family: "IBM Plex Mono", monospace; }
+td.p { font: 600 14px "IBM Plex Mono", monospace; }
+tr.drop td.p { color: var(--soft); font-weight: 400; text-decoration: line-through; }
+.res { color: var(--soft); }
+tr.tot td { border-top: 2px solid var(--ink); font-weight: 600; height: 48px; } tr.tot td.p { font-size: 20px; }
+tr.wk1 td { border-top: 1px solid var(--line); }
+.g2 { color: var(--mid); }
+h4 { font-size: 12px; font-weight: 600; letter-spacing: .04em; border-top: 2px solid var(--ink); padding-top: 8px; margin: 24px 0 6px; display: flex; justify-content: space-between; align-items: baseline; }
+h4 b { font: 600 14px "IBM Plex Mono", monospace; letter-spacing: 0; }
+#main table.h { table-layout: fixed; } col.c1 { width: 70px; } col.c3 { width: 70px; } col.c4 { width: 120px; } col.c5 { width: 90px; } col.c6 { width: 60px; } col.c7 { width: 70px; }
+#main table.ch { width: 420px; }
+h4:first-child { margin-top: 0; border-top: 0; padding-top: 0; }
+h4 span { font-weight: 400; color: var(--mid); font-size: 12px; }
+
+.rail .tot { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--ink); padding-bottom: 8px; margin-bottom: 4px; }
+.rail .tot span { font-size: 14px; font-weight: 600; } .rail .tot i { font-style: normal; font-size: 12px; color: var(--mid); }
+.rail table td { height: 36px; font-size: 13px; }
+.rail td.pg { color: var(--soft); font-family: "IBM Plex Mono", monospace; }
+</style></head>
+<body>
+<iframe class="under" id="under"></iframe><div class="dim"></div>
+<div class="card">
+  <span class="x">✕</span>
+  <div id="news"></div>
+  <div class="lt"><div class="por ph">portrait</div>
+    <div class="who"><span class="chip">Mid · T1</span><h1>Faker<i>이상혁</i></h1><div class="legal">Lee Sang-hyeok</div></div>
+    <div class="side"><div class="hero" id="hero"></div><div class="acts" id="acts"></div></div></div>
+  <div class="meta" id="meta"></div>
+  <div class="body"><div class="left"><div class="weeks" id="weeks"></div><div class="tabs" id="tabs"></div><div id="main"></div></div>
+    <div class="rail" id="rail"></div></div>
+</div>
+<script>
+// Made-up LCK Cup data, every number an example, the same as the Pick Team and Points pictures.
+// ?v=history (default): opened from Pick Team, Week 4, Tuesday 22:00 London, before the deadline.
+// ?v=week: opened from Points, Week 3, Saturday, T1 v DK game 2 live.
+// ?v=fixtures: the Fixtures tab, from Pick Team, with a news line.
+// ?v=champs: the Champions tab, from Pick Team.
+// Prices move at each deadline (spec/02): 17.5 in Week 1, 18.0 in Week 2, 18.5 from Week 3.
+const V = new URLSearchParams(location.search).get("v") || "history";
+const FP = V === "week";
+document.getElementById("under").src = FP ? "../../approved/points/points.html" : "../../approved/pick-team/pick.html";
+const $ = (id) => document.getElementById(id);
+
+if (V === "fixtures") { $("news").innerHTML = `<div class="news">! Rested for Wednesday's series</div>`; document.querySelector(".x").classList.add("on-bar"); }
+
+// The hero: season points with rank (spec/12 Header).
+$("hero").innerHTML = `<b>${FP ? 41 : 58}</b><span>Season · 2nd of 10 mids</span>`;
+
+// Meta line: price, form, owned with the week's transfers; buttons by where it opened (spec/12).
+const acts = FP ? `<a>Compare ›</a>` : `<span class="on">✓ Carry</span><span>Make Vice-carry</span><span>Swap with bench</span><span>Transfer out</span><a>Compare ›</a>`;
+$("meta").innerHTML = `<span class="kv"><b>18.5억</b>▲0.5</span><span class="kv"><b>${FP ? "20.5" : "19.3"}</b>form · 1st</span>
+  <span class="kv"><b>46%</b>owned · 1st</span><span class="kv">${FP ? "+842 / −126" : "+1,204 / −310"} this week</span>`;
+$("acts").innerHTML = acts;
+
+// One run of series (Craig, 14 Nov 2026: by series, not by week): the last 3 with his points, the next 3 (spec/12 Front).
+const PAST = FP
+  ? [["W2 · Fri", "v BFX", "10"], ["W3 · Wed", "v HLE", "12"], ["W3 · Sat", "v DK", "5 ●"]]
+  : [["W2 · Fri", "v BFX", "10"], ["W3 · Wed", "v HLE", "12"], ["W3 · Sat", "v DK", "5"]];
+const NEXT = [["W4 · Wed · Bo3", "v KT"], ["W4 · Sat · Bo3", "v GEN"], ["W5 · Thu · Bo3", "v BRO"]];
+$("weeks").innerHTML = PAST.map(([w, o, p]) => `<div class="c"><span class="w">${w}</span><b>${p}</b><span class="o">${o}</span></div>`).join("")
+  + `<div class="now"></div>` + NEXT.map(([w, o], i) => `<div class="c n ${i === 0 ? "first" : ""}"><span class="w">${w}</span><span class="o">${o}</span></div>`).join("");
+
+const TABS = ["This week", "Fixtures", "History", "Champions"];
+const ON = { week: "This week", champs: "Champions", fixtures: "Fixtures" }[V] || "History";
+$("tabs").innerHTML = TABS.map((t) => `<span class="${t === ON ? "on" : ""}">${t}</span>`).join("");
+
+// This week: each series and game, champion, K/D/A, points; the 2 that count in bold, the rest grey (spec/12, spec/05).
+const G = (n, champ, kda, p, keep, live) => `<tr class="${keep ? "" : "drop"}"><td class="l g2">G${n}</td><td class="l">${champ.replace(/ · (\w)$/, " <span class=res>· $1</span>")}</td><td class="n">${kda}</td><td class="p">${p}${live ? " ●" : ""}</td></tr>`;
+const WEEK = `<h4><span style="color:var(--ink);font-size:12px">Wed · v HLE &nbsp;<span class="g2" style="font-weight:400">W 2–1 · final</span></span><b>12</b></h4><table class="g">
+  ${G(1, "Azir · W", "6/1/7", 5, true)}${G(2, "Taliyah · L", "3/2/5", 2, false)}${G(3, "Galio · W", "9/0/8", 7, true)}</table>
+  <h4><span style="color:var(--ink);font-size:12px">Sat · v DK &nbsp;<span class="g2" style="font-weight:400">1–0 · <span class="tag">G2 live</span></span></span><b>5 ●</b></h4><table class="g">
+  ${G(1, "Orianna · W", "5/1/9", 4, true)}${G(2, "Sylas · 14:20", "3/0/2", 1, true, true)}
+  <tr class="tot"><td class="l" colspan="2">Week 3</td><td class="n g2">17 × 1.5 Carry</td><td class="p">25</td></tr></table>`;
+
+// Fixtures: his team's next series, Bo3 or Bo5 (spec/12).
+const FX = [[4, "Wed", "10:30", "KT"], [4, "Sat", "08:00", "GEN"], [5, "Thu", "08:00", "BRO"], [5, "Sun", "10:30", "KRX"], [6, "Wed", "08:00", "DK"], [6, "Sat", "10:30", "HLE"]];
+const KST = { "08:00": "17:00", "10:30": "19:30" };
+const FIXT = `<table><tr><th class="l">Week</th><th class="l">Series</th><th>Your time</th><th>KST</th></tr>
+  ${FX.map(([w, d, t, o], i) => `<tr${i > 0 && FX[i - 1][0] !== w ? ' class="wk1"' : ""}><td class="l g2">${i > 0 && FX[i - 1][0] === w ? "" : w}</td><td class="l">${d} · <b>T1 v ${o}</b> · Bo3</td><td class="n">${t}</td><td class="n g2">${KST[t]}</td></tr>`).join("")}</table>`;
+
+// History: each gameweek's points and price, then past LCK seasons scored by Flol (Craig, 14 Nov 2026).
+const SR = [[3, "Sat", "W 2–0 DK", 2, "8/1/13", "18.5억", 5], [3, "Wed", "W 2–1 HLE", 3, "18/3/20", "18.5억", 12],
+  [2, "Fri", "W 2–1 BFX", 3, "13/6/14", "18.0억", 10], [2, "Wed", "W 2–0 DNS", 2, "14/4/16", "18.0억", 12],
+  [1, "Sat", "W 2–0 NS", 2, "9/3/11", "17.5억", 11], [1, "Wed", "L 1–2 GEN", 3, "12/8/13", "17.5억", 8]];
+const WPTS = SR.reduce((m, x) => ({ ...m, [x[0]]: (m[x[0]] || 0) + x[6] }), {});
+const COLS = `<colgroup><col class="c1"><col><col class="c3"><col class="c4"><col class="c5"><col class="c6"><col class="c7"></colgroup>`;
+const HIST = `<h4>LCK Cup 2027</h4><table class="h">${COLS}<tr><th class="l">Week</th><th class="l">Series</th><th>Games</th><th>K / D / A</th><th>Price</th><th>Pts</th><th>Week</th></tr>
+  ${SR.map(([w, d, r, g, k, pr, p], i) => { const same = i > 0 && SR[i - 1][0] === w; return `<tr${i > 0 && !same ? ' class="wk1"' : ""}><td class="l g2">${same ? "" : w}</td><td class="l">${d} · ${r}</td><td class="n">${g}</td><td class="n">${k}</td><td class="n g2">${same ? "" : pr}</td><td class="p">${p}</td><td class="p">${same ? "" : WPTS[w]}</td></tr>`; }).join("")}</table>
+  <h4>Past seasons <span>LCK, scored by Flol</span></h4><table class="h">${COLS}<tr><th class="l">Season</th><th></th><th>Games</th><th>K / D / A</th><th>Per game</th><th>Pts</th><th></th></tr>
+  <tr><td class="l" colspan="2">LCK 2026</td><td class="n">98</td><td class="n">392/171/598</td><td class="n g2">4.2</td><td class="p">412</td><td></td></tr>
+  <tr><td class="l" colspan="2">LCK 2025</td><td class="n">104</td><td class="n">405/188/611</td><td class="n g2">4.4</td><td class="p">455</td><td></td></tr></table>`;
+
+// Champions: each champion this season, games and average points over every game (spec/12).
+// Sorted by games; W–L adds to T1's 11–4 over 15 games.
+const CH = [["Azir", 4, "3–1", 4.8], ["Galio", 3, "3–0", 5.7], ["Orianna", 3, "2–1", 4.3], ["Sylas", 2, "2–0", 4.0], ["Taliyah", 2, "0–2", 2.5], ["Ryze", 1, "1–0", 1.0]];
+const CHAMPS = `<table class="ch"><tr><th class="l">Champion</th><th>Games</th><th>W–L</th><th>Avg pts</th></tr>
+  ${CH.map(([c, g, wl, a]) => `<tr><td class="l">${c}</td><td class="n">${g}</td><td class="n g2">${wl}</td><td class="p">${a.toFixed(1)}</td></tr>`).join("")}</table>`;
+
+$("main").innerHTML = { week: WEEK, champs: CHAMPS, fixtures: FIXT }[V] || HIST;
+
+// Season rail, on every tab (Craig, 14 Nov 2026): the scoring lines only, total and per game (spec/12, spec/05).
+// Total and per game cover every game; Pts only the games that counted (best 2 a series).
+// On the Points view the season is Weeks 1 and 2; Week 3 joins when final.
+const LINES = FP
+  ? [["Kills", 48, 16], ["Assists", 54, 10], ["Deaths", 21, -3], ["Gold lead at 15", 6, 6], ["Solo kills", 4, 4], ["First bloods", 2, 2], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 1, 1]]
+  : [["Kills", 74, 22], ["Assists", 87, 16], ["Deaths", 25, -4], ["Gold lead at 15", 9, 9], ["Solo kills", 5, 5], ["First bloods", 3, 3], ["Deathless", 4, 4], ["Quadra kills", 1, 1], ["Steals", 2, 2]];
+const GAMES = FP ? 10 : 15, TOT = LINES.reduce((s, x) => s + x[2], 0);
+$("rail").innerHTML = `<div class="tot"><span>Season</span><i>${GAMES} games</i></div><table><tr><th class="l"></th><th>Total</th><th>Per game</th><th>Pts</th></tr>
+  ${LINES.map(([l, t, p]) => `<tr><td class="l">${l}</td><td class="n">${t}</td><td class="pg">${(t / GAMES).toFixed(1)}</td><td class="p">${p > 0 ? "+" + p : p}</td></tr>`).join("")}</table>`;
+</script>
+</body></html>

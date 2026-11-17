@@ -33,9 +33,11 @@ product's set, because it is proven on these services.
 | Vitest with `convex-test` | game rules test as plain functions, and Convex functions run in memory, with no deployment |
 | TypeScript, ESLint | strict types and lint, both in `npm run verify` |
 | Papa Parse | reads Oracle's Elixir's daily CSV, quoted fields included, with errors reported, not skipped (#36) |
+| Playwright | drives Chrome for Forge's QA panel walk tool (`scripts/qa-walk.mjs`); dev only |
 
-`convex/_generated/` is written by `npx convex dev`, which needs a Convex deployment. Until Craig
-creates one, the rules are pure functions and need none.
+`convex/_generated/` is normally written by `npx convex dev`, which needs a Convex deployment. Until
+Craig creates one, it is written by hand (#36), and `npx convex dev` will overwrite it. The rules are
+pure functions; Convex functions run in memory under `convex-test`.
 
 ## Data
 
@@ -53,20 +55,25 @@ Each folder has a README saying what goes in it.
 | Folder | What lives there |
 |---|---|
 | `convex/lck/` | The real world: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. |
-| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload. |
+| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload. |
 | `convex/stats/` | Per-player stats for each game, as the feed sent them, plus the latest live reading. |
 | `convex/scoring/` | Scoring rules as data, the engine that turns stats into series points, and the re-score. |
 | `convex/gameweeks/` | Gameweeks, deadlines and settling a gameweek. |
-| `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, chips, prices. |
+| `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, buffs, prices. |
 | `convex/leagues/` | Global, supporter and private leagues, and their tables. |
+| `convex/following/` | Follow requests, blocks, the feed of followed managers, and cheers and jeers. |
 | `convex/achievements/` | The achievement book: the pages, the rules that award them, the awards. |
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
-| `src/` | The app's entry (`main.tsx`) and its routes (`router.tsx`). |
-| `src/screens/` | One folder per screen in the site map (`docs/design/site-map.md`), named as it is there. |
-| `src/rift/` | The Rift view: the map, the lanes, the shirts and the role icons. |
-| `src/parts/` | Parts shared by two or more screens: tables, the player row, buttons. |
+| `src/` | Every screen's path (`paths.ts`), and the folders below. |
+| `src/app/` | The app's entry (`main.tsx`), its routes (`router.tsx`) and the dev states page. |
+| `src/theme/` | Every colour, font, size, gap and width, as tokens; nothing else holds a colour. |
+| `src/fixtures/` | Made-up data the screens are built on until the backend wires real data. |
+| `src/testing/` | Test helpers: a part or screen rendered to HTML or text inside the app's router. |
+| `src/screens/` | One folder per screen in the site map (`docs/design/site-map.html`), named as it is there. |
+| `src/rift/` | The Rift view and Card view: the map, the tiles, the shirts, the role icons, the bench bar. Builds on `src/parts`; parts never import it. |
+| `src/parts/` | Parts shared by two or more screens: the top bar and page frame, tables, tabs, tags, keys, modal, menu, form fields, states, in `frame/`, `controls/`, `display/`, `text/` and `util/` (`src/parts/README.md`). |
 | `data/` | Seed data held per competition and season: teams, kit colours, stages. Data, never constants in code. |
 | `tests/` | Tests that cross features: a replayed gameweek, the signed-out pick to sign-up path. |
 | `docs/design/approved/` | One folder per screen with the picture Craig approved. An approved picture binds the layout. |
@@ -80,5 +87,6 @@ The rules:
 - A feature's server code, its tests and its fixtures sit in its one `convex/` folder.
 - `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`, `achievements`). The game reads the real world; it never writes it.
 - Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
-- A screen imports from `src/parts` and `src/rift`, never from another screen.
+- A screen never imports from another screen (src/screens/README.md).
+- A screen's CSS classes start with its folder's name (`.points__side`); a test fails on any other.
 - Before adding a helper or a fixture, search for its home and reuse it.

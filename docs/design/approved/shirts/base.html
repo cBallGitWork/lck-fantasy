@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Jersey base</title><style>
+*{margin:0;padding:0;box-sizing:border-box}body{width:1440px;background:#010A13;color:#F0E6D2;font:12px/1.4 sans-serif;padding:24px 32px}
+.g{display:flex;gap:32px;align-items:end}.c{background:#0A1428;padding:16px}
+</style></head><body>
+<h1 style="font-size:24px;margin-bottom:16px">Jersey base: three-quarter, soccer cut</h1>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <!-- The cut. The shirt turns a little to its right (our left shows more), as FPL's. viewBox 0 0 100 100. -->
+  <path id="j-torso" d="M30 17 Q41 23 52 19 L60 17 L66 26 L67 92 Q46 96 27 92 L28 30 Z"/>
+  <path id="j-near" d="M30 17 L16 27 L6 46 L19 53 L28 38 Z"/>
+  <path id="j-far" d="M60 17 L72 22 L80 40 L71 45 L66 34 Z"/>
+  <clipPath id="j-clip"><use href="#j-torso"/><use href="#j-near"/><use href="#j-far"/></clipPath>
+  <linearGradient id="j-shade" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+    <stop offset=".72" stop-color="#000" stop-opacity=".05"/><stop offset="1" stop-color="#000" stop-opacity=".32"/>
+  </linearGradient>
+  <g id="j-light">
+    <rect x="0" y="0" width="100" height="100" fill="url(#j-shade)" clip-path="url(#j-clip)"/>
+    <!-- the far side, the turn's shadow -->
+    <path d="M60 17 L66 26 L67 92 L62 93 L61 30 Z" fill="#000" opacity=".22"/>
+    <path d="M60 17 L72 22 L80 40 L71 45 L66 34 Z" fill="#000" opacity=".18"/>
+    <!-- folds -->
+    <path d="M33 60 Q40 66 36 80" stroke="#000" stroke-opacity=".12" stroke-width="1.6" fill="none"/>
+    <path d="M55 52 Q51 64 56 76" stroke="#000" stroke-opacity=".1" stroke-width="1.4" fill="none"/>
+    <path d="M28 38 L29 31" stroke="#000" stroke-opacity=".25" stroke-width="1.2"/>
+    <path d="M66 34 L66 27" stroke="#000" stroke-opacity=".25" stroke-width="1.2"/>
+    <!-- outline -->
+    <g fill="none" stroke="#000" stroke-opacity=".55" stroke-width="1.1" stroke-linejoin="round"><use href="#j-torso"/><use href="#j-near"/><use href="#j-far"/></g>
+  </g>
+</defs></svg>
+
+<div class="g">
+<!-- sample: plain red, white trim, crew collar -->
+<div class="c"><svg width="240" height="240" viewBox="0 0 100 100">
+  <g clip-path="url(#j-clip)"><rect width="100" height="100" fill="#E2012D"/>
+  <path d="M6 46 L19 53 L20.5 50 L7.6 43 Z" fill="#fff"/><path d="M71 45 L80 40 L79 37.5 L70 42.5 Z" fill="#fff"/></g>
+  <use href="#j-light"/>
+  <path d="M30 17 Q41 23 52 19 L60 17 Q57 24 45 26 Q34 25 30 17 Z" fill="#fff"/>
+  <path d="M33 18.5 Q41 23 52 20.5 L57 18.5 Q53 22.5 45 23.5 Q37 23 33 18.5 Z" fill="#7a0010"/>
+</svg></div>
+<div class="c"><svg width="120" height="120" viewBox="0 0 100 100"><use href="#j-light"/></svg></div>
+</div>
+</body></html>

@@ -25,9 +25,11 @@ Not ported: `look-gate.yml` (no screens yet), `release-check.yml` (no site yet),
 |---|---|---|
 | `CLAUDE_CODE_OAUTH_TOKEN` | `review.yml`, `claude-build.yml` | No review runs and `review-landed` passes, saying why. Nothing builds. |
 | `BUILD_TOKEN` | `claude-build.yml`, `lead.yml`, `drift-pass.yml` | Nothing builds. A token of the pipeline's account (CBHelper180): it pushes, opens pull requests and starts builds, so CI runs on them and `lane-auto` can approve them. |
-| `ANTHROPIC_API_KEY` (leave unset) | `claude-build.yml` | A build whose subscription run never started goes red instead of running again on the API key. Leave it unset: then a bad subscription token can never spend real money. |
-| `HEALTHCHECKS_PING_URL` (optional) | `lead.yml` | No heartbeat: nothing emails Craig if the lead stops. |
+| `HEALTHCHECKS_PING_URL` (optional) | `lead.yml` | No heartbeat and no tripwire email: nothing emails Craig if the lead stops, and a trip is only a warning on the lead's run. |
 | `PIPELINE_ON` (a variable, `true`) | `lead.yml`, `drift-pass.yml` | The schedule starts nothing, so no Actions minutes are spent. A run by hand still works. |
+| `PIPELINE_STOP` (a variable, a reason) | `claude-build.yml`, `review.yml`, `lead.yml`, `drift-pass.yml` | Craig's stop switch: set, no build or review starts and the `Today` board says why. Delete it to start again. |
+
+Builds bill the subscription only: `verify` fails any workflow that reads `ANTHROPIC_API_KEY`. A build that hits the usage limit opens a `pipeline:paused` issue (or moves the open one's time on), and the lead starts nothing until its `Until:` time, then closes it; close it sooner to start again. Craig's `build` label and the Actions button still start a build while paused, but not while `PIPELINE_STOP` is set. The lead's tripwire (each pass on main) pings the `lck-tripwire` Healthchecks check, failed when in the last 7 hours a workflow ran for an unknown account, a commit reached `main` with no pull request, or a pull request not Craig's touched `.github/`, `.claude/` or `CLAUDE.md`; past 400 builds in a day it also pauses builds until Craig closes the issue.
 
 ## The `main` ruleset
 
@@ -65,8 +67,8 @@ Never print a secret: paste it at `gh secret set`'s prompt, or pipe it in.
 3. *Done 14 Nov 2026.* Invite CBHelper180 to the repo with Write access, and accept as that account.
 4. *Done 14 Nov 2026.* Set the secrets:
    - `gh secret set CLAUDE_CODE_OAUTH_TOKEN -R cBallGitWork/lck-fantasy` (from `claude setup-token`);
-   - `gh secret set BUILD_TOKEN -R cBallGitWork/lck-fantasy`: a fine-grained token of CBHelper180 for this repo with read and write on Contents, Pull requests, Issues and Actions, and read on Commit statuses (the fix round's `gh pr checks`). Never give it the Workflows permission: without it GitHub refuses any push that changes `.github/workflows/`, which is what stops the builder editing the workflows that judge it;
-   - optional: `HEALTHCHECKS_PING_URL`. Leave `ANTHROPIC_API_KEY` unset.
+   - `gh secret set BUILD_TOKEN -R cBallGitWork/lck-fantasy`: a classic token of CBHelper180 with the `repo` scope only (the `workflow` scope removed 15 Nov 2026), so a build cannot push a change to `.github/workflows/`, the workflows that judge it;
+   - optional: `HEALTHCHECKS_PING_URL`.
 5. *Done 14 Nov 2026.* Repo settings:
    - `gh api -X PATCH repos/cBallGitWork/lck-fantasy -F allow_auto_merge=true -F allow_merge_commit=false -F allow_rebase_merge=false`
    - `gh api -X PUT repos/cBallGitWork/lck-fantasy/actions/permissions/workflow -f default_workflow_permissions=read -F can_approve_pull_request_reviews=true`

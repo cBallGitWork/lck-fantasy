@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Patch update</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
+.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+a { color: var(--ink); text-decoration: none; }
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
+nav.top .sp { flex: 1; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.page { padding: 24px 32px 48px; }
+.hd { display: flex; align-items: baseline; gap: 16px; }
+.hd h1 { font-size: 28px; font-weight: 700; letter-spacing: -.5px; }
+.hd h1 i { font-style: normal; color: var(--mid); font-size: 16px; font-weight: 400; margin-left: 8px; }
+.gw { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: 700; }
+.gw a { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; color: var(--ink); font-size: 16px; font-weight: 400; } .gw a.off { color: var(--line); }
+.when { color: var(--mid); font-size: 14px; margin-top: 8px; display: flex; align-items: center; gap: 24px; } .when b { color: var(--ink); font-weight: 400; font-family: "IBM Plex Mono", monospace; }
+.when a { color: var(--ink); display: inline-flex; align-items: center; min-height: 24px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
+.col h2 { font-size: 16px; font-weight: 700; padding-bottom: 8px; border-bottom: 2px solid var(--ink); }
+.col.r h2 { color: var(--rise); border-color: var(--rise); } .col.f h2 { color: var(--fall); border-color: var(--fall); }
+table { width: 100%; border-collapse: collapse; background: var(--paper); }
+th { text-align: left; font-weight: 400; color: var(--mid); font-size: 12px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+th.n { text-align: right; } td.n { text-align: right; font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+td { height: 40px; padding: 0 12px; border-bottom: 1px solid var(--fill); font-size: 14px; }
+td small { color: var(--mid); font-size: 12px; margin-left: 8px; }
+.up { color: var(--rise); } .dn { color: var(--fall); }
+th.ar, td.ar { width: 32px; padding: 0 4px 0 12px; text-align: right; font-size: 12px; }
+.mine::after { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); margin-left: 4px; vertical-align: 1px; }
+</style></head><body>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a class="on">Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
+<div class="page">
+  <div class="hd"><h1>Patch update<i>패치 노트</i></h1><div class="gw"><a>‹</a>Week 4 prices<a class="off">›</a></div></div>
+  <div class="when"><span>Set Wed 13 Jan <b>07:45</b>&nbsp;&nbsp;16:45 KST</span><a>How prices move ›</a></div>
+  <div class="cols">
+    <div class="col r"><h2>Rises</h2><table id="rises"></table></div>
+    <div class="col f"><h2>Falls</h2><table id="falls"></table></div>
+  </div>
+</div>
+<script>
+// Made-up LCK Cup: the moves made at the Week 3 deadline, seen Week 4 Tuesday 22:00 London.
+// Prices and moves agree with the approved Stats, Transfers and player-card pictures. ● = in Baron Steal FC's squad.
+// [name, team, role, new price, move, owned %, mine]
+const RISES = [
+  ["Faker", "T1", "Mid", 18.5, 0.5, 46, true], ["Chovy", "GEN", "Mid", 17.5, 0.5, 41], ["Peyz", "T1", "Bot", 15.0, 0.5, 33],
+  ["Siwoo", "DK", "Top", 11.5, 0.5, 12, true], ["BuLLDoG", "DNS", "Mid", 11.0, 0.5, 6], ["Lucid", "DK", "Jungle", 9.0, 0.5, 4],
+  ["Kingen", "NS", "Top", 6.5, 0.5, 3], ["Ssong", "DNS", "Coach", 5.5, 0.5, 3], ["Hype", "KRX", "Bot", 5.5, 0.5, 2],
+];
+const FALLS = [
+  ["Gumayusi", "HLE", "Bot", 15.5, -0.5, 26], ["Aiming", "DK", "Bot", 13.5, -0.5, 8], ["ShowMaker", "DK", "Mid", 13.0, -0.5, 9],
+  ["Doran", "T1", "Top", 12.5, -0.5, 18], ["DuDu", "DNS", "Top", 6.0, -0.5, 2], ["Clear", "BFX", "Top", 5.5, -0.5, 1], ["DanDy", "NS", "Coach", 5.0, -0.5, 1], ["Edgar", "BRO", "Coach", 4.5, -0.5, 1],
+];
+const head = `<tr><th>Player</th><th class="n">Was</th><th class="ar"></th><th class="n">Now</th><th class="n">Owned</th></tr>`;
+const row = ([n, t, r, p, m, o, mine]) => `<tr><td><b class="${mine ? "mine" : ""}">${n}</b><small>${t} · ${r}</small></td><td class="n" style="color:var(--mid);width:80px">${(p - m).toFixed(1)}억</td><td class="ar ${m > 0 ? "up" : "dn"}">${m > 0 ? "▲" : "▼"}</td><td class="n" style="width:72px;padding-left:0"><b>${p.toFixed(1)}억</b></td><td class="n" style="width:80px">${o}%</td></tr>`;
+document.getElementById("rises").innerHTML = head + RISES.map(row).join("");
+document.getElementById("falls").innerHTML = head + FALLS.map(row).join("");
+</script>
+</body></html>

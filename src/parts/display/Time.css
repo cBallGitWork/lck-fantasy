@@ -1,0 +1,6 @@
+.time {
+  white-space: nowrap;
+}
+.time__kst {
+  margin-left: var(--s-1);
+}

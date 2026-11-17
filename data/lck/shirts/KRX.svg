@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Kiwoom DRX shirt"><defs>
+  <path id="krx-j-torso" d="M37 12 Q49 18 61 12 L75 16 L73.5 40 L74 91 Q49 96 25 91 L25.5 40 L23 16 Z"/>
+  <path id="krx-j-near" d="M37 12 L23 15.5 Q12.5 20 5 39 L17 47 L25.5 38 Z"/>
+  <path id="krx-j-far" d="M61 12 L75 15.5 Q84.5 20 90.5 37 L80.5 44.5 L73.5 37 Z"/>
+  <clipPath id="krx-j-clip"><use href="#krx-j-torso"/><use href="#krx-j-near"/><use href="#krx-j-far"/></clipPath>
+  <clipPath id="krx-j-tclip"><use href="#krx-j-torso"/></clipPath>
+  <clipPath id="krx-j-nclip"><use href="#krx-j-near"/></clipPath>
+  <clipPath id="krx-j-fclip"><use href="#krx-j-far"/></clipPath>
+  <linearGradient id="krx-j-shade" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/>
+    <stop offset=".7" stop-color="#000" stop-opacity=".06"/><stop offset="1" stop-color="#000" stop-opacity=".34"/>
+  </linearGradient>
+  <linearGradient id="krx-j-vshade" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/>
+  </linearGradient>
+  <radialGradient id="krx-j-glow" cx=".38" cy=".3" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".13"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <g id="krx-j-light">
+    <g clip-path="url(#krx-j-clip)">
+      <rect width="100" height="100" fill="url(#krx-j-shade)"/><rect width="100" height="100" fill="url(#krx-j-vshade)"/>
+      <ellipse cx="40" cy="38" rx="22" ry="26" fill="url(#krx-j-glow)"/>
+      <path d="M69 15 L75 16 L73.5 40 L74 92 L68.5 93 L68.5 40 Z" fill="#000" opacity=".14"/>
+      <path d="M61 12 L75 15.5 Q84.5 20 90.5 37 L80.5 44.5 L73.5 37 Z" fill="#000" opacity=".14"/>
+      <path d="M17 47 L25.5 38" stroke="#000" stroke-opacity=".3" stroke-width="1.4"/>
+      <path d="M80.5 44.5 L73.5 37" stroke="#000" stroke-opacity=".3" stroke-width="1.4"/>
+      <path d="M29 62 Q35 70 31 84" stroke="#000" stroke-opacity=".1" stroke-width="2" fill="none"/>
+      <path d="M64 56 Q60 68 65 80" stroke="#000" stroke-opacity=".09" stroke-width="1.8" fill="none"/>
+      <path d="M26 41 Q31 44 30 50" stroke="#000" stroke-opacity=".12" stroke-width="1.2" fill="none"/>
+      <path d="M73 41 Q68 44 69 50" stroke="#000" stroke-opacity=".12" stroke-width="1.2" fill="none"/>
+      <path d="M25 90 Q49 95 74 90" stroke="#000" stroke-opacity=".18" stroke-width="1" fill="none"/>
+    </g>
+    <g fill="none" stroke="#000" stroke-opacity=".6" stroke-width="1" stroke-linejoin="round"><use href="#krx-j-near"/><use href="#krx-j-far"/><use href="#krx-j-torso"/></g>
+  </g>
+  
+  <path id="krx-j-maker" d="M-2.6 2.2 L-0.6 -2.2 L2.8 -2.2 L2.2 -1 L0.2 -1 L-0.2 -0.1 L1.6 -0.1 L1.1 1 L-0.7 1 L-1.2 2.2 Z"/>
+<linearGradient id="krx-heart" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FF2E9A"/><stop offset="1" stop-color="#C8006E"/></linearGradient></defs><g clip-path="url(#krx-j-clip)"><rect width="100" height="100" fill="#1E2C5D"/><path d="M49.5 92 C28 76 18 56 24 42 C29 31 43 30 49.5 41 C56 30 70 31 75 42 C81 56 71 76 49.5 92 Z" fill="url(#krx-heart)"/>
+  <path d="M49.5 41 L46 50 L52.5 58 L46.5 66 L51.5 74 L48 82 L49.5 92" fill="none" stroke="#1E2C5D" stroke-width="1.6" stroke-linejoin="round"/>
+  <g stroke="#fff" stroke-width=".7" stroke-linecap="round"><path d="M46 46 L50 47"/><path d="M47.5 54 L51.5 52.5"/><path d="M47.5 62 L51.5 63"/><path d="M48 70 L51.5 69"/><path d="M47.5 78 L51 79.5"/><path d="M47 87 L50.5 86"/></g>
+  <path d="M5 39 L17 47 L18.7 44.5 L6.7 36.5 Z" fill="#E4007F"/><path d="M90.5 37 L80.5 44.5 L78.8 42 L88.8 34.6 Z" fill="#E4007F"/><g stroke="#E4007F" stroke-opacity="0.6" stroke-width=".8" fill="none"><path d="M25.5 40 L25 91"/><path d="M73.5 40 L74 91"/><path d="M37 12.4 L23.4 16"/><path d="M61 12.4 L74.6 16"/></g><text x="49.5" y="58" text-anchor="middle" font-family='"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif' font-weight="700" font-size="10" letter-spacing="0" fill="#fff" stroke="#1E2C5D" stroke-width="1" paint-order="stroke" stroke-linejoin="round">중꺾마</text><path d="M62 24 L65.4 28 L62 32 L58.6 28 Z" fill="#E4007F" stroke="#fff" stroke-width=".6"/><use href="#krx-j-maker" transform="translate(37 29)" fill="#fff"/></g><use href="#krx-j-light"/><path d="M37 12 Q49 8.5 61 12 L49 25 Z" fill="#0b1230"/><path d="M37 12 Q49 8.5 61 12" stroke="#E4007F" stroke-width="1.6" fill="none"/><path d="M36.4 11.8 L49 25.5 L61.6 11.8" stroke="#E4007F" stroke-width="2.6" fill="none" stroke-linejoin="miter" stroke-linecap="round"/></svg>

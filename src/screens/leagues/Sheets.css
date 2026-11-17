@@ -1,0 +1,61 @@
+/* The league forms' sheets (docs/design/approved/leagues/). Every value is a token. */
+.leagues__week {
+  margin-top: var(--s-4);
+}
+.leagues__label {
+  display: block;
+  margin-bottom: var(--s-2);
+}
+.leagues__select {
+  width: 100%;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  font: inherit;
+  font-size: var(--size-lead);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+}
+.leagues__select:focus {
+  border-color: var(--text);
+}
+.leagues__code-field input {
+  font-family: var(--font-mono);
+}
+.leagues__sheet-keys {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+.leagues__back {
+  margin-right: var(--s-2);
+  color: var(--text);
+  text-decoration: underline;
+}
+.leagues__count {
+  margin-top: var(--s-4);
+}
+.leagues__sheet-sub {
+  color: var(--mid);
+}
+.leagues__made {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  padding: var(--s-4);
+  border: var(--m-rule) solid var(--line);
+}
+.leagues__made-code {
+  flex: 1;
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.leagues__open {
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-5);
+  background: var(--ink);
+  color: var(--on-ink);
+}

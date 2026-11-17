@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { oeGames, oeSeriesGame, parseOeCsv } from "./oraclesElixir";
-import { BRION, DRX, gameOnePlayer, OE_FIXTURE_GAMES, OE_FIXTURE_ROWS, OE_FIXTURE_TEXT, OE_GAME_1 } from "./fixtures/oe";
+import { BRION, DRX, gameOnePlayer, OE_FIXTURE_GAMES, OE_FIXTURE_LEAGUE, OE_FIXTURE_ROWS, OE_FIXTURE_TEXT, OE_GAME_1 } from "./fixtures/oe";
 
 const game1 = OE_GAME_1;
 const player = gameOnePlayer;
@@ -38,14 +38,14 @@ describe("oeGames", () => {
   });
 
   test("a game missing a row, or a stat, throws rather than load part of it", () => {
-    expect(() => oeGames(OE_FIXTURE_ROWS.slice(1), "LCK")).toThrow("Game LOLTMNT03_183532 has 2 team rows and 9 player rows.");
+    expect(() => oeGames(OE_FIXTURE_ROWS.slice(1), OE_FIXTURE_LEAGUE)).toThrow("Game LOLTMNT03_183532 has 2 team rows and 9 player rows.");
     const noKills = OE_FIXTURE_ROWS.map((row, i) => (i === 0 ? { ...row, kills: "" } : row));
-    expect(() => oeGames(noKills, "LCK")).toThrow("No kills in game LOLTMNT03_183532.");
+    expect(() => oeGames(noKills, OE_FIXTURE_LEAGUE)).toThrow("No kills in game LOLTMNT03_183532.");
   });
 
   test("a partial game is marked, so it can't settle a series", () => {
     const partial = OE_FIXTURE_ROWS.map((row) => ({ ...row, datacompleteness: "partial" }));
-    expect(oeGames(partial, "LCK")[0]!.complete).toBe(false);
+    expect(oeGames(partial, OE_FIXTURE_LEAGUE)[0]!.complete).toBe(false);
   });
 
   test("a malformed file throws", () => {

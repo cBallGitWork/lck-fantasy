@@ -2,4 +2,4 @@
 
 Gameweeks, deadlines and settling a gameweek.
 
-Nothing is built here yet.
+- `starAndFlop.ts`: effective ownership, and the gameweek's star and flop (spec/12, Home).

@@ -40,7 +40,8 @@ Notes:
 - **The coach** is a `contracts` row with the role `coach`. The coach slot picks the team, not
   the person: its pick holds a team, which scores the team's play and shows whoever holds the
   team's current coach contract, so a change of head coach changes no pick
-  ([spec/01](../spec/01-squad-and-slots.md)). What it scores from is open (to-grill).
+  ([spec/01](../spec/01-squad-and-slots.md)). It scores the team's lines per game
+  ([spec/05](../spec/05-scoring.md)).
 - **Roles** are a fixed list for LoL: top, jungle, mid, bot, support, plus coach. This is a rule
   of the sport, like FPL's four positions, so it can be a constant.
 - **Substitutes and call-ups.** LCK teams register more than five players and promote from the
@@ -57,13 +58,11 @@ Notes:
   series between gameweeks, which covers postponements.
 - **Proposal:** in the regular stages a gameweek is the LCK's own week, Wednesday to Sunday. Every
   team plays exactly two Bo3s in it, so there are no blanks or doubles there.
-- **Proposal:** one deadline per gameweek, a fixed time before its first series. **ask:** how long
-  before (FPL uses 90 minutes).
-- **ask:** Road to MSI, the Play-In and the playoffs are uneven: four teams sit out Road to MSI,
-  and in the playoffs a team can play none, one or three Bo5s in a week. Whether these are
-  gameweeks at all is the open playoffs question.
-- **ask:** the LCK Cup's format differs from the splits, and it needs the same mapping once its
-  2027 schedule is out.
+- One deadline per gameweek, 15 minutes before its first series
+  ([spec/10](../spec/10-season-and-gameweeks.md)).
+- Road to MSI, the Play-In and the playoffs are uneven: four teams sit out Road to MSI, and in the
+  playoffs a team can play none, one or three Bo5s in a week. A knockout gameweek is still one
+  LCK week, never one bracket round ([spec/10](../spec/10-season-and-gameweeks.md)).
 
 ## Stats and points
 
@@ -76,8 +75,8 @@ Notes:
 
 - **Raw stats are kept, points are worked out.** A rule change re-scores every series from
   `gameStats`, and the breakdown shows a manager where each point came from.
-- **Points are per series**, as Craig said. Whether a series takes the best game or all of them is
-  one field on the rules (to-grill).
+- **Points are per series**, as Craig said: a series scores a player's or coach's best 2 games
+  ([spec/05](../spec/05-scoring.md)).
 - **Live and final are separate.** Live points are provisional readings; a series turns final when
   the settled stats arrive, and only final points move prices and ranks.
 - **Scoring rules are data per season**, with a weight per role, so the toggles and position
@@ -89,9 +88,9 @@ Notes:
 |---|---|---|
 | `managers` | a signed-in person | name, country, favourite team |
 | `entries` | a manager's team in one season | manager, season, team name, bank |
-| `picks` | an entry's squad for one gameweek | entry, gameweek, player (a team for the coach slot), slot (role, flex, coach, bench order), captain, vice-captain, buy price |
-| `transfers` | one player out, one in | entry, gameweek, out, in, prices, free or a −4 hit |
-| `chipPlays` | a chip used | entry, gameweek, chip |
+| `picks` | an entry's squad for one gameweek | entry, gameweek, player (a team for the coach slot), slot (role, flex, coach, bench order), Carry, Vice-carry, buy price |
+| `transfers` | one player out, one in | entry, gameweek, out, in, prices, free or a hit (−6) |
+| `buffPlays` | a buff used | entry, gameweek, buff |
 | `prices` | a player's price over time | player, season, from gameweek, price in won |
 | `entryGameweeks` | an entry's result for a gameweek | entry, gameweek, points, hits, rank, the auto-subs made |
 | `leagues` | a mini-league | name, kind (overall, country, supporter, private, Legend, Rise), join code |
@@ -104,13 +103,14 @@ Notes:
   sign-up.
 - **A team always has a lineup.** `picks` rows are copied forward at each deadline, so an entry
   that does nothing still fields last week's team.
-- **Chips, slots and squad sizes are data per season**, so they can be tuned after the beta.
+- **Buffs, slots and squad sizes are data per season**, so they can be tuned after the beta.
 
 ## What the LCK forces
 
 Things FPL never has to handle, which the model above allows for:
 
-1. **A series is several games.** Points per series, with best-game or whole-series as a rule.
+1. **A series is several games.** Points per series, from the best 2 games
+   ([spec/05](../spec/05-scoring.md)).
 2. **Series length is unknown in advance.** A Bo3 lasts two or three games, so anything summed
    rewards the loser of a 2–1 less than the winner of a 2–0 only if the rules say so. The
    backtest measures this.

@@ -1,0 +1,53 @@
+.price-changes__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+}
+.price-changes__week {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.price-changes__when {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  color: var(--mid);
+}
+.price-changes__lists {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-6);
+  margin-top: var(--s-5);
+}
+.price-changes__list-title {
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+  padding-bottom: var(--s-2);
+  border-bottom: var(--m-rule-heavy) solid;
+}
+.price-changes__list--rise .price-changes__list-title {
+  color: var(--rise);
+}
+.price-changes__list--fall .price-changes__list-title {
+  color: var(--fall);
+}
+/* Was, the move's mark, Now and Owned at the picture's widths; the player takes the rest. */
+.price-changes__list col:nth-child(2),
+.price-changes__list col:nth-child(5) {
+  width: var(--m-col-price);
+}
+.price-changes__list col:nth-child(3) {
+  width: var(--s-6);
+}
+.price-changes__list col:nth-child(4) {
+  width: var(--m-col-figure);
+}
+.price-changes__name {
+  font-weight: var(--w-bold);
+}
+.price-changes__meta {
+  margin-left: var(--s-2);
+}
+.price-changes__was {
+  color: var(--mid);
+}

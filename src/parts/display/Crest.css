@@ -1,0 +1,12 @@
+.crest {
+  display: block;
+  flex: none;
+  object-fit: contain;
+}
+.crest--none {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: var(--m-rule) dashed var(--soft);
+}

@@ -47,7 +47,7 @@ for go in "ok build it" "go ahead" "file it as an issue" "ship it" "merge that" 
   "yes please, open the PR" "merge it" "merge #1378" "ok merge them" \
   "file answers" "File the answers on their issues" "yes but multiple workflows in one go" "yes, run them" \
   "yes but what about a sixth man" "yes, objectives matter" "yes merge confilcts are annoying" \
-  "1a 2b" "1 a
+  "Save" "save it" "save the design" "1a 2b" "1 a
 2 a
 3 a" "1. a" "3 a" "1) b, 2) c"; do
   said "$go"
@@ -57,7 +57,7 @@ done
 # a message opening with yes is a go (Craig, 9 Nov 2026); other talk stays talk, and numbers need only answers
 for talk in "file naming is odd" "go figure, the substitute rule again" "what if we run the beta live" \
   "merge conflicts again" "i think one captain might be better?" "or shall i answer more qs first?" \
-  "the file looks wrong" "yesterday was slow" "2 things bother me" "1 a but what about substitutes"; do
+  "the file looks wrong" "save naming is odd" "saves look wrong" "yesterday was slow" "2 things bother me" "1 a but what about substitutes"; do
   said "$talk"
   check deny guard_mode.py "$(bash_call 'gh issue create --title t')"
 done

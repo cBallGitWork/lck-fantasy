@@ -1,0 +1,16 @@
+.side-section {
+  border-top: var(--m-rule-heavy) solid var(--text);
+  padding-top: var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.side-section__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--s-2);
+  font-size: var(--size-body);
+  font-weight: var(--w-bold);
+}
+.side-section__note {
+  font-weight: var(--w-regular);
+}

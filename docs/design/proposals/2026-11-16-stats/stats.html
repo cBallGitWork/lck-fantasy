@@ -1,0 +1,133 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Stats</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+/* type scale: 28 page title · 20 figures and team codes · 14 body · 12 labels (the nav is shared) */
+body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
+.mono { font-family: "IBM Plex Mono", monospace; }
+nav.top { height: 56px; display: flex; align-items: center; gap: 28px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { font-size: 20px; letter-spacing: -0.5px; margin-right: 12px; }
+nav.top a { color: var(--mid); }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: -18px; }
+nav.top .sp { flex: 1; }
+.presented { color: var(--soft); font-size: 12px; display: flex; gap: 8px; align-items: center; }
+.ph { background: repeating-linear-gradient(45deg, var(--fill), var(--fill) 6px, #e2e2e2 6px, #e2e2e2 12px); border: 1px dashed var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+
+.page { padding: 24px 32px 48px; }
+.head { display: flex; align-items: baseline; gap: 14px; }
+.head h1 { font-size: 28px; letter-spacing: -.5px; }
+.tabs { display: flex; margin: 18px 0 0; border-bottom: 2px solid var(--ink); }
+.tabs span { padding: 10px 22px; font-weight: 600; color: var(--mid); } .tabs span.on { background: var(--ink); color: #fff; }
+/* controls in one row, FPL's: role, team, max price, span, totals or per game, search */
+.ctl { display: flex; align-items: center; gap: 10px; margin: 16px 0 14px; }
+.roles, .seg { display: flex; } .roles span, .seg span { border: 1px solid var(--line); margin-left: -1px; background: var(--paper); padding: 6px 12px; color: var(--mid); display: flex; align-items: center; gap: 6px; } .roles span:first-child, .seg span:first-child { margin-left: 0; }
+.roles span.on, .seg span.on { background: var(--ink); border-color: var(--ink); color: #fff; } .roles svg { width: 13px; height: 13px; }
+.sel { border: 1px solid var(--line); background: var(--paper); padding: 6px 12px; color: var(--ink); } .sel small { color: var(--mid); font-size: 12px; margin-right: 6px; }
+.find { width: 200px; border: 1px solid var(--line); background: var(--paper); padding: 6px 12px; color: var(--mid); }
+table { width: 100%; border-collapse: collapse; background: var(--paper); table-layout: fixed; }
+th { text-align: right; font-size: 12px; font-weight: 500; color: var(--mid); padding: 10px 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; } th.l { text-align: left; }
+th.s { color: var(--ink); font-weight: 700; } th.s::after { content: " ▼"; font-size: 12px; } th.o::after { content: " ▿"; color: var(--soft); }
+th.grp, td.grp { border-left: 1px solid var(--line); }
+td { text-align: right; padding: 0 10px; height: 44px; border-top: 1px solid var(--fill); font-family: "IBM Plex Mono", monospace; } td.l { text-align: left; font-family: inherit; }
+td.rk { color: var(--mid); text-align: left; }
+td.rl { padding-right: 0; } td.rl svg { width: 14px; height: 14px; vertical-align: -2px; }
+td.nm b { font-weight: 600; } td.nm small { color: var(--mid); font-size: 12px; margin-left: 6px; font-family: "IBM Plex Mono", monospace; }
+td.mv { padding-left: 0; text-align: left; font-size: 12px; } .up { color: #c8102e; } .dn { color: #1f4fa8; }
+td.s { font-weight: 600; background: #f4f4f2; }
+td.z { color: var(--mid); }
+i.me { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); margin: 0 0 2px 8px; }
+.foot { display: flex; justify-content: space-between; align-items: center; color: var(--mid); margin-top: 12px; } .pg { display: flex; } .pg span { min-width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--line); margin-left: -1px; background: var(--paper); color: var(--ink); font-family: "IBM Plex Mono", monospace; } .pg span.on { background: var(--ink); color: #fff; border-color: var(--ink); }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+  <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
+  <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
+  <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+</defs></svg>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a class="on">Stats</a><a>LCK</a><a>Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:26px">sponsor</span></span></nav>
+<div class="page">
+  <div class="head"><h1>Stats</h1><span style="flex:1"></span><a>Patch update ›</a></div>
+  <div class="tabs" id="tabs"></div>
+  <div class="ctl" id="ctl"></div>
+  <table id="tb"></table>
+  <div class="foot" id="foot"></div>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const V = new URLSearchParams(location.search).get("v") || "players";
+const PER = V === "pergame";
+const COACH = V === "coaches";
+$("tabs").innerHTML = `<span class="${COACH ? "" : "on"}">Players</span><span class="${COACH ? "on" : ""}">Coaches</span>`;
+const RH = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support" };
+$("ctl").innerHTML = (COACH ? "" : `<div class="roles"><span class="on">All</span>${Object.entries(RH).map(([k, t]) => `<span><svg><use href="#i-${k}"/></svg>${t}</span>`).join("")}</div>`)
+  + `<span class="sel"><small>Team</small>All ▾</span><span class="sel"><small>Max price</small>Any ▾</span><span class="sel"><small>Span</small>Season ▾</span>`
+  + `<div class="seg"><span class="${PER ? "" : "on"}">Totals</span><span class="${PER ? "on" : ""}">Per game</span></div>`
+  + `<span style="flex:1"></span><span class="find">Find a ${COACH ? "coach" : "player"}</span>`;
+
+// The moment: LCK Cup Week 4, Tuesday, Weeks 1 to 3 final, two Bo3 series a week. Games and series match the LCK hub's
+// standings (T1 5–1, sets 11–4, so 15 games). Form, the last 4 weeks' average, is points ÷ 3 until Week 4 is final.
+// Faker, Chovy, Keria and kkOma match the Pick Team, Transfers and card pictures.
+const GAMES = { T1: 15, GEN: 16, HLE: 15, DK: 15, KRX: 15, NS: 13, BRO: 15, DNS: 16, KT: 15, BFX: 13 };
+const REC = { T1: [5, 1], GEN: [5, 1], HLE: [4, 2], DK: [3, 3], KRX: [3, 3], NS: [2, 4], BRO: [1, 5], DNS: [3, 3], KT: [3, 3], BFX: [1, 5] };
+// [role, name, team, price, move, owned %, points, K, D, A, GD@15 ahead, solo kills, first bloods, deathless, quadra+, objective steals]
+const P = [
+  ["mid", "Chovy", "GEN", 17.5, 1, 41, 61, 70, 9, 74, 11, 8, 3, 4, 1, 0],
+  ["mid", "Faker", "T1", 18.5, 1, 46, 58, 66, 16, 87, 10, 6, 3, 3, 1, 0],
+  ["bot", "Ruler", "GEN", 16.0, 0, 38, 56, 83, 11, 60, 10, 3, 2, 4, 1, 0],
+  ["bot", "Peyz", "T1", 15.0, 1, 33, 52, 75, 15, 66, 8, 3, 2, 3, 1, 0],
+  ["sup", "Keria", "T1", 12.0, 0, 47, 52, 10, 18, 144, 8, 0, 2, 3, 0, 0],
+  ["jng", "Canyon", "GEN", 15.5, 0, 29, 50, 50, 12, 92, 10, 5, 3, 4, 0, 2],
+  ["top", "Zeus", "HLE", 14.0, 0, 31, 48, 48, 12, 50, 8, 10, 2, 3, 0, 0],
+  ["top", "Doran", "T1", 12.5, -1, 18, 45, 43, 18, 62, 8, 8, 2, 3, 0, 0],
+  ["jng", "Oner", "T1", 14.0, 0, 22, 43, 40, 19, 94, 8, 3, 4, 2, 0, 1],
+  ["bot", "Gumayusi", "HLE", 15.5, -1, 26, 42, 58, 14, 44, 6, 2, 2, 3, 0, 0],
+  ["mid", "Zeka", "HLE", 15.0, 0, 15, 41, 53, 15, 45, 6, 5, 2, 2, 0, 0],
+  ["top", "Kiin", "GEN", 13.5, 0, 21, 40, 35, 14, 56, 8, 6, 0, 3, 0, 0],
+  ["sup", "Delight", "HLE", 10.0, 0, 19, 38, 6, 16, 106, 6, 0, 0, 3, 0, 0],
+  ["mid", "BuLLDoG", "DNS", 11.0, 1, 6, 36, 54, 20, 52, 6, 5, 2, 2, 0, 0],
+  ["top", "Siwoo", "DK", 11.5, 1, 12, 35, 38, 22, 39, 6, 11, 2, 0, 0, 0],
+  ["sup", "Duro", "GEN", 9.5, 0, 14, 35, 8, 12, 111, 6, 0, 0, 4, 0, 0],
+  ["mid", "ShowMaker", "DK", 13.0, -1, 9, 33, 45, 19, 56, 6, 3, 2, 2, 0, 0],
+  ["jng", "Kanavi", "HLE", 13.0, 0, 11, 32, 29, 16, 66, 6, 2, 3, 2, 0, 1],
+  ["bot", "Aiming", "DK", 13.5, -1, 8, 31, 53, 18, 42, 5, 2, 0, 2, 0, 0],
+  ["jng", "Pyosik", "DNS", 10.5, 0, 4, 30, 34, 22, 69, 6, 2, 3, 0, 0, 1],
+];
+// [name, team, price, move, owned %, points, first tower, most drakes, most barons, most elders, quick wins]
+// Points = 3 a series won − 1 a series lost + the lines in each series' best 2 games.
+const C = [
+  ["kkOma", "T1", 7.0, 0, 24, 27, 6, 5, 5, 0, 2],
+  ["Ryu", "GEN", 7.0, 0, 21, 26, 6, 5, 4, 0, 2],
+  ["Homme", "HLE", 6.5, 0, 9, 18, 5, 4, 3, 0, 1],
+  ["Ssong", "DNS", 5.5, 1, 3, 14, 5, 4, 3, 0, 1],
+  ["cvMax", "DK", 6.0, 0, 5, 13, 4, 4, 3, 0, 1],
+  ["Score", "KT", 5.5, 0, 2, 12, 4, 3, 3, 1, 0],
+  ["Joker", "KRX", 5.0, 0, 2, 11, 4, 3, 2, 0, 1],
+  ["DanDy", "NS", 5.0, -1, 1, 7, 3, 3, 2, 0, 0],
+  ["Edgar", "BRO", 4.5, -1, 1, 4, 3, 3, 3, 0, 0],
+  ["Mowgli", "BFX", 4.5, 0, 1, 3, 3, 3, 2, 0, 0],
+];
+// Your own players: Baron Steal FC's squad, as on Pick Team.
+const MINE = ["Faker", "Siwoo", "Zeus", "Canyon", "Ruler", "Delight", "kkOma"];
+const me = (n) => MINE.includes(n) ? `<i class="me"></i>` : "";
+// A rise Korean red, a fall blue, on every screen (Craig, 16 Nov 2026).
+const mv = (m) => m > 0 ? `<span class="up">▲${(0.5 * m).toFixed(1)}</span>` : m < 0 ? `<span class="dn">▼${(-0.5 * m).toFixed(1)}</span>` : "";
+const per = (x, g) => PER ? (x / g).toFixed(1) : x;
+// Every line is a count; the Totals | Per game toggle divides them all by games (Craig, 16 Nov 2026).
+const line = (x, g) => `<td class="${x === 0 ? "z" : ""}">${per(x, g)}</td>`;
+const lead = (n, t, pr, m, o, pts, g) => `<td class="rk"></td><td class="rl"></td><td class="l nm"><b>${n}</b><small>${t}</small>${me(n)}</td>
+  <td>${pr.toFixed(1)}억</td><td class="mv">${mv(m)}</td><td>${(pts / 3).toFixed(1)}</td><td>${o}%</td><td class="s">${per(pts, g)}</td><td class="grp">${g}</td>`;
+const cols = (n) => `<colgroup><col style="width:40px"><col style="width:30px"><col style="width:170px"><col style="width:76px"><col style="width:54px"><col span="${n}"></colgroup>`;
+const hd = (who, rest) => `<tr><th class="l"></th><th class="l"></th><th class="l">${who}</th><th class="o">Price</th><th></th><th class="o">Form</th><th class="o">Owned</th><th class="s">Pts</th><th class="grp o">Games</th>${rest.map((h) => `<th class="o">${h}</th>`).join("")}</tr>`;
+if (!COACH) {
+  const rows = PER ? [...P].sort((a, b) => b[6] / GAMES[b[2]] - a[6] / GAMES[a[2]]) : P;
+  $("tb").innerHTML = cols(13) + hd("Player", ["K", "D", "A", "GD@15", "Solo kills", "First blood", "Deathless", "Quadra+", "Obj. steals"])
+    + rows.map(([rl, n, t, pr, m, o, pts, ...L], i) => { const g = GAMES[t];
+      return `<tr>${lead(n, t, pr, m, o, pts, g).replace('<td class="rk"></td><td class="rl"></td>', `<td class="rk">${i + 1}</td><td class="rl"><svg><use href="#i-${rl}"/></svg></td>`)}${L.map((x) => line(x, g)).join("")}</tr>`; }).join("");
+  $("foot").innerHTML = `<span>1–20 of 104</span><span class="pg">${["‹", 1, 2, 3, 4, 5, 6, "›"].map((x) => `<span class="${x === 1 ? "on" : ""}">${x}</span>`).join("")}</span>`;
+} else {
+  $("tb").innerHTML = cols(10) + hd("Coach", ["Series", "First tower", "Most drakes", "Most barons", "Most elders", "Quick wins"])
+    + C.map(([n, t, pr, m, o, pts, ...L], i) => { const g = GAMES[t]; const [w, l] = REC[t];
+      return `<tr>${lead(n, t, pr, m, o, pts, g).replace('<td class="rk"></td><td class="rl"></td>', `<td class="rk">${i + 1}</td><td class="rl"><svg><use href="#i-coach"/></svg></td>`)}<td>${w}–${l}</td>${L.map((x) => `<td class="${x === 0 ? "z" : ""}">${per(x, g)}</td>`).join("")}</tr>`; }).join("");
+}
+</script></body></html>

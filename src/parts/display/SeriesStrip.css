@@ -1,0 +1,36 @@
+/* A card's series strip: the last 3, a 2px --text rule for now, the next 3. */
+.series-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) var(--m-rule-heavy) repeat(3, minmax(0, 1fr));
+  padding: var(--s-4) 0;
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.series-strip__cell {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--s-3);
+}
+.series-strip__when {
+  font-weight: var(--w-regular);
+}
+.series-strip__points {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-snug);
+  color: var(--text);
+}
+.series-strip__now {
+  background: var(--text);
+}
+.series-strip__next {
+  font-size: var(--size-head);
+  line-height: var(--lh-snug);
+  color: var(--mid);
+}
+.series-strip__next--first {
+  color: var(--text);
+  font-weight: var(--w-semi);
+}

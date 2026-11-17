@@ -2,7 +2,7 @@
 
 Craig's answers in chat, 26–29 Oct and 11 Nov 2026. This is the history; [SPEC.md](../SPEC.md) is the product, and open items live in [to-grill.md](to-grill.md).
 
-**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Korean touches grill](#korean-touches-grill-13-nov-2026) · [Settings and sign-in grill](#settings-and-sign-in-grill-13-nov-2026) · [Live points grill](#live-points-grill-13-nov-2026) · [Open](#open) · [Research](#research-behind-this)
+**Contents:** [What it is](#what-it-is) · [Season](#season) · [Squad and slots](#squad-and-slots) · [Scoring](#scoring) · [Chips](#chips) · [Achievement book](#achievement-book) · [Leagues](#leagues) · [Onboarding](#onboarding) · [Foundations](#foundations-11-nov-2026) · [Season grill](#season-and-gameweeks-grill-11-nov-2026) · [Squad grill](#squad-and-slots-grill-11-nov-2026) · [Scoring grill](#scoring-grill-first-round-12-nov-2026) · [Chips grill](#chips-grill-12-nov-2026) · [Prices grill](#prices-grill-12-nov-2026) · [Transfers grill](#transfers-grill-12-nov-2026) · [Captain grill](#captain-grill-12-nov-2026) · [Scoring table](#scoring-table-bench-1213-nov-2026) · [Onboarding grill](#onboarding-grill-13-nov-2026) · [Beta chips grill](#beta-chips-grill-13-nov-2026) · [Knockouts grill](#knockouts-grill-13-nov-2026) · [Leagues grill](#leagues-grill-13-nov-2026) · [Pages grill](#pages-grill-13-nov-2026) · [Korean touches grill](#korean-touches-grill-13-nov-2026) · [Settings and sign-in grill](#settings-and-sign-in-grill-13-nov-2026) · [Live points grill](#live-points-grill-13-nov-2026) · [Picture bits grill](#picture-bits-grill-14-nov-2026) · [Following grill](#following-and-trucks-grill-14-nov-2026) · [Transfers ideas grill](#transfers-ideas-grill-14-nov-2026) · [Following design](#following-design-round-14-nov-2026) · [Transfers redraw](#transfers-redraw-14-nov-2026) · [Profile design](#manager-profile-design-round-14-nov-2026) · [Points redraw](#points-redraw-14-nov-2026) · [Open](#open) · [Research](#research-behind-this)
 
 ## What it is
 
@@ -100,7 +100,7 @@ The philosophy is settled in [spec/05-scoring.md](../spec/05-scoring.md); the ta
 
 ## Chips grill (12 Nov 2026)
 
-Settled; the spec is [spec/06-chips.md](../spec/06-chips.md).
+Settled; the spec is [spec/06-buffs.md](../spec/06-buffs.md).
 
 - "we will have chips, undecided yet, but build the ability for us to make them"; chips as data, from a list of effects, yes.
 - Names: "Captain is Carry, Triple Cap is Hyper Carry. Bench Boost. Something shop related for Free Hit?"; Recall for the Free Hit, Remake for the Wildcard, the Vice-carry, yes.
@@ -163,7 +163,7 @@ taking the recommendation.
 
 ## Beta chips grill (13 Nov 2026)
 
-Settled; the spec is [spec/06-chips.md](../spec/06-chips.md).
+Settled; the spec is [spec/06-buffs.md](../spec/06-buffs.md).
 
 - All four chips in the beta; "One for each split when we start. All in beta", then one of each in the beta, yes.
 - Hyper Carry at ×2: "Well we have 2 series in a week so x2 a lot. 1.5x good"; then ×2, picked in a dialog; then "Change hypercarry to dual carry, vice carry gets the carry points too". No stand-in if the Carry doesn't play, yes.
@@ -232,6 +232,163 @@ Settled; the spec is [spec/11-live-points.md](../spec/11-live-points.md).
 - Feed down: no live points, "but we could look at other sites to grab the basic data like kills etc?", placed under Later.
 
 - Live game ids (13 Nov, later): Leaguepedia has no live-feed ids; "Find similar site as another backup?"; none exists, so read them from lolesports.com's pages: "yes".
+
+## Picture bits grill (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md) and the glossary.
+
+- Rift view and Card view on Pick Team and Transfers, the last choice remembered; greyed players sorted last; Home's muted stream when live and the lineup when idle: yes to each.
+- Chips: asked for a league term instead, then picked buffs over spells and ults; the rename goes everywhere, the code through an issue.
+- Star and flop: "star and flop takes in ownsership too i believe", then a differential star, "but also remember a carry means you own 150% of them"; yes to the formula with effective ownership.
+
+## Transfers ideas grill (14 Nov 2026)
+
+Settled; the spec is [spec/03-transfers.md](../spec/03-transfers.md) and spec/12.
+
+- Buy-back cancels out: "yes and allow an undo transfer somwhere too (at the top?)"; the undo as drawn up, per transfer until the deadline, filed on "File it".
+- Remake wipes the week's hits; a price arrow on each player: yes. A watchlist: "Later".
+- Hits: "up the -4 to -6 too".
+- Several transfers confirm together, as FPL; Undo: "no we probably need to undo the transaction no the indicidual ones (as one trasnfer could be an enabler for another)", then latest confirm first. Undo returns exactly what the confirm used; no arrow before a first price move.
+- Leagues: the Carry column (shown after the deadline) and the chase tag (pts to the rank above, "+16 clear" when 1st, nothing when level): yes.
+
+## Following and trucks grill (14 Nov 2026)
+
+Settled; the spec is [spec/14-following.md](../spec/14-following.md).
+
+- Following in the beta, by request and one-way; the feed's three items; a big Carry at 20+: "Yes, all five". Later: "we could have a notable personalities in the future/show followed teams/players etc".
+- Trucks: asked for research on truck culture first, then anyone you follow; coffee and protest with preset lines, one per person a week; sponsor trucks; a Following page; protest lines never name a player; lines take the manager's numbers.
+- Lines: "get a comedy writer agent in for it", "buuld a db of lines like a game like fm would for dialogue", "use fpl terms/lingo too, explore that, uk english". The first 63 are drafts in docs/research/truck-lines.md.
+
+## Following design round (14 Nov 2026)
+
+Settled; the spec is [spec/14-following.md](../spec/14-following.md), the picture `docs/design/approved/following/`.
+
+- A follow request from the profile only, no search; one timeline, newest first; a following cap held as data: Craig's picks in the round.
+- Trucking past weeks: "live or previous week (if next gameweek hasnt started)".
+- The picture: "Yes, save it".
+
+## Transfers redraw (14 Nov 2026)
+
+Settled; the spec is [spec/03-transfers.md](../spec/03-transfers.md), the picture `docs/design/approved/transfers/`.
+
+- "get fresh eyes on that transfers design and imrpove", "and less obvious esxplaing text too pelse".
+- Undo with changes not yet confirmed: "Undo clears pending too". A Remake or Limitless confirm: listed, no Undo.
+- The picture: "yes save".
+
+## Manager profile design round (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/profile/`.
+
+- Asked "does manager profile have transfer history?", then picked it as the next design.
+- Private leagues shown, as FPL; trucks from the feed only, no Truck button on a profile; a History row opens that week: recommended, picked.
+- The picture: "File and merge".
+
+## Points redraw (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/points/`. Redrawn from the 13 Nov start (PR #47, never merged).
+
+- LiveFPL picks: Carry v average Carry, points to climb, Killer kept; in play / to play dropped.
+- Star and flop on Points are your own; Star after the Carry, Flop the lowest who played, Killer the top scorer you don't own: "As drawn". Rift view first.
+- Points to climb: "rank, we cn use promoted or demoted / challenger needs great arrow essentially since its raw number", then "tiers for overall". Parked in to-grill.
+- The picture: "File and merge".
+
+## Pick Team redraw (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/pick-team/`. Redrawn from the 13 Nov picture (PR #48, never merged), whose Save rule ("2 has to be Save", Craig, 13 Nov) moves into spec/12.
+
+- Save in a bar under the pitch, as Transfers; tall photos kept in Card view; all 10 series, as Points; roles as icons only in Rift view: recommended, picked.
+- The picture: "Yes, save".
+
+## Player card design round (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/player-card/`.
+
+- Looked at other fantasy sites first: Craig's UCL Fantasy and FPL companion app screenshots.
+- Past seasons: "yes and more years if we can get it". Season panel on every tab, Transfer out kept: recommended, picked.
+- "that drawn player card is a sea of info and stats, might need to organise it more"; UI and UX designers in, twice.
+- "it should be grouped by series tbh"; the price once per gameweek in History.
+- The big number stays Season on every tab; the news line stays a black bar: "1 ok season 2 ok".
+- The picture: "save".
+
+## Coach card design round (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/coach-card/`.
+
+- "coach card should be not much differetn from player really": drawn as a variant of the player card, without the four-reviewer panel.
+- The picture: "save".
+
+## Live design round (14 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/live/`.
+
+- "ok, live first".
+- Average and Highest beside the total on Live: "Keep them".
+- The picture: "save".
+
+## LCK hub design round (15 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md) and [spec/01-squad-and-slots.md](../spec/01-squad-and-slots.md), the picture `docs/design/approved/lck-hub/`.
+
+- Sheep Esports on the page: "we part their articles on the page"; "news can have a thumbail"; fetched "using a tag, shold be simple".
+- Tabs: "needs a full league tab, fixtures in its own tab, results in its own tab etc".
+- Teams: "teams needs to be its own tab"; academy rosters "as they would be in the game too".
+- Academy players: "in the pool as they get subbed in"; "its like reservecs in fpl, the full squad is in the game"; "yes they are all part of the team for the cap"; "a coach is essentially the team, not put academy coach in"; on their prices, "dont worry about prices".
+- The picture: "save".
+
+## Six screens grill (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md). The questions and recommendations are in `docs/design/proposals/2026-11-16-open-questions.md`, five a screen, for Stats, Compare, the Series page, Perfect game, Price changes and Settings.
+
+- Shown the Series page's five with recommendations: "Recs for all". Taken as every recommendation in the list, all six screens.
+
+## Stats design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/stats/`.
+
+- The panel's calls, with Claude's picks: "yes". They keep price, form, owned and points in the list, mark your own players with a dot, list academy players last, and show a rise in red and a fall in blue everywhere.
+- Per game: "first blood should be a count actually"; "and we have a toggle for count/per game count". Every line is a count, and the toggle divides them all.
+- The picture: "looks good", then "save".
+
+## Series design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/series/`.
+
+- Price changes is renamed **Patch update**, "more league like", in SPEC.md, spec/12 and the Stats picture.
+- "series seems basic": offered POG, a draft strip, kill score and gold, team colours and your points from the series. Claude recommended POG, the draft strip and your points, and Craig said "ok".
+- The panel's five calls: "As recommended". That gives a VOD link per game, no last-meeting line, a monochrome scorebug, sides on the draft strip and a live view.
+- The draft strip: "i dont think we need draft info overload". It was cut, and the sides went with it. A fresh panel reviewed the page again.
+- The second five calls: "As recommended". Your players counts the Carry, there is no series POG, records and K/D/A stay, there is no side tag, and a sat-out player and his sub are drawn.
+- The Your players total: "remove that youyr players line its fluff". It was cut.
+- The picture: "Save".
+
+## Compare design round (16 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/compare/`.
+
+- The panel's four calls: "As recommended". The last 3 series stay, Change stays, there are no buttons, and the series where the two meet is not marked.
+- "get rid of the fluff lines and get a ux guy in to review". This cut the transfers row, legal names, the games caption, the ranks except Season's, Bo3 and the title.
+- The player card's form rank and the coach card's season and form ranks are fixed to match Stats.
+- The picture: "Save".
+
+## Settings design round (15 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), [spec/09](../spec/09-onboarding.md) and [spec/08](../spec/08-leagues.md), the picture `docs/design/approved/settings/`.
+
+- "settings need to include gdrp concersn etc and anything else". Shown four calls with recommendations, he took them all: Download my data at once, no cookie banner, a 16+ tick at sign-up, and Privacy, Terms, a public-data line and erase-at-once at the foot.
+- "get the team to reivew, maybe get differen tparts into tabs": four tabs.
+- "your wording sucks@until week 4 scores. what does that means"; "you cant change fav team anyways during season"; "once your first gameweek starts". Both favourite team and country lock at the manager's first deadline.
+- "1 save team 2 your call 3 ok 4 your call 5 just text is fine no need for draw, do some basics and file". The account is made on Save team; Claude allowed any banner text, moderated; a deleted maker's private league passes to the earliest joiner, or goes if nobody else is in it; Claude kept the delete sheet's list of what goes; Privacy and Terms are plain text in `docs/legal/`, not drawn.
+
+## Patch update design round (15 Nov 2026)
+
+Settled; the spec is [spec/12-pages.md](../spec/12-pages.md), the picture `docs/design/approved/patch-update/`.
+
+- "patch update, just shows the new prices, thats it really, occurs once a gameweek dealine had passed". The page is named Patch update; filters and the season view are left out.
+- "in your squad · 1억 = 100 million won, game money only please remove this fluff man people arent idiots": the footer line went.
+- "use dummy data": roster facts in the picture are made up, not checked.
+- "do a previous and new price": Was and Now columns.
+- "dotn say week 3 deadline, thats confusing, new price sfor gameweek 4 it should be"; "dont mention gameweej 5 thats fluff": titled Gameweek 4 prices, with only when they were set.
+- The picture: "Save it".
 
 ## Open
 

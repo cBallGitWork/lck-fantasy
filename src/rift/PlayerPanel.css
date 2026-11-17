@@ -1,0 +1,88 @@
+.player-panel {
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  margin-bottom: var(--s-5);
+}
+.player-panel__head {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+  padding: var(--s-3) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.player-panel__name {
+  display: block;
+  font-size: var(--size-head);
+  line-height: var(--lh-snug);
+}
+.player-panel__meta {
+  color: var(--mid);
+}
+.player-panel__close {
+  margin-left: auto;
+  align-self: flex-start;
+  min-width: var(--m-target);
+  min-height: var(--m-target);
+  color: var(--mid);
+}
+.player-panel__close:hover {
+  color: var(--text);
+}
+
+/* The tapped player's games: each series and its games, the sum, Full stats. */
+.player-panel__series {
+  padding: var(--s-2) var(--s-4) var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.player-panel__series-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--s-1);
+  font-size: var(--size-body);
+}
+.player-panel__series-head span {
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.player-panel__game {
+  display: grid;
+  grid-template-columns: var(--s-6) 1fr var(--m-go-col);
+  gap: var(--s-2);
+  align-items: center;
+  padding: var(--s-1) 0;
+}
+
+.player-panel__game-points {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.player-panel__game-what {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.player-panel__game--dropped {
+  color: var(--mid);
+}
+.player-panel__game--dropped .player-panel__game-points {
+  font-weight: var(--w-regular);
+}
+
+.player-panel__sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+
+.player-panel__sum-figure {
+  font-size: var(--size-head);
+}
+.player-panel__foot {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--s-2) var(--s-4) var(--s-3);
+  font-size: var(--size-small);
+}

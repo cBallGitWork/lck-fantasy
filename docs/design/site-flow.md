@@ -17,7 +17,7 @@ flowchart LR
   Home --> Book[The Book<br/>achievements]
   Points --> Series[Series page<br/>game by game]
   Leagues --> Rival[Another manager's team]
-  Transfers -->|Chips| Home
+  Transfers -->|Buffs| Home
 ```
 
 ## The screens
@@ -26,7 +26,7 @@ flowchart LR
 |---|---|---|
 | Pick team (signed out) | The front door. Build a squad inside the budget with no account, then save. | Squad selection, but before sign-up, as UCL Fantasy does |
 | Sign in | Google or Discord, then team name, favourite team and country. The squad built signed out becomes the manager's team. | Register |
-| My team | Set the lineup, captain and bench before the deadline. Play a chip. | Pick Team |
+| My team | Set the lineup, captain and bench before the deadline. Play a buff. | Pick Team |
 | Points | This gameweek's points, moving live, with each player's breakdown. | Points |
 | Series page | One series, game by game: who scored what and why. | Match pop-up |
 | Transfers | Swap players inside the budget; see the −4 before confirming. | Transfers |

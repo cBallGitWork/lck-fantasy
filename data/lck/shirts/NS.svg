@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Nongshim RedForce shirt"><defs>
+  <path id="ns-j-torso" d="M37 12 Q49 18 61 12 L75 16 L73.5 40 L74 91 Q49 96 25 91 L25.5 40 L23 16 Z"/>
+  <path id="ns-j-near" d="M37 12 L23 15.5 Q12.5 20 5 39 L17 47 L25.5 38 Z"/>
+  <path id="ns-j-far" d="M61 12 L75 15.5 Q84.5 20 90.5 37 L80.5 44.5 L73.5 37 Z"/>
+  <clipPath id="ns-j-clip"><use href="#ns-j-torso"/><use href="#ns-j-near"/><use href="#ns-j-far"/></clipPath>
+  <clipPath id="ns-j-tclip"><use href="#ns-j-torso"/></clipPath>
+  <clipPath id="ns-j-nclip"><use href="#ns-j-near"/></clipPath>
+  <clipPath id="ns-j-fclip"><use href="#ns-j-far"/></clipPath>
+  <linearGradient id="ns-j-shade" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".4" stop-color="#fff" stop-opacity="0"/>
+    <stop offset=".7" stop-color="#000" stop-opacity=".06"/><stop offset="1" stop-color="#000" stop-opacity=".34"/>
+  </linearGradient>
+  <linearGradient id="ns-j-vshade" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".06"/><stop offset=".75" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/>
+  </linearGradient>
+  <radialGradient id="ns-j-glow" cx=".38" cy=".3" r=".5"><stop offset="0" stop-color="#fff" stop-opacity=".13"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <g id="ns-j-light">
+    <g clip-path="url(#ns-j-clip)">
+      <rect width="100" height="100" fill="url(#ns-j-shade)"/><rect width="100" height="100" fill="url(#ns-j-vshade)"/>
+      <ellipse cx="40" cy="38" rx="22" ry="26" fill="url(#ns-j-glow)"/>
+      <path d="M69 15 L75 16 L73.5 40 L74 92 L68.5 93 L68.5 40 Z" fill="#000" opacity=".14"/>
+      <path d="M61 12 L75 15.5 Q84.5 20 90.5 37 L80.5 44.5 L73.5 37 Z" fill="#000" opacity=".14"/>
+      <path d="M17 47 L25.5 38" stroke="#000" stroke-opacity=".3" stroke-width="1.4"/>
+      <path d="M80.5 44.5 L73.5 37" stroke="#000" stroke-opacity=".3" stroke-width="1.4"/>
+      <path d="M29 62 Q35 70 31 84" stroke="#000" stroke-opacity=".1" stroke-width="2" fill="none"/>
+      <path d="M64 56 Q60 68 65 80" stroke="#000" stroke-opacity=".09" stroke-width="1.8" fill="none"/>
+      <path d="M26 41 Q31 44 30 50" stroke="#000" stroke-opacity=".12" stroke-width="1.2" fill="none"/>
+      <path d="M73 41 Q68 44 69 50" stroke="#000" stroke-opacity=".12" stroke-width="1.2" fill="none"/>
+      <path d="M25 90 Q49 95 74 90" stroke="#000" stroke-opacity=".18" stroke-width="1" fill="none"/>
+    </g>
+    <g fill="none" stroke="#000" stroke-opacity=".6" stroke-width="1" stroke-linejoin="round"><use href="#ns-j-near"/><use href="#ns-j-far"/><use href="#ns-j-torso"/></g>
+  </g>
+  
+  <path id="ns-j-maker" d="M-2.6 2.2 L-0.6 -2.2 L2.8 -2.2 L2.2 -1 L0.2 -1 L-0.2 -0.1 L1.6 -0.1 L1.1 1 L-0.7 1 L-1.2 2.2 Z"/>
+</defs><g clip-path="url(#ns-j-clip)"><rect width="100" height="100" fill="#ED1C24"/><g fill="none" stroke="#FFE7B0" stroke-width="1.5" stroke-linecap="round">
+  <path d="M27 69 q3 -4 6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0"/><path d="M30 65 q3 -4 6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0"/><path d="M36 61 q3 -4 6 0 t6 0 t6 0 t6 0 t6 0"/></g>
+  <path d="M0 70 H100 V100 H0 Z" fill="#111"/><path d="M20 70 H80" stroke="#CF8F3A" stroke-width="2.2"/><path d="M20 74.5 H80" stroke="#CF8F3A" stroke-width=".7"/>
+  <path d="M86 30 L58 66" stroke="#CF8F3A" stroke-width="1.8" stroke-linecap="round"/><path d="M90 34 L62 67" stroke="#CF8F3A" stroke-width="1.8" stroke-linecap="round"/><path d="M5 39 L17 47 L18.7 44.5 L6.7 36.5 Z" fill="#111"/><path d="M90.5 37 L80.5 44.5 L78.8 42 L88.8 34.6 Z" fill="#111"/><g stroke="#111" stroke-opacity="0.5" stroke-width=".8" fill="none"><path d="M25.5 40 L25 91"/><path d="M73.5 40 L74 91"/><path d="M37 12.4 L23.4 16"/><path d="M61 12.4 L74.6 16"/></g><text x="46" y="52" text-anchor="middle" font-family='"IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif' font-weight="700" font-size="9.5" letter-spacing="0" fill="#fff">후루룩</text><g transform="translate(62 28)"><path d="M-3.8 -1.4 H3.8 Q3.6 4.2 0 4.2 Q-3.6 4.2 -3.8 -1.4 Z" fill="#111" stroke="#CF8F3A" stroke-width=".7"/><path d="M-1.8 -2.6 q.8 -1 0 -2 M0 -2.6 q.8 -1 0 -2 M1.8 -2.6 q.8 -1 0 -2" fill="none" stroke="#fff" stroke-width=".5"/></g><use href="#ns-j-maker" transform="translate(37 29)" fill="#fff"/></g><use href="#ns-j-light"/><path d="M37 12 Q49 8.5 61 12 Q49 17.5 37 12 Z" fill="#4a0004"/><path d="M37 12 Q49 8.5 61 12" stroke="#111" stroke-width="1.6" fill="none"/><path d="M36.6 12 Q49 19.6 61.4 12" stroke="#111" stroke-width="2.8" fill="none" stroke-linecap="round"/><path d="M38.4 12.4 Q49 18 59.6 12.4" fill="none" stroke="#CF8F3A" stroke-width=".8"/></svg>

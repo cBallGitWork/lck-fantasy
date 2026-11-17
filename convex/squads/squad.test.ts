@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { coach, player, REGULAR_SETTINGS, validSquad, withStarter } from "./fixtures";
+import { bdd, canyon, coach, fourFromT1, peyz, player, REGULAR_SETTINGS, ruler, validSquad, withStarter } from "./fixtures";
 import { squadProblems } from "./squad";
 
 describe("squadProblems", () => {
@@ -10,7 +10,7 @@ describe("squadProblems", () => {
   test("a squad missing its flex or with a third bench player is refused", () => {
     const squad = validSquad();
     squad.starters = squad.starters.filter((s) => s.slot !== "flex");
-    squad.bench.push(player("peyz", "dk", "bot"));
+    squad.bench.push(peyz);
     expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([
       { rule: "slotCount", slot: "flex", expected: 1, actual: 0 },
       { rule: "slotCount", slot: "bench", expected: 2, actual: 3 },
@@ -24,14 +24,23 @@ describe("squadProblems", () => {
     ]);
   });
 
+  test("a squad short of a role's minimum is refused, wherever its players sit", () => {
+    // validSquad holds two bot laners, Gumayusi at bot and Ruler in flex.
+    const settings = { ...REGULAR_SETTINGS, minPerRole: { ...REGULAR_SETTINGS.minPerRole, bot: 3 } };
+    expect(squadProblems(validSquad(), settings)).toEqual([{ rule: "roleShort", role: "bot", min: 3, actual: 2 }]);
+  });
+
   test("a player in the wrong role slot is refused", () => {
-    const squad = withStarter(validSquad(), "top", player("canyon", "dk", "jungle"));
-    expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([{ rule: "wrongRole", slot: "top", pickId: "canyon" }]);
+    const squad = withStarter(validSquad(), "top", canyon);
+    expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([
+      { rule: "wrongRole", slot: "top", pickId: "canyon" },
+      { rule: "roleShort", role: "top", min: 1, actual: 0 }, // Zeus was the only top laner
+    ]);
   });
 
   test("the flex takes a player of any role, so two bot laners is valid", () => {
     // validSquad has Gumayusi at bot and Ruler, a bot laner, in flex.
-    const squad = withStarter(validSquad(), "flex", player("peyz", "dk", "bot"));
+    const squad = withStarter(validSquad(), "flex", peyz);
     expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([]);
   });
 
@@ -47,7 +56,7 @@ describe("squadProblems", () => {
   });
 
   test("the coach slot takes only a team", () => {
-    const squad = withStarter(validSquad(), "coach", player("peyz", "dk", "bot"));
+    const squad = withStarter(validSquad(), "coach", peyz);
     expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([{ rule: "wrongRole", slot: "coach", pickId: "peyz" }]);
   });
 
@@ -60,9 +69,9 @@ describe("squadProblems", () => {
     ]);
   });
 
-  test("the coach counts toward the team cap: T1's coach and Faker fill T1", () => {
-    const squad = withStarter(withStarter(validSquad(), "coach", coach("t1")), "mid", player("faker", "t1", "mid"));
-    squad.bench = [player("bdd", "kt", "mid"), player("peyz", "dk", "bot")];
+  test("the coach counts towards the team cap: T1's coach and Faker fill T1", () => {
+    const squad = fourFromT1();
+    squad.bench = [bdd, peyz];
     expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([{ rule: "overTeamCap", teamId: "t1", cap: 2, actual: 4 }]);
   });
 
@@ -72,7 +81,7 @@ describe("squadProblems", () => {
   });
 
   test("with no cap, any number from one team is valid", () => {
-    const squad = withStarter(withStarter(validSquad(), "coach", coach("t1")), "mid", player("faker", "t1", "mid"));
+    const squad = fourFromT1();
     expect(squadProblems(squad, { ...REGULAR_SETTINGS, teamCap: null })).toEqual([]);
   });
 
@@ -86,7 +95,7 @@ describe("squadProblems", () => {
 
   test("the same player picked twice is refused", () => {
     const squad = validSquad();
-    squad.bench = [squad.bench[0]!, player("ruler", "gen", "bot")];
+    squad.bench = [squad.bench[0]!, ruler];
     expect(squadProblems(squad, REGULAR_SETTINGS)).toContainEqual({ rule: "pickedTwice", pickId: "ruler" });
   });
 });

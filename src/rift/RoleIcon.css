@@ -1,0 +1,18 @@
+.role-icon {
+  width: var(--m-role-icon);
+  height: var(--m-role-icon);
+  flex: none;
+}
+.role-icon__a {
+  fill: var(--text);
+}
+.role-icon__b {
+  fill: var(--mid);
+}
+.role-icon__c {
+  fill: var(--soft);
+}
+.role-icon__line {
+  fill: none;
+  stroke: var(--text);
+}

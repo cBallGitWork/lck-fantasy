@@ -1,0 +1,96 @@
+// Every screen's path, in one home: the router, the top bar and every link read it.
+
+export const PATHS = {
+  home: "/",
+  pickTeam: "/pick-team",
+  transfers: "/transfers",
+  points: "/points",
+  /** Points for one week, so a week can be linked: `/points/2`. */
+  pointsWeek: "/points/$week",
+  leagues: "/leagues",
+  league: "/leagues/$leagueId",
+  stats: "/stats",
+  live: "/live",
+  series: "/series/$seriesId",
+  compare: "/compare",
+  perfectGame: "/perfect-game",
+  priceChanges: "/price-changes",
+  settings: "/settings",
+  lckHub: "/lck",
+  playerCard: "/player/$playerId",
+  coachCard: "/coach/$coachId",
+  profile: "/manager/$managerId",
+  following: "/following",
+} as const;
+
+export type ScreenKey = keyof typeof PATHS;
+
+/** Each screen's name: the top bar's label and the tab's title (`Pick Team · Flol`). */
+export const SCREEN_NAME: Record<ScreenKey, string> = {
+  home: "Home",
+  pickTeam: "Pick Team",
+  transfers: "Transfers",
+  points: "Points",
+  pointsWeek: "Points",
+  leagues: "Leagues",
+  league: "Leagues",
+  stats: "Stats",
+  live: "Live",
+  series: "Series",
+  compare: "Compare",
+  perfectGame: "Perfect game",
+  priceChanges: "Price changes",
+  settings: "Settings",
+  lckHub: "LCK",
+  playerCard: "Player",
+  coachCard: "Coach",
+  profile: "Manager",
+  following: "Following",
+};
+
+/** The product's name, the tab's title on a page with none of its own. */
+export const PRODUCT = "Flol";
+
+/** The tab's title for a route (`/pick-team` gives `Pick Team · Flol`); the product's name alone for any other. */
+export function pageTitle(routeId: string | undefined): string {
+  const key = (Object.keys(PATHS) as ScreenKey[]).find((k) => PATHS[k] === routeId);
+  return key ? `${SCREEN_NAME[key]} · ${PRODUCT}` : PRODUCT;
+}
+
+/** The `$params` a path names: `"/series/$seriesId"` gives `"seriesId"`. */
+type ParamName<P extends string> = P extends `${string}$${infer Name}/${infer Rest}`
+  ? Name | ParamName<Rest>
+  : P extends `${string}$${infer Name}`
+    ? Name
+    : never;
+
+type GoTo<P extends string> = [ParamName<P>] extends [never] ? { to: P; params?: never } : { to: P; params: Record<ParamName<P>, string> };
+
+/** Where a link goes inside Flol: a screen's path and every param it names, checked by the typecheck. */
+export type Go = { [K in ScreenKey]: GoTo<(typeof PATHS)[K]> }[ScreenKey];
+
+/** A link's path with its `$params` filled in. */
+export function pathTo(go: Go): string {
+  const params: Record<string, string> = go.params ?? {};
+  return go.to.replace(/\$(\w+)/g, (_, name: string) => encodeURIComponent(params[name] ?? ""));
+}
+
+/** A player's card, or the coach's card for a coach. */
+export function cardGo(id: string, coach: boolean): Go {
+  return coach ? { to: PATHS.coachCard, params: { coachId: id } } : { to: PATHS.playerCard, params: { playerId: id } };
+}
+
+/** The search key Transfers opens with a slot already sold under: `/transfers?sell=coach`. */
+export const SELL_SEARCH = "sell";
+
+/** Transfers with one of the nine already sold, as a card's Transfer out opens it. */
+export const transfersSelling = (slot: string) => `${PATHS.transfers}?${SELL_SEARCH}=${encodeURIComponent(slot)}`;
+
+/** A league's page. */
+export const leagueGo = (id: string): Go => ({ to: PATHS.league, params: { leagueId: id } });
+
+/** A series' page. */
+export const seriesGo = (id: string): Go => ({ to: PATHS.series, params: { seriesId: id } });
+
+/** A manager's profile. */
+export const profileGo = (id: string): Go => ({ to: PATHS.profile, params: { managerId: id } });

@@ -12,6 +12,10 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 - The same core as the LCK (budget and the like), with buffs and other settings tuned for it.
 - The same pages as the LCK's, with the LEC's differences, and its own sponsors (Craig, 17 Nov
   2026).
+- Each player's country flag beside his name in the player list and pop-up; not in the LCK, where
+  nearly all are Korean. Needs players' nationality in the data (Craig, 17 Nov 2026).
+- In both games, each manager's country flag beside his name in league tables and on his
+  profile; the country is already set at sign-up (Craig, 17 Nov 2026).
 
 ## Leagues, parked (14 Nov 2026)
 

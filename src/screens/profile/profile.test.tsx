@@ -15,7 +15,7 @@ const LEAGUES = ["Leagues", "Overall", "Emerald I", "21,804", "3,112", "South Ko
 describe("Points", () => {
   const out = text(page("Points"));
 
-  test("shows the banner, the tabs, Week 3's head, her team in role order, the bench, leagues and trucks", () => {
+  test("shows the banner, the tabs, Week 3's head, her team in role order, the bench, leagues, cheers and jeers", () => {
     expectInOrder(out, [
       ...BANNER,
       "‹",
@@ -41,9 +41,9 @@ describe("Points", () => {
       "Bench 1 · Mid", "Bdd", "KT", "—", "Not in KT's lineup",
       "Bench 2 · Jungle", "Cuzz", "9", "v GEN 0–2 · Wed", "v BFX 2–1 · Fri",
       ...LEAGUES,
-      "Trucks · Week 3", "2",
-      "The template was right there, mate.", "Protest from Dan Okafor",
-      "This coffee is Keria-tier support.", "Coffee from Jae Kim",
+      "Cheers and jeers · Week 3", "2",
+      "The template was right there, mate.", "Jeer from Dan Okafor", "Truck hire by Sponsor",
+      "This coffee is Keria-tier support.", "Cheer from Jae Kim", "Truck hire by Sponsor",
       "All sponsors are made up.",
     ]);
   });
@@ -69,17 +69,17 @@ describe("Points", () => {
     for (const id of ["overall", "south-korea", "gen-supporters", "pub-league"]) expect(markup).toContain(`href="/leagues/${id}"`);
   });
 
-  test("draws each truck on the shared LED panel and Overall on the shared, outlined tier shield", () => {
+  test("draws each cheer and jeer on the shared LED panel and Overall on the shared, outlined tier shield", () => {
     const markup = html(page("Points"));
     expect(markup).toContain('<div class="led">The template was right there, mate.</div>');
     expect(markup).toContain('<svg class="tier-shield profile__tier"');
   });
 
-  test("an earlier week shows its points, its team loading until the backend feeds it, and no trucks", () => {
+  test("an earlier week shows its points, its team loading until the backend feeds it, and no cheers or jeers", () => {
     const week2 = text(page("Points", PROFILE, 2));
     expectInOrder(week2, ["Week 2", "112"]);
     expect(week2).not.toContain("Not final");
-    expect(week2).not.toContain("Trucks");
+    expect(week2).not.toContain("Cheers and jeers");
     expect(html(page("Points", PROFILE, 2))).toContain("Week 2&#x27;s team");
   });
 });
@@ -97,10 +97,10 @@ describe("History", () => {
     ]);
   });
 
-  test("each row opens its week; the side has no trucks", () => {
+  test("each row opens its week; the side has no cheers or jeers", () => {
     const markup = html(page("History"));
     expect(markup).toContain('aria-label="Open Week 1"');
-    expect(markup).not.toContain("Trucks");
+    expect(markup).not.toContain("Cheers and jeers");
   });
 });
 

@@ -5,7 +5,7 @@
 import { MANAGERS, MINJI_EARLIER_WEEKS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { playedFromSide, seriesById } from "../../fixtures/series";
 import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
-import { score } from "../../parts";
+import { score, type CheerKind } from "../../parts";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
 /** Whether you follow the manager; `self` is your own profile, which has no key. */
@@ -40,8 +40,9 @@ export interface ProfilePick extends ProfilePlayer {
   note?: string;
 }
 
-export interface Truck {
-  kind: "coffee" | "protest";
+/** A cheer or jeer parked on her profile for the week (spec/14). */
+export interface Parked {
+  kind: CheerKind;
   line: string;
   from: string;
 }
@@ -56,7 +57,7 @@ export interface PointsWeek {
   buff?: BuffName;
   /** Her team that week; absent until the backend feeds it. */
   team?: ProfilePick[];
-  trucks: Truck[];
+  cheers: Parked[];
 }
 
 export interface HistoryRow {
@@ -146,8 +147,8 @@ export const PROFILE: ProfileData = {
   manager: { id: MANAGERS.minji.id, name: MANAGERS.minji.name, team: MANAGERS.minji.team, hangul: "쵸비는 바로 거기 있었다", follow: "following" },
   currentWeek: 3,
   weeks: [
-    { week: 1, points: W1, final: true, trucks: [] },
-    { week: 2, points: W2, final: true, trucks: [] },
+    { week: 1, points: W1, final: true, cheers: [] },
+    { week: 2, points: W2, final: true, cheers: [] },
     {
       week: 3,
       points: MINJI_WEEK3.points,
@@ -155,9 +156,9 @@ export const PROFILE: ProfileData = {
       final: false,
       buff: "Limitless",
       team: WEEK3_TEAM,
-      trucks: [
-        { kind: "protest", line: "The template was right there, mate.", from: MANAGERS.dan.name },
-        { kind: "coffee", line: "This coffee is Keria-tier support.", from: MANAGERS.jae.name },
+      cheers: [
+        { kind: "jeer", line: "The template was right there, mate.", from: MANAGERS.dan.name },
+        { kind: "cheer", line: "This coffee is Keria-tier support.", from: MANAGERS.jae.name },
       ],
     },
   ],

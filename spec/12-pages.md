@@ -106,8 +106,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
 - **Following**: the feed, follows, requests and cheers and jeers received
   ([spec/14](14-following.md)).
-- **Help**, with a Ranks section holding the tier cut-offs ([spec/08](08-leagues.md#overall-tiers)),
-  and **Settings** ([below](#settings)).
+- **Help**, as FPL's Help (Craig, 17 Nov 2026; its picture is `docs/design/approved/help/`): two
+  tabs. **Help** is a beginner's guide (Flol in 60 seconds, how a week works, seven steps saying
+  where to click, a weekly checklist, a glossary) with a Help menu beside it. **Rules** is every
+  rule, in groups of items that open and close, the Ranks item holding the tier cut-offs
+  ([spec/08](08-leagues.md#overall-tiers)). A link such as `/help#prices` opens its item.
+- **Settings** ([below](#settings)).
 
 ## Home
 

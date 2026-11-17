@@ -17,8 +17,9 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 - In both games, each manager's country flag beside his name in league tables and on his
   profile; the country is already set at sign-up (Craig, 17 Nov 2026).
 - Crests for the LEC teams made as the LCK's were ([docs/design/approved/crests](design/approved/crests/README.md)):
-  Flol's own shape, the team's colours and code, and a mark from a fan meme, never the real logo
-  (Craig, 17 Nov 2026).
+  the real logos fetched from the web, then one designer describes each to another, with the
+  team's memes, fanbase, mascots and lore, and the second draws from that alone (Craig, 17 Nov
+  2026).
 
 ## Leagues, parked (14 Nov 2026)
 

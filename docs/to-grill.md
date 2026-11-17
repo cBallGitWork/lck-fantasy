@@ -60,7 +60,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Price changes: the Set line before the first move; sort order; the week in the URL.
 - Settings: an empty hangul banner; the save bar's list; Save team's rules; Privacy and Terms
   routes. The picture draws the reminder On; spec/12 says both emails are off by default (built off).
-- LCK hub: ‹ on Fixtures for a past week; a stage before it starts; an academy with no roster.
 - Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
   History's week total with or without the Carry's ×1.5.
 - Coach card: This week before any series; mid-series History.

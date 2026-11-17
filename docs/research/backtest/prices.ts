@@ -2,7 +2,7 @@
 // checked against Craig's two squads, then weekly moves over the next season.
 // Scored with the game's own code (convex/scoring) on Oracle's Elixir's files.
 // Run: npx esbuild docs/research/backtest/prices.ts --bundle --platform=node --format=esm \
-//        --outfile=<scratch>/prices.mjs && node <scratch>/prices.mjs <last-season.csv> <this-season.csv> [grid]
+//        --outfile=<scratch>/prices.mjs && node <scratch>/prices.mjs <this-season.csv> <last-season.csv> [<season-before.csv>] [grid]
 // Solo kills and steals score 0: the files don't hold them (Leaguepedia does).
 import { readFileSync } from "node:fs";
 import { oeGames, oeSeriesGame, parseOeCsv, type OeGame } from "../../../convex/feeds/oraclesElixir";
@@ -16,18 +16,21 @@ import { teamGameStats } from "../../../convex/stats/gameStats";
 const SETTINGS = {
   budget: 100,
   floor: 5, // the cheapest pick
-  top: 25, // the dearest (Craig, 17 Nov 2026: maybe Chovy is 25)
+  top: 24.5, // the dearest from the formula: just under Chovy, the dearest by hand at 25 (Craig, 17 Nov 2026)
   coachTop: 16.5, // the dearest coach: about the top over the Captain's 1.5, as a coach can't be Captain (Craig, 17 Nov 2026)
-  star: 20, // a pick at this price or more is a star, for the example squads
+  star: 23, // a pick at this price or more is a star, for the example squads
   teamWeight: 0.3, // share of the price from his team's strength; the rest from his own points
   bend: 1.4, // the curve: 1 is a straight line, higher pulls stars up and the middle down
+  seasonWeights: [0.75, 0.25], // last season, the one before (Craig, 17 Nov 2026: use 2026 more than 2025)
   minSeries: 10, // fewer series last season: priced by hand, as a rookie
   lowPercentile: 0.1, // own points at this percentile count as zero
   formSeries: 8, // form is the last 8 series (about 4 weeks)
   threshold: 3, // a pick moves when his form price is ₩3m or more from his price
   step: 0.2, // by one step a week, up or down
   captain: 1.5, // the Captain's multiplier (spec/04)
-  byHand: { Chovy: 25 } as Record<string, number>, // Craig's hand prices, 17 Nov 2026: Chovy is the bigger name
+  byHand: { Chovy: 25, Faker: 15 } as Record<string, number>, // Craig's hand prices, 17 Nov 2026: the bigger names
+  gap: [17.5, 23] as const, // no price between these (Craig, 17 Nov 2026: nobody around 18–22); the stars sit above it
+  academy: 6, // an academy player's price (Craig, 17 Nov 2026), set by hand: no LCK data
 };
 type Settings = typeof SETTINGS;
 const LEAGUE = "LCK";
@@ -82,19 +85,25 @@ const fixed = (x: number) => x.toFixed(1);
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 
 /** First price: own points and team strength, each scaled 0–1, blended, then bent. */
-function pricer(s: Settings, ownPoints: number[], teamShares: number[]) {
+function pricer(s: Settings, ownPoints: number[], teamShares: number[], coachPoints: number[]) {
   const sorted = [...ownPoints].sort((a, b) => a - b);
+  const cLow = Math.min(...coachPoints), cHigh = Math.max(...coachPoints);
   const low = sorted[Math.floor(s.lowPercentile * (sorted.length - 1))]!;
   const high = sorted.at(-1)!;
   const tLow = Math.min(...teamShares), tHigh = Math.max(...teamShares);
-  // A coach's points are already his team's results, so he is priced on them alone.
+  // A coach's points are already his team's results, so he is priced on them alone, on a line of
+  // his own from the worst coach to the best, so the bottom coaches spread out.
   const blend = (pps: number, teamShare: number, isCoach: boolean) => {
+    if (isCoach) return clamp01((pps - cLow) / (cHigh - cLow));
     const own = clamp01((pps - low) / (high - low));
-    return isCoach ? own : (1 - s.teamWeight) * own + s.teamWeight * clamp01((teamShare - tLow) / (tHigh - tLow));
+    return (1 - s.teamWeight) * own + s.teamWeight * clamp01((teamShare - tLow) / (tHigh - tLow));
   };
   const topBlend = Math.max(...ownPoints.map((p, i) => blend(p, teamShares[i]!, false)));
+  const [gapLow, gapHigh] = s.gap;
+  // Inside the gap, a price goes to whichever edge is nearer.
+  const jump = (x: number) => (x <= gapLow || x >= gapHigh ? x : x - gapLow < gapHigh - x ? gapLow : gapHigh);
   return (pps: number, teamShare: number, isCoach: boolean) =>
-    Math.max(s.floor, roundTo(s.floor + ((isCoach ? s.coachTop : s.top) - s.floor) * clamp01(blend(pps, teamShare, isCoach) / topBlend) ** s.bend, 0.5));
+    jump(Math.max(s.floor, roundTo(s.floor + ((isCoach ? s.coachTop : s.top) - s.floor) * clamp01(blend(pps, teamShare, isCoach) / (isCoach ? 1 : topBlend)) ** s.bend, 0.5)));
 }
 
 interface Priced { pick: Pick; price: number }
@@ -129,16 +138,28 @@ function squadCheck(pool: Priced[]) {
   return { stars, midPrice, threeStars, twoTwo, cheapest };
 }
 
-function firstPrices(s: Settings, last: ReturnType<typeof seasonScores>, now: ReturnType<typeof seasonScores>) {
-  const perSeries = (key: string) => last.scores.filter((x) => x.key === key).map((x) => x.points);
-  const medianShare = [...last.winShare.values()].sort((a, b) => a - b)[Math.floor(last.winShare.size / 2)]!;
-  // A pick is priced on his own points last season and his current team's record last season.
+type Season = ReturnType<typeof seasonScores>;
+
+/** Weighted mean over the seasons that have a value, most recent first. */
+function weighted(weights: readonly number[], values: (number | undefined)[]) {
+  const pairs = values.flatMap((v, i) => (v === undefined ? [] : [[weights[i] ?? 0, v] as const]));
+  const w = pairs.reduce((a, [wi]) => a + wi, 0);
+  return w === 0 ? undefined : pairs.reduce((a, [wi, v]) => a + wi * v, 0) / w;
+}
+
+function firstPrices(s: Settings, past: Season[], now: Season) {
+  const median = (xs: number[]) => [...xs].sort((a, b) => a - b)[Math.floor(xs.length / 2)]!;
+  // A pick is priced on his own points over past seasons and his current team's record, recent seasons weighing more.
   const rows = [...now.picks.values()].flatMap((pick) => {
-    const xs = perSeries(pick.key);
-    if (xs.length < s.minSeries) return [];
-    return [{ pick, pps: mean(xs), teamShare: last.winShare.get(pick.teamId) ?? medianShare }];
+    const bySeason = past.map((season) => season.scores.filter((x) => x.key === pick.key).map((x) => x.points));
+    if (bySeason.reduce((a, xs) => a + xs.length, 0) < s.minSeries) return [];
+    const pps = weighted(s.seasonWeights, bySeason.map((xs) => (xs.length ? mean(xs) : undefined)))!;
+    const teamShare = weighted(s.seasonWeights, past.map((season) => season.winShare.get(pick.teamId))) ?? median([...past[0]!.winShare.values()]);
+    return [{ pick, pps, teamShare }];
   });
-  const price = pricer(s, rows.map((r) => r.pps), rows.map((r) => r.teamShare));
+  const players = rows.filter((r) => r.pick.role !== "coach");
+  const coaches = rows.filter((r) => r.pick.role === "coach");
+  const price = pricer(s, players.map((r) => r.pps), players.map((r) => r.teamShare), coaches.map((r) => r.pps));
   return rows.map((r) => ({ pick: r.pick, price: s.byHand[r.pick.name] ?? price(r.pps, r.teamShare, r.pick.role === "coach"), pps: r.pps, teamShare: r.teamShare, pricer: price }));
 }
 
@@ -179,21 +200,22 @@ function pearson(xs: number[], ys: number[]) {
   return cov / Math.sqrt(xs.reduce((a, x) => a + (x - mx) ** 2, 0) * ys.reduce((a, y) => a + (y - my) ** 2, 0));
 }
 
-function main(lastFile: string, thisFile: string, grid: boolean) {
-  const last = seasonScores(lastFile);
+function main(thisFile: string, pastFiles: string[], grid: boolean) {
   const now = seasonScores(thisFile);
+  const past = pastFiles.map((f) => (f === thisFile ? now : seasonScores(f)));
+  const lastFile = pastFiles.map((f) => f.match(/\d{4}/)?.[0]).join(" and ");
 
   if (grid) {
     console.log("teamWeight bend | stars | mid | 3 stars + cheapest | 2 stars + 2 mid + cheapest | cheapest squad");
     for (const teamWeight of [0.2, 0.3, 0.35, 0.4, 0.5]) for (const bend of [1, 1.1, 1.2, 1.3, 1.4]) {
-      const c = squadCheck(firstPrices({ ...SETTINGS, teamWeight, bend }, last, now));
+      const c = squadCheck(firstPrices({ ...SETTINGS, teamWeight, bend }, past, now));
       console.log(`${teamWeight} ${bend} | ${c.stars.map((x) => fixed(x.price)).join(" ")} | ${fixed(c.midPrice)} | ${fixed(c.threeStars)} | ${fixed(c.twoTwo)} | ${fixed(c.cheapest)}`);
     }
     return;
   }
 
-  const priced = firstPrices(SETTINGS, last, now).sort((a, b) => b.price - a.price);
-  console.log(`## First prices (${lastFile.match(/\d{4}/)?.[0]} data, ${thisFile.match(/\d{4}/)?.[0]} rosters)\n`);
+  const priced = firstPrices(SETTINGS, past, now).sort((a, b) => b.price - a.price);
+  console.log(`## First prices (${lastFile} data, ${thisFile.match(/\d{4}/)?.[0]} rosters)\n`);
   console.log(`Priced: ${priced.length}. Settings: top ₩${SETTINGS.top}m, floor ₩${SETTINGS.floor}m, team weight ${SETTINGS.teamWeight}, bend ${SETTINGS.bend}.\n`);
   console.log("| # | Pick | Role | Team | Own pts/series | Team won | Price |\n|---|---|---|---|---|---|---|");
   priced.forEach((p, i) => console.log(`| ${i + 1} | ${p.pick.name} | ${p.pick.role} | ${p.pick.team} | ${fixed(p.pps)} | ${Math.round(p.teamShare * 100)}% | ${fixed(p.price)} |`));
@@ -236,4 +258,6 @@ function main(lastFile: string, thisFile: string, grid: boolean) {
   console.log(`\nFirst price against ${thisFile.match(/\d{4}/)?.[0]}'s points per series (${both.length} picks): r = ${r.toFixed(2)}.`);
 }
 
-main(process.argv[2]!, process.argv[3]!, process.argv[4] === "grid");
+const args = process.argv.slice(2);
+const grid = args.at(-1) === "grid";
+main(args[0]!, args.slice(1, grid ? -1 : undefined), grid);

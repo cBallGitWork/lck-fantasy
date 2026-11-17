@@ -25,8 +25,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - The goal (Craig, 17 Nov 2026): a normal squad is 2 stars, 1 or 2 mid-priced and the rest cheap.
   Three stars force the rest to be the worst players. The
   [draft](../docs/research/prices-formula.md) is backtested against these squads.
-- Chovy is the dearest player, at about ₩25m: he is the bigger name (Craig, 17 Nov 2026).
-- Coaches can't be Captain, so they can't cost as much as the top players (Craig, 17 Nov 2026).
+- Chovy is the dearest player, at about ₩25m: he is the bigger name. Faker is ₩15m (Craig, 17 Nov 2026).
+- Coaches can't be Captain, so they can't cost as much as the top players, and the bottom coaches
+  are spread out (Craig, 17 Nov 2026).
+- Nobody costs ₩18–22m: the stars sit above a gap (Craig, 17 Nov 2026).
+- The base weighs last season more than the one before (Craig, 17 Nov 2026).
+- Academy players start at ₩6m (Craig, 17 Nov 2026).
 - The top coaches are priced a little higher than the others (Craig, 13 Nov 2026): in the 2026
   backtest Gen.G's coach scored 6.8 a series, among the top five picks, against 4.5–5.9 for the
   rest.

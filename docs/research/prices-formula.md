@@ -6,84 +6,90 @@ competition. Backtested with [backtest/prices.ts](backtest/prices.ts), using the
 scoring code. A template: 2027 rosters are still being signed, so prices are rerun once they are.
 
 **Contents:** [Craig's goal](#craigs-goal) · [First prices](#first-prices) ·
-[Backtest](#backtest-2025-pricing-2026) · [Example squads](#example-squads) ·
-[Template for 2027](#template-for-2027) · [Weekly moves](#weekly-moves) ·
+[Template for 2027](#template-for-2027) · [Example squads](#example-squads) ·
+[Backtest](#backtest-2025-pricing-2026) · [Weekly moves](#weekly-moves) ·
 [What the backtest can't test](#what-the-backtest-cant-test)
 
 ## Craig's goal
 
-- A normal squad: 2 stars, 1 or 2 mid-priced, the rest cheap.
-- Three stars force the rest to be the worst players.
+All 17 Nov 2026.
+
+- A normal squad: 2 stars, 1 or 2 mid-priced, the rest cheap. Three stars force the rest to be
+  the worst players.
 - Not a straight line: the best team's top players cost more, as they get the Captain most weeks.
-- A price weighs the player's own record and his team's strength.
-- Chovy is the dearest, at ₩25m: he is the bigger name.
-- Coaches can't be Captain, so they can't cost that much.
+- A price weighs the player's own record and his team's strength; 2026 counts more than 2025.
+- Chovy is the dearest, at ₩25m: the bigger name. Faker is ₩15m.
+- Nobody costs ₩18–22m: the stars sit above a gap.
+- Coaches can't be Captain, so they cost less; the bottom coaches are spread out.
+- Academy players start at ₩6m.
 
 ## First prices
 
-1. **Own record:** last season's points per series, scaled 0 to 1 (the 10th percentile and below
-   is 0, the best is 1).
-2. **Team strength:** his current team's share of series won last season, scaled 0 to 1.
-3. **Blend:** 70% own record, 30% team strength. A coach is priced on his own points alone, as they
-   already are his team's results.
-4. **Bend:** the blend, against the best blend, is raised to the power 1.4, then mapped from the
-   floor ₩5m to the top ₩25m, rounded to ₩0.5m. The bend pulls stars up and the middle down.
-5. **Coaches** run to ₩16.5m, not ₩25m: about the top over the Captain's 1.5.
-6. Fewer than 10 series last season: a rookie, priced by hand. Then Craig sets any price by hand;
-   here, Chovy at ₩25m.
-
-## Backtest: 2025 pricing 2026
-
-2025's points and records, 2026's rosters, 50 picks.
-
-| Squad (budget ₩100m) | Cost |
-|---|---|
-| 3 stars (Chovy, Ruler, Canyon) + the cheapest legal 6 | ₩102.5m, over |
-| 2 stars + 2 mid-priced (₩12m each) + the cheapest legal 5 | ₩99.5m |
-| The cheapest legal squad | ₩52.5m |
-
-- Dearest: Chovy and Ruler 25.0, Canyon 20.5, Kiin and Duro 20.0, Gumayusi 18.5, Oner 17.5.
-- Coaches: Gen.G 13.5, T1 and Hanwha 10.0, the bottom three ₩5m.
-- First price against 2026's points per series: r = 0.76.
-
-## Example squads
-
-The highest-scoring squad within ₩100m with 0 to 3 stars (₩20m or more), picked once on 2025's
-prices and kept all 2026. Captain on the top player; bench DuDu and Pyosik, ₩5m each.
-
-| Stars | 2026 pts | Squad |
-|---|---|---|
-| 0 | 1,645 | Zeus 15, Raptor 9, Zeka 15, Teddy 10.5, Keria 17, Kellin 9, Gen.G coach 13.5 |
-| 1 | **1,657** | Kiin 20, GIDEON 6.5, ShowMaker 15.5, Zeka 15, Teddy 10.5, Kellin 9, Gen.G coach 13.5 |
-| 2 | 1,628 | Kiin 20, Duro 20, GIDEON 6.5, Zeka 15, Teddy 10.5, Kellin 9, Dplus Kia coach 8 |
-| 3 | 1,515 | Ruler 25, Kiin 20, Duro 20, GIDEON 6.5, Ucal 7.5, Lehends 5.5, BNK FEARX coach 5.5 |
-
-- Three stars force cheap picks around them, as Craig wants, and cost about 140 points.
-- 0 to 2 stars score within 30 points of each other: points are flat. Ruler, ₩25m, scored 256 in
-  2026; Kellin, ₩9m, 212. A star scores about a fifth more than a mid-priced pick, for twice the
-  price. In FPL a star scores nearly twice a budget player's points.
+1. **Own record:** points per series, 75% last season and 25% the one before, scaled 0 to 1 (the
+   10th percentile and below is 0, the best is 1).
+2. **Team strength:** his current team's share of series won, weighted the same way, scaled 0 to 1.
+3. **Blend:** 70% own record, 30% team strength.
+4. **Bend:** the blend, against the best, is raised to the power 1.4, then mapped from the floor
+   ₩5m to ₩24.5m, rounded to ₩0.5m. The bend pulls stars up and the middle down.
+5. **Gap:** a price between ₩17.5m and ₩23m goes to whichever edge is nearer.
+6. **Coaches** have a line of their own, the worst coach ₩5m to the best ₩16.5m (about ₩24.5m over
+   the Captain's 1.5), on their own points alone: they already are the team's results.
+7. **By hand:** Chovy ₩25m, Faker ₩15m, academy players ₩6m. A rookie with under 10 series is
+   priced by hand.
 
 ## Template for 2027
 
-2026's points and records, 2026's rosters, 61 picks. Rerun once rosters are signed.
+2026 (75%) and 2025 (25%), on 2026's rosters, 63 picks. In ₩m.
 
-| Role | Prices, dearest first (₩m) |
+| Role | Prices |
 |---|---|
-| top | 23, 16.5, 12.5, 8.5, 8.5, 8.5, 7, 6, 5.5, 5 |
-| jungle | 21.5, 15, 15, 12, 11, 9.5, 9.5, 6.5, 6, 5 |
-| mid | 25, 23, 14, 12.5, 11, 9, 9, 7.5, 6.5, 5 |
-| bot | 24.5, 23.5, 16, 15, 13, 11.5, 11, 9, 9, 5, 5 |
-| support | 21.5, 19.5, 19.5, 16.5, 13, 12.5, 8, 6.5, 6.5, 5.5 |
-| coach | 16, 11, 10.5, 9.5, 8, 6.5, 6, 5, 5, 5 |
+| top | Kiin 23, Zeus 16, Doran 12, Siwoo 10, PerfecT 8.5, Clear 8.5, Kingen 6.5, Casting 6, Rich 6, DuDu 5 |
+| jungle | Canyon 23, Oner 15.5, Kanavi 14.5, Lucid 13, Cuzz 11.5, Raptor 9.5, GIDEON 8.5, Willer 6.5, Sponge 6.5, Pyosik 5 |
+| mid | Chovy 25, Zeka 23, Faker 15, ShowMaker 14.5, Bdd 12.5, Scout 9, Ucal 8, VicLa 7.5, Roamer 6.5, Clozer 5 |
+| bot | Ruler 24.5, Peyz 23, Smash 17.5, Gumayusi 16, Aiming 12, Jiwoo 11.5, Taeyoon 11, Diable 10, Teddy 9.5, deokdam 5, LazyFeel 5 |
+| support | Duro 23, Keria 17.5, Delight 17.5, Career 16, Effort 13, Kellin 11.5, Lehends 7.5, Namgung 7, Pollu 6.5, Peter 6.5, Andil 6, Life 5 |
+| coach | Gen.G 16.5, HLE 12.5, T1 12, DK 11, KT 9.5, BFX 8.5, NS 7.5, BRO 6.5, DRX 6.5, DNS 5 |
 
-- 3 stars (Chovy, Ruler, Peyz) + the cheapest 6: ₩103.5m, over. 2 stars + 2 mid-priced (₩13m) +
-  the cheapest 5: ₩100.5m. The cheapest squad: ₩47.0m.
+Squads, all nine (seven starters and two on the bench) inside ₩100m:
+
+- Chovy, Ruler and Kiin + the cheapest legal 6: ₩102.5m, over. Three ₩23m stars + the cheapest 6:
+  ₩99m.
+- 2 stars + 2 mid-priced (₩14.5m) + the cheapest legal 5: ₩102m.
+- The cheapest legal squad: ₩47m.
+
+Tops sit low because the data has no solo kills, which tops get most; Leaguepedia has them. The
+scoring's per-2-kills rule for tops is already in.
+
+## Example squads
+
+The highest-scoring squad on the template's prices with 0 to 3 stars (₩23m or more), picked once
+and kept all 2026. The bench costs money but scores nothing: no auto-subs here. Captain on the
+top player, never the coach.
+
+| Stars | 2026 pts | Starters (₩m) |
+|---|---|---|
+| 0 | 1,603 | Doran 12, GIDEON 8.5, Ucal 8, Smash 17.5, Career 16, Kellin 11.5, Gen.G coach 16.5 |
+| 1 | **1,628** | Casting 6, GIDEON 8.5, Ucal 8, Peyz 23, Career 16, Kellin 11.5, Gen.G coach 16.5 |
+| 2 | 1,558 | Casting 6, GIDEON 8.5, Zeka 23, Peyz 23, Kellin 11.5, Namgung 7, DK coach 11 |
+| 3 | 1,334 | DuDu 5, Casting 6, Canyon 23, Clozer 5, Peyz 23, Duro 23, DNS coach 5 |
+
+Bench: the two cheapest left, ₩5m each. Points are flat: Ruler, ₩24.5m, scored 256 in 2026;
+Kellin, ₩11.5m, 212. A star scores about a fifth more than a mid-priced pick, for twice the price.
+In FPL a star scores nearly twice a budget player's points.
+
+## Backtest: 2025 pricing 2026
+
+2025 alone (the files hold nothing earlier), on 2026's rosters, 48 picks with 2026 points.
+
+- Chovy, Ruler and Kiin + the cheapest legal 6: ₩98.5m. 2 stars + 2 mid-priced (₩12m) + the
+  cheapest 5: ₩98.5m. The cheapest squad: ₩50.5m.
+- First price against 2026's points per series: r = 0.78 (the first draft: 0.77).
 
 ## Weekly moves
 
 Unchanged from the approved shape: form is points per series over the last 8 series, put through
-the same pricer; a gap of ₩3m or more moves him ₩0.2m a week. Backtest over 2026's 28 weeks:
-14.5 moves a week; Zeka +2.0 and Chovy −3.2 the biggest, ₩5.0m to ₩22.8m at the end.
+the same pricer; a gap of ₩3m or more moves him ₩0.2m a week. Over 2026's 28 weeks on the
+template: 18 moves a week; Keria +1.4 and Faker −2.4 the biggest.
 
 ## What the backtest can't test
 

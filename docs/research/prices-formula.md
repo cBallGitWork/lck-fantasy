@@ -57,7 +57,8 @@ A team's share of series won against its players' points per series (10+ series)
 
 ## Template for 2027
 
-2026 (75%) and 2025 (25%), on 2026's rosters, 63 picks. In ₩m.
+2026 (75%) and 2025 (25%), on 2026's rosters, 63 picks. In ₩m. Saved as
+[prices-2027-template.csv](prices-2027-template.csv), the same as the Flol prices spreadsheet.
 
 | Role | Prices |
 |---|---|

@@ -11,7 +11,7 @@ test("a place takes st, nd, rd or th, the teens th, and marks its thousands", ()
   ]);
 });
 
-test("signed points take + or the minus sign, zero bare", () => {
+test("signed points show + or the minus sign, zero bare", () => {
   expect([6, 0, -1].map(signed)).toEqual(["+6", "0", "−1"]);
   expect(MINUS).toBe("−");
   expect(inOut(1204, 310)).toBe("+1,204 / −310");

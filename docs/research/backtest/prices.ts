@@ -17,6 +17,8 @@ const SETTINGS = {
   budget: 100,
   floor: 5, // the cheapest pick
   top: 25, // the dearest (Craig, 17 Nov 2026: maybe Chovy is 25)
+  coachTop: 16.5, // the dearest coach: about the top over the Captain's 1.5, as a coach can't be Captain (Craig, 17 Nov 2026)
+  star: 20, // a pick at this price or more is a star, for the example squads
   teamWeight: 0.3, // share of the price from his team's strength; the rest from his own points
   bend: 1.4, // the curve: 1 is a straight line, higher pulls stars up and the middle down
   minSeries: 10, // fewer series last season: priced by hand, as a rookie
@@ -25,6 +27,7 @@ const SETTINGS = {
   threshold: 3, // a pick moves when his form price is ₩3m or more from his price
   step: 0.2, // by one step a week, up or down
   captain: 1.5, // the Captain's multiplier (spec/04)
+  byHand: { Chovy: 25 } as Record<string, number>, // Craig's hand prices, 17 Nov 2026: Chovy is the bigger name
 };
 type Settings = typeof SETTINGS;
 const LEAGUE = "LCK";
@@ -91,7 +94,7 @@ function pricer(s: Settings, ownPoints: number[], teamShares: number[]) {
   };
   const topBlend = Math.max(...ownPoints.map((p, i) => blend(p, teamShares[i]!, false)));
   return (pps: number, teamShare: number, isCoach: boolean) =>
-    Math.max(s.floor, roundTo(s.floor + (s.top - s.floor) * clamp01(blend(pps, teamShare, isCoach) / topBlend) ** s.bend, 0.5));
+    Math.max(s.floor, roundTo(s.floor + ((isCoach ? s.coachTop : s.top) - s.floor) * clamp01(blend(pps, teamShare, isCoach) / topBlend) ** s.bend, 0.5));
 }
 
 interface Priced { pick: Pick; price: number }
@@ -136,15 +139,15 @@ function firstPrices(s: Settings, last: ReturnType<typeof seasonScores>, now: Re
     return [{ pick, pps: mean(xs), teamShare: last.winShare.get(pick.teamId) ?? medianShare }];
   });
   const price = pricer(s, rows.map((r) => r.pps), rows.map((r) => r.teamShare));
-  return rows.map((r) => ({ pick: r.pick, price: price(r.pps, r.teamShare, r.pick.role === "coach"), pps: r.pps, teamShare: r.teamShare, pricer: price }));
+  return rows.map((r) => ({ pick: r.pick, price: s.byHand[r.pick.name] ?? price(r.pps, r.teamShare, r.pick.role === "coach"), pps: r.pps, teamShare: r.teamShare, pricer: price }));
 }
 
 /**
  * The best squad over a season, set once and kept: one starter per role, a flex player, the coach
  * and the two cheapest players left on the bench, within budget. Points are each starter's season
- * total, with the Captain (×1.5) on the top scorer. No transfers, chips or auto-subs.
+ * total, with the Captain (×1.5) on the top-scoring player. No transfers, chips or auto-subs.
  */
-function bestSquad(pool: Priced[], seasonPoints: Map<string, number>, budget: number, captain: number) {
+function bestSquad(pool: Priced[], seasonPoints: Map<string, number>, budget: number, captain: number, stars?: { count: number; price: number }) {
   const pts = (p: Priced) => seasonPoints.get(p.pick.key) ?? 0;
   const byRole = (role: string) => pool.filter((p) => p.pick.role === role);
   const players = pool.filter((p) => p.pick.role !== "coach");
@@ -158,10 +161,12 @@ function bestSquad(pool: Priced[], seasonPoints: Map<string, number>, budget: nu
     for (const f of players) {
       if (five.includes(f)) continue;
       const starters = [...five, f];
+      if (stars && starters.filter((p) => p.price >= stars.price).length !== stars.count) continue;
       const bench = cheap.filter((p) => !starters.includes(p)).slice(0, 2);
       if (spent + f.price + cost(bench) > budget) continue;
       const scores = starters.map(pts);
-      const points = scores.reduce((a, x) => a + x, 0) + (captain - 1) * Math.max(...scores);
+      const captainPoints = Math.max(...starters.filter((p) => p.pick.role !== "coach").map(pts)); // a coach can't be Captain
+      const points = scores.reduce((a, x) => a + x, 0) + (captain - 1) * captainPoints;
       if (points > best.points) best = { points, squad: starters, bench };
     }
   }
@@ -222,6 +227,11 @@ function main(lastFile: string, thisFile: string, grid: boolean) {
   const top = bestSquad(priced, seasonPoints, SETTINGS.budget, SETTINGS.captain);
   const line = (p: Priced) => `${p.pick.name} (${p.pick.role}, ₩${fixed(p.price)}m, ${Math.round(seasonPoints.get(p.pick.key) ?? 0)} pts)`;
   console.log(`\nBest squad for ${thisFile.match(/\d{4}/)?.[0]}, set once: ${Math.round(top.points)} pts, ₩${fixed(cost([...top.squad, ...top.bench]))}m. Starters: ${top.squad.map(line).join(", ")}. Bench: ${top.bench.map(line).join(", ")}.`);
+  for (const count of [0, 1, 2, 3]) {
+    const ex = bestSquad(priced, seasonPoints, SETTINGS.budget, SETTINGS.captain, { count, price: SETTINGS.star });
+    if (ex.points < 0) { console.log(`\nBest with ${count} stars: none fits.`); continue; }
+    console.log(`\nBest with ${count} stars: ${Math.round(ex.points)} pts, ₩${fixed(cost([...ex.squad, ...ex.bench]))}m. ${ex.squad.map(line).join(", ")}. Bench: ${ex.bench.map(line).join(", ")}.`);
+  }
   console.log(`\nDearest 10, season points: ${priced.slice(0, 10).map(line).join(", ")}.`);
   console.log(`\nFirst price against ${thisFile.match(/\d{4}/)?.[0]}'s points per series (${both.length} picks): r = ${r.toFixed(2)}.`);
 }

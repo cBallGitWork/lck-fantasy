@@ -1,5 +1,6 @@
 // The made-up Split 1's Weeks 1 to 4: their series and deadlines, Weeks 3 and 4 at the pictures' moments.
 
+import season from "../../data/lck/season-2027.json";
 import type { SeriesRow } from "../parts";
 import type { TeamCode } from "./competition";
 
@@ -124,7 +125,14 @@ export function startOf(s: Series): string {
   return `2027-${mm}-${day.padStart(2, "0")}T${s.local}:00Z`;
 }
 
-const WEEK4_DEADLINE_AT = "2027-01-20T07:45:00Z";
+/** Week 4's deadline as data/lck/season-2027.json holds it. */
+const WEEK4_DEADLINE_AT = deadlineOf(4);
+
+function deadlineOf(gameweek: number): string {
+  const deadline = season.gameweeks.find((g) => g.number === gameweek)?.deadline;
+  if (deadline === undefined) throw new Error(`Gameweek ${gameweek} is not in data/lck/season-2027.json`);
+  return deadline;
+}
 
 /** Week 4's deadline, 15 minutes before its first series (pick.html), counted down from Pick Team's moment. */
 export const WEEK4_DEADLINE = {

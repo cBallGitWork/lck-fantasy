@@ -1,4 +1,6 @@
 // @vitest-environment node
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { expect, test } from "vitest";
 import { html, text } from "../../testing/render";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
@@ -134,6 +136,16 @@ test("Card view: the seven starters as the broadcast lineup, the bench bar, then
   expect(markup.match(/class="pcard[ "]/g)).toHaveLength(7);
   expect(markup).toContain("pcard--selected");
   expect(markup).not.toContain("rift-map");
+});
+
+test("the bar sticks to the window's foot over the pitch's tiles, so Save is always in view", () => {
+  const rule = (path: string, selector: string) => readFileSync(join(import.meta.dirname, path), "utf8").match(new RegExp(`\\${selector} \\{([^}]*)\\}`))?.[1] ?? "";
+  const zIndex = (css: string) => Number(css.match(/z-index: (\d+);/)?.[1]);
+  const bar = rule("pick-team.css", ".pick-team__bar");
+  expect(bar).toContain("position: sticky;");
+  expect(bar).toContain("bottom: 0;");
+  expect(zIndex(bar)).toBeGreaterThan(zIndex(rule("../../rift/Tile.css", ".tile")));
+  expect(zIndex(bar)).toBeLessThan(zIndex(rule("../../parts/controls/Menu.css", ".menu__list")));
 });
 
 test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on and unsaved", () => {

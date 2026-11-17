@@ -49,6 +49,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 ## Later
 
 - A watchlist, as FPL's (Craig, 14 Nov 2026) ([spec/03](spec/03-transfers.md)).
+- A `+` on each Stats row that opens Transfers with that player chosen (Craig, 17 Nov 2026)
+  ([spec/12](spec/12-pages.md)).
 - Following personalities (casters, streamers who play), teams and players; reactions other than
   cheers and jeers (Craig, 14 Nov 2026) ([spec/14](spec/14-following.md)).
 - A second live source, researched if Riot's live feed breaks during the beta (Craig, 13 Nov 2026)

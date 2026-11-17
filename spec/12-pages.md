@@ -34,6 +34,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Each row also shows price and its last move, form, owned and points, as FPL's list does. Any
     column sorts. Your own players carry a dot. Academy players are listed, after everyone with
     games (Craig, 16 Nov 2026).
+  - A column sorts highest first only, as FPL. Max price lists each price the players hold,
+    highest first, as FPL's Max cost. Per game shows `—` for a player with no games, not 0.0.
+    Filters that match no one show `No players` in place of the table (Craig, 17 Nov 2026).
   - It links to Price changes. The picture is `docs/design/approved/stats/`.
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.

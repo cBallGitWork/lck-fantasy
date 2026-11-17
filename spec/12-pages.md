@@ -148,8 +148,17 @@ Grilled 14 Nov 2026.
   - The choice is kept in the browser, so per device, and a guest's is kept too.
 - On Pick Team, swaps, the Carry, the Vice-carry and buffs take effect only when the manager
   presses Save (Craig, 13 Nov 2026). Reset clears what isn't saved.
-- On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in
-  the list, greyed, with why, and sorts last.
+- On Pick Team, the bar counts each change before Save: each swap, each Carry or Vice-carry moved,
+  and each buff played or cancelled is one. Example: a swap and a new Carry read `2 changes`
+  (Craig, 17 Nov 2026).
+- Any starter can be made the Carry, one not starting included, as FPL; his card says Not
+  starting, and the Vice-carry covers if he plays no game ([spec/04](04-captain.md)) (Craig,
+  17 Nov 2026).
+- A swap can start from the bench, as FPL: tap a bench player and the starters he can swap with
+  light up (Craig, 17 Nov 2026).
+- On Transfers, every player stays in the list and none is greyed; a buy Flol refuses says why
+  in a short message, and over the budget turns the bank red (Craig, 16 Nov 2026; it was greyed
+  and sorted last).
 - Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the
   deadline, [spec/02](02-prices-and-budget.md)); his card shows the amount. Example: Faker
   ▲ ₩0.5m. Before a player's price first moves, nothing shows.

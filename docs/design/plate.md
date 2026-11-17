@@ -144,7 +144,7 @@ Every screen part is drawn for each state it can be in.
 - An empty state is a title and at most one short line.
 - Absence is `—`, never `0`.
 - Money as `₩18.5m` (spec/02). Times in the viewer's own time, as `Sat 22:00`.
-- One name per thing on every screen: Carry, never Captain; Patch update, never Price changes;
+- One name per thing on every screen: Carry, never Captain; Price changes, never Patch update; Cheer and Jeer, never Truck;
   `Week 4`, never Gameweek.
 - No emoji, save the birthday cake (spec/13).
 - One made-up dataset: where two pictures show the same finished series, they show the same
@@ -159,7 +159,7 @@ Every screen part is drawn for each state it can be in.
 ## Never
 
 1. A row of stat tiles, a card around every section, or small capitals over big numbers.
-2. Pills, rounded corners, tinted badges, gradients, glow or soft shadows. A truck's LED
+2. Pills, rounded corners, tinted badges, gradients, glow or soft shadows. A cheer's or jeer's LED
    panel is a picture: dotted, in capitals, the same on every screen.
 3. Keys and legends: the heads and marks carry it.
 4. A landing page's furniture: a hero band, a centred marketing line, space used as decoration.

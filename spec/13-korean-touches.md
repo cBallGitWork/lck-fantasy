@@ -34,10 +34,11 @@ Each team has a fun shirt and a crest, Flol's own drawings (Craig, 16 Nov 2026).
 - The kit colours are data. DNS's, DK's and BFX's are guesses, fine for the beta (Craig, 16 Nov
   2026).
 
-## Trucks
+## Cheers and jeers
 
 LCK fans park LED trucks outside a team's base: protest trucks after bad play, coffee trucks to
-cheer. Flol's trucks, and their lines, are in [spec/14](14-following.md#trucks).
+cheer. Flol's cheers and jeers keep the trucks' LED panel, credited to a made-up truck-hire
+sponsor; they and their lines are in [spec/14](14-following.md#cheers-and-jeers).
 
 ## Birthday week
 

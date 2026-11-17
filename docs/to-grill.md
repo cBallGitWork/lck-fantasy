@@ -41,8 +41,8 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
   and flop show effective ownership, as spec/12 says (Faker 22 · 31%)?
 - Transfers: how a sold slot looks before a buy; what the list shows when no one is sold; which
   reason shows when over budget and team full; does a Carry's replacement take the C; Coach chip.
-- Following: empty lines for no requests, trucks or follows; does Block confirm first; is a truck
-  type or line picked when the picker opens?
+- Following: empty lines for no requests, cheers or follows; does Block confirm first; is cheer
+  or jeer, or a line, picked when the picker opens?
 - Pick Team: what counts as one change in the bar; Make Carry on a player not starting; can a swap
   start from the bench, as FPL allows?
 - Points: a Series win row for the Coach; a week total under non-Carry players; bench taps.
@@ -57,7 +57,7 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Series: VOD as ↗ or ›; an unknown series id; a coach's empty game as — or 0.
 - Compare: the search's role groups and caps; what /compare opens with no players.
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
-- Patch update: the Set line before the first move; sort order; the week in the URL.
+- Price changes: the Set line before the first move; sort order; the week in the URL.
 - Settings: an empty hangul banner; the save bar's list; Save team's rules; Privacy and Terms
   routes. The picture draws the reminder On; spec/12 says both emails are off by default (built off).
 - LCK hub: ‹ on Fixtures for a past week; a stage before it starts; an academy with no roster.
@@ -65,5 +65,5 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
   History's week total with or without the Carry's ×1.5.
 - Coach card: This week before any series; mid-series History.
 - Profile: cancelling a follow request; how a week's transfer cost reads; place or number ranks;
-  a sponsor truck's credit line.
+  a sponsor cheer's credit line.
 - Transfers Undo: a confirm made under a buff has no Undo, so the confirm before it can't be undone.

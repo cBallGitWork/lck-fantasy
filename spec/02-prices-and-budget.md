@@ -18,10 +18,13 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - A formula proposes each player's and coach's first price from last season's data, then an admin
   adjusts them by hand before the competition opens.
 - A rookie with no data is priced by hand.
-- The formula is a mix of data and hand work (Craig, 14 Nov 2026): last season's points per series
-  set a base on a line from the floor to the top price (5억 to 20억 in the
-  [draft](../docs/research/prices-formula.md)), and Craig then sets each price by hand. Prices stay
-  data he can edit, per competition.
+- The formula is a mix of data and hand work (Craig, 14 Nov 2026): it sets a base, and Craig then
+  sets each price by hand. Prices stay data he can edit, per competition.
+- The base weighs the player's own record and his team's strength, and is not a straight line: the
+  best team's top players cost more, as they get the Captain most weeks (Craig, 17 Nov 2026).
+- The goal (Craig, 17 Nov 2026): a normal squad is 2 stars, 1 or 2 mid-priced and the rest cheap.
+  Three stars force the rest to be the worst players. The
+  [draft](../docs/research/prices-formula.md) is backtested against these squads.
 - The top coaches are priced a little higher than the others (Craig, 13 Nov 2026): in the 2026
   backtest Gen.G's coach scored 6.8 a series, among the top five picks, against 4.5–5.9 for the
   rest.

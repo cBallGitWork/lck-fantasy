@@ -233,6 +233,10 @@ Grilled 13 Nov 2026.
 The same as the player card, with the coach's lines in place of a player's. A Roster tab, the
 team's players and prices, replaces Champions.
 
+- This week before his team's first series lists the week's series with opponent and time,
+  points as —, filling in as played, as the player card (Craig, 17 Nov 2026).
+- History shows a series being played, tagged Live, with its points so far (Craig, 17 Nov 2026).
+
 ## Buffs
 
 Buffs confirm as in FPL: Remake and Limitless are final once confirmed, like FPL's Wildcard and

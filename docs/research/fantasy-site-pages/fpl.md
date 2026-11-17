@@ -2,12 +2,12 @@
 
 **Contents:** top navigation and grouping · each page · signed in, seen 14 Nov 2026 · app-only and web-only features · URL patterns
 
-Method and date note: the live site was read directly on 13 Nov 2026 in a signed-out browser, and signed in, on Craig's own team, on 14 Nov 2026 (see [Signed in](#signed-in-seen-14-nov-2026); nothing was changed). By then the game is in its 2026/27 season, so what the live pages show is 2026/27. Where a 2026/27 page differs from 2025/26 it is flagged below. Signed-in-only pages (Pick Team, Transfers, squad selection, account settings) could not be opened. They are described from official help text and articles, and anything not found in a source is listed under Gaps. "Live site" below means fantasy.premierleague.com as read on 13 Nov 2026.
+Method and date note: the live site was read directly on 13 Nov 2026 in a signed-out browser, and signed in, on Craig's own team, on 14 Nov 2026 (see [Signed in](#signed-in-seen-14-nov-2026); nothing was changed). By then the game is in its 2026/27 season, so what the live pages show is 2026/27. Where a 2026/27 page differs from 2025/26 it is flagged below. On 13 Nov the signed-in-only pages (Pick Team, Transfers, squad selection, account settings) could not be opened, so the sections before [Signed in](#signed-in-seen-14-nov-2026) describe them from official help text and articles; that section says what was seen on 14 Nov. "Live site" below means fantasy.premierleague.com as read on 13 Nov 2026.
 
 ## Top navigation, signed out and signed in, and how pages are grouped
 
 ### Takeaway
-Signed out, the FPL bar has 8 items: Home, Prizes, The Scout, Price Changes, Injuries, Podcast, Help and Statistics. Above it sits a "Fantasy" switcher for FPL Challenge and FPL Draft, and above that the wider Premier League site bar. Every URL now carries a language prefix (`/en/`). Signed-in team pages (Points, Pick Team, Transfers) exist and are named in the official FAQ, but I could not see the signed-in bar itself.
+Signed out, the FPL bar has 8 items: Home, Prizes, The Scout, Price Changes, Injuries, Podcast, Help and Statistics. Above it sits a "Fantasy" switcher for FPL Challenge and FPL Draft, and above that the wider Premier League site bar. Every URL now carries a language prefix (`/en/`). Signed-in team pages (Points, Pick Team, Transfers) exist and are named in the official FAQ, but I could not see the signed-in bar itself on 13 Nov. (Seen 14 Nov 2026; see [Signed in](#signed-in-seen-14-nov-2026).)
 
 ### Cited Findings
 - On the signed-out live site, the FPL sub-nav reads "Home, Prizes, The Scout, Price Changes, Injuries, Podcast, Help, Statistics". Above it, a "Fantasy" product switcher links "FPL Challenge" (fplchallenge.premierleague.com) and "FPL Draft" (draft.premierleague.com) — [FPL home, live site](https://fantasy.premierleague.com/en/)
@@ -24,7 +24,7 @@ Signed out, the FPL bar has 8 items: Home, Prizes, The Scout, Price Changes, Inj
 - Fixtures is not in the signed-out nav, yet `/en/fixtures` loads signed out. It is reached from the fixtures panel on Points pages, and probably from the signed-in nav.
 
 ### Gaps
-- I could not see the signed-in nav bar. Before 2025 it was, from memory without a source: Status (home), Points, Pick Team, Transfers, Leagues & Cups, Fixtures, The Scout, Podcast, Stats, Prizes, Help. Whether 2025/26 kept a "Status" page is unconfirmed; no source mentioned one.
+- I could not see the signed-in nav bar. Before 2025 it was, from memory without a source: Status (home), Points, Pick Team, Transfers, Leagues & Cups, Fixtures, The Scout, Podcast, Stats, Prizes, Help. Whether 2025/26 kept a "Status" page is unconfirmed; no source mentioned one. (Closed 14 Nov 2026: the bar was seen and Status exists; see [Signed in](#signed-in-seen-14-nov-2026).)
 - I could not confirm the account menu (sign-out, team details, email preferences). The FAQ has a question "How do I change my team name or the team I support?", but its answer was collapsed.
 
 ## Each page: what it shows and what the manager does there
@@ -148,7 +148,7 @@ A manager needs these pages: the Points view of any manager (pitch or list, game
 - The manager sidebar (ranks, leagues, cups, transfers, finance) appears on every entry page, so a copy needs it as one shared component, not a separate page.
 
 ### Gaps
-- No source showed the Pick Team or Transfers screens themselves: chip button placement, the confirm-transfers dialog wording, how a hit is displayed, or the Wildcard/Free Hit confirmation modal. They need a signed-in look.
+- No source showed the Pick Team or Transfers screens themselves: chip button placement, the confirm-transfers dialog wording, how a hit is displayed, or the Wildcard/Free Hit confirmation modal. They need a signed-in look. (Partly closed 14 Nov 2026: Pick Team and Transfers were seen, chip tiles included; see [Signed in](#signed-in-seen-14-nov-2026).)
 - I did not see the create-league form (fields such as classic or H2H, start gameweek, H2H knock-out option, closing entries) or the cup page once a cup has started.
 - I found no source on account settings or email preferences; they live in the myPremierLeague account on premierleague.com.
 - I found no source confirming whether a "Status" home page still exists for signed-in managers in 2025/26. (Closed 14 Nov 2026: it does; see below.)
@@ -225,6 +225,6 @@ API mirrors, all under `/api/`:
 - Head-to-head standings probably follow `/en/leagues/{id}/standings/h`, mirroring `/c` for classic. Not verified.
 
 ### Gaps
-- I could not see the signed-in paths for Pick Team, Transfers, squad selection or create/join league forms.
+- I could not see the signed-in paths for Pick Team, Transfers, squad selection or create/join league forms. (Partly closed 14 Nov 2026: Pick Team, Transfers and Leagues & Cups were seen; see [Signed in](#signed-in-seen-14-nov-2026).)
 - From memory without a source, before 2025 they were `/my-team`, `/transfers`, `/squad-selection`, `/leagues/create`, `/leagues/join`. Whether they now carry `/en/` is unconfirmed.
 - The old `/dream-team/{gw}` path is gone, replaced by `/en/team-of-the-week/{gw}`, as observed.

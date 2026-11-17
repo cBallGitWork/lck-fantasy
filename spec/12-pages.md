@@ -235,8 +235,7 @@ team's players and prices, replaces Champions.
 
 ## Buffs
 
-Buffs confirm as in FPL: Remake and Limitless are final once confirmed, like FPL's Wildcard and
-Free Hit; Bench Boost and Dual Carry can be cancelled until the deadline
+Buffs confirm as in FPL: Remake is final once confirmed, like FPL's Wildcard; Bench Boost and Dual Carry can be cancelled until the deadline
 ([spec/06](06-buffs.md)).
 
 ## Words
@@ -257,6 +256,6 @@ suggestions.
 | Emerald I (any tier) | Home, Points, Leagues | Overall rank as a LoL tier |
 | C | the Carry's badge, everywhere | Scores ×1.5 this week |
 | V | the Vice-carry's badge, everywhere | Takes over if the Carry plays no game |
-| Remake, Limitless | Transfers' buff keys | the line on their Pick Team card |
+| Remake | Transfers' buff key | the line on their Pick Team card |
 
 - Carry, Killer and the buff names stay; the hover explains them (Craig, 16 Nov 2026).

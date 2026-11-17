@@ -41,7 +41,7 @@ He looked at the built page and asked for these; they overrule the pictures wher
 - **Confirmed · Week 4**: each confirm this week, newest first, with what it used (free or −6). Only the latest has **Undo**, until the deadline (spec/03). Undo also clears any unconfirmed changes. A confirm under Remake or Limitless is listed with no Undo.
 - **Bottom bar**: the transfers so far, Reset, and Review and confirm.
 - **Confirm sheet**: what changes, the cost and the bank. Back or Confirm, with the deadline.
-- **Remake and Limitless**: the buff names alone, no "Play"; the transfer buffs (FPL's chips; renamed 14 Nov 2026, the pictures too), at the top beside the bank, as FPL's Wildcard and Free Hit. Bench Boost and Dual Carry stay on Pick Team.
+- **Remake**: the buff name alone (Limitless, in the picture, dropped 17 Nov 2026, spec/06), no "Play"; the transfer buffs (FPL's chips; renamed 14 Nov 2026, the pictures too), at the top beside the bank, as FPL's Wildcard. Bench Boost and Dual Carry stay on Pick Team.
 
 ## Placeholders
 

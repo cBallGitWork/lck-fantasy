@@ -46,10 +46,10 @@ Grilled 14 Nov 2026.
   may spend money an earlier one freed.
 - Undo puts the old players back at their old prices and gives back exactly what the confirm
   used: free transfers return to the week's count (never above the bank cap of 3), and its −6s
-  are dropped. It isn't offered for transfers made under Remake or Limitless.
-- Undo also clears any changes the manager hasn't confirmed yet. A confirm made under Remake or
-  Limitless is still listed, with no Undo (Craig, 14 Nov 2026).
-- Playing Remake or Limitless wipes that gameweek's −6s, as FPL's Wildcard and Free Hit do
+  are dropped. It isn't offered for transfers made under Remake.
+- Undo also clears any changes the manager hasn't confirmed yet. A confirm made under Remake is
+  still listed, with no Undo (Craig, 14 Nov 2026).
+- Playing Remake wipes that gameweek's −6s, as FPL's Wildcard does
   ([spec/06](06-buffs.md)).
 
 ## Between the splits

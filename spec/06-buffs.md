@@ -13,13 +13,10 @@ rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
   split ([SPEC.md](../SPEC.md)).
 - The first effects:
   - unlimited free transfers, kept (FPL's Wildcard);
-  - for one gameweek, unlimited free transfers with no budget and no cap per team, then the squad
-    goes back (UCL Fantasy's Limitless). The roles still apply: one per role, the flex and the
-    coach;
   - the bench scores too (FPL's Bench Boost);
   - the Vice-carry scores the Carry's multiplier too ([spec/04](04-captain.md)).
 - A manager plays at most one buff a gameweek.
-- In a gameweek a manager plays Remake or Limitless, his free transfer doesn't roll over
+- In a gameweek a manager plays Remake, his free transfer doesn't roll over
   ([spec/03](03-transfers.md)). His bank is kept: 2 banked, Remake played, still 2 the next week
   (Craig, 14 Nov 2026).
 
@@ -28,15 +25,18 @@ rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
 | Buff | Effect | Like |
 |---|---|---|
 | Remake | Unlimited free transfers, kept | FPL's Wildcard |
-| Limitless | One gameweek with no budget and no team cap, then the squad goes back | UCL Fantasy's Limitless |
 | Bench Boost | The bench scores too | FPL's Bench Boost |
 | Dual Carry | The Vice-carry scores ×1.5 too, as the Carry does | none |
 
 Dual Carry example: the Carry scores 12 and the Vice-carry 10, so they give 18 and 15, not 18
 and 10. If the Carry plays no game, nobody else steps in.
 
+No Limitless, FPL's Free Hit: a one-week free squad takes away the reason to plan transfers week
+by week, and knockouts already have unlimited transfers ([spec/03](03-transfers.md)) (Craig, 17
+Nov 2026).
+
 ## How many, and when
 
-- The beta, Split 1, has all four, one of each (Craig, 16 Nov 2026).
+- The beta, Split 1, has all three, one of each (Craig, 16 Nov 2026; Limitless dropped 17 Nov).
 - The main season gives one of each per split.
 - Every buff can be played in every stage, knockouts included.

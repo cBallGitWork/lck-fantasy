@@ -1,0 +1,414 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Help</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --bg: #010A13; --paper: #0A1428; --line: #1E2D40; --fill: #14233A; --text: #F0E6D2; --mid: #A09B8C; --soft: #5B5A56; --ink: #C89B3C; --rise: #FF5C6C; --fall: #6EA2FF; --teal: #0AC8B9; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { width: 1440px; background: var(--bg); color: var(--text); font: 14px/1.5 "IBM Plex Sans KR", sans-serif; }
+.num, td.n { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+a { color: var(--text); text-decoration: none; }
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; color: var(--ink); margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); margin-right: 8px; }
+nav.top .sp { flex: 1; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--text); font-weight: 600; margin-left: -8px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.page { padding: 24px 32px 48px; display: grid; grid-template-columns: 1fr 360px; column-gap: 32px; row-gap: 24px; }
+.head { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 16px; }
+h1 { font-size: 28px; font-weight: 700; line-height: 1.2; }
+h1 i { font-style: normal; color: var(--mid); font-size: 16px; font-weight: 400; margin-left: 8px; }
+.head span { color: var(--mid); }
+section { display: none; }
+section.on { display: block; }
+.tabs { grid-column: 1 / -1; display: flex; gap: 32px; border-bottom: 1px solid var(--line); }
+.tabs a { display: flex; align-items: center; height: 40px; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tabs a.on { color: var(--text); font-weight: 600; border-bottom-color: var(--text); }
+main { max-width: 1016px; }
+details { border-bottom: 1px solid var(--line); }
+details > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; min-height: 48px; font-size: 16px; font-weight: 600; }
+details > summary::-webkit-details-marker { display: none; }
+details > summary::after { content: "▾"; color: var(--mid); font-size: 14px; }
+details[open] > summary::after { content: "▴"; }
+details > .body { padding-bottom: 24px; }
+li.eg { color: var(--mid); }
+.dl td.ph-cell { color: var(--mid); }
+details > .body > ul:first-child, details > .body > table:first-child { margin-top: 0; }
+.intro { padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+section[data-tab="rules"] h2 { font-size: 20px; font-weight: 700; padding-top: 8px; border-top: 2px solid var(--text); margin-top: 32px; }
+section[data-tab="rules"] h2:first-child { margin-top: 0; }
+section[data-tab="rules"] h2 + details { border-top: 0; }
+aside { position: sticky; top: 24px; align-self: start; }
+aside h4 { font-size: 14px; font-weight: 700; padding-top: 8px; border-top: 2px solid var(--text); line-height: 30px; }
+aside ol { list-style: none; margin-top: 8px; }
+aside li { padding: 0; margin: 0; max-width: none; }
+aside li::before { display: none; }
+aside li a { display: flex; align-items: center; min-height: 40px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+body.rules aside { display: none; }
+body.rules main { grid-column: 1 / -1; }
+
+p.lead { max-width: 720px; margin-top: 16px; }
+p.lead:first-child { margin-top: 0; }
+ol.steps { margin-top: 12px; padding-left: 24px; max-width: 720px; }
+ol.steps li { padding-left: 8px; }
+ol.steps li::before { display: none; }
+ol.steps li::marker { color: var(--mid); font-family: "IBM Plex Mono", monospace; }
+.gloss td:first-child { width: 240px; font-weight: 600; white-space: nowrap; }
+main h3 + p.lead { margin-top: 12px; }
+h3 { font-size: 20px; font-weight: 700; margin-top: 32px; }
+main { font-size: 16px; line-height: 1.6; }
+ul { list-style: none; margin-top: 12px; }
+li { padding-left: 24px; position: relative; margin-top: 12px; max-width: 720px; }
+li::before { content: ""; position: absolute; left: 4px; top: 11px; width: 4px; height: 4px; background: var(--text); }
+.eg { color: var(--mid); }
+li b, .eg b { color: var(--text); font-weight: 600; }
+p.eg { margin-top: 16px; max-width: 720px; }
+table { width: 100%; border-collapse: collapse; background: var(--paper); margin-top: 12px; }
+th { text-align: left; font-weight: 400; color: var(--mid); font-size: 12px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+th.n, td.n { text-align: right; white-space: nowrap; }
+td { height: 40px; padding: 0 12px; border-bottom: 1px solid var(--line); }
+td.n { white-space: nowrap; width: 96px; }
+td.per { color: var(--mid); }
+td.m { color: var(--mid); }
+.c { display: inline-flex; width: 20px; height: 20px; border-radius: 50%; background: var(--text); color: var(--bg); font-size: 12px; font-weight: 700; align-items: center; justify-content: center; vertical-align: 1px; }
+.buffs td:first-child, .tiers td:first-child { width: 200px; font-weight: 600; }
+.buffs td.like { color: var(--mid); width: 240px; }
+.tiers td.n { width: auto; }
+.up { color: var(--rise); }
+.foot { grid-column: 1 / -1; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; gap: 24px; font-size: 12px; color: var(--mid); align-items: center; }
+.foot a { color: var(--mid); display: inline-flex; align-items: center; min-height: 24px; } .foot a.on { color: var(--text); }
+.foot .sp { flex: 1; }
+</style></head><body>
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
+<div class="page">
+<div class="head"><h1>Help<i>도움말</i></h1><span>LCK Cup 2027</span></div>
+<nav class="tabs"><a href="#help" class="on">Help</a><a href="#rules">Rules</a></nav>
+<main>
+  <section data-tab="help">
+    <div class="intro">
+      <p class="lead">Flol is a free fantasy game where you pick real LCK players, from Korea's League of Legends league, and score points from how they play in their actual games.</p>
+      <p class="lead">You start by building a squad, choosing your starters, picking a Captain each week, and then managing your team across the whole season. You play against everyone else on Flol, and you can make leagues to take on your friends.</p>
+      <p class="lead">There's a lot to take in at first. Start with the basics below, then use Rules for the full detail.</p>
+    </div>
+
+    <details id="in-60" open><summary>Flol in 60 seconds</summary><div class="body">
+      <p class="lead">You get <b class="num">₩100.0m</b> of game money to build a squad of 9 LCK players. They score points for what they do in real games, such as kills, assists and staying alive.</p>
+      <p class="lead">Flol runs one LCK week at a time. Each week, 7 of your squad score for you: one player in each of the five positions, a Flex, and a whole LCK team in your coach slot. The other 2 sit on your bench. You pick a Captain, whose points count one and a half times.</p>
+      <p class="lead">Transfers let you swap players in and out as the season goes on. Four buffs, played one at a time, give your score a boost.</p>
+      <p class="lead">The aim is to score as many points as you can over the season and climb the rankings, while taking on other people in leagues.</p>
+    </div></details>
+
+    <details id="weeks" open><summary>How a week works</summary><div class="body">
+      <p class="lead">A Flol week is one LCK week. It usually runs Wednesday to Sunday, and in the regular season each of the 10 LCK teams plays two series in it, at about 17:00 and 19:30 Korea time.</p>
+      <ul>
+        <li>A series is one match between two teams. Regular-season series are best of 3 games; playoff series are best of 5.</li>
+        <li>The deadline is 15 minutes before the week's first series. Any changes to your team must be saved by then. Home shows the next deadline in your own time.</li>
+        <li>Your points go up live while the games are played. They're confirmed about 3 hours after each series ends, and the league tables move then.</li>
+        <li>In the playoffs, a team might play no series in a week, or several.</li>
+      </ul>
+    </div></details>
+
+    <details id="build-squad" open><summary>Step 1: Build your squad</summary><div class="body">
+      <p class="lead">Pick 9 players on Pick Team, spending no more than <b class="num">₩100.0m</b>. You need at least one player in each of the five positions, and no more than 2 from one LCK team. You'll be asked to sign up when you save.</p>
+      <p class="lead">A good first squad usually has:</p>
+      <ul>
+        <li>Players who start every series for their team.</li>
+        <li>Good players in every position, not just Mids and Bots. Tops and Supports need fewer kills to score, so they can keep up.</li>
+        <li>A team in your coach slot that wins a lot, since winning a series is worth 3 points.</li>
+        <li>Cheaper players on your bench, so more of your money goes on the 7 who score.</li>
+        <li>One or two players who score well week after week, to captain.</li>
+      </ul>
+    </div></details>
+
+    <details id="pick-starters" open><summary>Step 2: Pick your starters</summary><div class="body">
+      <p class="lead">Each week you choose 7 starters from your 9 on Pick Team. To swap two players, tap one, then tap one of the players that lights up. Press Save team when you're done; nothing changes until you do.</p>
+      <p class="lead">Your 2 bench players sit in an order you choose. If a starter plays no games that week, your first bench player comes on for him if he fits, then your second.</p>
+      <p class="lead">When picking your starters, ask:</p>
+      <ul>
+        <li>Who is sure to start for his team?</li>
+        <li>Whose team has an easy week, or two series instead of one?</li>
+        <li>Is your bench in the right order?</li>
+      </ul>
+    </div></details>
+
+    <details id="choose-captain" open><summary>Step 3: Choose your Captain</summary><div class="body">
+      <p class="lead">Your Captain is your biggest call each week, because his points count one and a half times. Tap a starter on Pick Team, press Make Captain, then save.</p>
+      <p class="lead">Pick someone who is very likely to play and who usually scores well. There's no vice-captain, so if your Captain plays no games that week, nobody gets the extra points.</p>
+    </div></details>
+
+    <details id="points-scored" open><summary>Step 4: Understand how points are scored</summary><div class="body">
+      <p class="lead">Players score in every game of a series, and their best 2 games count. The main ways to score are:</p>
+      <ul>
+        <li>Kills and assists</li>
+        <li>Not dying, or dying little</li>
+        <li>Having more gold than the player opposite at 15 minutes</li>
+        <li>Solo kills, first blood, multikills and stealing monsters</li>
+      </ul>
+      <p class="lead">Your coach slot scores for what the whole team does: the first tower, killing more dragons and barons than the other team, quick wins, and winning the series. A team can lose points for losing a series.</p>
+    </div></details>
+
+    <details id="make-transfers" open><summary>Step 5: Make transfers to improve your squad</summary><div class="body">
+      <p class="lead">Transfers let you change your squad during the season, on Transfers. Use them to:</p>
+      <ul>
+        <li>Replace a player who has lost his place to a stand-in.</li>
+        <li>Bring in players in good form, or whose teams have an easy week.</li>
+        <li>Move money between positions.</li>
+      </ul>
+      <p class="lead">You get 1 free transfer a week. Each extra one takes 6 points off that week's score, often called a hit. If you don't use your free transfer, it carries over, and you can save up to 3.</p>
+    </div></details>
+
+    <details id="using-buffs" open><summary>Step 6: Use buffs at the right time</summary><div class="body">
+      <p class="lead">Buffs are boosts for big weeks. You get each one once a split, and can play only one in any week.</p>
+      <ul>
+        <li><b>Remake:</b> as many free transfers as you like, to rebuild your squad for good.</li>
+        <li><b>Limitless:</b> one week with no budget or team limit, then your old squad comes back.</li>
+        <li><b>Bench Boost:</b> your bench players score too.</li>
+        <li><b>Double Captain:</b> a second Captain, so two players score one and a half times.</li>
+      </ul>
+      <p class="lead">Play Remake and Limitless on Transfers; they're final once you confirm. Play Bench Boost and Double Captain on Pick Team; you can cancel them until the deadline.</p>
+    </div></details>
+
+    <details id="join-leagues" open><summary>Step 7: Join leagues and take on your friends</summary><div class="body">
+      <p class="lead">You're put in three leagues when you join: Overall, your country, and fans of your favourite LCK team.</p>
+      <p class="lead">To play your friends, go to Leagues and press Create a league, then send them its code or link. If a friend sends you a code, press Join a league on Leagues and enter it.</p>
+    </div></details>
+
+    <details id="weekly-checklist" open><summary>Your weekly checklist</summary><div class="body">
+      <p class="lead">Before each deadline, check:</p>
+      <ul>
+        <li>Have you picked your 7 starters?</li>
+        <li>Have you picked your Captain?</li>
+        <li>Is your bench in the right order?</li>
+        <li>Is any of your players not starting, or is his team not playing?</li>
+        <li>Do you need a transfer?</li>
+        <li>Do you want to play a buff?</li>
+      </ul>
+    </div></details>
+
+    <details id="glossary" open><summary>Flol glossary</summary><div class="body">
+      <table class="gloss">
+      <tr><td>Week</td><td>One LCK match week, usually Wednesday to Sunday. Most teams play two series in it, and your players score for what they do in them.</td></tr>
+      <tr><td>Deadline</td><td>15 minutes before a week's first series. Make your changes before it.</td></tr>
+      <tr><td>Series</td><td>A match between two LCK teams, best of 3 or best of 5 games.</td></tr>
+      <tr><td>Split</td><td>Half of the LCK season. Buffs reset each split.</td></tr>
+      <tr><td>Playoffs</td><td>The knockout end of a split, with unlimited transfers and up to 3 players from one team.</td></tr>
+      <tr><td>Squad</td><td>Your 9 players.</td></tr>
+      <tr><td>Starters</td><td>The 7 who score for you this week.</td></tr>
+      <tr><td>Bench</td><td>Your other 2, who come on if a starter doesn't play.</td></tr>
+      <tr><td>Positions</td><td>Top, Jungle, Mid, Bot and Support: the five places in a League of Legends team.</td></tr>
+      <tr><td>Flex</td><td>A starter from any position.</td></tr>
+      <tr><td>Coach 감독</td><td>Your starter that is a whole LCK team, shown by its head coach.</td></tr>
+      <tr><td>Captain</td><td>The player whose points count one and a half times.</td></tr>
+      <tr><td>Transfer</td><td>Selling one player and buying another.</td></tr>
+      <tr><td>Free transfer</td><td>A transfer that costs no points.</td></tr>
+      <tr><td>Hit</td><td>The 6 points taken off for each extra transfer.</td></tr>
+      <tr><td>Buff</td><td>A one-off boost: Remake, Limitless, Bench Boost or Double Captain.</td></tr>
+      <tr><td>Kill, assist, death</td><td>Killing an enemy, helping a teammate kill one, and being killed.</td></tr>
+      <tr><td>Solo kill</td><td>A kill with no help from a teammate.</td></tr>
+      <tr><td>First blood</td><td>The first kill of a game.</td></tr>
+      <tr><td>Multikill</td><td>A quadra (four kills in quick succession) or a penta (five).</td></tr>
+      <tr><td>Gold lead at 15</td><td>Having more gold at 15 minutes than the player in the same position on the other team.</td></tr>
+      <tr><td>Tower</td><td>A defensive building. A team destroys towers on the way to winning.</td></tr>
+      <tr><td>Dragon, baron, elder dragon</td><td>Big monsters the two teams fight over for boosts.</td></tr>
+      <tr><td>Steal</td><td>Killing a monster the other team was fighting.</td></tr>
+      <tr><td>Stand-in</td><td>A player who plays in place of a team's usual starter.</td></tr>
+      <tr><td>Price change</td><td>When a player's price goes up or down, once a week at the deadline.</td></tr>
+      <tr><td>Overall</td><td>The league with everyone in it.</td></tr>
+      <tr><td>Legend and Rise</td><td>The top and bottom halves of Overall in Split 2.</td></tr>
+      <tr><td>Rank</td><td>Your place in Overall, shown as a League of Legends rank from Iron to Challenger.</td></tr>
+    </table>
+    </div></details>
+  </section>
+
+  <section data-tab="rules">
+    <h2>Selecting your squad</h2>
+    <details id="squad-size" open><summary>Squad size</summary><div class="body"><ul>
+      <li>Your squad is 9 players: 7 starters and 2 on the bench.</li>
+      <li>The 7 starters are one player in each position (Top, Jungle, Mid, Bot and Support), a Flex, and a coach.</li>
+    </ul></div></details>
+    <details id="positions"><summary>Positions</summary><div class="body"><ul>
+      <li>Your squad needs at least one player for each position. Beyond that, your Flex and bench can be anyone.</li>
+      <li>A player counts as the position his team lists him in, even if he plays somewhere else for a game.</li>
+    </ul></div></details>
+    <details id="budget"><summary>Budget</summary><div class="body"><ul>
+      <li>Your squad must cost no more than <b class="num">₩100.0m</b> of game money. In the playoffs you get more.</li>
+    </ul></div></details>
+    <details id="per-team"><summary>Players per team</summary><div class="body"><ul>
+      <li>You can have no more than 2 from one LCK team, counting the coach. In the playoffs it's 3.</li>
+    </ul></div></details>
+
+    <h2>Managing your squad</h2>
+    <details id="starters"><summary>Choosing your starters</summary><div class="body"><ul>
+      <li>Before each deadline, choose your 7 starters on Pick Team. All your points for the week come from them, unless one doesn't play and a bench player comes on.</li>
+      <li>A starter in a position can swap with a bench player of the same position, or with your Flex if the Flex plays that position.</li>
+    </ul></div></details>
+    <details id="flex"><summary>The Flex</summary><div class="body"><ul>
+      <li>Your sixth starter can be a player from any position, so a second Mid is fine. The coach can't be your Flex.</li>
+    </ul></div></details>
+    <details id="coach"><summary>The coach 감독</summary><div class="body"><ul>
+      <li>Your seventh starter is a whole LCK team, shown by its head coach (감독 is Korean for coach). It scores for what the team does, not for its players' points.</li>
+      <li>If that team changes head coach during the season, your pick stays and shows the new one.</li>
+    </ul></div></details>
+    <details id="captain"><summary>Captain</summary><div class="body"><ul>
+      <li><span class="c">C</span> Each week, pick one of your 6 starting players as Captain. His points count one and a half times. Half points round towards zero, so 9 becomes 13 and −3 becomes −4. The coach can't be Captain.</li>
+      <li>There's no vice-captain. If your Captain plays no games that week, nobody gets the extra points, even if a bench player comes on for him.</li>
+      <li>If you move your Captain to the bench yourself before the deadline, the player who takes his place becomes Captain.</li>
+    </ul></div></details>
+    <details id="auto-subs"><summary>Bench order and automatic substitutions</summary><div class="body"><ul>
+      <li>If a starter plays no games that week, a bench player comes on for him once the week is over.</li>
+      <li>Your bench players are tried in the order you set. Each one fills the first gap he fits: his own position first, then the Flex.</li>
+      <li>A bench player who also played no games is skipped.</li>
+      <li class="eg">Say your Top laner doesn't play. Your first bench player is a Support and your second a Top laner, so your second one comes on.</li>
+      <li>Nobody comes on for your coach. If that team doesn't play that week, it scores 0.</li>
+    </ul></div></details>
+
+    <h2>Transfers</h2>
+    <details id="transfers"><summary>Transfer rules</summary><div class="body"><ul>
+      <li>Before a split's first deadline, transfers are free and unlimited. In its second week you have 2 free transfers, then 1 a week.</li>
+      <li>If you don't use a free transfer, it carries over. You can save up to 3.</li>
+      <li>Each transfer beyond your free ones takes 6 points off that week's score.</li>
+      <li>You can swap a player for one in another position, as long as you still have one in every position. A coach can only be swapped for another coach.</li>
+      <li>In the playoffs, transfers are unlimited and never cost points.</li>
+    </ul></div></details>
+    <details id="undo"><summary>Undoing transfers</summary><div class="body"><ul>
+      <li>Each time you confirm transfers, you can undo that whole batch until the deadline, latest first. Your old players come back at their old prices, and any free transfers and points it used are given back.</li>
+      <li>Selling a player and buying him back before the deadline costs nothing.</li>
+      <li>Transfers made with Remake or Limitless can't be undone.</li>
+    </ul></div></details>
+    <details id="between-splits"><summary>Between the splits</summary><div class="body"><ul>
+      <li>Once Split 1 ends, transfers are locked until 2 weeks before Split 2's first deadline. Then they're free and unlimited.</li>
+      <li>Any extra money from the Split 1 playoffs is taken back when Split 2 starts, so your bank can go below zero. Your squad must be back within budget, and back to 2 per team, by the deadline.</li>
+      <li>If it isn't, Flol fixes it for you at no points cost, selling your most expensive extra players and buying the cheapest who fit.</li>
+    </ul></div></details>
+    <details id="prices"><summary>Player prices</summary><div class="body"><ul>
+      <li>Every player and coach has a price. Prices change once a week, at the deadline.</li>
+      <li>Scoring well lately is what mostly pushes a price up, and scoring badly pulls it down.</li>
+      <li>If lots of people playing Flol buy a player, his price goes up a little; if lots sell, it goes down a little.</li>
+      <li>A player hardly anyone picks slowly gets cheaper. No price drops below a set minimum.</li>
+      <li>When you sell a player, you get his full current price.</li>
+      <li class="eg">Say Faker, T1's star Mid, scored <b class="num">22</b> in Week 2, more than any other Mid, and lots of people bought him. At the Week 3 deadline his price went up <span class="up num">▲ ₩0.5m</span>, from <span class="num">₩18.0m</span> to <b class="num">₩18.5m</b>.</li>
+    </ul><p class="eg"><a>Price changes ›</a></p></div></details>
+
+    <h2>Buffs</h2>
+    <details id="buffs"><summary>The buffs</summary><div class="body">
+      <table class="buffs"><tr><th>Buff</th><th>What it does</th><th>Like</th></tr>
+      <tr><td>Remake</td><td>Make as many free transfers as you like this week, and keep the new team</td><td class="like">FPL's Wildcard</td></tr>
+      <tr><td>Limitless</td><td>For one week, ignore the budget and the limit per LCK team. The team you had before comes back the week after</td><td class="like">UCL Fantasy's Limitless</td></tr>
+      <tr><td>Bench Boost</td><td>Your 2 bench players score too this week</td><td class="like">FPL's Bench Boost</td></tr>
+      <tr><td>Double Captain</td><td>Pick a second Captain this week. Both score one and a half times</td><td class="like">—</td></tr>
+    </table>
+      <ul>
+        <li>You get one of each per split. You can play only one in any week, in any stage, playoffs included.</li>
+        <li>Remake and Limitless are played on Transfers and are final once confirmed. Bench Boost and Double Captain are played on Pick Team and can be cancelled until the deadline.</li>
+        <li>In a week you play Remake or Limitless, transfers that would have cost points are free. That week doesn't add a free transfer to your saved ones, but you keep the ones you have.</li>
+      </ul>
+    </div></details>
+
+    <h2>Deadlines</h2>
+    <details id="deadlines"><summary>Deadlines</summary><div class="body">
+      <ul>
+        <li>Every change to your team (starters, Captain, bench order, transfers and buffs) must be saved by the week's deadline to count that week.</li>
+        <li>The deadline is 15 minutes before the week's first series.</li>
+      </ul>
+      <table class="dl"><tr><th>Week</th><th>Deadline</th><th>Korea time</th></tr>
+        <tr><td>Week 1</td><td class="ph-cell" colspan="2"><span class="ph" style="height:24px;width:240px">Schedule</span></td></tr>
+        <tr><td>Week 2</td><td class="ph-cell" colspan="2"><span class="ph" style="height:24px;width:240px">Schedule</span></td></tr>
+        <tr><td>Week 3</td><td class="ph-cell" colspan="2"><span class="ph" style="height:24px;width:240px">Schedule</span></td></tr>
+      </table>
+    </div></details>
+
+    <h2>Scoring</h2>
+    <details id="scoring"><summary>How players score</summary><div class="body">
+      <ul>
+        <li>Players score in every game of a series, and their best 2 games count. In a 2–0 both games count; in a longer series the weaker ones are dropped.</li>
+        <li>Nobody gets points just for playing or for their team winning.</li>
+      </ul>
+      <table><tr><th>In a game</th><th class="n">Points</th><th class="n">Cap per game</th></tr>
+      <tr><td>Every 2 kills for a Top or Support, or every 3 for a Jungle, Mid or Bot</td><td class="n">+1</td><td class="n m">+3</td></tr>
+      <tr><td>Every 5 assists (helping a teammate get a kill)</td><td class="n">+1</td><td class="n m">+3</td></tr>
+      <tr><td>Every 3 deaths, or every 4 for a Support</td><td class="n">−1</td><td class="n m">−3</td></tr>
+      <tr><td>More gold at 15 minutes than the player in his position on the other team</td><td class="n">+1</td><td class="n m">—</td></tr>
+      <tr><td>Each kill with no help from a teammate</td><td class="n">+1</td><td class="n m">—</td></tr>
+      <tr><td>First blood (the game's first kill)</td><td class="n">+1</td><td class="n m">—</td></tr>
+      <tr><td>Not dying all game</td><td class="n">+1</td><td class="n m">—</td></tr>
+      <tr><td>A quadra kill (four kills in quick succession)</td><td class="n">+1</td><td class="n m">—</td></tr>
+      <tr><td>A penta kill (five). A penta scores 2, not 2 plus 1</td><td class="n">+2</td><td class="n m">—</td></tr>
+      <tr><td>Each monster stolen from the other team</td><td class="n">+1</td><td class="n m">—</td></tr>
+    </table>
+    </div></details>
+    <details id="coach-scoring"><summary>How the coach scores</summary><div class="body">
+      <table><tr><th>In a game, the team</th><th class="n">Points</th></tr>
+      <tr><td>Takes the first tower</td><td class="n">+1</td></tr>
+      <tr><td>Kills more dragons than the other team</td><td class="n">+1</td></tr>
+      <tr><td>Kills more barons than the other team</td><td class="n">+1</td></tr>
+      <tr><td>Kills more elder dragons than the other team</td><td class="n">+1</td></tr>
+      <tr><td>Wins in under 25 minutes</td><td class="n">+1</td></tr>
+      <tr><th>In the series, the team</th><th class="n"></th></tr>
+      <tr><td>Wins</td><td class="n">+3</td></tr>
+      <tr><td>Loses</td><td class="n">−1</td></tr>
+    </table>
+      <ul>
+        <li>As with players, the coach's best 2 games count, then the series win or loss is added. A coach can end a series below zero.</li>
+        <li>Dragons, barons and elder dragons are big monsters the two teams fight over. If both teams kill the same number, neither gets that point.</li>
+      </ul>
+    </div></details>
+    <details id="live"><summary>Live and final points</summary><div class="body"><ul>
+      <li>Points go up live while a game is played, for the things the live feed shows: kills, deaths, assists, gold at 15 minutes and more. They're marked Live until confirmed.</li>
+      <li>A series' points are final about 3 hours after it ends, and the league tables move then.</li>
+      <li>If the live feed is down, there are no live points, but final points still arrive.</li>
+    </ul></div></details>
+
+    <h2>Leagues</h2>
+    <details id="leagues"><summary>Leagues you're in</summary><div class="body"><ul>
+      <li>When you join, you're put in three leagues: Overall, which is everyone; one for the country you picked when you signed up; and one for fans of your favourite LCK team.</li>
+      <li>You can change your favourite team or country until your first week's deadline.</li>
+    </ul></div></details>
+    <details id="tables"><summary>Tables and splits</summary><div class="body"><ul>
+      <li>Every league is ranked on total points, with a table for the whole season and one for each split.</li>
+      <li>In Split 2, Overall is cut in two. The top half from Split 1 go into Legend and the rest into Rise, and everyone keeps their points. If you join in Split 2, you start in Rise.</li>
+    </ul></div></details>
+    <details id="private"><summary>Private leagues</summary><div class="body"><ul>
+      <li>Anyone can start a private league and invite friends with a code or link. You can be in up to 25, and there's no limit on how many people join one.</li>
+      <li>When you make a league, choose the week it starts counting from: this week or a later one.</li>
+      <li>The person who made it can rename it, remove someone or delete it. Anyone else can leave.</li>
+    </ul></div></details>
+    <details id="ties"><summary>Ties</summary><div class="body"><ul>
+      <li>If two people have the same points, the one who made fewer transfers goes ahead. Transfers made with Remake or Limitless don't count.</li>
+    </ul></div></details>
+    <details id="ranks"><summary>Ranks</summary><div class="body">
+      <ul>
+        <li>Your place in Overall is shown as a League of Legends rank, from Iron at the bottom to Challenger at the top. Only Overall has ranks.</li>
+        <li>Everyone is Unranked until the first week's points are final. After that, your rank can change whenever a series is confirmed.</li>
+        <li>Iron to Diamond each have four steps, IV up to I, and I is the best, as in League.</li>
+      </ul>
+      <table class="tiers"><tr><th>Top % of everyone</th><th class="n">I</th><th class="n">II</th><th class="n">III</th><th class="n">IV</th></tr>
+      <tr><td>Challenger</td><td class="n">0.02</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
+      <tr><td>Grandmaster</td><td class="n">0.06</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
+      <tr><td>Master</td><td class="n">0.7</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
+      <tr><td>Diamond</td><td class="n">1.5</td><td class="n">2.4</td><td class="n">3.3</td><td class="n">4.4</td></tr>
+      <tr><td>Emerald</td><td class="n">6.9</td><td class="n">9.6</td><td class="n">13</td><td class="n">16</td></tr>
+      <tr><td>Platinum</td><td class="n">20</td><td class="n">24</td><td class="n">29</td><td class="n">34</td></tr>
+      <tr><td>Gold</td><td class="n">39</td><td class="n">45</td><td class="n">51</td><td class="n">58</td></tr>
+      <tr><td>Silver</td><td class="n">62</td><td class="n">68</td><td class="n">73</td><td class="n">80</td></tr>
+      <tr><td>Bronze</td><td class="n">83</td><td class="n">87</td><td class="n">91</td><td class="n">96</td></tr>
+      <tr><td>Iron</td><td class="n">97</td><td class="n">98</td><td class="n">99</td><td class="n">100</td></tr>
+    </table>
+    </div></details>
+  </section>
+</main>
+<aside><h4>Help menu</h4><ol><li><a href="#in-60">Flol in 60 seconds</a></li><li><a href="#weeks">How a week works</a></li><li><a href="#build-squad">Step 1: Build your squad</a></li><li><a href="#pick-starters">Step 2: Pick your starters</a></li><li><a href="#choose-captain">Step 3: Choose your Captain</a></li><li><a href="#points-scored">Step 4: Understand how points are scored</a></li><li><a href="#make-transfers">Step 5: Make transfers to improve your squad</a></li><li><a href="#using-buffs">Step 6: Use buffs at the right time</a></li><li><a href="#join-leagues">Step 7: Join leagues and take on your friends</a></li><li><a href="#weekly-checklist">Your weekly checklist</a></li><li><a href="#glossary">Flol glossary</a></li></ol></aside>
+<div class="foot"><a class="on">Help</a><a>Privacy</a><a>Terms</a><span class="sp"></span><span>All sponsors are made up.</span></div>
+</div>
+<script>
+// Two tabs, Help and Rules. A hash names a tab or a part: /help#prices opens Rules with Prices open and in view.
+const show = h => {
+  let el = h && document.getElementById(h);
+  let tab = h === "rules" || (el && el.closest('section[data-tab="rules"]')) ? "rules" : "help";
+  document.querySelectorAll("section").forEach(x => x.classList.toggle("on", x.dataset.tab === tab));
+  document.querySelectorAll(".tabs a").forEach(a => a.classList.toggle("on", a.getAttribute("href") === "#" + tab));
+  document.body.classList.toggle("rules", tab === "rules");
+  if (el && el.tagName === "DETAILS") { el.open = true; requestAnimationFrame(() => scrollTo(0, el.getBoundingClientRect().top + scrollY - 24)); } else scrollTo(0, 0);
+};
+addEventListener("hashchange", () => show(location.hash.slice(1)));
+show(location.hash.slice(1));
+</script>
+</body></html>

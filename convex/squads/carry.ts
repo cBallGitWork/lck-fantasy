@@ -1,42 +1,33 @@
-// The Carry and Vice-carry (spec/04-captain.md): FPL's captain and vice-captain.
-import { pickKey, playerKey, type ScoringPick, type Squad } from "./squad";
+// The Captain (spec/04-captain.md): FPL's captain, with no vice-captain.
+import { pickKey, playerKey, type Pick, type ScoringPick, type Squad } from "./squad";
 
-/** Player ids: the armband is only ever on a player, never the coach. */
+/** A player id: the armband is only ever on a player, never the coach. */
 export interface Armband {
-  carry: string;
-  viceCarry: string;
+  captain: string;
 }
 
-export type ArmbandProblem =
-  | { rule: "armbandOffStarters"; band: keyof Armband; pickId: string }
-  | { rule: "carryIsViceCarry"; pickId: string };
+export type ArmbandProblem = { rule: "armbandOffStarters"; pickId: string };
 
-/** The armband's rules: both on the six starting players, the five roles and the flex, never the
- *  coach or the bench (spec/04, The armband), and on two different players, as in FPL. */
+/** The armband's rule: on one of the six starting players, the five roles and the flex, never the
+ *  coach or the bench (spec/04, The armband). */
 export function armbandProblems(squad: Squad, armband: Armband): ArmbandProblem[] {
   const startingPlayers = new Set(
     squad.starters.filter((starter) => starter.slot !== "coach").map((starter) => starter.pick.id),
   );
-  const problems: ArmbandProblem[] = [];
-  for (const band of ["carry", "viceCarry"] as const) {
-    if (!startingPlayers.has(armband[band])) problems.push({ rule: "armbandOffStarters", band, pickId: armband[band] });
-  }
-  if (armband.carry === armband.viceCarry) problems.push({ rule: "carryIsViceCarry", pickId: armband.carry });
-  return problems;
+  return startingPlayers.has(armband.captain) ? [] : [{ rule: "armbandOffStarters", pickId: armband.captain }];
 }
 
-/** Who takes the multiplier: the Carry if he played, else the Vice-carry if he did, else nobody.
- *  With Dual Carry both take it if they played, and nobody steps in for a Carry who didn't
- *  (spec/06, Dual Carry). */
-export function carryingPlayers(armband: Armband, played: ReadonlySet<string>, dualCarry: boolean): Set<string> {
-  const carryPlayed = played.has(playerKey(armband.carry));
-  const vicePlayed = played.has(playerKey(armband.viceCarry));
-  if (dualCarry) return new Set([...(carryPlayed ? [armband.carry] : []), ...(vicePlayed ? [armband.viceCarry] : [])]);
-  if (carryPlayed) return new Set([armband.carry]);
-  return new Set(vicePlayed ? [armband.viceCarry] : []);
+/** Who takes the multiplier: the Captain if he played, else nobody (spec/04, The armband). */
+export function carryingPlayers(armband: Armband, played: ReadonlySet<string>): Set<string> {
+  return new Set(played.has(playerKey(armband.captain)) ? [armband.captain] : []);
 }
 
-/** Points multiplied and rounded towards zero: ×1.5 makes a 9 a 13 and a −3 a −4 (spec/05, The Carry). */
+/** Whether a pick takes the multiplier: a player in `carrying`, never the coach. */
+export function isCarrying(pick: Pick, carrying: ReadonlySet<string>): boolean {
+  return pick.role !== "coach" && carrying.has(pick.id);
+}
+
+/** Points multiplied and rounded towards zero: ×1.5 makes a 9 a 13 and a −3 a −4 (spec/05, The Captain). */
 export function multiplied(points: number, multiplier: number): number {
   return Math.trunc(points * multiplier) + 0;
 }
@@ -55,7 +46,6 @@ export function lineupPoints(
 ): SlotPoints[] {
   return lineup.map((scoring) => {
     const base = points.get(pickKey(scoring.pick)) ?? 0;
-    const isCarrying = scoring.pick.role !== "coach" && carrying.has(scoring.pick.id);
-    return { ...scoring, points: isCarrying ? multiplied(base, carryMultiplier) : base };
+    return { ...scoring, points: isCarrying(scoring.pick, carrying) ? multiplied(base, carryMultiplier) : base };
   });
 }

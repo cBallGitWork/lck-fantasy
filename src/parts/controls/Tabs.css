@@ -1,0 +1,16 @@
+.tabs {
+  display: flex;
+  align-items: center;
+  margin-top: var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.tabs__tab {
+  padding: var(--s-2) var(--s-4);
+  color: var(--mid);
+}
+.tabs__tab--on {
+  color: var(--text);
+  font-weight: var(--w-bold);
+  border-bottom: var(--m-rule-heavy) solid var(--text);
+  margin-bottom: calc(var(--m-rule) * -1);
+}

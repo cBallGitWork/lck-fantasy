@@ -1,0 +1,48 @@
+import { cx, gameNo, seriesResult, seriesTitle, sum } from "../../parts";
+import type { CardWeek, WeekSeries } from "./card";
+
+/** A series' points: the games that count. */
+const seriesPoints = (s: WeekSeries) => sum(s.games.filter((g) => g.counts).map((g) => g.points));
+
+/** This week: each series with its score and points in its head (the strip carries its Live tag), each game with champion, K/D/A and points, then the week's total. */
+export function ThisWeek({ week }: { week: CardWeek }) {
+  const raw = sum(week.series.map(seriesPoints));
+  return (
+    <div>
+      {week.series.map((s) => (
+        <section key={s.id}>
+          <h3 className="player-card__section">
+            <span>
+              {seriesTitle(s.day, s.opponent)}{" "}
+              <span className="player-card__quiet quiet">{seriesResult(s.score, s.state === "live")}</span>
+            </span>
+            <b className="num">{seriesPoints(s)}</b>
+          </h3>
+          <table className="player-card__games">
+            <tbody>
+              {s.games.map((g, i) => (
+                <tr key={i} className={cx(!g.counts && "player-card__dropped")}>
+                  <td className="player-card__quiet quiet">{gameNo(i + 1)}</td>
+                  <td>
+                    {g.champion} <span className="player-card__quiet quiet">· {g.outcome ?? g.clock}</span>
+                  </td>
+                  <td className="player-card__right num">{g.kda}</td>
+                  <td className="player-card__right player-card__points num">{g.points}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      ))}
+      <table className="player-card__games player-card__total">
+        <tbody>
+          <tr>
+            <td colSpan={2}>Week {week.week}</td>
+            <td className="player-card__right player-card__quiet quiet num">{week.captain !== undefined && `${raw} × ${week.captain} Captain`}</td>
+            <td className="player-card__right player-card__points num">{week.total}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}

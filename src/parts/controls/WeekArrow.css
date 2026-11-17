@@ -1,0 +1,26 @@
+/* A week's ‹ or ›: a key, 32px square, its glyph in text on paper with a mid edge (Craig, 16 Nov 2026). */
+.week-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--s-6);
+  height: var(--s-6);
+  font: inherit;
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-tight);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--mid);
+  cursor: pointer;
+  text-decoration: none;
+}
+.week-arrow:hover:not(:disabled) {
+  border-color: var(--text);
+}
+/* ‹ week ›: the arrows either side of the week; the page sets its type. */
+.week-step {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}

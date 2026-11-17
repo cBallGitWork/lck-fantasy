@@ -1,7 +1,7 @@
 // One game's settled stats in the shape the scoring reads (spec/05): Oracle's Elixir's row joined
 // to Leaguepedia's solo kills and steals by participant id.
 import type { OeGame, OePlayerGame } from "../feeds/oraclesElixir";
-import type { V5Extras } from "../feeds/leaguepedia";
+import { leaguepediaGameKey, v5Extras, type V5Extras } from "../feeds/leaguepedia";
 import type { PlayerGameStats, TeamGameStats } from "../scoring/game";
 
 export function playerGameStats(player: OePlayerGame, extras: ReadonlyMap<number, V5Extras>): PlayerGameStats {
@@ -34,4 +34,42 @@ export function teamGameStats(game: OeGame, teamId: string): TeamGameStats {
     elders: ours.elders,
     opponent: { drakes: theirs.drakes, barons: theirs.barons, elders: theirs.elders },
   };
+}
+
+export interface SettledGame {
+  gameId: string;
+  players: { playerId: string; stats: PlayerGameStats }[];
+  teams: { teamId: string; stats: TeamGameStats }[];
+}
+
+/** A series' settled stats: every game's, once each is complete in Oracle's Elixir and has its
+ *  Leaguepedia page. Else the games still waiting and why, so the series stays provisional and an
+ *  admin can see which key to paste in (spec/11, Final). */
+export type SeriesSettledStats = { settled: true; games: SettledGame[] } | { settled: false; waiting: string[] };
+
+/** `matchData` is Leaguepedia's pages by key; `pastedKeys` an admin's keys by Oracle's Elixir game id. */
+export function seriesSettledStats(
+  games: readonly OeGame[],
+  matchData: ReadonlyMap<string, unknown>,
+  pastedKeys: ReadonlyMap<string, string> = new Map(),
+): SeriesSettledStats {
+  const waiting: string[] = [];
+  const settled: SettledGame[] = [];
+  for (const game of games) {
+    const key = leaguepediaGameKey(game.gameId, pastedKeys.get(game.gameId));
+    const page = matchData.get(key);
+    if (!game.complete) {
+      waiting.push(`${game.gameId}: Oracle's Elixir marks it partial`);
+    } else if (page === undefined) {
+      waiting.push(`${game.gameId}: no Leaguepedia page "${key}"`);
+    } else {
+      const extras = v5Extras(page);
+      settled.push({
+        gameId: game.gameId,
+        players: game.players.map((player) => ({ playerId: player.playerId, stats: playerGameStats(player, extras) })),
+        teams: game.teams.map(({ teamId }) => ({ teamId, stats: teamGameStats(game, teamId) })),
+      });
+    }
+  }
+  return waiting.length > 0 ? { settled: false, waiting } : { settled: true, games: settled };
 }

@@ -1,0 +1,112 @@
+/* A player's breakdown sheet (docs/design/approved/points/breakdown.html). Every value is a theme token. */
+
+.points__breakdown-head {
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+  padding-bottom: var(--s-4);
+  border-bottom: var(--m-rule-heavy) solid var(--text);
+}
+.points__breakdown-name {
+  display: flex;
+  align-items: center;
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.points__breakdown-hangul {
+  margin-left: var(--s-2);
+  font-size: var(--size-lead);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.points__breakdown-mark {
+  margin-left: var(--s-3);
+}
+.points__breakdown-mid {
+  color: var(--mid);
+}
+/* The total clears the sheet's ✕. */
+.points__breakdown-total {
+  margin-left: auto;
+  margin-right: var(--s-6);
+  text-align: right;
+}
+.points__breakdown-total b {
+  font-size: var(--size-key);
+  line-height: var(--lh-tight);
+}
+.points__breakdown-total-note {
+  display: block;
+  margin-top: var(--s-1);
+}
+
+.points__breakdown-series {
+  margin-top: var(--s-5);
+}
+.points__breakdown-series-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: var(--s-2);
+  font-size: var(--size-lead);
+  font-weight: var(--w-semi);
+}
+.points__breakdown-series-go {
+  color: var(--text);
+}
+.points__breakdown-day {
+  margin-right: var(--s-1);
+  font-weight: var(--w-regular);
+}
+.points__breakdown-result {
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.points__breakdown-series-points {
+  font-size: var(--size-head);
+}
+
+/* One row per game: G1, champion and W/L, K/D/A, the lines that scored, the points. */
+.points__breakdown-game {
+  display: grid;
+  grid-template-columns: var(--s-6) 1fr var(--m-col-figure) 1fr var(--m-go-col);
+  gap: var(--s-2);
+  align-items: center;
+  min-height: var(--m-row-sheet);
+  border-top: var(--m-rule) solid var(--line);
+}
+
+.points__breakdown-game-what {
+  display: flex;
+  gap: var(--s-1);
+  align-items: center;
+}
+.points__breakdown-kda {
+  text-align: right;
+}
+
+.points__breakdown-points {
+  text-align: right;
+}
+.points__breakdown-counted {
+  display: inline-block;
+  min-width: var(--m-target);
+  text-align: center;
+  font-weight: var(--w-bold);
+}
+.points__breakdown-game--dropped .points__breakdown-game-what b,
+.points__breakdown-game--dropped .points__breakdown-kda,
+.points__breakdown-game--dropped .points__breakdown-points {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}
+
+.points__breakdown-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+  font-weight: var(--w-semi);
+}

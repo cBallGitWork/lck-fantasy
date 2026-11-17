@@ -1,0 +1,303 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Team shirts B</title><style>
+:root{--bg:#010A13;--paper:#0A1428;--line:#1E2D40;--ink:#C89B3C;--text:#F0E6D2;--mid:#A09B8C}
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1440px;background:var(--bg);color:var(--text);font:14px/1.4 "Apple SD Gothic Neo","Noto Sans KR",sans-serif;padding:24px 32px 40px}
+h1{font-size:28px;font-weight:700}h1 i{font-style:normal;color:var(--mid);font-size:16px;font-weight:400;margin-left:8px}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:20px}
+.card{background:var(--paper);padding:16px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.sizes{display:flex;align-items:end;gap:16px}
+.code{font-weight:700;font-size:16px;letter-spacing:.04em}
+.line{color:var(--mid);font-size:13px;text-align:center;min-height:36px}
+.strip{display:flex;gap:12px;align-items:center;margin-top:24px;padding:12px 16px;border-top:2px solid var(--ink)}
+.strip span{color:var(--mid);font-size:12px;margin-right:8px}
+.note{color:var(--mid);font-size:12px;margin-top:6px}
+</style></head><body>
+<h1>Team shirts <i>designer B · kit as the joke</i></h1>
+<p class="note">Cut B: near front-on with a slight turn to our right, as FPL's. Crest top right, Flol maker mark top left, a made-up sponsor word across the chest.</p>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+  <!-- CUT B (replaces base.html's three-quarter cut). viewBox 0 0 100 100. Neck 37..63 at y11, shoulders 20 / 78, armpits 25 / 75 at y38, hem 26..74. Far (right) side a touch narrower: the turn. -->
+  <path id="j-torso" d="M37 11 Q50 18 63 11 L78 18 L75 38 L74 93 Q50 96.5 26 93 L25 38 L20 17 Z"/>
+  <path id="j-near" d="M20 17 L8 40 L20 47 L25 38 Z"/>
+  <path id="j-far" d="M78 18 L90 40 L80 46 L75 38 Z"/>
+  <clipPath id="j-clip"><use href="#j-torso"/><use href="#j-near"/><use href="#j-far"/></clipPath>
+  <linearGradient id="j-shade" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset=".4" stop-color="#fff" stop-opacity=".04"/>
+    <stop offset=".62" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".3"/>
+  </linearGradient>
+  <linearGradient id="j-drop" x1="0" x2="0" y1="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".08"/><stop offset=".3" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".16"/>
+  </linearGradient>
+  <!-- cuff bands and the maker mark, shared -->
+  <path id="j-cuff-near" d="M8 40 L20 47 L21.3 44.6 L9.4 37.5 Z"/>
+  <path id="j-cuff-far" d="M90 40 L80 46 L78.8 43.6 L88.7 37.6 Z"/>
+  <path id="j-maker" d="M33.4 31 L35.6 26.4 H37 L34.8 31 Z M36.2 31 L38.4 26.4 H39.8 L37.6 31 Z"/>
+  <g id="j-light">
+    <rect width="100" height="100" fill="url(#j-shade)" clip-path="url(#j-clip)"/>
+    <rect width="100" height="100" fill="url(#j-drop)" clip-path="url(#j-clip)"/>
+    <!-- the turn: far side and far sleeve in shadow -->
+    <path d="M71 14.5 L78 18 L75 38 L74 93 L70 93.8 L70.5 38 Z" fill="#000" opacity=".16"/>
+    <path d="M78 18 L90 40 L80 46 L75 38 Z" fill="#000" opacity=".14"/>
+    <!-- side seams and sleeve seams -->
+    <g fill="none" stroke="#000" stroke-opacity=".22" stroke-width=".6">
+      <path d="M25 38 L26 93"/><path d="M75 38 L74 93"/><path d="M20 17 L25 38"/><path d="M78 18 L75 38"/>
+    </g>
+    <!-- folds -->
+    <g fill="none" stroke="#000" stroke-linecap="round">
+      <path d="M26.5 40 Q33 46 30.5 56" stroke-opacity=".14" stroke-width="1.4"/>
+      <path d="M73.5 40 Q67 47 69.5 57" stroke-opacity=".12" stroke-width="1.3"/>
+      <path d="M36 80 Q40 86 38 93" stroke-opacity=".1" stroke-width="1.4"/>
+      <path d="M60 78 Q57 86 61 93" stroke-opacity=".08" stroke-width="1.2"/>
+      <path d="M12 36 Q16 33 21 36" stroke-opacity=".1" stroke-width="1"/>
+    </g>
+    <path d="M27 40 Q31 47 29 56" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="1.2"/>
+    <!-- outline -->
+    <g fill="none" stroke="#000" stroke-opacity=".6" stroke-width="1" stroke-linejoin="round"><use href="#j-torso"/><use href="#j-near"/><use href="#j-far"/></g>
+  </g>
+
+  <!-- shared collar shapes; each team sets fill on a <use> -->
+  <path id="j-neck-in" d="M37 11 Q50 18 63 11 Q50 6 37 11 Z"/>
+  <path id="j-crew" fill-rule="evenodd" d="M37 11 Q50 18.4 63 11 Q50 5.4 37 11 Z M39.6 11 Q50 15.4 60.4 11 Q50 7.8 39.6 11 Z"/>
+  <path id="j-v-in" d="M38 11 Q50 7 62 11 L50 27 Z"/>
+  <path id="j-v" d="M37 11 L50 28 L63 11 L60.2 11 L50 24.4 L39.8 11 Z M37 11 Q50 5.4 63 11 L60.2 11 Q50 7.9 39.8 11 Z"/>
+  <path id="j-polo-flaps" d="M37 11 L33.5 15 L45 22 L48.2 16.6 Q42 15 37 11 Z M63 11 L66.5 15 L55 22 L51.8 16.6 Q58 15 63 11 Z"/>
+  <rect id="j-placket" x="47.6" y="15.5" width="4.8" height="12" rx=".6"/>
+
+  <!-- patterns, team prefixed -->
+  <pattern id="hle-feather" width="7" height="8" patternUnits="userSpaceOnUse">
+    <path d="M0 0 Q3.5 5 7 0 M-3.5 4 Q0 9 3.5 4 M3.5 4 Q7 9 10.5 4" fill="none" stroke="#C4520A" stroke-opacity=".55" stroke-width=".8"/>
+  </pattern>
+  <pattern id="dk-check" width="4" height="4" patternUnits="userSpaceOnUse">
+    <rect width="4" height="4" fill="#F5F5F5"/><rect width="2" height="2" fill="#111"/><rect x="2" y="2" width="2" height="2" fill="#111"/>
+  </pattern>
+  <linearGradient id="t1-gold" x1="0" x2="1"><stop offset="0" stop-color="#F2D27A"/><stop offset="1" stop-color="#B8862B"/></linearGradient>
+  <linearGradient id="gen-gold" x1="0" x2="1"><stop offset="0" stop-color="#E2C26A"/><stop offset="1" stop-color="#A88414"/></linearGradient>
+  <linearGradient id="krx-heart" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#FF2E9A"/><stop offset="1" stop-color="#C8006E"/></linearGradient>
+
+  <!-- ===== T1: the Unkillable Demon King. Black mantle with a gold crown-point edge, horns on the collar. ===== -->
+  <symbol id="t1-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#E2012D"/>
+      <path d="M0 0 H100 V33 H75 L70 39.5 L65 33 L60 39.5 L55 33 L50 42 L45 33 L40 39.5 L35 33 L30 39.5 L25 33 H0 Z" fill="#111"/>
+      <path d="M0 33 H25 L30 39.5 L35 33 L40 39.5 L45 33 L50 42 L55 33 L60 39.5 L65 33 L70 39.5 L75 33 H100" fill="none" stroke="url(#t1-gold)" stroke-width="1.6" stroke-linejoin="miter"/>
+      <use href="#j-cuff-near" fill="url(#t1-gold)"/><use href="#j-cuff-far" fill="url(#t1-gold)"/>
+      <path d="M26 89 Q50 92.5 74 89" fill="none" stroke="#111" stroke-width="2"/>
+      <use href="#j-maker" fill="#E7C46A"/>
+      <path d="M63 25.5 L67 26.8 V30 Q67 33 63 34.6 Q59 33 59 30 V26.8 Z" fill="#E2012D" stroke="url(#t1-gold)" stroke-width=".8"/>
+      <text x="50" y="58" text-anchor="middle" font-size="11" font-weight="800" fill="#fff" letter-spacing=".5">마왕</text>
+    </g>
+    <use href="#j-light"/>
+    <!-- horns -->
+    <path d="M38.5 10.6 Q35 6 36.2 2.2 Q38.4 6 42 8.6 Z" fill="url(#t1-gold)" stroke="#000" stroke-opacity=".5" stroke-width=".5"/>
+    <path d="M61.5 10.6 Q65 6 63.8 2.2 Q61.6 6 58 8.6 Z" fill="url(#t1-gold)" stroke="#000" stroke-opacity=".5" stroke-width=".5"/>
+    <use href="#j-v-in" fill="#3a0008"/><use href="#j-v" fill="url(#t1-gold)"/>
+  </symbol>
+
+  <!-- ===== GEN: TigerNation. Black with gold tiger stripes clawing in from both sides. ===== -->
+  <symbol id="gen-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#111"/>
+      <g fill="url(#gen-gold)">
+        <path d="M18 22 Q30 24 38 21 Q30 28 18 28 Z"/>
+        <path d="M22 36 Q33 39 40 36 Q32 43 22 43 Z"/>
+        <path d="M22 62 Q34 64 41 60 Q33 69 22 69 Z"/>
+        <path d="M22 78 Q31 80 37 77 Q30 85 22 85 Z"/>
+        <path d="M82 28 Q70 30 62 27 Q70 34 82 34 Z"/>
+        <path d="M80 56 Q68 58 59 55 Q67 63 80 63 Z"/>
+        <path d="M80 72 Q70 75 63 72 Q70 80 80 80 Z"/>
+        <path d="M5 30 Q12 31 17 28 Q12 35 5 35 Z"/><path d="M3 40 Q10 41 15 38 Q10 45 3 45 Z"/>
+        <path d="M95 30 Q88 31 83 28 Q88 35 95 35 Z"/><path d="M96 40 Q89 41 85 38 Q89 45 96 45 Z"/>
+      </g>
+      <use href="#j-cuff-near" fill="#D2B984"/><use href="#j-cuff-far" fill="#D2B984"/>
+      <use href="#j-maker" fill="#D2B984"/>
+      <circle cx="63" cy="29.5" r="3.6" fill="#111" stroke="#D2B984" stroke-width=".9"/><circle cx="63" cy="29.5" r="1.4" fill="#D2B984"/>
+      <text x="50" y="55" text-anchor="middle" font-size="11" font-weight="800" fill="#D2B984">어흥</text>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-neck-in" fill="#000"/><use href="#j-crew" fill="#D2B984"/>
+  </symbol>
+
+  <!-- ===== HLE: LoL-Chicken (롤칰). Feather scallops, wing-tip sleeves, a beak for a collar, an egg for a crest. ===== -->
+  <symbol id="hle-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#F3741B"/>
+      <rect width="100" height="100" fill="url(#hle-feather)"/>
+      <!-- wing tips: grey then black feathers to the cuff -->
+      <path d="M4 30 Q8 27 10 31 Q13 28 15 33 Q18 31 19 36 Q22 34 23 39 L24 50 L4 46 Z" fill="#BCBEC1"/>
+      <path d="M3 37 Q7 35 9 39 Q12 37 13 41 Q16 40 17 44 Q20 43 21 47 L20 52 L3 46 Z" fill="#111"/>
+      <path d="M96 30 Q92 27 90 31 Q87 28 85 33 Q82 31 81 36 Q78 34 77 39 L76 50 L96 46 Z" fill="#BCBEC1"/>
+      <path d="M97 37 Q93 35 91 39 Q88 37 87 41 Q84 40 83 44 Q80 43 79 47 L80 52 L97 46 Z" fill="#111"/>
+      <path d="M26 88 Q30 85 34 88 Q38 85 42 88 Q46 85 50 88 Q54 85 58 88 Q62 85 66 88 Q70 85 74 88 V100 H26 Z" fill="#111"/>
+      <use href="#j-maker" fill="#111"/>
+      <ellipse cx="63" cy="29.6" rx="2.9" ry="3.8" fill="#FFF6E6" stroke="#111" stroke-width=".7"/>
+      <text x="50" y="56" text-anchor="middle" font-size="11" font-weight="800" fill="#111">치킨</text>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-v-in" fill="#7a2f00"/><use href="#j-v" fill="#111"/>
+    <path d="M43.6 17.6 Q50 15.6 56.4 17.6 L50 27.5 Z" fill="#FFC21A" stroke="#000" stroke-opacity=".5" stroke-width=".5"/>
+  </symbol>
+
+  <!-- ===== DK: Dpboong, the fans' car. Twin racing stripes, a number plate for a sponsor, chequered hem and cuffs. ===== -->
+  <symbol id="dk-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#F5F5F5"/>
+      <path d="M41.5 0 H46.5 L46.5 100 H41.5 Z M50.5 0 H55.5 V100 H50.5 Z" fill="#111"/>
+      <rect x="26" y="85" width="50" height="12" fill="url(#dk-check)"/>
+      <use href="#j-cuff-near" fill="url(#dk-check)"/><use href="#j-cuff-far" fill="url(#dk-check)"/>
+      <use href="#j-maker" fill="#111"/>
+      <path d="M63 25.4 L66.6 27.5 V31.6 L63 33.7 L59.4 31.6 V27.5 Z" fill="#111"/><circle cx="63" cy="29.6" r="1.3" fill="#1FC8B4"/>
+      <rect x="35" y="45.5" width="30" height="12" rx="1.6" fill="#fff" stroke="#111" stroke-width="1.2"/>
+      <text x="50" y="55" text-anchor="middle" font-size="9" font-weight="800" fill="#111">부릉부릉</text>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-neck-in" fill="#555"/><use href="#j-crew" fill="#111"/>
+    <use href="#j-polo-flaps" fill="#111" stroke="#000" stroke-opacity=".4" stroke-width=".4"/>
+  </symbol>
+
+  <!-- ===== KT: Rolster = roller coaster. A white track climbs, peaks with the cart, and drops. ===== -->
+  <symbol id="kt-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#EC1B23"/>
+      <!-- supports -->
+      <g stroke="#fff" stroke-opacity=".55" stroke-width=".8"><path d="M38 66 V100"/><path d="M44 65 V100"/><path d="M68 70 V100"/><path d="M30 78 V100"/></g>
+      <path id="kt-track" d="M14 96 C24 94 32 64 41 64 C50 64 52 94 59 94 C66 94 68 70 76 68 C82 66 86 70 90 72" fill="none" stroke="#fff" stroke-width="5.4" stroke-linecap="round"/>
+      <path d="M14 96 C24 94 32 64 41 64 C50 64 52 94 59 94 C66 94 68 70 76 68 C82 66 86 70 90 72" fill="none" stroke="#111" stroke-width="3.2" stroke-dasharray="1 1.8"/>
+      <!-- cart at the top -->
+      <rect x="37" y="57" width="8" height="4.4" rx="1" fill="#111"/>
+      <circle cx="39" cy="62" r="1.1" fill="#fff"/><circle cx="43" cy="62" r="1.1" fill="#fff"/>
+      <path d="M39 57 L37.6 53.6 M41 57 V53 M43 57 L44.4 53.6" stroke="#111" stroke-width=".9" stroke-linecap="round"/>
+      <use href="#j-cuff-near" fill="#111"/><use href="#j-cuff-far" fill="#111"/>
+      <path d="M8 40 L20 47 L20.6 46 L8.6 39 Z M90 40 L80 46 L79.4 45 L89.4 39 Z" fill="#fff"/>
+      <use href="#j-maker" fill="#fff"/>
+      <path d="M59.4 25.6 H66.6 V30.4 Q66.6 33.2 63 34.4 Q59.4 33.2 59.4 30.4 Z" fill="#111" stroke="#fff" stroke-width=".7"/>
+      <text x="50" y="48" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">꺄악!</text>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-neck-in" fill="#5a0006"/><use href="#j-crew" fill="#fff"/>
+    <path d="M38.6 11.6 Q50 17.7 61.4 11.6" fill="none" stroke="#111" stroke-width=".9"/>
+  </symbol>
+
+  <!-- ===== DNS: Mad Dogs, Bite it! The shirt is a jaw: fangs down from the yoke, fangs up from the hem. ===== -->
+  <symbol id="dns-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#1F4FD8"/>
+      <path d="M0 0 H100 V35 H0 Z" fill="#0B1E4F"/>
+      <path d="M25 35 L28 42 L31 35 L34.5 44.5 L38 35 L41 41 L44 35 L47 41 L50 35 L53 41 L56 35 L59 41 L62 35 L65.5 44.5 L69 35 L72 42 L75 35 Z" fill="#fff"/>
+      <path d="M0 78 H100 V100 H0 Z" fill="#0B1E4F"/>
+      <path d="M25 78 L28 71 L31 78 L34.5 68.5 L38 78 L41 72 L44 78 L47 72 L50 78 L53 72 L56 78 L59 72 L62 78 L65.5 68.5 L69 78 L72 71 L75 78 Z" fill="#fff"/>
+      <use href="#j-cuff-near" fill="#fff"/><use href="#j-cuff-far" fill="#fff"/>
+      <use href="#j-maker" fill="#fff"/>
+      <g fill="#fff" transform="rotate(-30 63 29.6)"><rect x="60.2" y="28.9" width="5.6" height="1.4"/><circle cx="60.2" cy="28.9" r=".95"/><circle cx="60.2" cy="30.3" r=".95"/><circle cx="65.8" cy="28.9" r=".95"/><circle cx="65.8" cy="30.3" r=".95"/></g>
+      <text x="50" y="62" text-anchor="middle" font-size="12" font-weight="800" fill="#fff">물어!</text>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-neck-in" fill="#020a22"/><use href="#j-crew" fill="#fff"/>
+  </symbol>
+
+  <!-- ===== NS: the ramyun team. A black bowl, noodles spilling up, gold chopsticks. ===== -->
+  <symbol id="ns-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#ED1C24"/>
+      <g fill="none" stroke="#FFE7B0" stroke-width="1.5" stroke-linecap="round">
+        <path d="M27 69 q3 -4 6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0"/>
+        <path d="M30 65 q3 -4 6 0 t6 0 t6 0 t6 0 t6 0 t6 0 t6 0"/>
+        <path d="M36 61 q3 -4 6 0 t6 0 t6 0 t6 0 t6 0"/>
+      </g>
+      <path d="M0 70 H100 V100 H0 Z" fill="#111"/>
+      <path d="M20 70 H80" stroke="#CF8F3A" stroke-width="2.2"/>
+      <path d="M20 74.5 H80" stroke="#CF8F3A" stroke-width=".7"/>
+      <!-- chopsticks -->
+      <path d="M86 26 L57 66" stroke="#CF8F3A" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M90 30 L61 67" stroke="#CF8F3A" stroke-width="1.8" stroke-linecap="round"/>
+      <use href="#j-cuff-near" fill="#111"/><use href="#j-cuff-far" fill="#111"/>
+      <use href="#j-maker" fill="#fff"/>
+      <path d="M59.2 28 H66.8 Q66.6 33.6 63 33.6 Q59.4 33.6 59.2 28 Z" fill="#111" stroke="#CF8F3A" stroke-width=".7"/>
+      <path d="M61.2 26.6 q.8 -1 0 -2 M63 26.6 q.8 -1 0 -2 M64.8 26.6 q.8 -1 0 -2" fill="none" stroke="#fff" stroke-width=".5"/>
+      <text x="45.5" y="53" text-anchor="middle" font-size="10" font-weight="800" fill="#fff">후루룩</text>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-neck-in" fill="#4a0004"/><use href="#j-crew" fill="#111"/>
+    <path d="M38.6 11.6 Q50 17.7 61.4 11.6" fill="none" stroke="#CF8F3A" stroke-width=".8"/>
+  </symbol>
+
+  <!-- ===== KRX: 중꺾마, the heart that never breaks. A heart the size of the chest, cracked and stitched shut. ===== -->
+  <symbol id="krx-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#1E2C5D"/>
+      <path d="M50 92 C28 76 18 56 24 42 C29 31 43 30 50 41 C57 30 71 31 76 42 C82 56 72 76 50 92 Z" fill="url(#krx-heart)"/>
+      <path d="M50 41 L46.5 50 L53 58 L47 66 L52 74 L48.5 82 L50 92" fill="none" stroke="#1E2C5D" stroke-width="1.6" stroke-linejoin="round"/>
+      <g stroke="#fff" stroke-width=".7" stroke-linecap="round">
+        <path d="M46.5 46 L50.5 47"/><path d="M48 54 L52 52.5"/><path d="M48 62 L52 63"/><path d="M48.5 70 L52 69"/><path d="M48 78 L51.5 79.5"/><path d="M47.5 87 L51 86"/>
+      </g>
+      <use href="#j-cuff-near" fill="#E4007F"/><use href="#j-cuff-far" fill="#E4007F"/>
+      <use href="#j-maker" fill="#fff"/>
+      <path d="M63 25.6 L66.4 29.6 L63 33.6 L59.6 29.6 Z" fill="#E4007F" stroke="#fff" stroke-width=".6"/>
+      <text x="50" y="61" text-anchor="middle" font-size="10" font-weight="800" fill="#fff" stroke="#1E2C5D" stroke-width=".5" paint-order="stroke">중꺾마</text>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-v-in" fill="#0b1230"/><use href="#j-v" fill="#E4007F"/>
+  </symbol>
+
+  <!-- ===== BRO: Morgan's gift penta. The shirt is a present: ribbon, bow, a tag for T1. ===== -->
+  <symbol id="bro-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#004B29"/>
+      <path d="M30 0 H36 V100 H30 Z" fill="#F37021"/>
+      <path d="M0 63 H100 V69 H0 Z" fill="#F37021"/>
+      <path d="M31 0 V100 M35 0 V100 M0 64 H100 M0 68 H100" stroke="#FFB27A" stroke-width=".35"/>
+      <use href="#j-cuff-near" fill="#F37021"/><use href="#j-cuff-far" fill="#F37021"/>
+      <use href="#j-maker" fill="#fff"/>
+      <path d="M59.4 25.6 H66.6 V30.4 Q66.6 33.2 63 34.4 Q59.4 33.2 59.4 30.4 Z" fill="#F37021" stroke="#fff" stroke-width=".6"/>
+      <text x="55" y="53" text-anchor="middle" font-size="11" font-weight="800" fill="#fff">선물</text>
+      <!-- bow at the crossing -->
+      <path d="M33 66 C25 56 21 62 24 66 C21 70 25 76 33 66 Z" fill="#F37021" stroke="#9a3e05" stroke-width=".6"/>
+      <path d="M33 66 C41 56 45 62 42 66 C45 70 41 76 33 66 Z" fill="#F37021" stroke="#9a3e05" stroke-width=".6"/>
+      <path d="M33 66 L28 79 L31 78 M33 66 L38 79 L35 78" fill="none" stroke="#F37021" stroke-width="2"/>
+      <rect x="31" y="63.6" width="4" height="4.8" rx="1" fill="#E05E10"/>
+      <!-- tag -->
+      <path d="M35 68 Q39 72 44 74" fill="none" stroke="#fff" stroke-width=".4"/>
+      <g transform="rotate(14 49 76)"><path d="M44 72 H56 V80 H44 L42 76 Z" fill="#FFF6E6"/><text x="49.6" y="77.8" text-anchor="middle" font-size="4" font-weight="800" fill="#004B29">TO: T1</text></g>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-neck-in" fill="#00210f"/><use href="#j-crew" fill="#F37021"/>
+  </symbol>
+
+  <!-- ===== BFX: Furry-X. A fox in a shirt: fluffy white bib, black fox-leg sleeves, fur on every edge. ===== -->
+  <symbol id="bfx-shirt" viewBox="0 0 100 100">
+    <g clip-path="url(#j-clip)">
+      <rect width="100" height="100" fill="#FFC20E"/>
+      <path d="M37 10 L36 22 L33 24 L37 28 L34 32 L39 35 L36.5 40 L42 42 L40 47 L45 48.5 L44 53 L50 57 L56 53 L55 48.5 L60 47 L58 42 L63.5 40 L61 35 L66 32 L63 28 L67 24 L64 22 L63 10 Z" fill="#FFF8E8"/>
+      <path d="M2 24 L7 26 L6 29 L11 30 L10 33 L15 33.5 L14 37 L19 37 L18 40 L23 40.5 L25 44 L20 50 L2 44 Z" fill="#111"/>
+      <path d="M98 24 L93 26 L94 29 L89 30 L90 33 L85 33.5 L86 37 L81 37 L82 40 L77 40.5 L75 44 L80 50 L98 44 Z" fill="#111"/>
+      <path d="M26 86 L29 83 L31 86.5 L34 82.5 L37 86 L40 83 L43 86.5 L46 82.5 L49 86 L52 83 L55 86.5 L58 82.5 L61 86 L64 83 L67 86.5 L70 82.5 L74 86 V100 H26 Z" fill="#111"/>
+      <use href="#j-maker" fill="#111"/>
+      <path d="M59.6 27 L60.6 23.4 L62.6 26 H63.4 L65.4 23.4 L66.4 27 L63 33.8 Z" fill="#111" stroke="#FFF8E8" stroke-width=".5"/>
+      <text x="50" y="52" text-anchor="middle" font-size="10" font-weight="800" fill="#111">복슬</text>
+    </g>
+    <use href="#j-light"/>
+    <use href="#j-v-in" fill="#6b4e00"/><use href="#j-v" fill="#111"/>
+  </symbol>
+</defs></svg>
+
+<div class="grid" id="grid"></div>
+<div class="strip" id="strip"><span>28 on navy</span></div>
+<div class="strip" id="strip56" style="border-top:0;padding-top:0"><span>56 on navy</span></div>
+
+<script>
+const T=[
+ ["t1","T1","The Unkillable Demon King: black mantle, gold crown points, horns on the collar. 마왕 means demon king."],
+ ["gen","GEN","TigerNation: gold tiger stripes claw in from both sides. 어흥 is a tiger's roar."],
+ ["hle","HLE","LoL-Chicken (롤칰): feathers, wing-tip sleeves, a beak collar, an egg crest. 치킨."],
+ ["dk","DK","Dpboong, the fans' car: racing stripes, chequered hem, a number plate reading 부릉부릉 (vroom)."],
+ ["kt","KT","Rolster = roller coaster: the track climbs, the cart peaks, it drops. 꺄악! (aaah!)"],
+ ["dns","DNS","Mad Dogs, 물어! (bite it): the shirt is a jaw, fangs top and bottom."],
+ ["ns","NS","The ramyun team: a black bowl, noodles, gold chopsticks. 후루룩 is a slurp."],
+ ["krx","KRX","중꺾마, the heart that never breaks: a chest-sized heart, cracked and stitched."],
+ ["bro","BRO","Morgan's gift penta: the shirt is a present, ribbon, bow and a tag for T1. 선물 = gift."],
+ ["bfx","BFX","Furry-X: a fox in a shirt, fluffy bib, black fox-leg sleeves, fur on every edge. 복슬 = fluffy."]];
+const s=(id,n)=>`<svg width="${n}" height="${n}" viewBox="0 0 100 100"><use href="#${id}-shirt"/></svg>`;
+document.getElementById('grid').innerHTML=T.map(([id,c,l])=>`<div class="card">${s(id,160)}<div class="sizes">${s(id,56)}${s(id,28)}</div><div class="code">${c}</div><div class="line">${l}</div></div>`).join('');
+document.getElementById('strip').insertAdjacentHTML('beforeend',T.map(([id])=>s(id,28)).join(''));
+document.getElementById('strip56').insertAdjacentHTML('beforeend',T.map(([id])=>s(id,56)).join(''));
+</script>
+</body></html>

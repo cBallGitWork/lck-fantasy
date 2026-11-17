@@ -56,6 +56,12 @@ jobs:
       - name: npm run verify
         if: steps.repo.outputs.package == 'true'
         run: npm run verify
+      # the metered API key is out of every workflow (claude-build.yml's header): builds bill the subscription only
+      - name: No workflow reads the metered API key
+        run: |
+          if grep -rnE --exclude=verify.yml 'secrets\.ANTHROPIC_API_KEY|anthropic_api_key:' .github/workflows; then  # not this line
+            echo "::error::A workflow reads ANTHROPIC_API_KEY: builds bill the subscription only (claude-build.yml)."; exit 1
+          fi
       - name: actionlint
         run: |
           tarball="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"

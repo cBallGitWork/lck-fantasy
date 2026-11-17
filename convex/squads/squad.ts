@@ -39,6 +39,8 @@ export interface SquadSettings {
   /** How many of each starter slot a squad has. */
   starterSlots: Record<StarterSlot, number>;
   benchSize: number;
+  /** The fewest players of each role a squad holds, wherever they sit (spec/01, The squad). */
+  minPerRole: Record<PlayerRole, number>;
   /** The most picks from one team, the coach included; null for no cap. */
   teamCap: number | null;
 }
@@ -47,6 +49,7 @@ export type SquadProblem =
   | { rule: "slotCount"; slot: StarterSlot | "bench"; expected: number; actual: number }
   | { rule: "wrongRole"; slot: StarterSlot | "bench"; pickId: string }
   | { rule: "pickedTwice"; pickId: string }
+  | { rule: "roleShort"; role: PlayerRole; min: number; actual: number }
   | { rule: "overTeamCap"; teamId: string; cap: number; actual: number };
 
 export const STARTER_SLOTS = [...PLAYER_ROLES, "flex", "coach"] as const satisfies readonly StarterSlot[];
@@ -79,6 +82,7 @@ export function squadProblems(squad: Squad, settings: SquadSettings): SquadProbl
   }
 
   const picks = allPicks(squad);
+  problems.push(...roleShortfalls(picks, settings));
   const seen = new Set<string>();
   for (const pick of picks) {
     const key = pickKey(pick);
@@ -94,6 +98,16 @@ export function squadProblems(squad: Squad, settings: SquadSettings): SquadProbl
   return problems;
 }
 
+/** Each role the picks hold fewer of than the minimum: one of each role, past that roles are free
+ *  (spec/01, The squad). */
+export function roleShortfalls(picks: Pick[], settings: SquadSettings): SquadProblem[] {
+  return PLAYER_ROLES.flatMap((role) => {
+    const min = settings.minPerRole[role];
+    const actual = picks.filter((pick) => pick.role === role).length;
+    return actual < min ? [{ rule: "roleShort" as const, role, min, actual }] : [];
+  });
+}
+
 /** A pick's key, apart from a player and a team sharing an id: prices and ownership are keyed by it. */
 export function pickKey(pick: Pick): string {
   return pick.role === "coach" ? `coach:${pick.id}` : playerKey(pick.id);
@@ -105,6 +119,11 @@ export function playerKey(playerId: string): string {
 
 export function allPicks(squad: Squad): Pick[] {
   return [...squad.starters.map((starter) => starter.pick), ...squad.bench];
+}
+
+/** Every pick's `pickKey` in the squad. */
+export function pickKeysOf(squad: Squad): Set<string> {
+  return new Set(allPicks(squad).map(pickKey));
 }
 
 /** How many picks each team fills, the coach counting as one (spec/01, The coach). */

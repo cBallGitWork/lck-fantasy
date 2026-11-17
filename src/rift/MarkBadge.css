@@ -1,0 +1,28 @@
+/* The Captain's C (MarkBadge.tsx): round and filled. Each page places it. */
+.mark-badge {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+}
+.mark-badge--small {
+  width: var(--m-mark);
+  height: var(--m-mark);
+  font-size: var(--size-small);
+}
+.mark-badge--card {
+  width: var(--m-mark-card);
+  height: var(--m-mark-card);
+  font-size: var(--size-body);
+}
+.mark-badge--sheet {
+  width: var(--m-mark-sheet);
+  height: var(--m-mark-sheet);
+  font-family: var(--font-mono);
+  font-size: var(--size-head);
+}

@@ -1,0 +1,132 @@
+/* Leagues (docs/design/approved/leagues/): the open league's table, then the list on the right. */
+.leagues {
+  margin-top: var(--s-2);
+}
+
+/* The list of your leagues. */
+.leagues__list-title {
+  margin-top: var(--s-5);
+}
+.leagues__list section:first-child .leagues__list-title {
+  margin-top: 0;
+}
+.leagues__list-row {
+  display: grid;
+  grid-template-columns: 1fr auto calc(var(--s-6) * 2);
+  gap: 0 var(--s-2);
+  align-items: baseline;
+  padding: var(--s-2) var(--s-3);
+  background: var(--paper);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.leagues__list-row:hover {
+  background: var(--fill);
+}
+.leagues__list-row small {
+  grid-column: 1;
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.leagues__list-move {
+  text-align: right;
+}
+.leagues__list-row--on {
+  box-shadow: inset var(--m-rule-heavy) 0 0 var(--text);
+  background: var(--fill);
+  font-weight: var(--w-bold);
+}
+.leagues__list-row--on small {
+  font-weight: var(--w-regular);
+}
+.leagues__list-actions {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+
+/* The open league's head. */
+.leagues__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.leagues__name-head {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.leagues__sub {
+  color: var(--mid);
+  font-size: var(--size-body);
+}
+.leagues__spacer {
+  flex: 1;
+}
+.leagues__code {
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  padding: var(--s-1) var(--s-2);
+}
+.leagues__rename {
+  font: inherit;
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+/* Admin ▾, drawn as an outlined key. */
+.leagues__admin {
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.leagues__tabs-line {
+  position: relative;
+}
+.leagues__sponsor {
+  position: absolute;
+  right: 0;
+  bottom: var(--s-1);
+}
+
+/* The table: the Table part's, its rank bold and the manager in mid grey after the team. */
+.leagues__rank {
+  font-weight: var(--w-semi);
+}
+.leagues__name small {
+  color: var(--mid);
+  font-size: var(--size-small);
+  margin-left: var(--s-2);
+}
+.leagues__chase {
+  margin-left: var(--s-2);
+}
+
+/* The pager. */
+.leagues__pager {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+.leagues__page {
+  font: inherit;
+  color: var(--text);
+  padding: var(--s-1) var(--s-2);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  cursor: pointer;
+}
+.leagues__page:hover,
+.leagues__page--on {
+  border-color: var(--text);
+}
+.leagues__page--on {
+  font-weight: var(--w-bold);
+}
+.leagues__page--gap {
+  cursor: default;
+}

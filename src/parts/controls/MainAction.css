@@ -1,0 +1,17 @@
+.main-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+.main-action__reason {
+  color: var(--mid);
+}
+.main-action__key {
+  font: inherit;
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-5);
+  background: var(--ink);
+  color: var(--on-ink);
+  border: 0;
+  cursor: pointer;
+}

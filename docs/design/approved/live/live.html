@@ -1,0 +1,134 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Live</title><style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --stage: #1b1b1b; --stage-mid: #999; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
+.mono { font-family: "IBM Plex Mono", monospace; }
+/* Top bar: the same on every screen (as Points). */
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
+nav.top .sp { flex: 1; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.tag { display: inline-block; border: 1px solid var(--ink); color: var(--ink); padding: 0 4px; font: 400 11px/16px "IBM Plex Sans KR", sans-serif; vertical-align: 1px; }
+.tag.prov { border-style: dashed; }
+.tag.live { background: var(--ink); color: var(--paper); }
+
+/* type scale (plate.md): 44 the key figures (total, countdown) · 28 the next series · 20 points figures and the score · 14 body · 12 labels · 11 tags */
+/* Twitch theatre: the dark stage (stream, scorebug, picker) in the main column, your points where chat would be. Only the stage is dark. */
+.page { padding: 24px 32px 48px; display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; }
+.stage { background: var(--stage); padding-bottom: 16px; }
+.screen { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--stage); overflow: hidden; }
+.screen .ph2 { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--stage-mid); font-size: 14px; border: 1px dashed var(--soft); }
+/* scorebug, as the LCK broadcast's */
+.bug { display: grid; grid-template-columns: auto 1fr auto; align-items: stretch; margin: 12px 16px 0; color: #fff; height: 48px; }
+.bug .sb { display: flex; align-items: stretch; }
+.bug .tm { background: #fff; color: var(--ink); font: 700 20px "IBM Plex Sans KR"; padding: 0 16px; display: flex; align-items: center; gap: 8px; }
+.bug .sc { background: var(--ink); font: 600 20px "IBM Plex Mono", monospace; padding: 0 16px; display: flex; align-items: center; letter-spacing: 2px; }
+.bug .gm { padding: 0 16px; display: flex; flex-direction: column; justify-content: center; font-size: 12px; color: var(--stage-mid); } .bug .gm b { color: #fff; font: 600 14px "IBM Plex Mono", monospace; display: flex; align-items: center; gap: 8px; }
+/* tags on the dark stage: Live filled (white on black), Final outlined */
+.bug .gm .tag { border-color: #fff; color: var(--ink); background: #fff; font-family: "IBM Plex Sans KR"; vertical-align: 0; }
+.bug .gm .tag.o { background: none; color: #fff; }
+
+.side { display: flex; flex-direction: column; }
+.side h2 { font-size: 14px; font-weight: 700; display: flex; gap: 8px; align-items: baseline; border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 8px; }
+.tot { display: flex; align-items: baseline; gap: 12px; padding-bottom: 12px; }
+.tot .big { font: 700 44px/1 "IBM Plex Mono", monospace; } .tot .av { color: var(--mid); font-size: 16px; } .tot .av b { font-family: "IBM Plex Mono", monospace; color: var(--ink); } .tot .av i { font-style: normal; color: var(--ink); margin-left: 4px; }
+.row { display: grid; grid-template-columns: 16px 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--fill); }
+.row svg { width: 16px; height: 16px; }
+.row .nm { font-weight: 600; } .row .nm small { font-weight: 400; color: var(--mid); font-size: 12px; margin-left: 4px; }
+.row .gl { display: block; color: var(--mid); font-size: 12px; font-family: "IBM Plex Mono", monospace; }
+.row .p { font: 600 20px "IBM Plex Mono", monospace; text-align: right; }
+.mk { display: inline-block; width: 20px; height: 20px; border: 1px solid var(--ink); border-radius: 50%; font: 700 12px/18px "IBM Plex Sans KR"; text-align: center; margin-left: 4px; vertical-align: 1px; }
+.mk.c { background: var(--ink); color: #fff; }
+.sec2 { margin-top: 24px; }
+.rest { display: grid; grid-template-columns: 1fr auto; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--fill); font-size: 14px; } .rest b { font: 600 20px "IBM Plex Mono", monospace; }
+.rest small { color: var(--mid); }
+.spx { height: 16px; }
+.more { font-weight: 600; font-size: 14px; color: var(--ink); display: inline-flex; align-items: center; min-height: 24px; align-self: flex-start; }
+.down { background: var(--ink); color: #fff; padding: 8px 12px; font-size: 12px; margin-bottom: 16px; } .down b { display: block; font-size: 14px; }
+
+/* the picker: Home's chips */
+.pick { display: flex; gap: 8px; margin: 12px 16px 0; font-size: 14px; flex-wrap: wrap; } .pick span { border: 1px solid var(--stage-mid); color: #fff; padding: 4px 8px; } .pick span small { font-size: 12px; color: var(--stage-mid); margin-left: 4px; } .pick span.on { border-color: #fff; background: #fff; color: var(--ink); font-weight: 600; } .pick span.on small { color: var(--mid); } .pick span.off { color: var(--stage-mid); border-style: dashed; } .pick span.off small { color: var(--stage-mid); }
+
+/* nothing live */
+.idle { position: absolute; inset: 0; background: var(--stage); border: 1px dashed var(--soft); color: #fff; padding: 48px; }
+.idle span { color: var(--stage-mid); font-size: 14px; display: block; } .idle span b { color: #fff; font: 600 14px "IBM Plex Mono", monospace; margin-right: 8px; }
+.idle .vs { font: 700 28px/1.2 "IBM Plex Sans KR"; margin: 8px 0 4px; } .idle .vs i { font-style: normal; color: var(--stage-mid); font-weight: 400; margin: 0 12px; }
+.idle .cd { font: 600 44px "IBM Plex Mono", monospace; margin-top: 32px; } .idle .cd small { font-size: 20px; color: var(--stage-mid); margin: 0 12px 0 4px; font-weight: 400; }
+</style></head><body>
+<svg width="0" height="0" style="position:absolute"><defs>
+  <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#cfcfcf"/></symbol>
+  <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
+  <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
+  <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+</defs></svg>
+<nav class="top" id="nav"></nav>
+<div class="page"><div class="stage"><div class="screen" id="screen"></div><div class="bug" id="bug"></div><div class="pick" id="pick"></div></div><aside class="side" id="side"></aside></div>
+<script>
+// Made-up LCK Cup data. Every player's points match the Points picture (docs/design/approved/points/).
+// ?v=live (default): Week 3 Saturday, T1 v DK game 2 live at 14:20; Baron Steal FC on 94, not final.
+// ?v=down: the same moment with Riot's live feed down: only series already scored count (spec/11).
+// ?v=idle: nothing live, Sunday 06:40 London, before KRX v BRO; Saturday's series are final, so all 7 of yours are.
+const V = new URLSearchParams(location.search).get("v") || "live";
+const $ = (id) => document.getElementById(id);
+const LIVE = V !== "idle";
+$("nav").innerHTML = `<b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="on live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a>`;
+
+// Streams: admin data (spec/12): name, language, platform, channel. Twitch and YouTube only in the beta.
+// Opens on the official English stream, then the manager's last pick. Not live: dashed and greyed; More ▾ lists each channel.
+const ST = [["LCK", "English", "Twitch", "twitch.tv/lck", "official"], ["LCK", "English", "YouTube", "youtube.com/@LCKglobal", "official"],
+  ["LCK", "한국어", "YouTube", "youtube.com/@LCK", "official"], ["Caedrel", "English", "Twitch", "twitch.tv/caedrel", "co-stream"],
+  ["LCK", "Tiếng Việt", "YouTube", "youtube.com/@LCKVietnam", "official", true], ["Kameto", "Français", "Twitch", "twitch.tv/kamet0", "co-stream", true]];
+$("pick").innerHTML = ST.map(([n, l, p, c, k, off], i) => `<span class="${i === 0 && LIVE ? "on" : !LIVE || off ? "off" : ""}">${n} · ${l}<small>${p}</small></span>`).join("") + `<span>More ▾</span>`;
+
+
+if (LIVE) {
+  $("screen").innerHTML = `<div class="ph2">stream</div>`;
+  $("bug").innerHTML = `<div class="sb"><span class="tm">T1</span><span class="sc">1–0</span><span class="tm">DK</span></div>
+    <div class="gm"><b><span class="tag live">Live</span>Game 2</b>Bo3 · LCK Cup Week 3</div><div></div>`;
+} else {
+  $("screen").innerHTML = `<div class="idle"><span>Next · Sunday · LCK Cup Week 3 · Bo3</span><div class="vs">KRX<i>v</i>BRO</div><span><b>08:00</b>17:00 KST</span>
+    <div class="cd">1<small>h</small>20<small>m</small></div></div>`;
+  $("bug").innerHTML = `<div class="sb"><span class="tm">T1</span><span class="sc">2–0</span><span class="tm">DK</span></div><div class="gm"><b><span class="tag o">Final</span>Last series</b>Saturday · Bo3 · LCK Cup Week 3</div><div></div>`;
+}
+
+// Your points: the Points picture's numbers. Each row is the player's week, as Points: best 2 games a series (spec/05),
+// the Carry ×1.5 rounded down; the line under it is this series' games. 14+14+25+14+9+8+10 = 94.
+// Feed down: T1 v DK not counted: Faker 12×1.5 = 18, Siwoo 5, kkOma 8, so 82. Idle: T1 v DK final 2–0 with the Series page's points
+// (Faker 4+6, Siwoo 2+2, kkOma 2+3 and +3 a series won): Faker (12+10)×1.5 = 33, Siwoo 9, kkOma 16, so 33+9+16+51 = 109.
+const IC = { mid: "i-mid", coach: "i-coach", top: "i-top", jng: "i-jng", bot: "i-bot", sup: "i-sup" };
+const row = (ic, name, team, mk, line, p) => `<div class="row"><svg><use href="#${IC[ic]}"/></svg><div><span class="nm">${name}<small>${team}</small>${mk ? `<span class="mk ${mk === "C" ? "c" : ""}">${mk}</span>` : ""}</span><span class="gl">${line}</span></div><div class="p">${p}</div></div>`;
+const rest = (ic, name, team, mk, p) => `<div class="rest"><span><svg width="12" height="12" style="vertical-align:-1px;margin-right:6px"><use href="#${IC[ic]}"/></svg>${name} <small>${team}</small>${mk ? `<span class="mk">${mk}</span>` : ""}</span><b>${p}</b></div>`;
+const REST = rest("top", "Zeus", "HLE", "", 14) + rest("jng", "Canyon", "GEN", "", 14) + rest("bot", "Ruler", "GEN", "V", 14) + rest("sup", "Delight", "HLE", "", 9);
+
+const side = {
+  live: `<h2>Your week <span class="tag prov">Not final</span></h2>
+    <div class="tot"><span class="big">94</span><span class="av">Average <b>74</b></span><a class="av">Highest <b>131</b><i>›</i></a></div>
+    <h2>T1 v DK</h2>
+    ${row("mid", "Faker", "T1", "C", "G1 4 · G2 1 <span class='tag live'>Live</span> 3/0/2", 25)}
+    ${row("top", "Siwoo", "DK", "", "G1 2 · G2 1 <span class='tag live'>Live</span> 1/0/1", 8)}
+    ${row("coach", "kkOma", "T1", "", "G1 2 · G2 0 <span class='tag live'>Live</span>", 10)}
+    <div class="sec2"><h2>Rest of your week</h2>${REST}</div>
+    <div class="spx"></div><a class="more">Points ›</a>`,
+  down: `<div class="down"><b>Live points down</b>Final points follow</div>
+    <h2>Your week <span class="tag prov">Not final</span></h2>
+    <div class="tot"><span class="big">82</span><span class="av">Average <b>66</b></span><a class="av">Highest <b>118</b><i>›</i></a></div>
+    <h2>T1 v DK</h2>
+    ${row("mid", "Faker", "T1", "C", "G1 — · G2 —", 18)}${row("top", "Siwoo", "DK", "", "G1 — · G2 —", 5)}${row("coach", "kkOma", "T1", "", "G1 — · G2 —", 8)}
+    <div class="sec2"><h2>Rest of your week</h2>${REST}</div>
+    <div class="spx"></div><a class="more">Points ›</a>`,
+  idle: `<h2>Your week</h2>
+    <div class="tot"><span class="big">109</span><span class="av">Average <b>79</b></span><a class="av">Highest <b>136</b><i>›</i></a></div>
+    <h2>T1 2–0 DK</h2>
+    ${row("mid", "Faker", "T1", "C", "G1 4 · G2 6", 33)}${row("top", "Siwoo", "DK", "", "G1 2 · G2 2", 9)}${row("coach", "kkOma", "T1", "", "G1 2 · G2 3 · won +3", 16)}
+    <div class="sec2"><h2>Rest of your week</h2>${REST}</div>
+    <div class="spx"></div><a class="more">Points ›</a>`,
+}[V];
+$("side").innerHTML = side;
+</script></body></html>

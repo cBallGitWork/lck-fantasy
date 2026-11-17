@@ -3,42 +3,9 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
-## Transfers ideas from other games (13 Nov 2026)
+## Leagues, parked (14 Nov 2026)
 
-From the Transfers research ([docs/research/transfers-page-references.md](research/transfers-page-references.md)); Claude's suggestions, not Craig's wants:
-
-- Selling a player and buying him back in the same week costs nothing (F1 Fantasy).
-- Playing Remake after paid transfers wipes that week's −4s (UCL Fantasy).
-- A price-change arrow on each player, once Flol decides whether prices move in a split (#23).
-- A watchlist (FPL).
-
-## Transfers picture, not yet specced (13 Nov 2026)
-
-Drawn into the approved Transfers picture on Craig's chat yes; no spec file holds them yet:
-
-- Card view beside Rift view, and whether the choice is remembered.
-- Whether a chip is final once played (FPL lets you cancel until the deadline), and whether the screen says boost or chip.
-- Greyed players sorted last.
-
-## Home picture, not yet specced (13 Nov 2026)
-
-Craig's yes in the Home design round; no spec file holds them yet:
-
-- While a series is live, Home embeds the stream, muted, with the Live page's picker and its remembered pick; Live › opens the Live page.
-- With nothing live, Home shows the week's 7 starters as a broadcast lineup, the next series on stream, and Pick Team ›.
-- Home shows last week's star and flop, from the Points page.
-
-## Following and trucks, parked (13 Nov 2026)
-
-Craig's leanings, to grill later; trucks in big private leagues would pile up, so this replaces "a league-mate":
-
-- Follow by request: one-way, the other manager accepts.
-- A feed of the managers you follow: each series' total points, and big Carry performances.
-- Trucks are the reaction: truck anyone you follow, any week.
-- Maybe: other reactions; Following as its own tab.
-- Open: what counts as a big Carry.
-- At each deadline, post each followed manager's transfers and chip, then how each swap is doing as series finish ("Chovy → Faker, +6 so far"). LiveFPL's league table shows this per manager, and its favourite-manager list is the nearest thing to following (seen 13 Nov 2026).
-- Three kinds of truck, after LCK fans' own: a coffee truck to cheer a good series, a protest truck for a bad one, and a sponsor truck from a made-up sponsor (spec/13) to each private league's top manager of the week.
+- A chart of the league's ranks week by week.
 
 ## Achievements, parked (13 Nov 2026)
 
@@ -64,4 +31,39 @@ Claude's drafts and their sources are in
 
 ## Open from the foundations work (11 Nov 2026)
 
-- The screens and the look ([docs/design/](design/)). Craig likes the Rift view with team shirts, and asked whether player portraits can appear too (11 Nov 2026).
+- The screens and the look ([docs/design/](design/)). Craig asked whether player portraits can appear on the Rift (11 Nov 2026); shirts are settled in [spec/13](../spec/13-korean-touches.md#shirts-and-crests).
+
+## Pages, built on made-up data (15 Nov 2026)
+
+States and rules the approved pictures don't draw. Each page shows what is drawn; these wait.
+
+- Home: can a stream that isn't live be picked? How many streams before More ▾ (built 5)? Do star
+  and flop show effective ownership, as spec/12 says (Faker 22 · 31%)?
+- Transfers: how a sold slot looks before a buy; what the list shows when no one is sold; which
+  reason shows when over budget and team full; does a Carry's replacement take the C; Coach chip.
+- Following: empty lines for no requests, cheers or follows; does Block confirm first; is cheer
+  or jeer, or a line, picked when the picker opens?
+- Pick Team: what counts as one change in the bar; Make Carry on a player not starting; can a swap
+  start from the bench, as FPL allows?
+- Points: a Series win row for the Coach; a week total under non-Carry players; bench taps.
+- Leagues: what a bare /leagues opens; the default tab; page size and Find me; the line under
+  Overall's name per tab; where a row's › goes.
+- League forms: what Copy link copies; Join with a bad code; the 25-league cap message; Remove's
+  confirm text.
+- Stats: a `+` on each row that opens Transfers with that player chosen, so a scout isn't a dead
+  end (design panel, 16 Nov 2026).
+- Stats: second click flips the sort; Max price steps; 0.0 or — for no games; an empty result.
+- Live: can a greyed stream be picked; the remembered stream when idle.
+- Series: VOD as ↗ or ›; an unknown series id; a coach's empty game as — or 0.
+- Compare: the search's role groups and caps; what /compare opens with no players.
+- Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
+- Price changes: the Set line before the first move; sort order; the week in the URL.
+- Settings: an empty hangul banner; the save bar's list; Save team's rules; Privacy and Terms
+  routes. The picture draws the reminder On; spec/12 says both emails are off by default (built off).
+- LCK hub: ‹ on Fixtures for a past week; a stage before it starts; an academy with no roster.
+- Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
+  History's week total with or without the Carry's ×1.5.
+- Coach card: This week before any series; mid-series History.
+- Profile: cancelling a follow request; how a week's transfer cost reads; place or number ranks;
+  a sponsor cheer's credit line.
+- Transfers Undo: a confirm made under a buff has no Undo, so the confirm before it can't be undone.

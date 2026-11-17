@@ -12,6 +12,15 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - The flex slot holds a player of any role, never the coach. Example: Gumayusi at bot and Ruler
   in flex.
 - The bench is two players of any roles, ordered 1 and 2, as in FPL.
+- A squad always holds at least one player of each role (top, jungle, mid, bot, support); past
+  that, roles are free. Example: two junglers, one starting and one on the bench, and three mids
+  is fine; no jungler at all is not (Craig, 16 Nov 2026).
+- The minimum of each role is data per competition, like the sizes (Craig, 16 Nov 2026).
+- On Pick Team, tap a player, then one of those lit up, to swap them, as in FPL. A role starter
+  swaps with a bench player or the Flex of his role. Example: Zeus at top and a top laner in flex
+  trade places (Craig, 16 Nov 2026).
+- The two bench players swap their order the same way: tap one, then the other, as in FPL. There
+  is no swap key (Craig, 16 Nov 2026).
 - There is no bench coach.
 - The sizes are data per competition, like every value Craig may tune ([CLAUDE.md](../CLAUDE.md)).
 
@@ -40,6 +49,15 @@ FPL's rule, with role in place of formation:
   never its players' points. The head coach is only its face and name. What it scores and how
   much is settled by the scoring grill ([spec/05](05-scoring.md)).
 - A team with no series in the gameweek scores 0 in the coach slot.
-- The coach counts toward the cap on players from one team ([spec/10](10-season-and-gameweeks.md)
+- The coach counts towards the cap on players from one team ([spec/10](10-season-and-gameweeks.md)
   makes the cap's value a stage setting). Example: with a cap of 2, T1's coach and Faker fill T1.
 - If a team changes head coach mid-season, the pick stays and shows the new coach.
+
+## Academy players
+
+- Each team's academy (LCK CL) players are in the pool from the start, like FPL's reserves
+  (Craig, 15 Nov 2026). They score when subbed into an LCK game ("in the pool as they get
+  subbed in"). They are priced like any player.
+- They count towards the cap as their LCK team. Example: with a cap of 2, Faker and T1's academy
+  mid fill T1.
+- There is no academy coach: the coach slot is the team.

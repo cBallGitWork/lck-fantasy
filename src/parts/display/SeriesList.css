@@ -1,0 +1,12 @@
+.series-list__row {
+  display: grid;
+  grid-template-columns: var(--s-6) 1fr auto;
+  gap: var(--s-2);
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+  align-items: center;
+}
+
+.series-list__result {
+  text-align: right;
+}

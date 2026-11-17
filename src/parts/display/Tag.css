@@ -1,0 +1,15 @@
+.tag {
+  display: inline-block;
+  border: var(--m-rule) solid var(--text);
+  padding: 0 var(--s-1);
+  font: var(--w-regular) var(--size-small) / var(--m-tag-line) var(--font-sans);
+  color: var(--text);
+  white-space: nowrap;
+}
+.tag--not-final {
+  border-style: dashed;
+}
+.tag--live {
+  background: var(--text);
+  color: var(--bg);
+}

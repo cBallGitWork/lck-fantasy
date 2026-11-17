@@ -7,6 +7,11 @@ describe("leaguepedia", () => {
     expect(leaguepediaGameKey("LOLTMNT03_183532")).toBe("LOLTMNT03 183532");
   });
 
+  test("an admin's pasted key wins; a blank one falls back", () => {
+    expect(leaguepediaGameKey("LOLTMNT03_183532", " ESPORTSTMNT01 3400 ")).toBe("ESPORTSTMNT01 3400");
+    expect(leaguepediaGameKey("LOLTMNT03_183532", "  ")).toBe("LOLTMNT03 183532");
+  });
+
   test("solo kills and steals by participant id", () => {
     const extras = v5Extras(v5Game({ 3: { soloKills: 2 }, 7: { objectivesStolen: 1 } }));
     expect(extras.get(3)).toEqual({ soloKills: 2, steals: 0 });

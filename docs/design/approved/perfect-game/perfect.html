@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Perfect game</title>
+<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
+:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
+.num { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
+a { color: var(--ink); text-decoration: none; }
+a.go { display: inline-flex; align-items: center; min-height: 24px; }
+.me-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ink); margin-left: 4px; vertical-align: 1px; }
+
+/* Top bar: the same on every screen. */
+nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
+nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
+nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
+nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
+nav.top .sp { flex: 1; }
+nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
+.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+
+/* Parts */
+.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 4px; font: 400 11px/16px "IBM Plex Sans KR", sans-serif; }
+.tog { display: inline-flex; font-size: 14px; }
+.tog span { padding: 4px 24px; border: 1px solid var(--line); background: var(--fill); color: var(--mid); }
+.tog span + span { margin-left: -1px; }
+.tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
+
+/* Frame */
+.page { display: grid; grid-template-columns: 1fr 360px; gap: 32px; padding: 24px 32px 48px; }
+aside > section { border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 24px; }
+aside h2 { font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
+
+/* Page head */
+.mhd { margin-bottom: 16px; }
+.mhd .tn { font-size: 28px; font-weight: 700; line-height: 1.2; }
+.mhd .tn i { font-style: normal; color: var(--mid); font-size: 16px; font-weight: 400; margin-left: 8px; }
+.mhd .wkn { display: flex; gap: 8px; align-items: center; font-size: 20px; font-weight: 600; margin: 4px 0 12px; }
+.mhd .wkn a.arr { display: inline-flex; width: 24px; height: 24px; align-items: center; justify-content: center; font-size: 16px; font-weight: 400; }
+.line1 { display: flex; align-items: baseline; gap: 12px; }
+.line1 > b { font: 700 44px "IBM Plex Mono", monospace; line-height: 1; }
+.line1 .av { color: var(--mid); font-size: 16px; display: flex; gap: 12px; align-items: baseline; } .line1 .av b { color: var(--ink); font-family: "IBM Plex Mono", monospace; }
+.line1 .av a { color: var(--mid); } .line1 .av a i { font-style: normal; color: var(--ink); margin-left: 4px; }
+.ctl2 { margin-top: 16px; }
+
+/* Rift */
+.rift { position: relative; width: 100%; height: 560px; }
+.rift svg.map { position: absolute; inset: 0; width: 100%; height: 560px; }
+.tile { position: absolute; z-index: 2; width: 148px; transform: translate(-50%, -50%); text-align: center; }
+.tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto; }
+.tile .kit svg.shirt { width: 56px; height: 50px; }
+.tile .kit .code { position: absolute; left: 0; right: 0; top: 16px; font-size: 12px; font-weight: 700; }
+.tile .ri { position: absolute; left: -24px; top: 0; width: 28px; height: 28px; background: var(--paper); border: 1px solid var(--ink); display: flex; align-items: center; justify-content: center; }
+.tile .ri svg { width: 20px; height: 20px; }
+.tile .mark { position: absolute; right: -16px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.tile .nm { background: var(--paper); border: 1px solid var(--ink); font-weight: 700; font-size: 14px; padding: 0 4px; }
+.tile .pt { background: var(--ink); color: var(--paper); font-family: "IBM Plex Mono", monospace; font-size: 20px; font-weight: 600; line-height: 1.4; }
+.tile .pt small { font-size: 12px; font-weight: 400; color: var(--line); margin-left: 4px; }
+.tile .sr { background: var(--paper); border: 1px solid var(--line); border-top: 0; font-size: 12px; padding: 0 4px; color: var(--mid); }
+.tile.sel .nm, .tile.sel .sr { outline: 2px solid var(--ink); }
+.tile .tag { margin-top: 4px; background: var(--paper); }
+
+/* Card view: the seven starters as the broadcast lineup */
+.lineup { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 12px; }
+.pc { background: var(--paper); border: 1px solid var(--ink); position: relative; display: flex; flex-direction: column; min-width: 0; }
+.pc .rl { height: 48px; display: flex; gap: 4px; align-items: center; padding: 4px 8px; border-bottom: 1px solid var(--line); font-size: 12px; line-height: 1.3; }
+.pc .rl svg { width: 16px; height: 16px; flex: none; } .pc .rl span small { display: block; color: var(--mid); font-size: 12px; }
+.pc .por { position: relative; height: 176px; margin: 8px; }
+.pc .por.crest { border: 0; } .pc .por.crest i { width: 96px; height: 96px; border-radius: 50%; border: 1px dashed var(--soft); display: flex; align-items: center; justify-content: center; font-style: normal; }
+.pc .nm { font-size: 20px; font-weight: 700; padding: 0 8px; line-height: 1.2; white-space: nowrap; }
+.pc .tm { font-size: 12px; color: var(--mid); padding: 0 8px 8px; }
+.pc .nx { border-top: 1px solid var(--line); padding: 8px; font-size: 12px; color: var(--mid); font-family: "IBM Plex Mono", monospace; white-space: nowrap; margin-top: auto; }
+.pc .ft { border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline; padding: 4px 8px; font-size: 12px; color: var(--mid); font-family: "IBM Plex Mono", monospace; white-space: nowrap; }
+.pc .ft b { color: var(--ink); font-size: 20px; font-weight: 600; }
+.pc .mk { position: absolute; right: 4px; top: 4px; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--paper); font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.pc.sel { outline: 2px solid var(--ink); }
+
+/* Player panel */
+aside .pl { background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--ink); margin-bottom: 24px; }
+aside .pl header { display: flex; gap: 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+aside .pl header b { font-size: 20px; display: block; line-height: 1.2; }
+aside .pl header span.s { color: var(--mid); }
+aside .pl header .x { margin-left: auto; color: var(--mid); align-self: flex-start; }
+.ser { padding: 8px 16px 4px; border-bottom: 1px solid var(--fill); }
+.ser h4 { font-size: 14px; display: flex; justify-content: space-between; margin-bottom: 4px; } .ser h4 span { font-weight: 400; color: var(--mid); }
+.g { display: grid; grid-template-columns: 32px 1fr 48px; gap: 8px; padding: 4px 0; align-items: center; }
+.g .r { color: var(--mid); font-size: 12px; } .g .p { text-align: right; font-family: "IBM Plex Mono", monospace; font-weight: 600; }
+.g.drop { color: var(--mid); } .g.drop .p { font-weight: 400; } .g .box { border: 1px solid var(--ink); padding: 0 4px; }
+.pl .sum { padding: 8px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line); }
+.pl .sum .k { font-size: 12px; color: var(--mid); }
+.pl .sum b { font-family: "IBM Plex Mono", monospace; font-size: 20px; }
+.pl .ft { padding: 8px 16px 12px; font-size: 12px; text-align: right; }
+
+/* Series */
+.wk div { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--fill); align-items: center; }
+.wk .d { color: var(--mid); font-size: 12px; }
+.wk .t { text-align: right; }
+.wk b.lo { font-weight: 400; color: var(--mid); }
+.ad { height: 112px; }
+.adline { font-size: 12px; color: var(--mid); margin-top: 8px; }
+.view { display: none; } body.v-rift .vr, body.v-card .vc { display: block; }
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <!-- Position icons drawn after LoL's own: Top and Bot are opposite corners, Mid the diagonal, Jungle a claw, Support a crest. -->
+    <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
+    <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
+    <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
+    <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
+    <symbol id="shirt" viewBox="0 0 56 50"><path d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z" fill="#fff" stroke="#1d1d1d" stroke-width="1.6"/><path d="M18 2 Q28 9 38 2" fill="none" stroke="#1d1d1d" stroke-width="1.6"/></symbol>
+  </defs>
+</svg>
+
+<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a class="on">Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span>
+  <span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
+<div class="page">
+<main>
+  <div class="mhd"><div class="tn">Perfect game<i>퍼펙트 게임</i></div>
+    <div class="wkn"><a class="arr">‹</a>LCK Cup · Week 3<a class="arr">›</a></div>
+    <div class="line1"><b id="total"></b><span class="tag">Final</span><span class="tag">Cap 2</span><span class="av"><span>Average <b>79</b></span><span>Highest <b>136</b></span><a class="go">Your points&nbsp;<b>117</b><i>›</i></a></span></div>
+  </div>
+  <div class="ctl2"><span class="tog"><span class="tr">Rift view</span><span class="tc">Card view</span></span></div>
+  <div class="view vr"><div class="rift" id="map"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
+        <rect x="0" y="0" width="680" height="680" fill="#ededeb"/>
+        <path d="M0 40 L40 0 L680 640 L640 680 Z" fill="#dcdcd8"/>
+        <path d="M60 640 L60 60 L640 60" fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round"/>
+        <path d="M40 620 L620 620 L620 40" fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round"/>
+        <path d="M60 620 L620 60" fill="none" stroke="#fff" stroke-width="40"/>
+        <path d="M0 520 A160 160 0 0 1 160 680 L0 680 Z" fill="#c9c9c9"/>
+        <path d="M520 0 A160 160 0 0 0 680 160 L680 0 Z" fill="#c9c9c9"/>
+        <g fill="#9a9a9a"><rect x="54" y="400" width="12" height="12"/><rect x="54" y="220" width="12" height="12"/><rect x="250" y="54" width="12" height="12"/><rect x="430" y="54" width="12" height="12"/>
+        <rect x="270" y="614" width="12" height="12"/><rect x="450" y="614" width="12" height="12"/><rect x="614" y="440" width="12" height="12"/><rect x="614" y="260" width="12" height="12"/>
+        <rect x="250" y="424" width="12" height="12"/><rect x="420" y="254" width="12" height="12"/></g>
+        <circle cx="200" cy="200" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/><circle cx="480" cy="480" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/>
+      </svg></div></div>
+  <div class="view vc"><div class="lineup" id="lineup"></div></div>
+</main>
+<aside>
+  <section class="pl"><header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Faker<i class="me-dot"></i></b><span class="s">T1 · Mid · Carry</span></div><span class="x">✕</span></header>
+    <div class="ser"><h4>Wed · v HLE <span>W 2–1</span></h4>
+      <div class="g"><span class="r">G1</span><span>Azir · W</span><span class="p"><span class="box">5</span></span></div>
+      <div class="g drop"><span class="r">G2</span><span>Taliyah · L</span><span class="p">2</span></div>
+      <div class="g"><span class="r">G3</span><span>Galio · W</span><span class="p"><span class="box">7</span></span></div></div>
+    <div class="ser"><h4>Sat · v DK <span>W 2–0</span></h4>
+      <div class="g"><span class="r">G1</span><span>Orianna · W</span><span class="p"><span class="box">4</span></span></div>
+      <div class="g"><span class="r">G2</span><span>Sylas · W</span><span class="p"><span class="box">11</span></span></div></div>
+    <div class="sum"><span><span class="k">Carry</span><br>12 + 15 = 27 × 1.5</span><b>40</b></div>
+    <div class="ft"><a class="go">Full stats ›</a></div></section>
+  <section><h2>Week 3 series <span>Final</span></h2><div class="wk" id="week"></div></section>
+  <div class="ad ph">Sponsor</div><div class="adline">All sponsors are made up.</div>
+</aside>
+</div>
+<script>
+// Made-up LCK Cup Week 3, final, seen Week 4 Tuesday. Results are the LCK hub's; Saturday numbers agree with Points.
+// Cap 2 (groups): T1 = Faker + kkOma, DNS = Pyosik + BuLLDoG, GEN = Ruler + Duro. Chovy (GEN, 15) and Keria (T1) are left out by the cap.
+const SERIES = [["Wed","T1",2,1,"HLE"],["Wed","GEN",2,0,"KT"],["Thu","DK",2,0,"NS"],["Thu","BRO",1,2,"DNS"],["Fri","KT",2,1,"BFX"],["Fri","NS",0,2,"KRX"],["Sat","GEN",2,1,"HLE"],["Sat","T1",2,0,"DK"],["Sun","KRX",2,1,"BRO"],["Sun","BFX",0,2,"DNS"]];
+const TEAM = [
+  { slot: "top", role: "Top", name: "Zeus", mine: true, team: "HLE", pts: 14, line: "v T1 7 · v GEN 7" },
+  { slot: "jng", role: "Jungle", name: "Pyosik", team: "DNS", pts: 24, line: "v BRO 11 · v BFX 13" },
+  { slot: "mid", role: "Mid", name: "Faker", mine: true, team: "T1", pts: 40, raw: 27, c: true, line: "v HLE 12 · v DK 15" },
+  { slot: "bot", role: "Bot", name: "Ruler", mine: true, team: "GEN", pts: 14, line: "v KT 7 · v HLE 7" },
+  { slot: "sup", role: "Support", name: "Duro", team: "GEN", pts: 13, line: "v KT 6 · v HLE 7" },
+  { slot: "flex", role: "Flex", plays: "mid", name: "BuLLDoG", team: "DNS", pts: 21, line: "v BRO 9 · v BFX 12" },
+  { slot: "coach", role: "Coach", name: "kkOma", mine: true, team: "T1", pts: 16, line: "v HLE 8 · v DK 8" },
+];
+const $ = (id) => document.getElementById(id);
+const POS = { top: [104, 70], jng: [280, 262], mid: [500, 260], coach: [92, 468], flex: [252, 468], sup: [650, 486], bot: [846, 486] };
+const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach" };
+const icon = (p) => ICON[p.plays || p.slot];
+const dot = (p) => (p.mine ? '<i class="me-dot"></i>' : "");
+TEAM.forEach((p) => {
+  const t = document.createElement("div");
+  t.className = "tile" + (p.c ? " sel" : "");
+  t.innerHTML = `<div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span><span class="ri"><svg><use href="#${icon(p)}"/></svg></span>${p.c ? '<span class="mark">C</span>' : ""}</div>
+    <div class="nm">${p.name}${dot(p)}</div><div class="pt">${p.pts}${p.c ? `<small>${p.raw}×1.5</small>` : ""}</div><div class="sr">${p.line}</div>
+    ${p.slot === "flex" ? '<div class="tag">Flex · plays Mid</div>' : ""}${p.slot === "coach" ? '<div class="tag">Coach 감독</div>' : ""}`;
+  t.style.left = POS[p.slot][0] + "px"; t.style.top = POS[p.slot][1] + "px"; $("map").appendChild(t);
+});
+$("total").textContent = TEAM.reduce((s, p) => s + p.pts, 0);
+// Card view: Top, Jungle, Mid, Bot, Support, Flex, Coach, as the LCK broadcast's lineup
+$("lineup").innerHTML = TEAM.map((p) => {
+  const role = p.slot === "flex" ? "Flex<small>plays Mid</small>" : p.slot === "coach" ? "Coach<small>감독</small>" : p.role;
+  const mk = p.c ? '<span class="mk">C</span>' : "";
+  const por = p.slot === "coach" ? `<div class="por ph crest"><i>Crest</i>${mk}</div>` : `<div class="por ph">Photo${mk}</div>`;
+  return `<div class="pc ${p.c ? "sel" : ""}"><div class="rl"><svg><use href="#${icon(p)}"/></svg><span>${role}</span></div>
+    ${por}<div class="nm">${p.name}${dot(p)}</div><div class="tm">${p.team}</div>
+    <div class="nx">${p.line.split(" · ").join("<br>")}</div><div class="ft"><span>${p.c ? `${p.raw}×1.5` : ""}</span><b>${p.pts}</b></div></div>`;
+}).join("");
+$("week").innerHTML = SERIES.map(([d, a, sa, sb, b]) => `<div><span class="d">${d}</span><span><b class="${sa > sb ? "" : "lo"}">${a}</b> v <b class="${sb > sa ? "" : "lo"}">${b}</b></span><span class="t num">${sa}–${sb}</span></div>`).join("");
+// the view is the one saved on Points: switching here saves it there too
+const v = location.hash.slice(1) || "rift";
+document.body.className = "v-" + v;
+document.querySelector(v === "card" ? ".tc" : ".tr").className = "on";
+</script>
+</body></html>

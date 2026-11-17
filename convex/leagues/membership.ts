@@ -37,6 +37,14 @@ export function joinProblems(privateLeaguesIn: number, members: number, settings
   return problems;
 }
 
+/** The gameweeks a new private league can count from: this one or a later one, this one first as
+ *  the default (spec/08, Private leagues). */
+export function startGameweekChoices(current: number, lastOfSeason: number): number[] {
+  const choices: number[] = [];
+  for (let gameweek = current; gameweek <= lastOfSeason; gameweek++) choices.push(gameweek);
+  return choices;
+}
+
 export type PrivateLeagueAction = "rename" | "remove" | "delete" | "leave";
 
 /** The maker can rename, remove a manager and delete; any other member can leave. The maker can't
@@ -46,3 +54,21 @@ export function mayAct(action: PrivateLeagueAction, actorId: string, makerId: st
   if (action === "leave") return !isMaker;
   return isMaker;
 }
+
+/** Letters and digits a code is made of: no 0, O, 1, I or L, which read alike. */
+const CODE_CHARACTERS = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+const CODE_PART_LENGTH = 4;
+
+/** A private league's join code: up to four letters of its name's first word, then four random
+ *  characters (GANK-4TQ1); two random parts when the name starts with none (a hangul name).
+ *  `random` returns a number in [0, 1), as Math.random does. */
+export function joinCode(name: string, random: () => number): string {
+  const part = () =>
+    Array.from({ length: CODE_PART_LENGTH }, () => CODE_CHARACTERS[Math.floor(random() * CODE_CHARACTERS.length)]).join("");
+  const firstWord = name.trim().split(/\s+/)[0] ?? "";
+  const prefix = firstWord.toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, CODE_PART_LENGTH);
+  return `${prefix || part()}-${part()}`;
+}
+
+/** A typed code as codes are stored: trimmed, in capitals. */
+export const normalCode = (code: string) => code.trim().toUpperCase();

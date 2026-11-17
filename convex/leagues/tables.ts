@@ -1,5 +1,6 @@
 // League tables (spec/08-leagues.md, Tables; Legend and Rise). Every league ranks on total points
 // over a run of gameweeks: the season, or one split, from the league's start.
+import { sum } from "../../src/parts/util/sum";
 
 export interface EntryGameweek {
   gameweek: number;
@@ -54,8 +55,8 @@ export function leagueTable(
     return {
       entryId: member.entryId,
       gameweekPoints: latestPoints(member, to),
-      total: counted.reduce((sum, gw) => sum + gw.points, 0),
-      transfers: counted.reduce((sum, gw) => sum + gw.transfers, 0),
+      total: sum(counted.map((gw) => gw.points)),
+      transfers: sum(counted.map((gw) => gw.transfers)),
     };
   });
   rows.sort((a, b) => b.total - a.total || a.transfers - b.transfers);
@@ -75,6 +76,44 @@ export function rankMovement(previous: readonly TableRow[], current: readonly Ta
     const was = before.get(row.entryId);
     return [row.entryId, was === undefined ? null : was - row.rank];
   }));
+}
+
+/** Legend's or Rise's table on the Split 2 tab: ranked on season points, Split 1 included, with
+ *  each manager's Split 2 points beside the total (spec/08, Legend and Rise). */
+export function legendRiseTable(
+  members: readonly LeagueMember[],
+  season: GameweekRange,
+  split2: GameweekRange,
+  upTo: number,
+): (TableRow & { splitTotal: number })[] {
+  const split = new Map(leagueTable(members, split2, split2.first, upTo).map((row) => [row.entryId, row.total]));
+  return leagueTable(members, season, season.first, upTo).map((row) => ({ ...row, splitTotal: split.get(row.entryId) ?? 0 }));
+}
+
+/** The chase tag on a manager's own row: points to the rank above, or the lead when 1st. */
+export type ChaseTag = { kind: "chasing"; points: number; rank: number } | { kind: "clear"; points: number };
+
+/** spec/08, The Leagues page: the points to the nearest rank above ("16 pts to 1st"), the lead
+ *  over 2nd when alone in 1st ("+16 clear"), and none when level with the row it is measured to. */
+export function chaseTag(table: readonly TableRow[], entryId: string): ChaseTag | null {
+  const index = table.findIndex((row) => row.entryId === entryId);
+  const own = table[index];
+  if (own === undefined) throw new Error(`${entryId} is not in this table.`);
+  const above = table[index - 1];
+  if (above !== undefined) {
+    const gap = above.total - own.total;
+    return gap > 0 ? { kind: "chasing", points: gap, rank: above.rank } : null;
+  }
+  const below = table[index + 1];
+  if (below === undefined) return null;
+  const lead = own.total - below.total;
+  return lead > 0 ? { kind: "clear", points: lead } : null;
+}
+
+/** The Carry column shows each manager's Carry only once the gameweek's deadline has passed, as
+ *  FPL hides picks until then (spec/08, The Leagues page). */
+export function carryShown(deadline: number, now: number): boolean {
+  return now >= deadline;
 }
 
 /** Split 2's Overall groups: the top half of Split 1's Overall table goes to Legend, the rest to

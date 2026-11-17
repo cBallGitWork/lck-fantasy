@@ -1,0 +1,222 @@
+/* Compare, drawn to docs/design/approved/compare/: the two lower thirds facing each other, one mirrored table. */
+
+/* The head: each lower third, a `v` between. */
+.compare__faces {
+  display: grid;
+  grid-template-columns: 1fr calc(var(--s-7) + var(--s-5)) 1fr;
+  align-items: end;
+  padding: var(--s-7) var(--s-5) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.compare__face {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-end;
+}
+.compare__face--right {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.compare__portrait {
+  flex: none;
+  width: calc(var(--s-7) + var(--s-5));
+  height: calc(var(--s-7) + var(--s-5));
+}
+.compare__tag {
+  display: block;
+  margin-bottom: var(--s-2);
+  font-weight: var(--w-semi);
+}
+.compare__name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.compare__face--right .compare__name {
+  justify-content: flex-end;
+}
+.compare__hangul {
+  font-size: var(--size-lead);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.compare__v {
+  text-align: center;
+  padding-bottom: var(--s-4);
+  font: var(--w-semi) var(--size-head) var(--font-mono);
+  color: var(--mid);
+}
+.compare__go {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  margin-top: var(--s-1);
+  padding: 0;
+  color: var(--text);
+}
+
+/* The head-to-head: the top table, then the lines, each side mirrored about the line's name. */
+.compare__body {
+  padding: 0 var(--s-5) var(--s-5);
+}
+.compare__top,
+.compare__lines,
+.compare__results {
+  table-layout: fixed;
+}
+.compare__top {
+  margin-top: var(--s-3);
+}
+.compare__lines {
+  margin-top: var(--s-5);
+  border-top: var(--m-rule-heavy) solid var(--text);
+}
+.compare__label-col {
+  width: calc(var(--s-7) * 3 + var(--s-4));
+}
+.compare__per-game-col {
+  width: calc(var(--s-7) * 2 + var(--s-3));
+}
+.compare__points-col {
+  width: calc(var(--s-7) + var(--s-6) + var(--s-2));
+}
+.compare__lines th {
+  padding: var(--s-2);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+  color: var(--mid);
+}
+.compare__top td,
+.compare__lines td {
+  height: var(--m-row);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--line);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.compare__left {
+  text-align: right;
+}
+.compare__right {
+  text-align: left;
+}
+.compare__top td.compare__label,
+.compare__lines td.compare__label {
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
+  background: var(--bg);
+}
+.compare__better {
+  font-weight: var(--w-bold);
+}
+.compare__rank {
+  margin: 0 var(--s-2);
+  font: var(--size-small) var(--font-sans);
+  color: var(--mid);
+}
+.compare__move {
+  margin-left: var(--s-2);
+}
+.compare__top .compare__row--big td {
+  height: calc(var(--s-7) + var(--s-4));
+  font-size: var(--size-title);
+}
+.compare__top .compare__row--big td.compare__label {
+  font-size: var(--size-body);
+}
+.compare__top .compare__row--strip td {
+  height: calc(var(--s-7) + var(--s-3));
+}
+
+/* Last 3 and Next 3, as the card's series strip. */
+.compare__strip {
+  display: flex;
+}
+.compare__left .compare__strip {
+  justify-content: flex-end;
+}
+.compare__series {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: calc(var(--s-7) + var(--s-5));
+  padding: 0 var(--s-2);
+  text-align: center;
+  font: var(--size-small) var(--font-sans);
+  color: var(--mid);
+}
+.compare__series-points {
+  font: var(--w-semi) var(--size-head) / var(--lh-snug) var(--font-mono);
+  color: var(--text);
+}
+.compare__series-opp {
+  font-size: var(--size-body);
+  font-style: normal;
+  line-height: var(--lh-body);
+}
+.compare__series-opp--first {
+  font-weight: var(--w-bold);
+  color: var(--text);
+}
+
+/* The second player's search. */
+.compare__pick {
+  padding: var(--s-5);
+}
+.compare__find {
+  display: flex;
+  width: 100%;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  margin-bottom: var(--s-2);
+  border: var(--m-rule) solid var(--text);
+  background: var(--paper);
+  font: inherit;
+  color: var(--text);
+}
+.compare__find::placeholder {
+  color: var(--mid);
+}
+.compare__group {
+  padding: var(--s-3) 0 var(--s-1);
+  font-weight: var(--w-semi);
+}
+.compare__team-col {
+  width: var(--m-col-figure);
+}
+.compare__price-col {
+  width: var(--m-col-price);
+}
+.compare__score-col {
+  width: calc(var(--s-7) + var(--s-3));
+}
+.compare__results td {
+  height: var(--m-row);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--line);
+}
+.compare__result--pick {
+  cursor: pointer;
+}
+.compare__result--pick:hover {
+  background: var(--fill);
+}
+.compare__result-name {
+  font-weight: var(--w-semi);
+}
+
+.compare__result-price {
+  font-family: var(--font-mono);
+}
+.compare__result-points {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: var(--w-semi);
+}
+.compare__more {
+  margin-top: var(--s-3);
+  font-weight: var(--w-semi);
+}

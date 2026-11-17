@@ -78,7 +78,7 @@ export function oeGames(rows: readonly OeRow[], league: string): OeGame[] {
     const id = text(row, "gameid");
     byGame.set(id, [...(byGame.get(id) ?? []), row]);
   }
-  return [...byGame.entries()].map(([gameId, gameRows]) => toGame(gameId, gameRows));
+  return [...byGame.entries()].map(([gameId, gameRows]) => oeGame(gameId, gameRows));
 }
 
 /** A game with what grouping it into a series needs. */
@@ -88,7 +88,8 @@ export function oeSeriesGame(game: OeGame): OeGame & SeriesGame {
   return { ...game, teamIds: [blue.teamId, red.teamId], winnerId: (blue.won ? blue : red).teamId };
 }
 
-function toGame(gameId: string, rows: OeRow[]): OeGame {
+/** One game from its rows, ten players' and two teams', as the file or a stored copy holds them. */
+export function oeGame(gameId: string, rows: readonly OeRow[]): OeGame {
   const teamRows = rows.filter((row) => row.position === OE_TEAM_POSITION);
   const playerRows = rows.filter((row) => row.position !== OE_TEAM_POSITION);
   if (teamRows.length !== 2 || playerRows.length !== PLAYERS_PER_GAME) {

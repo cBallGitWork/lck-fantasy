@@ -1,0 +1,150 @@
+/* The Rift is square at any width, centred in the main column, so the map and the tiles' places never stretch. */
+.rift {
+  position: relative;
+  width: 100%;
+  max-width: var(--m-rift);
+  margin: 0 auto;
+  aspect-ratio: var(--ratio-rift);
+}
+
+/* A tile, as FPL's (Craig, 16 Nov 2026): price chip, a faint card round the shirt, a white name plate, a dark band. */
+.tile {
+  position: absolute;
+  z-index: 2;
+  width: var(--m-tile-w);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  line-height: var(--lh-body);
+}
+/* A bench tile stands in the bench bar, not on the map. */
+.tile--bench {
+  position: static;
+  transform: none;
+}
+.tile[role="button"] {
+  cursor: pointer;
+}
+.tile__price {
+  display: inline-block;
+  margin-bottom: var(--s-1);
+  padding: 0 var(--s-2);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+}
+.tile__card {
+  position: relative;
+  padding: var(--s-2) 0;
+  background: var(--tile-card);
+  border-radius: var(--m-tile-radius) var(--m-tile-radius) 0 0;
+}
+.tile__kit {
+  position: relative;
+  width: var(--m-shirt-w);
+  height: var(--m-shirt-h);
+  margin: 0 auto;
+}
+.tile__mark {
+  position: absolute;
+  top: 0;
+  right: calc(var(--s-2) * -1);
+}
+.tile__flag,
+.tile__sell {
+  position: absolute;
+  top: 0;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+}
+.tile__flag {
+  left: calc(var(--s-2) * -1);
+  border-radius: 50%;
+  background: var(--tile-plate);
+  color: var(--on-tile-plate);
+}
+.tile__sell {
+  left: var(--s-1);
+  top: var(--s-1);
+  color: var(--text);
+  font-size: var(--size-body);
+}
+/* The Flex's or Coach's label over his shirt, marking his place. */
+.tile__slot {
+  display: inline-block;
+  margin-bottom: var(--s-1);
+  padding: 0 var(--s-2);
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}
+.tile__slot--flex {
+  text-transform: uppercase;
+}
+.tile__name {
+  background: var(--tile-plate);
+  color: var(--on-tile-plate);
+  font-weight: var(--w-bold);
+  padding: 0 var(--s-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tile__name .me-dot {
+  background: var(--on-tile-plate);
+}
+.tile__points {
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.tile__line {
+  background: var(--bg);
+  padding: 0 var(--s-1) var(--s-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tile__line--fixtures {
+  color: var(--text);
+  font-family: var(--font-mono);
+  padding: var(--s-1);
+}
+
+/* Chosen: a heavy rule round the tile. Could go there: dashed. Dim: the plate and band greyed. */
+.tile--selected {
+  outline: var(--m-rule-heavy) solid var(--text);
+  outline-offset: var(--m-rule-heavy);
+}
+.tile--fit {
+  outline: var(--m-rule-heavy) dashed var(--text);
+  outline-offset: var(--m-rule-heavy);
+}
+.tile--dim .tile__name {
+  background: var(--fill);
+  color: var(--mid);
+}
+.tile--dim .tile__line,
+.tile--dim .tile__points {
+  color: var(--mid);
+}
+.tile--dim .tile__slot {
+  background: var(--fill);
+  color: var(--mid);
+}
+/* Only the drawing dims: the team code stays mid, 4.5:1 or more (plate, Accessibility). */
+.tile--dim .shirt__svg {
+  opacity: var(--opacity-dim);
+}
+.tile--dim .shirt__code {
+  color: var(--mid);
+}

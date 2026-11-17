@@ -40,6 +40,13 @@ export const TEAM_CAP = season.settings.squad.teamCap;
 export const HIT_POINTS = season.settings.transfers.hitPoints;
 export const BUFFS = ["Bench Boost", "Double Captain", "Remake", "Limitless"] as const;
 export type BuffName = (typeof BUFFS)[number];
+/** Each buff's one line (spec/06): its Pick Team card's, and its hover on Transfers' key (spec/12, Words). */
+export const BUFF_DOES: Record<BuffName, string> = {
+  "Bench Boost": "Your bench players score this week too",
+  "Double Captain": `A second Captain; both score ×${CAPTAIN_MULTIPLIER}`,
+  Remake: "Unlimited free transfers; your new squad stays",
+  Limitless: "One week, no budget or team cap; then your squad returns",
+};
 
 /** The Captain's points: ×1.5, rounded down, a minus towards zero (spec/05, The Captain). */
 export const captained = (points: number) => Math.trunc(points * CAPTAIN_MULTIPLIER);

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Columns, count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, RankMove, SectionHead, SponsorNote, TierShield, Time } from "../../parts";
+import { Columns, count, Hint, HINTS, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, RankMove, SectionHead, SponsorNote, TierShield, Time } from "../../parts";
 import { Following, Leagues, type Cheering } from "./band";
 import "./home.css";
 import type { Countdown, HomeShared, OverallTier } from "./types";
@@ -19,7 +19,7 @@ function HomeHead({ team, hangul, overall }: { team: string; hangul: string; ove
         <TierShield className="home__shield" />
         <div>
           <div className="home__tier-name">
-            {overall.tier}
+            <Hint line={HINTS.tier}>{overall.tier}</Hint>
             <span className="home__tier-hangul quiet" lang="ko">
               {overall.hangul}
             </span>

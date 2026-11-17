@@ -4,6 +4,7 @@
 
 import { opponent, seriesOf } from "../../fixtures/series";
 import {
+  BUFF_DOES,
   COMPETITION,
   finalPickOf,
   formOf,
@@ -124,6 +125,6 @@ export const TRANSFERS_PICTURE: TransfersPageProps = {
   confirms: CONFIRMS,
   fixtures: FIXTURES,
   teams: TEAMS_PLAYING,
-  buffs: ["Remake", "Limitless"],
+  buffs: (["Remake", "Limitless"] as const).map((name) => ({ name, does: BUFF_DOES[name] })),
   initialPlan: PICTURE_PLAN,
 };

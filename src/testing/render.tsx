@@ -17,9 +17,10 @@ export async function htmlAt(path: string): Promise<string> {
   return renderToStaticMarkup(<RouterProvider router={atPath} />);
 }
 
-/** Markup's text alone, entities decoded. */
+/** Markup's text alone, entities decoded; a word's hover line, shown only on hover, left out (`hovers` reads them). */
 export const plain = (markup: string) =>
   markup
+    .replace(/<span class="hint__line"[^>]*>.*?<\/span>/g, "")
     .replace(/<[^>]+>/g, "")
     .replace(/&#x27;/g, "'")
     .replace(/&quot;/g, '"')
@@ -27,6 +28,10 @@ export const plain = (markup: string) =>
 
 /** The rendered text alone, entities decoded. */
 export const text = (node: ReactNode) => plain(html(node));
+
+/** Each word in `markup` with a hover (the Hint part), as `[word, its line]`, in order. */
+export const hovers = (markup: string): [string, string][] =>
+  [...markup.matchAll(/<span class="hint[ "][^>]*>(.*?)<span class="hint__line"[^>]*>(.*?)<\/span>/g)].map(([, word = "", line = ""]) => [plain(word), plain(line)]);
 
 /** Fails unless every piece is in `out`, each after the end of the one before. */
 export function expectInOrder(out: string, pieces: readonly string[]) {

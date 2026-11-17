@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, press, text, trucksOutsideCredit } from "../../testing/render";
+import { CAPTAIN_MULTIPLIER } from "../../fixtures/competition";
+import { expectInOrder, hovers, html, press, text, trucksOutsideCredit } from "../../testing/render";
 import { FOLLOWING } from "../following/fixtures";
 import { pickerOn } from "../following/useCheerPicker";
 import { FeedRow } from "./band";
@@ -161,4 +162,12 @@ test("a held rank, Overall's or a league's, is RankMove's grey —", () => {
   const markup = html(<Home data={held} />);
   expect(markup.split('class="rank-held"').length - 1).toBe(held.leagues.length + 1);
   expect(markup).not.toContain("rank-up");
+});
+
+test("Overall's tier and the C carry their hover's lines (spec/12, Words)", () => {
+  for (const data of [HOME_IDLE, HOME_LIVE]) {
+    const out = hovers(html(<Home data={data} />));
+    expect(out[0]).toEqual(["Emerald I", "Overall rank as a LoL tier"]);
+    expect(out).toContainEqual(["C", `Scores ×${CAPTAIN_MULTIPLIER} this week`]);
+  }
 });

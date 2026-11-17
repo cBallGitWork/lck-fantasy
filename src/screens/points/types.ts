@@ -56,7 +56,7 @@ export interface PointsStarter extends PointsPlayer {
 
 /** A line of Your week: Star, Flop or Killer. */
 export interface WeekPick {
-  label: string;
+  label: "Star" | "Flop" | "Killer";
   name: string;
   points: number;
   ownedPct: number;
@@ -66,6 +66,8 @@ export interface WeekPick {
 
 export interface LeagueRank {
   name: string;
+  /** Overall's tier after its name (`Overall · Emerald I`). */
+  tier?: string;
   rank: string;
   /** Places moved: up when positive. */
   move: number;

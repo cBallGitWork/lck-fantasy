@@ -94,7 +94,7 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   ]);
   const markup = html(view(PICK_TEAM_STATES.rift));
   expect(markup).toContain('data-screen="pick-team"');
-  expect(markup).toContain('title="Captain">C');
+  expect(markup).toContain('aria-label="Captain">C');
   expect(markup.match(/class="mark-badge /g)).toHaveLength(1);
   expect(markup.match(/tile--selected/g)).toHaveLength(1);
   // Faker tapped: Bdd, the bench mid, is lit to swap with him; the Flex plays Top, so isn't; the other six starters and Cuzz dim.

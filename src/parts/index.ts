@@ -8,6 +8,7 @@ export { Deadline } from "./display/Deadline";
 export { DEV_STATE_PARAM, useDevState } from "./util/devState";
 export { Field } from "./controls/Field";
 export { GoLink } from "./controls/GoLink";
+export { captainHint, Hint, HINTS } from "./display/Hint";
 export { LinkGo } from "./controls/LinkGo";
 export { MainAction } from "./controls/MainAction";
 export { MeDot } from "./display/MeDot";

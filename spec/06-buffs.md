@@ -17,7 +17,7 @@ rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
     goes back (UCL Fantasy's Limitless). The roles still apply: one per role, the flex and the
     coach;
   - the bench scores too (FPL's Bench Boost);
-  - the Vice-carry scores the Carry's multiplier too ([spec/04](04-captain.md)).
+  - a second Captain for one gameweek, scoring the Captain's multiplier too ([spec/04](04-captain.md)).
 - A manager plays at most one buff a gameweek.
 - In a gameweek a manager plays Remake or Limitless, his free transfer doesn't roll over
   ([spec/03](03-transfers.md)). His bank is kept: 2 banked, Remake played, still 2 the next week
@@ -30,10 +30,10 @@ rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
 | Remake | Unlimited free transfers, kept | FPL's Wildcard |
 | Limitless | One gameweek with no budget and no team cap, then the squad goes back | UCL Fantasy's Limitless |
 | Bench Boost | The bench scores too | FPL's Bench Boost |
-| Dual Carry | The Vice-carry scores ×1.5 too, as the Carry does | none |
+| Double Captain | A second Captain for the gameweek; both score ×1.5 and wear C (Craig, 17 Nov 2026; Dual Carry before) | none |
 
-Dual Carry example: the Carry scores 12 and the Vice-carry 10, so they give 18 and 15, not 18
-and 10. If the Carry plays no game, nobody else steps in.
+Double Captain example: the Captain scores 12 and the second Captain 10, so they give 18 and 15,
+not 18 and 10. Either one playing no game just scores nothing; nobody steps in.
 
 ## How many, and when
 

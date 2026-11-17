@@ -64,6 +64,4 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
   History's week total with or without the Carry's ×1.5.
 - Coach card: This week before any series; mid-series History.
-- Profile: cancelling a follow request; how a week's transfer cost reads; place or number ranks;
-  a sponsor cheer's credit line.
 - Transfers Undo: a confirm made under a buff has no Undo, so the confirm before it can't be undone.

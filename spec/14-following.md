@@ -16,6 +16,7 @@ has no following, so most of this is Flol's own. Open questions are in
 - Profiles stay public, as in FPL ([spec/12](12-pages.md)); the feed is what needs the yes.
 - A follow request is sent from the manager's profile, which opens from any league table. There
   is no search (Craig, 14 Nov 2026).
+- Tapping Requested cancels the request, back to Follow, with no confirm (Craig, 17 Nov 2026).
 - A manager can follow up to a cap, held as data per competition (drawn as 50).
 
 ## The feed
@@ -50,7 +51,8 @@ truck hire as a sponsor").
 - It parks on the receiver's profile for the gameweek.
 - A **sponsor cheer** sends itself: each private league's top manager of the gameweek gets one
   from a made-up sponsor ([spec/13](13-korean-touches.md)), shown on their profile and in the
-  league.
+  league. Its panel credits only the sponsor, as its sender: no truck-hire line (Craig, 17 Nov
+  2026).
 
 ## Lines
 

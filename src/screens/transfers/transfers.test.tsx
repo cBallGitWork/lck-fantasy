@@ -1,6 +1,9 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectDeadlinePart, html, text } from "../../testing/render";
+import { VIEW_KEYS } from "../../parts";
+import { PATHS } from "../../paths";
+import { expectDeadlinePart, html, htmlAt, text } from "../../testing/render";
+import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICTURE_PLAN, TRANSFERS_PICTURE } from "./fixtures";
 import { lineupIds } from "./lineup";
 import { confirmTransfers, EMPTY_PLAN } from "./plan";
@@ -175,5 +178,14 @@ describe("Rift view or List view", () => {
     const page = html(<TransfersPage {...TRANSFERS_PICTURE} view="List view" />);
     expect(page).toContain('class="transfers__squad"');
     expect(page).toMatch(/aria-pressed="true"[^>]*>List view/);
+  });
+
+  test("the route opens on the view Transfers kept, apart from the one Pick Team shares, and on Rift where storage is blocked", async () => {
+    stubStorage(keptStorage({ [VIEW_KEYS.transfers]: "List view" }));
+    expect(chosenView(await htmlAt(PATHS.transfers))).toBe("List view");
+    stubStorage(keptStorage({ [VIEW_KEYS.board]: "Card view" }));
+    expect(chosenView(await htmlAt(PATHS.transfers))).toBe("Rift view");
+    stubStorage(blockedStorage);
+    expect(chosenView(await htmlAt(PATHS.transfers))).toBe("Rift view");
   });
 });

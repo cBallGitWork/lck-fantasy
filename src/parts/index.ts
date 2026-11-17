@@ -38,6 +38,7 @@ export {
 export { money, mToWon, formatWon, WON_PER_M } from "./text/money";
 export { browserZone, timeIn } from "./text/time";
 export { PriceMove, RankMove } from "./display/Move";
+export { rememberedView, rememberView, VIEW_KEYS, type ViewKey } from "./util/rememberedView";
 export { OutlinedKey } from "./controls/OutlinedKey";
 export { PageFrame } from "./frame/PageFrame";
 export { PageHead, type WeekNav } from "./frame/PageHead";

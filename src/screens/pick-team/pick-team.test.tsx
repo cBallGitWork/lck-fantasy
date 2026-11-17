@@ -2,7 +2,10 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "vitest";
-import { html, text } from "../../testing/render";
+import { VIEW_KEYS } from "../../parts";
+import { PATHS } from "../../paths";
+import { html, htmlAt, text } from "../../testing/render";
+import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
 import { changeCount, pickNews, pickReducer, swapIds, type PickAction, type PickState } from "./model";
 import { PickTeamView } from "./PickTeam";
@@ -281,4 +284,12 @@ test("Rift view | Card view sets the view; ✕ closes the card and ends the swap
   expect(closed.selected).toBeUndefined();
   expect(text(view(closed))).not.toContain("Last 3 series");
   expect(html(view(closed))).not.toMatch(/tile--(fit|dim)/);
+});
+
+test("Pick Team opens on Rift the first time, then on the view shared with Points, and on Rift where storage is blocked", async () => {
+  expect(chosenView(await htmlAt(PATHS.pickTeam))).toBe("Rift view");
+  stubStorage(keptStorage({ [VIEW_KEYS.board]: "Card view", [VIEW_KEYS.transfers]: "List view" }));
+  expect(chosenView(await htmlAt(PATHS.pickTeam))).toBe("Card view");
+  stubStorage(blockedStorage);
+  expect(chosenView(await htmlAt(PATHS.pickTeam))).toBe("Rift view");
 });

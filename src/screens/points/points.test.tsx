@@ -1,10 +1,13 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
-import { expectInOrder, html, text } from "../../testing/render";
+import { VIEW_KEYS } from "../../parts";
+import { PATHS } from "../../paths";
+import { expectInOrder, html, htmlAt, text } from "../../testing/render";
+import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { MY_EARLIER_WEEKS, MY_WEEK3 } from "../../fixtures/week3";
 import { LATEST_WEEK, POINTS_FIXTURE, POINTS_WEEKS } from "./fixtures";
-import { POINTS_VIEW_KEY, rememberedView, weekOf } from "./index";
+import { weekOf } from "./index";
 import { LINE, LIVE_SERIES_ID, WEEK3_FINAL_SQUAD, weekGamesOf, type Kda, type LineWord } from "../../fixtures/week3";
 import type { PointsPlayer } from "./types";
 import { PointsPage } from "./PointsPage";
@@ -162,18 +165,12 @@ test("the fixture's total is its starters' points: 94, the Carry's 25 among them
   expect(faker?.carry).toEqual({ average: 19 });
 });
 
-test("the view opens on Rift the first time, then on the one kept, and on Rift where storage fails", () => {
-  const kept = (value: string | null) => ({ getItem: (key: string) => (key === POINTS_VIEW_KEY ? value : null) });
-  expect(rememberedView(undefined)).toBe("Rift view");
-  expect(rememberedView(kept(null))).toBe("Rift view");
-  expect(rememberedView(kept("Card view"))).toBe("Card view");
-  expect(rememberedView(kept("Pitch"))).toBe("Rift view");
-  const blocked = {
-    getItem: () => {
-      throw new Error("blocked");
-    },
-  };
-  expect(rememberedView(blocked)).toBe("Rift view");
+test("Points opens on Rift the first time, then on the view shared with Pick Team, and on Rift where storage is blocked", async () => {
+  expect(chosenView(await htmlAt(PATHS.points))).toBe("Rift view");
+  stubStorage(keptStorage({ [VIEW_KEYS.board]: "Card view", [VIEW_KEYS.transfers]: "List view" }));
+  expect(chosenView(await htmlAt(PATHS.points))).toBe("Card view");
+  stubStorage(blockedStorage);
+  expect(chosenView(await htmlAt(PATHS.points))).toBe("Rift view");
 });
 
 const week = (n: number) => {

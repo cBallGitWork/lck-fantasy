@@ -45,6 +45,10 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 ## Private leagues
 
 - Any manager can make a private league and invite others with a code or a link, as in FPL.
+- A link only fills in the code: it opens Join a league with the code in, and the manager presses
+  Join. A visitor with no account lands on the front door, picks a squad and signs up first; then
+  Join a league opens with the code in. Nobody joins a league without pressing Join (Craig,
+  17 Nov 2026).
 - A private league's scoring starts from the gameweek its maker picks. Example: a league made in
   gameweek 4 can count from gameweek 4. The choice is this gameweek or a later one, this one by
   default (Craig, 14 Nov 2026).

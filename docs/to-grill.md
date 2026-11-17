@@ -32,6 +32,8 @@ Claude's drafts and their sources are in
 ## Open from the foundations work (11 Nov 2026)
 
 - The screens and the look ([docs/design/](design/)). Craig asked whether player portraits can appear on the Rift (11 Nov 2026); shirts are settled in [spec/13](../spec/13-korean-touches.md#shirts-and-crests).
+- The team's name on its shirt, so a 28px shirt says whose it is, such as the code on the hem or
+  collar (Craig, 17 Nov 2026). Redraws all ten: for the shirts' design round after the reskin.
 
 ## Pages, built on made-up data (15 Nov 2026)
 

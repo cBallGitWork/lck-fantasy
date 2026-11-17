@@ -37,8 +37,6 @@ Claude's drafts and their sources are in
 
 States and rules the approved pictures don't draw. Each page shows what is drawn; these wait.
 
-- Home: can a stream that isn't live be picked? How many streams before More ▾ (built 5)? Do star
-  and flop show effective ownership, as spec/12 says (Faker 22 · 31%)?
 - Transfers: how a sold slot looks before a buy; what the list shows when no one is sold; which
   reason shows when over budget and team full; does a Carry's replacement take the C; Coach chip.
 - Following: empty lines for no requests, cheers or follows; does Block confirm first; is cheer
@@ -53,7 +51,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Stats: a `+` on each row that opens Transfers with that player chosen, so a scout isn't a dead
   end (design panel, 16 Nov 2026).
 - Stats: second click flips the sort; Max price steps; 0.0 or — for no games; an empty result.
-- Live: can a greyed stream be picked; the remembered stream when idle.
 - Series: VOD as ↗ or ›; an unknown series id; a coach's empty game as — or 0.
 - Compare: the search's role groups and caps; what /compare opens with no players.
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.

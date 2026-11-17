@@ -88,7 +88,8 @@ Each part is drawn one way on every screen.
   `--text` underline (Craig, 16 Nov 2026).
 - **Top bar**, the same on every screen: `Flol`, Home, Pick Team, Transfers, Points, Leagues, Stats,
   LCK, `● Live` (its dot always shown); at the right `presented by [Sponsor]` and the account menu
-  `Baron Steal FC ▾`, or `Sign in` for a visitor.
+  `Baron Steal FC ▾`, or `Log in ›` for a visitor, whose bar shows only Stats and LCK (Craig,
+  16 Nov 2026).
 - **A link** ends with `›`, in `--text` (Craig, 16 Nov 2026), and names where it goes: `Full stats ›`. Not underlined, save
   a link inside a sentence. A link leaving Flol ends with `↗`.
 - **Deadline**, one way everywhere: `Deadline Wed 07:45  16:45 KST` and the countdown `9h 45m`.

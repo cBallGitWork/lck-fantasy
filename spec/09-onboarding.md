@@ -33,6 +33,8 @@ Copies UCL Fantasy: the first page is one where you can just pick a team, with n
   until it is ticked, a team picked and a team name typed (spaces alone count as empty; Craig,
   17 Nov 2026), and the account is made on Save team, not at the Google
   or Discord step (Craig, 15 Nov 2026). The account keeps when they agreed and to which version.
+- On Save team, one cheer: "Baron Steal FC is in. 화이팅!" (the team's own name; Craig, 17 Nov
+  2026).
 - Team names are as in FPL: free text, need not be unique, with a length cap, and offensive names
   can be removed. Example: two managers can both be called Faker's Chair.
 

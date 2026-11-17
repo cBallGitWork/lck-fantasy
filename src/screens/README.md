@@ -28,4 +28,5 @@ So each screen's issue touches only its own folder:
 - `coach-card/`: the full coach card (`/coach/$coachId`).
 - `profile/`: a manager's profile (`/manager/$managerId`).
 - `following/`: the managers you follow.
+- `legal/`: Privacy (`/privacy`) and Terms (`/terms`), `docs/legal/`'s text as plain pages, with no picture (spec/12, Settings).
 - `pick-team-signed-out/`: the front door (`docs/design/site-flow.md`, Pick team (signed out)). Only `guestSquad.ts` so far, the guest's squad kept in the browser (spec/09); no route until it has its approved picture.

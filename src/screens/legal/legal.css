@@ -1,0 +1,19 @@
+/* Privacy and Terms: plain text at a reading width, as Settings' column. */
+.legal {
+  width: calc(var(--s-6) * 30);
+  max-width: 100%;
+  margin-top: var(--s-5);
+  color: var(--text);
+}
+.legal p,
+.legal__list {
+  margin: 0 0 var(--s-4);
+}
+.legal__list {
+  padding-left: var(--s-5);
+}
+.legal__link {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: var(--s-1);
+}

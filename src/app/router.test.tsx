@@ -25,6 +25,8 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   coachCard: [{ to: PATHS.coachCard, params: { coachId: "kkoma" } }, "coach-card"],
   profile: [{ to: PATHS.profile, params: { managerId: "minji" } }, "profile"],
   following: [{ to: PATHS.following }, "following"],
+  privacy: [{ to: PATHS.privacy }, "legal"],
+  terms: [{ to: PATHS.terms }, "legal"],
 };
 
 test.each(Object.keys(PATHS) as ScreenKey[])("the %s route renders its screen with the top bar", async (key) => {

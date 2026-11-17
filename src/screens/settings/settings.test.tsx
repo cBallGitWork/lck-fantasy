@@ -50,6 +50,16 @@ describe("Settings, each tab as its picture draws it", () => {
     expect(out).not.toContain("T1 · United Kingdom");
   });
 
+  test("with no banner, the preview greys 배너 in the hangul's place", () => {
+    const out = settingsOn("Team", { draft: { ...DRAFT, banner: "" } });
+    expectInOrder(out, ["0/20", 'class="settings__banner-hangul settings__banner-hangul--empty" lang="ko">배너<', "Baron Steal FC"]);
+    expect(settingsOn("Team")).not.toContain("settings__banner-hangul--empty");
+  });
+
+  test("the foot links Privacy and Terms", () => {
+    expectInOrder(settingsOn("Team"), ['href="/privacy"', "Privacy ›", 'href="/terms"', "Terms ›"]);
+  });
+
   test("Display: the browser's zone, the deadline in it and in KST, and the theme", () => {
     const out = settingsOn("Display");
     expectInOrder(out, [">Team •<", 'aria-selected="true"', ">Display<", "Time zone", "Browser · Europe/London", "Deadline", "Wed 07:45", "16:45 KST", "Theme"]);
@@ -129,7 +139,7 @@ describe("sign-up", () => {
     expectInOrder(out, ["Save your team", "1 of 2", "Your squad of 9 is kept while you sign up.", "GContinue with Google", "DContinue with Discord", "No password is stored.", ...FOOT.slice(0, 2)]);
   });
 
-  test("step 2 asks name, team and country, says when they lock, and holds Save team until a team and the tick", () => {
+  test("step 2 asks name, team and country, says when they lock, and holds Save team until a name, a team and the tick", () => {
     const step = (answers = SIGN_UP) =>
       html(
         <SignUpStepTwo
@@ -164,6 +174,8 @@ describe("sign-up", () => {
     ]);
     expect(out).toMatch(/disabled="">Save team/);
     expect(step({ ...SIGN_UP, favouriteTeam: "T1", ticked: true })).not.toMatch(/disabled="">Save team/);
+    expect(step({ ...SIGN_UP, teamName: "  ", favouriteTeam: "T1", ticked: true })).toMatch(/disabled="">Save team/);
+    expectInOrder(out, ["accept the", 'href="/terms"', ">Terms<", 'href="/privacy"', ">Privacy<"]);
   });
 });
 
@@ -188,9 +200,11 @@ describe("the rules", () => {
     expect(timeIn(DEADLINE_AT, "Asia/Seoul")).toEqual({ local: "Wed 16:45", kst: "16:45" });
   });
 
-  test("Save team needs a team and the tick", () => {
-    expect(canSaveTeam(null, true)).toBe(false);
-    expect(canSaveTeam("T1", false)).toBe(false);
-    expect(canSaveTeam("T1", true)).toBe(true);
+  test("Save team needs a name, a team and the tick; spaces alone are no name", () => {
+    expect(canSaveTeam("Baron Steal FC", null, true)).toBe(false);
+    expect(canSaveTeam("Baron Steal FC", "T1", false)).toBe(false);
+    expect(canSaveTeam("", "T1", true)).toBe(false);
+    expect(canSaveTeam("   ", "T1", true)).toBe(false);
+    expect(canSaveTeam("Baron Steal FC", "T1", true)).toBe(true);
   });
 });

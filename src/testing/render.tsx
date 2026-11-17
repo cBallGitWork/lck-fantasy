@@ -30,7 +30,7 @@ export const text = (node: ReactNode) => plain(html(node));
 
 /** Each word in `markup` with a hover (the Hint part), as `[word, its line]`, in order. */
 export const hovers = (markup: string): [string, string][] =>
-  [...markup.matchAll(/<span class="hint[ "][^>]*>(.*?)<span class="hint__line"[^>]*>(.*?)<\/span>/g)].map((m) => [plain(m[1]), plain(m[2])]);
+  [...markup.matchAll(/<span class="hint[ "][^>]*>(.*?)<span class="hint__line"[^>]*>(.*?)<\/span>/g)].map(([, word = "", line = ""]) => [plain(word), plain(line)]);
 
 /** Fails unless every piece is in `out`, each after the end of the one before. */
 export function expectInOrder(out: string, pieces: readonly string[]) {

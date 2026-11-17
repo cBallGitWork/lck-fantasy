@@ -139,10 +139,13 @@ function readFrame(reading: LiveReading, frame: FeedFrame): LiveReading {
   const firstBloodTaken = reading.players.some((p) => p.firstBloodKill);
   const reaches15 = startedAt !== null && at >= startedAt + GOLD_AT_MS;
   const byId = new Map([...frame.blueTeam.participants, ...frame.redTeam.participants].map((p) => [p.participantId, p]));
-  const timed = reading.lastFrameAt > 0 && at - reading.lastFrameAt <= FRAME_GAP_MS;
+  // A reading's first frame is its baseline: kills and towers already there when it started
+  // mid-game have no known order, so first blood and first tower wait for the final stats.
+  const baseline = reading.lastFrameAt === 0;
+  const timed = !baseline && at - reading.lastFrameAt <= FRAME_GAP_MS;
   // First blood is credited only when one player's kills rose in the frame; two at once (after a
   // skipped stretch) leave it to the final stats.
-  const scorers = reading.players.filter((p) => (byId.get(p.participantId)?.kills ?? 0) > p.kills).length;
+  const scorers = baseline ? 0 : reading.players.filter((p) => (byId.get(p.participantId)?.kills ?? 0) > p.kills).length;
   const players = reading.players.map((player) => {
     const now = byId.get(player.participantId);
     if (now === undefined) throw new Error(`Live feed frame ${frame.rfc460Timestamp} has no participant ${player.participantId}.`);
@@ -158,7 +161,7 @@ function readFrame(reading: LiveReading, frame: FeedFrame): LiveReading {
   const fedTeam = (team: LiveTeam) => (team.side === "blue" ? frame.blueTeam : frame.redTeam);
   // First tower, like first blood, goes to one team only; both taking one in the same frame
   // (after a skipped stretch) leaves it to the final stats.
-  const noTowerYet = reading.teams.every((t) => t.towers === 0);
+  const noTowerYet = !baseline && reading.teams.every((t) => t.towers === 0);
   const towerTakers = reading.teams.filter((t) => fedTeam(t).towers > 0).length;
   const teamNow = (team: LiveTeam): LiveTeam => {
     const fed = fedTeam(team);

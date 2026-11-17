@@ -48,6 +48,11 @@ describe("readWindow", () => {
     expect(reading.players.every((p) => livePlayerStats(reading, p.participantId).biggestMultikill === 0)).toBe(true);
   });
 
+  test("a reading started mid-game credits no first blood or first tower: they wait for the final stats", () => {
+    expect(fold(nextWindow((f) => (f.blueTeam.participants[0]!.kills = 1))).players.some((p) => p.firstBloodKill)).toBe(false);
+    expect(fold(nextWindow((f) => (f.blueTeam.towers = 1))).teams.some((t) => t.firstTower)).toBe(false);
+  });
+
   test("a window already read changes nothing", () => {
     const once = fold(start, firstBlood);
     expect(readWindow(once, firstBlood)).toEqual(once);

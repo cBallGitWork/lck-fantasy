@@ -33,6 +33,7 @@ export const WORDS = {
   public: "Public",
   publicList: "Team name, favourite team, country, banner, points",
   yourData: "Your data",
+  /** The feature's name in spec/12. */
   download: "Download my data",
   deleteAccount: "Delete account",
   privacy: "Privacy ›",
@@ -41,13 +42,13 @@ export const WORDS = {
   privacyEmail: "privacy email",
   /** The Delete sheet. */
   deleteTitle: "Delete account?",
-  backups: "Backups clear within 30 days.",
+  backups: "Backups are deleted within 30 days.",
   keepCopy: "first to keep a copy.",
   back: "Back",
   /** The Delete sheet's rows. */
   teamAndSquad: "Team and squad",
   pointsAndHistory: "Points and history",
-  follows: "Follows",
+  follows: "Following and followers",
 } as const;
 
 export const TAB_NAMES: Record<SettingsTab, string> = {
@@ -76,13 +77,11 @@ const FIELD_NAMES: Record<keyof SettingsValues, string> = {
 };
 
 /** The save bar's words: `1 change: hangul banner`. */
-export function changeLine(changed: (keyof SettingsValues)[]): string {
-  const count = changed.length;
-  return `${count} change${count === 1 ? "" : "s"}: ${changed.map((key) => FIELD_NAMES[key]).join(", ")}`;
-}
+export const changeLine = (changed: (keyof SettingsValues)[]) =>
+  `${plural(changed.length, "change")}: ${changed.map((key) => FIELD_NAMES[key]).join(", ")}`;
 
 /** The reminder's lead time as the Emails tab shows it: `24 hours before`. */
-export const hoursBefore = (hours: number) => `${hours} hour${hours === 1 ? "" : "s"} before`;
+export const hoursBefore = (hours: number) => `${plural(hours, "hour")} before`;
 
 /** `Browser · Europe/London`: the time zone the browser reports, as the first choice. */
 export const browserZoneLabel = (zone: string) => `Browser · ${zone}`;
@@ -93,8 +92,8 @@ export const sentTo = (email: string) => `Sent to ${email}`;
 /** `from Google`: how the manager signs in. */
 export const fromProvider = (provider: string) => `from ${provider}`;
 
-/** The Delete sheet's sentence: `Baron Steal FC is erased at once and can't be brought back.` */
-export const erased = (team: string) => `${team} is erased at once and can't be brought back.`;
+/** The Delete sheet's sentence, erased at once (docs/decisions.md): `Baron Steal FC is deleted at once. You can't undo this.` */
+export const erased = (team: string) => `${team} is deleted at once. You can't undo this.`;
 
 /** `Weeks 1–3 · 187 pts`: the weeks played and the points they scored. */
 export const weeksPoints = (from: number, to: number, points: number) => `Weeks ${from}–${to} · ${points} pts`;
@@ -109,5 +108,5 @@ export const leagueList = (general: string[], privateCount: number) =>
 /** `12 following · 9 followers`. */
 export const followCounts = (following: number, followers: number) => `${following} following · ${plural(followers, "follower")}`;
 
-/** `passes to Haru's Tower Divers`: who a private league goes to. */
-export const passesTo = (team: string) => `passes to ${team}`;
+/** `Haru's Tower Divers becomes admin`: who a private league passes to (spec/12, Settings). */
+export const passesTo = (team: string) => `${team} becomes admin`;

@@ -7,7 +7,7 @@ questions are in [docs/to-grill.md](../docs/to-grill.md).
 ## Live
 
 - The beta has live points: "we really need live in some way" (Craig, 13 Nov 2026). They run
-  from the first day of the LEC Winter test (Craig, 18 Nov 2026).
+  from the first day of the January tests (Craig, 18 Nov 2026).
 - They come from Riot's unofficial live stats feed and are shown as provisional. Riot has never
   allowed fan use of it and can switch it off ([research](../docs/research/live-data-sources.md)).
 - Live points show only the lines the feed carries: kills, deaths, assists, gold lead at 15,

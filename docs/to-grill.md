@@ -3,13 +3,6 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
-## The road to launch (18 Nov 2026)
-
-- The LCK Cup: played or not. Dropped on 16 Nov, then "not confirmed" (Craig, 18 Nov 2026).
-- The simulated season: how the bots pick and change their squads, how fast time skips, what it
-  checks and who watches it.
-- The Winter test: how many bots and invited accounts, and how they're invited.
-
 ## An LEC game, talk only (17 Nov 2026)
 - A second game for the LEC, which starts 15 Jan 2027 with three splits; its schedule differs
   from the LCK's. Each split as last summer's: 8 weeks, some with 5 match days (Craig, from the

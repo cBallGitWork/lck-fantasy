@@ -4,6 +4,7 @@
 import { ConvexError, v } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
 import { internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "../_generated/server";
+import { now } from "../admin/clock";
 import {
   autoLeagues,
   canChangeFavouriteTeam,
@@ -48,7 +49,7 @@ export async function joinAutoLeagues(ctx: MutationCtx, entry: Id<"entries">) {
 export const changeFavouriteTeam = internalMutation({
   args: { entry: v.id("entries"), team: v.id("teams"), firstDeadline: v.number() },
   handler: async (ctx, { entry, team, firstDeadline }) => {
-    if (!canChangeFavouriteTeam(firstDeadline, Date.now())) throw refuse({ rule: "favouriteTeamFixed" });
+    if (!canChangeFavouriteTeam(firstDeadline, await now(ctx))) throw refuse({ rule: "favouriteTeamFixed" });
     const manager = await managerOf(ctx, entry);
     // Every entry joins its team's league at sign-up, so one that isn't in it is a broken row, said so.
     const old = await membership(ctx, await autoLeague(ctx, { kind: "team", teamId: manager.favouriteTeam }), entry);

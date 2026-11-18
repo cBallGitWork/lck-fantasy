@@ -38,9 +38,12 @@ export interface HubStage {
   name: string;
   fixtures: HubWeek[];
   results: HubWeek[];
-  /** The week each tab opens on. */
-  openFixtures: number;
+  /** This week, in `fixtures`: Fixtures opens on it and its ‹ stops there, as past weeks are on Results. */
+  thisWeek: number;
+  /** The week Results opens on. */
   openResults: number;
+  /** When the stage starts, from the competition's data: `Wed 10 Mar`. */
+  starts: string;
   groups: StandingsGroup[];
 }
 

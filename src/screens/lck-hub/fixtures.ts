@@ -43,12 +43,13 @@ export const LCK_HUB: LckHubData = {
       name: "Groups",
       fixtures: [{ label: "Week 4", dates: "20–24 Jan", series: WEEK4_SERIES }],
       results: [{ label: "Week 3", dates: "13–17 Jan", series: WEEK3_SERIES_FINAL }],
-      openFixtures: 0,
+      thisWeek: 0,
       openResults: 0,
+      starts: "Wed 6 Jan",
       groups: WEEK3_STANDINGS.map((g) => ({ ...g, rows: g.rows.map(row) })),
     },
-    { name: "Play-In", fixtures: [], results: [], openFixtures: 0, openResults: 0, groups: [] },
-    { name: "Playoffs", fixtures: [], results: [], openFixtures: 0, openResults: 0, groups: [] },
+    { name: "Play-In", fixtures: [], results: [], thisWeek: 0, openResults: 0, starts: "Wed 10 Mar", groups: [] },
+    { name: "Playoffs", fixtures: [], results: [], thisWeek: 0, openResults: 0, starts: "Wed 24 Mar", groups: [] },
   ],
   teams: [
     {

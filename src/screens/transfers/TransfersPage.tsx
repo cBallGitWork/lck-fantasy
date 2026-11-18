@@ -9,7 +9,6 @@ import {
   add,
   ALL,
   bankNow,
-  CONFIRMED,
   EMPTY_PLAN,
   freeLeft,
   freeUsed,
@@ -34,9 +33,10 @@ import { PlayerList } from "./PlayerList";
 import { spotOf } from "./spots";
 import { SquadList } from "./SquadList";
 import "./transfers.css";
+import { WORDS } from "./words";
 
 /** Transfers' two views: the nine on the Rift, or listed by role (Craig, 16 Nov 2026). */
-export const TRANSFER_VIEWS = [RIFT_VIEW, "List view"] as const;
+export const TRANSFER_VIEWS = [RIFT_VIEW, WORDS.listView] as const;
 export type View = (typeof TRANSFER_VIEWS)[number];
 
 export interface TransfersPageProps {
@@ -126,8 +126,8 @@ export function TransfersPage(props: TransfersPageProps) {
   return (
     <PageFrame screen="transfers" active="transfers" account={props.account} side={side}>
       <PageHead
-        title="Transfers"
-        hangul="이적"
+        title={WORDS.title}
+        hangul={WORDS.hangul}
         sub={
           <>
             {props.competition} {props.week} · <Deadline {...props.deadline} />
@@ -136,18 +136,18 @@ export function TransfersPage(props: TransfersPageProps) {
       >
         <div className="transfers__figures">
           <span className="transfers__figure quiet">
-            Free transfers <b className="num">{freeLeft(rules, made)}</b>
+            {WORDS.freeTransfers} <b className="num">{freeLeft(rules, made)}</b>
           </span>
           <span className="transfers__figure quiet">
-            Cost <b className="num">{signed(-hit)}</b>
+            {WORDS.cost} <b className="num">{signed(-hit)}</b>
           </span>
           <span className={cx("transfers__figure quiet", bank < 0 && "transfers__figure--over")}>
-            Bank <b className="num">{formatWon(bank)}</b>
+            {WORDS.bank} <b className="num">{formatWon(bank)}</b>
           </span>
         </div>
       </PageHead>
       <div className="transfers__controls">
-        <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={chooseView} label="View" />
+        <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={chooseView} label={WORDS.view} />
         <span className="transfers__keys">
           {props.buffs.map((buff) => (
             <Hint key={buff.name} line={buff.does} onKey>
@@ -197,10 +197,10 @@ export function TransfersPage(props: TransfersPageProps) {
         </span>
         <span className="transfers__actions">
           <button type="button" className="transfers__reset" onClick={reset}>
-            Reset
+            {WORDS.reset}
           </button>
           <MainAction disabledReason={reviewBlock(squad, plan, rules)} onClick={() => setReviewing(true)}>
-            Review and confirm ›
+            {WORDS.review}
           </MainAction>
         </span>
       </div>
@@ -221,7 +221,7 @@ export function TransfersPage(props: TransfersPageProps) {
             );
             setReviewing(false);
             reset();
-            say(CONFIRMED);
+            say(WORDS.confirmed);
           }}
         />
       )}

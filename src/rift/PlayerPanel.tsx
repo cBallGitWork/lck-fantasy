@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { cx, gameNo, LinkGo } from "../parts";
 import type { Go } from "../paths";
 import { Shirt } from "./Shirt";
+import { WORDS } from "./words";
 import "./PlayerPanel.css";
 
 /**
@@ -27,7 +28,7 @@ export function PlayerPanel({
           <b className="player-panel__name">{name}</b>
           <span className="player-panel__meta">{meta}</span>
         </div>
-        <button type="button" className="player-panel__close key-bare" aria-label="Close" onClick={onClose}>
+        <button type="button" className="player-panel__close key-bare" aria-label={WORDS.close} onClick={onClose}>
           ✕
         </button>
       </header>
@@ -79,7 +80,7 @@ export function PanelSumLabel({ children }: { children: ReactNode }) {
 export function PanelFoot({ go }: { go: Go }) {
   return (
     <div className="player-panel__foot">
-      <LinkGo go={go}>Full stats</LinkGo>
+      <LinkGo go={go}>{WORDS.fullStats}</LinkGo>
     </div>
   );
 }

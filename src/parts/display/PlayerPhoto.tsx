@@ -1,9 +1,7 @@
 import type { MeasureKey } from "../../theme/tokens";
 import { Crest } from "./Crest";
+import { PHOTO_CREDIT } from "../words";
 import "./PlayerPhoto.css";
-
-/** The credit on every player photo (spec/13, Shirts and crests). */
-export const PHOTO_CREDIT = "Photo: LCK";
 
 /**
  * A player's media-day portrait, filling its box and credited `Photo: LCK`; his team's crest at

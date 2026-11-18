@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
+import { BACK } from "../words";
 import "./SheetKeys.css";
-
-/** A sheet's way out, the same in every sheet. */
-export const BACK = "Back";
 
 /** A sheet's foot: Back, a text link (as in the Transfers confirm), then the sheet's main action. */
 export function SheetKeys({ onBack, children }: { onBack: () => void; children: ReactNode }) {

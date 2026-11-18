@@ -5,12 +5,15 @@ import { cardGo, PATHS } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import {
   ALL,
+  COACHES,
   FIGURES,
   linesFor,
   listRows,
   pageCount,
   pageLabel,
   pageRows,
+  PER_GAME,
+  PLAYERS,
   priceChoices,
   TABS,
   type Figures,
@@ -19,6 +22,7 @@ import {
   type StatsRow,
   type StatsView,
 } from "./stats";
+import { findA, pageName, WORDS } from "./words";
 import "./stats.css";
 
 type Ranked = StatsRow & { rank: number };
@@ -43,8 +47,8 @@ export function StatsPage({ account, view, rows, spans, onChange }: StatsPagePro
   return (
     <PageFrame screen="stats" active="stats" account={account}>
       <div className="stats">
-        <PageHead title="Stats" hangul="통계" link={{ label: "Price changes", go: { to: PATHS.priceChanges } }} />
-        <Tabs id={tabsId} tabs={TABS} chosen={view.tab} onChoose={(tab) => onChange({ tab })} label="Players or coaches" />
+        <PageHead title={WORDS.title} hangul={WORDS.hangul} link={{ label: WORDS.priceChanges, go: { to: PATHS.priceChanges } }} />
+        <Tabs id={tabsId} tabs={TABS} chosen={view.tab} onChoose={(tab) => onChange({ tab })} label={WORDS.tabsLabel} />
         <TabPanel id={tabsId}>
           <Controls view={view} rows={rows} spans={spans} onChange={onChange} />
           <Table<Ranked>
@@ -66,14 +70,14 @@ export function StatsPage({ account, view, rows, spans, onChange }: StatsPagePro
 }
 
 function Controls({ view, rows, spans, onChange }: Omit<StatsPageProps, "account">) {
-  const players = view.tab === "Players";
+  const players = view.tab === PLAYERS;
   const who = players ? "player" : "coach";
   return (
     <div className="stats__controls">
       {players && (
         <ViewToggle<RoleKey | typeof ALL>
           options={[
-            { value: ALL, label: "All" },
+            { value: ALL, label: WORDS.all },
             ...ROLE_KEYS.map((role) => ({
               value: role,
               label: (
@@ -86,34 +90,34 @@ function Controls({ view, rows, spans, onChange }: Omit<StatsPageProps, "account
           ]}
           chosen={view.role}
           onChoose={(role) => onChange({ role })}
-          label="Role"
+          label={WORDS.role}
         />
       )}
       <Select
-        label="Team"
+        label={WORDS.team}
         value={view.team}
-        options={[{ value: ALL, label: "All" }, ...(Object.keys(TEAMS) as TeamCode[]).map((code) => ({ value: code, label: code }))]}
+        options={[{ value: ALL, label: WORDS.all }, ...(Object.keys(TEAMS) as TeamCode[]).map((code) => ({ value: code, label: code }))]}
         onChange={(team) => onChange({ team: team as TeamCode | typeof ALL })}
       />
       <Select
-        label="Max price"
+        label={WORDS.maxPrice}
         value={view.maxPrice === null ? ALL : String(view.maxPrice)}
-        options={[{ value: ALL, label: "Any" }, ...priceChoices(rows).map((p) => ({ value: String(p), label: money(p) }))]}
+        options={[{ value: ALL, label: WORDS.anyPrice }, ...priceChoices(rows).map((p) => ({ value: String(p), label: money(p) }))]}
         onChange={(price) => onChange({ maxPrice: price === ALL ? null : Number(price) })}
       />
-      <Select label="Span" value={view.span} options={spans} onChange={(span) => onChange({ span })} />
+      <Select label={WORDS.span} value={view.span} options={spans} onChange={(span) => onChange({ span })} />
       <ViewToggle<Figures>
         options={FIGURES}
         chosen={view.figures}
         onChoose={(figures) => onChange({ figures })}
-        label="Totals or per game"
+        label={WORDS.figuresLabel}
       />
       <span className="stats__gap" />
       <input
         className="stats__find"
         type="search"
-        placeholder={`Find a ${who}`}
-        aria-label={`Find a ${who}`}
+        placeholder={findA(who)}
+        aria-label={findA(who)}
         value={view.search}
         onChange={(e) => onChange({ search: e.target.value })}
       />
@@ -148,7 +152,7 @@ function Select({
 
 /** A count as the toggle shows it: as it is, or over games to one decimal. Zero in mid grey. */
 function Count({ n, games, figures }: { n: number; games: number; figures: Figures }) {
-  return <span className={cx(n === 0 && "stats__zero")}>{figures === "Per game" ? perGame(n, games) : n}</span>;
+  return <span className={cx(n === 0 && "stats__zero")}>{figures === PER_GAME ? perGame(n, games) : n}</span>;
 }
 
 /** The list's columns: the name, price and move, form, owned, Pts, then Games and the lines. */
@@ -166,20 +170,20 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
     group,
   });
   const line = ({ key, head }: Line) => sortable(key, head, (r) => <Count n={r.lines[key] ?? 0} games={r.games} figures={view.figures} />);
-  const coaches = view.tab === "Coaches";
+  const coaches = view.tab === COACHES;
   return [
     {
       key: "name",
-      head: <span className={cx("stats__lead-head", coaches && "stats__lead-head--coach")}>{coaches ? "Coach" : "Player"}</span>,
+      head: <span className={cx("stats__lead-head", coaches && "stats__lead-head--coach")}>{coaches ? WORDS.coach : WORDS.player}</span>,
       cell: (r) => <Lead row={r} />,
       fullText: (r) => r.name,
     },
-    sortable("priceM", "Price", (r) => money(r.priceM)),
+    sortable("priceM", WORDS.price, (r) => money(r.priceM)),
     { key: "move", head: "", cell: (r) => <PriceMove money={r.moveM} className="stats__move" /> },
-    sortable("form", "Form", (r) => oneDecimal(r.form)),
-    sortable("ownedPct", "Owned", (r) => pct(r.ownedPct)),
-    sortable("points", "Pts", (r) => <Count n={r.points} games={r.games} figures={view.figures} />),
-    sortable("games", "Games", (r) => r.games, true),
+    sortable("form", WORDS.form, (r) => oneDecimal(r.form)),
+    sortable("ownedPct", WORDS.owned, (r) => pct(r.ownedPct)),
+    sortable("points", WORDS.pts, (r) => <Count n={r.points} games={r.games} figures={view.figures} />),
+    sortable("games", WORDS.games, (r) => r.games, true),
     ...(coaches ? [seriesColumn] : []),
     ...linesFor(view.tab).map(line),
   ];
@@ -187,7 +191,7 @@ function columns(view: StatsView, onChange: StatsPageProps["onChange"]): Column<
 
 const seriesColumn: Column<Ranked> = {
   key: "series",
-  head: "Series",
+  head: WORDS.series,
   cell: (r) => (r.series ? score(r.series) : ""),
   figure: true,
 };
@@ -226,9 +230,9 @@ function Pages({ page, pages, onPage }: { page: number; pages: number; onPage: (
   };
   return (
     <span className="stats__pages">
-      {key(page - 1, "‹", "Page before")}
-      {Array.from({ length: pages }, (_, i) => key(i + 1, i + 1, `Page ${i + 1}`, i + 1 === page))}
-      {key(page + 1, "›", "Page after")}
+      {key(page - 1, "‹", WORDS.pageBefore)}
+      {Array.from({ length: pages }, (_, i) => key(i + 1, i + 1, pageName(i + 1), i + 1 === page))}
+      {key(page + 1, "›", WORDS.pageAfter)}
     </span>
   );
 }

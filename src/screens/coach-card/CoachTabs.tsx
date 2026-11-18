@@ -1,12 +1,18 @@
 // The coach card's tabs: This week, Fixtures, History and Roster (coach.html; Fixtures as the player card's).
 import { Fragment } from "react";
-import { gameNo, money, MeDot, NONE, pct, perGame, result, seriesResult, seriesTitle, signed, sum, Table, YOUR_TIME } from "../../parts";
+import { gameNo, LiveTag, money, MeDot, NONE, pct, perGame, seriesResult, seriesTitle, signed, sum, Table, Time, YOUR_TIME } from "../../parts";
 import { ROLE_NAME } from "../../rift";
-import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, RosterRow, WeekSeries } from "./types";
+import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, PlayedSeries, RosterRow, WeekSeries } from "./types";
 
 
-/** This week: each series (the strip carries its Live tag), its games with the lines they scored, the series line, then the week. */
+const isPlayed = (s: WeekSeries): s is PlayedSeries => s.state !== "upcoming";
+
+/**
+ * This week: each series (the strip carries its Live tag), its games with the lines they scored, the series line, then the week.
+ * A series not yet started shows its time and — for points, and the week is — until his team's first series starts (spec/12).
+ */
 export function CoachThisWeek({ week }: { week: CoachWeek }) {
+  const started = week.series.some(isPlayed);
   return (
     <div className="coach-card__week">
       {week.series.map((s) => (
@@ -14,30 +20,32 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
           <h2 className="coach-card__block">
             <span>
               {seriesTitle(s.day, s.opponent)}{" "}
-              <span className="coach-card__soft">{seriesResult(s.score, s.state === "live")}</span>
+              <span className="coach-card__soft">{isPlayed(s) ? seriesResult(s.score, s.state === "live") : <Time local={s.local} kst={s.kst} />}</span>
             </span>
-            <b className="num">{s.points}</b>
+            <b className="num">{isPlayed(s) ? s.points : NONE}</b>
           </h2>
-          <table className="coach-card__games">
-            <tbody>
-              {s.games.map((g, i) => (
-                <tr key={i} className={g.counts ? undefined : "coach-card__drop"}>
-                  <td className="coach-card__g coach-card__soft">{gameNo(i + 1)}</td>
-                  <td className="coach-card__g coach-card__soft">{g.result ?? ""}</td>
-                  <td className="coach-card__soft">{g.clock ?? (g.lines.length > 0 ? g.lines.join(" · ") : NONE)}</td>
-                  <td className="coach-card__pts num">{g.points}</td>
-                </tr>
-              ))}
-              <SeriesLine series={s} week={week} />
-            </tbody>
-          </table>
+          {isPlayed(s) && (
+            <table className="coach-card__games">
+              <tbody>
+                {s.games.map((g, i) => (
+                  <tr key={i} className={g.counts ? undefined : "coach-card__drop"}>
+                    <td className="coach-card__g coach-card__soft">{gameNo(i + 1)}</td>
+                    <td className="coach-card__g coach-card__soft">{g.result ?? ""}</td>
+                    <td className="coach-card__soft">{g.clock ?? (g.lines.length > 0 ? g.lines.join(" · ") : NONE)}</td>
+                    <td className="coach-card__pts num">{g.points}</td>
+                  </tr>
+                ))}
+                <SeriesLine series={s} week={week} />
+              </tbody>
+            </table>
+          )}
         </Fragment>
       ))}
       <table className="coach-card__games">
         <tbody>
           <tr className="coach-card__total">
             <td>Week {week.week}</td>
-            <td className="coach-card__pts num">{week.total}</td>
+            <td className="coach-card__pts num">{started ? week.total : NONE}</td>
           </tr>
         </tbody>
       </table>
@@ -46,7 +54,7 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
 }
 
 /** The series line: +3 won, −1 lost; while live, both. */
-function SeriesLine({ series, week }: { series: WeekSeries; week: CoachWeek }) {
+function SeriesLine({ series, week }: { series: PlayedSeries; week: CoachWeek }) {
   const [label, points] =
     series.state === "live"
       ? [`Series · ${signed(week.seriesWon)} if won, ${signed(week.seriesLost)} if lost`, NONE]
@@ -94,7 +102,7 @@ export function CoachFixtures({ rows, team }: { rows: FixtureRow[]; team: string
 
 /**
  * History: each series' points, the week's price and total once; then past seasons, the team's.
- * `shown` is the rows the strip doesn't show; a week's total still counts them all.
+ * `shown` is the rows the strip doesn't show, and a live one; a week's total still counts them all.
  */
 export function CoachHistoryTab({ history, shown, team }: { history: CoachHistory; shown: HistoryRow[]; team: string }) {
   const weekTotal = (week: number) => sum(history.rows.filter((r) => r.week === week).map((r) => r.points));
@@ -108,7 +116,16 @@ export function CoachHistoryTab({ history, shown, team }: { history: CoachHistor
         ruleAbove={(r) => r !== shown[0] && firstOfWeek(shown, r)}
         columns={[
           { key: "week", head: "Week", width: "goCol", cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
-          { key: "series", head: "Series", cell: (r) => `${r.day} · ${result(r.score)} ${r.opponent}` },
+          {
+            key: "series",
+            head: "Series",
+            cell: (r) => (
+              <>
+                {`${r.day} · ${seriesResult(r.score, r.live ?? false)} ${r.opponent}`}
+                {r.live && <> <LiveTag /></>}
+              </>
+            ),
+          },
           { key: "games", head: "Games", figure: true, cell: (r) => r.games },
           { key: "price", head: "Price", figure: true, cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{money(r.priceM)}</span> : "") },
           { key: "pts", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },

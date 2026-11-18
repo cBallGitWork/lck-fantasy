@@ -28,9 +28,9 @@ export const MINJI_EARLIER_WEEKS = [110, 112] as const;
 const MINJI_WEEK3_POINTS = 93;
 export const MINJI_WEEK3 = { points: MINJI_WEEK3_POINTS, total: MINJI_EARLIER_WEEKS[0] + MINJI_EARLIER_WEEKS[1] + MINJI_WEEK3_POINTS } as const;
 
-/** One series of each followed manager's Week 3 and his points in it, as Following's and Home's feeds show them; Dan's with his Carry. */
+/** One series of each followed manager's Week 3 and his points in it, as Following's and Home's feeds show them; Dan's with his Captain. */
 export const FOLLOWED_WEEK3 = {
   minji: { seriesId: "w3-sat-1", points: 20 },
-  dan: { seriesId: "w3-wed-1", points: 34, carry: "Faker" },
+  dan: { seriesId: "w3-wed-1", points: 34, captain: "Faker" },
   jae: { seriesId: "w3-fri-2", points: 9 },
 } as const;

@@ -3,7 +3,7 @@
 
 import { sum } from "../parts";
 import type { Mark, PersonRole, SlotKey, SquadSlot } from "../rift";
-import { carried, playerId, seriesPoints, type TeamCode } from "./competition";
+import { captained, playerId, seriesPoints, type TeamCode } from "./competition";
 import { formOf, statsOf } from "./players";
 import { fromSide, seriesById } from "./series";
 import { WEEK3_SERIES_FINAL } from "./weeks";
@@ -31,7 +31,7 @@ export const POINTS_SQUAD: PointsPick[] = [
   { slot: "top", name: "Zeus", team: "HLE", role: "top", series: [{ id: "w3-wed-1", games: [4, 1, 3] }, { id: "w3-sat-1", games: [2, 5, 0] }] },
   { slot: "jng", name: "Canyon", team: "GEN", role: "jng", series: [{ id: "w3-wed-2", games: [3, 4] }, { id: "w3-sat-1", games: [2, 3, 4] }] },
   { slot: "mid", name: "Faker", team: "T1", role: "mid", mark: "C", series: [{ id: "w3-wed-1", games: [5, 2, 7] }, { id: "w3-sat-2", games: [4, 1] }] },
-  { slot: "bot", name: "Ruler", team: "GEN", role: "bot", mark: "V", series: [{ id: "w3-wed-2", games: [3, 4] }, { id: "w3-sat-1", games: [3, 1, 4] }] },
+  { slot: "bot", name: "Ruler", team: "GEN", role: "bot", series: [{ id: "w3-wed-2", games: [3, 4] }, { id: "w3-sat-1", games: [3, 1, 4] }] },
   { slot: "sup", name: "Delight", team: "HLE", role: "sup", birthday: true, series: [{ id: "w3-wed-1", games: [2, 3, 1] }, { id: "w3-sat-1", games: [1, 2, 2] }] },
   { slot: "flex", name: "Siwoo", team: "DK", role: "top", series: [{ id: "w3-thu-1", games: [3, 2] }, { id: "w3-sat-2", games: [2, 1] }] },
   {
@@ -72,10 +72,10 @@ export const WEEK3_FINAL_SQUAD: PointsPick[] = POINTS_SQUAD.map((pick) => ({
   }),
 }));
 
-/** A squad member's points in each series he played, before the Carry's ×1.5. */
+/** A squad member's points in each series he played, before the Captain's ×1.5. */
 export const seriesPointsOf = (pick: PointsPick) => pick.series.map((s) => ({ id: s.id, points: seriesPoints(s.games, s.coachResult) }));
 
-/** A squad member's week before the Carry's ×1.5; `without` leaves a series out. */
+/** A squad member's week before the Captain's ×1.5; `without` leaves a series out. */
 export const rawWeekOf = (pick: PointsPick, without?: string) =>
   sum(
     seriesPointsOf(pick)
@@ -83,8 +83,8 @@ export const rawWeekOf = (pick: PointsPick, without?: string) =>
       .map((s) => s.points),
   );
 
-/** A squad member's week as it counts for Baron Steal FC: the Carry's ×1.5 in. */
-export const weekOf = (pick: PointsPick, without?: string) => (pick.mark === "C" ? carried(rawWeekOf(pick, without)) : rawWeekOf(pick, without));
+/** A squad member's week as it counts for Baron Steal FC: the Captain's ×1.5 in. */
+export const weekOf = (pick: PointsPick, without?: string) => (pick.mark === "C" ? captained(rawWeekOf(pick, without)) : rawWeekOf(pick, without));
 
 /** Each starter's week by card id, at a moment's squad. */
 const startersWeek = (squad: PointsPick[], without?: string): Readonly<Record<string, number>> =>
@@ -129,7 +129,7 @@ export const squadIn = (played: Record<string, Played>): PointsPick[] =>
 
 /**
  * Baron Steal FC's Week 3 as Home, Live, Points and the cards give it, worked from the squad: each
- * starter's points at Points' moment, by card id (the Carry's after ×1.5), the same with the live
+ * starter's points at Points' moment, by card id (the Captain's after ×1.5), the same with the live
  * series left out (the feed down), and once final.
  */
 export const MY_WEEK3 = (() => {
@@ -185,7 +185,7 @@ export const PICK_TEAM_SQUAD: PickTeamPick[] = ([
   { slot: "top", name: "Zeus", team: "HLE", role: "top" },
   { slot: "jng", name: "Canyon", team: "GEN", role: "jng" },
   { slot: "mid", name: "Faker", team: "T1", role: "mid", mark: "C" },
-  { slot: "bot", name: "Ruler", team: "GEN", role: "bot", mark: "V" },
+  { slot: "bot", name: "Ruler", team: "GEN", role: "bot" },
   { slot: "sup", name: "Delight", team: "HLE", role: "sup" },
   { slot: "flex", name: "Siwoo", team: "DK", role: "top", news: "Not starting Wed" },
   { slot: "coach", name: "kkOma", team: "T1", role: "coach" },
@@ -210,22 +210,22 @@ export interface PerfectPick {
   team: TeamCode;
   role: PersonRole;
   points: number;
-  /** Before ×1.5, for the Carry. */
+  /** Before ×1.5, for the Captain. */
   raw?: number;
-  carry?: boolean;
+  captain?: boolean;
   /** One of the sample manager's players. */
   mine?: boolean;
   line: string;
 }
 
 /** A perfect pick from Baron Steal FC's final squad: his series and points, worked from its games. */
-function mineInPerfect(slot: SlotKey, carry = false): PerfectPick {
+function mineInPerfect(slot: SlotKey, captain = false): PerfectPick {
   const pick = WEEK3_FINAL_SQUAD.find((p) => p.slot === slot);
   if (!pick) throw new Error(`Baron Steal FC has no ${slot} in Week 3`);
   const series = seriesPointsOf(pick);
   const raw = rawWeekOf(pick);
   const line = series.map((s) => `v ${opponentIn(s.id, pick.team)} ${s.points}`).join(" · ");
-  return { slot, role: pick.role, name: pick.name, mine: true, team: pick.team, points: carry ? carried(raw) : raw, raw: carry ? raw : undefined, carry: carry || undefined, line };
+  return { slot, role: pick.role, name: pick.name, mine: true, team: pick.team, points: captain ? captained(raw) : raw, raw: captain ? raw : undefined, captain: captain || undefined, line };
 }
 
 /** The perfect game's other three: each series he played in Week 3 and his points in it, the picture's own. */

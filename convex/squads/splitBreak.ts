@@ -1,12 +1,15 @@
-// Between the splits (spec/03-transfers.md): the Road to MSI budget raise comes back off, and a
-// squad still over the budget or the cap at Split 2's first deadline is fixed by Flol, at no
-// points cost.
+// Between the splits (spec/03-transfers.md): each split has fresh prices, so every squad is
+// repriced and its bank reset, and a squad still over the budget or the cap at Split 2's first
+// deadline is fixed by Flol, at no points cost.
+import { sum } from "../../src/parts/util/sum";
 import { priceOf, requirePrice, type Prices } from "./budget";
 import { allPicks, pickKey, pickKeysOf, picksPerTeam, type Pick, type Squad } from "./squad";
 
-/** The money bank once Split 2 starts: the raise comes off, and may leave it below zero. */
-export function bankAtSplitStart(bank: number, knockoutRaise: number): number {
-  return bank - knockoutRaise;
+/** The money bank when Split 2's transfers reopen: the split's budget less the squad's value at
+ *  the split's fresh prices, so team value and the Road to MSI raise are gone. It may fall below
+ *  zero: a ₩100m budget and a squad now worth ₩103m leave −₩3m (spec/03, spec/02). */
+export function bankAtSplitStart(squad: Squad, freshPrices: Prices, budget: number): number {
+  return budget - sum(allPicks(squad).map((pick) => requirePrice(pick, freshPrices)));
 }
 
 export interface SplitFix {

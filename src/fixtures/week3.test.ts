@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import { sum } from "../parts";
 import { playedBy, FAKER_SEASON } from "./t1Season";
 import {
-  carried,
+  captained,
   countdown,
   countdownText,
   finalPickOf,
@@ -21,26 +21,26 @@ import {
   WEEK4_DEADLINE,
 } from "./week3";
 
-test("a series counts its best two games and a coach's result; the Carry's ×1.5 rounds down, a minus towards zero", () => {
+test("a series counts its best two games and a coach's result; the Captain's ×1.5 rounds down, a minus towards zero", () => {
   expect(seriesPoints([5, 2, 7])).toBe(12);
   expect(seriesPoints([2, 0, 3], 3)).toBe(8);
-  expect([carried(9), carried(17), carried(-3)]).toEqual([13, 25, -4]);
+  expect([captained(9), captained(17), captained(-3)]).toEqual([13, 25, -4]);
 });
 
 test("Faker's Week 3 is one set of games: Points, Live, his card's History and Perfect game agree", () => {
   const faker = finalPickOf("Faker");
   expect(livePointsOf("faker")).toBe(25);
   expect(MY_WEEK3.down.faker).toBe(18);
-  expect(MY_WEEK3.final.faker).toBe(carried(rawWeekOf(faker)));
+  expect(MY_WEEK3.final.faker).toBe(captained(rawWeekOf(faker)));
   const history = playedBy(FAKER_SEASON).filter((s) => s.week === 3);
   expect(history.map((s) => [s.id, s.points]).sort()).toEqual(seriesPointsOf(faker).map((s) => [s.id, s.points]).sort());
   const perfect = PERFECT_GAME.find((p) => p.name === "Faker");
   expect(perfect).toMatchObject({ raw: 22, points: 33, line: "v HLE 12 · v DK 10" });
 });
 
-test("the perfect game is a real best: its Carry tops every raw week, and its total tops the week's Highest", () => {
-  const carry = PERFECT_GAME.find((p) => p.carry);
-  for (const p of PERFECT_GAME) if (!p.carry) expect(p.points).toBeLessThanOrEqual(carry?.raw ?? 0);
+test("the perfect game is a real best: its Captain tops every raw week, and its total tops the week's Highest", () => {
+  const captain = PERFECT_GAME.find((p) => p.captain);
+  for (const p of PERFECT_GAME) if (!p.captain) expect(p.points).toBeLessThanOrEqual(captain?.raw ?? 0);
   expect(sum(PERFECT_GAME.map((p) => p.points))).toBeGreaterThanOrEqual(WEEK3_FINAL.highest);
   expect(WEEK3_FINAL.highest).toBeGreaterThanOrEqual(POINTS_WEEK.highest);
 });

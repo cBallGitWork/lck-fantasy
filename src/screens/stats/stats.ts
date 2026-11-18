@@ -4,12 +4,13 @@
 import type { TeamCode } from "../../fixtures/week3";
 import { perGameValue, type Score } from "../../parts";
 import type { PersonRole, RoleKey } from "../../rift";
+import { FIGURES, LINE_HEADS, rowsOf, TABS } from "./words";
 
-export const TABS = ["Players", "Coaches"] as const;
+export { FIGURES, TABS };
 export type Tab = (typeof TABS)[number];
-
-export const FIGURES = ["Totals", "Per game"] as const;
 export type Figures = (typeof FIGURES)[number];
+export const [PLAYERS, COACHES] = TABS;
+export const [TOTALS, PER_GAME] = FIGURES;
 
 /** A line's column: its key in a row's `lines`, and its head. */
 export interface Line {
@@ -17,29 +18,15 @@ export interface Line {
   head: string;
 }
 
+const lines = (keys: readonly (keyof typeof LINE_HEADS)[]): readonly Line[] => keys.map((key) => ({ key, head: LINE_HEADS[key] }));
+
 /** The player lines, each a count, in the picture's order. */
-export const PLAYER_LINES: readonly Line[] = [
-  { key: "kills", head: "K" },
-  { key: "deaths", head: "D" },
-  { key: "assists", head: "A" },
-  { key: "gd15", head: "GD@15" },
-  { key: "soloKills", head: "Solo kills" },
-  { key: "firstBlood", head: "First blood" },
-  { key: "deathless", head: "Deathless" },
-  { key: "quadra", head: "Quadra+" },
-  { key: "steals", head: "Obj. steals" },
-];
+export const PLAYER_LINES = lines(["kills", "deaths", "assists", "gd15", "soloKills", "firstBlood", "deathless", "quadra", "steals"]);
 
 /** The coach lines after Series, in the picture's order. */
-export const COACH_LINES: readonly Line[] = [
-  { key: "firstTower", head: "First tower" },
-  { key: "drakes", head: "Most drakes" },
-  { key: "barons", head: "Most barons" },
-  { key: "elders", head: "Most elders" },
-  { key: "quickWins", head: "Quick wins" },
-];
+export const COACH_LINES = lines(["firstTower", "drakes", "barons", "elders", "quickWins"]);
 
-export const linesFor = (tab: Tab) => (tab === "Players" ? PLAYER_LINES : COACH_LINES);
+export const linesFor = (tab: Tab) => (tab === PLAYERS ? PLAYER_LINES : COACH_LINES);
 
 /** One player or coach in the list, over the chosen span. */
 export interface StatsRow {
@@ -89,8 +76,8 @@ export interface StatsView {
 export const SEASON = "season";
 
 export const START_VIEW: StatsView = {
-  tab: "Players",
-  figures: "Totals",
+  tab: PLAYERS,
+  figures: TOTALS,
   role: ALL,
   team: ALL,
   maxPrice: null,
@@ -111,7 +98,7 @@ const PAGE_SIZE = 20;
 
 /** Points and the lines divide by games under Per game; price, form, owned and games never do. */
 function sortValue(row: StatsRow, key: SortKey, figures: Figures): number {
-  const divide = (n: number) => (figures === "Per game" ? perGameValue(n, row.games) : n);
+  const divide = (n: number) => (figures === PER_GAME ? perGameValue(n, row.games) : n);
   switch (key) {
     case "priceM":
     case "form":
@@ -131,7 +118,7 @@ export function listRows(rows: readonly StatsRow[], view: StatsView): StatsRow[]
   return rows
     .filter(
       (r) =>
-        (view.tab === "Coaches" || view.role === ALL || r.role === view.role) &&
+        (view.tab === COACHES || view.role === ALL || r.role === view.role) &&
         (view.team === ALL || r.team === view.team) &&
         (view.maxPrice === null || r.priceM <= view.maxPrice) &&
         r.name.toLowerCase().includes(find),
@@ -154,7 +141,7 @@ export function pageRows(rows: readonly StatsRow[], page: number): (StatsRow & {
 export function pageLabel(total: number, page: number): string {
   if (total === 0) return "";
   const start = (page - 1) * PAGE_SIZE + 1;
-  return `${start}–${Math.min(page * PAGE_SIZE, total)} of ${total}`;
+  return rowsOf(start, Math.min(page * PAGE_SIZE, total), total);
 }
 
 /** Max price's choices: each price the list holds, highest first, as FPL's Max cost lists them. */

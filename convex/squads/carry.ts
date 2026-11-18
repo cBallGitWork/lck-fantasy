@@ -1,47 +1,50 @@
-// The Carry and Vice-carry (spec/04-captain.md): FPL's captain and vice-captain.
+// The Captain (spec/04-captain.md): FPL's captain, with no vice-captain.
 import { pickKey, playerKey, type Pick, type ScoringPick, type Squad } from "./squad";
 
-/** Player ids: the armband is only ever on a player, never the coach. */
+/** Player ids: the armband is only ever on a player, never the coach. `secondCaptain` is the
+ *  Double Captain buff's (spec/04, spec/06). */
 export interface Armband {
-  carry: string;
-  viceCarry: string;
+  captain: string;
+  secondCaptain?: string;
 }
 
 export type ArmbandProblem =
-  | { rule: "armbandOffStarters"; band: keyof Armband; pickId: string }
-  | { rule: "carryIsViceCarry"; pickId: string };
+  | { rule: "armbandOffStarters"; pickId: string }
+  | { rule: "sameCaptainTwice"; pickId: string };
 
-/** The armband's rules: both on the six starting players, the five roles and the flex, never the
- *  coach or the bench (spec/04, The armband), and on two different players, as in FPL. */
+/** The armband's rule: on one of the six starting players, the five roles and the flex, never the
+ *  coach or the bench; a second Captain by the same rules, and not the first (spec/04, The armband). */
 export function armbandProblems(squad: Squad, armband: Armband): ArmbandProblem[] {
   const startingPlayers = new Set(
     squad.starters.filter((starter) => starter.slot !== "coach").map((starter) => starter.pick.id),
   );
-  const problems: ArmbandProblem[] = [];
-  for (const band of ["carry", "viceCarry"] as const) {
-    if (!startingPlayers.has(armband[band])) problems.push({ rule: "armbandOffStarters", band, pickId: armband[band] });
-  }
-  if (armband.carry === armband.viceCarry) problems.push({ rule: "carryIsViceCarry", pickId: armband.carry });
+  const problems: ArmbandProblem[] = captainsOf(armband)
+    .filter((pickId) => !startingPlayers.has(pickId))
+    .map((pickId) => ({ rule: "armbandOffStarters", pickId }));
+  if (armband.secondCaptain === armband.captain) problems.push({ rule: "sameCaptainTwice", pickId: armband.captain });
   return problems;
 }
 
-/** Who takes the multiplier: the Carry if he played, else the Vice-carry if he did, else nobody.
- *  With Dual Carry both take it if they played, and nobody steps in for a Carry who didn't
- *  (spec/06, Dual Carry). */
-export function carryingPlayers(armband: Armband, played: ReadonlySet<string>, dualCarry: boolean): Set<string> {
-  const carryPlayed = played.has(playerKey(armband.carry));
-  const vicePlayed = played.has(playerKey(armband.viceCarry));
-  if (dualCarry) return new Set([...(carryPlayed ? [armband.carry] : []), ...(vicePlayed ? [armband.viceCarry] : [])]);
-  if (carryPlayed) return new Set([armband.carry]);
-  return new Set(vicePlayed ? [armband.viceCarry] : []);
+/** The Captain, then the second Captain if there is one. */
+export function captainsOf(armband: Armband): string[] {
+  return armband.secondCaptain === undefined ? [armband.captain] : [armband.captain, armband.secondCaptain];
 }
 
-/** Whether a pick takes the multiplier: a player in `carrying`, never the coach. */
-export function isCarrying(pick: Pick, carrying: ReadonlySet<string>): boolean {
-  return pick.role !== "coach" && carrying.has(pick.id);
+/** Who takes the multiplier: each Captain who played; one who played no game passes it to nobody
+ *  (spec/04, The armband). */
+export function carryingPlayers(armband: Armband, played: ReadonlySet<string>): Set<string> {
+  return new Set(captainsOf(armband).filter((id) => played.has(playerKey(id))));
 }
 
-/** Points multiplied and rounded towards zero: ×1.5 makes a 9 a 13 and a −3 a −4 (spec/05, The Carry). */
+/** Each multiplied pick's multiplier, by `pickKey`: the Captains', and the coach's under Coach Diff. */
+export type Multipliers = ReadonlyMap<string, number>;
+
+/** Whether a pick is a Captain taking the multiplier: a player, never the coach. */
+export function isCarrying(pick: Pick, multipliers: Multipliers): boolean {
+  return pick.role !== "coach" && multipliers.has(pickKey(pick));
+}
+
+/** Points multiplied and rounded towards zero: ×1.5 makes a 9 a 13 and a −3 a −4 (spec/05, The Captain). */
 export function multiplied(points: number, multiplier: number): number {
   return Math.trunc(points * multiplier) + 0;
 }
@@ -50,16 +53,17 @@ export interface SlotPoints extends ScoringPick {
   points: number;
 }
 
-/** Each scoring pick's points, the carrying players' multiplied. `points` holds each pick's
+/** Each scoring pick's points, the multiplied picks' multiplied. `points` holds each pick's
  *  gameweek points by `pickKey`; a pick with none scores 0. */
 export function lineupPoints(
   lineup: readonly ScoringPick[],
   points: ReadonlyMap<string, number>,
-  carrying: ReadonlySet<string>,
-  carryMultiplier: number,
+  multipliers: Multipliers,
 ): SlotPoints[] {
   return lineup.map((scoring) => {
-    const base = points.get(pickKey(scoring.pick)) ?? 0;
-    return { ...scoring, points: isCarrying(scoring.pick, carrying) ? multiplied(base, carryMultiplier) : base };
+    const key = pickKey(scoring.pick);
+    const base = points.get(key) ?? 0;
+    const multiplier = multipliers.get(key);
+    return { ...scoring, points: multiplier === undefined ? base : multiplied(base, multiplier) };
   });
 }

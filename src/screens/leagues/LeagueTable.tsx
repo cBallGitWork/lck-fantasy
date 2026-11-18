@@ -3,6 +3,7 @@ import { Empty, Menu, OutlinedKey, TabPanel, Tabs, type MenuItem } from "../../p
 import { Pager } from "./Pager";
 import { Standings } from "./Standings";
 import type { CompetitionTabs, LeagueView, Standings as StandingsData, TableTab } from "./types";
+import { scoringFrom, WORDS } from "./words";
 
 /** The table shown, and turning its tabs and pages. */
 export interface TableProps {
@@ -40,10 +41,10 @@ export function LeagueHead({ name, sub, children }: { name: ReactNode; sub?: str
 
 /** The table, and its pager where it holds more than one page. */
 export function TableBody({ league, table, page, onPage, onFindMe }: { league: LeagueView } & Omit<TableProps, "competition" | "tab" | "onTab">) {
-  if (!table) return <Empty title="No table yet" />;
+  if (!table) return <Empty title={WORDS.noTable} />;
   return (
     <>
-      <Standings table={table} week={league.week} carryShown={league.carryShown} />
+      <Standings table={table} week={league.week} captainShown={league.captainShown} />
       {table.pages > 1 && <Pager pages={table.pages} page={page} onPage={onPage} onFindMe={onFindMe} />}
     </>
   );
@@ -84,19 +85,19 @@ export function LeagueTable({
   return (
     <section className="leagues__panel" aria-label={league.name}>
       {league.kind === "private" ? (
-        <LeagueHead name={name} sub={`Scoring from Week ${league.scoringFrom}`}>
+        <LeagueHead name={name} sub={scoringFrom(league.scoringFrom)}>
           <span className="leagues__code num">{league.code}</span>
-          <OutlinedKey onClick={actions.onCopyLink}>Copy link</OutlinedKey>
+          <OutlinedKey onClick={actions.onCopyLink}>{WORDS.copyLink}</OutlinedKey>
           {league.role === "maker" ? (
-            <Menu label="Admin ▾" className="leagues__admin" items={adminItems(actions, () => setRenaming(true))} startOpen={adminOpen} />
+            <Menu label={WORDS.admin} className="leagues__admin" items={adminItems(actions, () => setRenaming(true))} startOpen={adminOpen} />
           ) : (
-            <OutlinedKey onClick={actions.onLeave}>Leave</OutlinedKey>
+            <OutlinedKey onClick={actions.onLeave}>{WORDS.leave}</OutlinedKey>
           )}
         </LeagueHead>
       ) : (
         <LeagueHead name={name} />
       )}
-      <Tabs id={tabsId} tabs={table.competition.tabs} chosen={table.tab} onChoose={table.onTab} label="Table" />
+      <Tabs id={tabsId} tabs={table.competition.tabs} chosen={table.tab} onChoose={table.onTab} label={WORDS.table} />
       <TabPanel id={tabsId}>
         <TableBody league={league} {...table} />
       </TabPanel>
@@ -106,9 +107,9 @@ export function LeagueTable({
 
 /** The maker's Admin menu: Rename edits the name in place; the other two open their sheets. */
 export const adminItems = (actions: LeagueActions, onRename: () => void): MenuItem[] => [
-  { label: "Rename", onChoose: onRename },
-  { label: "Remove a manager", onChoose: actions.onRemoveManager },
-  { label: "Delete league…", onChoose: actions.onDelete, apart: true },
+  { label: WORDS.rename, onChoose: onRename },
+  { label: WORDS.removeManager, onChoose: actions.onRemoveManager },
+  { label: WORDS.deleteLeague, onChoose: actions.onDelete, apart: true },
 ];
 
 /** Rename, in place: Enter keeps the new name, Esc keeps the old. A blank name keeps the old. */
@@ -124,7 +125,7 @@ function RenameField({ name, maxLength, onDone }: { name: string; maxLength: num
   return (
     <input
       className="leagues__rename"
-      aria-label="League name"
+      aria-label={WORDS.leagueName}
       value={value}
       maxLength={maxLength}
       autoFocus

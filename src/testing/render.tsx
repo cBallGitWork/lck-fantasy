@@ -1,8 +1,9 @@
 import { createMemoryHistory, RouterContextProvider, RouterProvider } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { isValidElement, type ReactElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect } from "vitest";
 import { makeRouter } from "../app/router";
+import { TRUCK_HIRE } from "../parts";
 
 // Renders a part or a screen to HTML for a test, inside the app's router so its links resolve.
 const router = makeRouter(createMemoryHistory({ initialEntries: ["/"] }));
@@ -16,9 +17,10 @@ export async function htmlAt(path: string): Promise<string> {
   return renderToStaticMarkup(<RouterProvider router={atPath} />);
 }
 
-/** Markup's text alone, entities decoded. */
+/** Markup's text alone, entities decoded; a word's hover line, shown only on hover, left out (`hovers` reads them). */
 export const plain = (markup: string) =>
   markup
+    .replace(/<span class="hint__line"[^>]*>.*?<\/span>/g, "")
     .replace(/<[^>]+>/g, "")
     .replace(/&#x27;/g, "'")
     .replace(/&quot;/g, '"')
@@ -26,6 +28,10 @@ export const plain = (markup: string) =>
 
 /** The rendered text alone, entities decoded. */
 export const text = (node: ReactNode) => plain(html(node));
+
+/** Each word in `markup` with a hover (the Hint part), as `[word, its line]`, in order. */
+export const hovers = (markup: string): [string, string][] =>
+  [...markup.matchAll(/<span class="hint[ "][^>]*>(.*?)<span class="hint__line"[^>]*>(.*?)<\/span>/g)].map(([, word = "", line = ""]) => [plain(word), plain(line)]);
 
 /** Fails unless every piece is in `out`, each after the end of the one before. */
 export function expectInOrder(out: string, pieces: readonly string[]) {
@@ -45,3 +51,29 @@ export function expectDeadlinePart(out: string, local: string) {
 
 /** A handler that does nothing, for props a test doesn't press. */
 export const noop = () => {};
+
+/** Every "truck" in a screen's text outside the truck-hire credit: none, since a screen says Cheer and Jeer (plate.md, One name per thing). */
+export const trucksOutsideCredit = (out: string) => out.replaceAll(TRUCK_HIRE, "").match(/truck/gi) ?? [];
+
+/** Presses the key a screen reader names `label` in what a hook-free part returns, as a click would: its `onClick` runs. Fails when there is no such key. */
+export function press(node: ReactNode, label: string): void {
+  const key = findLabelled(node, label);
+  expect(key, `a key named "${label}"`).toBeDefined();
+  key?.props.onClick?.();
+}
+
+type Pressable = ReactElement<{ "aria-label"?: string; onClick?: () => void; children?: ReactNode }>;
+
+function findLabelled(node: ReactNode, label: string): Pressable | undefined {
+  if (Array.isArray(node)) {
+    for (const child of node as ReactNode[]) {
+      const found = findLabelled(child, label);
+      if (found) return found;
+    }
+    return undefined;
+  }
+  if (!isValidElement(node)) return undefined;
+  const element = node as Pressable;
+  if (element.props["aria-label"] === label) return element;
+  return findLabelled(element.props.children, label);
+}

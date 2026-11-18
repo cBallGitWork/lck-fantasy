@@ -1,4 +1,4 @@
-/* A truck's LED panel, drawn as Home's: dotted, in capitals, the same on every screen. */
+/* A cheer's or jeer's LED panel, drawn as Home's: dotted, in capitals, the same on every screen. */
 .led {
   display: flex;
   align-items: center;
@@ -14,4 +14,13 @@
 .led--big {
   font-size: var(--size-lead);
   min-height: calc(var(--s-7) + var(--s-5));
+}
+/* The truck-hire credit under a cheer or jeer received, its sponsor a placeholder box inline. */
+.led-hire {
+  display: block;
+  font-size: var(--size-small);
+}
+.led-hire .placeholder {
+  display: inline-flex;
+  padding: 0 var(--s-1);
 }

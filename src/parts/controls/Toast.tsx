@@ -6,7 +6,7 @@ import "./Toast.css";
 const TOAST_MS = 3000;
 
 /**
- * A short message at the foot of the page that goes by itself (`Kingen added`, `Team full: 2 from T1`),
+ * A short message at the foot of the page that goes by itself (`Kingen added`, `Max 2 from T1`),
  * as FPL's. `n` counts the messages, so the same words twice still show again. A screen reader hears
  * it through the page's one live region, not from the toast.
  */

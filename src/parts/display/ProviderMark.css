@@ -1,0 +1,12 @@
+.provider-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  margin-right: var(--s-2);
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}

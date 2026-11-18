@@ -7,7 +7,7 @@ Parts shared by two or more screens, each drawn one way everywhere (`docs/design
 
 The page's frame and its sections.
 
-- `TopBar.tsx`: the top bar: Flol, the eight items with `active`, the sponsor, the account menu or `Sign in`.
+- `TopBar.tsx`: the top bar: Flol, the eight items with `active`, the sponsor, the account menu; a visitor's only Stats, LCK and `Log in ›`.
 - `PageFrame.tsx`: the top bar, then the main column and the 360px side column.
 - `Columns.tsx`: the frame's two columns (main, then the 360px side) for a page whose head runs full width above them.
 - `PageHead.tsx`: title and hangul, ‹ week ›, the key figure, its tags, up to three figures, a link.
@@ -28,6 +28,7 @@ Keys, links, tabs, sheets and fields.
 - `Menu.tsx`: a key that opens a list of links and actions (a league's Admin menu; the account menu once its items are settled).
 - `Modal.tsx`: a card (1056) or sheet (544) over a dimmed page; ✕, Esc, focus kept inside. A sheet shows its title, or its own `head` (Points' breakdown).
 - `Field.tsx`: a form field: label above, 40px, an error line under.
+- `Select.tsx`: a choice from a list, 40px, edged, with its words before a choice (`Choose a team`); `plainOptions`, options that are their own words.
 - `Toast.tsx`: a short message at the foot of the page that goes by itself after `TOAST_MS` (`Kingen added`, `Max 2 from T1`).
 - `SheetKeys.tsx`: a sheet's foot: `Back`, a text link, then its main action (a league's Leave, Following's Block).
 - `MainAction.tsx`: the screen's one filled key; disabled with its reason.
@@ -47,6 +48,7 @@ What shows a fact: tags, tables, lists, crests, states.
 - `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px `--text` rule, the next 3 with `Bo3`, the first in `--text` (player card, coach card).
 - `States.tsx`: `Loading` (fill bars), `Empty` (a title, one line), `ErrorState` (a title, one line, `Try again ›`).
 - `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
+- `ProviderMark.tsx`: the sign-in provider's mark, `G` or `D` (Settings, the sign-up sheet).
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `TierShield.tsx`: Overall's tier shield, filled and outlined, no text on it (spec/08); the page sizes it through its class name.
 - `Led.tsx`: a cheer's or jeer's line on its dotted LED panel, in capitals, drawn as Home's; `big` for the picker's preview; `TruckHire`, the credit under one received; the kinds' words and `Cheer / Jeer`, the key.

@@ -84,7 +84,7 @@ Each folder has a README saying what goes in it.
 The rules:
 
 - A feature's server code, its tests and its fixtures sit in its one `convex/` folder.
-- `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`). The game reads the real world; it never writes it.
+- `convex/world` and `convex/stats` never import from the game's folders (`squads`, `leagues`). The game reads the real world; it never writes it.
 - Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
 - A screen never imports from another screen (src/screens/README.md).
 - Every word a player reads on a screen lives in that screen's `words.ts`, next to its code; words two screens share, such as the Carry's C, live in `src/parts` or `src/rift`. Moved one screen at a time, Pick Team first (Craig, 18 Nov 2026).

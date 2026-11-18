@@ -34,7 +34,7 @@ const ROLE_OF: Record<PersonRole, Role> = { top: "top", jng: "jungle", mid: "mid
 const RIFT_SLOT: Record<StarterSlot, SquadSlot> = { top: "top", jungle: "jng", mid: "mid", bot: "bot", support: "sup", flex: "flex", coach: "coach" };
 const STARTER_OF = Object.fromEntries(Object.entries(RIFT_SLOT).map(([starter, rift]) => [rift, starter])) as Partial<Record<SquadSlot, StarterSlot>>;
 
-/** A player's pick, as the server prices it: a player by handle, a coach by team (convex/lck/season.ts). */
+/** A player's pick, as the server prices it: a player by handle, a coach by team (convex/world/season.ts). */
 export const pickOf = (p: GuestPlayer): Pick => ({ id: p.role === "coach" ? p.team : p.name, teamId: p.team, role: ROLE_OF[p.role] });
 
 /** Every listed pick's price, keyed as the rules key them. */

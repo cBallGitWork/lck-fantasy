@@ -5,7 +5,7 @@ import { ConvexError, v } from "convex/values";
 import { sum } from "../../src/parts/util/sum";
 import type { Id } from "../_generated/dataModel";
 import { internalMutation, internalQuery, type QueryCtx } from "../_generated/server";
-import { findSeason, pricedPickOf, pricesFor } from "../lck/season";
+import { findSeason, pricedPickOf, pricesFor } from "../world/season";
 import { joinAutoLeagues } from "../leagues/store";
 import { literals } from "../schema";
 import { requirePrice } from "../squads/budget";

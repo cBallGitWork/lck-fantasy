@@ -3,7 +3,7 @@
 import { convexTest } from "convex-test";
 import { expect, test } from "vitest";
 import { internal } from "../convex/_generated/api";
-import { LCK_2027, type SeasonFile } from "../convex/lck/season";
+import { LCK_2027, type SeasonFile } from "../convex/world/season";
 import schema from "../convex/schema";
 import { modules } from "../convex/test.setup";
 import { PLAYERS, RULES } from "../src/screens/pick-team-signed-out/fixtures";
@@ -36,7 +36,7 @@ test("pick as a guest, Auto-fill, come back, Save team: the squad becomes the en
 
   // Save team: signs in (faked until Convex Auth is wired), names the team, and the server takes it.
   const t = convexTest(schema, modules);
-  await t.mutation(internal.lck.season.loadSeason, { data: season });
+  await t.mutation(internal.world.season.loadSeason, { data: season });
   const t1 = await t.run((ctx) => ctx.db.insert("teams", { name: "T1", oeId: "oe-t1" }));
   const saved = await t.mutation(internal.signIn.store.saveNewTeam, {
     ...LCK,

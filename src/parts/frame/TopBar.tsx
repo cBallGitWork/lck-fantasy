@@ -10,7 +10,7 @@ const TOP_BAR_ITEMS = ["home", "pickTeam", "transfers", "points", "leagues", "st
 export type TopBarItem = (typeof TOP_BAR_ITEMS)[number];
 
 /** A visitor's items: only what needs no team (front door picture, Craig 17 Nov 2026). */
-const VISITOR_ITEMS: readonly TopBarItem[] = ["stats", "lckHub"];
+const VISITOR_ITEMS: readonly TopBarItem[] = ["stats", "hub"];
 
 /** The link a visitor with an account takes (spec/09, Signing in again). */
 export const LOG_IN = "Log in ›";

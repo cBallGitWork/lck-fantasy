@@ -80,7 +80,7 @@ Each folder has a README saying what goes in it.
 | `spec/` | One file per feature, Craig's answers only. |
 | `docs/` | Decisions, research, design proposals, the data model. |
 | `scripts/` | Checks and one-off tools run from the command line. |
-| The studio kit | The files `.studio/kit.json` lists: hook helpers and checks every studio project shares, copied from the private `cBallGitWork/forge` repository at the commit it names. Change them there and copy the kit in again (`node bin/copy-kit.mjs <this checkout>` in studio); `scripts/studio-kit.mjs`, in verify, fails a copy edited here (11 Nov 2026). |
+| The studio kit | The files `.studio/kit.json` lists: hook helpers and checks every studio project shares, copied from the private `cBallGitWork/forge` repository at the commit it names. Change them there and copy the kit in again (`node bin/copy-kit.mjs <this checkout>` in forge); `scripts/studio-kit.mjs`, in verify, fails a copy edited here (11 Nov 2026). |
 
 The rules:
 

@@ -98,6 +98,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     checked.
   - It opens on the official English stream, then remembers each manager's last pick. Streams
     not live show greyed out.
+  - A greyed stream can't be picked; only a live one can (Craig, 17 Nov 2026).
+  - If the remembered pick isn't live when a series starts, the official English stream plays,
+    and the pick is kept for next time (Craig, 17 Nov 2026).
+  - Home's picker shows 5 streams, then More ▾ (Craig, 17 Nov 2026).
   - The points panel shows the week's total with Average and Highest, as Points (Craig, 14 Nov
     2026).
   - With nothing live, it shows the next series and a countdown.

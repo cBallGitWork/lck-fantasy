@@ -1,3 +1,4 @@
+import { photoOf } from "../../fixtures/photos";
 import { MANAGER } from "../../fixtures/week3";
 import { FinalTag, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, sum, ViewToggle, type WeekNav } from "../../parts";
 import { PATHS } from "../../paths";
@@ -39,6 +40,7 @@ export function PerfectGameCards({ game, selected, onSelect }: { game: PerfectGa
           plays: flexPlays(p.slot, p.role),
           name: p.name,
           team: p.team,
+          photo: photoOf(p.name),
           mark: p.captain ? "C" : undefined,
           me: p.mine,
           next: p.line.split(" · ").map((series) => (
@@ -67,7 +69,7 @@ export function PerfectGame({
   game: PerfectGameData;
   view: PerfectView;
   onView?: (view: PerfectView) => void;
-  /** The week before and after; the route takes no week yet. */
+  /** The week before and after, by the router. */
   weekNav?: Omit<WeekNav, "label">;
 } & Selection) {
   const total = sum(game.players.map((p) => p.points));

@@ -111,6 +111,14 @@ Each part is drawn one way on every screen.
 - **Marks:** C is round, and so are the live dot, your-player dot (8px, after the name)
   and a radio button. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
 - **Your players** are marked by that dot, on every screen.
+- **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
+  ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with
+  24px below. A group of them opens with a 20/700 heading over a 2px `--text` rule.
+- **Guide page** (Help's guide): one section at a time, its title 28/700, chosen from the side menu
+  (the current line 600 in `--text` with a 2px `--text` edge at its left); under it a 1px `--line`
+  and Back `‹ title` at the left, Next `title ›` at the right, both 600.
+- **Worked example** ("Say…"): its own paragraph, 14px `--mid`, 16px in from a 2px `--line` rule at
+  its left; its numbers in `--text`.
 - **Modal** (a card, a sheet): a dimmed page behind, `✕` top right, Esc closes, focus stays
   inside. A card is 1056 wide; a sheet 544.
 - **Form:** label above its field, 14px; the field 40px tall, 1px `--line`, `--text` when focused;
@@ -136,6 +144,17 @@ Every screen part is drawn for each state it can be in.
   moves.
 
 ## Words
+
+Prose (Help, and any page that explains in sentences) is written as a friend who plays would explain
+it (Craig, 17 Nov 2026, the Help round):
+
+- Full sentences to "you", with contractions; one rule per sentence, condition first.
+- Plain words, not labels: "your first bench player", never "bench 1".
+- A game term gets a few words of explanation the first time it appears, in the same sentence.
+- Where a rule could trip someone up, one worked example with real names and numbers, starting "Say".
+- Cut anything a reader doesn't need to play.
+
+Everywhere:
 
 - UK English, sentence case everywhere: `Live`, never `LIVE`.
 - The shortest label that's still clear: `Pts`, `Owned`, `Price`.

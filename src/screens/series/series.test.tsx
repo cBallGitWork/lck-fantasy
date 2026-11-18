@@ -1,7 +1,9 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { MANAGER } from "../../fixtures/week3";
-import { expectInOrder, html, plain, text } from "../../testing/render";
+import { PATHS, pathTo, seriesGo } from "../../paths";
+import { expectInOrder, html, htmlAt, plain, text } from "../../testing/render";
+import { WORDS } from "./words";
 import { SERIES_BY_ID, SERIES_VIEWS } from "./fixtures";
 import { SeriesFinal, SeriesLive, SeriesNext } from "./SeriesPage";
 
@@ -150,6 +152,13 @@ describe("before it starts (1440-next.png)", () => {
     expect(rows(out, 1).at(-1)).toBe("CoachcvMax김대호");
     expect(dotted(out, "Delight")).toBe(true);
   });
+});
+
+test("a link to a series that doesn't exist shows No such series and LCK hub › (spec/12, Series page)", async () => {
+  const out = await htmlAt(pathTo(seriesGo("w99-sun-9")));
+  expect(out).toContain('data-screen="series"');
+  expectInOrder(plain(out), [WORDS.noSuchSeries, `${WORDS.lckHub} ›`]);
+  expect(out).toMatch(new RegExp(`href="${PATHS.lckHub}"[^>]*>${WORDS.lckHub} ›`));
 });
 
 test("each series a link opens is in the fixture, at the hub's moment", () => {

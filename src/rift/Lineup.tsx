@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Crest, cx, MeDot, Placeholder, selectable, Tag } from "../parts";
+import { Crest, cx, MeDot, PlayerPhoto, selectable, Tag } from "../parts";
 import "./Lineup.css";
 import { RoleIcon } from "./RoleIcon";
 import type { RoleKey, SlotKey } from "./roles";
@@ -13,6 +13,8 @@ export interface LineupCardProps {
   plays?: RoleKey;
   name: string;
   team: string;
+  /** His media-day portrait for the split; his team's crest until it is saved. */
+  photo?: string;
   mark?: Mark;
   me?: boolean;
   /** A tag on the photo, such as `Not starting`. */
@@ -40,7 +42,7 @@ function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
   );
 }
 
-/** One starter's card in Card view (not the Player card screen): role head, photo (a crest for the Coach), name, team, next, footer. */
+/** One starter's card in Card view (not the Player card screen): role head, photo (a crest for the Coach, or until his photo is saved), name, team, next, footer. */
 export function LineupCard(p: LineupCardProps) {
   const mark = p.mark && (
     <MarkBadge mark={p.mark} size="card" className="pcard__mark" />
@@ -55,7 +57,7 @@ export function LineupCard(p: LineupCardProps) {
         </div>
       ) : (
         <div className="pcard__photo">
-          <Placeholder word="Photo" fill />
+          <PlayerPhoto photo={p.photo} name={p.name} team={p.team} />
           {mark}
           {p.news && (
             <span className="pcard__news">

@@ -175,4 +175,6 @@ export default defineSchema({
   leagueEntries: defineTable({ league: v.id("leagues"), entry: v.id("entries") })
     .index("by_league", ["league", "entry"])
     .index("by_entry", ["entry"]),
+  /** Managers a private league's maker removed: they can't rejoin it (spec/08). */
+  leagueRemovals: defineTable({ league: v.id("leagues"), entry: v.id("entries") }).index("by_league", ["league", "entry"]),
 });

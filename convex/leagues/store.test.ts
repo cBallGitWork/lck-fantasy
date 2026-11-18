@@ -10,6 +10,7 @@ import type { LeagueRefusal } from "./store";
 const FPL_LIKE = { privateLeagueCap: 25, privateLeagueSize: null }; // fixture values: the real ones are data
 const SEASON = { currentGameweek: 4, lastGameweek: 18 };
 const store = internal.leagues.store;
+const HOUR = 60 * 60 * 1000;
 
 type T = ReturnType<typeof convexTest>;
 
@@ -54,13 +55,13 @@ describe("leagues every manager joins", () => {
     expect((await t.query(store.leaguesOf, { entry: sam })).map((l) => l.size)).toEqual([2, 2, 2]);
   });
 
-  test("a change of favourite team moves the manager to its league until the first gameweek scores", async () => {
+  test("a change of favourite team moves the manager to its league until the first gameweek's deadline", async () => {
     const { t, t1, gen } = await world();
     const craig = await entryOf(t, "Faker Fan", "GB", t1);
-    await t.mutation(store.changeFavouriteTeam, { entry: craig, team: gen, firstScoredGameweek: null });
+    await t.mutation(store.changeFavouriteTeam, { entry: craig, team: gen, firstDeadline: Date.now() + HOUR });
     const team = (await t.query(store.leaguesOf, { entry: craig })).find((l) => l.kind === "team");
     expect(team).toMatchObject({ kind: "team", team: gen, size: 1 });
-    expect(await refusal(t.mutation(store.changeFavouriteTeam, { entry: craig, team: t1, firstScoredGameweek: 4 }))).toEqual({
+    expect(await refusal(t.mutation(store.changeFavouriteTeam, { entry: craig, team: t1, firstDeadline: Date.now() - HOUR }))).toEqual({
       rule: "favouriteTeamFixed",
     });
   });
@@ -71,7 +72,7 @@ describe("leagues every manager joins", () => {
       const manager = await ctx.db.insert("managers", { country: "GB", favouriteTeam: t1 });
       return ctx.db.insert("entries", { manager, teamName: "Faker Fan" });
     });
-    await expect(t.mutation(store.changeFavouriteTeam, { entry, team: gen, firstScoredGameweek: null })).rejects.toThrow(
+    await expect(t.mutation(store.changeFavouriteTeam, { entry, team: gen, firstDeadline: Date.now() + HOUR })).rejects.toThrow(
       "isn't in its favourite team's league",
     );
     expect(await t.run(async (ctx) => (await ctx.db.query("managers").first())?.favouriteTeam)).toBe(t1);
@@ -149,5 +150,25 @@ describe("private leagues", () => {
     await t.mutation(store.deletePrivateLeague, { entry: craig, league });
     expect(await kinds(t, craig)).toEqual(["overall", "country", "team"]);
     expect(await t.run((ctx) => ctx.db.get(league))).toBeNull();
+  });
+
+  test("a manager the maker removes can't rejoin; one who left can", async () => {
+    const { t, t1 } = await world();
+    const craig = await entryOf(t, "Faker Fan", "GB", t1);
+    const sam = await entryOf(t, "Sam's Squad", "GB", t1);
+    const jo = await entryOf(t, "Jo's Rift", "GB", t1);
+    const { league, code } = await make(t, craig);
+    for (const entry of [sam, jo]) await t.mutation(store.joinPrivateLeague, { entry, code, settings: FPL_LIKE });
+
+    await t.mutation(store.removeFromPrivateLeague, { entry: craig, league, member: jo });
+    expect(await refusal(t.mutation(store.joinPrivateLeague, { entry: jo, code, settings: FPL_LIKE }))).toEqual({ rule: "removed" });
+    expect(await kinds(t, jo)).toEqual(["overall", "country", "team"]);
+
+    await t.mutation(store.leavePrivateLeague, { entry: sam, league });
+    await t.mutation(store.joinPrivateLeague, { entry: sam, code, settings: FPL_LIKE });
+    expect(await kinds(t, sam)).toContain("Pub League");
+
+    await t.mutation(store.deletePrivateLeague, { entry: craig, league });
+    expect(await t.run((ctx) => ctx.db.query("leagueRemovals").collect())).toEqual([]);
   });
 });

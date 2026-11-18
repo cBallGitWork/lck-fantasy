@@ -61,7 +61,7 @@ const KEY: Record<string, string> = {
   "profile/history": "Week rank",
   "profile/transfers": "Pts gained",
   "following/following": "Cheer / Jeer ›",
-  "following/truck": "One cheer or jeer to Jae a week.",
+  "following/truck": "You can send Jae one cheer or jeer a week.",
 };
 
 const named = DEV_STATES.map((s) => ({ ...s, name: `${s.page}/${s.state}` }));

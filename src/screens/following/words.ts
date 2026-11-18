@@ -18,21 +18,21 @@ export const WORDS = {
   block: "Block",
   /** Block's confirm, under its title. */
   blockLine: "They can't follow you again.",
-  /** A series row's tag when the Captain's multiplier was the bigger one. */
-  bigCaptain: "Big Captain",
+  /** A series row's tag for spec/14's big Captain: a Captain's big score in that series. */
+  bigCaptain: "Captain haul",
   /** Before a series' end time: `Ended Sat 10:20`. */
   ended: "Ended",
   /** After a deadline row's moves, before each swap's points. */
   soFar: "so far",
   /** A received cheer's sender: `Cheer from Minji Park`. */
   from: "from",
-  /** A sponsor's cheer, before its league. */
-  sponsorCheer: "Sponsor cheer,",
+  /** A sponsor's cheer, before its league: `Sponsor cheer for topping Pub League`. */
+  sponsorCheer: "Sponsor cheer for",
   noTransfers: "no transfers",
   /** In a series row, after the Captain's points when no multiplier sum is shown. */
   captain: "Captain",
   /** The cheer picker's lines, for a reader. */
-  line: "Line",
+  line: "Pick a line",
   cancel: "Cancel",
   send: "Send",
 } as const;
@@ -55,8 +55,8 @@ export const more = (n: number) => `+ ${n} more`;
 /** `Cheer sent`. */
 export const sent = (kind: string) => `${kind} sent`;
 
-/** `Pub League top`: the league a sponsor's cheer went to the top of. */
-export const leagueTop = (league: string) => `${league} top`;
+/** `topping Pub League`: the league a sponsor's cheer went to the top of. */
+export const leagueTop = (league: string) => `topping ${league}`;
 
 /** `1 transfer`, `5 transfers`. */
 export const transfers = (n: number) => plural(n, "transfer");
@@ -70,5 +70,5 @@ export const ptsSoFar = (points: number) => `${points} pts so far`;
 /** The picker's title: `Cheer or jeer Jae Kim`. */
 export const pickerTitle = (name: string) => named(CHEER_LABEL, name);
 
-/** Under the picker's lines: `One cheer or jeer to Jae a week.` */
-export const pickerNote = (first: string) => `One cheer or jeer to ${first} a week.`;
+/** Under the picker's lines: `You can send Jae one cheer or jeer a week.` */
+export const pickerNote = (first: string) => `You can send ${first} one cheer or jeer a week.`;

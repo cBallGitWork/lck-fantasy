@@ -18,7 +18,7 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "Perfect game",
     "퍼펙트 게임",
     "‹",
-    "Split 1 · Week 3",
+    "Split 1 Week 3",
     "›",
     "130",
     "Final",
@@ -133,7 +133,7 @@ test("Perfect game opens on Rift the first time, then on the view shared with Po
 test("each week has its own address (spec/12): /perfect-game and /perfect-game/3 open Week 3, ‹ links Week 2, › is off", async () => {
   for (const at of [PATHS.perfectGame, "/perfect-game/3"]) {
     const head = (await htmlAt(at)).split('class="page-head__key-line"')[0] ?? "";
-    expect(head, at).toContain("Split 1 · Week 3");
+    expect(head, at).toContain("Split 1 Week 3");
     expect(head, at).toMatch(/href="\/perfect-game\/2"[^>]*>‹/);
     expect(head, at).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
   }
@@ -155,6 +155,6 @@ test("a path names its week: /perfect-game the current one; a week with no perfe
   for (const at of ["/perfect-game/2", "/perfect-game/two"]) {
     const out = await htmlAt(at);
     expect(out, at).toContain(WORDS.noWeek);
-    expect(out, at).not.toContain("Split 1 · Week 3");
+    expect(out, at).not.toContain("Split 1 Week 3");
   }
 });

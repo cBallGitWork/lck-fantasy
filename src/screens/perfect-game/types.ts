@@ -24,7 +24,7 @@ export interface PerfectPlayer extends PerfectPick {
 
 /** What the page shows: the backend feeds this once it picks the best team. */
 export interface PerfectGameData {
-  /** `Split 1 · Week 3`. */
+  /** `Split 1 Week 3`. */
   week: string;
   final: boolean;
   average: number;

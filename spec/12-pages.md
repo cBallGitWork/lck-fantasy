@@ -260,3 +260,20 @@ suggestions.
 | Remake, Limitless | Transfers' buff keys | the line on their Pick Team card |
 
 - Carry, Killer and the buff names stay; the hover explains them (Craig, 16 Nov 2026).
+
+### The Broadcast voice
+
+From the words grill of 18 Nov 2026.
+
+- Every word a player reads is written in the Broadcast voice, by the `broadcast` writer
+  (`.claude/agents/broadcast.md`), so Flol reads as if LCK fans wrote it.
+- The only Korean word in English text is 화이팅 (fighting), for a cheer.
+- The week is shown as Split 1 Week 3, or Week 3 where the split is clear; never Gameweek,
+  Matchweek or GW.
+- Game and series only: never set, map or match.
+- Each screen's words move into its `words.ts` and are rewritten in the voice, one pull request a
+  screen, in this order: Pick Team, Home, Transfers, Points, Leagues, then the rest. Four reader
+  personas score each rewrite; it merges on green, and Craig reads a before and after page once a
+  round of screens is done.
+- Cheer and jeer lines and the buffs' descriptions are data Craig approves line by line: the
+  writer drafts rewrites of them for Craig, never changes them itself.

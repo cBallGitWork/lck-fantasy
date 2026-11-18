@@ -13,8 +13,6 @@ const TERMS = new Set(GLOSSARY.map((row) => (row[0] ?? "").toLowerCase()));
  */
 const ALLOWED: readonly { phrase: string; why: string }[] = [
   { phrase: "Bench Boost", why: "a buff's own name (spec/06); boost is banned as a word for buff" },
-  { phrase: "this week", why: "Craig's own hover, Scores ×1.5 this week (spec/12, Words)" },
-  { phrase: "your week", why: "Points' and Live's Your week (spec/12); a numbered week is a gameweek" },
   { phrase: "leagues", why: "leagues are real (spec/08); league is banned only as a name for a tier" },
   { phrase: "league", why: "the same" },
 ];

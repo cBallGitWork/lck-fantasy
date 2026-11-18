@@ -46,8 +46,8 @@ SPEC.md's Glossary is the list: read it before you write, and use its Term, neve
 
 Two notes the Glossary doesn't hold:
 
-- A numbered week is always a gameweek: Gameweek 4, GW4, never Week 4 (Craig: "dont say week 3"). "this week" and "your week" in a hover or heading are fine (Craig's own hover: Scores ×1.5 this week).
-- A buff's name is data (`data/lck/`), not words: never rewrite one.
+- The week is shown as Split 1 Week 3, or Week 3 where the split is clear; never Gameweek, Matchweek or GW (Craig, 18 Nov 2026). Game and series only: never set, map or match.
+- A buff's name and description, and the cheer and jeer lines, are data Craig approves (`data/lck/`, spec/14): never rewrite one; draft a rewrite for Craig only when an issue asks.
 
 ## Before and after
 

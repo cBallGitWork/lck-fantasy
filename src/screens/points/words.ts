@@ -11,7 +11,7 @@ export const WORDS = {
   view: "View",
   /** A player with no games this week, on his tile and his bench tile. */
   didntPlay: "Didn't play",
-  noWeek: "No such week",
+  noWeek: "No points for this week",
   yourWeek: "Your week",
   leagues: "Leagues",
   allLeagues: "All leagues",
@@ -29,13 +29,13 @@ export const liveGame = (home: string, away: string, game: number) => `${home} $
 /** `v HLE`: a series by its opponent, for a reader and on its head. */
 export const versus = (opponent: string) => `${WORDS.versus} ${opponent}`;
 
-/** `25 · owned by 46%`, `15 · not owned · 41%`: a Your week pick's points and who owns him. */
-export const ownedBy = (points: number, pct: string, mine: boolean) => (mine ? `${points} · owned by ${pct}` : `${points} · not owned · ${pct}`);
+/** `25 · owned by 46%`, `15 · not yours · owned by 41%`: a Your week pick's points and who owns him. */
+export const ownedBy = (points: number, pct: string, mine: boolean) => (mine ? `${points} · owned by ${pct}` : `${points} · not yours · owned by ${pct}`);
 
 /** `≈6 pts`: the points to your next Overall tier; `to` and the tier follow. */
 export const toTier = (points: number) => `≈${points} pts`;
 
-/** `Average Captain 19`: the average Captain's points, on the Captain's sheet. */
-export const averageOf = (who: string, points: number) => `${WORDS.average} ${who} ${points}`;
+/** `Captains averaged 19`: the average Captain's points, on the Captain's sheet. */
+export const averaged = (who: string, points: number) => `${who}s averaged ${points}`;
 
 export const dot = " · ";

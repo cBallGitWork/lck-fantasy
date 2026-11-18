@@ -3,7 +3,7 @@ import { cardGo, seriesGo } from "../../paths";
 import { MARK_NAME, MarkBadge, ROLE_NAME } from "../../rift";
 import "./BreakdownSheet.css";
 import type { PointsGame, PointsPlayer, PointsSeries, PointsStarter } from "./types";
-import { averageOf, dot, versus, WORDS } from "./words";
+import { averaged, dot, versus, WORDS } from "./words";
 
 /** A series' result: `W 2–1`, `1–0` while live (its game row says Live), a Not final tag till it is; the coach's `· +3`. */
 function SeriesResult({ s }: { s: PointsSeries }) {
@@ -74,7 +74,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
         <span className="points__breakdown-total-note quiet">
           {!final && <NotFinalTag />}
           {!final && player.captain && dot}
-          {player.captain && averageOf(MARK_NAME.C, player.captain.average)}
+          {player.captain && averaged(MARK_NAME.C, player.captain.average)}
         </span>
       </div>
     </header>

@@ -22,6 +22,16 @@ questions are in [docs/to-grill.md](../docs/to-grill.md).
   18 Nov 2026).
 - A player with no same-role opponent in the feed shows 0 for gold lead, and an admin alert names
   the game and the player, so it is fixed before the series turns final (Craig, 18 Nov 2026).
+- Live points move within a minute: Flol reads the feed once a minute for each live game, as
+  FPL's pace. Example: a kill at 12:04 shows by about 12:05 (Craig, 18 Nov 2026).
+- The feed counts as down after 3 minutes with no new reading while a game is live, so a pause
+  doesn't set it off. Example: G2 v Fnatic game 2, no reading from 18:00 to 21:00 (Craig, 18 Nov
+  2026).
+- If the feed dies mid-series, points already shown stay at the last reading, under the Not
+  final tag, until the final points land; nothing new is added. Example: Caps on 9 at 18:00
+  stays on 9 (Craig, 18 Nov 2026).
+- An admin alert is a stored row on an admin-only page, plus one email to the admin through
+  Resend, at most one per series (Craig, 18 Nov 2026).
 
 ## Final
 

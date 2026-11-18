@@ -128,6 +128,15 @@ describe("the page (1440.png)", () => {
     expect(html(view())).toContain('<div class="led">−6 FOR A SIDEWAYS TRANSFER. WHO SIGNED THIS OFF?</div>');
   });
 
+  test("a sponsor cheer's panel credits only the sponsor, as its sender: no truck-hire line", () => {
+    const panels = html(view()).split('<div class="following__parked">').slice(1);
+    const sponsor = panels.filter((p) => p.includes("Sponsor cheer"));
+    expect(sponsor).toHaveLength(1);
+    expect(sponsor[0]).toContain("갱 치킨 Gank Chicken");
+    expect(sponsor[0]).not.toContain("Truck hire");
+    expect(panels.filter((p) => p.includes("Truck hire"))).toHaveLength(2);
+  });
+
   test("says Truck only in the truck-hire credit, a sponsor placeholder until its name is approved", () => {
     expect(trucksOutsideCredit(text(view()))).toEqual([]);
     expect(html(view())).toContain('Truck hire by <span class="placeholder quiet">Sponsor</span>');

@@ -34,6 +34,7 @@ import type * as scoring_game from "../scoring/game.js";
 import type * as scoring_series from "../scoring/series.js";
 import type * as signIn_autoFill from "../signIn/autoFill.js";
 import type * as signIn_signUp from "../signIn/signUp.js";
+import type * as signIn_store from "../signIn/store.js";
 import type * as squads_autoSubs from "../squads/autoSubs.js";
 import type * as squads_budget from "../squads/budget.js";
 import type * as squads_buffs from "../squads/buffs.js";
@@ -74,6 +75,7 @@ declare const fullApi: ApiFromModules<{
   "scoring/series": typeof scoring_series;
   "signIn/autoFill": typeof signIn_autoFill;
   "signIn/signUp": typeof signIn_signUp;
+  "signIn/store": typeof signIn_store;
   "squads/autoSubs": typeof squads_autoSubs;
   "squads/budget": typeof squads_budget;
   "squads/buffs": typeof squads_buffs;

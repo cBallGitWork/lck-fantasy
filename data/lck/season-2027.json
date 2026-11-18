@@ -12,6 +12,7 @@
       "teamCap": 2
     },
     "budget": 100000000,
+    "autoFillGap": 2000000,
     "transfers": { "freePerGameweek": 1, "bankCap": 3, "hitPoints": 6, "freeAfterUnlimited": 2 },
     "carryMultiplier": 1.5,
     "buffs": [

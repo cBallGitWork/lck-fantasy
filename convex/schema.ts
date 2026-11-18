@@ -28,6 +28,8 @@ export const seasonSettings = v.object({
   }),
   /** In won; null for no budget (spec/10). */
   budget: v.union(v.number(), v.null()),
+  /** In won: Auto-fill aims to spend at least the budget less this (spec/09). */
+  autoFillGap: v.number(),
   /** convex/squads/transfers.ts's TransferSettings. */
   transfers: v.object({ freePerGameweek: v.number(), bankCap: v.number(), hitPoints: v.number(), freeAfterUnlimited: v.number() }),
   carryMultiplier: v.number(),

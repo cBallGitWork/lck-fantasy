@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { PRODUCT } from "../../paths";
 import "./Columns.css";
 import { cx } from "../util/cx";
 import "./PageFrame.css";
@@ -7,10 +8,13 @@ import { TopBar, type TopBarItem } from "./TopBar";
 /** The main column's id, which `Skip to content` jumps to. */
 export const MAIN_ID = "main";
 
+/** Riot's Legal Jibber Jabber notice, word for word as its policy requires (spec/13, Shirts and crests). */
+export const RIOT_NOTICE = `${PRODUCT} was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.`;
+
 /**
  * `Skip to content` (unseen until focused), the top bar, then the page: the main column and, when
  * given, the 360px side column, 32px apart. The side column is on the right on every page. The
- * columns are Columns.css's.
+ * columns are Columns.css's. Every page's foot carries Riot's notice.
  */
 export function PageFrame({
   screen,
@@ -39,6 +43,9 @@ export function PageFrame({
         </main>
         {side !== undefined && <aside className="page-frame__side">{side}</aside>}
       </div>
+      <footer className="page-frame__foot quiet">
+        <p>{RIOT_NOTICE}</p>
+      </footer>
     </>
   );
 }

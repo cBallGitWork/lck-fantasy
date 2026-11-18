@@ -176,3 +176,17 @@ describe("the card's week rows", () => {
     expect([...weekStarts(rows)]).toEqual(["a", "c"]);
   });
 });
+
+describe("the portrait (spec/13, Shirts and crests)", () => {
+  test("shows his split's photo, credited Photo: LCK", () => {
+    const card = { ...CARD_FROM_PICK_TEAM, photo: "/photos/faker.jpg" };
+    expect(html(<PlayerCardPage card={card} />)).toContain('src="/photos/faker.jpg" alt="Faker"');
+    expectInOrder(text(<PlayerCardPage card={card} />), ["Photo: LCK", ...HEAD]);
+  });
+
+  test("shows his team's crest until his photo is saved", () => {
+    const out = html(<PlayerCardPage card={{ ...CARD_FROM_PICK_TEAM, photo: undefined }} />);
+    expect(out).toContain('alt="T1 crest"');
+    expect(out).not.toContain("Photo: LCK");
+  });
+});

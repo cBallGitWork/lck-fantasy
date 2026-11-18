@@ -133,6 +133,16 @@ test("the slots place all seven starters, inside the square Rift", () => {
   for (const [x, y] of Object.values(RIFT_SLOTS)) expect([x, y].every((v) => v > 0 && v < measure.rift)).toBe(true);
 });
 
+test("a lineup card shows his split's photo credited Photo: LCK, or his team's crest without one (spec/13)", () => {
+  const withPhoto = html(<LineupCard slot="mid" name="Faker" team="T1" photo="/photos/faker.jpg" />);
+  expect(withPhoto).toContain('src="/photos/faker.jpg" alt="Faker"');
+  expect(text(<LineupCard slot="mid" name="Faker" team="T1" photo="/photos/faker.jpg" />)).toContain("Photo: LCK");
+  expect(withPhoto).not.toContain("T1 crest");
+  const without = html(<LineupCard slot="mid" name="Faker" team="T1" />);
+  expect(without).toContain('alt="T1 crest"');
+  expect(without).not.toContain("Photo: LCK");
+});
+
 test("Card view shows the seven in broadcast order, with photo, crest, C, and footer", () => {
   const starters = PICK_TEAM_SQUAD.filter((p): p is typeof p & { slot: SlotKey } => LINEUP_ORDER.includes(p.slot as SlotKey));
   // Given out of order, drawn in the broadcast's order.
@@ -141,6 +151,7 @@ test("Card view shows the seven in broadcast order, with photo, crest, C, and fo
     plays: p.slot === "flex" && p.role !== "coach" ? p.role : undefined,
     name: p.name,
     team: p.team,
+    photo: p.name === "Faker" ? "/photos/faker.jpg" : undefined,
     mark: p.mark,
     news: p.news ? "Not starting" : undefined,
     next: "v KT · v GEN",
@@ -152,7 +163,8 @@ test("Card view shows the seven in broadcast order, with photo, crest, C, and fo
   expect(out).toContain("Flexplays Top");
   expect(out).toContain("Coach감독");
   expect(html(<Lineup cards={cards} />)).toContain('alt="T1 crest"');
-  expect(out).toContain("Photo");
+  expect(html(<Lineup cards={cards} />)).toContain('alt="Faker"');
+  expect(html(<Lineup cards={cards} />)).toContain('alt="GEN crest"');
   expect(out).toContain("Not starting");
   expect(out).toContain("Form 19.3");
   expect(html(<Lineup cards={cards} />)).toContain('aria-label="Captain">C');

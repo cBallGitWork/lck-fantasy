@@ -5,11 +5,12 @@ import { isBench, markKey, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { ranked, type ViewProps } from "./format";
 import { slotOf } from "./model";
+import { dot, WORDS } from "./words";
 
 /** The tapped player's card: price and last move, news, form, owned and season with ranks, last 3 series, his keys (his series are on his tile). */
 export function PlayerCard({ state, player: p, dispatch }: Omit<ViewProps, "data"> & { player: PickPlayer }) {
   const slot = slotOf(state.draft, p.id);
-  const role = slot === "flex" ? `${ROLE_NAME.flex} · plays ${ROLE_NAME[p.role]}` : ROLE_NAME[p.role];
+  const role = slot === "flex" ? `${ROLE_NAME.flex}${dot}${WORDS.plays} ${ROLE_NAME[p.role]}` : ROLE_NAME[p.role];
   const move = p.priceMove;
   return (
     <PlayerPanel
@@ -30,19 +31,25 @@ export function PlayerCard({ state, player: p, dispatch }: Omit<ViewProps, "data
         </div>
       )}
       <dl className="pick-team__rows">
-        <Row k="Form">
-          <b className="num">{oneDecimal(p.form)}</b> · {ranked(p.formRank)}
+        <Row k={WORDS.form}>
+          <b className="num">{oneDecimal(p.form)}</b>
+          {dot}
+          {ranked(p.formRank)}
         </Row>
-        <Row k="Owned">
-          <b className="num">{pct(p.ownedPct)}</b> · {ranked(p.ownedRank)}
+        <Row k={WORDS.owned}>
+          <b className="num">{pct(p.ownedPct)}</b>
+          {dot}
+          {ranked(p.ownedRank)}
         </Row>
-        <Row k="Season">
-          <b className="num">{p.season}</b> · {ranked(p.seasonRank)}
+        <Row k={WORDS.season}>
+          <b className="num">{p.season}</b>
+          {dot}
+          {ranked(p.seasonRank)}
         </Row>
       </dl>
       <dl className="pick-team__rows">
-        <Row k="Last 3 series">
-          <span className="num">{p.last3.join(" · ")}</span>
+        <Row k={WORDS.last3}>
+          <span className="num">{p.last3.join(dot)}</span>
         </Row>
       </dl>
       <CardKeys state={state} player={p} starter={slot !== undefined && !isBench(slot)} dispatch={dispatch} />
@@ -64,7 +71,7 @@ function Row({ k, children }: { k: string; children: ReactNode }) {
  * can swap with are lit on the board. The coach, and a bench player, have only Full card.
  */
 function CardKeys({ state, player: p, starter, dispatch }: Omit<ViewProps, "data"> & { player: PickPlayer; starter: boolean }) {
-  const full = <LinkGo go={cardGo(p.id, p.role === "coach")}>Full card</LinkGo>;
+  const full = <LinkGo go={cardGo(p.id, p.role === "coach")}>{WORDS.fullCard}</LinkGo>;
   if (p.role === "coach" || !starter) return <div className="pick-team__keys">{full}</div>;
   const on = state.draft.captain === p.id;
   return (

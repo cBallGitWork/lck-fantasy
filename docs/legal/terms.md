@@ -11,7 +11,9 @@ prizes. These terms apply when you sign up; the [Privacy](privacy.md) page says 
 your data.
 
 **Not official.** Flol is a fan game. It is not made, endorsed or supported by Riot Games, the
-LCK or any team. Team and player names are used to describe the real matches.
+LCK or any team. Team and player names are used to describe the real matches. Flol was created
+under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does
+not endorse or sponsor this project. Player photos are the LCK's.
 
 **Who can play.** You must be 16 or over.
 

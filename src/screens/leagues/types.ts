@@ -40,8 +40,8 @@ export interface StandingRow {
   team: string;
   manager: string;
   managerId: string;
-  /** The manager's Carry this week. */
-  carry: string;
+  /** The manager's Captain this week. */
+  captain: string;
   week: number;
   total: number;
   /** The grouped split's points, beside season points on a group's table. */
@@ -63,8 +63,8 @@ interface LeagueBase {
   name: string;
   /** The week in the Week column. */
   week: number;
-  /** Carry shows once the week's deadline has passed (`carryShown`). */
-  carryShown: boolean;
+  /** Captain shows once the week's deadline has passed (`captainShown`). */
+  captainShown: boolean;
   openTab: TableTab;
   /** Tables by tab, and on Overall's grouped tab by `tab/group` (`tableKey`). */
   tables: Partial<Record<string, Standings>>;
@@ -83,8 +83,8 @@ export interface PrivateEntry {
   view: PrivateLeague;
 }
 
-/** How a league made or joined here opens: its week, Carry, and its first tab. */
-export type NewTable = Pick<LeagueBase, "week" | "carryShown" | "openTab">;
+/** How a league made or joined here opens: its week, Captain, and its first tab. */
+export type NewTable = Pick<LeagueBase, "week" | "captainShown" | "openTab">;
 
 /** A week a new league's scoring can start from, with its first day (`Week 14 · Wed 10 Feb`). */
 export interface ScoringWeek {

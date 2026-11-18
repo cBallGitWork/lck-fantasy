@@ -1,0 +1,4401 @@
+<!doctype html>
+<html lang="en"><head>
+    
+
+    
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pick your squad · Flol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&amp;family=IBM+Plex+Sans+KR:wght@400;600;700&amp;display=swap">
+  <style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/theme/base.css">/* The page's base, drawn from the tokens (tokens.ts). Every value is a token. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font: var(--w-regular) var(--size-body) / var(--lh-body) var(--font-sans);
+}
+a {
+  color: var(--text);
+  text-decoration: none;
+}
+.num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+/* A price's move: never colour alone, so a rise has ▲ and a fall ▼. */
+.rise {
+  color: var(--rise);
+}
+.fall {
+  color: var(--fall);
+}
+.rise::before {
+  content: "▲";
+  font-size: var(--size-small);
+}
+.fall::before {
+  content: "▼";
+  font-size: var(--size-small);
+}
+/* A rank's move stays --text, never gold: red and blue are for prices only. ▲ or ▼, a space, then the places; a held rank's — in mid grey. */
+.rank-up,
+.rank-down,
+.rank-held {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--size-small);
+}
+.rank-held {
+  color: var(--mid);
+}
+.rank-up::before {
+  content: "▲ ";
+}
+.rank-down::before {
+  content: "▼ ";
+}
+:focus-visible {
+  outline: var(--m-rule-heavy) solid var(--teal);
+  outline-offset: var(--m-rule-heavy);
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+/* Every table: full width, collapsed rules; its head cells in mid grey over a --line rule. */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+thead th {
+  text-align: left;
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+/* Secondary words: mid grey, 12px. */
+.quiet {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+/* A key drawn as its words alone: no box, the page's type. */
+.key-bare {
+  font: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+/* A link's or key's hover: a 1px underline, 4px below (plate, Hover). Put on words inside a link or
+   key, it draws when the link or key is hovered. */
+.hover-line:hover,
+a:hover .hover-line,
+button:hover .hover-line {
+  text-decoration: underline;
+  text-decoration-thickness: var(--m-rule);
+  text-underline-offset: var(--s-1);
+}
+/* A key that can't be pressed: mid on fill, no edge (plate, Disabled). Put on the disabled key;
+   `:disabled` lets it win over the key's own look, whose CSS loads later. */
+.key-off:disabled {
+  color: var(--mid);
+  background: var(--fill);
+  border-color: var(--fill);
+  cursor: default;
+}
+/* A counted figure, boxed: a game's points that count. */
+.counted {
+  border: var(--m-rule) solid var(--text);
+  padding: 0 var(--s-1);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/BuffCard.css">.buff-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s-2) var(--s-3);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.buff-card__does {
+  margin-top: var(--s-1);
+  line-height: var(--lh-mid);
+}
+.buff-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: var(--s-2);
+}
+.buff-card__play,
+.buff-card__foot button {
+  font: inherit;
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+  min-height: var(--m-target);
+  padding: 0 var(--s-2);
+  color: var(--text);
+  background: none;
+  border: var(--m-rule) solid var(--text);
+  cursor: pointer;
+}
+.buff-card--on {
+  background: var(--text);
+  color: var(--bg);
+}
+.buff-card--on .buff-card__does,
+.buff-card--on .buff-card__foot,
+.buff-card--on .buff-card__foot button {
+  color: var(--bg);
+  border-color: var(--bg);
+}
+.buff-card--off {
+  background: var(--fill);
+  border-color: var(--fill);
+  color: var(--mid);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/Crest.css">.crest {
+  display: block;
+  flex: none;
+  object-fit: contain;
+}
+.crest--none {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: var(--m-rule) dashed var(--soft);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/frame/Columns.css">.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-side);
+  gap: var(--s-6);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/Deadline.css">.deadline {
+  color: var(--mid);
+  white-space: nowrap;
+}
+.deadline b {
+  color: var(--text);
+  font-weight: var(--w-regular);
+  margin: 0 var(--s-1);
+}
+.deadline__kst {
+  color: var(--mid);
+}
+.deadline b.deadline__count {
+  margin-left: var(--s-3);
+  border: var(--m-rule) solid var(--text);
+  padding: 0 var(--s-2);
+  font-weight: var(--w-semi);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/Field.css">.field {
+  margin-top: var(--s-4);
+}
+.field__label {
+  display: block;
+  font-size: var(--size-body);
+  margin-bottom: var(--s-2);
+}
+.field__box {
+  display: flex;
+  align-items: center;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+}
+.field__box:focus-within {
+  border-color: var(--text);
+}
+.field__box--error {
+  border-color: var(--text);
+  box-shadow: inset 0 0 0 var(--m-rule) var(--text);
+}
+.field__input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  font: inherit;
+  font-size: var(--size-lead);
+  color: var(--text);
+  background: none;
+  border: 0;
+  outline: none;
+}
+.field__aside {
+  color: var(--mid);
+  font-size: var(--size-body);
+}
+.field__error {
+  margin-top: var(--s-1);
+  font-size: var(--size-body);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/LinkGo.css">.link-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0 var(--s-1);
+  min-height: var(--m-target);
+  color: var(--text);
+  white-space: pre;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/MainAction.css">.main-action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+.main-action__reason {
+  color: var(--mid);
+}
+.main-action__key {
+  font: inherit;
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-5);
+  background: var(--ink);
+  color: var(--on-ink);
+  border: 0;
+  cursor: pointer;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/MeDot.css">.me-dot {
+  display: inline-block;
+  width: var(--m-dot);
+  height: var(--m-dot);
+  border-radius: 50%;
+  background: var(--text);
+  margin-left: var(--s-1);
+  vertical-align: middle;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/Menu.css">.menu {
+  position: relative;
+  display: flex;
+}
+.menu__key {
+  color: inherit;
+}
+.menu__list {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 4;
+  width: var(--m-menu-w);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+  font-size: var(--size-body);
+  font-weight: var(--w-regular);
+}
+.menu__item {
+  display: block;
+  width: 100%;
+  padding: var(--s-3) var(--s-4);
+  color: var(--text);
+  text-align: left;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.menu__item:last-child {
+  border-bottom: 0;
+}
+.menu__item--apart {
+  border-top: var(--m-rule) solid var(--text);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/Modal.css">.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: auto;
+  padding: var(--s-7) var(--s-4);
+}
+.modal__dim {
+  position: fixed;
+  inset: 0;
+  background: var(--dim);
+}
+.modal__box {
+  position: relative;
+  max-width: 100%;
+  background: var(--paper);
+  border-top: var(--m-rule-heavy) solid var(--text);
+}
+.modal__box--card {
+  width: var(--m-modal-card);
+}
+.modal__box--sheet {
+  width: var(--m-modal-sheet);
+  padding: var(--s-5) var(--s-6) var(--s-6);
+}
+.modal__box--strong {
+  background: var(--fill);
+  border: var(--m-rule-heavy) solid var(--text);
+  border-top-width: var(--s-1);
+}
+.modal__close {
+  position: absolute;
+  right: var(--s-4);
+  top: var(--s-4);
+  width: var(--m-target);
+  height: var(--m-target);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--size-lead);
+  color: var(--text);
+}
+.modal__title {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  margin-bottom: var(--s-4);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/OutlinedKey.css">.outlined-key {
+  font: inherit;
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-4);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+  cursor: pointer;
+}
+.outlined-key__off {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.outlined-key__reason {
+  color: var(--mid);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/frame/PageFrame.css">/* The columns' grid is Columns.css's; `page-frame--two` marks a page with a side column. */
+.page-frame {
+  padding: var(--s-5) var(--s-6) var(--s-7);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/frame/Placeholder.css">.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--m-rule) dashed var(--soft);
+}
+.placeholder--fill {
+  width: 100%;
+  height: 100%;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/frame/TopBar.css">.top-bar {
+  height: var(--m-top-bar);
+  display: flex;
+  align-items: stretch;
+  gap: var(--s-6);
+  padding: 0 var(--s-6);
+  background: var(--paper);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.top-bar a {
+  display: flex;
+  align-items: center;
+}
+.top-bar__word {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  color: var(--ink);
+  margin-right: var(--s-4);
+}
+.top-bar__item {
+  color: var(--mid);
+  border-bottom: var(--m-rule-heavy) solid transparent;
+  margin-bottom: calc(var(--m-rule) * -1);
+}
+.top-bar__item:hover {
+  color: var(--text);
+}
+.top-bar__item--on {
+  color: var(--text);
+  font-weight: var(--w-bold);
+  border-bottom-color: var(--text);
+}
+.top-bar__item--live::before {
+  content: "";
+  width: var(--m-dot);
+  height: var(--m-dot);
+  border-radius: 50%;
+  background: var(--teal);
+  margin-right: var(--s-1);
+}
+.top-bar__space {
+  flex: 1;
+}
+.top-bar__presented {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.top-bar__me {
+  color: var(--text);
+  font-weight: var(--w-semi);
+  margin-left: calc(var(--s-2) * -1);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/frame/PageHead.css">.page-head {
+  margin-bottom: var(--s-4);
+}
+.page-head__title-line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+}
+.page-head__title {
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.page-head__hangul {
+  color: var(--mid);
+  font-size: var(--size-lead);
+  font-weight: var(--w-regular);
+  margin-left: var(--s-2);
+}
+.page-head__week {
+  margin: var(--s-1) 0 var(--s-3);
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+.page-head__sub {
+  margin-top: var(--s-1);
+}
+.page-head__key-line {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+}
+.page-head__figure {
+  font-size: var(--size-key);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+}
+.page-head__figures {
+  display: flex;
+  gap: var(--s-3);
+  align-items: baseline;
+  color: var(--mid);
+  font-size: var(--size-lead);
+}
+.page-head__fig b {
+  color: var(--text);
+}
+.page-head__fig--link {
+  color: var(--mid);
+  display: inline-flex;
+  align-items: baseline;
+  min-height: var(--m-target);
+}
+.page-head__fig--link i {
+  font-style: normal;
+  color: var(--text);
+  margin-left: var(--s-1);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/WeekArrow.css">/* A week's ‹ or ›: a key, 32px square, its glyph in text on paper with a mid edge (Craig, 16 Nov 2026). */
+.week-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--s-6);
+  height: var(--s-6);
+  font: inherit;
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-tight);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--mid);
+  cursor: pointer;
+  text-decoration: none;
+}
+.week-arrow:hover:not(:disabled) {
+  border-color: var(--text);
+}
+/* ‹ week ›: the arrows either side of the week; the page sets its type. */
+.week-step {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/frame/SectionHead.css">.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding-top: var(--s-2);
+  margin-bottom: var(--s-2);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  font-size: var(--size-body);
+  font-weight: var(--w-bold);
+}
+.section-head__note {
+  font-weight: var(--w-regular);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/SeriesList.css">.series-list__row {
+  display: grid;
+  grid-template-columns: var(--s-6) 1fr auto;
+  gap: var(--s-2);
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+  align-items: center;
+}
+
+.series-list__result {
+  text-align: right;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/Tag.css">.tag {
+  display: inline-block;
+  border: var(--m-rule) solid var(--text);
+  padding: 0 var(--s-1);
+  font: var(--w-regular) var(--size-tag) / var(--m-tag-line) var(--font-sans);
+  color: var(--text);
+  white-space: nowrap;
+}
+.tag--not-final {
+  border-style: dashed;
+}
+.tag--live {
+  background: var(--text);
+  color: var(--bg);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/Time.css">.time {
+  white-space: nowrap;
+}
+.time__kst {
+  margin-left: var(--s-1);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/SeriesStrip.css">/* A card's series strip: the last 3, a 2px --text rule for now, the next 3. */
+.series-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) var(--m-rule-heavy) repeat(3, minmax(0, 1fr));
+  padding: var(--s-4) 0;
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.series-strip__cell {
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--s-3);
+}
+.series-strip__when {
+  font-weight: var(--w-regular);
+}
+.series-strip__points {
+  display: flex;
+  align-items: center;
+  gap: var(--s-1);
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-snug);
+  color: var(--text);
+}
+.series-strip__now {
+  background: var(--text);
+}
+.series-strip__next {
+  font-size: var(--size-head);
+  line-height: var(--lh-snug);
+  color: var(--mid);
+}
+.series-strip__next--first {
+  color: var(--text);
+  font-weight: var(--w-semi);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/frame/SideSection.css">.side-section {
+  border-top: var(--m-rule-heavy) solid var(--text);
+  padding-top: var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.side-section__title {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--s-2);
+  font-size: var(--size-body);
+  font-weight: var(--w-bold);
+}
+.side-section__note {
+  font-weight: var(--w-regular);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/frame/SponsorNote.css">.sponsor-note {
+  margin-top: var(--s-2);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/States.css">.state-loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.state-loading__bar {
+  display: block;
+  height: var(--m-target);
+  background: var(--fill);
+}
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-1);
+  padding: var(--s-5) 0;
+}
+.state__title {
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+}
+.state__line {
+  color: var(--mid);
+}
+.state__retry {
+  color: var(--text);
+  padding: 0;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/display/Table.css">.table {
+  table-layout: fixed;
+  background: var(--paper);
+}
+.table th {
+  padding: var(--s-2) var(--s-3);
+  white-space: nowrap;
+  background: var(--paper);
+}
+.table td {
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  border-bottom: var(--m-rule) solid var(--fill);
+  white-space: nowrap;
+}
+.table .table__figure {
+  text-align: right;
+}
+.table .table__group {
+  border-left: var(--m-rule) solid var(--line);
+}
+.table th.table__sorted {
+  color: var(--text);
+  font-weight: var(--w-bold);
+}
+.table th.table__sorted::after {
+  content: " ▼";
+}
+/* A rule above a row that starts a group: the row above's own line, since collapsed borders let it win. */
+.table tr:has(+ .table__row--rule) td {
+  border-bottom-color: var(--line);
+}
+.table__truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.table tbody tr:not(.table__sub, .table__gap):hover td,
+.table__row--selected td {
+  background: var(--fill);
+}
+/* A sub-row: a group's head, what is true of the group on its right; or `⋯` where rows are skipped. */
+.table .table__sub td {
+  height: auto;
+  padding: var(--s-2) var(--s-3);
+  background: var(--bg);
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.table__sub b {
+  color: var(--text);
+}
+.table__sub-aside {
+  float: right;
+}
+.table .table__gap td {
+  height: auto;
+  padding: var(--s-1);
+  text-align: center;
+  color: var(--mid);
+}
+.table__row--selected td {
+  font-weight: var(--w-bold);
+}
+.table__row--selected td small {
+  font-weight: var(--w-regular);
+}
+.table__go-col {
+  width: var(--m-go-col);
+}
+.table td.table__go {
+  padding: 0;
+  text-align: center;
+}
+.table__go a,
+.table__go button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--m-target);
+  min-height: var(--m-target);
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.table__scroll {
+  overflow: auto;
+  max-height: 100vh;
+}
+.table--sticky-head thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.table--sticky-first th:first-child,
+.table--sticky-first td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--paper);
+}
+.table--sticky-first tbody tr:hover td:first-child,
+.table--sticky-first .table__row--selected td:first-child {
+  background: var(--fill);
+}
+.table--sticky-head.table--sticky-first thead th:first-child {
+  z-index: 3;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/Tabs.css">.tabs {
+  display: flex;
+  align-items: center;
+  margin-top: var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.tabs__tab {
+  padding: var(--s-2) var(--s-4);
+  color: var(--mid);
+}
+.tabs__tab--on {
+  color: var(--text);
+  font-weight: var(--w-bold);
+  border-bottom: var(--m-rule-heavy) solid var(--text);
+  margin-bottom: calc(var(--m-rule) * -1);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/Toast.css">.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--s-6);
+  z-index: 20;
+  transform: translateX(-50%);
+  padding: var(--s-2) var(--s-4);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: var(--w-semi);
+  white-space: nowrap;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/parts/controls/ViewToggle.css">.view-toggle {
+  display: inline-flex;
+}
+.view-toggle__key {
+  font: inherit;
+  padding: var(--s-1) var(--s-5);
+  border: var(--m-rule) solid var(--line);
+  background: var(--fill);
+  color: var(--mid);
+  cursor: pointer;
+}
+.view-toggle__key + .view-toggle__key {
+  margin-left: calc(var(--m-rule) * -1);
+}
+.view-toggle__key--on {
+  background: var(--paper);
+  color: var(--text);
+  font-weight: var(--w-semi);
+}
+.view-toggle__key:hover {
+  border-color: var(--text);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/rift/BenchBar.css">.bench-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+}
+.bench-bar__title {
+  align-self: center;
+  width: var(--m-bench-title-w);
+  font-size: var(--size-body);
+  font-weight: var(--w-semi);
+}
+/* A bench place: its order and role over its tile (FPL's `1. DEF`). */
+.bench-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-1);
+}
+.bench-slot__role {
+  font-weight: var(--w-semi);
+  line-height: var(--lh-snug);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/rift/RiftMap.css">.rift-map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.rift-map__ground {
+  fill: var(--map-ground);
+}
+.rift-map__river {
+  fill: var(--map-river);
+}
+.rift-map__lane {
+  fill: none;
+  stroke: var(--map-lane);
+  stroke-linejoin: round;
+}
+.rift-map__base {
+  fill: var(--map-base);
+}
+.rift-map__tower {
+  fill: var(--map-tower);
+}
+.rift-map__pit {
+  fill: none;
+  stroke: var(--map-tower);
+  stroke-dasharray: var(--stroke-dash) var(--stroke-dash);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/rift/Shirt.css">.shirt {
+  position: relative;
+  display: block;
+  width: var(--m-shirt-w);
+  height: var(--m-shirt-h);
+  flex: none;
+}
+.shirt--small {
+  width: var(--m-shirt-small-w);
+  height: var(--m-shirt-small-h);
+}
+.shirt__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.shirt__body {
+  fill: var(--paper);
+  stroke: var(--text);
+  stroke-width: var(--stroke-shirt);
+}
+.shirt__collar {
+  fill: none;
+  stroke: var(--text);
+  stroke-width: var(--stroke-shirt);
+}
+.shirt__code {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--s-4);
+  text-align: center;
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/rift/MarkBadge.css">/* C and V (MarkBadge.tsx): round, C filled, V outlined. Each page places it. */
+.mark-badge {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+}
+.mark-badge--small {
+  width: var(--m-mark);
+  height: var(--m-mark);
+  font-size: var(--size-small);
+}
+.mark-badge--card {
+  width: var(--m-mark-card);
+  height: var(--m-mark-card);
+  font-size: var(--size-body);
+}
+.mark-badge--sheet {
+  width: var(--m-mark-sheet);
+  height: var(--m-mark-sheet);
+  font-family: var(--font-mono);
+  font-size: var(--size-head);
+}
+.mark-badge--v {
+  background: var(--bg);
+  color: var(--text);
+  border: var(--m-rule) solid var(--text);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/rift/Tile.css">/* The Rift is square at any width, centred in the main column, so the map and the tiles' places never stretch. */
+.rift {
+  position: relative;
+  width: 100%;
+  max-width: var(--m-rift);
+  margin: 0 auto;
+  aspect-ratio: var(--ratio-rift);
+}
+
+/* A tile, as FPL's (Craig, 16 Nov 2026): price chip, a faint card round the shirt, a white name plate, a dark band. */
+.tile {
+  position: absolute;
+  z-index: 2;
+  width: var(--m-tile-w);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  line-height: var(--lh-body);
+}
+/* A bench tile stands in the bench bar, not on the map. */
+.tile--bench {
+  position: static;
+  transform: none;
+}
+.tile[role="button"] {
+  cursor: pointer;
+}
+.tile__price {
+  display: inline-block;
+  margin-bottom: var(--s-1);
+  padding: 0 var(--s-2);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+}
+.tile__card {
+  position: relative;
+  padding: var(--s-2) 0;
+  background: var(--tile-card);
+  border-radius: var(--m-tile-radius) var(--m-tile-radius) 0 0;
+}
+.tile__kit {
+  position: relative;
+  width: var(--m-shirt-w);
+  height: var(--m-shirt-h);
+  margin: 0 auto;
+}
+.tile__mark {
+  position: absolute;
+  top: 0;
+  right: calc(var(--s-2) * -1);
+}
+.tile__flag,
+.tile__sell {
+  position: absolute;
+  top: 0;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+}
+.tile__flag {
+  left: calc(var(--s-2) * -1);
+  border-radius: 50%;
+  background: var(--tile-plate);
+  color: var(--on-tile-plate);
+}
+.tile__sell {
+  left: var(--s-1);
+  top: var(--s-1);
+  color: var(--text);
+  font-size: var(--size-body);
+}
+/* The Flex's or Coach's label over his shirt, marking his place. */
+.tile__slot {
+  display: inline-block;
+  margin-bottom: var(--s-1);
+  padding: 0 var(--s-2);
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}
+.tile__slot--flex {
+  text-transform: uppercase;
+}
+.tile__name {
+  background: var(--tile-plate);
+  color: var(--on-tile-plate);
+  font-weight: var(--w-bold);
+  padding: 0 var(--s-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tile__name .me-dot {
+  background: var(--on-tile-plate);
+}
+.tile__points {
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.tile__line {
+  background: var(--bg);
+  padding: 0 var(--s-1) var(--s-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tile__line--fixtures {
+  color: var(--text);
+  font-family: var(--font-mono);
+  padding: var(--s-1);
+}
+
+/* Chosen: a heavy rule round the tile. Could go there: dashed. Dim: the plate and band greyed. */
+.tile--selected {
+  outline: var(--m-rule-heavy) solid var(--text);
+  outline-offset: var(--m-rule-heavy);
+}
+.tile--fit {
+  outline: var(--m-rule-heavy) dashed var(--text);
+  outline-offset: var(--m-rule-heavy);
+}
+.tile--dim .tile__name {
+  background: var(--fill);
+  color: var(--mid);
+}
+.tile--dim .tile__line,
+.tile--dim .tile__points {
+  color: var(--mid);
+}
+.tile--dim .tile__slot {
+  background: var(--fill);
+  color: var(--mid);
+}
+.tile--dim .shirt {
+  opacity: 0.5;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/rift/Lineup.css">.lineup {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+}
+.pcard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.pcard[role="button"] {
+  cursor: pointer;
+}
+.pcard--selected {
+  outline: var(--m-rule-heavy) solid var(--text);
+}
+.pcard--fit {
+  outline: var(--m-rule-heavy) dashed var(--text);
+  outline-offset: var(--m-rule-heavy);
+}
+.pcard--dim {
+  border-color: var(--line);
+  color: var(--mid);
+}
+.pcard__role {
+  height: var(--m-card-head);
+  display: flex;
+  gap: var(--s-1);
+  align-items: center;
+  padding: var(--s-1) var(--s-2);
+  border-bottom: var(--m-rule) solid var(--line);
+  font-size: var(--size-small);
+  line-height: var(--lh-mid);
+}
+.pcard__role .role-icon {
+  width: var(--m-role-icon-small);
+  height: var(--m-role-icon-small);
+}
+.pcard__role small {
+  display: block;
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.pcard__photo {
+  position: relative;
+  display: flex;
+  height: var(--m-card-photo);
+  margin: var(--s-2);
+}
+.pcard__photo--crest {
+  align-items: center;
+  justify-content: center;
+}
+.pcard__news {
+  position: absolute;
+  left: var(--s-1);
+  bottom: var(--s-1);
+}
+.pcard__news .tag {
+  background: var(--paper);
+}
+.pcard__mark {
+  position: absolute;
+  right: var(--s-1);
+  top: var(--s-1);
+}
+.pcard__name {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  padding: 0 var(--s-2);
+  line-height: var(--lh-snug);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pcard__team {
+  padding: 0 var(--s-2) var(--s-2);
+}
+.pcard__next {
+  margin-top: auto;
+  border-top: var(--m-rule) solid var(--line);
+  padding: var(--s-2);
+  font-size: var(--size-small);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.pcard__foot {
+  border-top: var(--m-rule) solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding: var(--s-1) var(--s-2);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.pcard__foot b {
+  color: var(--text);
+  font-weight: var(--w-regular);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/rift/RoleIcon.css">.role-icon {
+  width: var(--m-role-icon);
+  height: var(--m-role-icon);
+  flex: none;
+}
+.role-icon__a {
+  fill: var(--text);
+}
+.role-icon__b {
+  fill: var(--mid);
+}
+.role-icon__c {
+  fill: var(--soft);
+}
+.role-icon__line {
+  fill: none;
+  stroke: var(--text);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/rift/PlayerPanel.css">.player-panel {
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  margin-bottom: var(--s-5);
+}
+.player-panel__head {
+  display: flex;
+  gap: var(--s-3);
+  align-items: center;
+  padding: var(--s-3) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.player-panel__name {
+  display: block;
+  font-size: var(--size-head);
+  line-height: var(--lh-snug);
+}
+.player-panel__meta {
+  color: var(--mid);
+}
+.player-panel__close {
+  margin-left: auto;
+  align-self: flex-start;
+  min-width: var(--m-target);
+  min-height: var(--m-target);
+  color: var(--mid);
+}
+.player-panel__close:hover {
+  color: var(--text);
+}
+
+/* The tapped player's games: each series and its games, the sum, Full stats. */
+.player-panel__series {
+  padding: var(--s-2) var(--s-4) var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.player-panel__series-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--s-1);
+  font-size: var(--size-body);
+}
+.player-panel__series-head span {
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.player-panel__game {
+  display: grid;
+  grid-template-columns: var(--s-6) 1fr var(--m-go-col);
+  gap: var(--s-2);
+  align-items: center;
+  padding: var(--s-1) 0;
+}
+
+.player-panel__game-points {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.player-panel__game-what {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.player-panel__game--dropped {
+  color: var(--mid);
+}
+.player-panel__game--dropped .player-panel__game-points {
+  font-weight: var(--w-regular);
+}
+
+.player-panel__sum {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+
+.player-panel__sum-figure {
+  font-size: var(--size-head);
+}
+.player-panel__foot {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--s-2) var(--s-4) var(--s-3);
+  font-size: var(--size-small);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/coach-card/coach-card.css">/* The coach card (docs/design/approved/coach-card/): a lower third, the meta line, then the body. */
+.coach-card__news {
+  background: var(--text);
+  color: var(--bg);
+  padding: var(--s-2) var(--s-5);
+  font-weight: var(--w-semi);
+}
+
+/* The lower third: crest, who, and on the right the season's points over the actions. */
+.coach-card__head {
+  display: grid;
+  grid-template-columns: var(--m-crest) minmax(0, 1fr) auto;
+  gap: var(--s-5);
+  align-items: end;
+  padding: var(--s-6) var(--s-5) var(--s-4);
+}
+.coach-card__name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  font-size: var(--size-card);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.coach-card__hangul {
+  font-size: var(--size-head);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.coach-card__legal {
+  margin-top: var(--s-1);
+}
+.coach-card__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-4);
+  align-self: stretch;
+}
+.coach-card__hero {
+  text-align: right;
+  padding-right: var(--s-6);
+}
+.coach-card__hero-figure {
+  display: block;
+  font-size: var(--size-key);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-tight);
+}
+
+.coach-card__acts {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  white-space: nowrap;
+}
+
+/* The meta line: price and move, form, owned, the week's transfers. */
+.coach-card__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+  padding: 0 var(--s-5) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+
+.coach-card__kv-figure {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  color: var(--text);
+  margin-right: var(--s-2);
+}
+
+/* The body: the strip, tabs and tab on the left, the Season panel in the 360 rail. */
+.coach-card__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-side);
+}
+.coach-card__left {
+  padding: 0 var(--s-5) var(--s-5);
+}
+.coach-card__main {
+  padding-top: var(--s-4);
+}
+.coach-card__rail {
+  border-left: var(--m-rule) solid var(--line);
+  padding: var(--s-4) var(--s-5) var(--s-5);
+}
+
+/* A block's head: a series in This week, a table's title in History. */
+.coach-card__block {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: var(--s-5) 0 var(--s-2);
+  padding-top: var(--s-2);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+}
+.coach-card__block:first-child,
+.coach-card__block--first {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.coach-card__soft {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}
+
+/* This week's games: G, result, lines, points; a game that doesn't count struck through. */
+.coach-card__games td {
+  height: var(--m-row);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--fill);
+}
+.coach-card__games .coach-card__g {
+  width: var(--m-go-col);
+}
+.coach-card__pts {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.coach-card__drop .coach-card__pts {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+  text-decoration: line-through;
+}
+.coach-card__total td {
+  height: var(--m-card-head);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  font-weight: var(--w-semi);
+}
+.coach-card__total .coach-card__pts {
+  font-size: var(--size-head);
+}
+
+/* History's Series column takes the room; Roster stays narrower, as drawn. */
+.coach-card__history col:nth-child(2) {
+  width: 40%;
+}
+.coach-card__roster {
+  max-width: var(--m-modal-sheet);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/compare/compare.css">/* Compare, drawn to docs/design/approved/compare/: the two lower thirds facing each other, one mirrored table. */
+
+/* The head: each lower third, a `v` between. */
+.compare__faces {
+  display: grid;
+  grid-template-columns: 1fr calc(var(--s-7) + var(--s-5)) 1fr;
+  align-items: end;
+  padding: var(--s-7) var(--s-5) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.compare__face {
+  display: flex;
+  gap: var(--s-4);
+  align-items: flex-end;
+}
+.compare__face--right {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.compare__portrait {
+  flex: none;
+  width: calc(var(--s-7) + var(--s-5));
+  height: calc(var(--s-7) + var(--s-5));
+}
+.compare__tag {
+  display: block;
+  margin-bottom: var(--s-2);
+  font-weight: var(--w-semi);
+}
+.compare__name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.compare__face--right .compare__name {
+  justify-content: flex-end;
+}
+.compare__hangul {
+  font-size: var(--size-lead);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.compare__v {
+  text-align: center;
+  padding-bottom: var(--s-4);
+  font: var(--w-semi) var(--size-head) var(--font-mono);
+  color: var(--mid);
+}
+.compare__go {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  margin-top: var(--s-1);
+  padding: 0;
+  color: var(--text);
+}
+
+/* The head-to-head: the top table, then the lines, each side mirrored about the line's name. */
+.compare__body {
+  padding: 0 var(--s-5) var(--s-5);
+}
+.compare__top,
+.compare__lines,
+.compare__results {
+  table-layout: fixed;
+}
+.compare__top {
+  margin-top: var(--s-3);
+}
+.compare__lines {
+  margin-top: var(--s-5);
+  border-top: var(--m-rule-heavy) solid var(--text);
+}
+.compare__label-col {
+  width: calc(var(--s-7) * 3 + var(--s-4));
+}
+.compare__per-game-col {
+  width: calc(var(--s-7) * 2 + var(--s-3));
+}
+.compare__points-col {
+  width: calc(var(--s-7) + var(--s-6) + var(--s-2));
+}
+.compare__lines th {
+  padding: var(--s-2);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+  color: var(--mid);
+}
+.compare__top td,
+.compare__lines td {
+  height: var(--m-row);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--line);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.compare__left {
+  text-align: right;
+}
+.compare__right {
+  text-align: left;
+}
+.compare__top td.compare__label,
+.compare__lines td.compare__label {
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: var(--size-body);
+  background: var(--bg);
+}
+.compare__better {
+  font-weight: var(--w-bold);
+}
+.compare__rank {
+  margin: 0 var(--s-2);
+  font: var(--size-small) var(--font-sans);
+  color: var(--mid);
+}
+.compare__move {
+  margin-left: var(--s-2);
+}
+.compare__top .compare__row--big td {
+  height: calc(var(--s-7) + var(--s-4));
+  font-size: var(--size-title);
+}
+.compare__top .compare__row--big td.compare__label {
+  font-size: var(--size-body);
+}
+.compare__top .compare__row--strip td {
+  height: calc(var(--s-7) + var(--s-3));
+}
+
+/* Last 3 and Next 3, as the card's series strip. */
+.compare__strip {
+  display: flex;
+}
+.compare__left .compare__strip {
+  justify-content: flex-end;
+}
+.compare__series {
+  display: inline-flex;
+  flex-direction: column;
+  min-width: calc(var(--s-7) + var(--s-5));
+  padding: 0 var(--s-2);
+  text-align: center;
+  font: var(--size-small) var(--font-sans);
+  color: var(--mid);
+}
+.compare__series-points {
+  font: var(--w-semi) var(--size-head) / var(--lh-snug) var(--font-mono);
+  color: var(--text);
+}
+.compare__series-opp {
+  font-size: var(--size-body);
+  font-style: normal;
+  line-height: var(--lh-body);
+}
+.compare__series-opp--first {
+  font-weight: var(--w-bold);
+  color: var(--text);
+}
+
+/* The second player's search. */
+.compare__pick {
+  padding: var(--s-5);
+}
+.compare__find {
+  display: flex;
+  width: 100%;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  margin-bottom: var(--s-2);
+  border: var(--m-rule) solid var(--text);
+  background: var(--paper);
+  font: inherit;
+  color: var(--text);
+}
+.compare__find::placeholder {
+  color: var(--mid);
+}
+.compare__group {
+  padding: var(--s-3) 0 var(--s-1);
+  font-weight: var(--w-semi);
+}
+.compare__team-col {
+  width: var(--m-col-figure);
+}
+.compare__price-col {
+  width: var(--m-col-price);
+}
+.compare__score-col {
+  width: calc(var(--s-7) + var(--s-3));
+}
+.compare__results td {
+  height: var(--m-row);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--line);
+}
+.compare__result--pick {
+  cursor: pointer;
+}
+.compare__result--pick:hover {
+  background: var(--fill);
+}
+.compare__result-name {
+  font-weight: var(--w-semi);
+}
+
+.compare__result-price {
+  font-family: var(--font-mono);
+}
+.compare__result-points {
+  text-align: right;
+  font-family: var(--font-mono);
+  font-weight: var(--w-semi);
+}
+.compare__more {
+  margin-top: var(--s-3);
+  font-weight: var(--w-semi);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/following/following.css">/* The Following page (docs/design/approved/following/), drawn to plate.md; colours are tokens only.
+   The picture's own widths (192 and 128 for the feed's columns, 180 and 40 for a swap) are
+   written from the spacing scale, since only this folder may change. */
+.following__grid {
+  margin-top: var(--s-5);
+}
+
+/* The feed: one timeline, a head per gameweek. */
+.following__week + .following__week {
+  margin-top: var(--s-5);
+}
+.following__week-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-bottom: var(--s-2);
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+}
+.following__deadline {
+  margin: 0 0 var(--s-2);
+}
+.following__item {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) * 4) minmax(0, 1fr) calc(var(--s-6) * 4);
+  gap: var(--s-4);
+  align-items: start;
+  background: var(--paper);
+  padding: var(--s-3) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.following__who {
+  display: flex;
+  flex-direction: column;
+}
+.following__item .following__name {
+  font-weight: var(--w-bold);
+}
+.following__team,
+.following__sub,
+.following__deadline,
+.following__so-far {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.following__sub {
+  display: block;
+  margin-top: var(--s-1);
+}
+.following__so-far {
+  margin-left: var(--s-2);
+}
+.following__pts {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  margin-right: var(--s-2);
+}
+.following__when {
+  display: block;
+  margin-top: var(--s-1);
+  font-size: var(--size-small);
+}
+.following__swaps {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) * 4 - var(--s-3)) var(--m-row);
+  gap: var(--s-1) var(--s-2);
+  margin-top: var(--s-1);
+  font-size: var(--size-small);
+}
+.following__swap {
+  display: contents;
+}
+.following__swap b {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.following__truck,
+.following__sent {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+}
+.following__truck {
+  font-weight: var(--w-semi);
+  color: var(--text);
+}
+.following__sent {
+  color: var(--mid);
+}
+
+/* The side column: requests, trucks, following, followers. */
+.following__request {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: var(--s-2);
+  align-items: center;
+  background: var(--paper);
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.following__parked {
+  background: var(--paper);
+  margin-bottom: var(--s-2);
+}
+.following__by {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--s-2) var(--s-3);
+}
+.following__by b,
+.following__by .following__name {
+  color: var(--text);
+  font-weight: var(--w-bold);
+}
+.following__people {
+  background: var(--paper);
+}
+.following__person {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-2);
+  align-items: baseline;
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.following__acts {
+  display: flex;
+  gap: var(--s-4);
+  justify-content: flex-end;
+}
+.following__act {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  font-size: var(--size-small);
+  color: var(--text);
+}
+
+/* A truck's LED panel: dotted, in capitals, the same everywhere. */
+.following__led {
+  display: flex;
+  align-items: center;
+  min-height: var(--s-7);
+  padding: var(--s-2) var(--s-3);
+  background-color: var(--text);
+  background-image: radial-gradient(circle, var(--bg) calc(var(--m-rule) * 0.35), transparent calc(var(--m-rule) * 0.7));
+  background-size: var(--s-1) var(--s-1);
+  color: var(--bg);
+  font: var(--w-semi) var(--size-body) / var(--lh-body) var(--font-mono);
+  text-transform: uppercase;
+}
+.following__led--big {
+  font-size: var(--size-lead);
+  min-height: calc(var(--s-7) + var(--s-5));
+}
+
+/* The truck picker. */
+.following__picker-sub {
+  margin-top: calc(var(--s-3) * -1);
+  color: var(--mid);
+}
+.following__kinds {
+  margin: var(--s-4) 0 var(--s-3);
+}
+.following__line {
+  display: grid;
+  grid-template-columns: var(--s-4) minmax(0, 1fr);
+  gap: var(--s-3);
+  padding: var(--s-2) var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+  font-family: var(--font-mono);
+  cursor: pointer;
+}
+.following__line--on {
+  font-weight: var(--w-semi);
+}
+.following__radio {
+  appearance: none;
+  width: var(--s-4);
+  height: var(--s-4);
+  margin-top: calc(var(--m-rule) * 2);
+  border: var(--m-rule) solid var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+}
+.following__radio:checked {
+  background: var(--text);
+  box-shadow: inset 0 0 0 calc(var(--m-rule) * 3) var(--paper);
+}
+.following__preview {
+  margin: var(--s-4) 0 var(--s-2);
+}
+.following__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.following__foot-note {
+  flex: 1;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/home/home.css">/* Home, drawn to docs/design/approved/home/ (live.html, idle.html). Every value is a token. */
+
+/* Head: team name and hangul, then Overall as a tier. The tier keeps the head's own bottom margin so the two centre. */
+.home__head {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--s-2);
+}
+.home__tier {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin: 0 0 var(--s-4) var(--s-5);
+  padding-left: var(--s-5);
+  border-left: var(--m-rule) solid var(--line);
+}
+.home__shield {
+  display: block;
+  width: calc(var(--s-6) + var(--s-2));
+  aspect-ratio: 40 / 46;
+}
+.home__shield-body {
+  fill: var(--text);
+  stroke: var(--text);
+  stroke-width: var(--stroke-shirt);
+}
+.home__shield-band {
+  stroke: var(--bg);
+  stroke-width: var(--m-rule);
+  opacity: var(--opacity-tier-band);
+}
+.home__tier-name {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.home__tier-hangul {
+  margin-left: var(--s-2);
+  font-weight: var(--w-regular);
+}
+.home__tier-rank b {
+  margin-right: var(--s-2);
+  font-size: var(--size-lead);
+}
+.home__badge {
+  display: flex;
+  align-self: flex-start;
+  width: calc(var(--s-7) + var(--s-4));
+  height: var(--m-target);
+}
+
+/* Deadline bar: full width under the head, its keys on the side column's line. */
+.home__deadline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-side);
+  column-gap: var(--s-6);
+  align-items: end;
+  margin-bottom: var(--s-5);
+}
+.home__deadline-title {
+  grid-column: 1 / -1;
+}
+.home__deadline-left {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+}
+.home__countdown {
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.home__countdown small {
+  margin: 0 var(--s-2) 0 var(--s-1);
+  font-size: var(--size-lead);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.home__deadline-when {
+  color: var(--mid);
+}
+.home__deadline-keys {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.home__free {
+  margin-left: auto;
+}
+.home__free b {
+  font-size: var(--size-lead);
+}
+
+/* The main and side columns, twice: the state's own, then Following and Leagues. */
+.home__row {
+  align-items: start;
+}
+.home__row--band {
+  margin-top: var(--s-5);
+}
+
+/* The side column: the week's total, then lists of players. */
+.home__total {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  margin-bottom: var(--s-4);
+  padding-bottom: var(--s-3);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.home__total-figure {
+  font-size: var(--size-key);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+}
+.home__fig {
+  font-size: var(--size-lead);
+  color: var(--mid);
+}
+.home__fig b {
+  margin-left: var(--s-1);
+  color: var(--text);
+}
+.home__fig--link {
+  display: inline-flex;
+  align-items: baseline;
+  min-height: var(--m-target);
+}
+.home__fig--link i {
+  margin-left: var(--s-1);
+  font-style: normal;
+  color: var(--text);
+}
+.home__sub {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--s-2);
+  font-size: var(--size-body);
+  font-weight: var(--w-bold);
+}
+.home__players + .home__sub {
+  margin-top: var(--s-4);
+}
+.home__sub-note {
+  font-weight: var(--w-regular);
+}
+.home__players {
+  list-style: none;
+}
+.home__player {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) calc(var(--s-7) * 2) var(--s-6);
+  align-items: center;
+  height: var(--m-row);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.home__player .home__role-icon {
+  width: var(--s-3);
+  height: var(--s-3);
+  margin-right: var(--s-2);
+  vertical-align: middle;
+}
+.home__mark {
+  margin-left: var(--s-1);
+  vertical-align: middle;
+}
+.home__player-team,
+.home__player-stat {
+  font-size: var(--size-small);
+  color: var(--mid);
+}
+.home__player-points {
+  text-align: right;
+  font-weight: var(--w-semi);
+}
+.home__more {
+  margin-top: var(--s-2);
+}
+
+/* Following: each item, Truck › on its right; a truck received on its LED panel. */
+.home__feed-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s-2);
+  align-items: center;
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.home__feed-row--truck {
+  grid-template-columns: calc(var(--s-7) * 3 + var(--s-2)) minmax(0, 1fr);
+}
+.home__feed-small {
+  display: block;
+}
+.home__truck {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  color: var(--text);
+}
+.home__led {
+  display: flex;
+  align-items: center;
+  height: var(--m-row);
+  padding: var(--s-2);
+  font: var(--w-semi) var(--size-small) / var(--lh-snug) var(--font-mono);
+  text-transform: uppercase;
+  color: var(--text);
+  background-color: var(--stage);
+  background-image: radial-gradient(circle, var(--line) var(--m-rule), transparent calc(var(--m-rule) * 1.4));
+  background-size: var(--s-1) var(--s-1);
+}
+
+.home__sponsor {
+  display: flex;
+  height: calc(var(--s-7) * 2);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/home/Idle.css">/* Home with nothing live (idle.html). Every value is a token. */
+
+/* Idle: the lineup on a broadcast stage, the full main column, its own 984 × 552 stage. */
+.home__stage {
+  position: relative;
+  aspect-ratio: 41 / 23;
+  overflow: hidden;
+  background: var(--stage);
+  color: var(--text);
+}
+.home__stage-title {
+  position: absolute;
+  left: var(--s-5);
+  top: var(--s-4);
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.home__next {
+  position: absolute;
+  left: var(--s-5);
+  top: calc(var(--s-7) * 2);
+}
+.home__next-label,
+.home__next-when {
+  display: block;
+}
+.home__next-label {
+  color: var(--stage-text);
+}
+.home__next-teams {
+  display: block;
+  font-size: var(--size-title);
+  line-height: var(--lh-snug);
+}
+.home__floor {
+  position: absolute;
+  left: calc(var(--s-6) * -1 - var(--s-2));
+  right: calc(var(--s-6) * -1 - var(--s-2));
+  bottom: 0;
+  height: calc(var(--s-7) * 3 + var(--s-2));
+  background: var(--fill);
+  transform: skewY(-4deg);
+  transform-origin: left;
+}
+.home__starters {
+  position: absolute;
+  left: var(--s-5);
+  right: calc(var(--s-6) + var(--s-2));
+  bottom: calc(var(--s-7) + var(--s-4));
+  display: flex;
+  gap: var(--s-2);
+  list-style: none;
+}
+.home__starter {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+/* The shirt at one and a half times its size, grown upward from its foot. */
+.home__starter-shirt {
+  display: flex;
+  justify-content: center;
+  transform: scale(1.5);
+  transform-origin: bottom center;
+}
+.home__starter-mark {
+  position: absolute;
+  top: calc(var(--s-6) * -1 - var(--m-rule));
+  right: var(--s-3);
+}
+.home__plate {
+  padding: var(--s-2) 0 var(--s-1);
+  background: var(--paper);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  transform: skewX(-12deg);
+}
+.home__plate-name,
+.home__plate-role {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transform: skewX(12deg);
+}
+.home__plate-name {
+  font-size: var(--size-lead);
+}
+
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/home/Live.css">/* Home while a series is live (live.html). Every value is a token. */
+
+/* Live: the stream at 16:9, 704 of the main column's 984; its picker beside it. */
+.home__tv {
+  display: grid;
+  grid-template-columns: 11fr 4fr;
+  gap: var(--s-5);
+  align-items: start;
+}
+.home__screen {
+  position: relative;
+  aspect-ratio: var(--ratio-stream);
+  overflow: hidden;
+  background: var(--stage);
+  color: var(--text);
+}
+.home__screen-bar {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  font-size: var(--size-lead);
+}
+.home__screen-small {
+  font-size: var(--size-small);
+  color: var(--stage-text);
+}
+.home__screen-space {
+  flex: 1;
+}
+.home__screen-video {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--stage-text);
+}
+.home__picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.home__picker > span {
+  display: block;
+}
+.home__stream {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--s-6);
+  padding: 0 var(--s-3);
+  font: inherit;
+  text-align: left;
+  color: var(--mid);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  cursor: pointer;
+}
+.home__stream--on {
+  color: var(--text);
+  font-weight: var(--w-semi);
+  border-color: var(--text);
+}
+.home__stream--off {
+  border-style: dashed;
+  cursor: default;
+}
+.home__stream--more {
+  justify-content: flex-start;
+}
+.home__stream-platform {
+  margin-left: var(--s-1);
+  font-weight: var(--w-regular);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/lck-hub/lck-hub.css">/* The LCK hub, drawn to docs/design/approved/lck-hub/. Every value is a theme token. */
+
+/* The head: the competition at the left, the deadline at the right. */
+.lck-hub__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.lck-hub__head > header {
+  margin-bottom: 0;
+}
+.lck-hub__stages,
+.lck-hub__picker {
+  margin: var(--s-4) 0 var(--s-5);
+}
+/* A main-column section's head (SectionHead), its note a little further off. */
+.lck-hub__title {
+  gap: var(--s-3);
+}
+
+/* Fixtures and Results: one week by day, a day's series on paper. */
+.lck-hub__time-heads {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-6) + var(--s-2)) calc(var(--s-7) + var(--s-4)) calc(var(--s-7) + var(--s-4));
+  padding-bottom: var(--s-1);
+}
+.lck-hub__time-heads span:first-child {
+  grid-column: 2;
+  padding-left: var(--s-4);
+}
+.lck-hub__day {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-6) + var(--s-2)) 1fr;
+  border-top: var(--m-rule) solid var(--line);
+}
+.lck-hub__day-name {
+  padding: var(--s-3) 0;
+}
+.lck-hub__day-date {
+  display: block;
+  font-weight: var(--w-regular);
+}
+.lck-hub__series {
+  display: grid;
+  grid-template-columns:
+    calc(var(--s-7) + var(--s-4)) calc(var(--s-7) + var(--s-4)) calc(var(--s-7) * 2 + var(--s-4)) var(--s-6)
+    calc(var(--s-7) * 2) var(--m-target) 1fr;
+  align-items: center;
+  height: var(--s-7);
+  padding: 0 var(--s-4);
+  background: var(--paper);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.lck-hub__series--result {
+  grid-template-columns: calc(var(--s-7) * 2 + var(--s-6) + var(--s-3)) calc(var(--s-7) + var(--s-6)) calc(var(--s-7) + var(--s-4)) var(--m-target) 1fr;
+}
+.lck-hub__series:last-child {
+  border-bottom: 0;
+}
+.lck-hub__series:hover {
+  background: var(--fill);
+}
+.lck-hub__kst {
+  color: var(--mid);
+}
+.lck-hub__home {
+  text-align: right;
+}
+.lck-hub__code {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+.lck-hub__loser {
+  font-weight: var(--w-regular);
+}
+.lck-hub__record {
+  margin: 0 var(--s-2);
+}
+.lck-hub__versus {
+  text-align: center;
+  color: var(--mid);
+}
+.lck-hub__score {
+  text-align: center;
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+.lck-hub__go {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--size-lead);
+}
+
+/* Standings: one table per group. */
+.lck-hub__groups {
+  display: grid;
+  gap: var(--s-6);
+}
+.lck-hub__standings col:nth-child(n + 3) {
+  width: var(--m-col-figure);
+}
+.lck-hub__standings col:last-child {
+  width: calc(var(--s-7) * 3 + var(--s-4));
+}
+.lck-hub__rank {
+  color: var(--mid);
+}
+.lck-hub__form {
+  display: inline-block;
+  width: var(--s-4);
+  text-align: center;
+  font-weight: var(--w-semi);
+}
+.lck-hub__form--lost {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}
+
+/* Teams: the LCK roster beside its academy roster. */
+.lck-hub__two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+}
+.lck-hub__roster {
+  background: var(--paper);
+}
+.lck-hub__roster td {
+  height: var(--m-row);
+  padding: 0 var(--s-4);
+  border-top: var(--m-rule) solid var(--fill);
+}
+.lck-hub__roster-coach td {
+  border-top-color: var(--line);
+}
+.lck-hub__role {
+  width: var(--m-col-role);
+}
+.lck-hub__role-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.1em;
+  margin-right: var(--s-2);
+}
+.lck-hub__person b {
+  font-weight: var(--w-semi);
+}
+.lck-hub__hangul {
+  margin-left: var(--s-1);
+}
+.lck-hub__price {
+  text-align: right;
+}
+.lck-hub__price--none {
+  color: var(--mid);
+}
+
+/* News: each headline a link out, its thumbnail at the left. */
+.lck-hub__story {
+  display: grid;
+  grid-template-columns: var(--m-crest) 1fr;
+  gap: var(--s-3);
+  padding: var(--s-3) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.lck-hub__thumb {
+  height: calc(var(--s-7) + var(--s-4));
+}
+.lck-hub__headline {
+  display: block;
+  font-weight: var(--w-semi);
+}
+
+.lck-hub__more {
+  margin-top: var(--s-3);
+  font-weight: var(--w-semi);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/leagues/leagues.css">/* Leagues (docs/design/approved/leagues/): the open league's table, then the list on the right. */
+.leagues {
+  margin-top: var(--s-2);
+}
+
+/* The list of your leagues. */
+.leagues__list-title {
+  margin-top: var(--s-5);
+}
+.leagues__list section:first-child .leagues__list-title {
+  margin-top: 0;
+}
+.leagues__list-row {
+  display: grid;
+  grid-template-columns: 1fr auto calc(var(--s-6) * 2);
+  gap: 0 var(--s-2);
+  align-items: baseline;
+  padding: var(--s-2) var(--s-3);
+  background: var(--paper);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.leagues__list-row:hover {
+  background: var(--fill);
+}
+.leagues__list-row small {
+  grid-column: 1;
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.leagues__list-move {
+  text-align: right;
+}
+.leagues__list-row--on {
+  box-shadow: inset var(--m-rule-heavy) 0 0 var(--text);
+  background: var(--fill);
+  font-weight: var(--w-bold);
+}
+.leagues__list-row--on small {
+  font-weight: var(--w-regular);
+}
+.leagues__list-actions {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+
+/* The open league's head. */
+.leagues__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.leagues__name-head {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.leagues__sub {
+  color: var(--mid);
+  font-size: var(--size-body);
+}
+.leagues__spacer {
+  flex: 1;
+}
+.leagues__code {
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  padding: var(--s-1) var(--s-2);
+}
+.leagues__rename {
+  font: inherit;
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+/* Admin ▾, drawn as an outlined key. */
+.leagues__admin {
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.leagues__tabs-line {
+  position: relative;
+}
+.leagues__sponsor {
+  position: absolute;
+  right: 0;
+  bottom: var(--s-1);
+}
+
+/* The table: the Table part's, its rank bold and the manager in mid grey after the team. */
+.leagues__rank {
+  font-weight: var(--w-semi);
+}
+.leagues__name small {
+  color: var(--mid);
+  font-size: var(--size-small);
+  margin-left: var(--s-2);
+}
+.leagues__chase {
+  margin-left: var(--s-2);
+}
+
+/* The pager. */
+.leagues__pager {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+.leagues__page {
+  font: inherit;
+  color: var(--text);
+  padding: var(--s-1) var(--s-2);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  cursor: pointer;
+}
+.leagues__page:hover,
+.leagues__page--on {
+  border-color: var(--text);
+}
+.leagues__page--on {
+  font-weight: var(--w-bold);
+}
+.leagues__page--gap {
+  cursor: default;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/leagues/Sheets.css">/* The league forms' sheets (docs/design/approved/leagues/). Every value is a token. */
+.leagues__week {
+  margin-top: var(--s-4);
+}
+.leagues__label {
+  display: block;
+  margin-bottom: var(--s-2);
+}
+.leagues__select {
+  width: 100%;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  font: inherit;
+  font-size: var(--size-lead);
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+}
+.leagues__select:focus {
+  border-color: var(--text);
+}
+.leagues__code-field input {
+  font-family: var(--font-mono);
+}
+.leagues__sheet-keys {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+.leagues__back {
+  margin-right: var(--s-2);
+  color: var(--text);
+  text-decoration: underline;
+}
+.leagues__count {
+  margin-top: var(--s-4);
+}
+.leagues__sheet-sub {
+  color: var(--mid);
+}
+.leagues__made {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  padding: var(--s-4);
+  border: var(--m-rule) solid var(--line);
+}
+.leagues__made-code {
+  flex: 1;
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.leagues__open {
+  font-weight: var(--w-bold);
+  padding: var(--s-2) var(--s-5);
+  background: var(--ink);
+  color: var(--on-ink);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/live/live.css">/* Twitch theatre (live.html): the dark stage in the main column, your points where chat would be. Only the stage is dark. */
+.live__stage {
+  background: var(--stage);
+  padding-bottom: var(--s-4);
+}
+.live__screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--ratio-stream);
+  overflow: hidden;
+}
+
+/* The scorebug, as the LCK broadcast's: each team in a box, the series score between them. */
+.live__bug {
+  display: flex;
+  align-items: stretch;
+  height: var(--s-7);
+  margin: var(--s-3) var(--s-4) 0;
+  color: var(--text);
+}
+.live__bug-score {
+  display: flex;
+  align-items: stretch;
+}
+.live__bug-team {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--s-4);
+  background: var(--text);
+  color: var(--bg);
+  font: var(--w-bold) var(--size-head) var(--font-sans);
+}
+.live__bug-figure {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--s-4);
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  letter-spacing: var(--m-rule-heavy);
+}
+.live__bug-game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--s-4);
+  font-size: var(--size-small);
+  color: var(--stage-text);
+}
+.live__bug-state {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  color: var(--text);
+  font-size: var(--size-body);
+  font-weight: var(--w-semi);
+}
+
+/* The picker: Home's chips. */
+.live__picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin: var(--s-3) var(--s-4) 0;
+}
+.live__chip {
+  padding: var(--s-1) var(--s-2);
+  border: var(--m-rule) solid var(--stage-text);
+  background: none;
+  color: var(--text);
+  font: var(--w-regular) var(--size-body) var(--font-sans);
+  cursor: pointer;
+}
+.live__chip-platform {
+  margin-left: var(--s-1);
+  font-size: var(--size-small);
+  color: var(--stage-text);
+}
+.live__chip--on {
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: var(--w-semi);
+}
+.live__chip--on .live__chip-platform {
+  color: var(--bg);
+}
+.live__chip--off {
+  border-style: dashed;
+  color: var(--stage-text);
+}
+
+/* Nothing live: the next series, its time and a countdown. */
+.live__idle {
+  position: absolute;
+  inset: 0;
+  padding: var(--s-7);
+  border: var(--m-rule) dashed var(--soft);
+  color: var(--text);
+}
+.live__idle-line {
+  display: block;
+  color: var(--stage-text);
+}
+.live__idle-teams {
+  margin: var(--s-2) 0 var(--s-1);
+  font: var(--w-bold) var(--size-title) / var(--lh-snug) var(--font-sans);
+}
+.live__idle-v {
+  margin: 0 var(--s-3);
+  color: var(--stage-text);
+  font-weight: var(--w-regular);
+}
+.live__idle-count {
+  margin-top: var(--s-6);
+  font-size: var(--size-key);
+  font-weight: var(--w-semi);
+}
+.live__idle-unit {
+  margin: 0 var(--s-3) 0 var(--s-1);
+  font-size: var(--size-head);
+  font-weight: var(--w-regular);
+  color: var(--stage-text);
+}
+
+/* The points panel, no captions. */
+.live__side {
+  display: flex;
+  flex-direction: column;
+}
+.live__down {
+  margin-bottom: var(--s-4);
+  padding: var(--s-2) var(--s-3);
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--size-small);
+}
+.live__down-title {
+  display: block;
+  font-size: var(--size-body);
+}
+.live__apart {
+  margin-top: var(--s-5);
+}
+.live__total {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  padding-bottom: var(--s-3);
+}
+.live__key {
+  font-size: var(--size-key);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+}
+.live__avg {
+  color: var(--mid);
+  font-size: var(--size-lead);
+}
+.live__figure {
+  color: var(--text);
+}
+.live__go {
+  margin-left: var(--s-1);
+  color: var(--text);
+}
+.live__row {
+  display: grid;
+  grid-template-columns: var(--m-role-icon-small) 1fr auto;
+  gap: var(--s-2);
+  align-items: center;
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.live__row-icon {
+  width: var(--m-role-icon-small);
+  height: var(--m-role-icon-small);
+}
+.live__name {
+  font-weight: var(--w-semi);
+}
+.live__team {
+  margin-left: var(--s-1);
+  font-weight: var(--w-regular);
+}
+.live__mark {
+  margin-left: var(--s-1);
+}
+.live__games {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.live__points {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  text-align: right;
+}
+.live__rest {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.live__rest-name {
+  display: flex;
+  align-items: center;
+}
+.live__rest-icon {
+  width: var(--s-3);
+  height: var(--s-3);
+  margin-right: var(--s-2);
+}
+.live__more {
+  margin-top: var(--s-4);
+  font-weight: var(--w-semi);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/perfect-game/perfect-game.css">/* Perfect game (docs/design/approved/perfect-game/perfect.html). Every value is a token. */
+.perfect-game__toggle {
+  margin-top: var(--s-4);
+}
+.perfect-game__cards {
+  margin-top: var(--s-3);
+}
+.perfect-game__card-series {
+  display: block;
+  color: var(--mid);
+}
+/* The points at the card's foot, on its right. */
+.perfect-game__card-points {
+  margin-left: auto;
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/pick-team/pick-team.css">/* Pick Team (docs/design/approved/pick-team/pick.html), every value a token. */
+.pick-team__cards {
+  margin-top: var(--s-3);
+}
+
+/* The bar under the pitch: what changed, Reset, the deadline, Save team. */
+.pick-team__bar {
+  display: flex;
+  gap: var(--s-5);
+  align-items: center;
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.pick-team__changes {
+  color: var(--mid);
+}
+.pick-team__changes b {
+  color: var(--text);
+}
+.pick-team__reset {
+  min-height: var(--m-target);
+  color: var(--text);
+}
+.pick-team__deadline {
+  flex: 1;
+  text-align: right;
+}
+.pick-team__save span:empty {
+  display: none;
+}
+
+/* The tapped player's card, under its head. */
+.pick-team__news {
+  padding: var(--s-2) var(--s-4) 0;
+  color: var(--mid);
+}
+.pick-team__rows {
+  padding: var(--s-2) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.pick-team__row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--s-1) 0;
+}
+.pick-team__label {
+  color: var(--mid);
+}
+.pick-team__keys {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+}
+.pick-team__keys > a {
+  justify-content: center;
+}
+.pick-team__key {
+  font: inherit;
+  font-weight: var(--w-semi);
+  padding: var(--s-2) 0;
+  color: var(--text);
+  background: none;
+  border: var(--m-rule) solid var(--text);
+  cursor: pointer;
+}
+.pick-team__key--on {
+  background: var(--paper);
+}
+
+/* Buffs: four boxes of one size, in one row above the Rift. */
+.pick-team__buffs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+}
+
+/* The team's crest before its code in the card's meta. */
+.pick-team__crest > * {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: var(--s-1);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/player-card/player-card.css">/* The full player card, drawn to docs/design/approved/player-card/ and the plate's values. */
+
+.player-card__quiet {
+  font-weight: var(--w-regular);
+}
+.player-card__figure {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  color: var(--text);
+  margin-right: var(--s-2);
+}
+.player-card__right {
+  text-align: right;
+}
+
+/* The news line: a filled bar over the card, the ✕ inside it. */
+.player-card__news {
+  display: flex;
+  align-items: center;
+  height: var(--m-card-head);
+  padding: 0 var(--s-5);
+  background: var(--text);
+  color: var(--bg);
+  font-weight: var(--w-semi);
+}
+[role="dialog"]:has(.player-card__news) > [aria-label="Close"] {
+  color: var(--bg);
+}
+
+/* The lower third: portrait, role and team, name and hangul, legal name; the season's points and the keys. */
+.player-card__head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--s-5);
+  align-items: end;
+  padding: var(--s-6) var(--s-5) var(--s-4);
+}
+.player-card__portrait {
+  display: block;
+  width: calc(var(--s-7) + var(--s-6));
+  height: calc(var(--s-7) + var(--s-6));
+}
+.player-card__name {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  font-size: var(--size-card);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.player-card__hangul {
+  font-size: var(--size-head);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.player-card__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-4);
+  align-self: stretch;
+}
+.player-card__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: var(--s-6);
+}
+.player-card__hero b {
+  font-size: var(--size-key);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-tight);
+}
+.player-card__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  white-space: nowrap;
+}
+
+/* The meta line: price and move, form, owned, the week's transfers. */
+.player-card__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+  padding: 0 var(--s-5) var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
+}
+
+/* The main column beside the Season panel. */
+.player-card__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-side);
+}
+.player-card__main {
+  padding: 0 var(--s-5) var(--s-5);
+}
+.player-card__tab {
+  padding-top: var(--s-4);
+}
+
+/* A section's head inside a tab: 12/600, a 2px rule above all but the first. */
+.player-card__section {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin: var(--s-5) 0 var(--s-2);
+  padding-top: var(--s-2);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+}
+.player-card__tab > div > :first-child > .player-card__section,
+.player-card__tab > div > .player-card__section:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.player-card__section b {
+  font-size: var(--size-body);
+}
+
+/* This week's games: G, champion, K/D/A, points; a game that doesn't count struck through. */
+.player-card__games {
+  table-layout: fixed;
+}
+.player-card__games td {
+  height: var(--m-row);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--fill);
+}
+.player-card__games td:first-child {
+  width: 8%;
+}
+.player-card__games td:nth-child(3) {
+  width: 22%;
+}
+.player-card__games td:nth-child(4) {
+  width: 10%;
+}
+.player-card__points {
+  font-weight: var(--w-semi);
+}
+.player-card__dropped .player-card__points {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+  text-decoration: line-through;
+}
+.player-card__total td {
+  height: var(--m-card-head);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  font-weight: var(--w-semi);
+}
+.player-card__total td:first-child {
+  width: auto;
+}
+.player-card__total .player-card__points {
+  font-size: var(--size-head);
+}
+
+/* Fixtures and History: each week's first row ruled above. */
+.player-card__fixtures tr:has(.player-card__week-start) td,
+.player-card__history tr:has(.player-card__week-start) td {
+  border-top: var(--m-rule) solid var(--line);
+}
+.player-card__fixtures col:first-child {
+  width: 15%;
+}
+.player-card__fixtures col:nth-child(n + 3) {
+  width: 20%;
+}
+.player-card__history col:first-child,
+.player-card__history col:nth-child(3),
+.player-card__history col:nth-child(7) {
+  width: 12%;
+}
+.player-card__history col:nth-child(4) {
+  width: 20%;
+}
+.player-card__history col:nth-child(5) {
+  width: 15%;
+}
+.player-card__history col:nth-child(6) {
+  width: 10%;
+}
+.player-card__champions {
+  width: 65%;
+}
+
+/* The Season panel, on every tab. */
+.player-card__rail {
+  padding: var(--s-4) var(--s-5) var(--s-5);
+  border-left: var(--m-rule) solid var(--line);
+}
+.player-card__rail-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  padding: var(--s-2) 0;
+  border-top: var(--m-rule-heavy) solid var(--text);
+  font-size: var(--size-body);
+  font-weight: var(--w-semi);
+}
+.player-card__rail col:nth-child(n + 2) {
+  width: 22%;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/points/BreakdownSheet.css">/* A player's breakdown sheet (docs/design/approved/points/breakdown.html). Every value is a theme token. */
+
+.points__breakdown-head {
+  display: flex;
+  gap: var(--s-4);
+  align-items: center;
+  padding-bottom: var(--s-4);
+  border-bottom: var(--m-rule-heavy) solid var(--text);
+}
+.points__breakdown-name {
+  display: flex;
+  align-items: center;
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.points__breakdown-hangul {
+  margin-left: var(--s-2);
+  font-size: var(--size-lead);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.points__breakdown-mark {
+  margin-left: var(--s-3);
+}
+.points__breakdown-mid {
+  color: var(--mid);
+}
+/* The total clears the sheet's ✕. */
+.points__breakdown-total {
+  margin-left: auto;
+  margin-right: var(--s-6);
+  text-align: right;
+}
+.points__breakdown-total b {
+  font-size: var(--size-key);
+  line-height: var(--lh-tight);
+}
+.points__breakdown-total-note {
+  display: block;
+  margin-top: var(--s-1);
+}
+
+.points__breakdown-series {
+  margin-top: var(--s-5);
+}
+.points__breakdown-series-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: var(--s-2);
+  font-size: var(--size-lead);
+  font-weight: var(--w-semi);
+}
+.points__breakdown-series-go {
+  color: var(--text);
+}
+.points__breakdown-day {
+  margin-right: var(--s-1);
+  font-weight: var(--w-regular);
+}
+.points__breakdown-result {
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.points__breakdown-series-points {
+  font-size: var(--size-head);
+}
+
+/* One row per game: G1, champion and W/L, K/D/A, the lines that scored, the points. */
+.points__breakdown-game {
+  display: grid;
+  grid-template-columns: var(--s-6) 1fr var(--m-col-figure) 1fr var(--m-go-col);
+  gap: var(--s-2);
+  align-items: center;
+  min-height: var(--m-row-sheet);
+  border-top: var(--m-rule) solid var(--line);
+}
+
+.points__breakdown-game-what {
+  display: flex;
+  gap: var(--s-1);
+  align-items: center;
+}
+.points__breakdown-kda {
+  text-align: right;
+}
+
+.points__breakdown-points {
+  text-align: right;
+}
+.points__breakdown-counted {
+  display: inline-block;
+  min-width: var(--m-target);
+  text-align: center;
+  font-weight: var(--w-bold);
+}
+.points__breakdown-game--dropped .points__breakdown-game-what b,
+.points__breakdown-game--dropped .points__breakdown-kda,
+.points__breakdown-game--dropped .points__breakdown-points {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}
+
+.points__breakdown-foot {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+  font-weight: var(--w-semi);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/points/points.css">/* Points (docs/design/approved/points/points.html). Every value is a theme token. */
+
+/* The live bar, under the head. */
+.points__live {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  border: var(--m-rule) solid var(--text);
+  background: var(--paper);
+}
+
+/* Card view's footer: the points. */
+.points__card-points {
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+}
+
+/* Your week: Star, Flop, Killer. */
+.points__pick {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-2)) 1fr auto;
+  gap: var(--s-2);
+  align-items: baseline;
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.points__pick-label,
+.points__pick-owned {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.points__pick-owned {
+  text-align: right;
+}
+
+/* Leagues: name, rank, its move. */
+.points__ranks {
+  display: grid;
+  gap: var(--s-1);
+}
+.points__rank {
+  display: grid;
+  grid-template-columns: 1fr auto var(--m-col-figure);
+  gap: var(--s-3);
+  align-items: center;
+}
+.points__rank-place,
+.points__rank > span:last-child {
+  text-align: right;
+}
+.points__tier {
+  margin-top: var(--s-2);
+}
+.points__tier b {
+  color: var(--text);
+}
+
+.points__sponsor {
+  height: var(--m-sponsor-h);
+  margin-bottom: var(--s-2);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/price-changes/price-changes.css">.price-changes__head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+}
+.price-changes__week {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.price-changes__when {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  color: var(--mid);
+}
+.price-changes__lists {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--s-6);
+  margin-top: var(--s-5);
+}
+.price-changes__list-title {
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+  padding-bottom: var(--s-2);
+  border-bottom: var(--m-rule-heavy) solid;
+}
+.price-changes__list--rise .price-changes__list-title {
+  color: var(--rise);
+}
+.price-changes__list--fall .price-changes__list-title {
+  color: var(--fall);
+}
+/* Was, the move's mark, Now and Owned at the picture's widths; the player takes the rest. */
+.price-changes__list col:nth-child(2),
+.price-changes__list col:nth-child(5) {
+  width: var(--m-col-price);
+}
+.price-changes__list col:nth-child(3) {
+  width: var(--s-6);
+}
+.price-changes__list col:nth-child(4) {
+  width: var(--m-col-figure);
+}
+.price-changes__name {
+  font-weight: var(--w-bold);
+}
+.price-changes__meta {
+  margin-left: var(--s-2);
+}
+.price-changes__was {
+  color: var(--mid);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/profile/profile.css">/* A manager's profile (docs/design/approved/profile/). Every value is a token. */
+
+/* The hangul banner: the team in hangul and English, the manager, the follow key. */
+.profile__banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-4) var(--s-5);
+  background: var(--stage);
+  border-bottom: var(--s-1) solid var(--gold-rule);
+}
+.profile__hangul {
+  color: var(--gold);
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.profile__team {
+  color: var(--stage-text);
+  font-size: var(--size-small);
+}
+.profile__team b {
+  display: block;
+  color: var(--text);
+  font-size: var(--size-lead);
+}
+.profile__follow {
+  margin-left: auto;
+}
+
+.profile__grid {
+  margin: var(--s-5) 0 var(--s-7);
+}
+
+/* Points' head: ‹ Week 3 ›, the points, Average and Highest, the tags. */
+.profile__week {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-3);
+}
+.profile__week-name {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.profile__week-points {
+  margin-left: var(--s-2);
+  font-size: var(--size-title);
+  font-weight: var(--w-semi);
+}
+.profile__week-fig {
+  color: var(--mid);
+}
+.profile__week-fig b {
+  color: var(--text);
+}
+
+/* Points' and Transfers' tables: the Table part's, a player's team and price in mid grey. */
+.profile__points td small,
+.profile__transfers td small {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.profile__series + .profile__series {
+  margin-left: var(--s-4);
+}
+.profile__name {
+  font-weight: var(--w-bold);
+}
+.profile__mark {
+  margin-left: var(--s-2);
+  vertical-align: middle;
+}
+
+.profile__left {
+  margin-top: var(--s-4);
+  color: var(--mid);
+}
+.profile__left b {
+  color: var(--text);
+  font-weight: var(--w-semi);
+}
+
+/* The side column: leagues, then trucks. */
+.profile__leagues {
+  list-style: none;
+  background: var(--paper);
+}
+.profile__league {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-2) var(--s-3);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.profile__league:hover {
+  background: var(--fill);
+}
+.profile__league-name {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.profile__league-name b {
+  font-weight: var(--w-semi);
+}
+.profile__tier {
+  display: block;
+  width: var(--m-mark);
+}
+.profile__tier-body {
+  fill: var(--text);
+}
+.profile__tier-band {
+  stroke: var(--bg);
+  opacity: var(--opacity-tier-band);
+}
+.profile__truck {
+  margin-bottom: var(--s-2);
+  background: var(--paper);
+}
+/* A truck's LED panel: dotted, in capitals, the same on every screen (plate.md, Never). */
+.profile__led {
+  display: flex;
+  align-items: center;
+  min-height: calc(var(--s-6) + var(--s-3));
+  padding: var(--s-3);
+  background-color: var(--stage);
+  background-image: radial-gradient(circle, var(--soft) var(--m-rule), transparent var(--m-rule-heavy));
+  background-size: var(--s-1) var(--s-1);
+  color: var(--text);
+  font: var(--w-semi) var(--size-small) / var(--lh-mid) var(--font-mono);
+  text-transform: uppercase;
+}
+.profile__truck-by {
+  padding: var(--s-1) var(--s-3);
+}
+.profile__truck-by b {
+  color: var(--text);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/series/series.css">/* The Series page, drawn to docs/design/approved/series/. Every value is a token. */
+.series__crumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+}
+
+/* The scorebug, as Live's, full width: each team in a box, the series score between on --text. */
+.series__bug {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  height: calc(var(--s-7) + var(--s-5));
+  margin: var(--s-4) 0 var(--s-3);
+}
+.series__bug-team {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 0 var(--s-5);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.series__bug-team--away {
+  justify-content: flex-end;
+}
+.series__bug-code {
+  font-size: var(--size-title);
+  font-weight: var(--w-bold);
+}
+.series__bug-team--lost .series__bug-code {
+  font-weight: var(--w-regular);
+}
+
+.series__bug-score {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--s-6);
+  background: var(--text);
+  color: var(--bg);
+  font-size: var(--size-title);
+  font-weight: var(--w-semi);
+}
+.series__bug-score--v {
+  font-size: var(--size-head);
+}
+
+/* The line under it: tags, format and day, the time, Watch ›. */
+.series__meta {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-5);
+  color: var(--mid);
+}
+.series__meta a {
+  font-weight: var(--w-semi);
+}
+.series__tags {
+  display: flex;
+  gap: var(--s-2);
+  margin-right: calc(var(--s-4) * -1);
+}
+
+.series__two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-6);
+  margin-top: var(--s-5);
+}
+/* The grids: one row per player, then the coach; one column per game, then Series. */
+.series__grid,
+.series__roster {
+  table-layout: fixed;
+  background: var(--paper);
+}
+.series__col-role {
+  width: calc(var(--s-7) + var(--s-6) + var(--s-2));
+}
+.series__col-name {
+  width: calc(var(--s-7) * 3 + var(--s-5));
+}
+.series__grid--three .series__col-name {
+  width: calc(var(--s-7) * 3 + var(--s-1));
+}
+.series__col-total {
+  width: calc(var(--s-7) + var(--s-3));
+}
+.series__col-roster-role {
+  width: var(--m-col-role);
+}
+.series__grid th {
+  padding: var(--s-2);
+  white-space: nowrap;
+}
+.series__grid th b,
+.series__grid th a {
+  color: var(--text);
+  font-weight: var(--w-semi);
+}
+.series__grid th a {
+  min-height: 0;
+}
+.series__grid th.series__figure {
+  text-align: right;
+}
+.series__grid td,
+.series__roster td {
+  height: var(--s-7);
+  padding: 0 var(--s-2);
+  border-top: var(--m-rule) solid var(--fill);
+  vertical-align: middle;
+}
+.series__roster td {
+  height: var(--m-row);
+}
+.series__grid .series__coach td,
+.series__roster .series__coach td {
+  border-top: var(--m-rule) solid var(--line);
+}
+.series__role {
+  white-space: nowrap;
+}
+.series__role-icon {
+  width: var(--size-small);
+  height: var(--size-small);
+  margin-right: var(--s-2);
+  vertical-align: middle;
+}
+.series__name {
+  white-space: nowrap;
+}
+.series__name b {
+  font-weight: var(--w-semi);
+}
+.series__hangul {
+  margin-left: var(--s-2);
+}
+
+/* A game: champion and K/D/A at the left, POG over the points at the right. */
+.series__game {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-2);
+}
+.series__champ {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.series__champ small {
+  display: block;
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.series__points {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-1);
+  min-width: calc(var(--s-5) + var(--s-1));
+  font-weight: var(--w-semi);
+}
+
+/* A dropped game, outside the best 2: grey and unboxed. */
+.series__dropped .series__game,
+.series__dropped .series__champ small {
+  color: var(--mid);
+}
+.series__dropped .series__points {
+  font-weight: var(--w-regular);
+}
+.series__none {
+  color: var(--mid);
+}
+.series__coach-lines {
+  font-size: var(--size-small);
+  line-height: var(--lh-body);
+}
+.series__total {
+  border-left: var(--m-rule) solid var(--line);
+  font-size: var(--size-head);
+  font-weight: var(--w-semi);
+  text-align: right;
+}
+.series__total small {
+  display: block;
+  color: var(--mid);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/settings/settings.css">/* Settings (docs/design/approved/settings/): one 960 column of label-and-control rows. */
+.settings__column {
+  width: calc(var(--s-6) * 30);
+  max-width: 100%;
+  margin-top: var(--s-5);
+}
+.settings__column section {
+  padding: var(--s-1) 0 var(--s-2);
+  margin-bottom: var(--s-5);
+}
+.settings__row {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) * 3) minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: center;
+  padding: var(--s-3) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.settings__row:last-of-type {
+  border-bottom: 0;
+}
+.settings__label {
+  align-self: start;
+  padding-top: var(--s-2);
+  color: var(--mid);
+}
+.settings__label-note {
+  display: block;
+  font-size: var(--size-small);
+}
+
+/* Fields: a capped text field with its count, and a dropdown. */
+.settings__input,
+.settings__email {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-3);
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  border: var(--m-rule) solid var(--text);
+  background: var(--paper);
+}
+.settings__input-text {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  outline: none;
+}
+
+.settings__select {
+  width: 100%;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  font: inherit;
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.settings__sub {
+  margin-top: var(--s-2);
+}
+.settings__sent-to {
+  padding-top: var(--s-2);
+}
+
+/* The hangul banner, as Profile draws it. */
+.settings__banner {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  margin-top: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  background: var(--stage);
+  border-bottom: var(--s-1) solid var(--gold-rule);
+}
+.settings__banner-hangul {
+  color: var(--gold);
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+}
+.settings__banner-name {
+  display: block;
+  color: var(--text);
+  font-size: var(--size-lead);
+}
+
+.settings__locked {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.settings__locked-value {
+  font-weight: var(--w-semi);
+}
+.settings__switch {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+.settings__switch-when {
+  flex: 1;
+}
+
+/* Account. */
+.settings__acts {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+}
+.settings__email {
+  flex: 1;
+  color: var(--mid);
+  border-color: var(--line);
+}
+.settings__provider {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  margin-right: var(--s-2);
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}
+.settings__danger {
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+}
+
+/* The save bar, then the foot. */
+.settings__save-bar {
+  width: calc(var(--s-6) * 30);
+  max-width: 100%;
+  margin-top: var(--s-1);
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.settings__save-line {
+  flex: 1;
+}
+.settings__text-key,
+.settings__inline-key {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-underline-offset: var(--s-1);
+  cursor: pointer;
+}
+.settings__text-key {
+  min-height: var(--m-target);
+}
+.settings__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  margin-top: var(--s-5);
+}
+.settings__go {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  margin-right: var(--s-4);
+  color: var(--text);
+}
+.settings__foot .settings__go {
+  margin-right: 0;
+}
+/* The sheets: Delete account and the two sign-up steps. */
+.settings__step {
+  position: absolute;
+  top: var(--s-5);
+  right: var(--s-7);
+}
+.settings__lead {
+  margin-bottom: var(--s-4);
+  color: var(--mid);
+}
+.settings__list {
+  list-style: none;
+  border-top: var(--m-rule) solid var(--line);
+}
+.settings__list-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--s-2) 0;
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.settings__list-what {
+  font-weight: var(--w-semi);
+}
+
+.settings__warn {
+  margin-top: var(--s-4);
+}
+.settings__inline-key {
+  font-size: var(--size-small);
+}
+.settings__sheet-keys {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-5);
+}
+.settings__providers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.settings__two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+}
+.settings__field {
+  display: block;
+  margin-top: var(--s-4);
+  color: var(--mid);
+}
+.settings__field .settings__select {
+  margin-top: var(--s-2);
+}
+.settings__tick {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+.settings__tick-box {
+  width: var(--m-mark);
+  height: var(--m-mark);
+  flex: none;
+  accent-color: var(--text);
+}
+.settings__underlined {
+  text-decoration: underline;
+  text-underline-offset: var(--s-1);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/stats/stats.css">/* Stats, drawn to docs/design/approved/stats/stats.html. Every value is a theme token. */
+
+/* Controls in one row: role, Team, Max price, Span, Totals | Per game, then the search at the right. */
+.stats__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin: var(--s-4) 0 var(--s-3);
+  white-space: nowrap;
+}
+.stats__gap {
+  flex: 1;
+}
+.stats__role {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.stats__role-icon {
+  width: var(--size-small);
+  height: var(--size-small);
+}
+.stats__select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  padding: var(--s-2) var(--s-3);
+}
+.stats__select-label {
+  margin-right: var(--s-2);
+}
+.stats__select-input {
+  appearance: none;
+  font: inherit;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  padding-right: var(--s-4);
+  cursor: pointer;
+}
+.stats__select-input option {
+  background: var(--paper);
+  color: var(--text);
+}
+.stats__select::after {
+  content: "▾";
+  position: absolute;
+  right: var(--s-3);
+  pointer-events: none;
+}
+.stats__find {
+  width: calc(var(--s-7) * 4 + var(--s-2));
+  min-width: 0;
+  font: inherit;
+  border: var(--m-rule) solid var(--line);
+  background: var(--paper);
+  color: var(--text);
+  padding: var(--s-2) var(--s-3);
+}
+.stats__find::placeholder {
+  color: var(--mid);
+}
+
+/* The list: rank, role and name in the sticking column, then price and its move. */
+.stats col:nth-child(1) {
+  width: var(--m-col-name);
+}
+.stats col:nth-child(2) {
+  width: calc(var(--s-7) + var(--s-5) + var(--s-1));
+}
+.stats col:nth-child(3) {
+  width: calc(var(--s-7) + var(--s-1));
+}
+.stats th {
+  font-weight: var(--w-semi);
+}
+.stats__sort {
+  color: inherit;
+  white-space: nowrap;
+}
+.stats__lead-head {
+  padding-left: calc(var(--s-6) + var(--s-5));
+}
+.stats__lead-head--coach {
+  padding-left: var(--s-6);
+}
+.stats__lead {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.stats__rank {
+  flex: none;
+  width: var(--s-6);
+  color: var(--mid);
+}
+.stats__lead-icon {
+  width: var(--size-body);
+  height: var(--size-body);
+  margin-right: var(--s-2);
+}
+.stats__name {
+  font-weight: var(--w-semi);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.stats__team {
+  margin-left: var(--s-2);
+}
+.stats td:has(> .stats__move) {
+  font-size: var(--size-small);
+  padding-left: 0;
+}
+.stats td:has(> .stats__sorted) {
+  font-weight: var(--w-semi);
+  background: var(--bg);
+}
+.stats__zero {
+  color: var(--mid);
+}
+
+/* Beneath: how many, then the pages. */
+.stats__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--mid);
+  margin-top: var(--s-3);
+}
+.stats__pages {
+  display: flex;
+}
+.stats__page {
+  min-width: var(--s-6);
+  height: var(--s-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--m-rule) solid var(--line);
+  margin-left: calc(var(--m-rule) * -1);
+  background: var(--paper);
+  color: var(--text);
+  font-size: var(--size-body);
+  cursor: pointer;
+}
+.stats__page--on {
+  background: var(--fill);
+  font-weight: var(--w-bold);
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/transfers/ConfirmSheet.css">/* Transfers' confirm sheet (confirm.html, changed 16 Nov 2026). Every value is a token. */
+
+/* The confirm sheet: the transfers large, one row each, then the figures. */
+.transfers__sheet-moves {
+  list-style: none;
+  margin: 0 0 var(--s-4);
+  padding: 0;
+  border-top: var(--m-rule-heavy) solid var(--text);
+}
+.transfers__sheet-moves li {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--s-3);
+  align-items: baseline;
+  padding: var(--s-3) 0;
+  border-bottom: var(--m-rule) solid var(--line);
+  font-size: var(--size-lead);
+}
+.transfers__sheet-moves small {
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.transfers__sheet-out {
+  color: var(--mid);
+  text-decoration: line-through;
+}
+.transfers__sheet th,
+.transfers__sheet td {
+  height: var(--m-row);
+  border-bottom: var(--m-rule) solid var(--line);
+  text-align: left;
+}
+.transfers__sheet th {
+  width: calc(var(--s-7) * 3);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.transfers__sheet-keys {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+}
+.transfers__sheet-deadline {
+  margin-top: var(--s-2);
+  text-align: right;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/transfers/SquadList.css">/* Transfers' List view (Craig, 16 Nov 2026). Every value is a token. */
+
+/* List view: the nine by role. */
+.transfers__squad {
+  background: var(--paper);
+}
+.transfers__squad th,
+.transfers__squad td {
+  padding: var(--s-1) var(--s-2);
+  text-align: left;
+}
+.transfers__squad td {
+  height: var(--m-row);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.transfers__squad .transfers__num {
+  width: var(--m-col-figure);
+  text-align: right;
+  white-space: nowrap;
+}
+.transfers__squad td:first-child {
+  width: var(--m-shirt-small-w);
+}
+.transfers__squad .transfers__next {
+  width: var(--m-col-price);
+}
+.transfers__group th {
+  padding-top: var(--s-3);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  color: var(--text);
+  border-bottom: var(--m-rule) solid var(--text);
+}
+.transfers__row--sold td {
+  color: var(--mid);
+}
+.transfers__row--sold b {
+  font-weight: var(--w-regular);
+  text-decoration: line-through;
+}
+</style><style type="text/css" data-vite-dev-id="/private/tmp/claude-501/-Users-craigball-lck-fantasy/5951f5ae-365b-4f8a-93d7-2bde3b10caaa/scratchpad/qa-words/src/screens/transfers/transfers.css">/* Transfers (docs/design/approved/transfers/). Every value is a token. */
+
+/* The head's figures, as FPL's: free transfers, cost, bank; the bank red below zero. */
+.transfers__figures {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+.transfers__figure {
+  display: flex;
+  flex-direction: column;
+  min-width: calc(var(--s-7) * 3);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  border-top: var(--m-rule-heavy) solid var(--text);
+}
+.transfers__figure b {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  color: var(--text);
+  white-space: nowrap;
+}
+.transfers__figure--over b {
+  color: var(--over);
+}
+
+.transfers__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-3);
+}
+.transfers__keys {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+/* The changes so far, Reset, and Review and confirm. */
+.transfers__changes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+.transfers__out {
+  color: var(--mid);
+}
+.transfers__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  white-space: nowrap;
+}
+.transfers__reset,
+.transfers__back,
+.transfers__undo,
+.transfers__chip,
+.transfers__add {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.transfers__reset,
+.transfers__back {
+  min-height: var(--m-target);
+}
+
+/* The list's filters: role chips, then search, sort and team. */
+.transfers__roles,
+.transfers__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  margin-bottom: var(--s-2);
+  font-size: var(--size-small);
+}
+.transfers__chip,
+.transfers__search,
+.transfers__tool {
+  padding: var(--s-1) var(--s-2);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  font-size: var(--size-small);
+}
+.transfers__chip--on {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.transfers__search {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+}
+.transfers__search::placeholder,
+.transfers__tool {
+  color: var(--mid);
+  white-space: nowrap;
+}
+
+/* The player list. */
+.transfers__list {
+  background: var(--paper);
+}
+.transfers__list th {
+  padding: var(--s-1);
+}
+.transfers__list td {
+  height: var(--m-row);
+  padding: var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.transfers__list .transfers__num {
+  text-align: right;
+  white-space: nowrap;
+}
+.transfers__list svg {
+  width: var(--size-small);
+  height: var(--size-small);
+}
+.transfers__name {
+  max-width: calc(var(--s-7) * 2 + var(--s-4));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.transfers__name b {
+  font-weight: var(--w-bold);
+}
+.transfers__next {
+  font-size: var(--size-small);
+  line-height: var(--lh-mid);
+  white-space: nowrap;
+}
+.transfers__add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-target);
+  height: var(--m-target);
+  border: var(--m-rule) solid var(--text);
+  font-weight: var(--w-bold);
+}
+.transfers__row--picked td {
+  background: var(--fill);
+}
+
+/* This week's confirms. */
+.transfers__confirm {
+  display: grid;
+  grid-template-columns: calc(var(--s-7) + var(--s-5)) 1fr var(--s-7) calc(var(--s-7) + var(--s-2));
+  gap: var(--s-2);
+  align-items: center;
+  padding: var(--s-2) 0;
+  border-top: var(--m-rule) solid var(--fill);
+}
+.transfers__when {
+  font-size: var(--size-small);
+}
+.transfers__when small {
+  display: block;
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.transfers__cost {
+  text-align: right;
+}
+.transfers__confirm > :last-child {
+  justify-self: end;
+}
+.transfers__undo {
+  padding: 0 var(--s-2);
+  border: var(--m-rule) solid var(--text);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+}
+.transfers__confirm--old {
+  color: var(--mid);
+}
+.transfers__confirm--old b {
+  font-weight: var(--w-regular);
+}
+</style></head>
+  <body>
+    <div id="root"><style>:root{--bg:#010A13;--paper:#0A1428;--line:#1E2D40;--fill:#14233A;--ink:#C89B3C;--on-ink:#010A13;--text:#F0E6D2;--mid:#A09B8C;--soft:#5B5A56;--rise:#FF5C6C;--fall:#6EA2FF;--over:#FF5C6C;--gold:#F0D58C;--gold-rule:#785A28;--stage:#000508;--stage-text:#A09B8C;--teal:#0AC8B9;--dim:rgba(1, 10, 19, 0.72);--map-ground:#0B1A2C;--map-river:#0D2B3E;--map-lane:#1A2C42;--map-base:#22374F;--map-tower:#5B5A56;--tile-card:rgba(240, 230, 210, 0.12);--tile-plate:#FFFFFF;--on-tile-plate:#010A13;--font-sans:"IBM Plex Sans KR", sans-serif;--font-mono:"IBM Plex Mono", monospace;--size-tag:11px;--size-small:12px;--size-body:14px;--size-lead:16px;--size-head:20px;--size-title:28px;--size-card:40px;--size-key:44px;--w-regular:400;--w-semi:600;--w-bold:700;--s-1:4px;--s-2:8px;--s-3:12px;--s-4:16px;--s-5:24px;--s-6:32px;--s-7:48px;--m-rule:1px;--m-rule-heavy:2px;--m-row:40px;--m-target:24px;--m-top-bar:56px;--m-side:360px;--m-modal-card:1056px;--m-modal-sheet:544px;--m-dot:8px;--m-mark:20px;--m-mark-card:28px;--m-mark-sheet:32px;--m-role-icon:28px;--m-role-icon-small:20px;--m-shirt-w:56px;--m-shirt-h:50px;--m-shirt-small-w:40px;--m-shirt-small-h:36px;--m-rift:720px;--m-tile-w:124px;--m-tile-radius:6px;--m-bench-title-w:56px;--m-tag-line:16px;--m-col-name:244px;--m-go-col:48px;--m-col-figure:72px;--m-col-price:80px;--m-col-role:112px;--m-col-rank:64px;--m-col-carry:152px;--m-col-score:120px;--m-col-slot:150px;--m-col-player:230px;--m-col-pts:60px;--m-col-swap:90px;--m-col-out:240px;--m-col-arrow:30px;--m-col-in:260px;--m-menu-w:220px;--m-card-head:48px;--m-card-photo:176px;--m-crest:96px;--m-crest-small:20px;--m-crest-sheet:56px;--m-row-sheet:32px;--m-sponsor-h:112px;--m-sponsor-top-w:120px;--lh-tight:1;--lh-snug:1.2;--lh-mid:1.3;--lh-body:1.4;--opacity-tier-band:0.45;--stroke-shirt:1.6;--stroke-dash:3;--ratio-stream:16 / 9;--ratio-rift:720 / 720;}</style><nav class="top-bar" aria-label="Flol"><a class="top-bar__word" href="/">Flol</a><a class="top-bar__item" href="/stats">Stats</a><a class="top-bar__item" href="/lck">LCK</a><span class="top-bar__space"></span><span class="top-bar__presented quiet">presented by <span class="placeholder quiet" style="width: var(--m-sponsor-top-w); height: var(--m-target);">Sponsor</span></span><a class="top-bar__me" href="/settings">Log in ›</a></nav><div class="page-frame page-frame--two columns" data-screen="transfers"><main class="page-frame__main"><header class="page-head"><div class="page-head__title-line"><h1 class="page-head__title">Pick your squad<span class="page-head__hangul" lang="ko">스쿼드 선택</span></h1></div><div class="page-head__sub">Split 1 Week 4 · <span class="deadline">Deadline <b class="num">Wed 07:45</b> <span class="deadline__kst">16:45 KST</span> <b class="deadline__count num">9h 45m</b></span></div><div class="transfers__figures"><span class="transfers__figure quiet">Picked <b class="num">9 / 9</b></span><span class="transfers__figure quiet">Bank <b class="num">₩3.5m</b></span><span class="transfers__figure quiet">Team cap <b class="num">T1 2 / 2</b></span></div></header><div class="transfers__controls"><span class="view-toggle" role="group" aria-label="View"><button type="button" class="view-toggle__key view-toggle__key--on" aria-pressed="true">Rift view</button><button type="button" class="view-toggle__key" aria-pressed="false">List view</button></span><span class="transfers__keys"><button type="button" class="outlined-key">Reset</button><button type="button" class="outlined-key key-off" disabled="">Auto-fill</button></span></div><div class="rift"><svg class="rift-map" viewBox="0 0 720 720" aria-hidden="true"><rect class="rift-map__ground" x="0" y="0" width="720" height="720"></rect><path class="rift-map__river" d="M0 56 L56 0 L720 664 L664 720 Z"></path><path class="rift-map__lane" d="M48 660 L48 48 L660 48" stroke-width="32"></path><path class="rift-map__lane" d="M60 672 L672 672 L672 60" stroke-width="32"></path><path class="rift-map__lane" d="M60 660 L660 60" stroke-width="30"></path><path class="rift-map__base" d="M0 588 A132 132 0 0 1 132 720 L0 720 Z"></path><path class="rift-map__base" d="M588 0 A132 132 0 0 0 720 132 L720 0 Z"></path><g class="rift-map__tower"><rect x="42" y="464" width="12" height="12"></rect><rect x="42" y="284" width="12" height="12"></rect><rect x="284" y="666" width="12" height="12"></rect><rect x="464" y="666" width="12" height="12"></rect><rect x="264" y="444" width="12" height="12"></rect><rect x="666" y="244" width="12" height="12"></rect><rect x="666" y="424" width="12" height="12"></rect><rect x="424" y="42" width="12" height="12"></rect><rect x="244" y="42" width="12" height="12"></rect><rect x="444" y="264" width="12" height="12"></rect></g><circle class="rift-map__pit" cx="250" cy="210" r="16"></circle><circle class="rift-map__pit" cx="470" cy="510" r="16"></circle></svg><div class="tile" style="left: 13.8889%; top: 14.4444%;"><div class="tile__price num">₩14.0m</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">HLE</span></span></div></div><div class="tile__name">Zeus</div><div class="tile__line quiet tile__line--fixtures">v DK</div></div><div class="tile" style="left: 27.2222%; top: 41.6667%;"><div class="tile__price num">₩15.5m</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">GEN</span></span></div></div><div class="tile__name">Canyon</div><div class="tile__line quiet tile__line--fixtures">v BRO</div></div><div class="tile" style="left: 51.6667%; top: 51.6667%;"><div class="tile__price num">₩18.5m</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">T1</span></span></div></div><div class="tile__name">Faker</div><div class="tile__line quiet tile__line--fixtures">v KT</div></div><div class="tile" style="left: 83.3333%; top: 62.2222%;"><div class="tile__price num">₩16.0m</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">GEN</span></span></div></div><div class="tile__name">Ruler</div><div class="tile__line quiet tile__line--fixtures">v BRO</div></div><div class="tile" style="left: 83.3333%; top: 83.8889%;"><div class="tile__price num">₩10.0m</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">HLE</span></span></div></div><div class="tile__name">Delight</div><div class="tile__line quiet tile__line--fixtures">v DK</div></div><div class="tile" style="left: 32.7778%; top: 85%;"><div class="tile__price num">₩6.5m</div><div class="tile__slot tile__slot--flex">Flex</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">NS</span></span></div></div><div class="tile__name">Kingen</div><div class="tile__line quiet tile__line--fixtures">v DNS</div></div><div class="tile" style="left: 13.8889%; top: 85%;"><div class="tile__price num">₩7.0m</div><div class="tile__slot">Coach 감독</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">T1</span></span></div></div><div class="tile__name">kkOma</div><div class="tile__line quiet tile__line--fixtures">v KT</div></div></div><div class="bench-bar"><h3 class="bench-bar__title">Bench</h3><div class="bench-slot"><span class="bench-slot__role quiet">1. Mid</span><div class="tile tile--bench"><div class="tile__price num">₩5.0m</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">KT</span></span></div></div><div class="tile__name">Bdd</div><div class="tile__line quiet tile__line--fixtures">v T1</div></div></div><div class="bench-slot"><span class="bench-slot__role quiet">2. Jungle</span><div class="tile tile--bench"><div class="tile__price num">₩4.0m</div><div class="tile__card"><span class="tile__sell" aria-hidden="true">×</span><div class="tile__kit"><span class="shirt"><svg class="shirt__svg" viewBox="0 0 56 50" aria-hidden="true"><path class="shirt__body" d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z"></path><path class="shirt__collar" d="M18 2 Q28 9 38 2"></path></svg><span class="shirt__code">KT</span></span></div></div><div class="tile__name">Cuzz</div><div class="tile__line quiet tile__line--fixtures">v T1</div></div></div></div><div class="transfers__changes"><span class="quiet"></span><span class="transfers__actions"><span class="main-action"><button type="button" class="main-action__key">Save team</button></span></span></div></main><aside class="page-frame__side"><section class="side-section"><h2 class="side-section__title">Players</h2><div class="transfers__roles"><button type="button" class="transfers__chip transfers__chip--on" aria-pressed="true">All roles</button><button type="button" class="transfers__chip" aria-pressed="false">Top</button><button type="button" class="transfers__chip" aria-pressed="false">Jungle</button><button type="button" class="transfers__chip" aria-pressed="false">Mid</button><button type="button" class="transfers__chip" aria-pressed="false">Bot</button><button type="button" class="transfers__chip" aria-pressed="false">Support</button></div><div class="transfers__tools"><input class="transfers__search" placeholder="Search a player" aria-label="Search a player" type="search" value=""><span class="menu"><button type="button" class="menu__key key-bare transfers__tool" aria-expanded="false" aria-controls="_r_0_">Sort: Points ▾</button></span><span class="menu"><button type="button" class="menu__key key-bare transfers__tool" aria-expanded="false" aria-controls="_r_1_">Team: All ▾</button></span></div><table class="transfers__list"><thead><tr><th aria-label="Role"></th><th>Player</th><th class="transfers__num">Price</th><th class="transfers__num">Pts</th><th class="transfers__num">Owned</th><th>Next</th><th aria-label="Buy"></th></tr></thead><tbody><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Mid"><path class="role-icon__a" d="M11 1h4v4L5 15H1v-4z"></path><path class="role-icon__c" d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z"></path></svg></td><td class="transfers__name" title="Chovy"><a href="/player/chovy"><b>Chovy</b> GEN</a></td><td class="transfers__num num">₩17.5m</td><td class="transfers__num num">61</td><td class="transfers__num num">41%</td><td class="transfers__next">v BRO</td><td><button type="button" class="transfers__add" aria-label="Buy Chovy">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Support"><path class="role-icon__a" d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z"></path></svg></td><td class="transfers__name" title="Keria"><a href="/player/keria"><b>Keria</b> T1</a></td><td class="transfers__num num">₩12.0m</td><td class="transfers__num num">52</td><td class="transfers__num num">47%</td><td class="transfers__next">v KT</td><td><button type="button" class="transfers__add" aria-label="Buy Keria">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Mid"><path class="role-icon__a" d="M11 1h4v4L5 15H1v-4z"></path><path class="role-icon__c" d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z"></path></svg></td><td class="transfers__name" title="ShowMaker"><a href="/player/showmaker"><b>ShowMaker</b> DK</a></td><td class="transfers__num num">₩13.0m</td><td class="transfers__num num">33</td><td class="transfers__num num">9%</td><td class="transfers__next">v HLE</td><td><button type="button" class="transfers__add" aria-label="Buy ShowMaker">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Bot"><path class="role-icon__a" d="M15 15H1l3-3h8V4l3-3z"></path><rect class="role-icon__b" x="6" y="6" width="4" height="4"></rect><path class="role-icon__c" d="M1 10V1h9L7 4H4v3z"></path></svg></td><td class="transfers__name" title="Aiming"><a href="/player/aiming"><b>Aiming</b> DK</a></td><td class="transfers__num num">₩13.5m</td><td class="transfers__num num">31</td><td class="transfers__num num">8%</td><td class="transfers__next">v HLE</td><td><button type="button" class="transfers__add" aria-label="Buy Aiming">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Mid"><path class="role-icon__a" d="M11 1h4v4L5 15H1v-4z"></path><path class="role-icon__c" d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z"></path></svg></td><td class="transfers__name" title="Clozer"><a href="/player/clozer"><b>Clozer</b> BRO</a></td><td class="transfers__num num">₩5.0m</td><td class="transfers__num num">28</td><td class="transfers__num num">2%</td><td class="transfers__next">v GEN</td><td><button type="button" class="transfers__add" aria-label="Buy Clozer">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Top"><path class="role-icon__a" d="M1 1h14l-3 3H4v8l-3 3z"></path><rect class="role-icon__b" x="6" y="6" width="4" height="4"></rect><path class="role-icon__c" d="M15 6v9H6l3-3h3V9z"></path></svg></td><td class="transfers__name" title="PerfecT"><a href="/player/perfect"><b>PerfecT</b> KT</a></td><td class="transfers__num num">₩7.0m</td><td class="transfers__num num">27</td><td class="transfers__num num">3%</td><td class="transfers__next">v T1</td><td><button type="button" class="transfers__add" aria-label="Buy PerfecT">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Jungle"><path class="role-icon__a" d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z"></path></svg></td><td class="transfers__name" title="Lucid"><a href="/player/lucid"><b>Lucid</b> DK</a></td><td class="transfers__num num">₩9.0m</td><td class="transfers__num num">26</td><td class="transfers__num num">5%</td><td class="transfers__next">v HLE</td><td><button type="button" class="transfers__add" aria-label="Buy Lucid">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Coach"><rect class="role-icon__line" x="2" y="3" width="12" height="10" stroke-width="1.6"></rect><path class="role-icon__line" d="M5 7h6M5 10h4" stroke-width="1.4"></path></svg></td><td class="transfers__name" title="Ryu"><a href="/coach/ryu"><b>Ryu</b> GEN</a></td><td class="transfers__num num">₩7.0m</td><td class="transfers__num num">26</td><td class="transfers__num num">21%</td><td class="transfers__next">v BRO</td><td><button type="button" class="transfers__add" aria-label="Buy Ryu">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Top"><path class="role-icon__a" d="M1 1h14l-3 3H4v8l-3 3z"></path><rect class="role-icon__b" x="6" y="6" width="4" height="4"></rect><path class="role-icon__c" d="M15 6v9H6l3-3h3V9z"></path></svg></td><td class="transfers__name" title="DuDu"><a href="/player/dudu"><b>DuDu</b> DNS</a></td><td class="transfers__num num">₩6.0m</td><td class="transfers__num num">23</td><td class="transfers__num num">2%</td><td class="transfers__next">v NS</td><td><button type="button" class="transfers__add" aria-label="Buy DuDu">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Coach"><rect class="role-icon__line" x="2" y="3" width="12" height="10" stroke-width="1.6"></rect><path class="role-icon__line" d="M5 7h6M5 10h4" stroke-width="1.4"></path></svg></td><td class="transfers__name" title="Homme"><a href="/coach/homme"><b>Homme</b> HLE</a></td><td class="transfers__num num">₩6.5m</td><td class="transfers__num num">18</td><td class="transfers__num num">9%</td><td class="transfers__next">v DK</td><td><button type="button" class="transfers__add" aria-label="Buy Homme">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Bot"><path class="role-icon__a" d="M15 15H1l3-3h8V4l3-3z"></path><rect class="role-icon__b" x="6" y="6" width="4" height="4"></rect><path class="role-icon__c" d="M1 10V1h9L7 4H4v3z"></path></svg></td><td class="transfers__name" title="Hype"><a href="/player/hype"><b>Hype</b> KRX</a></td><td class="transfers__num num">₩5.5m</td><td class="transfers__num num">15</td><td class="transfers__num num">1%</td><td class="transfers__next">v BFX</td><td><button type="button" class="transfers__add" aria-label="Buy Hype">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Top"><path class="role-icon__a" d="M1 1h14l-3 3H4v8l-3 3z"></path><rect class="role-icon__b" x="6" y="6" width="4" height="4"></rect><path class="role-icon__c" d="M15 6v9H6l3-3h3V9z"></path></svg></td><td class="transfers__name" title="Clear"><a href="/player/clear"><b>Clear</b> BFX</a></td><td class="transfers__num num">₩5.5m</td><td class="transfers__num num">14</td><td class="transfers__num num">1%</td><td class="transfers__next">v KRX</td><td><button type="button" class="transfers__add" aria-label="Buy Clear">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Support"><path class="role-icon__a" d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z"></path></svg></td><td class="transfers__name" title="Pollu"><a href="/player/pollu"><b>Pollu</b> BRO</a></td><td class="transfers__num num">₩4.5m</td><td class="transfers__num num">14</td><td class="transfers__num num">1%</td><td class="transfers__next">v GEN</td><td><button type="button" class="transfers__add" aria-label="Buy Pollu">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Coach"><rect class="role-icon__line" x="2" y="3" width="12" height="10" stroke-width="1.6"></rect><path class="role-icon__line" d="M5 7h6M5 10h4" stroke-width="1.4"></path></svg></td><td class="transfers__name" title="Ssong"><a href="/coach/ssong"><b>Ssong</b> DNS</a></td><td class="transfers__num num">₩5.5m</td><td class="transfers__num num">14</td><td class="transfers__num num">3%</td><td class="transfers__next">v NS</td><td><button type="button" class="transfers__add" aria-label="Buy Ssong">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Coach"><rect class="role-icon__line" x="2" y="3" width="12" height="10" stroke-width="1.6"></rect><path class="role-icon__line" d="M5 7h6M5 10h4" stroke-width="1.4"></path></svg></td><td class="transfers__name" title="cvMax"><a href="/coach/cvmax"><b>cvMax</b> DK</a></td><td class="transfers__num num">₩6.0m</td><td class="transfers__num num">13</td><td class="transfers__num num">5%</td><td class="transfers__next">v HLE</td><td><button type="button" class="transfers__add" aria-label="Buy cvMax">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Coach"><rect class="role-icon__line" x="2" y="3" width="12" height="10" stroke-width="1.6"></rect><path class="role-icon__line" d="M5 7h6M5 10h4" stroke-width="1.4"></path></svg></td><td class="transfers__name" title="Score"><a href="/coach/score"><b>Score</b> KT</a></td><td class="transfers__num num">₩5.5m</td><td class="transfers__num num">12</td><td class="transfers__num num">2%</td><td class="transfers__next">v T1</td><td><button type="button" class="transfers__add" aria-label="Buy Score">+</button></td></tr><tr><td><svg class="role-icon" viewBox="0 0 16 16" role="img" aria-label="Coach"><rect class="role-icon__line" x="2" y="3" width="12" height="10" stroke-width="1.6"></rect><path class="role-icon__line" d="M5 7h6M5 10h4" stroke-width="1.4"></path></svg></td><td class="transfers__name" title="Joker"><a href="/coach/joker"><b>Joker</b> KRX</a></td><td class="transfers__num num">₩5.0m</td><td class="transfers__num num">11</td><td class="transfers__num num">2%</td><td class="transfers__next">v BFX</td><td><button type="button" class="transfers__add" aria-label="Buy Joker">+</button></td></tr></tbody></table></section></aside></div><p class="quiet" style="font-size: 12px; margin: 24px 32px;">All sponsors are made up.</p></div>
+    
+  
+
+</body></html>

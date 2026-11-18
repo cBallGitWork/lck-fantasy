@@ -15,7 +15,7 @@ const LEAGUES = ["Leagues", "Overall", "Emerald I", "21,804", "3,112", "South Ko
 describe("Points", () => {
   const out = text(page("Points"));
 
-  test("shows the banner, the tabs, Week 3's head, her team in role order, the bench, leagues and trucks", () => {
+  test("shows the banner, the tabs, Week 3's head, her team in role order, the bench, leagues, cheers and jeers", () => {
     expectInOrder(out, [
       ...BANNER,
       "‹",
@@ -25,14 +25,14 @@ describe("Points", () => {
       "Average 79",
       "Highest 128 ›",
       "Not final",
-      "Limitless",
+      "Bench Boost",
       "Slot",
       "Player",
       "Pts",
       "Series",
       "Top", "Kiin", "GEN", "11", "v KT 2–0 · Wed", "v HLE 2–1 · Sat",
       "Jungle", "Canyon", "14",
-      "Mid", "Chovy", "V", "17",
+      "Mid", "Chovy", "17",
       "Bot", "Ruler", "C", "21",
       "Support", "Keria", "T1", "9", "v HLE 2–1 · Wed", "v DK 2–0 · Sat",
       "Flex · Top", "Kingen", "NS", "5", "v DK 0–2 · Thu", "v KRX 0–2 · Fri",
@@ -41,9 +41,9 @@ describe("Points", () => {
       "Bench 1 · Mid", "Bdd", "KT", "—", "Not in KT's lineup",
       "Bench 2 · Jungle", "Cuzz", "9", "v GEN 0–2 · Wed", "v BFX 2–1 · Fri",
       ...LEAGUES,
-      "Trucks · Week 3", "2",
-      "The template was right there, mate.", "Protest from Dan Okafor",
-      "This coffee is Keria-tier support.", "Coffee from Jae Kim",
+      "Cheers and jeers · Week 3", "2",
+      "The template was right there, mate.", "Jeer from Dan Okafor", "Truck hire by Sponsor",
+      "This coffee is Keria-tier support.", "Cheer from Jae Kim", "Truck hire by Sponsor",
       "All sponsors are made up.",
     ]);
   });
@@ -69,17 +69,17 @@ describe("Points", () => {
     for (const id of ["overall", "south-korea", "gen-supporters", "pub-league"]) expect(markup).toContain(`href="/leagues/${id}"`);
   });
 
-  test("draws each truck on the shared LED panel and Overall on the shared, outlined tier shield", () => {
+  test("draws each cheer and jeer on the shared LED panel and Overall on the shared, outlined tier shield", () => {
     const markup = html(page("Points"));
     expect(markup).toContain('<div class="led">The template was right there, mate.</div>');
     expect(markup).toContain('<svg class="tier-shield profile__tier"');
   });
 
-  test("an earlier week shows its points, its team loading until the backend feeds it, and no trucks", () => {
+  test("an earlier week shows its points, its team loading until the backend feeds it, and no cheers or jeers", () => {
     const week2 = text(page("Points", PROFILE, 2));
     expectInOrder(week2, ["Week 2", "112"]);
     expect(week2).not.toContain("Not final");
-    expect(week2).not.toContain("Trucks");
+    expect(week2).not.toContain("Cheers and jeers");
     expect(html(page("Points", PROFILE, 2))).toContain("Week 2&#x27;s team");
   });
 });
@@ -89,18 +89,18 @@ describe("History", () => {
     expectInOrder(text(page("History")), [
       ...BANNER,
       "Week", "Pts", "Total", "Week rank", "Overall", "Move", "Transfers", "Hits", "Bank", "Value", "Buff",
-      "Week 3", "93", "315", "—", "21,804", "3,112", "5", "0", "₩0.5m", "₩100.9m", "Limitless", "›",
+      "Week 3", "93", "315", "—", "21,804", "3,112", "5", "3", "₩0.5m", "₩100.9m", "Bench Boost", "›",
       "Week 2", "112", "222", "4,211", "24,916", "9,870", "1", "0", "₩1.0m", "₩100.6m", "—", "›",
       "Week 1", "110", "110", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",
-      "Buffs left: Remake · Bench Boost · Dual Carry",
+      "Buffs left: Double Captain · Coach Diff",
       ...LEAGUES,
     ]);
   });
 
-  test("each row opens its week; the side has no trucks", () => {
+  test("each row opens its week; the side has no cheers or jeers", () => {
     const markup = html(page("History"));
     expect(markup).toContain('aria-label="Open Week 1"');
-    expect(markup).not.toContain("Trucks");
+    expect(markup).not.toContain("Cheers and jeers");
   });
 });
 
@@ -109,7 +109,7 @@ describe("Transfers", () => {
     expectInOrder(text(page("Transfers")), [
       ...BANNER,
       "Slot", "Out", "In", "Pts gained",
-      "Week 3", "Tue 09:00", "18:00 KST", "Limitless · 0 hits",
+      "Week 3", "Tue 09:00", "18:00 KST", "Bench Boost · 3 hits",
       "Top", "Doran", "T1 · ₩13.0m", "→", "Kiin", "GEN · ₩13.5m", "+1",
       "Bot", "Peyz", "T1 · ₩13.0m", "→", "Ruler", "GEN · ₩16.0m", "+4",
       "Support", "Lehends", "NS · ₩10.0m", "→", "Keria", "T1 · ₩12.0m", "−1",
@@ -124,7 +124,7 @@ describe("Transfers", () => {
   test("is the Table part's, each week a sub-row with its cost on the right", () => {
     const markup = html(page("Transfers"));
     expect(markup.match(/<tr class="table__sub"><td colSpan="6"><b>Week \d<\/b>/g)).toHaveLength(2);
-    expect(markup).toContain('<span class="table__sub-aside">Limitless · 0 hits</span>');
+    expect(markup).toContain('<span class="table__sub-aside">Bench Boost · 3 hits</span>');
   });
 });
 

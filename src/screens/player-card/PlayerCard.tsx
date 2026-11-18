@@ -99,12 +99,11 @@ export function PlayerCard({
   );
 }
 
-/** ✓ Carry (or Make Carry), Make Vice-carry, Swap with bench, Transfer out. */
+/** ✓ Captain (or Make Captain), Swap with bench, Transfer out. */
 function PickTeamKeys({ actions }: { actions: CardActions }) {
   return (
     <>
       <OutlinedKey onClick={() => actions.onMark("C")}>{markKey("C", actions.mark === "C")}</OutlinedKey>
-      <OutlinedKey onClick={() => actions.onMark("V")}>{markKey("V", actions.mark === "V")}</OutlinedKey>
       <OutlinedKey onClick={actions.onSwap}>Swap with bench</OutlinedKey>
       <OutlinedKey onClick={actions.onTransferOut}>Transfer out</OutlinedKey>
     </>

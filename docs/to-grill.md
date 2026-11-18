@@ -51,6 +51,5 @@ Claude's drafts and their sources are in
 
 States and rules the approved pictures don't draw. Each page shows what is drawn; these wait.
 
-- Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
 - Player card: This week before any game; History's week total with or without the Captain's
   ×1.5.

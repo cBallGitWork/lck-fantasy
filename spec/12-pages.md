@@ -96,6 +96,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Reached from links on Points and Home.
   - Rift view or Card view, the shared remembered view (see [Pick Team and Transfers](#pick-team-and-transfers)). Your own players are marked
     (Craig, 15 Nov 2026).
+  - It opens with no one tapped: the right side shows the week's series until a player is
+    tapped, as FPL's Team of the Week (Craig, 17 Nov 2026).
+  - A tapped player's sum line reads as on Points: a starter's series added up (9 + 8), the
+    Captain's C and his result only (Craig, 17 Nov 2026).
+  - Each week has its own address, as Points: `/perfect-game/3` is Week 3, and bare
+    `/perfect-game` opens the current week (Craig, 17 Nov 2026).
 - **Price changes** (Craig, 16 Nov 2026: back from Patch update, which all five QA testers read as
   LoL patch notes): the new prices for a
   gameweek, set once the deadline before it passes ("just shows the new prices, thats it really").

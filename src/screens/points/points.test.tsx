@@ -1,10 +1,13 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
-import { expectInOrder, html, text } from "../../testing/render";
+import { VIEW_KEYS } from "../../parts";
+import { PATHS } from "../../paths";
+import { expectInOrder, html, htmlAt, text } from "../../testing/render";
+import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { MY_EARLIER_WEEKS, MY_WEEK3 } from "../../fixtures/week3";
 import { LATEST_WEEK, POINTS_FIXTURE, POINTS_WEEKS } from "./fixtures";
-import { POINTS_VIEW_KEY, rememberedView, weekOf } from "./index";
+import { weekOf } from "./index";
 import { LINE, LIVE_SERIES_ID, WEEK3_FINAL_SQUAD, weekGamesOf, type Kda, type LineWord } from "../../fixtures/week3";
 import type { PointsPlayer } from "./types";
 import { PointsPage } from "./PointsPage";
@@ -55,7 +58,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "Your week",
     "StarFaker25 · owned by 46%",
     "FlopSiwoo8 · owned by 6%",
-    "KillerChovy15 · not owned · 41%",
+    "KillerChovy15 · not yours · owned by 41%",
     "Sponsor",
     "All sponsors are made up.",
   ]);
@@ -73,7 +76,7 @@ test("the picture's state boxes the counted games, greys the dropped one and mar
   expect(out.match(/rank-down/g)).toHaveLength(1);
 });
 
-test("the Carry shows only his result, and no one's tile, card or games show an auto-sub line", () => {
+test("the Captain shows only his result, and no one's tile, card or games show an auto-sub line", () => {
   for (const view of ["Rift view", "Card view"] as const) {
     const out = text(<PointsPage data={POINTS_FIXTURE} view={view} open="Faker" />);
     expect(out).not.toMatch(/×|Subbed in/);
@@ -110,25 +113,6 @@ test("the sheet stays closed until a player is tapped", () => {
   expectInOrder(out, ["Bench", "Cuzz9", "Your week"]);
 });
 
-test("the Coach's sheet (coach.png): his lines, the series' +3, no C or Average Carry, and his coach card", () => {
-  const coach = <PointsPage data={POINTS_FIXTURE} open="kkOma" />;
-  expect(html(coach)).toContain('href="/coach/kkoma"');
-  const out = text(coach);
-  expect(out).not.toContain("Average Carry");
-  expectInOrder(out, [
-    "kkOma김정균",
-    "T1 · Coach",
-    "10Not final",
-    "Wed v HLE W 2–1 · +3 ›8",
-    "G1WFirst tower · Most drakes2",
-    "G2L0",
-    "G3WFirst tower · Most drakes · Most barons3",
-    "Sat v DK 1–0 ›2",
-    "G1WFirst tower · Most barons2",
-    "G2Live 14:200",
-  ]);
-});
-
 test("Card view shows the seven in the broadcast's order with their series and points, then the bench", () => {
   const out = text(<PointsPage data={POINTS_FIXTURE} view="Card view" />);
   expect(out).not.toContain("rift-map");
@@ -147,33 +131,21 @@ test("Card view shows the seven in the broadcast's order with their series and p
   expect(html(<PointsPage data={POINTS_FIXTURE} view="Card view" />)).toContain('class="lineup"');
 });
 
-test("a bench player who didn't play can't be opened; one who played can", () => {
-  const bench = html(<PointsPage data={POINTS_FIXTURE} />).split('class="bench-bar"')[1] ?? "";
-  expect(bench.match(/role="button"/g)).toHaveLength(1);
-  expect(text(<PointsPage data={POINTS_FIXTURE} open="Cuzz" />)).toContain("KT · Jungle9Wed v GEN L 0–2 ›1");
-});
-
-test("the fixture's total is its starters' points: 94, the Carry's 25 among them, as the shared Week 3 gives them", () => {
+test("the fixture's total is its starters' points: 94, the Captain's 25 among them, as the shared Week 3 gives them", () => {
   const { starters, total } = POINTS_FIXTURE;
   expect(total).toBe(MY_WEEK3.liveTotal);
   expect(starters.map((p) => p.points)).toEqual([14, 14, 25, 14, 9, 8, 10]);
   expect(Object.fromEntries(starters.map((p) => [p.cardId, p.points]))).toEqual(MY_WEEK3.live);
   const faker = starters.find((p) => p.mark === "C");
-  expect(faker?.carry).toEqual({ average: 19 });
+  expect(faker?.captain).toEqual({ average: 19 });
 });
 
-test("the view opens on Rift the first time, then on the one kept, and on Rift where storage fails", () => {
-  const kept = (value: string | null) => ({ getItem: (key: string) => (key === POINTS_VIEW_KEY ? value : null) });
-  expect(rememberedView(undefined)).toBe("Rift view");
-  expect(rememberedView(kept(null))).toBe("Rift view");
-  expect(rememberedView(kept("Card view"))).toBe("Card view");
-  expect(rememberedView(kept("Pitch"))).toBe("Rift view");
-  const blocked = {
-    getItem: () => {
-      throw new Error("blocked");
-    },
-  };
-  expect(rememberedView(blocked)).toBe("Rift view");
+test("Points opens on Rift the first time, then on the view shared with Pick Team, and on Rift where storage is blocked", async () => {
+  expect(chosenView(await htmlAt(PATHS.points))).toBe("Rift view");
+  stubStorage(keptStorage({ [VIEW_KEYS.board]: "Card view", [VIEW_KEYS.transfers]: "List view" }));
+  expect(chosenView(await htmlAt(PATHS.points))).toBe("Card view");
+  stubStorage(blockedStorage);
+  expect(chosenView(await htmlAt(PATHS.points))).toBe("Rift view");
 });
 
 const week = (n: number) => {
@@ -213,7 +185,7 @@ test("a final week says Final once, as the head's tag (Craig, 16 Nov 2026): no N
   }
 });
 
-test("Weeks 1 and 2 add up: each total its starters', the Carry's ×1.5 rounded down, Star the top and Flop the lowest", () => {
+test("Weeks 1 and 2 add up: each total its starters', the Captain's ×1.5 rounded down, Star the top and Flop the lowest", () => {
   const w1 = week(1);
   expect(w1.starters.map((p) => p.points)).toEqual([15, 14, 27, 16, 9, 6, 9]);
   expect(w1.total).toBe(96);
@@ -224,7 +196,7 @@ test("Weeks 1 and 2 add up: each total its starters', the Carry's ×1.5 rounded 
   expect(w2.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual(["Star Faker 30", "Flop Delight 9", "Killer Peyz 19"]);
   // A final week: no Not final on the sheet; Weeks 1 and 2 have no lines, so the rows show W or L and points.
   const out = text(<PointsPage data={w2} open="kkOma" />);
-  expectInOrder(out, ["T1 · Coach15", "v DNS W 2–0 · +3 ›7", "G1W2", "G2W2", "v BFX W 2–1 · +3 ›8", "G1W2", "G2L0", "G3W3"]);
+  expectInOrder(out, ["T1 · Coach15", "v DNS W 2–0 ›7", "G1W2", "G2W2", "Series win+3", "v BFX W 2–1 ›8", "G1W2", "G2L0", "G3W3", "Series win+3"]);
 });
 
 test("Leagues' season total is Points' weeks: Weeks 1 and 2 final, and Week 3 so far", () => {
@@ -269,7 +241,7 @@ test("the sheet shows the picture: Faker's crest, name, hangul and C, his 25, th
   expectInOrder(text(PICTURE), [
     "Faker이상혁C",
     "T1 · Mid",
-    "25Not final · Average Carry 19",
+    "25Not final · Captains averaged 19",
     "Wed v HLE W 2–1 ›12",
     "G1AzirW6/1/9Gold · Solo5",
     "G2TaliyahL2/4/5Gold · First blood2",

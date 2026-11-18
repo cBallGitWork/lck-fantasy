@@ -1,8 +1,8 @@
 import { WON_PER_M } from "../../src/parts/text/money";
 import { describe, expect, test } from "vitest";
-import { byPick, chovy, REGULAR_SETTINGS, validSquad } from "../squads/fixtures";
+import { bdd, byPick, chovy, keria, ktCoach, REGULAR_SETTINGS, ruler, validSquad, zeus } from "../squads/fixtures";
 import { allPicks, pickKey } from "../squads/squad";
-import { firstScoringGameweek, signUpProblems } from "./signUp";
+import { firstCaptain, firstScoringGameweek, overBudgetBy, signUpProblems } from "./signUp";
 
 const prices = byPick(allPicks(validSquad()).map((pick) => [pick, 10 * WON_PER_M]));
 // Fixture values: FPL caps team names at 20 characters; the real cap and teams are data.
@@ -49,6 +49,37 @@ describe("signUpProblems", () => {
     expect(signUpProblems(validSquad(), prices, { ...FIELDS, favouriteTeamId: "lec-team" }, RULES)).toEqual([
       { rule: "unknownTeam", teamId: "lec-team" },
     ]);
+  });
+});
+
+describe("Save team at today's prices (spec/09, Signing up)", () => {
+  test("a squad picked before a deadline moved prices is checked at today's, and says by how much it is over", () => {
+    const picked = signUpProblems(validSquad(), prices, FIELDS, RULES);
+    expect(overBudgetBy(picked)).toBeNull();
+    // Nine at 10m is 90m of 100m. Since the guest picked, Chovy rose to 20.3m: 100.3m, ₩0.3m over.
+    const today = new Map(prices).set(pickKey(chovy), 20_300_000);
+    expect(overBudgetBy(signUpProblems(validSquad(), today, FIELDS, RULES))).toBe(300_000);
+  });
+
+  test("a squad still under budget at today's prices saves", () => {
+    const today = new Map(prices).set(pickKey(chovy), 19 * WON_PER_M);
+    expect(signUpProblems(validSquad(), today, FIELDS, RULES)).toEqual([]);
+  });
+});
+
+describe("firstCaptain (spec/09: after Save team)", () => {
+  test("the highest-priced starter", () => {
+    expect(firstCaptain(validSquad(), new Map(prices).set(pickKey(keria), 15 * WON_PER_M))).toBe(keria.id);
+  });
+
+  test("never the coach or a bench player, however dear", () => {
+    const dear = new Map(prices).set(pickKey(ktCoach), 30 * WON_PER_M).set(pickKey(bdd), 30 * WON_PER_M).set(pickKey(ruler), 12 * WON_PER_M);
+    expect(firstCaptain(validSquad(), dear)).toBe(ruler.id);
+  });
+
+  test("a tie goes to the first in slot order: top before flex", () => {
+    const tied = new Map(prices).set(pickKey(ruler), 15 * WON_PER_M).set(pickKey(zeus), 15 * WON_PER_M);
+    expect(firstCaptain(validSquad(), tied)).toBe(zeus.id);
   });
 });
 

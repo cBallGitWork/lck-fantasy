@@ -9,6 +9,8 @@ export const PATHS = {
   pointsWeek: "/points/$week",
   leagues: "/leagues",
   league: "/leagues/$leagueId",
+  /** A private league's link: Join a league opens with its code in (spec/08). */
+  leagueJoin: "/leagues/join/$code",
   stats: "/stats",
   live: "/live",
   series: "/series/$seriesId",
@@ -21,6 +23,8 @@ export const PATHS = {
   coachCard: "/coach/$coachId",
   profile: "/manager/$managerId",
   following: "/following",
+  privacy: "/privacy",
+  terms: "/terms",
 } as const;
 
 export type ScreenKey = keyof typeof PATHS;
@@ -34,6 +38,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   pointsWeek: "Points",
   leagues: "Leagues",
   league: "Leagues",
+  leagueJoin: "Leagues",
   stats: "Stats",
   live: "Live",
   series: "Series",
@@ -46,6 +51,8 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   coachCard: "Coach",
   profile: "Manager",
   following: "Following",
+  privacy: "Privacy",
+  terms: "Terms",
 };
 
 /** The product's name, the tab's title on a page with none of its own. */
@@ -88,6 +95,9 @@ export const transfersSelling = (slot: string) => `${PATHS.transfers}?${SELL_SEA
 
 /** A league's page. */
 export const leagueGo = (id: string): Go => ({ to: PATHS.league, params: { leagueId: id } });
+
+/** A private league's link, as Copy link gives it: it fills in the code, never joins (spec/08). */
+export const leagueJoinGo = (code: string): Go => ({ to: PATHS.leagueJoin, params: { code } });
 
 /** A series' page. */
 export const seriesGo = (id: string): Go => ({ to: PATHS.series, params: { seriesId: id } });

@@ -17,6 +17,11 @@ questions are in [docs/to-grill.md](../docs/to-grill.md).
   No second public source was found. Riot's schedule API is not used: its key is Riot's own
   site's, not ours.
 - If the feed breaks or is switched off, there are no live points; final points still arrive.
+- Gold lead is read at 15:00, a scoring value held as data per competition. The multikill
+  timers (10 seconds between kills, 30 for a penta) are LoL's own rule, fixed in code (Craig,
+  18 Nov 2026).
+- A player with no same-role opponent in the feed shows 0 for gold lead, and an admin alert names
+  the game and the player, so it is fixed before the series turns final (Craig, 18 Nov 2026).
 
 ## Final
 

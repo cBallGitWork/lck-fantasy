@@ -64,8 +64,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
   Overall's name per tab; where a row's › goes.
 - League forms: what Copy link copies; Join with a bad code; the 25-league cap message; Remove's
   confirm text.
-- Series: VOD as ↗ or ›; an unknown series id; a coach's empty game as — or 0.
-- Compare: the search's role groups and caps; what /compare opens with no players.
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
 - Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
   History's week total with or without the Carry's ×1.5.

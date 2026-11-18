@@ -62,6 +62,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - The scorebug shows each team's record as of now. The coach row shows the coach lines that
     scored and the series +3 or −1. Your own players carry a mark; there is no total of your
     players' points (Craig, 16 Nov 2026).
+  - A coach's cell for a game his team didn't play shows `—`. A link to a series that doesn't
+    exist shows `No such series` and `LCK hub ›` (Craig, 17 Nov 2026). The VOD link leaves Flol,
+    so it ends with `↗` (plate.md).
   - While live: provisional points, a Not final tag, solo kills and steals at final
     ([spec/11](11-live-points.md)).
   - A player who sat out a game shows a dash there; a sub has his own row.
@@ -205,6 +208,8 @@ F1 Fantasy, Sleeper and gol.gg).
     line's total, per game and points. Only Season, Form and line points are marked. No buttons, a
     Change link on the second player, and no mark on a series where the two meet (Craig, 16 Nov
     2026). No transfers row: "get rid of the fluff lines".
+  - The search lists every player of his role first, with no cap; typing narrows it, and Other
+    roles › opens the rest. A bare /compare, with no player, goes to Stats (Craig, 17 Nov 2026).
   - The picture is `docs/design/approved/compare/`.
 
 ## Settings

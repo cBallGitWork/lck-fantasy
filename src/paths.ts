@@ -17,6 +17,8 @@ export const PATHS = {
   /** Compare, opened from a player's or a coach's card: `/compare/faker`. */
   compare: "/compare/$playerId",
   perfectGame: "/perfect-game",
+  /** Perfect game for one week, so a week can be shared: `/perfect-game/3`. */
+  perfectGameWeek: "/perfect-game/$week",
   priceChanges: "/price-changes",
   /** One week's new prices, so a week can be linked: `/price-changes/4`. */
   priceChangesWeek: "/price-changes/$week",
@@ -47,6 +49,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   series: "Series",
   compare: "Compare",
   perfectGame: "Perfect game",
+  perfectGameWeek: "Perfect game",
   priceChanges: "Price changes",
   priceChangesWeek: "Price changes",
   settings: "Settings",
@@ -84,16 +87,6 @@ export type Go = { [K in ScreenKey]: GoTo<(typeof PATHS)[K]> }[ScreenKey];
 export function pathTo(go: Go): string {
   const params: Record<string, string> = go.params ?? {};
   return go.to.replace(/\$(\w+)/g, (_, name: string) => encodeURIComponent(params[name] ?? ""));
-}
-
-/**
- * The week a `$week` path names, among `weeks`: none in the path is the `latest`, `/points/2` is
- * Week 2; undefined for a week there isn't, or anything not a number.
- */
-export function weekInPath(param: string | undefined, weeks: { has: (week: number) => boolean }, latest: number): number | undefined {
-  if (param === undefined) return latest;
-  const week = /^\d+$/.test(param) ? Number(param) : NaN;
-  return weeks.has(week) ? week : undefined;
 }
 
 /** A player's card, or the coach's card for a coach. */

@@ -19,6 +19,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   series: [{ to: PATHS.series, params: { seriesId: "w3-sat-2" } }, "series"],
   compare: [{ to: PATHS.compare, params: { playerId: "faker" } }, "compare"],
   perfectGame: [{ to: PATHS.perfectGame }, "perfect-game"],
+  perfectGameWeek: [{ to: PATHS.perfectGameWeek, params: { week: "2" } }, "perfect-game"],
   priceChanges: [{ to: PATHS.priceChanges }, "price-changes"],
   priceChangesWeek: [{ to: PATHS.priceChangesWeek, params: { week: "3" } }, "price-changes"],
   settings: [{ to: PATHS.settings }, "settings"],

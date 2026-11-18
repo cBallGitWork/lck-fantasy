@@ -1,7 +1,6 @@
 import { useParams } from "@tanstack/react-router";
 import { MANAGER } from "../../fixtures/week3";
-import { Empty, PageFrame, rememberedView, rememberView, VIEW_KEYS } from "../../parts";
-import { weekInPath } from "../../paths";
+import { Empty, PageFrame, rememberedView, rememberView, VIEW_KEYS, weekInPath } from "../../parts";
 import { LATEST_WEEK, POINTS_WEEKS } from "./fixtures";
 import { PointsPage } from "./PointsPage";
 import { POINTS_VIEWS, type PointsView } from "./types";

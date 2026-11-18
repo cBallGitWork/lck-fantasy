@@ -47,6 +47,7 @@ export { focusPage, inertOutside, openerOf, returnTo, type InertNode, type Opene
 export { Placeholder } from "./frame/Placeholder";
 export { chooseOnKey, selectable } from "./util/selectable";
 export { sum } from "./util/sum";
+export { weekInPath, weekSteps } from "./util/weeks";
 export { SectionHead } from "./frame/SectionHead";
 export { SeriesList, type SeriesRow, type SeriesState } from "./display/SeriesList";
 export { beyondStrip, SeriesStrip, type StripNext, type StripPast } from "./display/SeriesStrip";

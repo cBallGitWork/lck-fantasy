@@ -1,7 +1,7 @@
 import { useParams } from "@tanstack/react-router";
 import { MANAGER } from "../../fixtures/week3";
-import { Empty, PageFrame } from "../../parts";
-import { PATHS, weekInPath, type Go } from "../../paths";
+import { Empty, PageFrame, weekInPath } from "../../parts";
+import { PATHS, type Go } from "../../paths";
 import { LATEST_PRICE_WEEK, PRICE_WEEKS } from "./fixtures";
 import { PriceChangesPage } from "./PriceChangesPage";
 import { WORDS } from "./words";

@@ -65,6 +65,7 @@ const routeTree = rootRoute.addChildren([
   compareRoute,
   bareCompareRoute,
   screen(PATHS.perfectGame, PerfectGameScreen),
+  screen(PATHS.perfectGameWeek, PerfectGameScreen),
   screen(PATHS.priceChanges, PriceChangesScreen),
   screen(PATHS.priceChangesWeek, PriceChangesScreen),
   screen(PATHS.settings, SettingsScreen),

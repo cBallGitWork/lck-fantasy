@@ -88,5 +88,6 @@ The rules:
 - `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`, `achievements`). The game reads the real world; it never writes it.
 - Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
 - A screen never imports from another screen (src/screens/README.md).
+- Every word a player reads on a screen lives in that screen's `words.ts`, next to its code; words two screens share live in `src/parts`. Moved one screen at a time, Pick Team first (Craig, 18 Nov 2026).
 - A screen's CSS classes start with its folder's name (`.points__side`); a test fails on any other.
 - Before adding a helper or a fixture, search for its home and reuse it.

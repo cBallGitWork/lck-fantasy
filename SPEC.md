@@ -45,6 +45,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 12 | [Pages](spec/12-pages.md) | Home (a status page), Pick Team, Transfers, Points, Leagues, Stats, an LCK hub for the LCK's fixtures, standings and rosters, a series page, player and coach pop-ups, public manager profiles, Perfect game (the week's best team), Price changes (the new prices each gameweek), Live (a stream picker: official broadcasts and co-streamers beside live points), Help and Settings. | partly built: star and flop rules, and every page but Help built to its picture on made-up data; no backend wired yet |
 | 13 | [Korean touches](spec/13-korean-touches.md) | Made-up Korean sponsors from LCK memes, each explaining its meme on tap; cheers, jeers and sponsor cheers, each an LED truck from a made-up truck-hire sponsor ([spec/14](spec/14-following.md)); a birthday cake on a player's week; a hangul banner for your team; fun team shirts and crests, and where each shows. No points. | not built |
 | 14 | [Following, cheers and jeers](spec/14-following.md) | Follow other managers by request, one-way, in the beta. A feed of their series points, big Captains and transfers. Cheer or jeer anyone you follow once a gameweek, from a database of preset lines; a sponsor cheer to each private league's weekly top. | partly built: follows, the feed and cheers and jeers as rules, and the Following page on made-up data; no storage yet |
+| 15 | [Beta testing](spec/15-beta-testing.md) | A busy game simulated on staging, once the site is basically complete: LEC Spring 2026 replayed from a snapshot on a clock that steps or runs fast, 5,000 bots of seven kinds through the real rules, full leagues, feed trouble thrown in, and Craig playing along. The replayed split is kept as a test; a deadline-rush load test runs once before launch. | not built; waits for the site |
 
 ## Later
 
@@ -100,6 +101,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | game | One game within a series (Craig, 18 Nov 2026: game and series only). | map, set |
 | stage | A part of a competition with its own settings: groups, Road to MSI, play-in, playoffs. | phase |
 | round | One round of a knockout bracket. | |
+| bot | A made-up manager on staging, for beta testing; never in the live game (Craig, 18 Nov 2026). | AI, NPC |
+| staging | The Convex deployment of its own that test runs use, wiped each run (Craig, 18 Nov 2026). | test site |
 | Captain | The player whose points are multiplied this gameweek, as in FPL. There is no vice-captain. | Carry |
 | table | A league's ranking: one for the season and one per split. | leaderboard |
 | Perfect game | The gameweek's best team under the squad rules: a Captain and 7 starters. | team of the week |

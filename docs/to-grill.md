@@ -4,6 +4,8 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
 ## An LEC game, talk only (17 Nov 2026)
+- Which split is the beta: LEC Spring (Craig, 18 Nov 2026), or LEC Winter and the LCK Cup
+  (asked the same day)? Either changes spec/10's Split 1.
 - A second game for the LEC, which starts 15 Jan 2027 with three splits; its schedule differs
   from the LCK's. Each split as last summer's: 8 weeks, some with 5 match days (Craig, from the
   LEC's commissioner, 17 Nov 2026).

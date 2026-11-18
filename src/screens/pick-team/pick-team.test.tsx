@@ -30,11 +30,9 @@ const BUFFS = [
   "Bench Boost",
   "Your bench players score this week too",
   "Double Captain",
-  "A second Captain; both score ×1.5",
-  "Remake",
-  "Unlimited free transfers; your new squad stays",
-  "Limitless",
-  "One week, no budget or team cap; then your squad returns",
+  "A second Captain; both score ×2",
+  "Coach Diff",
+  "Your coach scores ×3 this week",
 ];
 
 const SIDE_TAIL = [
@@ -94,7 +92,7 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   ]);
   const markup = html(view(PICK_TEAM_STATES.rift));
   expect(markup).toContain('data-screen="pick-team"');
-  expect(markup).toContain('title="Captain">C');
+  expect(markup).toContain('aria-label="Captain">C');
   expect(markup.match(/class="mark-badge /g)).toHaveLength(1);
   expect(markup.match(/tile--selected/g)).toHaveLength(1);
   // Faker tapped: Bdd, the bench mid, is lit to swap with him; the Flex plays Top, so isn't; the other six starters and Cuzz dim.
@@ -108,8 +106,9 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expect(markup.match(/alt="T1 crest"/g)).toHaveLength(1);
   expect(markup).toMatch(/main-action__key[^"]*"[^>]*disabled/);
   expect(markup).not.toContain("Reset");
-  expect(markup.match(/buff-card__play/g)).toHaveLength(2);
-  expect(markup.match(/href="\/transfers"[^>]*class="link-go hover-line"|class="link-go hover-line"[^>]*href="\/transfers"/g)).toHaveLength(2);
+  // All three buffs play here; none links to Transfers (spec/06).
+  expect(markup.match(/buff-card__play/g)).toHaveLength(3);
+  expect(markup).not.toMatch(/class="link-go[^"]*" href="\/transfers"/);
   expect(markup).toContain('href="/player/faker"');
 });
 
@@ -158,7 +157,7 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
     "Cancel",
     "Double Captain",
     "1 left",
-    "Remake",
+    "Coach Diff",
     "Siwoo",
     "Bench",
     "Bdd",
@@ -187,7 +186,7 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
   expect(markup.match(/"tile tile--fit"/g)).toHaveLength(1);
   expect(markup.match(/tile--dim/g)).toHaveLength(5);
   expect(markup).toContain("buff-card--on");
-  expect(markup.match(/buff-card--off/g)).toHaveLength(3);
+  expect(markup.match(/buff-card--off/g)).toHaveLength(2);
   expect(markup).not.toContain("buff-card__play");
   expect(markup).not.toMatch(/main-action__key[^"]*"[^>]*disabled/);
 });
@@ -256,7 +255,7 @@ test("each buff is a heading, and Play names its buff", () => {
 });
 
 test("tapping one bench player then the other swaps bench 1 and 2, as FPL; one buff a week; Reset drops the draft and Save keeps it", () => {
-  const s = run(PICK_TEAM_STATES.rift, { type: "select", id: "faker" }, { type: "select", id: "bdd" }, { type: "select", id: "cuzz" }, { type: "playBuff", buff: "benchBoost" }, { type: "playBuff", buff: "dualCarry" });
+  const s = run(PICK_TEAM_STATES.rift, { type: "select", id: "faker" }, { type: "select", id: "bdd" }, { type: "select", id: "cuzz" }, { type: "playBuff", buff: "benchBoost" }, { type: "playBuff", buff: "doubleCaptain" });
   expect([s.draft.slots.bench1, s.draft.slots.bench2]).toEqual(["cuzz", "bdd"]);
   expect(s.draft.buff).toBe("benchBoost");
   expect(changeCount(s.saved, s.draft)).toBe(2);

@@ -124,6 +124,5 @@ export const TRANSFERS_PICTURE: TransfersPageProps = {
   confirms: CONFIRMS,
   fixtures: FIXTURES,
   teams: TEAMS_PLAYING,
-  buffs: ["Remake", "Limitless"],
   initialPlan: PICTURE_PLAN,
 };

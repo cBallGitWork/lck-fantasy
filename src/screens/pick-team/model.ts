@@ -4,9 +4,10 @@
 
 import { SAVED_NEWS } from "../../parts";
 import { isBench, markNews, type PersonRole, type SquadSlot } from "../../rift";
+import type { BuffEffect } from "../../../convex/squads/buffs";
 
-/** The two buffs played on this page; Remake and Limitless are played on Transfers. */
-export type PickBuff = "benchBoost" | "dualCarry";
+/** The buffs, each played and cancelled on this page (spec/06). */
+export type PickBuff = BuffEffect;
 
 /** A manager's team as the page edits it: who stands in each slot, the marks, the buff. */
 export interface PickTeam {

@@ -19,8 +19,27 @@ function pricesWith(picks: Pick[], overrides: [Pick, number][]) {
 }
 
 describe("bankAtSplitStart", () => {
-  test("the Road to MSI raise comes back off: a raise of 5m and a bank of 1m leave −4m", () => {
-    expect(bankAtSplitStart(1 * WON_PER_M, 5 * WON_PER_M)).toBe(-4 * WON_PER_M);
+  const squad = validSquad();
+  /** The squad's nine picks at Split 2's fresh prices: eight at 11m and Chovy at `chovyM`. */
+  const fresh = (chovyM: number) => pricesWith(allPicks(squad), [...allPicks(squad).map((pick): [Pick, number] => [pick, 11]), [chovy, chovyM]]);
+
+  test("the squad is repriced and the bank is the budget less its new value: ₩100m and ₩103m leave −₩3m", () => {
+    expect(bankAtSplitStart(squad, fresh(15), 100 * WON_PER_M)).toBe(-3 * WON_PER_M);
+  });
+
+  test("whatever the bank was in Split 1, raise included, a squad now worth less leaves money over", () => {
+    expect(bankAtSplitStart(squad, fresh(10), 100 * WON_PER_M)).toBe(2 * WON_PER_M);
+  });
+
+  test("a squad left at −₩3m by the deadline is then fixed by Flol: Chovy, the dearest, goes", () => {
+    const prices = pricesWith([...allPicks(squad), ...pool], [...allPicks(squad).map((pick): [Pick, number] => [pick, 11]), [chovy, 15], [cheapMid, 6]]);
+    const fix = fixSquadForSplit(squad, bankAtSplitStart(squad, prices, 100 * WON_PER_M), CAP, pool, prices);
+    expect(fix.sold).toEqual([chovy]);
+    expect(fix.bank).toBe(6 * WON_PER_M);
+  });
+
+  test("a pick with no fresh price is a data fault, never free", () => {
+    expect(() => bankAtSplitStart(squad, new Map(), 100 * WON_PER_M)).toThrow("No current price");
   });
 });
 

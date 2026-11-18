@@ -68,7 +68,7 @@ export function Profile({
           {tab === "Transfers" && <ProfileTransfers weeks={data.transfers} />}
         </TabPanel>
         <aside className="profile__side">
-          <ProfileSide leagues={data.leagues} trucks={tab === "Points" ? { week: week.week, list: week.trucks } : undefined} />
+          <ProfileSide leagues={data.leagues} cheers={tab === "Points" ? { week: week.week, list: week.cheers } : undefined} />
         </aside>
       </Columns>
       <SponsorNote />

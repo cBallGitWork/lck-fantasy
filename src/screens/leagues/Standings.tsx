@@ -1,7 +1,7 @@
 import { count, NONE, RankMove, Table, Tag, type Column } from "../../parts";
 import { profileGo } from "../../paths";
-import { chaseText } from "./format";
 import type { StandingRow, Standings as StandingsData } from "./types";
+import { chaseText, weekHead, WORDS } from "./words";
 
 /**
  * A league's table: rank, move, team and manager (your row on fill, with its chase tag), Captain once
@@ -24,15 +24,15 @@ export function Standings({ table, week, captainShown }: { table: StandingsData;
 
 function columns(week: number, captainShown: boolean, splitColumn?: string): Column<StandingRow>[] {
   return [
-    { key: "rank", head: "Rank", width: "colRank", cell: (r) => <span className="leagues__rank num">{count(r.rank)}</span> },
+    { key: "rank", head: WORDS.rank, width: "colRank", cell: (r) => <span className="leagues__rank num">{count(r.rank)}</span> },
     { key: "move", head: "", width: "colFigure", cell: (r) => <RankMove move={r.move} /> },
-    { key: "name", head: "Team · Manager", fullText: (r) => `${r.team} · ${r.manager}`, cell: Name },
-    ...(captainShown ? [{ key: "captain", head: "Captain", width: "colCaptain", cell: (r) => r.captain } satisfies Column<StandingRow>] : []),
-    { key: "week", head: `Week ${week}`, figure: true, width: "colScore", cell: (r) => r.week },
+    { key: "name", head: WORDS.teamManager, fullText: (r) => `${r.team} · ${r.manager}`, cell: Name },
+    ...(captainShown ? [{ key: "captain", head: WORDS.captain, width: "colCaptain", cell: (r) => r.captain } satisfies Column<StandingRow>] : []),
+    { key: "week", head: weekHead(week), figure: true, width: "colScore", cell: (r) => r.week },
     ...(splitColumn
       ? [{ key: "split", head: splitColumn, figure: true, width: "colScore", cell: (r) => (r.split === undefined ? NONE : count(r.split)) } satisfies Column<StandingRow>]
       : []),
-    { key: "total", head: "Total", figure: true, width: "colScore", cell: (r) => count(r.total) },
+    { key: "total", head: WORDS.total, figure: true, width: "colScore", cell: (r) => count(r.total) },
   ];
 }
 

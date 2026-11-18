@@ -13,7 +13,7 @@ export type TopBarItem = (typeof TOP_BAR_ITEMS)[number];
 const VISITOR_ITEMS: readonly TopBarItem[] = ["stats", "lckHub"];
 
 /** The team-name ▾ menu: Settings, and Help (spec/12, Help). */
-const ACCOUNT_MENU: MenuItem[] = (["settings", "help"] as const).map((key) => ({ label: SCREEN_NAME[key], go: { to: PATHS[key] } }));
+export const ACCOUNT_MENU: MenuItem[] = (["settings", "help"] as const).map((key) => ({ label: SCREEN_NAME[key], go: { to: PATHS[key] } }));
 
 /** The link a visitor with an account takes (spec/09, Signing in again). */
 export const LOG_IN = "Log in ›";

@@ -24,7 +24,7 @@ file and the lint only. Check each sibling repo's stack before its move.
 
 ## The look, said once
 
-A draft for Craig to correct. It fills the design file's first section.
+Approved by Craig as written, 18 Nov 2026. It fills the design file's first section.
 
 > A broadcast desk for a League league. Square, ruled and dense, on a neutral ground. The league
 > brings the colour: navy and gold for the LCK. It reads as League through roles, the Rift, sides and

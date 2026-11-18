@@ -5,7 +5,7 @@
 import { MANAGERS, MINJI_EARLIER_WEEKS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { playedFromSide, seriesById } from "../../fixtures/series";
 import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
-import { score } from "../../parts";
+import { score, type CheerKind } from "../../parts";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
 /** Whether you follow the manager; `self` is your own profile, which has no key. */
@@ -40,8 +40,9 @@ export interface ProfilePick extends ProfilePlayer {
   note?: string;
 }
 
-export interface Truck {
-  kind: "coffee" | "protest";
+/** A cheer or jeer parked on her profile for the week (spec/14). */
+export interface Parked {
+  kind: CheerKind;
   line: string;
   from: string;
 }
@@ -56,7 +57,7 @@ export interface PointsWeek {
   buff?: BuffName;
   /** Her team that week; absent until the backend feeds it. */
   team?: ProfilePick[];
-  trucks: Truck[];
+  cheers: Parked[];
 }
 
 export interface HistoryRow {
@@ -146,32 +147,32 @@ export const PROFILE: ProfileData = {
   manager: { id: MANAGERS.minji.id, name: MANAGERS.minji.name, team: MANAGERS.minji.team, hangul: "쵸비는 바로 거기 있었다", follow: "following" },
   currentWeek: 3,
   weeks: [
-    { week: 1, points: W1, final: true, trucks: [] },
-    { week: 2, points: W2, final: true, trucks: [] },
+    { week: 1, points: W1, final: true, cheers: [] },
+    { week: 2, points: W2, final: true, cheers: [] },
     {
       week: 3,
       points: MINJI_WEEK3.points,
       ...WEEK3_FINAL,
       final: false,
-      buff: "Limitless",
+      buff: "Bench Boost",
       team: WEEK3_TEAM,
-      trucks: [
-        { kind: "protest", line: "The template was right there, mate.", from: MANAGERS.dan.name },
-        { kind: "coffee", line: "This coffee is Keria-tier support.", from: MANAGERS.jae.name },
+      cheers: [
+        { kind: "jeer", line: "The template was right there, mate.", from: MANAGERS.dan.name },
+        { kind: "cheer", line: "This coffee is Keria-tier support.", from: MANAGERS.jae.name },
       ],
     },
   ],
   history: [
-    { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, hits: 0, bankM: 0.5, valueM: 100.9, buff: "Limitless" },
+    { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, hits: 3, bankM: 0.5, valueM: 100.9, buff: "Bench Boost" },
     { week: 2, points: W2, total: W1 + W2, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, hits: 0, bankM: 1.0, valueM: 100.6 },
     { week: 1, points: W1, total: W1, weekRank: 34_786, overall: 34_786, bankM: 2.5, valueM: 100.0 },
   ],
-  buffsLeft: ["Remake", "Bench Boost", "Double Captain"],
+  buffsLeft: ["Double Captain", "Coach Diff"],
   transfers: [
     {
       week: 3,
       at: { local: "Tue 09:00", kst: "18:00" },
-      cost: "Limitless · 0 hits",
+      cost: "Bench Boost · 3 hits",
       transfers: [
         { slot: "top", out: { ...player("Doran", "T1"), priceM: 13.0 }, in: { ...player("Kiin", "GEN"), priceM: 13.5 }, gained: 1 },
         { slot: "bot", out: { ...player("Peyz", "T1"), priceM: 13.0 }, in: { ...player("Ruler", "GEN"), priceM: 16.0 }, gained: 4 },

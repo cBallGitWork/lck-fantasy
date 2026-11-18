@@ -36,10 +36,10 @@ describe("each sheet holds its picture's content in order", () => {
 
   test("spec/08: at the cap, Create and Join refuse and say why", () => {
     const create = html(<CreateSheet weeks={SCORING_WEEKS} nameMax={LEAGUE_NAME_MAX} privates={AT_CAP} initialName="Full" onCreate={noop} onClose={noop} />);
-    expect(create).toContain("25 leagues already");
+    expect(create).toContain("Max 25 private leagues");
     expect(disabledKey(create, "Create")).toBe(true);
     const join = html(<JoinSheet privates={AT_CAP} initialCode="GANK-4TQ1" onJoin={noop} onClose={noop} />);
-    expect(join).toContain("25 leagues already");
+    expect(join).toContain("Max 25 private leagues");
     expect(disabledKey(join, "Join")).toBe(true);
   });
 
@@ -56,8 +56,8 @@ describe("each sheet holds its picture's content in order", () => {
   });
 
   test("join.html: a code that finds nothing says so under the field", () => {
-    expect(text(<JoinSheet privates={TWO_OF_CAP} initialCode="NOPE" error="No league has that code" onJoin={noop} onClose={noop} />)).toContain(
-      "No league has that code",
+    expect(text(<JoinSheet privates={TWO_OF_CAP} initialCode="NOPE" error="No league has that code. Check it and try again." onJoin={noop} onClose={noop} />)).toContain(
+      "No league has that code. Check it and try again.",
     );
   });
 

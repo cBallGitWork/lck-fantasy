@@ -1,17 +1,14 @@
 // The gameweek's star and flop (spec/12-pages.md, Home): the same pair for every manager, picked
 // from effective ownership once the gameweek is final.
 import type { BuffLineup } from "../squads/buffs";
-import { isCarrying } from "../squads/carry";
 import { pickKey } from "../squads/squad";
 
 /** One manager's gameweek as it scored: the line-up after auto-subs or with a Bench Boost bench,
- *  and the players taking the Captain's multiplier (spec/12, Home: "as it scored", Craig,
- *  15 Nov 2026). */
-export type ManagerLineup = Pick<BuffLineup, "lineup" | "carrying">;
+ *  and who took a multiplier, which also weighs them in effective ownership: a Captain 1.5, both
+ *  Captains under Double Captain 2 (spec/12, Home: "as it scored", Craig, 15 and 17 Nov 2026). */
+export type ManagerLineup = Pick<BuffLineup, "lineup" | "multipliers">;
 
 export interface StarAndFlopSettings {
-  /** The Captain's multiplier, which also weighs a Captain in effective ownership. */
-  carryMultiplier: number;
   /** How many picks, highest effective ownership first, the flop is picked from. */
   flopPoolSize: number;
 }
@@ -39,12 +36,12 @@ export function starAndFlop(
   points: ReadonlyMap<string, number>,
   settings: StarAndFlopSettings,
 ): StarAndFlop {
-  // Weights stay as counts (a Carry 1.5) so the comparisons below are exact, not float shares.
+  // Weights stay as counts (a Captain 1.5) so the comparisons below are exact, not float shares.
   const weights = new Map<string, number>([...points.keys()].map((key) => [key, 0]));
-  for (const { lineup, carrying } of managers) {
+  for (const { lineup, multipliers } of managers) {
     for (const { pick } of lineup) {
       const key = pickKey(pick);
-      weights.set(key, (weights.get(key) ?? 0) + (isCarrying(pick, carrying) ? settings.carryMultiplier : 1));
+      weights.set(key, (weights.get(key) ?? 0) + (multipliers.get(key) ?? 1));
     }
   }
 

@@ -53,9 +53,9 @@ describe("settleTransfers", () => {
     expect(settleTransfers(2, transfers(4), counted, generous)).toEqual({ hit: 6, nextFree: 2 });
   });
 
-  test("playing Remake or Limitless wipes the gameweek's hits", () => {
-    expect(settleTransfers(1, transfers(4), counted, SETTINGS, "remake").hit).toBe(0);
-    expect(settleTransfers(1, transfers(4), counted, SETTINGS, "limitless").hit).toBe(0);
+  test("no buff changes the transfers: 4 on 1 free cost 18 in any week (spec/06)", () => {
+    expect(settleTransfers.length).toBe(4);
+    expect(settleTransfers(1, transfers(4), counted, SETTINGS)).toEqual({ hit: 18, nextFree: 1 });
   });
 });
 
@@ -86,8 +86,8 @@ describe("undoing a transfer", () => {
   });
 
   // Two confirms: Chovy → Faker, then Siwoo → Kingen and Doran → Zeus, one free transfer: −12.
-  const first: Confirm = { transfers: [confirmed(chovy, faker, { outPrice: 20, inPrice: 19 })], underBuff: false };
-  const latest: Confirm = { transfers: [confirmed(siwoo, kingen), confirmed(doran, zeus)], underBuff: false };
+  const first: Confirm = { transfers: [confirmed(chovy, faker, { outPrice: 20, inPrice: 19 })] };
+  const latest: Confirm = { transfers: [confirmed(siwoo, kingen), confirmed(doran, zeus)] };
 
   test("undoing the latest confirm undoes all of it and gives back exactly its hits", () => {
     expect(settleTransfers(1, transfersOf([first, latest]), counted, SETTINGS).hit).toBe(12);
@@ -104,11 +104,6 @@ describe("undoing a transfer", () => {
   test("the earlier confirm can't be undone while the later one stands; after it, it can", () => {
     expect(() => undoConfirm([first, latest], 0)).toThrow("Only the latest confirm can be undone, not confirm 0.");
     expect(undoConfirm(undoConfirm([first, latest], 1), 0)).toEqual([]);
-  });
-
-  test("a confirm made under Remake or Limitless can't be undone", () => {
-    const buffed: Confirm = { ...latest, underBuff: true };
-    expect(() => undoConfirm([first, buffed], 1)).toThrow("Confirm 1 was made under Remake or Limitless, so it can't be undone.");
   });
 });
 

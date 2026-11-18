@@ -1,6 +1,10 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, text } from "../../testing/render";
+import { CAPTAIN_MULTIPLIER } from "../../fixtures/competition";
+import { expectInOrder, hovers, html, press, text, trucksOutsideCredit } from "../../testing/render";
+import { FOLLOWING } from "../following/fixtures";
+import { pickerOn } from "../following/useCheerPicker";
+import { FeedRow } from "./band";
 import { STREAMS } from "../../fixtures/streams";
 import { HOME_IDLE, HOME_LIVE } from "./fixtures";
 import { Home } from "./index";
@@ -11,14 +15,17 @@ const BAND = [
   "Following",
   "Minji · GEN v HLE",
   "20 pts",
-  "Truck ›",
+  "Cheer / Jeer ›",
   "Dan · Captain Faker",
   "34 pts in T1 v HLE",
+  "Cheer sent",
   "Jae · NS v KRX",
   "9 pts",
+  "Cheer / Jeer ›",
   "Sell your bot laner",
-  "Truck from Minji",
+  "Jeer from Minji",
   "Week 3",
+  "Truck hire by Sponsor",
   "Following ›",
   "Leagues",
   "League",
@@ -68,6 +75,14 @@ describe("live", () => {
     expect(text(<Home data={{ ...HOME_LIVE, pickedStream: "caedrel" }} />)).toContain("Caedrel · English · Twitch");
   });
 
+  test("plays the official English stream when the remembered pick isn't live, without saving it as the pick", () => {
+    const remembered = { ...HOME_LIVE, pickedStream: "kameto" };
+    const saved: string[] = [];
+    expect(html(<Home data={remembered} onPickStream={(id) => saved.push(id)} />)).toMatch(/aria-pressed="true"[^>]*>LCK · English<small[^>]*>Twitch/);
+    expect(text(<Home data={remembered} />)).toContain("LCK · English · Twitch");
+    expect(saved).toEqual([]);
+  });
+
   test("shows Live's one streams list: Kameto sixth, under More ▾", () => {
     expect(HOME_LIVE.streams).toBe(STREAMS);
     expect(STREAMS[5]?.name).toBe("Kameto");
@@ -98,7 +113,7 @@ describe("idle", () => {
       ...["HLE", "Zeus", "Top", "GEN", "Canyon", "Jungle", "T1", "C", "Faker", "Mid", "GEN", "Ruler", "Bot"],
       ...["HLE", "Delight", "Support", "DK", "Siwoo", "Flex · Top", "T1", "kkOma", "Coach"],
       ...["Week 3", "Final", "109", "Average 79", "Highest 128›"],
-      ...["Faker", "T1", "Star", "22", "Delight", "HLE", "Flop", "9", "Points ›"],
+      ...["Pyosik", "DNS", "Star", "21", " · 7%", "Delight", "HLE", "Flop", "9", " · 26%", "Points ›"],
       ...BAND,
     ]);
   });
@@ -114,15 +129,44 @@ describe("idle", () => {
     expect(html(<Home data={HOME_IDLE} />)).toContain('href="/pick-team"');
   });
 
+  test("shows the same star and flop to every manager, each with points and effective ownership, and every one still tied", () => {
+    const tied = { ...HOME_IDLE, stars: [{ role: "top" as const, name: "Kiin", team: "GEN", points: 15, eoPct: 8 }, { role: "top" as const, name: "Doran", team: "T1", points: 15, eoPct: 8 }] };
+    expectInOrder(text(<Home data={tied} />), ["Kiin", "Star", "15", " · 8%", "Doran", "Star", "15", " · 8%", "Delight", "Flop"]);
+  });
+
   test("sets each starter's role upright on his slanted plate, as his name is", () => {
     const markup = html(<Home data={HOME_IDLE} />);
     expect(markup.match(/class="home__plate-role[ "]/g)).toHaveLength(HOME_IDLE.lineup.length);
   });
 
-  test("draws the truck on the shared LED panel and Overall on the shared, outlined tier shield", () => {
+  test("draws the jeer on the shared LED panel and Overall on the shared, outlined tier shield", () => {
     const markup = html(<Home data={HOME_IDLE} />);
     expect(markup).toContain('<div class="led">Sell your bot laner</div>');
     expect(markup).toContain('<svg class="tier-shield home__shield"');
+  });
+});
+
+describe("cheers and jeers on the Following card (spec/14)", () => {
+  const minji = HOME_LIVE.following.find((item) => item.kind === "series" && item.managerId === "minji")!;
+
+  test("Cheer / Jeer › on Home opens the picker on that manager", () => {
+    const opened: string[] = [];
+    press(FeedRow({ item: minji, onCheer: (id) => opened.push(id) }), "Cheer or jeer Minji");
+    expect(opened).toEqual(["minji"]);
+    expectInOrder(text(<Home data={HOME_LIVE} initialPicking={pickerOn(FOLLOWING, "minji")} />), [
+      "Cheer or jeer Minji Park",
+      "Chovy Was Right There · Week 3 · 58 pts so far, Bench Boost, 5 transfers, −18",
+      "BENCH BOOST IN WEEK 3? BIG PLAY.",
+      "Send",
+    ]);
+  });
+
+  test("no picker shows until a key is pressed", () => {
+    expect(text(<Home data={HOME_LIVE} />)).not.toContain("Cheer or jeer");
+  });
+
+  test("says Truck only in the truck-hire credit", () => {
+    for (const data of [HOME_LIVE, HOME_IDLE]) expect(trucksOutsideCredit(text(<Home data={data} />))).toEqual([]);
   });
 });
 
@@ -131,4 +175,12 @@ test("a held rank, Overall's or a league's, is RankMove's grey —", () => {
   const markup = html(<Home data={held} />);
   expect(markup.split('class="rank-held"').length - 1).toBe(held.leagues.length + 1);
   expect(markup).not.toContain("rank-up");
+});
+
+test("Overall's tier and the C carry their hover's lines (spec/12, Words)", () => {
+  for (const data of [HOME_IDLE, HOME_LIVE]) {
+    const out = hovers(html(<Home data={data} />));
+    expect(out[0]).toEqual(["Emerald I", "Overall rank as a LoL tier"]);
+    expect(out).toContainEqual(["C", `Scores ×${CAPTAIN_MULTIPLIER} this week`]);
+  }
 });

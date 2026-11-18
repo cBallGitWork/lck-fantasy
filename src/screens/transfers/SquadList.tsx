@@ -3,6 +3,7 @@ import { cx, formatWon, oneDecimal } from "../../parts";
 import { ROLE_NAME, Shirt, type PersonRole, type SquadSlot } from "../../rift";
 import type { SlotHolder } from "./lineup";
 import { nextAgainst, type Fixture } from "./plan";
+import { keyFor, weekHead, WORDS } from "./words";
 import "./SquadList.css";
 
 /**
@@ -28,14 +29,14 @@ export function SquadList({
     <table className="transfers__squad">
       <thead>
         <tr>
-          <th aria-label="Shirt" />
-          <th>Player</th>
-          <th className="transfers__num">Wk {lastWeek}</th>
-          <th className="transfers__num">Price</th>
-          <th className="transfers__num">Form</th>
-          <th className="transfers__num">Total</th>
-          <th>Next</th>
-          <th aria-label="Sell" />
+          <th aria-label={WORDS.shirt} />
+          <th>{WORDS.player}</th>
+          <th className="transfers__num">{weekHead(lastWeek)}</th>
+          <th className="transfers__num">{WORDS.price}</th>
+          <th className="transfers__num">{WORDS.form}</th>
+          <th className="transfers__num">{WORDS.total}</th>
+          <th>{WORDS.next}</th>
+          <th aria-label={WORDS.sell} />
         </tr>
       </thead>
       <tbody>
@@ -60,7 +61,7 @@ export function SquadList({
                 <td className="transfers__num num">{holder.player.points}</td>
                 <td className="transfers__next">{nextAgainst(fixtures, holder.player.team)}</td>
                 <td>
-                  <button type="button" className="transfers__add" aria-label={`${holder.empty ? "Restore" : "Sell"} ${holder.player.name}`} onClick={() => onTap(holder)}>
+                  <button type="button" className="transfers__add" aria-label={keyFor(holder.empty ? WORDS.restore : WORDS.sell, holder.player.name)} onClick={() => onTap(holder)}>
                     {holder.empty ? "↺" : "×"}
                   </button>
                 </td>

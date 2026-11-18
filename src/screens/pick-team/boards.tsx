@@ -3,6 +3,7 @@ import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
 import { swapIds } from "./model";
+import { WORDS } from "./words";
 
 /** The starter in each slot, in the broadcast's order. */
 const starters = ({ data, state }: ViewProps) =>
@@ -63,7 +64,7 @@ export function CardBoard(props: ViewProps) {
     footer: (
       <>
         <span>
-          Form <b>{oneDecimal(p.form)}</b>
+          {WORDS.form} <b>{oneDecimal(p.form)}</b>
         </span>
         <b>{money(p.priceM)}</b>
       </>

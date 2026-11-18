@@ -81,7 +81,7 @@
   font-weight: var(--w-semi);
 }
 
-/* The side column: leagues, then trucks. */
+/* The side column: leagues, then cheers and jeers. */
 .profile__leagues {
   list-style: none;
   background: var(--paper);
@@ -107,13 +107,13 @@
 .profile__tier {
   width: var(--m-mark);
 }
-.profile__truck {
+.profile__cheer {
   margin-bottom: var(--s-2);
   background: var(--paper);
 }
-.profile__truck-by {
+.profile__cheer-by {
   padding: var(--s-1) var(--s-3);
 }
-.profile__truck-by b {
+.profile__cheer-by b {
   color: var(--text);
 }

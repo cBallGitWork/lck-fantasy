@@ -88,7 +88,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     own players. Titled by the gameweek the prices are for ("Gameweek 4 prices"), with when they
     were set; no next move, no filters, no explainer lines (Craig, 15 Nov 2026). The picture is
     `docs/design/approved/price-changes/`.
-  - Before the first move: "No moves yet".
+  - Before the first move: "No moves yet", and no Set line (Craig, 17 Nov 2026).
+  - In Rises and in Falls, the biggest move first, then the most owned (Craig, 17 Nov 2026).
+  - Each week has its own address, as Points: `/price-changes/4` is Gameweek 4's prices, and
+    bare `/price-changes` opens the latest (Craig, 17 Nov 2026).
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).
   - A picker chooses the stream. The list is admin data (name, language, platform, channel): the

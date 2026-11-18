@@ -1,14 +1,15 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectDeadlinePart, expectInOrder, html, noop, text } from "../../testing/render";
-import { accept, decline, movesSummary, playersLine, receiverLine, removeFollower, sendTruck, unfollow, type DeadlineItem } from "./feed";
+import { expectDeadlinePart, expectInOrder, html, noop, text, trucksOutsideCredit } from "../../testing/render";
+import { accept, decline, movesSummary, playersLine, receiverLine, removeFollower, sendCheer, unfollow, type DeadlineItem } from "./feed";
 import { FOLLOWING, PICKER_AS_DRAWN } from "./fixtures";
 import { FollowingScreen } from ".";
 import { FollowingView } from "./FollowingView";
-import { TruckPicker } from "./TruckPicker";
+import { CheerPicker } from "./CheerPicker";
+import { pickerOn } from "./useCheerPicker";
 
 const view = (data = FOLLOWING) => (
-  <FollowingView data={data} onTruck={noop} onAccept={noop} onDecline={noop} onUnfollow={noop} onRemove={noop} onBlock={noop} />
+  <FollowingView data={data} onCheer={noop} onAccept={noop} onDecline={noop} onUnfollow={noop} onRemove={noop} onBlock={noop} />
 );
 
 describe("the page (1440.png)", () => {
@@ -27,32 +28,32 @@ describe("the page (1440.png)", () => {
       "GEN 2–1 HLE",
       "Kiin 5 · Canyon 7 · Chovy 8",
       "Ended Sat 10:20 19:20 KST",
-      "Truck ›",
+      "Cheer / Jeer ›",
       "Jae Kim",
       "NS 0–2 KRX",
       "Rich 4 · ucal 2 (Captain) · Lehends 3",
       "Ended Fri 13:00 22:00 KST",
-      "Truck ›",
+      "Cheer / Jeer ›",
       "Dan Okafor",
       "T1 2–1 HLE",
       "Oner 11 · Faker 18 (12 × 1.5) · Keria 5",
-      "Coffee sent",
+      "Cheer sent",
       "Minji Park",
-      "Limitless, 5 transfers",
+      "Bench Boost, 5 transfers, −18",
       "so far",
       "Doran → Kiin+9",
       "Peyz → Ruler+4",
       "Lehends → Keria−1",
       "+ 2 more",
-      "Truck ›",
+      "Cheer / Jeer ›",
       "Dan Okafor",
       "2 transfers, −6",
       "Lucid → Oner0",
       "Chovy → Faker+24",
-      "Coffee sent",
+      "Cheer sent",
       "Jae Kim",
       "no transfers",
-      "Truck ›",
+      "Cheer / Jeer ›",
       "Week 2",
       "Jae Kim",
       "GEN 2–0 BRO",
@@ -68,7 +69,7 @@ describe("the page (1440.png)", () => {
     expectDeadlinePart(html(view()), "Wed 07:45");
   });
 
-  test("shows requests, trucks, following and followers on the right, then the sponsor note", () => {
+  test("shows requests, cheers and jeers, following and followers on the right, then the sponsor note", () => {
     expectInOrder(out, [
       "Requests2",
       "Ella Wong",
@@ -76,13 +77,15 @@ describe("the page (1440.png)", () => {
       "Accept",
       "Decline",
       "Joe Grant",
-      "Trucks",
+      "Cheers and jeers",
       "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!",
-      "Coffee from Minji Park",
-      "THIS TRUCK WAS FUNDED BY YOUR −6.",
-      "Protest from Dan Okafor",
+      "Cheer from Minji Park",
+      "Truck hire by Sponsor",
+      "−6 FOR A SIDEWAYS TRANSFER. WHO SIGNED THIS OFF?",
+      "Jeer from Dan Okafor",
+      "Truck hire by Sponsor",
       "WINNER WINNER, GANK CHICKEN. 98 PTS.",
-      "Sponsor truck, Pub League top",
+      "Sponsor cheer, Pub League top",
       "갱 치킨 Gank Chicken",
       "Following3 of 50",
       "Minji Park",
@@ -103,15 +106,15 @@ describe("the page (1440.png)", () => {
 
   test("each repeated key names its manager for a screen reader", () => {
     const markup = html(view());
-    for (const name of ['aria-label="Accept Ella Wong"', 'aria-label="Decline Ella Wong"', 'aria-label="Unfollow Minji Park"', 'aria-label="Remove Minji Park"', 'aria-label="Block Minji Park"', 'aria-label="Truck Minji Park"']) {
+    for (const name of ['aria-label="Accept Ella Wong"', 'aria-label="Decline Ella Wong"', 'aria-label="Unfollow Minji Park"', 'aria-label="Remove Minji Park"', 'aria-label="Block Minji Park"', 'aria-label="Cheer or jeer Minji Park"']) {
       expect(markup).toContain(name);
     }
   });
 
-  test("trucks only the live week: Week 2's rows have none", () => {
+  test("cheers and jeers only the live week: Week 2's rows have none", () => {
     const week2 = out.slice(out.indexOf("Week 2"));
-    expect(week2).not.toContain("Truck ›");
-    expect(out.match(/Truck ›/g)).toHaveLength(4);
+    expect(week2).not.toContain("Cheer / Jeer ›");
+    expect(out.match(/Cheer \/ Jeer ›/g)).toHaveLength(4);
   });
 
   test("a manager's name opens their profile, and the page sits in its frame", () => {
@@ -121,19 +124,24 @@ describe("the page (1440.png)", () => {
     expect(page).toContain('href="/manager/priya"');
   });
 
-  test("draws each truck received on the shared LED panel", () => {
-    expect(html(view())).toContain('<div class="led">THIS TRUCK WAS FUNDED BY YOUR −6.</div>');
+  test("draws each cheer and jeer received on the shared LED panel", () => {
+    expect(html(view())).toContain('<div class="led">−6 FOR A SIDEWAYS TRANSFER. WHO SIGNED THIS OFF?</div>');
+  });
+
+  test("says Truck only in the truck-hire credit, a sponsor placeholder until its name is approved", () => {
+    expect(trucksOutsideCredit(text(view()))).toEqual([]);
+    expect(html(view())).toContain('Truck hire by <span class="placeholder quiet">Sponsor</span>');
   });
 
   test("the screen renders on its fixture", () => {
-    expect(text(<FollowingScreen />)).toContain("Limitless, 5 transfers");
+    expect(text(<FollowingScreen />)).toContain("Bench Boost, 5 transfers, −18");
   });
 });
 
-describe("the truck picker (1440-truck.png)", () => {
+describe("the cheer picker (1440-truck.png)", () => {
   const jae = FOLLOWING.following.find((m) => m.id === PICKER_AS_DRAWN.managerId)!;
   const picker = (
-    <TruckPicker
+    <CheerPicker
       receiver={jae}
       line={receiverLine(FOLLOWING, jae)}
       lines={FOLLOWING.receivers.jae!.lines}
@@ -146,35 +154,41 @@ describe("the truck picker (1440-truck.png)", () => {
     />
   );
 
-  test("shows Jae's week, the kinds, the protest lines, the preview, then Cancel and Send truck", () => {
+  test("shows Jae's week, the kinds, the jeer lines, the preview, then Cancel and Send", () => {
     expectInOrder(text(picker), [
-      "Truck Jae Kim",
+      "Cheer or jeer Jae Kim",
       "Deft Tomorrow · Week 3 · 31 pts so far, no transfers",
-      "Coffee 커피차",
-      "Protest 시위 트럭",
+      "Cheer",
+      "Jeer",
       "MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS.",
       "NO TRANSFER AGAIN. IS ANYONE AT HEADQUARTERS?",
       "SET AND FORGET IS NOT A PHILOSOPHY. IT'S A NAP.",
       "31 POINTS. WE ARE NOT ANGRY. WE ARE GUTTED.",
       "THE TEMPLATE WAS RIGHT THERE, MATE.",
       "MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS.",
-      "One truck to Jae a week.",
+      "One cheer or jeer to Jae a week.",
       "Cancel",
-      "Send truck",
+      "Send",
     ]);
+    expect(trucksOutsideCredit(text(picker))).toEqual([]);
   });
 
-  test("Protest is chosen, its first line picked, and no coffee line shows", () => {
+  test("Jeer is chosen, its first line picked, and no cheer line shows", () => {
     const out = html(picker);
-    expect(out).toMatch(/aria-pressed="true"[^>]*>Protest/);
+    expect(out).toMatch(/aria-pressed="true"[^>]*>Jeer/);
     expect(out.match(/checked=""/g)).toHaveLength(1);
     expect(out).not.toContain("KERIA-TIER");
     expect(out).toContain('<div class="led led--big">MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS.</div>');
   });
 
-  test("Send truck waits for a line", () => {
-    const off = html(<TruckPicker receiver={jae} line="" lines={[]} kind="coffee" onKind={noop} onPick={noop} onSend={noop} onClose={noop} />);
-    expect(off).toMatch(/<button[^>]*disabled=""[^>]*>Send truck/);
+  test("Send waits for a line", () => {
+    const off = html(<CheerPicker receiver={jae} line="" lines={[]} kind="cheer" onKind={noop} onPick={noop} onSend={noop} onClose={noop} />);
+    expect(off).toMatch(/<button[^>]*disabled=""[^>]*>Send</);
+  });
+
+  test("opens on Cheer, its first line picked", () => {
+    expect(pickerOn(FOLLOWING, "jae")).toEqual({ managerId: "jae", kind: "cheer", lineId: "c13" });
+    expect(pickerOn(FOLLOWING, "jae", "jeer")).toEqual(PICKER_AS_DRAWN);
   });
 });
 
@@ -198,18 +212,18 @@ describe("the controls", () => {
     expect(removeFollower(FOLLOWING, "tom").followers.map((m) => m.id)).toEqual(["minji", "dan", "sam", "priya"]);
   });
 
-  test("a sent truck marks every row of that manager, and a second is refused", () => {
-    const sent = sendTruck(FOLLOWING, "jae", "protest");
+  test("a sent jeer marks every row of that manager, and a second is refused", () => {
+    const sent = sendCheer(FOLLOWING, "jae", "jeer");
     const out = text(view(sent));
-    expect(out.match(/Protest sent/g)).toHaveLength(2);
-    expect(out.match(/Truck ›/g)).toHaveLength(2);
-    expect(() => sendTruck(sent, "jae", "coffee")).toThrow("already");
+    expect(out.match(/Jeer sent/g)).toHaveLength(2);
+    expect(out.match(/Cheer \/ Jeer ›/g)).toHaveLength(2);
+    expect(() => sendCheer(sent, "jae", "cheer")).toThrow("already");
   });
 });
 
 test("summaries read as the picture writes them", () => {
   const moves = (over: Partial<DeadlineItem>): DeadlineItem => ({ kind: "deadline", id: "x", manager: FOLLOWING.following[0]!, transfers: 0, swaps: [], ...over });
   expect(movesSummary(moves({ transfers: 1 }))).toBe("1 transfer");
-  expect(movesSummary(moves({ buff: "Limitless", transfers: 5 }))).toBe("Limitless, 5 transfers");
+  expect(movesSummary(moves({ buff: "Bench Boost", transfers: 5, hit: 18 }))).toBe("Bench Boost, 5 transfers, −18");
   expect(playersLine([{ name: "Faker", points: 18, captain: { before: 12 } }], 1.5)).toBe("Faker 18 (12 × 1.5)");
 });

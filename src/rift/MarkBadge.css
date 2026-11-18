@@ -1,4 +1,8 @@
-/* The Captain's C (MarkBadge.tsx): round and filled. Each page places it. */
+/* The Captain's C (MarkBadge.tsx): round and filled, in its hover. Each page places the hover. */
+.mark-badge-hint {
+  display: inline-flex;
+  flex: none;
+}
 .mark-badge {
   display: inline-flex;
   flex: none;

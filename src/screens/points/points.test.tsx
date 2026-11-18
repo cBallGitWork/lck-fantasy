@@ -58,7 +58,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "Your week",
     "StarFaker25 · owned by 46%",
     "FlopSiwoo8 · owned by 6%",
-    "KillerChovy15 · not owned · 41%",
+    "KillerChovy15 · not yours · owned by 41%",
     "Sponsor",
     "All sponsors are made up.",
   ]);
@@ -113,11 +113,11 @@ test("the sheet stays closed until a player is tapped", () => {
   expectInOrder(out, ["Bench", "Cuzz9", "Your week"]);
 });
 
-test("the Coach's sheet (coach.png): his lines, the series' +3, no C or Average Captain, and his coach card", () => {
+test("the Coach's sheet (coach.png): his lines, the series' +3, no C or Captains averaged, and his coach card", () => {
   const coach = <PointsPage data={POINTS_FIXTURE} open="kkOma" />;
   expect(html(coach)).toContain('href="/coach/kkoma"');
   const out = text(coach);
-  expect(out).not.toContain("Average Captain");
+  expect(out).not.toContain("Captains averaged");
   expectInOrder(out, [
     "kkOma김정균",
     "T1 · Coach",
@@ -266,7 +266,7 @@ test("the sheet shows the picture: Faker's crest, name, hangul and C, his 25, th
   expectInOrder(text(PICTURE), [
     "Faker이상혁C",
     "T1 · Mid",
-    "25Not final · Average Captain 19",
+    "25Not final · Captains averaged 19",
     "Wed v HLE W 2–1 ›12",
     "G1AzirW6/1/9Gold · Solo5",
     "G2TaliyahL2/4/5Gold · First blood2",

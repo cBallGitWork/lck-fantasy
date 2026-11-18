@@ -63,8 +63,8 @@ The coach is the team ([spec/01](01-squad-and-slots.md)). Per game:
   below 0.
 - A coach scores a little under the lowest role (Craig, 12 Nov 2026).
 
-## The Carry
+## The Captain
 
-- The Carry's points are multiplied by 1.5 and rounded down: a 9 becomes 13
+- The Captain's points are multiplied by 1.5 and rounded down: a 9 becomes 13
   ([spec/04](04-captain.md)). The multiplier is data.
 - A minus rounds towards zero: a −3 becomes −4, not −5 (Craig, 14 Nov 2026).

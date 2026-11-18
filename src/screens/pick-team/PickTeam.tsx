@@ -7,6 +7,7 @@ import type { PickTeamData } from "./fixtures";
 import type { ViewProps } from "./format";
 import { changeCount, pickNews, pickReducer, type PickAction, type PickState, type PickTeam, type PickView } from "./model";
 import { PlayerCard } from "./PlayerCard";
+import { changes as changesWord, WORDS } from "./words";
 import "./pick-team.css";
 
 /** Pick Team's views, each with the shared board view it is kept as (spec/12). */
@@ -27,17 +28,17 @@ export function PickTeamView({ data, state, dispatch }: ViewProps) {
       side={
         <>
           {selected && <PlayerCard state={state} dispatch={dispatch} player={selected} />}
-          <SideSection title="This week's series" note={TIME_NOTE}>
+          <SideSection title={WORDS.seriesTitle} note={TIME_NOTE}>
             <SeriesList series={data.series} />
           </SideSection>
-          <Placeholder word="Sponsor" height="sponsorH" />
+          <Placeholder word={WORDS.sponsor} height="sponsorH" />
           <SponsorNote />
         </>
       }
     >
-      <PageHead title="Pick Team" hangul="팀 선택" sub={data.week} />
+      <PageHead title={WORDS.title} hangul={WORDS.hangul} sub={data.week} />
       <Buffs {...props} />
-      <ViewToggle label="View" options={VIEWS} chosen={state.view} onChoose={(view: PickView) => dispatch({ type: "view", view })} />
+      <ViewToggle label={WORDS.view} options={VIEWS} chosen={state.view} onChoose={(view: PickView) => dispatch({ type: "view", view })} />
       {state.view === "rift" ? <RiftBoard {...props} /> : <CardBoard {...props} />}
       <ChangeBar {...props} />
     </PageFrame>
@@ -50,16 +51,14 @@ function ChangeBar({ data, state, dispatch }: ViewProps) {
   return (
     <div className="pick-team__bar">
       {changes === 0 ? (
-        <span className="pick-team__changes">No changes</span>
+        <span className="pick-team__changes">{WORDS.noChanges}</span>
       ) : (
         <>
           <span className="pick-team__changes">
-            <b>
-              {changes} {changes === 1 ? "change" : "changes"}
-            </b>
+            <b>{changesWord(changes)}</b>
           </span>
           <button type="button" className="pick-team__reset key-bare hover-line" onClick={() => dispatch({ type: "reset" })}>
-            Reset
+            {WORDS.reset}
           </button>
         </>
       )}
@@ -69,7 +68,7 @@ function ChangeBar({ data, state, dispatch }: ViewProps) {
       <span className="pick-team__save">
         {/* `No changes` already leads the bar, so the disabled key's own reason stays empty. */}
         <MainAction disabledReason={changes === 0 ? "" : undefined} onClick={() => dispatch({ type: "save" })}>
-          Save team
+          {WORDS.save}
         </MainAction>
       </span>
     </div>

@@ -38,8 +38,8 @@ export interface CardGame {
   counts: boolean;
 }
 
-/** A series in This week: his team's score first. */
-export interface WeekSeries {
+/** A series in This week once it has started: his team's score first. */
+export interface PlayedSeries {
   id: string;
   day: string;
   opponent: TeamCode;
@@ -47,6 +47,18 @@ export interface WeekSeries {
   state: "final" | "live";
   games: CardGame[];
 }
+
+/** A series in This week not yet started: its time, yours then KST, and no points yet (spec/12, The player card). */
+export interface UpcomingSeries {
+  id: string;
+  day: string;
+  opponent: TeamCode;
+  state: "upcoming";
+  local: string;
+  kst: string;
+}
+
+export type WeekSeries = PlayedSeries | UpcomingSeries;
 
 export interface CardWeek {
   week: number;

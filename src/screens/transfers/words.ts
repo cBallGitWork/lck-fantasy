@@ -1,5 +1,7 @@
 // Transfers' words, named once. Every word a player reads on this screen lives here.
 
+import type { SortKey } from "./plan";
+
 export const WORDS = {
   title: "Transfers",
   hangul: "이적",
@@ -48,7 +50,7 @@ export const WORDS = {
   removeCoach: "One coach only. Remove yours first",
 } as const;
 
-export const SORT_WORDS = { points: "Points", price: "Price", owned: "Owned" } as const;
+export const SORT_WORDS = { points: "Points", price: "Price", owned: "Owned" } as const satisfies Record<SortKey, string>;
 
 /** `Kingen added`, `Siwoo removed`, `Siwoo restored`: the live region's news. */
 export const added = (name: string) => `${name} added`;
@@ -74,7 +76,7 @@ export const teamLabel = (team: string) => `Team: ${team} ▾`;
 export const keyFor = (key: string, name: string) => `${key} ${name}`;
 
 /** `Week 3`: the List view's last-week column. */
-export const weekHead =(n: number) => `Week ${n}`;
+export const weekHead = (n: number) => `Week ${n}`;
 
 /** `Confirmed · Week 4`. */
 export const confirmedIn = (week: string) => `Confirmed · ${week}`;

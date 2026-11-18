@@ -4,7 +4,6 @@ import { ROLE_KEYS, ROLE_NAME, RoleIcon } from "../../rift";
 import { ALL, listRows, nextAgainst, outOf, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
 import { keyFor, replacing, SORT_WORDS, sortLabel, teamLabel, WORDS } from "./words";
 
-const SORTS: Record<SortKey, string> = SORT_WORDS;
 const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: ALL, label: WORDS.allRoles }, ...ROLE_KEYS.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
 
 /** The list: who can be bought, with role chips, search, sort and team; none greyed (Craig, 16 Nov 2026). */
@@ -55,8 +54,8 @@ export function PlayerList({
         />
         <Menu
           className="transfers__tool"
-          label={sortLabel(SORTS[filters.sort])}
-          items={(Object.keys(SORTS) as SortKey[]).map((sort) => ({ label: SORTS[sort], onChoose: () => onFilters({ ...filters, sort }) }))}
+          label={sortLabel(SORT_WORDS[filters.sort])}
+          items={(Object.keys(SORT_WORDS) as SortKey[]).map((sort) => ({ label: SORT_WORDS[sort], onChoose: () => onFilters({ ...filters, sort }) }))}
         />
         <Menu
           className="transfers__tool"

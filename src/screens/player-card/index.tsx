@@ -19,6 +19,12 @@ export function PlayerCardScreen() {
   return <PlayerCardPage {...dev} />;
 }
 
+/** Where the Pick Team keys go: Swap with bench to Pick Team with him tapped, Transfer out to Transfers with him sold (spec/12). */
+export const cardKeysGo = (card: PlayerCardData) => {
+  const id = playerId(card.name);
+  return { swap: pickTeamSwapping(id), transferOut: transfersSelling(id) };
+};
+
 /** The full player card over the page that opened it (docs/design/approved/player-card/). */
 export function PlayerCardPage({
   card = CARD_FROM_PICK_TEAM,
@@ -36,7 +42,7 @@ export function PlayerCardPage({
   const navigate = useNavigate();
   const [mark, setMark] = useState<CardMark>(initialMark);
   const announce = useAnnounce();
-  const id = playerId(card.name);
+  const goes = cardKeysGo(card);
   const actions =
     openedFrom === "pickTeam"
       ? {
@@ -45,14 +51,14 @@ export function PlayerCardPage({
             if (next !== mark) announce(markNews(card.name, next));
             setMark(next);
           },
-          onSwap: () => void navigate({ href: pickTeamSwapping(id) }),
-          onTransferOut: () => void navigate({ href: transfersSelling(id) }),
+          onSwap: () => void navigate({ href: goes.swap }),
+          onTransferOut: () => void navigate({ href: goes.transferOut }),
         }
       : undefined;
   return (
     <PageFrame screen="player-card" account={MANAGER.team}>
       <Modal kind="card" title={card.name} onClose={() => router.history.back()}>
-        <PlayerCard card={card} actions={actions} compare={compareGo(id)} initialTab={initialTab} />
+        <PlayerCard card={card} actions={actions} compare={compareGo(playerId(card.name))} initialTab={initialTab} />
       </Modal>
     </PageFrame>
   );

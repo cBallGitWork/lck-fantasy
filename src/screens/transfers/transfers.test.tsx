@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
-import { PATHS } from "../../paths";
+import { PATHS, transfersSelling } from "../../paths";
 import { BUFFS } from "../../fixtures/competition";
 import { expectDeadlinePart, html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
@@ -183,6 +183,13 @@ describe("Rift view or List view", () => {
     stubStorage(blockedStorage);
     expect(chosenView(await htmlAt(PATHS.transfers))).toBe("Rift view");
   });
+});
+
+test("arriving from a player card's Transfer out, his slot is sold, whatever slot he stands in", async () => {
+  const sold = (name: string) => new RegExp(`class="tile tile--selected tile--dim"(?:(?!class="tile ).)*title="${name}"`);
+  expect(await htmlAt(transfersSelling("faker"))).toMatch(sold("Faker"));
+  expect(await htmlAt(transfersSelling("bdd"))).toMatch(sold("Bdd"));
+  expect(await htmlAt(transfersSelling("nobody"))).not.toContain("tile--dim");
 });
 
 test("Transfers has no buff keys: every buff is played on Pick Team (spec/06)", () => {

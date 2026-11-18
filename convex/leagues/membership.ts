@@ -19,10 +19,11 @@ export function autoLeagues(manager: { country: string; favouriteTeamId: string 
   ];
 }
 
-/** The favourite team, and so the supporter league, can change until the manager's first
- *  gameweek scores; after that it is fixed (spec/08). The country follows the same rule. */
-export function canChangeFavouriteTeam(firstScoredGameweek: number | null): boolean {
-  return firstScoredGameweek === null;
+/** The favourite team, and so the supporter league, can change until the deadline of the manager's
+ *  first gameweek; after that it is fixed (spec/08, Craig, 15 Nov 2026). The country follows the
+ *  same rule. Both times in ms since the epoch. */
+export function canChangeFavouriteTeam(firstDeadline: number, now: number): boolean {
+  return now < firstDeadline;
 }
 
 export type JoinProblem = { rule: "privateLeagueCap"; cap: number } | { rule: "leagueFull"; size: number };

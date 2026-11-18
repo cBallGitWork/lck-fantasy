@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { chovy, validSquad, zeus } from "../../../convex/squads/fixtures";
-import { forgetGuestSquad, GUEST_SQUAD_KEY, keepGuestSquad, readGuestSquad } from "./guestSquad";
+import { forgetGuestSquad, GUEST_SQUAD_KEY, keepGuestSquad, onLogIn, readGuestSquad } from "./guestSquad";
 
 const THIS_COMPETITION = "lck-2027-split-1";
 const OTHER_COMPETITION = "lck-2027-split-2";
@@ -55,5 +55,21 @@ describe("a guest's squad kept in the browser (spec/09, Picking as a guest)", ()
     expect(readGuestSquad(storage, THIS_COMPETITION)).toMatchObject({ kept: "unreadable" });
     storage.setItem(GUEST_SQUAD_KEY, JSON.stringify({ competitionId: THIS_COMPETITION, squad: { starters: [{ slot: "wing", pick: zeus }], bench: [] } }));
     expect(readGuestSquad(storage, THIS_COMPETITION)).toEqual({ kept: "unreadable", reason: "not a kept squad" });
+  });
+});
+
+describe("logging in with a guest squad kept (spec/09, Signing in again)", () => {
+  test("an account that has a team gets it; the guest squad is dropped", () => {
+    const storage = browserStorage();
+    keepGuestSquad(storage, THIS_COMPETITION, validSquad());
+    onLogIn(storage, true);
+    expect(readGuestSquad(storage, THIS_COMPETITION)).toEqual({ kept: "none" });
+  });
+
+  test("an account with no team keeps the guest squad, to save on sign-up", () => {
+    const storage = browserStorage();
+    keepGuestSquad(storage, THIS_COMPETITION, validSquad());
+    onLogIn(storage, false);
+    expect(readGuestSquad(storage, THIS_COMPETITION)).toEqual({ kept: "squad", squad: validSquad() });
   });
 });

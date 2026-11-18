@@ -5,6 +5,7 @@ import { HomeFrame, type HomeActions } from "./Home";
 import "./Live.css";
 import { PlayerList, WeekTotal } from "./side";
 import { STREAM_DOT, streamLabel, type Stream } from "../../fixtures/streams";
+import { streamToPlay } from "./stream";
 import type { HomeLiveData, LiveSeries } from "./types";
 
 /** The picker's rows before `More ▾`, as the picture draws them. */
@@ -64,7 +65,8 @@ function StreamPicker({ streams, picked, onPick }: { streams: Stream[]; picked: 
 
 /** Home while a series is live: the stream and its picker; your week, your players in this series, who is still to play. */
 export function HomeLive({ data, onPickStream, ...actions }: { data: HomeLiveData; onPickStream?: (id: string) => void } & HomeActions) {
-  const [picked, setPicked] = useState(data.pickedStream);
+  // The remembered pick plays if it is live; else English plays, and the remembered pick is kept.
+  const [picked, setPicked] = useState(() => streamToPlay(data.streams, data.pickedStream));
   const pick = (id: string) => {
     setPicked(id);
     onPickStream?.(id);

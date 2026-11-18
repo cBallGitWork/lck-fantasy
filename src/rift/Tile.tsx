@@ -5,6 +5,7 @@ import { RiftMap } from "./RiftMap";
 import { Shirt } from "./Shirt";
 import type { SlotKey } from "./roles";
 import { slotLabel } from "./roles";
+import { SlotName } from "./SlotName";
 import type { RiftPoint } from "./slots";
 import { MarkBadge, type Mark } from "./MarkBadge";
 import "./Tile.css";
@@ -53,7 +54,11 @@ export function Tile(p: TileProps) {
       {...selectable(p.onSelect, p.selected)}
     >
       {p.price !== undefined && <div className="tile__price num">{p.price}</div>}
-      {label && <div className={cx("tile__slot", p.slot === "flex" && "tile__slot--flex")}>{label}</div>}
+      {label && (
+        <div className={cx("tile__slot", p.slot === "flex" && "tile__slot--flex")}>
+          <SlotName slot={p.slot} label={label} />
+        </div>
+      )}
       <div className="tile__card">
         {p.sell && (
           <span className="tile__sell" aria-hidden="true">

@@ -3,10 +3,10 @@ import { describe, expect, test } from "vitest";
 import draftJson from "../../docs/research/truck-lines.json?raw";
 import { fillLine, linesThatFit, pickWeighted, scoreBand, type Receiver, type ReceiverWeek } from "./fit";
 import { LINE_SETTINGS } from "./fixtures";
-import { approveLine, seedLines, type NewLine, type TruckLine } from "./lines";
+import { approveLine, seedLines, type NewLine, type CheerLine } from "./lines";
 
 /** The draft set, every line approved. */
-const draft: TruckLine[] = (() => {
+const draft: CheerLine[] = (() => {
   const seeded = seedLines(JSON.parse(draftJson) as NewLine[]);
   return seeded.reduce((lines, line) => approveLine(lines, line.id), seeded);
 })();
@@ -36,52 +36,52 @@ function receiver(week: Partial<ReceiverWeek> | null, leagues: Partial<Receiver[
   };
 }
 
-function fitIds(kind: "coffee" | "protest" | "sponsor", who: Receiver): string[] {
+function fitIds(kind: "cheer" | "jeer" | "sponsor", who: Receiver): string[] {
   return linesThatFit(draft, kind, who, LINE_SETTINGS).map((one) => one.line.id);
 }
 
-const anyProtest = ["p26", "p27", "p28", "p29", "p30", "p31"];
+const anyJeer = ["p26", "p27", "p28", "p29", "p30", "p31"];
 
-describe("lines that fit the receiver's week (spec/14, Truck lines)", () => {
+describe("lines that fit the receiver's week (spec/14, Lines)", () => {
   test("a quiet week fits only any-week lines", () => {
-    expect(fitIds("protest", receiver({}))).toEqual(anyProtest);
+    expect(fitIds("jeer", receiver({}))).toEqual(anyJeer);
   });
 
   test("each trigger fits its week (Craig's answers on #90)", () => {
-    const cases: [Partial<ReceiverWeek>, Partial<Receiver["leagues"]>, "coffee" | "protest", string][] = [
+    const cases: [Partial<ReceiverWeek>, Partial<Receiver["leagues"]>, "cheer" | "jeer", string][] = [
       // Faker as the Carry on 3 after the ×1.5 is no blank; on 2 he is.
-      [{ carry: { name: "Faker", points: 2, bestSeries: 2 } }, {}, "protest", "p01"],
-      [{ carry: { name: "Faker", points: 30, bestSeries: 21 } }, {}, "coffee", "c01"],
-      [{ hits: 6 }, {}, "protest", "p05"],
-      [{ rankMove: -12_000 }, {}, "protest", "p08"],
-      [{ rankMove: 12_000 }, {}, "coffee", "c03"],
-      [{}, { bottomOf: ["Office"] }, "protest", "p11"],
-      [{}, { topOf: ["Office"] }, "coffee", "c06"],
-      [{ benchPoints: 18 }, {}, "protest", "p13"],
-      [{ transfers: 0 }, {}, "protest", "p15"],
-      [{ buffPlayed: true, points: 40 }, {}, "protest", "p18"],
-      [{ buffPlayed: true, points: 45 }, {}, "coffee", "c08"],
-      [{ starters: [{ name: "Chovy", price: 12 * WON_PER_M, points: 2 }, { name: "Zeus", price: 10 * WON_PER_M, points: 8 }] }, {}, "protest", "p20"],
-      [{ band: "high" }, {}, "coffee", "c11"],
-      [{ band: "low" }, {}, "protest", "p23"],
+      [{ carry: { name: "Faker", points: 2, bestSeries: 2 } }, {}, "jeer", "p01"],
+      [{ carry: { name: "Faker", points: 30, bestSeries: 21 } }, {}, "cheer", "c01"],
+      [{ hits: 6 }, {}, "jeer", "p05"],
+      [{ rankMove: -12_000 }, {}, "jeer", "p08"],
+      [{ rankMove: 12_000 }, {}, "cheer", "c03"],
+      [{}, { bottomOf: ["Office"] }, "jeer", "p11"],
+      [{}, { topOf: ["Office"] }, "cheer", "c06"],
+      [{ benchPoints: 18 }, {}, "jeer", "p13"],
+      [{ transfers: 0 }, {}, "jeer", "p15"],
+      [{ buffPlayed: true, points: 40 }, {}, "jeer", "p18"],
+      [{ buffPlayed: true, points: 45 }, {}, "cheer", "c08"],
+      [{ starters: [{ name: "Chovy", price: 12 * WON_PER_M, points: 2 }, { name: "Zeus", price: 10 * WON_PER_M, points: 8 }] }, {}, "jeer", "p20"],
+      [{ band: "high" }, {}, "cheer", "c11"],
+      [{ band: "low" }, {}, "jeer", "p23"],
     ];
     for (const [week, leagues, kind, id] of cases) expect(fitIds(kind, receiver(week, leagues))).toContain(id);
-    expect(fitIds("protest", receiver({ carry: { name: "Faker", points: 3, bestSeries: 3 } }))).not.toContain("p01");
+    expect(fitIds("jeer", receiver({ carry: { name: "Faker", points: 3, bestSeries: 3 } }))).not.toContain("p01");
   });
 
   test("a dear player's flop is the dearest starter's, not a cheaper one's", () => {
     const cheapFlop = { starters: [{ name: "Chovy", price: 12 * WON_PER_M, points: 9 }, { name: "Zeus", price: 10 * WON_PER_M, points: 1 }] };
-    expect(fitIds("protest", receiver(cheapFlop))).not.toContain("p20");
+    expect(fitIds("jeer", receiver(cheapFlop))).not.toContain("p20");
   });
 
   test("no shared league, no league lines; before a final week, only any-week lines", () => {
-    expect(fitIds("coffee", receiver({ rankMove: 5 })).filter((id) => ["c06", "c07"].includes(id))).toEqual([]);
-    expect(fitIds("protest", receiver(null))).toEqual(anyProtest);
-    expect(fitIds("coffee", receiver(null, { topOf: ["Office"] }))).toEqual(expect.arrayContaining(["c06", "c07"]));
+    expect(fitIds("cheer", receiver({ rankMove: 5 })).filter((id) => ["c06", "c07"].includes(id))).toEqual([]);
+    expect(fitIds("jeer", receiver(null))).toEqual(anyJeer);
+    expect(fitIds("cheer", receiver(null, { topOf: ["Office"] }))).toEqual(expect.arrayContaining(["c06", "c07"]));
   });
 
   test("an unapproved line never fits", () => {
-    expect(linesThatFit(seedLines(JSON.parse(draftJson) as NewLine[]), "protest", receiver({}), LINE_SETTINGS)).toEqual([]);
+    expect(linesThatFit(seedLines(JSON.parse(draftJson) as NewLine[]), "jeer", receiver({}), LINE_SETTINGS)).toEqual([]);
   });
 
   test("a top-10% score is high, a bottom-10% one low, level with the cut-off counts", () => {
@@ -92,7 +92,7 @@ describe("lines that fit the receiver's week (spec/14, Truck lines)", () => {
   });
 
   test("a line is drawn by its weight", () => {
-    const fitting = linesThatFit(draft, "coffee", receiver(null), LINE_SETTINGS).filter((one) => ["c13", "c19"].includes(one.line.id));
+    const fitting = linesThatFit(draft, "cheer", receiver(null), LINE_SETTINGS).filter((one) => ["c13", "c19"].includes(one.line.id));
     // c13 weighs 3 and c19 1: the first three quarters draw c13.
     expect(pickWeighted(fitting, 0.74)?.line.id).toBe("c13");
     expect(pickWeighted(fitting, 0.75)?.line.id).toBe("c19");
@@ -100,7 +100,7 @@ describe("lines that fit the receiver's week (spec/14, Truck lines)", () => {
   });
 });
 
-describe("a line fills in the receiver's own numbers (spec/14, Truck lines)", () => {
+describe("a line fills in the receiver's own numbers (spec/14, Lines)", () => {
   const line = (id: string) => draft.find((one) => one.id === id)!;
 
   test("a dear flop's price, in m as money shows everywhere", () => {

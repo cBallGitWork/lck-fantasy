@@ -44,7 +44,13 @@ export function forgetGuestSquad(storage: Storage): void {
   storage.removeItem(GUEST_SQUAD_KEY);
 }
 
-const isObject = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null;
+/** On log-in: an account that already has a team keeps it, and the guest's squad is dropped with no
+ *  question; an account with none keeps the squad for sign-up (spec/09, Signing in again). */
+export function onLogIn(storage: Storage, accountHasTeam: boolean): void {
+  if (accountHasTeam) forgetGuestSquad(storage);
+}
+
+const isObject =(value: unknown): value is Record<string, unknown> => typeof value === "object" && value !== null;
 
 const ROLES: readonly unknown[] = [...PLAYER_ROLES, "coach"];
 const SLOTS: readonly unknown[] = STARTER_SLOTS;

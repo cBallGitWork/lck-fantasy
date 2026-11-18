@@ -11,6 +11,10 @@ The rules and a beginner's guide, as FPL's Help (spec/12, Help). Reached from th
 | `1440-rules.png`, `help.html#rules` | Rules tab, first item open |
 | `1440-rules-open.png` | Rules tab with Captain, Player prices and How players score open |
 
+## Since approval
+
+- The buffs were reworked after this picture (spec/06, #319): Remake and Limitless are gone, Double Captain is ×2 and Coach Diff is new. The Rules text follows spec/06, not the picture's buff list.
+
 ## Borrowed
 
 - **FPL's Help** ([notes](../../../research/fpl-help-pages.md)): Help and Rules tabs; the guide's intro, "in 60 seconds", seven steps that say where to click and what to look for, a weekly checklist and a glossary; a Help menu beside the guide; Rules as groups of items that open and close; a deadlines item.

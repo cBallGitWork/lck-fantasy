@@ -73,6 +73,8 @@ function playerOf(list: readonly Series[], pick: PointsPick, games: Record<strin
     mark: pick.mark,
     birthday: pick.birthday,
     points: pick.subbedOut ? undefined : sum(series.map((s) => s.points)),
+    // No week here plays a Bench Boost or makes an auto-sub, so only the seven count.
+    counts: pick.slot !== "bench",
     series,
   };
 }
@@ -80,7 +82,7 @@ function playerOf(list: readonly Series[], pick: PointsPick, games: Record<strin
 /** Owned % of the players a week's Star or Flop can be. */
 const OWNED_PCT: Record<string, number> = { Faker: 46, Siwoo: 6, Delight: 18 };
 
-function mine(label: string, p: PointsStarter): WeekPick {
+function mine(label: WeekPick["label"], p: PointsStarter): WeekPick {
   const ownedPct = OWNED_PCT[p.name];
   if (ownedPct === undefined || p.points === undefined) throw new Error(`No ${label} figures for ${p.name}`);
   return { label, name: p.name, points: p.points, ownedPct, mine: true };
@@ -174,7 +176,7 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     bench: squad.filter((p) => p.slot === "bench").map((p) => playerOf(list, p, games)),
     yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, mine: false }],
     leagues: [
-      { name: `Overall · ${MY_OVERALL.tier}`, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
+      { name: "Overall", tier: MY_OVERALL.tier,rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
       ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),
     ],
     nextTier: { points: 6, tier: "Diamond IV" },

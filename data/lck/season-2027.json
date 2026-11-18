@@ -12,13 +12,13 @@
       "teamCap": 2
     },
     "budget": 100000000,
+    "autoFillGap": 2000000,
     "transfers": { "freePerGameweek": 1, "bankCap": 3, "hitPoints": 6, "freeAfterUnlimited": 2 },
     "carryMultiplier": 1.5,
     "buffs": [
-      { "name": "Remake", "effect": "remake", "perSplit": 1 },
-      { "name": "Limitless", "effect": "limitless", "perSplit": 1 },
       { "name": "Bench Boost", "effect": "benchBoost", "perSplit": 1 },
-      { "name": "Dual Carry", "effect": "dualCarry", "perSplit": 1 }
+      { "name": "Double Captain", "effect": "doubleCaptain", "multiplier": 2, "perSplit": 1 },
+      { "name": "Coach Diff", "effect": "coachMultiplier", "multiplier": 3, "perSplit": 1 }
     ],
     "teamNameMaxLength": 20
   },

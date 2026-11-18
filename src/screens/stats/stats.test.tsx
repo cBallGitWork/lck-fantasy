@@ -3,7 +3,7 @@ import { describe, expect, test } from "vitest";
 import { ROSTERS } from "../../fixtures/rosters";
 import { FAKER_SEASON, KKOMA_SEASON } from "../../fixtures/t1Season";
 import { MANAGER } from "../../fixtures/week3";
-import { sum } from "../../parts";
+import { NONE, sum } from "../../parts";
 import { expectInOrder, html, plain, text } from "../../testing/render";
 import { SEASON_COACHES, SEASON_PLAYERS, SPANS, STATS_BY_SPAN } from "./fixtures";
 import { listRows, nextView, pageLabel, pageRows, priceChoices, START_VIEW, type StatsView } from "./stats";
@@ -178,6 +178,26 @@ describe("players, per game (1440-pergame.png)", () => {
       "0.1",
     ]);
     expect(out).toContain('aria-pressed="true">Per game<');
+  });
+
+  test("an academy player with no games shows — in Pts and every line, not 0.0 (spec/12, Stats)", () => {
+    const academy = html(page({ figures: "Per game", search: "Smash" }));
+    const [, , , , , pts, games, ...lines] = cells(academy, "Smash");
+    expect(games).toBe("0");
+    expect([pts, ...lines]).toEqual(Array(10).fill(NONE));
+  });
+});
+
+describe("filters that match no one (spec/12, Stats)", () => {
+  test("show No players in place of the table", () => {
+    const out = html(page({ search: "nobody" }));
+    expect(text(page({ search: "nobody" }))).toContain("No players");
+    expect(out).not.toContain("<table");
+    expect(out).not.toContain("stats__foot");
+  });
+
+  test("on Coaches, No coaches", () => {
+    expect(text(page({ tab: "Coaches", search: "nobody" }, SEASON_COACHES))).toContain("No coaches");
   });
 });
 

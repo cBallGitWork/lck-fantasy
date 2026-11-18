@@ -22,7 +22,7 @@ test("a score, its result and a per-game figure", () => {
   expect([outcome(true), outcome(false)]).toEqual(["W", "L"]);
   expect([result([2, 1]), result([1, 2])]).toEqual(["W 2–1", "L 1–2"]);
   expect(perGame(49, 10)).toBe("4.9");
-  expect(perGame(5, 0)).toBe("0.0");
+  expect(perGame(5, 0)).toBe(NONE);
   expect([perGameValue(49, 10), perGameValue(5, 0)]).toEqual([4.9, 0]);
 });
 

@@ -40,6 +40,27 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   backtest Gen.G's coach scored 6.8 a series, among the top five picks, against 4.5–5.9 for the
   rest.
 
+### The formula
+
+Craig approved the second draft ([docs/research/prices-formula.md](../docs/research/prices-formula.md),
+17 Nov 2026) on 18 Nov 2026. Every number below is a setting, data per competition; the LEC's
+are set the same way for its Winter test.
+
+1. **Own record:** points per series, 75% last season and 25% the one before, scaled 0 to 1 (the
+   10th percentile and below is 0, the best is 1).
+2. **Team strength:** his current team's share of series won, weighted the same way, scaled 0 to
+   1. Tier lists or bookmakers' odds can replace it before the season.
+3. **Blend:** 55% own record, 45% team strength.
+4. **Line:** the blend against the best, to the power 1.1, mapped from ₩6m to ₩22.5m and rounded
+   to ₩0.5m.
+5. **Gap:** nothing between ₩17.5m and ₩21m; a price there goes to the nearer edge. Stars are
+   spaced ₩0.5m apart, dearest first, down to ₩21m.
+6. **Different prices:** each team's most-played player in a role is its starter. The ten
+   starters of a role, and the ten coaches, are at least ₩0.5m apart, from the cheapest up, never
+   into the gap.
+7. **Coaches:** a line of their own on their own points, the worst ₩6m to the best ₩16.5m.
+8. **By hand:** Chovy ₩23m, Faker ₩15m, academy players ₩5m; a rookie with under 10 series.
+
 ## Price moves
 
 - Each split starts from a fresh set of prices, set like the first ones; team value resets
@@ -54,6 +75,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - A pick rises a step when net transfers in reach 5% of managers in a week, and falls a step at 5%
   net out. One owned by under 2% of managers, with form not above his price, falls a step. Both
   thresholds are data (Craig, 14 Nov 2026).
+- Form is points per series over his last 8 series, put through the same line as first prices.
+  A gap of ₩3m or more between form and price moves him ₩0.2m that week (Craig, approved
+  18 Nov 2026).
 - No price falls below a floor.
 - The coach moves by the same rule, on its own score.
 - Step sizes, weights and the floor are data. The formula is public, on a help page.

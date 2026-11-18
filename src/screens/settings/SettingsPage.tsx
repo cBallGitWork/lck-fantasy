@@ -21,7 +21,6 @@ import { CappedInput, LegalNames, Row, TEAM_OPTIONS } from "./form";
 import {
   BROWSER,
   changedFields,
-  changeLine,
   dirtyTabs,
   TABS,
   THEMES,
@@ -31,11 +30,14 @@ import {
   type SettingsValues,
   type ThemeChoice,
 } from "./settings";
-import { browserZoneLabel, fromProvider, hoursBefore, sentTo, WORDS } from "./words";
 import "./settings.css";
+import { browserZoneLabel, changeLine, fromProvider, hoursBefore, sentTo, TAB_NAMES, THEME_NAMES, WORDS } from "./words";
 
-const ON_OFF = [WORDS.on, WORDS.off] as const;
-const THEME_OPTIONS = THEMES.map((value) => ({ value, label: WORDS.themes[value] }));
+const ON_OFF = [
+  { value: "on", label: WORDS.on },
+  { value: "off", label: WORDS.off },
+] as const;
+const THEME_OPTIONS = THEMES.map((value) => ({ value, label: THEME_NAMES[value] }));
 
 /** Settings' data from the backend, and what the manager does with it. */
 export interface SettingsProps {
@@ -66,14 +68,14 @@ export function SettingsPage(props: SettingsProps) {
   const { tab, onTab, saved, draft, onReset, onSave } = props;
   const changed = changedFields(saved, draft);
   const dirty = dirtyTabs(changed);
-  const tabLabel = (t: SettingsTab) => (dirty.has(t) ? `${WORDS.tabs[t]}${WORDS.dirtyMark}` : WORDS.tabs[t]);
+  const tabLabel = (t: SettingsTab) => (dirty.has(t) ? `${TAB_NAMES[t]}${WORDS.dirtyMark}` : TAB_NAMES[t]);
   const tabsId = useId();
   return (
     <PageFrame screen="settings" account={saved.teamName}>
       <PageHead title={WORDS.title} hangul={WORDS.hangul} />
       <Tabs
         id={tabsId}
-        label={WORDS.title}
+        label={WORDS.tabs}
         tabs={TABS.map(tabLabel)}
         chosen={tabLabel(tab)}
         onChoose={(label) => onTab(TABS.find((t) => tabLabel(t) === label) ?? tab)}
@@ -172,7 +174,7 @@ function OnOffRow({ label, when, on, onChoose }: { label: string; when: string; 
     <Row label={label}>
       <span className="settings__switch">
         <span className="settings__switch-when">{when}</span>
-        <ViewToggle label={label} options={ON_OFF} chosen={on ? WORDS.on : WORDS.off} onChoose={(choice) => onChoose(choice === WORDS.on)} />
+        <ViewToggle label={label} options={ON_OFF} chosen={on ? "on" : "off"} onChoose={(choice) => onChoose(choice === "on")} />
       </span>
     </Row>
   );
@@ -183,7 +185,7 @@ function EmailsTab({ draft, onChange, account, reminderHours }: SettingsProps) {
   return (
     <section>
       <OnOffRow label={WORDS.deadlineReminder} when={hoursBefore(reminderHours)} on={draft.deadlineReminder} onChoose={(deadlineReminder) => onChange({ deadlineReminder })} />
-      <OnOffRow label={WORDS.weeklyRecap} when={WORDS.weeklyRecapWhen} on={draft.weeklyRecap} onChoose={(weeklyRecap) => onChange({ weeklyRecap })} />
+      <OnOffRow label={WORDS.weeklyRecap} when={WORDS.recapWhen} on={draft.weeklyRecap} onChoose={(weeklyRecap) => onChange({ weeklyRecap })} />
       <p className="settings__sub quiet settings__sent-to">{sentTo(account.email)}</p>
     </section>
   );
@@ -207,7 +209,7 @@ function AccountTab({ account, onSignOut, onDownload, onDelete }: SettingsProps)
           </span>
         </Row>
         <Row label={WORDS.public}>
-          <p className="settings__public">{WORDS.publicFields}</p>
+          <p className="settings__public">{WORDS.publicList}</p>
         </Row>
         <Row label={WORDS.yourData}>
           <OutlinedKey onClick={onDownload}>{WORDS.download}</OutlinedKey>

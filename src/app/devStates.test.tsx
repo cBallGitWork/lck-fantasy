@@ -45,7 +45,7 @@ const KEY: Record<string, string> = {
   "settings/display": "Time zone",
   "settings/emails": "Deadline reminder",
   "settings/account": "Sign out",
-  "settings/delete": "Backups go within 30 days",
+  "settings/delete": "Backups are deleted within 30 days",
   "lck-hub/hub": "20–24 Jan",
   "lck-hub/results": "13–17 Jan",
   "lck-hub/standings": "Baron group",

@@ -13,6 +13,8 @@ wiring=(  # event|matcher|script, the matcher empty where the entry has none
   'PostToolUse|Write|Edit|line_ceiling.py'
   'PostToolUse|AskUserQuestion|guard_ask.py'
   'UserPromptSubmit||context_size.py'
+  'SessionStart||quick_check.py'
+  'Stop||quick_check.py'
 )
 
 unwired() { # settings-file: a loud line for each row it doesn't wire, so silence means all are

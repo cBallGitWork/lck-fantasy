@@ -50,13 +50,13 @@ export interface PointsStarter extends PointsPlayer {
   slot: SlotKey;
   /** The role a Flex plays. */
   plays?: RoleKey;
-  /** The Carry's week: the average Carry's points. His own points are already the result. */
-  carry?: { average: number };
+  /** The Captain's week: the average Captain's points. His own points are already the result. */
+  captain?: { average: number };
 }
 
 /** A line of Your week: Star, Flop or Killer. */
 export interface WeekPick {
-  label: string;
+  label: "Star" | "Flop" | "Killer";
   name: string;
   points: number;
   ownedPct: number;
@@ -66,6 +66,8 @@ export interface WeekPick {
 
 export interface LeagueRank {
   name: string;
+  /** Overall's tier after its name (`Overall · Emerald I`). */
+  tier?: string;
   rank: string;
   /** Places moved: up when positive. */
   move: number;
@@ -93,6 +95,3 @@ export interface PointsData {
 }
 
 export { VIEWS as POINTS_VIEWS, type BoardView as PointsView } from "../../rift";
-
-/** A player with no games this week, on his tile and his bench tile. */
-export const DIDNT_PLAY = "Didn't play";

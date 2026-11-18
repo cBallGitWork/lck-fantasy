@@ -21,6 +21,8 @@ export const PATHS = {
   coachCard: "/coach/$coachId",
   profile: "/manager/$managerId",
   following: "/following",
+  privacy: "/privacy",
+  terms: "/terms",
 } as const;
 
 export type ScreenKey = keyof typeof PATHS;
@@ -46,6 +48,8 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   coachCard: "Coach",
   profile: "Manager",
   following: "Following",
+  privacy: "Privacy",
+  terms: "Terms",
 };
 
 /** The product's name, the tab's title on a page with none of its own. */

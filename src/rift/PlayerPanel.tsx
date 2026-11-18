@@ -5,7 +5,7 @@ import { Shirt } from "./Shirt";
 import "./PlayerPanel.css";
 
 /**
- * A tapped player's panel, at the top of the side column: shirt, name and meta (`T1 · Mid · Carry`),
+ * A tapped player's panel, at the top of the side column: shirt, name and meta (`T1 · Mid · Captain`),
  * ✕, then the page's own body.
  */
 export function PlayerPanel({
@@ -70,7 +70,7 @@ export function PanelSum({ lines, figure }: { lines: ReactNode; figure: ReactNod
   );
 }
 
-/** A label inside the sum's lines, in mid grey: `Your Carry`. */
+/** A label inside the sum's lines, in mid grey: `Your Captain`. */
 export function PanelSumLabel({ children }: { children: ReactNode }) {
   return <span className="quiet">{children}</span>;
 }

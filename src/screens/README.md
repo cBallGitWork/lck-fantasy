@@ -8,6 +8,7 @@ So each screen's issue touches only its own folder:
 - Its page is a `PageFrame` with `screen` set to its folder's name; `src/app/router.test.tsx` checks only that.
 - Every class in its CSS starts with its folder's name: `.points`, `.points__side`, `.points--live` (`screens.test.ts`).
 - Its files are named one way: the screen's own CSS and tests after its folder (`points.css`, `points.test.tsx`), a component's CSS after the component (`BreakdownSheet.css`).
+- Every word it shows lives in its `words.ts`.
 - Its own tests and its own made-up data live in its folder; data two screens share goes in `src/fixtures/`.
 - Links go through `GoLink`, `LinkGo` or the parts' `go` props, typed by `src/paths.ts`.
 
@@ -28,4 +29,5 @@ So each screen's issue touches only its own folder:
 - `coach-card/`: the full coach card (`/coach/$coachId`).
 - `profile/`: a manager's profile (`/manager/$managerId`).
 - `following/`: the managers you follow.
+- `legal/`: Privacy (`/privacy`) and Terms (`/terms`), `docs/legal/`'s text as plain pages, with no picture (spec/12, Settings).
 - `pick-team-signed-out/`: the front door (`docs/design/site-flow.md`, Pick team (signed out)). Only `guestSquad.ts` so far, the guest's squad kept in the browser (spec/09); no route until it has its approved picture.

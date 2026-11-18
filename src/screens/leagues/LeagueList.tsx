@@ -1,10 +1,11 @@
 import { count, cx, GoLink, MainAction, ordinal, OutlinedKey, plural, RankMove, SectionHead } from "../../parts";
 import { leagueGo } from "../../paths";
 import type { LeagueSummary } from "./types";
+import { ofSize, WORDS } from "./words";
 
 const SECTIONS = [
-  ["general", "General"],
-  ["private", "Private"],
+  ["general", WORDS.general],
+  ["private", WORDS.private],
 ] as const;
 
 /**
@@ -13,7 +14,7 @@ const SECTIONS = [
  */
 export function LeagueList({ leagues, openId, onCreate, onJoin }: { leagues: LeagueSummary[]; openId: string; onCreate: () => void; onJoin: () => void }) {
   return (
-    <nav className="leagues__list" aria-label="Your leagues">
+    <nav className="leagues__list" aria-label={WORDS.yourLeagues}>
       {SECTIONS.map(([kind, title]) => (
         <section key={kind}>
           <SectionHead className="leagues__list-title">{title}</SectionHead>
@@ -31,14 +32,14 @@ export function LeagueList({ leagues, openId, onCreate, onJoin }: { leagues: Lea
                 <span className="leagues__list-move">
                   <RankMove move={league.move} />
                 </span>
-                <small>{kind === "private" ? plural(league.size, "manager") : `of ${count(league.size)}`}</small>
+                <small>{kind === "private" ? plural(league.size, WORDS.manager) : ofSize(count(league.size))}</small>
               </GoLink>
             ))}
         </section>
       ))}
       <div className="leagues__list-actions">
-        <MainAction onClick={onCreate}>Create a league</MainAction>
-        <OutlinedKey onClick={onJoin}>Join a league</OutlinedKey>
+        <MainAction onClick={onCreate}>{WORDS.create}</MainAction>
+        <OutlinedKey onClick={onJoin}>{WORDS.join}</OutlinedKey>
       </div>
     </nav>
   );

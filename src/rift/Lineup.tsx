@@ -5,6 +5,7 @@ import { RoleIcon } from "./RoleIcon";
 import type { RoleKey, SlotKey } from "./roles";
 import { COACH_HANGUL, LINEUP_ORDER, ROLE_NAME, slotIcon } from "./roles";
 import { MarkBadge, type Mark } from "./MarkBadge";
+import { SlotName } from "./SlotName";
 
 export interface LineupCardProps {
   slot: SlotKey;
@@ -13,8 +14,6 @@ export interface LineupCardProps {
   name: string;
   team: string;
   mark?: Mark;
-  /** Dual Carry is played: the V is gold as the C (spec/06). */
-  dual?: boolean;
   me?: boolean;
   /** A tag on the photo, such as `Not starting`. */
   news?: string;
@@ -34,7 +33,7 @@ function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
     <div className="pcard__role">
       <RoleIcon role={slotIcon(slot, plays)} />
       <span>
-        {ROLE_NAME[slot]}
+        <SlotName slot={slot} label={ROLE_NAME[slot]} />
         {small && <small>{small}</small>}
       </span>
     </div>
@@ -44,7 +43,7 @@ function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
 /** One starter's card in Card view (not the Player card screen): role head, photo (a crest for the Coach), name, team, next, footer. */
 export function LineupCard(p: LineupCardProps) {
   const mark = p.mark && (
-    <MarkBadge mark={p.mark} size="card" dual={p.dual} className="pcard__mark" />
+    <MarkBadge mark={p.mark} size="card" className="pcard__mark" />
   );
   return (
     <div className={cx("pcard", p.selected && "pcard--selected", p.state && `pcard--${p.state}`)} {...selectable(p.onSelect, p.selected)}>

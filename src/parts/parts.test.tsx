@@ -222,7 +222,7 @@ test("a buff shows name, what it does, how many are left, and Play", () => {
   expect(text(<BuffCard name="Bench Boost" does="Your bench scores too" left="1 left" />)).toBe(
     "Bench BoostYour bench scores too1 leftPlay",
   );
-  expect(html(<BuffCard name="Dual Carry" does="Vice-carry ×1.5 too" left="1 left" state="off" />)).not.toContain("Play");
+  expect(html(<BuffCard name="Double Captain" does="A second Captain; both score ×1.5" left="1 left" state="off" />)).not.toContain("Play");
 });
 
 test("the main action is one filled key, disabled with its reason", () => {

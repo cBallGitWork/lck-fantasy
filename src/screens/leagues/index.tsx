@@ -11,7 +11,6 @@ import {
   LEAGUES,
   NEW_LEAGUE,
   NEW_TABLE,
-  NO_SUCH_CODE,
   OPEN_LEAGUE_ID,
   PRIVATE_LEAGUE_CAP,
   SCORING_WEEKS,
@@ -23,6 +22,7 @@ import { LeagueTable, type LeagueActions } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
 import { CreatedSheet, CreateSheet, DeleteSheet, JoinSheet, LeaveSheet } from "./Sheets";
 import { tableKey, type OverallGroup, type PrivateEntry, type TableTab } from "./types";
+import { WORDS } from "./words";
 
 /** The page the made-up tables are: the top rows and the rows round yours. */
 const FIRST_PAGE = 1;
@@ -93,7 +93,7 @@ export function LeaguesScreen() {
   };
   const join = (codeOrLink: string) => {
     const found = findByCode(JOINABLE, codeOrLink);
-    if (!found) return setJoinError(NO_SUCH_CODE);
+    if (!found) return setJoinError(WORDS.noSuchCode);
     setJoinError(undefined);
     if (!(found.view.id in mine.views)) {
       if (capReason(privates.count, privates.cap)) return;

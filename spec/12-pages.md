@@ -17,10 +17,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
   - Rift view and Card view, Rift on the first visit, then remembered, as Pick Team.
-  - Your own week (Craig, 14 Nov 2026): your Star, the top starter after the Carry ×1.5; your
+  - Your own week (Craig, 14 Nov 2026): your Star, the top starter after the Captain ×1.5; your
     Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
     ownership. Home keeps the global star and flop.
-  - The Carry's games show your Carry's points beside the average Carry's.
+  - The Captain's games show your Captain's points beside the average Captain's.
   - Your Overall tier and ≈ points to promote, or to avoid demotion
     ([spec/08](08-leagues.md#overall-tiers)).
   - Its layout is the approved picture (`docs/design/approved/points/`).
@@ -46,6 +46,11 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Sheep Esports' latest LCK headlines sit beside the tabs, each with a thumbnail, linking out.
     They come from Sheep's LCK tag page (Craig, 15 Nov 2026).
   - The picture is `docs/design/approved/lck-hub/`.
+  - Fixtures' ‹ stops at the current week; past weeks are on Results (Craig, 17 Nov 2026).
+  - A stage not yet started says when it starts, from the competition's data. Example: "Starts
+    Wed 12 Mar" (Craig, 17 Nov 2026).
+  - Every LCK team has an academy roster in the LCK CL, so Teams has no empty academy column
+    (Craig, 17 Nov 2026).
 - **Series page**: one series, its games and each player's lines in each game.
   - A page with its own link, opened from every series row anywhere (Craig, 16 Nov 2026).
   - One grid per team: its players down the side, the games as columns, as in the Points drawer.
@@ -70,9 +75,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   ([spec/08](08-leagues.md#overall-tiers)). Its private leagues show too, as in FPL; a History row
   opens that week's team (Craig, 14 Nov 2026). Its layout is the approved picture
   (`docs/design/approved/profile/`).
-- **Perfect game**: the gameweek's best team, a Carry and 7 starters, picked under the squad
+- **Perfect game**: the gameweek's best team, a Captain and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
-  - The 7 starter slots, with one of them as Carry; the Carry's ×1.5 counts in its total. The cap
+  - The 7 starter slots, with one of them as Captain; the Captain's ×1.5 counts in its total. The cap
     applies, the budget does not (Craig, 16 Nov 2026). FPL's Team of the Week has no captain and
     ignores both.
   - It builds live, with a Not final tag until the week is final.
@@ -91,7 +96,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     own players. Titled by the gameweek the prices are for ("Gameweek 4 prices"), with when they
     were set; no next move, no filters, no explainer lines (Craig, 15 Nov 2026). The picture is
     `docs/design/approved/price-changes/`.
-  - Before the first move: "No moves yet".
+  - Before the first move: "No moves yet", and no Set line (Craig, 17 Nov 2026).
+  - In Rises and in Falls, the biggest move first, then the most owned (Craig, 17 Nov 2026).
+  - Each week has its own address, as Points: `/price-changes/4` is Gameweek 4's prices, and
+    bare `/price-changes` opens the latest (Craig, 17 Nov 2026).
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).
   - A picker chooses the stream. The list is admin data (name, language, platform, channel): the
@@ -101,6 +109,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     checked.
   - It opens on the official English stream, then remembers each manager's last pick. Streams
     not live show greyed out.
+  - A greyed stream can't be picked; only a live one can (Craig, 17 Nov 2026).
+  - If the remembered pick isn't live when a series starts, the official English stream plays,
+    and the pick is kept for next time (Craig, 17 Nov 2026).
+  - Home's picker shows 5 streams, then More ▾ (Craig, 17 Nov 2026).
   - The points panel shows the week's total with Average and Highest, as Points (Craig, 14 Nov
     2026).
   - With nothing live, it shows the next series and a countdown.
@@ -119,15 +131,15 @@ Craig's yes in the Home design round, grilled 14 Nov 2026. Its layout is the app
 
 - **A series live:** the stream, muted, with the Live page's picker and the manager's remembered
   pick. **Live ›** opens the Live page.
-- **Nothing live:** the manager's 7 starters for the week as a broadcast lineup, with C and V;
+- **Nothing live:** the manager's 7 starters for the week as a broadcast lineup, with C;
   the next series on stream and when; **Pick Team ›**.
 - **Star and flop** of the last gameweek, the same pair for every manager, each shown with its
   points and effective ownership.
-  - Effective ownership: the share of managers starting a player, a Carry counting 1.5. Example:
-    40% of managers start Faker and 20% of all managers make him Carry, so 50%.
+  - Effective ownership: the share of managers starting a player, a Captain counting 1.5. Example:
+    40% of managers start Faker and 20% of all managers make him Captain, so 50%.
   - It counts the team as it scored, as FPL sites do: an auto-sub and a Bench Boost bench count
-    as starting, and anyone taking the ×1.5 counts 1.5, the Vice-carry too under Dual Carry
-    (Craig, 15 Nov 2026).
+    as starting, and anyone taking the ×1.5 counts 1.5, both Captains under Double Captain
+    count 2 (Craig, 15 Nov 2026; ×2 from 17 Nov 2026).
   - Star: the most points × (1 − effective ownership). Example: Kiin, 15 points at 8%, beats
     Chovy, 18 at 45% (13.8 against 9.9).
   - Flop: the fewest points among the 10 highest by effective ownership. Example: Faker, 2 points
@@ -149,7 +161,7 @@ Grilled 14 Nov 2026.
   - Transfers remembers its own. Its List view, FPL's list with prices and fixtures, is a different
     thing from Card view.
   - The choice is kept in the browser, so per device, and a guest's is kept too.
-- On Pick Team, swaps, the Carry, the Vice-carry and buffs take effect only when the manager
+- On Pick Team, swaps, the Captain and buffs take effect only when the manager
   presses Save (Craig, 13 Nov 2026). Reset clears what isn't saved.
 - On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in
   the list, greyed, with why, and sorts last.
@@ -181,7 +193,7 @@ F1 Fantasy, Sleeper and gol.gg).
   - Champions: each champion he has played this season, with games and average points.
 - **Season stats**: the scoring lines only ([spec/05](05-scoring.md)), as per-game averages and
   totals, beside every tab (Craig, 14 Nov 2026).
-- **Buttons**, as FPL's, by where it opened: transfer in or out, Make Carry, Make Vice-carry,
+- **Buttons**, as FPL's, by where it opened: transfer in or out, Make Captain,
   substitute.
 - **Compare**, in the beta: two players side by side, with header stats, form, scoring lines and
   next series.
@@ -236,10 +248,13 @@ Grilled 13 Nov 2026.
 The same as the player card, with the coach's lines in place of a player's. A Roster tab, the
 team's players and prices, replaces Champions.
 
+- This week before his team's first series lists the week's series with opponent and time,
+  points as —, filling in as played, as the player card (Craig, 17 Nov 2026).
+- History shows a series being played, tagged Live, with its points so far (Craig, 17 Nov 2026).
+
 ## Buffs
 
-Buffs confirm as in FPL: Remake and Limitless are final once confirmed, like FPL's Wildcard and
-Free Hit; Bench Boost and Dual Carry can be cancelled until the deadline
+Buffs confirm as in FPL's Bench Boost: each can be cancelled until the deadline
 ([spec/06](06-buffs.md)).
 
 ## Words
@@ -258,8 +273,24 @@ suggestions.
 | Killer | Points, Your week | Top scorer you don't own |
 | Flex | Pick Team and Points, the slot's label | Any role |
 | Emerald I (any tier) | Home, Points, Leagues | Overall rank as a LoL tier |
-| C | the Carry's badge, everywhere | Scores ×1.5 this week |
-| V | the Vice-carry's badge, everywhere | Takes over if the Carry plays no game |
-| Remake, Limitless | Transfers' buff keys | the line on their Pick Team card |
+| C | the Captain's badge, everywhere | Scores ×1.5 this week (×2 under Double Captain) |
 
-- Carry, Killer and the buff names stay; the hover explains them (Craig, 16 Nov 2026).
+- Killer and the buff names stay; the hover explains them (Craig, 16 Nov 2026). Captain replaced
+  Carry, and Double Captain Dual Carry (Craig, 17 Nov 2026).
+
+### The Broadcast voice
+
+From the words grill of 18 Nov 2026.
+
+- Every word a player reads is written in the Broadcast voice, by the `broadcast` writer
+  (`.claude/agents/broadcast.md`), so Flol reads as if LCK fans wrote it.
+- The only Korean word in English text is 화이팅 (fighting), for a cheer.
+- The week is shown as Split 1 Week 3, or Week 3 where the split is clear; never Gameweek,
+  Matchweek or GW.
+- Game and series only: never set, map or match.
+- Each screen's words move into its `words.ts` and are rewritten in the voice, one pull request a
+  screen, in this order: Pick Team, Home, Transfers, Points, Leagues, then the rest. Four reader
+  personas score each rewrite; it merges on green, and Craig reads a before and after page once a
+  round of screens is done.
+- Cheer and jeer lines and the buffs' descriptions are data Craig approves line by line: the
+  writer drafts rewrites of them for Craig, never changes them itself.

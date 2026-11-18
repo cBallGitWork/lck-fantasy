@@ -80,19 +80,25 @@ Overall shows each manager's place as a LoL ranked tier, Iron to Challenger (Cra
 - The tier moves whenever the rank does, when a series turns final
   ([spec/11](11-live-points.md)). No protection: a manager drops a tier as soon as their rank
   does. Example: T1 v Gen.G turns final at 10pm KST; Emerald IV becomes Emerald III.
-- Everyone is Unranked until gameweek 1 is final.
+- Everyone is Unranked until gameweek 1 is final: the outlined shield and `Unranked`, with no
+  rank line.
 - Only Overall has tiers. Country, team and private leagues show plain ranks.
 - Where it shows:
   - Home: a shield, the tier and the rank beneath, by the team name, with no total of managers
     ([approved picture](../docs/design/approved/home/)).
-  - Points: the tier, and the points to promote or to avoid demotion. That is the gap to the
-    manager at the cut-off now, shown with ≈ as others still score. Example: ≈6 pts to
-    Diamond IV.
-  - The manager's profile, by the team name.
-  - The Leagues page's Overall table: a small shield on each row.
+  - Points: the tier, and the points to promote. That is the gap to the manager at the cut-off
+    now, shown with ≈ as others still score. Example: ≈6 pts to Diamond IV. The line to avoid
+    demotion shows only at Challenger, with no tier above (Craig, 18 Nov 2026).
+  - The manager's profile, by the team name in its banner, as on Home: the shield, tier, rank and
+    its move. It shows there only, not again in the Leagues column (Craig, 18 Nov 2026, over the
+    approved picture, which puts it beside Overall).
+  - The Leagues page's Overall table: a Tier column, the small shield and the short name, such as
+    `Emerald I` (Craig, 18 Nov 2026).
   - Help: a Ranks section with the cut-off table ([spec/09](09-onboarding.md)).
 - At the season's end each manager's final tier and rank are kept, and the profile's History tab
-  lists them per season. Example: LCK 2027, Diamond II, 2,104th.
+  lists them per season in a Past seasons table under the weeks, as FPL's: Season, Tier, Rank.
+  Example: LCK 2027, Diamond II, 2,104th. It is hidden until a season has ended (Craig, 18 Nov
+  2026).
 
 Starting cut-offs (top % of Overall), from 2026 solo queue shares across all servers, split by
 Gold's division ratios, checked 14 Nov 2026

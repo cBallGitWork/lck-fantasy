@@ -189,10 +189,23 @@ describe("controls", () => {
     expect(html(page("Fixtures"))).toMatch(/<button[^>]*aria-label="Week before"[^>]*disabled/);
   });
 
-  test("a stage with no series yet says so", () => {
+  test("a stage with no series yet says when it starts, from the competition's data", () => {
     const noGroups: LckHubData = { ...LCK_HUB, stages: LCK_HUB.stages.slice(1) };
-    expect(text(page("Fixtures", noGroups))).toContain("Not started");
-    expect(text(page("Standings", noGroups))).toContain("Not started");
+    for (const tab of ["Fixtures", "Results", "Standings"] as const) expect(text(page(tab, noGroups))).toContain("Starts Wed 10 Mar");
+  });
+
+  test("Fixtures opens on this week, and its ‹ is off: past weeks are on Results", () => {
+    const week = (label: string) => ({ label, dates: "", series: [] });
+    const midSplit: LckHubData = {
+      ...LCK_HUB,
+      stages: [{ ...groups, fixtures: [week("Week 2"), week("Week 3"), week("Week 4"), week("Week 5")], thisWeek: 2 }, ...LCK_HUB.stages.slice(1)],
+    };
+    const out = html(page("Fixtures", midSplit));
+    expect(text(page("Fixtures", midSplit))).toContain("‹Week 4›");
+    expect(out).toMatch(/<button[^>]*aria-label="Week before"[^>]*disabled/);
+    expect(out).toMatch(/<button[^>]*aria-label="Week after"(?![^>]*disabled)/);
+    expect(run([{ type: "week", tab: "Fixtures", step: -1 }], midSplit).fixturesWeek).toBe(0);
+    expect(run([{ type: "week", tab: "Fixtures", step: 1 }, { type: "week", tab: "Fixtures", step: 1 }], midSplit).fixturesWeek).toBe(1);
   });
 });
 

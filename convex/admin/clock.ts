@@ -1,4 +1,4 @@
-// The one clock every server read and write takes its "now" from (spec/10, The road to launch, step 1):
+// The one clock every server read and write takes its "now" from (#398; no spec file covers the sim yet):
 // real time on the real site, the stored moment on the sim. On the sim an admin's Next day plays one
 // match day, passing its deadline when it comes, and Play to end runs the rest without stopping.
 import { v } from "convex/values";
@@ -63,13 +63,20 @@ export const nextDay = internalMutation({
   handler: async (ctx, { competition }) => playDay(ctx, await zoneOf(ctx, competition)),
 });
 
-/** Play to end: Next day until no game is left. Returns how many match days it played. */
+/** Play to end: Next day until no game is left. Returns how many match days it played. Each day is
+ *  one indexed read; the clock is written once, at the end, so a full split stays one small mutation. */
 export const playToEnd = internalMutation({
   args: { competition: v.string() },
   handler: async (ctx, { competition }) => {
     const zone = await zoneOf(ctx, competition);
+    const clock = await startedSimClock(ctx);
+    let at = clock.now;
     let days = 0;
-    while ((await playDay(ctx, zone)) !== null) days++;
+    for (let to = await nextMatchDayEnd(ctx, at, zone); to !== null; to = await nextMatchDayEnd(ctx, at, zone)) {
+      at = to;
+      days++;
+    }
+    if (days > 0) await ctx.db.patch(clock._id, { now: at });
     return days;
   },
 });
@@ -77,11 +84,15 @@ export const playToEnd = internalMutation({
 /** One match day played: the clock's new moment, or null when no game is left. */
 async function playDay(ctx: MutationCtx, zone: string): Promise<number | null> {
   const clock = await startedSimClock(ctx);
-  const next = await ctx.db.query("games").withIndex("by_startedAt", (q) => q.gt("startedAt", clock.now)).first();
-  if (next === null) return null;
-  const to = nextMidnight(next.startedAt, zone);
-  await ctx.db.patch(clock._id, { now: to });
+  const to = await nextMatchDayEnd(ctx, clock.now, zone);
+  if (to !== null) await ctx.db.patch(clock._id, { now: to });
   return to;
+}
+
+/** The end of the next day after `from` that a game starts on, or null when no game is left. */
+async function nextMatchDayEnd(ctx: QueryCtx, from: number, zone: string): Promise<number | null> {
+  const next = await ctx.db.query("games").withIndex("by_startedAt", (q) => q.gt("startedAt", from)).first();
+  return next === null ? null : nextMidnight(next.startedAt, zone);
 }
 
 function requireSim() {

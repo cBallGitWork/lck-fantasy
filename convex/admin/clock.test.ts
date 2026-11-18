@@ -71,7 +71,7 @@ async function sim() {
   return { t, series, now, openGameweek, stateOf };
 }
 
-describe("the sim's clock (spec/10, The road to launch, step 1)", () => {
+describe("the sim's clock (#398)", () => {
   test("Next day plays one match day at a time, through a deadline and a series turning final", async () => {
     const { t, series, now, openGameweek, stateOf } = await sim();
     expect(await now()).toBe(kst(0, 12));

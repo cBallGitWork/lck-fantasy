@@ -1,5 +1,8 @@
 # Templates and tools for giving AI coding agents a design system (2025-2026)
 
+**Contents:** [Google Stitch's DESIGN.md and similar open formats (design.md spec, awesome-design-md, W3C DTCG)](#google-stitchs-designmd-and-similar-open-formats-designmd-spec-awesome-design-md-w3c-dtcg) · [Popular design skills and taste packs: structure, claims, criticisms, evals](#popular-design-skills-and-taste-packs-structure-claims-criticisms-evals) · [Lint and checker tools that flag AI-slop tells](#lint-and-checker-tools-that-flag-ai-slop-tells) · [Designer write-ups on keeping AI output on-brand](#designer-write-ups-on-keeping-ai-output-on-brand) · [Sharing one design template across repos](#sharing-one-design-template-across-repos) · [Common skeleton most templates share](#common-skeleton-most-templates-share)
+
+
 Researched 18 Nov 2026. Star counts are as the pages showed them in Oct-Nov 2026; several third-party pages give different (often lower or dated) counts, so treat them as rough adoption signals only. "Targets" says whether a pattern is aimed at landing/marketing pages or at product UI (data-dense app screens).
 
 ## Google Stitch's DESIGN.md and similar open formats (design.md spec, awesome-design-md, W3C DTCG)

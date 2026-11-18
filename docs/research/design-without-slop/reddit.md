@@ -1,5 +1,8 @@
 # Claude UI design without slop: what Reddit users report (2025-2026)
 
+**Contents:** [What people put in CLAUDE.md / DESIGN.md / design-system files to stop AI slop](#what-people-put-in-claudemd--designmd--design-system-files-to-stop-ai-slop) · [Skills and plugins: which are rated, which do nothing](#skills-and-plugins-which-are-rated-which-do-nothing) · [Reference-driven workflows](#reference-driven-workflows) · [Visual feedback loops](#visual-feedback-loops) · [Claude Design vs Claude Code for design](#claude-design-vs-claude-code-for-design) · [Model differences for design](#model-differences-for-design) · [Data-dense app UI vs marketing landing pages](#data-dense-app-ui-vs-marketing-landing-pages)
+
+
 > **Read this first: access limit.** Reddit could not be read directly in this run. WebSearch refuses `reddit.com` ("domains are not accessible to our user agent"), WebFetch "is unable to fetch from www.reddit.com", a curl to Reddit's JSON was denied by the session's permission classifier, and Claude in Chrome blocks reddit.com ("not allowed due to safety restrictions"). Mirrors were not tried, because they would be a way round a block. So **almost nothing below is first-hand Reddit evidence**. It comes from blogs, GitHub repos and reviews that sometimes quote Reddit. Only two Reddit permalinks were found, both second-hand, through the awesome-claude-design repo. Thread counts and upvotes per practice are **not available**. A human with a browser, or a tool allowed to read Reddit, should check these findings against Reddit before relying on them.
 
 ## What people put in CLAUDE.md / DESIGN.md / design-system files to stop AI slop

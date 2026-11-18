@@ -1,5 +1,8 @@
 # The LCK brand layer: what makes Flol feel Korean and LCK, not Western-with-Korean-words
 
+**Contents:** [1. Who made the LCK look, and what it is built on](#1-who-made-the-lck-look-and-what-it-is-built-on) · [2. The broadcasters' brands that frame LCK viewing (CHZZK, SOOP)](#2-the-broadcasters-brands-that-frame-lck-viewing-chzzk-soop) · [3. Korean product typography: what Korean apps actually use](#3-korean-product-typography-what-korean-apps-actually-use) · [4. Korean colour habits and density](#4-korean-colour-habits-and-density) · [5. What is protected, and the brand-layer split](#5-what-is-protected-and-the-brand-layer-split) · [Checked](#checked)
+
+
 Read 18 Nov 2026, by search and fetch only. Builds on, and does not repeat, `docs/research/lck-visual-research.md` (LCK palette from Namu, LoL client colours, ten 2026 teams and kits, portrait rights, Riot's Legal Jibber Jabber), `lck-team-logos-and-memes.md`, `lec-team-*.md`, `esports-fantasy-design-ideas.md` and `docs/design/plate.md`. Where this file corrects those, it says so.
 
 Context: Flol wants one core design (layout, components, density, type scale) and a brand layer per region. This file is the LCK brand layer's evidence.

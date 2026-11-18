@@ -1,5 +1,8 @@
 # Reddit saved threads: making Claude's UI not look AI-made, and Claude Design
 
+**Contents:** [Thread 1: "Any tips on making a UI/UX frontend not look like it was obviously coded by Claude?" (r/ClaudeCode)](#thread-1-any-tips-on-making-a-uiux-frontend-not-look-like-it-was-obviously-coded-by-claude-rclaudecode) · [Thread 2: "No, YOU check the ui." (r/ClaudeCode)](#thread-2-no-you-check-the-ui-rclaudecode) · [Thread 3: "Claude Artifacts is nothing comapred to Design!!" (r/ClaudeDesign)](#thread-3-claude-artifacts-is-nothing-comapred-to-design-rclaudedesign) · [Across the threads: recurring practices, disagreements, named tools, product app vs marketing page](#across-the-threads-recurring-practices-disagreements-named-tools-product-app-vs-marketing-page)
+
+
 Source: three Reddit pages Craig saved as HTML on 18 Nov 2026 (in ~/Downloads). Each saved page holds only the first 25 comments in Reddit's "Best" (confidence) order; the rest sit behind "load more" links that were never fetched. Scores are as of the save. URLs below are the comments' Reddit permalinks, taken from the saved HTML (not visited).
 
 Thread URLs:

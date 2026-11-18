@@ -1,5 +1,8 @@
 # Anthropic's official guidance on distinctive front-end design from Claude (as of 18 Nov 2026)
 
+**Contents:** [What Anthropic says causes generic output, and the frontend-design skill's rules](#what-anthropic-says-causes-generic-output-and-the-frontend-design-skills-rules) · [Anthropic prompting docs: per-model design behaviour (Opus 5.5, Fable 5.2, Sonnet 5.5, and the 4.x/5 line)](#anthropic-prompting-docs-per-model-design-behaviour-opus-55-fable-52-sonnet-55-and-the-4x5-line) · [Claude Design: what it is, design systems, handoff to Claude Code, limits](#claude-design-what-it-is-design-systems-handoff-to-claude-code-limits) · [Claude Code docs: skills, hooks, subagents and screenshot verification in a design workflow](#claude-code-docs-skills-hooks-subagents-and-screenshot-verification-in-a-design-workflow)
+
+
 ## What Anthropic says causes generic output, and the frontend-design skill's rules
 
 ### Takeaway

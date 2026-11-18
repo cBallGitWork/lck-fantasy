@@ -1,5 +1,8 @@
 # What six YouTube guides teach about designing with Claude
 
+**Contents:** [Per-video summaries and practices](#per-video-summaries-and-practices) · [Q1: What files or system do they set up before designing?](#q1-what-files-or-system-do-they-set-up-before-designing) · [Q2: How do they avoid generic "AI-looking" output?](#q2-how-do-they-avoid-generic-ai-looking-output) · [Q3: How do they review and iterate?](#q3-how-do-they-review-and-iterate) · [Q4: Which tools and skills do they name, and is there evidence they help?](#q4-which-tools-and-skills-do-they-name-and-is-there-evidence-they-help) · [Cross-video: repeated practices, contradictions, and fit for a data-dense app vs landing pages](#cross-video-repeated-practices-contradictions-and-fit-for-a-data-dense-app-vs-landing-pages)
+
+
 Source note, for the report writer:
 - All six videos come from **one channel, UI Collective (presenter Kirk, "KirkMDesign")**. That is one person's view, not six independent sources.
 - He sells an academy and a design-system kit (collectivekit.co), runs a design-system agency, and carries a Mobbin 20%-off affiliate link in several descriptions. In one video he says Mobbin is "not paying me".

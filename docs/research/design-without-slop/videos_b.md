@@ -1,5 +1,8 @@
 # What eight UI Collective videos teach about designing with Claude
 
+**Contents:** [Q0. Per-video breakdown: what each video teaches](#q0-per-video-breakdown-what-each-video-teaches) · [Q1. What files or systems do they set up before designing?](#q1-what-files-or-systems-do-they-set-up-before-designing) · [Q2. How do they avoid generic "AI slop"?](#q2-how-do-they-avoid-generic-ai-slop) · [Q3. How do they review and iterate?](#q3-how-do-they-review-and-iterate) · [Q4. Which tools and skills are named, and is there evidence they help?](#q4-which-tools-and-skills-are-named-and-is-there-evidence-they-help) · [Q5. Cross-video: repeated practices, contradictions, and fit for a data-dense app vs a landing page](#q5-cross-video-repeated-practices-contradictions-and-fit-for-a-data-dense-app-vs-a-landing-page)
+
+
 Scope: eight transcripts in `~/.claude/yt-transcripts/` (YouTube machine captions, read in full). Mishearings fixed: "quad/claw code" = Claude Code, "claw design" = Claude Design, "Mobin" = Mobbin (spelling confirmed by the video descriptions), "Wick/WIKG" = WCAG, "Verscell" = Vercel, "Codeex" = Codex, "Grock" = Grok, "Figma UI skill" = the `figma-use` skill.
 
 Source caveats that apply to everything below:

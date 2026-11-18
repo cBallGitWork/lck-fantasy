@@ -1,5 +1,8 @@
 # Riot and LoL Esports core visual identity: what is shared, what each region overrides
 
+**Contents:** [1. How Riot layers its brands: umbrella, event, region](#1-how-riot-layers-its-brands-umbrella-event-region) · [2. What each region overrides](#2-what-each-region-overrides) · [3. The visual language players read instantly as "League"](#3-the-visual-language-players-read-instantly-as-league) · [4. What is protected: Riot's "Legal Jibber Jabber" policy](#4-what-is-protected-riots-legal-jibber-jabber-policy) · [Checked](#checked)
+
+
 Read 18 Nov 2026. Extends, does not repeat, `docs/research/lck-visual-research.md` (section 2 already holds: Pentagram's 2019 LoL logo, Beaufort for LOL and Spiegel, RixSGo for Hangul, lolesports.com on Inter + Noto Sans KR, the client's hextech palette with hex values, the role-icon geometry, blue-left/red-right and the gold graph). Those are cited there and only referred to here. Blocked this session (403): designweek.co.uk, sheepesports.com (New Dawn article), liquipedia.net.
 
 ## 1. How Riot layers its brands: umbrella, event, region

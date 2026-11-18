@@ -1,5 +1,8 @@
 # Craig's five bookmarked design sites, judged for an anti-slop design template
 
+**Contents:** [1. Oversight Supply: Sections (supply.madebyoversight.com/sections)](#1-oversight-supply-sections-supplymadebyoversightcomsections) · [2. GradientDeck UI (ui.gradientdeck.com)](#2-gradientdeck-ui-uigradientdeckcom) · [3. Subframe Motion (www.subframe.com/motion)](#3-subframe-motion-wwwsubframecommotion) · [4. Shipframe (getshipframe.com)](#4-shipframe-getshipframecom) · [5. Impeccable by Paul Bakaus (impeccable.style)](#5-impeccable-by-paul-bakaus-impeccablestyle) · [Overall ranking for the anti-slop template](#overall-ranking-for-the-anti-slop-template)
+
+
 Context for the reader: the team wants a reusable template that stops Claude producing generic "AI slop" UI, for a data-dense product app (Flol, a fantasy LCK game: desktop first, mobile a priority, maybe native later). Pages were read on 18 Nov 2026 by fetch only; nothing was signed up for, bought or submitted.
 
 ## 1. Oversight Supply: Sections (supply.madebyoversight.com/sections)

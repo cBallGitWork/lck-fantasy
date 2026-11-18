@@ -1,5 +1,8 @@
 # One core design, a brand layer per region: how others do it, and what it means for Flol
 
+**Contents:** [1. How do sports and esports run one product across several competitions?](#1-how-do-sports-and-esports-run-one-product-across-several-competitions) · [2. What belongs in the core and what in the brand layer?](#2-what-belongs-in-the-core-and-what-in-the-brand-layer) · [3. How many tokens typically change per brand?](#3-how-many-tokens-typically-change-per-brand) · [4. Token tooling for brands and modes](#4-token-tooling-for-brands-and-modes) · [5. How do teams stop brands drifting the core?](#5-how-do-teams-stop-brands-drifting-the-core) · [6. What is protected: brand-layer limits from Riot and the leagues](#6-what-is-protected-brand-layer-limits-from-riot-and-the-leagues) · [Checked](#checked)
+
+
 Scope: how products run one shared design with a per-competition or per-region brand on top, so
 Flol can run the LCK and the LEC (and later regions) from one system. Covers sports and esports
 precedents, token tooling, and design-system practice.

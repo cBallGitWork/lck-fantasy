@@ -4,7 +4,7 @@ import { useId, useState, type ReactNode } from "react";
 import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf, plural } from "../../parts";
 import { leagueGo } from "../../paths";
 import { capReason } from "./forms";
-import type { PrivateLeague, ScoringWeek, ScoringWeeks } from "./types";
+import type { PrivateLeague, ScoringWeeks } from "./types";
 import { deleteLine, deleteTitle, leaveTitle, nameCount, privateCountLine, scoringFrom, weekStarts, WORDS } from "./words";
 import "./Sheets.css";
 
@@ -27,8 +27,6 @@ interface PrivateCount {
 }
 
 const CountLine = ({ count, cap }: PrivateCount) => <p className="leagues__count quiet">{privateCountLine(count, cap)}</p>;
-
-const weekLabel = ({ week, starts }: ScoringWeek) => weekStarts(week, starts);
 
 /** Create a league: its name, and the week scoring starts, this week by default (create.html). */
 export function CreateSheet({
@@ -60,7 +58,7 @@ export function CreateSheet({
         <select id={weekId} className="leagues__select" value={week} onChange={(e) => setWeek(Number(e.target.value))}>
           {weeks.map((w) => (
             <option key={w.week} value={w.week}>
-              {weekLabel(w)}
+              {weekStarts(w.week, w.starts)}
             </option>
           ))}
         </select>

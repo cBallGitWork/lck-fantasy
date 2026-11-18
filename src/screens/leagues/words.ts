@@ -53,8 +53,10 @@ export const WORDS = {
   deleteKey: "Delete league",
 } as const;
 
+const dot = " · ";
+
 /** `2027 · Split 1`: Overall's season, and the split on a split's tab. */
-export const seasonSplit = (season: string, split: string) => `${season} · ${split}`;
+export const seasonSplit = (season: string, split: string) => season + dot + split;
 
 /** `of 212,480`: a general league's size under your rank. */
 export const ofSize = (size: string) => `of ${size}`;
@@ -63,13 +65,13 @@ export const ofSize = (size: string) => `of ${size}`;
 export const weekHead = (n: number) => `Week ${n}`;
 
 /** `Scoring from Week 3`: a private league's first week. */
-export const scoringFrom = (week: number) => `Scoring from Week ${week}`;
+export const scoringFrom = (week: number) => `Scoring from ${weekHead(week)}`;
 
 /** `12 managers · scoring from Week 1`: the Delete sheet's line. */
-export const deleteLine = (managers: string, week: number) => `${managers} · scoring from Week ${week}`;
+export const deleteLine = (managers: string, week: number) => `${managers}${dot}scoring from ${weekHead(week)}`;
 
 /** `Week 3 · Wed 13 Jan`: a week scoring can start from, and its first day. */
-export const weekStarts = (week: number, starts: string) => `Week ${week} · ${starts}`;
+export const weekStarts = (week: number, starts: string) => weekHead(week) + dot + starts;
 
 /** `11 / 30`: the name's length of the most it takes. */
 export const nameCount = (length: number, max: number) => `${length} / ${max}`;

@@ -1,5 +1,5 @@
 // Leagues stored (spec/08): the three every manager joins, and private leagues made, joined, renamed,
-// left and deleted. Internal until sign-in arrives (#42): the signed-in manager's entry is passed in.
+// left and deleted. Internal until Convex Auth is wired: the signed-in manager's entry is passed in.
 // The cap and size settings are the competition's data, passed in, as the rules take them.
 import { ConvexError, v } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
@@ -32,13 +32,16 @@ const refuse = (refusal: LeagueRefusal) => new ConvexError(refusal);
 /** A new entry joins Overall, its country's league and its favourite team's (spec/08). */
 export const enterAutoLeagues = internalMutation({
   args: { entry: v.id("entries") },
-  handler: async (ctx, { entry }) => {
-    const manager = await managerOf(ctx, entry);
-    for (const auto of autoLeagues({ country: manager.country, favouriteTeamId: manager.favouriteTeam })) {
-      await join(ctx, await autoLeague(ctx, auto), entry);
-    }
-  },
+  handler: (ctx, { entry }) => joinAutoLeagues(ctx, entry),
 });
+
+/** `enterAutoLeagues` inside another mutation: sign-up's (convex/signIn). */
+export async function joinAutoLeagues(ctx: MutationCtx, entry: Id<"entries">) {
+  const manager = await managerOf(ctx, entry);
+  for (const auto of autoLeagues({ country: manager.country, favouriteTeamId: manager.favouriteTeam })) {
+    await join(ctx, await autoLeague(ctx, auto), entry);
+  }
+}
 
 /** The favourite team, and with it the team league, until the deadline of the entry's first
  *  gameweek, in ms since the epoch (spec/08). */

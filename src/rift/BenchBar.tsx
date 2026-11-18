@@ -29,11 +29,17 @@ export function BenchTile({
   state,
   selected,
   onSelect,
+  ...tile
 }: {
   order: number;
-  role: PersonRole;
+  /** None for an empty bench slot (front door): `1.` alone. */
+  role?: PersonRole;
   name: string;
   team: string;
+  /** His price chip and `×` (front door), or an empty slot. */
+  price?: ReactNode;
+  sell?: boolean;
+  empty?: boolean;
   /** Under his points, such as `Didn't play`. */
   detail?: string;
   /** The week's fixtures. */
@@ -48,9 +54,10 @@ export function BenchTile({
   return (
     <div className="bench-slot">
       <span className="bench-slot__role quiet">
-        {order}. {ROLE_NAME[role]}
+        {order}.{role && ` ${ROLE_NAME[role]}`}
       </span>
       <Tile
+        {...tile}
         slot={role}
         name={name}
         team={team}

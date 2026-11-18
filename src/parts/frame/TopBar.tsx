@@ -9,9 +9,15 @@ const TOP_BAR_ITEMS = ["home", "pickTeam", "transfers", "points", "leagues", "st
 
 export type TopBarItem = (typeof TOP_BAR_ITEMS)[number];
 
+/** A visitor's items: only what needs no team (front door picture, Craig 17 Nov 2026). */
+const VISITOR_ITEMS: readonly TopBarItem[] = ["stats", "lckHub"];
+
+/** The link a visitor with an account takes (spec/09, Signing in again). */
+export const LOG_IN = "Log in ›";
+
 /**
  * The same on every screen: Flol, the eight items (Live's dot always shown), `presented by` the
- * sponsor, then the account menu, or `Sign in` for a visitor (`account` null).
+ * sponsor, then the account menu. A visitor (`account` null) gets Stats and LCK, then `Log in ›`.
  */
 export function TopBar({
   active,
@@ -28,7 +34,7 @@ export function TopBar({
       <GoLink className="top-bar__word" go={{ to: PATHS.home }}>
         {PRODUCT}
       </GoLink>
-      {TOP_BAR_ITEMS.map((key) => (
+      {(account === null ? VISITOR_ITEMS : TOP_BAR_ITEMS).map((key) => (
         <GoLink
           key={key}
           go={{ to: PATHS[key] }}
@@ -44,7 +50,7 @@ export function TopBar({
       </span>
       {account === null ? (
         <GoLink className="top-bar__me" go={{ to: PATHS.pickTeam }}>
-          Sign in
+          {LOG_IN}
         </GoLink>
       ) : accountMenu ? (
         <Menu label={`${account} ▾`} items={accountMenu} className="top-bar__me" />

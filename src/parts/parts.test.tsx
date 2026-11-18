@@ -39,11 +39,14 @@ describe("top bar", () => {
     expect(out).toBe("FlolHomePick TeamTransfersPointsLeaguesStatsLCKLivepresented by SponsorBaron Steal FC ▾");
   });
 
-  test("marks the active item and offers Sign in to a visitor", () => {
-    const out = html(<TopBar active="leagues" account={null} />);
+  test("marks the active item", () => {
+    const out = html(<TopBar active="leagues" account={MANAGER.team} />);
     expect(out).toMatch(/aria-current="page"[^>]*>Leagues/);
     expect(out).toContain('href="/leagues"');
-    expect(out).toContain(">Sign in<");
+  });
+
+  test("a visitor's bar: Stats and LCK, then Log in (front door picture)", () => {
+    expect(text(<TopBar account={null} />)).toBe("FlolStatsLCKpresented by SponsorLog in ›");
   });
 
   test("opens the account menu when it has items", () => {

@@ -1,0 +1,208 @@
+/* The front door (docs/design/approved/front-door/), drawn in the Transfers frame. Every value is a token. */
+
+/* The head's figures: Picked, Bank, Team cap; the bank red below zero. */
+.pick-team-signed-out__figures {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+.pick-team-signed-out__figure {
+  display: flex;
+  flex-direction: column;
+  min-width: calc(var(--s-7) * 3);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  border-top: var(--m-rule-heavy) solid var(--text);
+}
+.pick-team-signed-out__figure b {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  color: var(--text);
+  white-space: nowrap;
+}
+.pick-team-signed-out__figure--over b {
+  color: var(--over);
+}
+
+/* The view toggle, then Reset and Auto-fill. */
+.pick-team-signed-out__controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s-3);
+}
+.pick-team-signed-out__keys {
+  display: flex;
+  gap: var(--s-2);
+}
+
+/* The bar under the bench: what's left, then Save team. */
+.pick-team-signed-out__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-4);
+  margin-top: var(--s-4);
+  padding: var(--s-2) var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}
+
+/* List view: the nine by slot. */
+.pick-team-signed-out__squad {
+  width: 100%;
+  background: var(--paper);
+}
+.pick-team-signed-out__squad td {
+  height: var(--m-row);
+  padding: var(--s-1) var(--s-2);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+
+.pick-team-signed-out__chip,
+.pick-team-signed-out__add {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* The list's filters: role chips, then search, sort and team. */
+.pick-team-signed-out__roles,
+.pick-team-signed-out__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-1);
+  margin-bottom: var(--s-2);
+  font-size: var(--size-small);
+}
+.pick-team-signed-out__chip,
+.pick-team-signed-out__search,
+.pick-team-signed-out__tool {
+  padding: var(--s-1) var(--s-2);
+  background: var(--paper);
+  font-size: var(--size-small);
+}
+.pick-team-signed-out__tool {
+  border: var(--m-rule) solid var(--line);
+}
+.pick-team-signed-out__chip--on {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.pick-team-signed-out__search {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+}
+.pick-team-signed-out__search::placeholder,
+.pick-team-signed-out__tool {
+  color: var(--mid);
+  white-space: nowrap;
+}
+
+/* The player list. */
+.pick-team-signed-out__list {
+  background: var(--paper);
+}
+.pick-team-signed-out__list th {
+  padding: var(--s-1);
+}
+.pick-team-signed-out__list td {
+  height: var(--m-row);
+  padding: var(--s-1);
+  border-bottom: var(--m-rule) solid var(--fill);
+}
+.pick-team-signed-out__num {
+  text-align: right;
+  white-space: nowrap;
+}
+.pick-team-signed-out__list svg {
+  width: var(--size-small);
+  height: var(--size-small);
+}
+.pick-team-signed-out__name {
+  max-width: calc(var(--s-7) * 2 + var(--s-4));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pick-team-signed-out__name b {
+  font-weight: var(--w-bold);
+}
+.pick-team-signed-out__next {
+  font-size: var(--size-small);
+  line-height: var(--lh-mid);
+  white-space: nowrap;
+}
+.pick-team-signed-out__add {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-target);
+  height: var(--m-target);
+  border: var(--m-rule) solid var(--text);
+  font-weight: var(--w-bold);
+}
+
+/* The sign-up sheets. */
+.pick-team-signed-out__step {
+  position: absolute;
+  top: var(--s-5);
+  right: var(--s-7);
+}
+.pick-team-signed-out__lead {
+  margin-bottom: var(--s-4);
+  color: var(--mid);
+}
+.pick-team-signed-out__providers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+}
+.pick-team-signed-out__warn {
+  margin-top: var(--s-4);
+}
+.pick-team-signed-out__go {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  margin-right: var(--s-4);
+  color: var(--text);
+}
+.pick-team-signed-out__two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-4);
+}
+.pick-team-signed-out__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  color: var(--mid);
+}
+.pick-team-signed-out__sub {
+  margin-top: var(--s-2);
+}
+.pick-team-signed-out__tick {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+}
+.pick-team-signed-out__tick-box {
+  width: var(--m-mark);
+  height: var(--m-mark);
+  flex: none;
+  accent-color: var(--text);
+}
+.pick-team-signed-out__underlined {
+  text-decoration: underline;
+  text-underline-offset: var(--s-1);
+}

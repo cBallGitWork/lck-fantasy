@@ -2,6 +2,9 @@
 // League and Home's feed show the same three, and Following and the Pub League five more. Names and
 // teams are examples.
 
+/** The countries a manager may pick, in Settings and at sign-up, until the backend gives the full list. */
+export const COUNTRIES = ["United Kingdom", "South Korea", "United States", "France", "Germany", "Vietnam"];
+
 export interface MadeUpManager {
   id: string;
   name: string;

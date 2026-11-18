@@ -11,6 +11,8 @@ const KEY: Record<string, string> = {
   "pick-team/pick": "Rift view",
   "pick-team/cards": 'class="lineup"',
   "pick-team/swap": "On · unsaved",
+  "front-door/front": "9 to pick",
+  "front-door/part": "5 to pick",
   "transfers/transfers": "Review and confirm",
   "transfers/confirm": "Confirm your transfers",
   "points/points": "Zeus",

@@ -20,15 +20,22 @@ async function world() {
     await ctx.db.insert("teams", { name: "T1", oeId: "oe-t1" }),
     await ctx.db.insert("teams", { name: "Gen.G", oeId: "oe-gen" }),
   ]);
+  await t.mutation(internal.lck.season.loadSeason, {});
   return { t, t1, gen };
 }
 
+/** A manager and their entry, in no league yet. */
+const newEntry = (t: T, teamName: string, country: string, favouriteTeam: Id<"teams">) =>
+  t.run(async (ctx) => {
+    const season = (await ctx.db.query("seasons").first())!._id;
+    const agreed = { at: 0, version: "test" };
+    const manager = await ctx.db.insert("managers", { account: `account-${teamName}`, country, favouriteTeam, agreed });
+    return ctx.db.insert("entries", { manager, season, teamName, firstGameweek: 1, bank: 0 });
+  });
+
 /** A signed-up manager's entry, entered into its three leagues. */
 async function entryOf(t: T, teamName: string, country: string, favouriteTeam: Id<"teams">) {
-  const entry = await t.run(async (ctx) => {
-    const manager = await ctx.db.insert("managers", { country, favouriteTeam });
-    return ctx.db.insert("entries", { manager, teamName });
-  });
+  const entry = await newEntry(t, teamName, country, favouriteTeam);
   await t.mutation(store.enterAutoLeagues, { entry });
   return entry;
 }
@@ -68,10 +75,7 @@ describe("leagues every manager joins", () => {
 
   test("an entry never entered into its leagues is a broken row: the change says so and changes nothing", async () => {
     const { t, t1, gen } = await world();
-    const entry = await t.run(async (ctx) => {
-      const manager = await ctx.db.insert("managers", { country: "GB", favouriteTeam: t1 });
-      return ctx.db.insert("entries", { manager, teamName: "Faker Fan" });
-    });
+    const entry = await newEntry(t, "Faker Fan", "GB", t1);
     await expect(t.mutation(store.changeFavouriteTeam, { entry, team: gen, firstDeadline: Date.now() + HOUR })).rejects.toThrow(
       "isn't in its favourite team's league",
     );

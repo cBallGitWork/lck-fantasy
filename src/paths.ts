@@ -5,6 +5,8 @@ import { REGION } from "./region";
 export const PATHS = {
   home: "/",
   pickTeam: "/pick-team",
+  /** The front door: a visitor picks a squad, then signs up on Save team (spec/09), as UCL Fantasy's /create-team. */
+  createTeam: "/create-team",
   transfers: "/transfers",
   points: "/points",
   /** Points for one week, so a week can be linked: `/points/2`. */
@@ -39,6 +41,7 @@ export type ScreenKey = keyof typeof PATHS;
 export const SCREEN_NAME: Record<ScreenKey, string> = {
   home: "Home",
   pickTeam: "Pick Team",
+  createTeam: "Pick your squad",
   transfers: "Transfers",
   points: "Points",
   pointsWeek: "Points",

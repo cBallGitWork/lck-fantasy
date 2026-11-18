@@ -57,6 +57,10 @@ export const DEV_STATES: readonly DevState[] = [
     { state: "cards", go: { to: PATHS.pickTeam }, param: true },
     { state: "swap", go: { to: PATHS.pickTeam }, param: true },
   ]),
+  ...page("front-door", [
+    { state: "front", go: { to: PATHS.createTeam } },
+    { state: "part", go: { to: PATHS.createTeam }, param: true },
+  ]),
   ...page("transfers", [
     { state: "transfers", go: { to: PATHS.transfers } },
     { state: "confirm", go: { to: PATHS.transfers }, param: true },

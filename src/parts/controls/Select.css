@@ -1,0 +1,9 @@
+.select {
+  width: 100%;
+  height: var(--m-row);
+  padding: 0 var(--s-3);
+  font: inherit;
+  color: var(--text);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--text);
+}

@@ -1,9 +1,11 @@
 // A competition's season as data (docs/data-model.md, The real world and Gameweeks): its settings,
 // splits, gameweeks and prices, loaded from its region's data/<region>/. A load run again updates each row in place.
 import { v, type Infer } from "convex/values";
-import type { Id } from "../_generated/dataModel";
-import { internalMutation, internalQuery, type MutationCtx } from "../_generated/server";
+import type { Doc, Id } from "../_generated/dataModel";
+import { internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { competitionFields, gameweekState, pricedPick, seasonSettings, split } from "../schema";
+import type { Prices } from "../squads/budget";
+import { pickKey, type Pick } from "../squads/squad";
 import season2027 from "../../data/lck/season-2027.json";
 
 /** A season file in data/<region>/, such as data/lck/season-2027.json. */
@@ -40,13 +42,9 @@ export const loadSeason = internalMutation({
 export const seasonOf = internalQuery({
   args: { competition: v.string(), year: v.number() },
   handler: async (ctx, args) => {
-    const competition = await ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", args.competition)).unique();
-    if (competition === null) return null;
-    const season = await ctx.db
-      .query("seasons")
-      .withIndex("by_competition", (q) => q.eq("competition", competition._id).eq("year", args.year))
-      .unique();
-    if (season === null) return null;
+    const found = await findSeason(ctx, args.competition, args.year);
+    if (found === null) return null;
+    const { competition, season } = found;
     const gameweeks = await ctx.db.query("gameweeks").withIndex("by_season", (q) => q.eq("season", season._id)).collect();
     const prices = await ctx.db.query("prices").withIndex("by_season", (q) => q.eq("season", season._id)).collect();
     return {
@@ -60,6 +58,17 @@ export const seasonOf = internalQuery({
     };
   },
 });
+
+/** A competition's season by name and year; null before it is loaded. */
+export async function findSeason(ctx: QueryCtx, name: string, year: number): Promise<{ competition: Doc<"competitions">; season: Doc<"seasons"> } | null> {
+  const competition = await ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", name)).unique();
+  if (competition === null) return null;
+  const season = await ctx.db
+    .query("seasons")
+    .withIndex("by_competition", (q) => q.eq("competition", competition._id).eq("year", year))
+    .unique();
+  return season === null ? null : { competition, season };
+}
 
 async function upsertCompetition(ctx: MutationCtx, competition: SeasonFile["competition"]): Promise<Id<"competitions">> {
   const existing = await ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", competition.name)).unique();
@@ -111,8 +120,29 @@ async function upsertPrices(ctx: MutationCtx, season: Id<"seasons">, prices: Sea
   }
 }
 
+type PricedPick = { team: string; role: Pick["role"]; handle?: string };
+
+/** A price row's pick as a squad holds it: a player by handle, a coach by its team's code (spec/01). */
+export const pickOfPrice = ({ team, role, handle }: PricedPick): Pick => ({ id: handle ?? team, teamId: team, role });
+
+/** A squad's pick as a price row names it: the reverse of `pickOfPrice`. */
+export const pricedPickOf = (pick: Pick): PricedPick =>
+  pick.role === "coach" ? { team: pick.teamId, role: pick.role } : { team: pick.teamId, role: pick.role, handle: pick.id };
+
+/** Each pick's price in won for `gameweek`: its row from the latest gameweek up to it. */
+export function pricesFor(rows: readonly (PricedPick & { fromGameweek: number; won: number })[], gameweek: number): Prices {
+  const latest = new Map<string, { fromGameweek: number; won: number }>();
+  for (const row of rows) {
+    if (row.fromGameweek > gameweek) continue;
+    const key = pickKey(pickOfPrice(row));
+    const held = latest.get(key);
+    if (held === undefined || row.fromGameweek > held.fromGameweek) latest.set(key, row);
+  }
+  return new Map([...latest].map(([key, row]) => [key, row.won]));
+}
+
 /** A price row's pick, apart from every other in its season and gameweek. */
-const pricedPickKey = (pick: { team: string; role: string; handle?: string }) => `${pick.team}:${pick.role}:${pick.handle ?? ""}`;
+const pricedPickKey = (pick: PricedPick) => `${pick.team}:${pick.role}:${pick.handle ?? ""}`;
 
 /** An ISO 8601 time with its zone as ms since the epoch; throws on one that isn't. */
 function utcMs(iso: string): number {

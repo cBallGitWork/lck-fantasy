@@ -111,7 +111,7 @@ function refusal(squad: SquadPlayer[], plan: Plan, slot: SquadSlot, player: List
   return missing.length > stillOpen ? roleEmpty(ROLE_NAME[missing[0]!]) : undefined;
 }
 
-/** `Remove a player first`, `Remove your coach first`: no empty slot he fits. */
+/** No empty slot he fits: remove a player, or the coach, first. */
 const noRoom = (role: PersonRole) => (role === "coach" ? WORDS.removeCoach : WORDS.removePlayer);
 
 /**

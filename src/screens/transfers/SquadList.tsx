@@ -3,7 +3,7 @@ import { cx, formatWon, oneDecimal } from "../../parts";
 import { ROLE_NAME, Shirt, type PersonRole, type SquadSlot } from "../../rift";
 import type { SlotHolder } from "./lineup";
 import { nextAgainst, type Fixture } from "./plan";
-import { keyFor, weekShort, WORDS } from "./words";
+import { keyFor, weekHead, WORDS } from "./words";
 import "./SquadList.css";
 
 /**
@@ -31,7 +31,7 @@ export function SquadList({
         <tr>
           <th aria-label={WORDS.shirt} />
           <th>{WORDS.player}</th>
-          <th className="transfers__num">{weekShort(lastWeek)}</th>
+          <th className="transfers__num">{weekHead(lastWeek)}</th>
           <th className="transfers__num">{WORDS.price}</th>
           <th className="transfers__num">{WORDS.form}</th>
           <th className="transfers__num">{WORDS.total}</th>

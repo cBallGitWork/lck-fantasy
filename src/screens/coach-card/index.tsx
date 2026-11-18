@@ -7,6 +7,7 @@ import { CoachCard } from "./CoachCard";
 import "./coach-card.css";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
 import type { CoachCardData, CoachFrom, CoachTab } from "./types";
+import { cardTitle } from "./words";
 
 /** The tab each opening starts on, as the picture draws it: History from Pick Team, This week from Points. */
 export const FIRST_TAB: Record<CoachFrom, CoachTab> = { pickTeam: "History", points: "This week" };
@@ -34,7 +35,7 @@ export function CoachCardPage({
   const [tab, setTab] = useState<CoachTab>(initialTab);
   return (
     <PageFrame screen="coach-card" active={from} account={MANAGER.team}>
-      <Modal kind="card" title={`${data.head.name}, coach`} onClose={onClose}>
+      <Modal kind="card" title={cardTitle(data.head.name)} onClose={onClose}>
         <CoachCard data={data} from={from} tab={tab} onTab={setTab} onTransferOut={onTransferOut} />
       </Modal>
     </PageFrame>

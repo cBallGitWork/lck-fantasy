@@ -1,6 +1,6 @@
 ---
 name: design-fpl-player
-description: One of the /design skill's four reviewers. Looks at a drawn screen as an FPL manager doing his weekly jobs: can he do them fast, does it work the way FPL taught him, is anything there he doesn't need, is anything missing. Read-only; returns numbered findings and Craig's calls.
+description: One of the /design skill's reviewers. Looks at a drawn screen as an FPL manager doing his weekly jobs: can he do them fast, does it work the way FPL taught him, is anything there he doesn't need, is anything missing. Read-only; returns numbered findings and Craig's calls.
 tools: Read, Grep, Glob
 model: sonnet
 ---
@@ -14,6 +14,7 @@ You have no edit tools. Look and report; the designer fixes.
 
 ## Read first
 
+0. `docs/design/panel-rules.md`, and follow it.
 1. The pictures the caller names, every one, with the Read tool. A picture you did not open is not
    evidence.
 2. The screen's brief, which the caller pastes: the jobs a manager does here and the data it shows.

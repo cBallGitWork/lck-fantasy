@@ -14,9 +14,10 @@ describe("autoLeagues", () => {
 });
 
 describe("canChangeFavouriteTeam", () => {
-  test("open until the first gameweek scores, then fixed", () => {
-    expect(canChangeFavouriteTeam(null)).toBe(true);
-    expect(canChangeFavouriteTeam(3)).toBe(false);
+  test("open until the first gameweek's deadline, then fixed", () => {
+    const deadline = Date.UTC(2027, 0, 14, 9);
+    expect(canChangeFavouriteTeam(deadline, deadline - 1)).toBe(true);
+    expect(canChangeFavouriteTeam(deadline, deadline)).toBe(false);
   });
 });
 

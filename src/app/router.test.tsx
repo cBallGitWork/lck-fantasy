@@ -13,6 +13,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   pointsWeek: [{ to: PATHS.pointsWeek, params: { week: "2" } }, "points"],
   leagues: [{ to: PATHS.leagues }, "leagues"],
   league: [{ to: PATHS.league, params: { leagueId: "pub-league" } }, "leagues"],
+  leagueJoin: [{ to: PATHS.leagueJoin, params: { code: "GANK-4TQ1" } }, "leagues"],
   stats: [{ to: PATHS.stats }, "stats"],
   live: [{ to: PATHS.live }, "live"],
   series: [{ to: PATHS.series, params: { seriesId: "w3-sat-2" } }, "series"],

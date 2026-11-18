@@ -138,6 +138,13 @@ describe("the page", () => {
     expect(await htmlAt("/leagues/overall")).toContain("Unkillable FC");
   });
 
+  test("spec/08: a league's link opens Join a league with its code in, and joins nobody until Join is pressed", async () => {
+    const out = await htmlAt("/leagues/join/gank-4tq1");
+    expectInOrder(plain(out), ["Join a league", "Code or link", "Back", "Join"]);
+    expect(out).toContain('value="GANK-4TQ1"');
+    expect(plain(out)).not.toContain("Gank Squad");
+  });
+
   test("a row opens that manager's team", async () => {
     expect(await htmlAt("/leagues")).toContain('href="/manager/tom-reid"');
   });

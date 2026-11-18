@@ -21,8 +21,8 @@ export const WORDS = {
   week: "Week",
   total: "Total",
   weekRank: "Week rank",
-  overall: "Overall",
-  move: "Move",
+  overall: "Overall rank",
+  move: "Rank move",
   transfers: "Transfers",
   cost: "Cost",
   bank: "Bank",
@@ -41,8 +41,8 @@ export const dot = " · ";
 /** `Week 3`: the week's head on Points and Transfers, and a History row. */
 export const weekNo = (week: number) => `${WORDS.week} ${week}`;
 
-/** `Week 3's team`: what loads while her team is on its way. */
-export const weekTeam = (week: number) => `${weekNo(week)}'s team`;
+/** `Loading Week 3's team`: what a reader hears while her team is on its way. */
+export const weekTeam = (week: number) => `Loading ${weekNo(week)}'s team`;
 
 /** `Cheers and jeers · Week 3`: the side's head on Points. */
 export const cheersWeek = (cheers: string, week: number) => `${cheers}${dot}${weekNo(week)}`;

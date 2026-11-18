@@ -43,6 +43,8 @@ Claude's drafts and their sources are in
 
 ## Open from the foundations work (11 Nov 2026)
 
+- The team's name on its shirt, so a 28px shirt says whose it is, such as the code on the hem or
+  collar (Craig, 17 Nov 2026). Redraws all ten: for the shirts' design round after the reskin.
 - The screens and the look ([docs/design/](design/)). Shirts and player photos are settled in [spec/13](../spec/13-korean-touches.md#shirts-and-crests).
 
 ## Pages, built on made-up data (15 Nov 2026)

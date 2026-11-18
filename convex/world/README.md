@@ -1,6 +1,6 @@
 # convex/world
 
-The real world, for every region: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. A region's facts are its data folder, `data/<region>/`, never code here (spec/15).
+The real world, for every region: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. A region's facts are its data folder, `data/<region>/`, never code here (#374).
 
 - `season.ts`: a competition's season from its `data/<region>/` file (its settings, splits, gameweeks and prices), loaded again in place, and read back (`loadSeason`, `seasonOf`).
 - `series.ts`: games grouped into series, and when a series turns final (spec/11, Final).

@@ -1,6 +1,6 @@
 # data
 
-Seed data held per region, competition and season: teams, kit colours, stages. Data, never constants in code. Each region is one folder, `data/<region>/`, such as `data/lck/`; a new region is a new folder, not new code (spec/15).
+Seed data held per region, competition and season: teams, kit colours, stages. Data, never constants in code. Each region is one folder, `data/<region>/`, such as `data/lck/`; a new region is a new folder, not new code (#374).
 
 - `lck/crests/<code>.svg`: each LCK team's crest, by team code (docs/design/approved/crests/). `src/parts/display/Crest.tsx` draws them.
 - `lck/photos/<year>/split-<n>/<handle>.<jpg|png|webp>`: each player's LCK media-day portrait for the split, saved from the LCK's Flickr and served by Flol, never hotlinked (spec/13). None yet: the 2027 media days aren't shot, so cards show the crest. `src/fixtures/photos.ts` reads them.

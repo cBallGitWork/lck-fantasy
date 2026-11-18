@@ -6,6 +6,7 @@ import { flexPlays, Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
 import "./perfect-game.css";
 import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectView, type Selection } from "./types";
+import { WORDS } from "./words";
 
 /** Rift view: the seven on the Rift, each with his points and series, C on the Captain. */
 export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGameData } & Selection) {
@@ -86,25 +87,25 @@ export function PerfectGame({
           <SideSection title={game.seriesTitle}>
             <SeriesList series={game.series} />
           </SideSection>
-          <Placeholder word="Sponsor" height="sponsorH" />
+          <Placeholder word={WORDS.sponsor} height="sponsorH" />
           <SponsorNote />
         </>
       }
     >
       <PageHead
-        title="Perfect game"
-        hangul="퍼펙트 게임"
+        title={WORDS.title}
+        hangul={WORDS.hangul}
         week={{ label: game.week, ...weekNav }}
         figure={total}
         tags={<FinalTag final={game.final} />}
         figures={[
-          { label: "Average", value: game.average },
-          { label: "Highest", value: game.highest },
-          { label: "Your points", value: game.yours, go: { to: PATHS.points } },
+          { label: WORDS.average, value: game.average },
+          { label: WORDS.highest, value: game.highest },
+          { label: WORDS.yours, value: game.yours, go: { to: PATHS.points } },
         ]}
       />
       <div className="perfect-game__toggle">
-        <ViewToggle options={VIEWS} chosen={view} onChoose={onView} label="View" />
+        <ViewToggle options={VIEWS} chosen={view} onChoose={onView} label={WORDS.view} />
       </div>
       {view === RIFT_VIEW ? <PerfectGameRift {...viewProps} /> : <PerfectGameCards {...viewProps} />}
     </PageFrame>

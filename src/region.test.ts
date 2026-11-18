@@ -4,7 +4,7 @@ import { SEASON } from "./fixtures/competition";
 import { PATHS, SCREEN_NAME } from "./paths";
 import { REGION, regionOf } from "./region";
 
-describe("the region's names come from its data (spec/15)", () => {
+describe("the region's names come from its data (#374)", () => {
   test("the hub's name, address and the season label are the LCK's season file's", () => {
     expect([SCREEN_NAME.hub, PATHS.hub, SEASON]).toEqual([season.competition.name, `/${season.competition.name.toLowerCase()}`, `${season.competition.name} ${season.year}`]);
     expect(REGION).toEqual({ name: "LCK", hub: "/lck", season: "LCK 2027" });

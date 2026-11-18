@@ -27,7 +27,7 @@ export const PATHS = {
   /** One week's new prices, so a week can be linked: `/price-changes/4`. */
   priceChangesWeek: "/price-changes/$week",
   settings: "/settings",
-  /** The region's hub at the region's own address: `/lck` (spec/15). */
+  /** The region's hub at the region's own address: `/lck` (#374). */
   hub: REGION.hub,
   playerCard: "/player/$playerId",
   coachCard: "/coach/$coachId",

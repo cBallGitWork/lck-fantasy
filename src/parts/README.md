@@ -39,8 +39,8 @@ Keys, links, tabs, sheets and fields.
 What shows a fact: tags, tables, lists, crests, states.
 
 - `Tag.tsx`: a tag: plain, `Live` filled, `Not final` dashed; `LiveTag`, `NotFinalTag` and `FinalTag` (Final or Not final) say the states one way everywhere.
-- `Deadline.tsx`: `Deadline Wed 07:45  16:45 KST` and the countdown.
-- `Time.tsx`: your time, then KST in mid grey; the words over such times (`YOUR_TIME`, `TIME_NOTE`).
+- `Deadline.tsx`: `Deadline Wed 07:45  16:45` and the league's zone, and the countdown.
+- `Time.tsx`: your time, then the league's in mid grey, its zone named from its data (`src/region.ts`); the words over such times (`YOUR_TIME`, `TIME_NOTE`).
 - `MeDot.tsx`: your player's dot.
 - `Hint.tsx`: a word's hover (spec/12, Words): one short line on hover, or on tap on the phone; the words-alone lines (`HINTS`) and C's (`captainHint`).
 - `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a rule above a row starting a group (`ruleAbove`), a row's `›` (`open`); sticky head and name column for the wide table.
@@ -59,7 +59,7 @@ What shows a fact: tags, tables, lists, crests, states.
 
 How figures and money are written.
 
-- `money.ts`: money as ₩ and m (spec/02): `formatWon` for an amount in won, `money` for a price held in m, `mToWon` between them.
+- `money.ts`: money as the league's sign and m (spec/02), the sign from its data (`src/region.ts`): `formatWon` for an amount in won, `money` for a price held in m, `mToWon` between them.
 - `figures.ts`: counts, places (`2nd`, `2nd of 10 mids`), signed points, `+in / −out`, scores (`2–1`, `W 2–1`, `seriesResult` for a week's series), per-game and one-decimal figures, per cents, `Bo3`, a game (`G2`), a series' title (`Wed · v HLE`) and absence (`—`), written one way everywhere.
 
 ## util/

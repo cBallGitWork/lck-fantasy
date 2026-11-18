@@ -50,7 +50,7 @@ function CountdownFigure({ countdown }: { countdown: Countdown }) {
   );
 }
 
-/** The full-width deadline bar: the countdown, your time and KST; on the side column's line, Pick Team, Transfers, free transfers. */
+/** The full-width deadline bar: the countdown, your time and the league's; on the side column's line, Pick Team, Transfers, free transfers. */
 function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions }) {
   const { deadline } = data;
   return (

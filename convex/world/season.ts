@@ -48,7 +48,13 @@ export const seasonOf = internalQuery({
     const gameweeks = await ctx.db.query("gameweeks").withIndex("by_season", (q) => q.eq("season", season._id)).collect();
     const prices = await ctx.db.query("prices").withIndex("by_season", (q) => q.eq("season", season._id)).collect();
     return {
-      competition: { name: competition.name, region: competition.region, timeZone: competition.timeZone },
+      competition: {
+        name: competition.name,
+        region: competition.region,
+        timeZone: competition.timeZone,
+        timeZoneLabel: competition.timeZoneLabel,
+        currency: competition.currency,
+      },
       year: season.year,
       madeUp: season.madeUp,
       splits: season.splits,

@@ -29,9 +29,9 @@ const priceOf = (prices: { handle?: string; team: string; role: string; won: num
   prices.find((p) => p.handle === handle)?.won;
 
 describe("a season loaded from data/lck", () => {
-  test("the LCK is a competition in KST, with a 2027 season and Split 1", async () => {
+  test("the LCK is a competition in KST, paid in won, with a 2027 season and Split 1", async () => {
     const got = (await (await loaded()).read())!;
-    expect(got.competition).toEqual({ name: "LCK", region: "Korea", timeZone: "Asia/Seoul" });
+    expect(got.competition).toEqual({ name: "LCK", region: "Korea", timeZone: "Asia/Seoul", timeZoneLabel: "KST", currency: "₩" });
     expect(got.year).toBe(2027);
     expect(got.splits).toEqual([{ number: 1, name: "Split 1" }]);
     expect(got.madeUp).toBe(true);

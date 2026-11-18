@@ -1,7 +1,7 @@
 {
   "note": "The LCK's 2027 season: its settings, Split 1's gameweeks and every pick's price in won. Made up until the 2027 fixtures and prices are out (spec/10): the gameweeks and prices are the screens' (src/fixtures), the settings spec/01-10's. convex/world/season.ts loads it; a rerun updates in place.",
   "madeUp": true,
-  "competition": { "name": "LCK", "region": "Korea", "timeZone": "Asia/Seoul" },
+  "competition": { "name": "LCK", "region": "Korea", "timeZone": "Asia/Seoul", "timeZoneLabel": "KST", "currency": "₩" },
   "year": 2027,
   "splits": [{ "number": 1, "name": "Split 1" }],
   "settings": {

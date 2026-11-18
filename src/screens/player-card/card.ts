@@ -49,7 +49,7 @@ export interface PlayedSeries {
   games: CardGame[];
 }
 
-/** A series in This week not yet started: its time, yours then KST, and no points yet (spec/12, The player card). */
+/** A series in This week not yet started: its time, yours then the league's, and no points yet (spec/12, The player card). */
 export interface UpcomingSeries {
   id: string;
   day: string;

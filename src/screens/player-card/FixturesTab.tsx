@@ -4,7 +4,7 @@ import type { FixtureRow } from "./card";
 import { WeekCell, weekStarts } from "./WeekCell";
 import { dot, WORDS } from "./words";
 
-/** Fixtures: his team's next series, each week's number once, your time and KST. */
+/** Fixtures: his team's next series, each week's number once, your time and the league's. */
 export function FixturesTab({ team, rows }: { team: TeamCode; rows: FixtureRow[] }) {
   const starts = weekStarts(rows);
   return (

@@ -21,9 +21,7 @@ import { CappedInput, LegalNames, Row, TEAM_OPTIONS } from "./form";
 import {
   BROWSER,
   changedFields,
-  changeLine,
   dirtyTabs,
-  hoursBefore,
   TABS,
   THEMES,
   zoneOf,
@@ -33,9 +31,13 @@ import {
   type ThemeChoice,
 } from "./settings";
 import "./settings.css";
+import { browserZoneLabel, changeLine, fromProvider, hoursBefore, sentTo, TAB_NAMES, THEME_NAMES, WORDS } from "./words";
 
-const ON_OFF = ["On", "Off"] as const;
-const DIRTY_MARK = " •";
+const ON_OFF = [
+  { value: "on", label: WORDS.on },
+  { value: "off", label: WORDS.off },
+] as const;
+const THEME_OPTIONS = THEMES.map((value) => ({ value, label: THEME_NAMES[value] }));
 
 /** Settings' data from the backend, and what the manager does with it. */
 export interface SettingsProps {
@@ -66,14 +68,14 @@ export function SettingsPage(props: SettingsProps) {
   const { tab, onTab, saved, draft, onReset, onSave } = props;
   const changed = changedFields(saved, draft);
   const dirty = dirtyTabs(changed);
-  const tabLabel = (t: SettingsTab) => (dirty.has(t) ? `${t}${DIRTY_MARK}` : t);
+  const tabLabel = (t: SettingsTab) => (dirty.has(t) ? `${TAB_NAMES[t]}${WORDS.dirtyMark}` : TAB_NAMES[t]);
   const tabsId = useId();
   return (
     <PageFrame screen="settings" account={saved.teamName}>
-      <PageHead title="Settings" hangul="설정" />
+      <PageHead title={WORDS.title} hangul={WORDS.hangul} />
       <Tabs
         id={tabsId}
-        label="Settings"
+        label={WORDS.tabs}
         tabs={TABS.map(tabLabel)}
         chosen={tabLabel(tab)}
         onChoose={(label) => onTab(TABS.find((t) => tabLabel(t) === label) ?? tab)}
@@ -88,9 +90,9 @@ export function SettingsPage(props: SettingsProps) {
         <div className="settings__save-bar">
           <span className="settings__save-line">{changeLine(changed)}</span>
           <button type="button" className="settings__text-key" onClick={onReset}>
-            Reset
+            {WORDS.reset}
           </button>
-          <MainAction onClick={onSave}>Save</MainAction>
+          <MainAction onClick={onSave}>{WORDS.save}</MainAction>
         </div>
       )}
       <LegalFoot />
@@ -98,15 +100,12 @@ export function SettingsPage(props: SettingsProps) {
   );
 }
 
-/** The greyed word holding the hangul's place while the banner is empty (Profile then shows the team name alone). */
-const EMPTY_BANNER = "배너";
-
 /** Your team's banner as Profile shows it, redrawn as you type: the hangul and the team name (favourite team and country are the rows below). */
 function Banner({ values }: { values: SettingsValues }) {
   return (
     <div className="settings__banner">
       <span className={cx("settings__banner-hangul", !values.banner && "settings__banner-hangul--empty")} lang="ko">
-        {values.banner || EMPTY_BANNER}
+        {values.banner || WORDS.emptyBanner}
       </span>
       <b className="settings__banner-name">{values.teamName}</b>
     </div>
@@ -117,7 +116,7 @@ function Locked({ children }: { children: ReactNode }) {
   return (
     <span className="settings__locked">
       <b className="settings__locked-value">{children}</b>
-      <Tag>Locked</Tag>
+      <Tag>{WORDS.locked}</Tag>
     </span>
   );
 }
@@ -126,25 +125,25 @@ function Locked({ children }: { children: ReactNode }) {
 function TeamTab({ draft, onChange, locked, countries }: SettingsProps) {
   return (
     <section>
-      <Row label="Team name">
-        <CappedInput label="Team name" value={draft.teamName} onChange={(teamName) => onChange({ teamName })} />
+      <Row label={WORDS.teamName}>
+        <CappedInput label={WORDS.teamName} value={draft.teamName} onChange={(teamName) => onChange({ teamName })} />
       </Row>
-      <Row label="Hangul banner" note="Optional">
-        <CappedInput label="Hangul banner" value={draft.banner} onChange={(banner) => onChange({ banner })} />
+      <Row label={WORDS.banner} note={WORDS.optional}>
+        <CappedInput label={WORDS.banner} value={draft.banner} onChange={(banner) => onChange({ banner })} />
         <Banner values={draft} />
       </Row>
-      <Row label="Favourite team">
+      <Row label={WORDS.favouriteTeam}>
         {locked ? (
           <Locked>{TEAMS[draft.favouriteTeam]}</Locked>
         ) : (
-          <Select label="Favourite team" value={draft.favouriteTeam} options={TEAM_OPTIONS} onChange={(favouriteTeam) => onChange({ favouriteTeam })} />
+          <Select label={WORDS.favouriteTeam} value={draft.favouriteTeam} options={TEAM_OPTIONS} onChange={(favouriteTeam) => onChange({ favouriteTeam })} />
         )}
       </Row>
-      <Row label="Country">
+      <Row label={WORDS.country}>
         {locked ? (
           <Locked>{draft.country}</Locked>
         ) : (
-          <Select label="Country" value={draft.country} options={plainOptions(countries)} onChange={(country) => onChange({ country })} />
+          <Select label={WORDS.country} value={draft.country} options={plainOptions(countries)} onChange={(country) => onChange({ country })} />
         )}
       </Row>
     </section>
@@ -153,18 +152,18 @@ function TeamTab({ draft, onChange, locked, countries }: SettingsProps) {
 
 /** Display: time zone, with the next deadline in it and in KST; theme. */
 function DisplayTab({ draft, onChange, browserZone, zones, deadlineAt }: SettingsProps) {
-  const zoneOptions = [{ value: BROWSER, label: `Browser · ${browserZone}` }, ...plainOptions(zones)];
+  const zoneOptions = [{ value: BROWSER, label: browserZoneLabel(browserZone) }, ...plainOptions(zones)];
   const deadline = timeIn(deadlineAt, zoneOf(draft.timeZone, browserZone));
   return (
     <section>
-      <Row label="Time zone">
-        <Select label="Time zone" value={draft.timeZone} options={zoneOptions} onChange={(timeZone) => onChange({ timeZone })} />
+      <Row label={WORDS.timeZone}>
+        <Select label={WORDS.timeZone} value={draft.timeZone} options={zoneOptions} onChange={(timeZone) => onChange({ timeZone })} />
         <p className="settings__sub quiet">
           <Deadline {...deadline} />
         </p>
       </Row>
-      <Row label="Theme">
-        <ViewToggle<ThemeChoice> label="Theme" options={THEMES} chosen={draft.theme} onChoose={(theme) => onChange({ theme })} />
+      <Row label={WORDS.theme}>
+        <ViewToggle<ThemeChoice> label={WORDS.theme} options={THEME_OPTIONS} chosen={draft.theme} onChoose={(theme) => onChange({ theme })} />
       </Row>
     </section>
   );
@@ -175,7 +174,7 @@ function OnOffRow({ label, when, on, onChoose }: { label: string; when: string; 
     <Row label={label}>
       <span className="settings__switch">
         <span className="settings__switch-when">{when}</span>
-        <ViewToggle label={label} options={ON_OFF} chosen={on ? "On" : "Off"} onChoose={(choice) => onChoose(choice === "On")} />
+        <ViewToggle label={label} options={ON_OFF} chosen={on ? "on" : "off"} onChoose={(choice) => onChoose(choice === "on")} />
       </span>
     </Row>
   );
@@ -185,9 +184,9 @@ function OnOffRow({ label, when, on, onChoose }: { label: string; when: string; 
 function EmailsTab({ draft, onChange, account, reminderHours }: SettingsProps) {
   return (
     <section>
-      <OnOffRow label="Deadline reminder" when={hoursBefore(reminderHours)} on={draft.deadlineReminder} onChoose={(deadlineReminder) => onChange({ deadlineReminder })} />
-      <OnOffRow label="Weekly recap" when="Once the week is final" on={draft.weeklyRecap} onChoose={(weeklyRecap) => onChange({ weeklyRecap })} />
-      <p className="settings__sub quiet settings__sent-to">Sent to {account.email}</p>
+      <OnOffRow label={WORDS.deadlineReminder} when={hoursBefore(reminderHours)} on={draft.deadlineReminder} onChoose={(deadlineReminder) => onChange({ deadlineReminder })} />
+      <OnOffRow label={WORDS.weeklyRecap} when={WORDS.recapWhen} on={draft.weeklyRecap} onChoose={(weeklyRecap) => onChange({ weeklyRecap })} />
+      <p className="settings__sub quiet settings__sent-to">{sentTo(account.email)}</p>
     </section>
   );
 }
@@ -197,27 +196,27 @@ function AccountTab({ account, onSignOut, onDownload, onDelete }: SettingsProps)
   return (
     <>
       <section>
-        <Row label="Email">
+        <Row label={WORDS.email}>
           <span className="settings__acts">
             <span className="settings__email">
               <span>
                 <ProviderMark provider={account.provider} />
                 {account.email}
               </span>
-              <span className="quiet">from {account.provider}</span>
+              <span className="quiet">{fromProvider(account.provider)}</span>
             </span>
-            <OutlinedKey onClick={onSignOut}>Sign out</OutlinedKey>
+            <OutlinedKey onClick={onSignOut}>{WORDS.signOut}</OutlinedKey>
           </span>
         </Row>
-        <Row label="Public">
-          <p className="settings__public">Team name, favourite team, country, banner, points</p>
+        <Row label={WORDS.public}>
+          <p className="settings__public">{WORDS.publicList}</p>
         </Row>
-        <Row label="Your data">
-          <OutlinedKey onClick={onDownload}>Download my data</OutlinedKey>
+        <Row label={WORDS.yourData}>
+          <OutlinedKey onClick={onDownload}>{WORDS.download}</OutlinedKey>
         </Row>
       </section>
       <div className="settings__danger">
-        <OutlinedKey onClick={onDelete}>Delete account</OutlinedKey>
+        <OutlinedKey onClick={onDelete}>{WORDS.deleteAccount}</OutlinedKey>
       </div>
     </>
   );
@@ -227,7 +226,7 @@ function LegalFoot() {
   return (
     <div className="settings__foot quiet">
       <LegalNames />
-      <Placeholder word="privacy email" />
+      <Placeholder word={WORDS.privacyEmail} />
     </div>
   );
 }

@@ -22,18 +22,6 @@
 .leagues__code-field input {
   font-family: var(--font-mono);
 }
-.leagues__sheet-keys {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: var(--s-2);
-  margin-top: var(--s-5);
-}
-.leagues__back {
-  margin-right: var(--s-2);
-  color: var(--text);
-  text-decoration: underline;
-}
 .leagues__count {
   margin-top: var(--s-4);
 }

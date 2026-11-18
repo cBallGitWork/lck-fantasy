@@ -16,7 +16,7 @@ const CHIPS = [
   "LCK · Tiếng ViệtYouTube",
   "Kameto · FrançaisTwitch",
 ];
-const REST = ["Rest of your week", "ZeusHLE14", "CanyonGEN14", "RulerGENV14", "DelightHLE9", "Points ›"];
+const REST = ["Rest of your week", "ZeusHLE14", "CanyonGEN14", "RulerGEN14", "DelightHLE9", "Points ›"];
 
 describe("a series live", () => {
   const out = text(<LiveNow {...LIVE_NOW} picker={picker} />);

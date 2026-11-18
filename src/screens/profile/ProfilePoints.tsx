@@ -16,7 +16,7 @@ function pickSlot(pick: ProfilePick): string {
 
 /**
  * Points: ‹ week ›, her points with Average and Highest, Not final and the buff; then her team in
- * role order with C and V, each player's points and series, and the bench.
+ * role order with the C, each player's points and series, and the bench.
  */
 export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: PointsWeek; onWeek?: (week: number) => void; hasPrev: boolean; hasNext: boolean }) {
   const starters = week.team?.filter((pick) => !onBench(pick)) ?? [];

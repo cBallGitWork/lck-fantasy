@@ -1,6 +1,6 @@
 // How every page writes its figures, once each: counts, places, signed points and scores.
 
-/** The minus sign figures carry, never a hyphen: `−4`. */
+/** The minus sign figures use, never a hyphen: `−4`. */
 export const MINUS = "−";
 
 const EN_DASH = "–";
@@ -46,8 +46,8 @@ export const oneDecimal = (n: number) => n.toFixed(1);
 /** A figure per game as a number, 0 where there are no games; for sorting. */
 export const perGameValue = (total: number, games: number) => (games === 0 ? 0 : total / games);
 
-/** A figure per game, to one decimal: `4.9`; `0.0` with no games. */
-export const perGame = (total: number, games: number) => oneDecimal(perGameValue(total, games));
+/** A figure per game, to one decimal: `4.9`; `—` with no games (spec/12, Stats). */
+export const perGame = (total: number, games: number) => (games === 0 ? NONE : oneDecimal(total / games));
 
 /** A per cent: owned, a win rate. `46%`. */
 export const pct = (n: number) => `${n}%`;

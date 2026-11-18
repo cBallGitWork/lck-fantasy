@@ -42,7 +42,8 @@ export interface PlayerTable {
   assists: PerLine;
   /** Scored as minus points. */
   deaths: RolePerLine;
-  goldLeadAt15: FlatLine;
+  /** Gold is read `atMinutes` into the game: 15 in spec/05, held as data (spec/11, Live). */
+  goldLeadAt15: FlatLine & { atMinutes: number };
   soloKill: FlatLine;
   firstBlood: FlatLine;
   deathless: FlatLine;

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
-import { PATHS } from "../../paths";
+import { PATHS, pickTeamSwapping } from "../../paths";
 import { html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
@@ -272,6 +272,15 @@ test("Rift view | Card view sets the view; ✕ closes the card and ends the swap
   expect(closed.selected).toBeUndefined();
   expect(text(view(closed))).not.toContain("Last 3 series");
   expect(html(view(closed))).not.toMatch(/tile--(fit|dim)/);
+});
+
+test("arriving from a card's Swap with bench, the player is tapped and those he can swap with lit; anyone not in the squad is ignored", async () => {
+  const zeus = await htmlAt(pickTeamSwapping("zeus"));
+  expect(zeus).toMatch(/class="tile tile--selected[^"]*"(?:(?!class="tile ).)*title="Zeus"/);
+  // Zeus swaps only with Siwoo, the Flex.
+  expect(zeus.match(/tile--fit/g)).toHaveLength(1);
+  expect(zeus).toMatch(/class="tile [^"]*tile--fit[^"]*"(?:(?!class="tile ).)*title="Siwoo"/);
+  expect(await htmlAt(pickTeamSwapping("nobody"))).toBe(await htmlAt(PATHS.pickTeam));
 });
 
 test("Pick Team opens on Rift the first time, then on the view shared with Points, and on Rift where storage is blocked", async () => {

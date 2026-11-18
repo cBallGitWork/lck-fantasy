@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { cx, Deadline, formatWon, MainAction, NONE, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
-import { Rift, RIFT_VIEW, Tile, type SquadSlot } from "../../rift";
+import { Rift, RIFT_VIEW, ROLE_NAME, Tile, type SquadSlot } from "../../rift";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
 import { byRole, lineupIds, type SlotHolder } from "./lineup";
@@ -148,22 +148,29 @@ export function TransfersPage(props: TransfersPageProps) {
       {view === RIFT_VIEW ? (
         <Rift>
           {groups.flatMap(({ role, holders }) =>
-            holders.map((holder, i) => (
-              <Tile
-                key={holder.slot}
-                slot={role}
-                name={holder.player.name}
-                team={holder.player.team}
-                at={spotOf(role, i, holders.length)}
-                mark={holder.mark}
-                price={formatWon(holder.player.priceWon)}
-                sell={!holder.empty}
-                line={nextAgainst(fixtures, holder.player.team) || NONE}
-                selected={plan.replacing === holder.slot}
-                state={holder.empty ? "dim" : undefined}
-                onSelect={() => tap(holder)}
-              />
-            )),
+            holders.map((holder, i) => {
+              const at = spotOf(role, i, holders.length);
+              const selected = plan.replacing === holder.slot;
+              const onSelect = () => tap(holder);
+              // A sold player's slot: dashed and empty with his role and `+`, as the front door's; ↺ puts him back (Craig, 18 Nov 2026).
+              if (holder.empty)
+                return <Tile key={holder.slot} slot={role} name={ROLE_NAME[role]} team="" at={at} empty restore line="+" selected={selected} onSelect={onSelect} />;
+              return (
+                <Tile
+                  key={holder.slot}
+                  slot={role}
+                  name={holder.player.name}
+                  team={holder.player.team}
+                  at={at}
+                  mark={holder.mark}
+                  price={formatWon(holder.player.priceWon)}
+                  sell
+                  line={nextAgainst(fixtures, holder.player.team) || NONE}
+                  selected={selected}
+                  onSelect={onSelect}
+                />
+              );
+            }),
           )}
         </Rift>
       ) : (

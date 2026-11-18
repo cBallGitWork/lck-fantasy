@@ -22,6 +22,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   perfectGame: [{ to: PATHS.perfectGame }, "perfect-game"],
   perfectGameWeek: [{ to: PATHS.perfectGameWeek, params: { week: "2" } }, "perfect-game"],
   priceChanges: [{ to: PATHS.priceChanges }, "price-changes"],
+  priceChangesWeek: [{ to: PATHS.priceChangesWeek, params: { week: "3" } }, "price-changes"],
   settings: [{ to: PATHS.settings }, "settings"],
   hub: [{ to: PATHS.hub }, "lck-hub"],
   playerCard: [{ to: PATHS.playerCard, params: { playerId: "faker" } }, "player-card"],

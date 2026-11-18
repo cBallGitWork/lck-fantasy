@@ -88,7 +88,11 @@ function TabBody({ data, tab }: { data: CoachCardData; tab: CoachTab }) {
   const team = data.head.team;
   if (tab === "This week" && data.week) return <CoachThisWeek week={data.week} />;
   if (tab === "Fixtures" && data.fixtures) return <CoachFixtures rows={beyondStrip(data.fixtures, data.next)} team={team} />;
-  if (tab === "History" && data.history) return <CoachHistoryTab history={data.history} shown={beyondStrip(data.history.rows, data.past)} team={team} />;
+  if (tab === "History" && data.history) {
+    // A series being played shows in History too, tagged Live (spec/12, The coach card).
+    const shown = beyondStrip(data.history.rows, data.past.filter((s) => !s.live));
+    return <CoachHistoryTab history={data.history} shown={shown} team={team} />;
+  }
   if (tab === "Roster" && data.roster) return <CoachRoster rows={data.roster} />;
   return <Empty title={EMPTY_TAB[tab]} />;
 }

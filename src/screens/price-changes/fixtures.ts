@@ -18,7 +18,7 @@ export interface PriceMove {
   mine: boolean;
 }
 
-/** One week's new prices: when they were set, then the rises and falls in the picture's order. */
+/** One week's new prices: when they were set, then the rises and falls, in any order (the page sorts them). */
 export interface PriceWeek {
   week: number;
   /** When the prices were set, your time then KST; absent before the first move. */
@@ -63,5 +63,8 @@ export const WEEK4_PRICES: PriceWeek = {
 /** Week 3, before the first move: both lists read `No moves yet` (the picture's README). */
 export const WEEK3_PRICES: PriceWeek = { week: 3, rises: [], falls: [] };
 
-/** The weeks ‹ › step through, oldest first. */
-export const PRICE_WEEKS: PriceWeek[] = [WEEK3_PRICES, WEEK4_PRICES];
+/** The weeks ‹ › step through, by week number. */
+export const PRICE_WEEKS: ReadonlyMap<number, PriceWeek> = new Map([WEEK3_PRICES, WEEK4_PRICES].map((w) => [w.week, w]));
+
+/** The latest week's prices, where bare `/price-changes` opens. */
+export const LATEST_PRICE_WEEK = Math.max(...PRICE_WEEKS.keys());

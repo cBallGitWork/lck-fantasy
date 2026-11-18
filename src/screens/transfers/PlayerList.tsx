@@ -1,10 +1,11 @@
 import { cx, Empty, formatWon, GoLink, Menu, pct, SideSection } from "../../parts";
 import { cardGo } from "../../paths";
-import { ROLE_KEYS, ROLE_NAME, RoleIcon } from "../../rift";
+import { PERSON_ROLES, ROLE_NAME, RoleIcon } from "../../rift";
 import { ALL, listRows, nextAgainst, outOf, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
 import { keyFor, replacing, SORT_WORDS, sortLabel, teamLabel, WORDS } from "./words";
 
-const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: ALL, label: WORDS.allRoles }, ...ROLE_KEYS.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
+/** All roles, the five roles, then Coach, so coaches can be browsed without selling yours first (Craig, 18 Nov 2026). */
+const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: ALL, label: WORDS.allRoles }, ...PERSON_ROLES.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
 
 /** The list: who can be bought, with role chips, search, sort and team; none greyed (Craig, 16 Nov 2026). */
 export function PlayerList({

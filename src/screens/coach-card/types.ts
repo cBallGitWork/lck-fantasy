@@ -61,7 +61,8 @@ export interface WeekGame {
   clock?: string;
 }
 
-export interface WeekSeries {
+/** A series in This week once it has started. */
+export interface PlayedSeries {
   id: string;
   day: string;
   opponent: TeamCode;
@@ -71,6 +72,18 @@ export interface WeekSeries {
   games: WeekGame[];
   points: number;
 }
+
+/** A series in This week not yet started: its time, yours then KST, and no points yet (spec/12, The coach card). */
+export interface UpcomingSeries {
+  id: string;
+  day: string;
+  opponent: TeamCode;
+  state: "upcoming";
+  local: string;
+  kst: string;
+}
+
+export type WeekSeries = PlayedSeries | UpcomingSeries;
 
 export interface CoachWeek {
   week: number;
@@ -97,7 +110,10 @@ export interface HistoryRow {
   score: Score;
   games: number;
   priceM: number;
+  /** His points, so far while `live`. */
   points: number;
+  /** Being played: History shows it, tagged Live, though the strip shows it too (spec/12, The coach card). */
+  live?: boolean;
 }
 
 export interface PastSeason {

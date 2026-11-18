@@ -1,4 +1,4 @@
-import { CHEER_WORD, CHEERS_RECEIVED, count, GoLink, Led, ordinal, RankMove, SideSection, TierShield, TruckHire } from "../../parts";
+import { CHEER_WORD, CHEERS_RECEIVED, count, GoLink, Led, RankMove, SideSection, TierShield, TruckHire } from "../../parts";
 import { leagueGo } from "../../paths";
 import type { LeagueRow, Parked } from "./fixtures";
 
@@ -23,7 +23,7 @@ export function ProfileSide({ leagues, cheers }: { leagues: LeagueRow[]; cheers?
                   )}
                 </span>
                 <span>
-                  <b className="num">{league.ordinal ? ordinal(league.rank) : count(league.rank)}</b> <RankMove move={league.move} />
+                  <b className="num">{count(league.rank)}</b> <RankMove move={league.move} />
                 </span>
               </GoLink>
             </li>

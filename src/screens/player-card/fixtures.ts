@@ -69,6 +69,13 @@ const WEEK3_AT_POINTS: CardWeek = {
   total: livePointsOf(playerId(NAME)),
 };
 
+/** Week 4 at Pick Team's moment, Tuesday before T1's first series: each series with its time, no points yet. */
+const WEEK4_BEFORE_GAMES: CardWeek = {
+  week: 4,
+  series: T1_FIXTURES.filter((s) => s.week === 4).map(({ id, day, opponent, local, kst }): WeekSeries => ({ id, day, opponent, state: "upcoming", local, kst })),
+  total: 0,
+};
+
 const FAKER = { name: NAME, hangul: hangulOf(NAME), legalName: "Lee Sang-hyeok", role: "mid", team: TEAM, photo: photoOf(NAME) } as const;
 
 /** Opened from Pick Team, Week 4 Tuesday: the History, Fixtures and Champions pictures. */
@@ -91,6 +98,7 @@ export const CARD_FROM_PICK_TEAM: PlayerCardData = {
   transfersOut: 310,
   past: PAST,
   next: NEXT,
+  thisWeek: WEEK4_BEFORE_GAMES,
   fixtures: FIXTURES,
   history: {
     competition: COMPETITION_TITLE,

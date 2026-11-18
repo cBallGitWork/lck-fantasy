@@ -1,4 +1,4 @@
-import { money, NONE, RankMove, Table, type Column } from "../../parts";
+import { money, NONE, RankMove, signed, Table, type Column } from "../../parts";
 import type { HistoryRow } from "./fixtures";
 import { countOrNone } from "./format";
 
@@ -10,13 +10,13 @@ const COLUMNS: Column<HistoryRow>[] = [
   { key: "overall", head: "Overall", figure: true, cell: (r) => countOrNone(r.overall) },
   { key: "move", head: "Move", figure: true, cell: (r) => <RankMove move={r.move} /> },
   { key: "transfers", head: "Transfers", figure: true, cell: (r) => countOrNone(r.transfers) },
-  { key: "hits", head: "Hits", figure: true, cell: (r) => countOrNone(r.hits) },
+  { key: "cost", head: "Cost", figure: true, cell: (r) => (r.cost ? signed(-r.cost) : NONE) },
   { key: "bank", head: "Bank", figure: true, cell: (r) => money(r.bankM) },
   { key: "value", head: "Value", figure: true, cell: (r) => money(r.valueM) },
   { key: "buff", head: "Buff", cell: (r) => r.buff ?? NONE },
 ];
 
-/** History: each week's points, total, ranks, transfers, hits, bank, value and buff; then the buffs left. */
+/** History: each week's points, total, ranks, transfers, their cost, bank, value and buff; then the buffs left. */
 export function ProfileHistory({ rows, buffsLeft, onOpenWeek }: { rows: HistoryRow[]; buffsLeft: string[]; onOpenWeek: (week: number) => void }) {
   return (
     <section className="profile__history">

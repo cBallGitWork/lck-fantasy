@@ -1,8 +1,8 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, text } from "../../testing/render";
+import { expectInOrder, html, htmlAt, text } from "../../testing/render";
 import { CARD_FROM_PICK_TEAM, CARD_FROM_POINTS, CARD_WITH_NEWS } from "./fixtures";
-import { PlayerCardPage } from ".";
+import { cardKeysGo, PlayerCardPage } from ".";
 import { weekStarts } from "./WeekCell";
 
 const HEAD = ["Mid · T1", "Faker", "이상혁", "Lee Sang-hyeok"];
@@ -159,9 +159,52 @@ describe("the Pick Team keys", () => {
   });
 });
 
+describe("the Pick Team keys go on", () => {
+  const goes = cardKeysGo(CARD_FROM_PICK_TEAM);
+
+  test("Swap with bench to Pick Team with him tapped, Bdd lit to swap with him", async () => {
+    expect(goes.swap).toBe("/pick-team?swap=faker");
+    const markup = await htmlAt(goes.swap);
+    expect(markup).toMatch(/class="tile tile--selected[^"]*"(?:(?!class="tile ).)*title="Faker"/);
+    expect(markup.match(/tile--bench tile--fit/g)).toHaveLength(1);
+  });
+
+  test("Transfer out to Transfers with him already sold", async () => {
+    expect(goes.transferOut).toBe("/transfers?sell=faker");
+    // His slot is the dashed empty Mid, ↺ to put him back (spec/12, A sold player's slot).
+    const markup = await htmlAt(goes.transferOut);
+    expect(markup).toMatch(/class="tile tile--selected tile--empty"(?:(?!class="tile[ "]).)*title="Mid"/);
+    expect(markup).not.toContain('title="Faker"');
+  });
+});
+
+describe("This week before any of his games", () => {
+  const screen = <PlayerCardPage initialTab="This week" />;
+  const out = text(screen);
+
+  test("lists the week's series with opponent and time, points as —", () => {
+    expectInOrder(out, [...TABS, "Wed · v KT", "10:30 19:30 KST", "—", "Sat · v GEN", "08:00 17:00 KST", "—", "Week 4", "—", "Season"]);
+  });
+
+  test("shows no games, no score and no Captain line yet", () => {
+    const tab = out.slice(out.indexOf("Champions"), out.indexOf("Season 15 games"));
+    expect(tab).toBe("ChampionsWed · v KT 10:30 19:30 KST—Sat · v GEN 08:00 17:00 KST—Week 4—");
+  });
+
+  test("fills in game by game: a started series shows its games, the next still —", () => {
+    const [first, second] = CARD_FROM_PICK_TEAM.thisWeek?.series ?? [];
+    if (!first || !second) throw new Error("Week 4 has two T1 series");
+    const game = { champion: "Azir", outcome: "W" as const, kda: "5/1/7", points: 6, counts: true };
+    const started = { ...first, state: "live" as const, score: [1, 0] as [number, number], games: [game] };
+    const week = { week: 4, series: [started, second], total: 6 };
+    const live = text(<PlayerCardPage card={{ ...CARD_FROM_PICK_TEAM, thisWeek: week }} initialTab="This week" />);
+    expectInOrder(live, ["Wed · v KT", "1–0", "6", "G1", "Azir", "5/1/7", "6", "Sat · v GEN", "08:00 17:00 KST", "—", "Week 4", "6"]);
+  });
+});
+
 describe("a tab whose data hasn't come", () => {
   test("shows nothing between the tabs and the Season panel", () => {
-    const out = text(<PlayerCardPage initialTab="This week" />);
+    const out = text(<PlayerCardPage card={{ ...CARD_FROM_PICK_TEAM, thisWeek: undefined }} initialTab="This week" />);
     expect(out).toContain("ChampionsSeason 15 games");
   });
 });

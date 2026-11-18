@@ -31,7 +31,8 @@ questions are in [docs/to-grill.md](../docs/to-grill.md).
   final tag, until the final points land; nothing new is added. Example: Caps on 9 at 18:00
   stays on 9 (Craig, 18 Nov 2026).
 - An admin alert is a stored row on an admin-only page, plus one email to the admin through
-  Resend, at most one per series (Craig, 18 Nov 2026).
+  Resend, at most one per match day: the first alert of the day sends it, later ones only add
+  rows (Craig, 18 Nov 2026).
 
 ## Final
 

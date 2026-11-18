@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { useDevState } from "../../parts";
+import { BlockSheet } from "./BlockSheet";
 import { accept, decline, removeFollower, unfollow, type FollowingData } from "./feed";
 import { FOLLOWING, PICKER_AS_DRAWN } from "./fixtures";
 import { FollowingView } from "./FollowingView";
@@ -9,9 +11,19 @@ export function FollowingScreen() {
   return <FollowingPage data={FOLLOWING} initialPicking={useDevState<Picking>({ truck: PICKER_AS_DRAWN })} />;
 }
 
-/** The Following page with its controls working, from the data it is fed; `initialPicking` opens the cheer picker. */
-function FollowingPage({ data: initial, initialPicking = null }: { data: FollowingData; initialPicking?: Picking | null }) {
+/** The Following page with its controls working, from the data it is fed; `initialPicking` opens the cheer picker, `initialBlocking` Block's confirm on that follower. */
+export function FollowingPage({
+  data: initial,
+  initialPicking = null,
+  initialBlocking = null,
+}: {
+  data: FollowingData;
+  initialPicking?: Picking | null;
+  initialBlocking?: string | null;
+}) {
   const { data, setData, open, closeOn, sheet } = useCheerPicker(initial, initialPicking);
+  const [blocking, setBlocking] = useState<string | null>(initialBlocking);
+  const blocked = blocking && data.followers.find((m) => m.id === blocking);
   return (
     <>
       <FollowingView
@@ -24,9 +36,19 @@ function FollowingPage({ data: initial, initialPicking = null }: { data: Followi
           closeOn(id);
         }}
         onRemove={(id) => setData((d) => removeFollower(d, id))}
-        onBlock={(id) => setData((d) => removeFollower(d, id))}
+        onBlock={setBlocking}
       />
       {sheet}
+      {blocked && (
+        <BlockSheet
+          follower={blocked}
+          onBlock={() => {
+            setData((d) => removeFollower(d, blocked.id));
+            setBlocking(null);
+          }}
+          onClose={() => setBlocking(null)}
+        />
+      )}
     </>
   );
 }

@@ -25,7 +25,7 @@ describe("Points", () => {
       "Average 79",
       "Highest 128 ›",
       "Not final",
-      "Limitless",
+      "Bench Boost",
       "Slot",
       "Player",
       "Pts",
@@ -89,10 +89,10 @@ describe("History", () => {
     expectInOrder(text(page("History")), [
       ...BANNER,
       "Week", "Pts", "Total", "Week rank", "Overall", "Move", "Transfers", "Hits", "Bank", "Value", "Buff",
-      "Week 3", "93", "315", "—", "21,804", "3,112", "5", "0", "₩0.5m", "₩100.9m", "Limitless", "›",
+      "Week 3", "93", "315", "—", "21,804", "3,112", "5", "3", "₩0.5m", "₩100.9m", "Bench Boost", "›",
       "Week 2", "112", "222", "4,211", "24,916", "9,870", "1", "0", "₩1.0m", "₩100.6m", "—", "›",
       "Week 1", "110", "110", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",
-      "Buffs left: Remake · Bench Boost · Double Captain",
+      "Buffs left: Double Captain · Coach Diff",
       ...LEAGUES,
     ]);
   });
@@ -109,7 +109,7 @@ describe("Transfers", () => {
     expectInOrder(text(page("Transfers")), [
       ...BANNER,
       "Slot", "Out", "In", "Pts gained",
-      "Week 3", "Tue 09:00", "18:00 KST", "Limitless · 0 hits",
+      "Week 3", "Tue 09:00", "18:00 KST", "Bench Boost · 3 hits",
       "Top", "Doran", "T1 · ₩13.0m", "→", "Kiin", "GEN · ₩13.5m", "+1",
       "Bot", "Peyz", "T1 · ₩13.0m", "→", "Ruler", "GEN · ₩16.0m", "+4",
       "Support", "Lehends", "NS · ₩10.0m", "→", "Keria", "T1 · ₩12.0m", "−1",
@@ -124,7 +124,7 @@ describe("Transfers", () => {
   test("is the Table part's, each week a sub-row with its cost on the right", () => {
     const markup = html(page("Transfers"));
     expect(markup.match(/<tr class="table__sub"><td colSpan="6"><b>Week \d<\/b>/g)).toHaveLength(2);
-    expect(markup).toContain('<span class="table__sub-aside">Limitless · 0 hits</span>');
+    expect(markup).toContain('<span class="table__sub-aside">Bench Boost · 3 hits</span>');
   });
 });
 

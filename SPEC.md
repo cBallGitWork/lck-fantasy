@@ -49,6 +49,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 ## Later
 
 - A watchlist, as FPL's (Craig, 14 Nov 2026) ([spec/03](spec/03-transfers.md)).
+- A `+` on each Stats row that opens Transfers with that player chosen (Craig, 17 Nov 2026)
+  ([spec/12](spec/12-pages.md)).
 - Following personalities (casters, streamers who play), teams and players; reactions other than
   cheers and jeers (Craig, 14 Nov 2026) ([spec/14](spec/14-following.md)).
 - A second live source, researched if Riot's live feed breaks during the beta (Craig, 13 Nov 2026)
@@ -65,6 +67,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
   ([spec/09](spec/09-onboarding.md)).
 - A line on Points when a manager's tier changes, such as "Promoted to Diamond IV" (Craig, 14 Nov 2026)
   ([spec/08](spec/08-leagues.md)).
+- A line chart of the manager's Overall rank by week, on the profile above History (Craig, 17
+  Nov 2026). FPL's Gameweek History has a table only, as Flol's profile does now.
 - A trophy room of a manager's big achievements, on their profile, and a difficulty rating for each series (Craig, 13 Nov 2026).
 
 ## Out of scope

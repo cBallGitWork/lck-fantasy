@@ -21,6 +21,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
     ownership. Home keeps the global star and flop.
   - The Captain's games show your Captain's points beside the average Captain's.
+  - A player's breakdown shows his total alone; only the Captain's has the average Captain's under it,
+    as FPL (Craig, 17 Nov 2026).
+  - The coach's breakdown ends each series with its own row under its games: `Series win +3` or
+    `Series loss −1` (Craig, 17 Nov 2026).
+  - A bench player opens his breakdown too, as FPL: his points in grey when they don't count (no
+    Bench Boost, no auto-sub), `Didn't play` when he has no games (Craig, 17 Nov 2026).
   - Your Overall tier and ≈ points to promote, or to avoid demotion
     ([spec/08](08-leagues.md#overall-tiers)).
   - Its layout is the approved picture (`docs/design/approved/points/`).
@@ -34,6 +40,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Each row also shows price and its last move, form, owned and points, as FPL's list does. Any
     column sorts. Your own players carry a dot. Academy players are listed, after everyone with
     games (Craig, 16 Nov 2026).
+  - A column sorts highest first only, as FPL. Max price lists each price the players hold,
+    highest first, as FPL's Max cost. Per game shows `—` for a player with no games, not 0.0.
+    Filters that match no one show `No players` in place of the table (Craig, 17 Nov 2026).
   - It links to Price changes. The picture is `docs/design/approved/stats/`.
 - **LCK hub**: the LCK's own fixtures, standings and team rosters. There is no separate Fixtures
   page.
@@ -43,6 +52,11 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Sheep Esports' latest LCK headlines sit beside the tabs, each with a thumbnail, linking out.
     They come from Sheep's LCK tag page (Craig, 15 Nov 2026).
   - The picture is `docs/design/approved/lck-hub/`.
+  - Fixtures' ‹ stops at the current week; past weeks are on Results (Craig, 17 Nov 2026).
+  - A stage not yet started says when it starts, from the competition's data. Example: "Starts
+    Wed 12 Mar" (Craig, 17 Nov 2026).
+  - Every LCK team has an academy roster in the LCK CL, so Teams has no empty academy column
+    (Craig, 17 Nov 2026).
 - **Series page**: one series, its games and each player's lines in each game.
   - A page with its own link, opened from every series row anywhere (Craig, 16 Nov 2026).
   - One grid per team: its players down the side, the games as columns, as in the Points drawer.
@@ -54,6 +68,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - The scorebug shows each team's record as of now. The coach row shows the coach lines that
     scored and the series +3 or −1. Your own players carry a mark; there is no total of your
     players' points (Craig, 16 Nov 2026).
+  - A coach's cell for a game his team didn't play shows `—`. A link to a series that doesn't
+    exist shows `No such series` and `LCK hub ›` (Craig, 17 Nov 2026). The VOD link leaves Flol,
+    so it ends with `↗` (plate.md).
   - While live: provisional points, a Not final tag, solo kills and steals at final
     ([spec/11](11-live-points.md)).
   - A player who sat out a game shows a dash there; a sub has his own row.
@@ -67,6 +84,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   ([spec/08](08-leagues.md#overall-tiers)). Its private leagues show too, as in FPL; a History row
   opens that week's team (Craig, 14 Nov 2026). Its layout is the approved picture
   (`docs/design/approved/profile/`).
+  - History's Cost column shows the points a week's transfers took, such as −6 for one extra
+    ([spec/03](03-transfers.md)), and — for none (Craig, 17 Nov 2026).
+  - League ranks are plain numbers everywhere (1, 12, 1,234), as FPL (Craig, 17 Nov 2026).
 - **Perfect game**: the gameweek's best team, a Captain and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
   - The 7 starter slots, with one of them as Captain; the Captain's ×1.5 counts in its total. The cap
@@ -88,7 +108,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     own players. Titled by the gameweek the prices are for ("Gameweek 4 prices"), with when they
     were set; no next move, no filters, no explainer lines (Craig, 15 Nov 2026). The picture is
     `docs/design/approved/price-changes/`.
-  - Before the first move: "No moves yet".
+  - Before the first move: "No moves yet", and no Set line (Craig, 17 Nov 2026).
+  - In Rises and in Falls, the biggest move first, then the most owned (Craig, 17 Nov 2026).
+  - Each week has its own address, as Points: `/price-changes/4` is Gameweek 4's prices, and
+    bare `/price-changes` opens the latest (Craig, 17 Nov 2026).
 - **Live**: in the beta. It embeds a stream beside the manager's live points. Its points panel
   waits on the live points spec ([spec/11](11-live-points.md)).
   - A picker chooses the stream. The list is admin data (name, language, platform, channel): the
@@ -98,6 +121,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     checked.
   - It opens on the official English stream, then remembers each manager's last pick. Streams
     not live show greyed out.
+  - A greyed stream can't be picked; only a live one can (Craig, 17 Nov 2026).
+  - If the remembered pick isn't live when a series starts, the official English stream plays,
+    and the pick is kept for next time (Craig, 17 Nov 2026).
+  - Home's picker shows 5 streams, then More ▾ (Craig, 17 Nov 2026).
   - The points panel shows the week's total with Average and Highest, as Points (Craig, 14 Nov
     2026).
   - With nothing live, it shows the next series and a countdown.
@@ -106,8 +133,18 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
 - **Following**: the feed, follows, requests and cheers and jeers received
   ([spec/14](14-following.md)).
-- **Help**, with a Ranks section holding the tier cut-offs ([spec/08](08-leagues.md#overall-tiers)),
-  and **Settings** ([below](#settings)).
+- **Help**: the rules, as FPL's Rules page (Craig, 17 Nov 2026).
+  - One page of sections, each a heading and a few short lines, with a contents list at the top:
+    Squad, Transfers, Captain, Scoring, Buffs, Prices, Leagues, Ranks. Each section has its own
+    link, such as `/help#prices`. No questions-and-answers section in the beta.
+  - Scoring shows the full points table, every line for players and the coach with its points,
+    read from the same data the scoring uses ([spec/05](05-scoring.md)).
+  - Prices explains a price move in plain words with one example, not the formula
+    ([spec/02](02-prices-and-budget.md)).
+  - Ranks holds the tier cut-offs ([spec/08](08-leagues.md#overall-tiers)).
+  - Reached from a Help link in every page's foot, beside Privacy and Terms, and in the team-name
+    ▾ menu; links such as Price changes' How prices move › open its section. Not in the top bar.
+- **Settings** ([below](#settings)).
 
 ## Home
 
@@ -152,12 +189,13 @@ Grilled 14 Nov 2026.
   one; anything put back as it was saved counts none. Example: swap Zeus to the bench, make Chovy
   Captain and play Bench Boost: 3 changes (Craig, 18 Nov 2026).
 - Make Captain shows only on a starter, never on the bench or the coach, as FPL
-  ([spec/04](04-captain.md)).
+  ([spec/04](04-captain.md)). Any starter can be made Captain, one not starting this week
+  included, as FPL; his card says Not starting (Craig, 17 Nov 2026).
 - On Transfers no row is greyed: a buy Flol refuses says why at the foot of the page. Over the
   budget is allowed while choosing; the bank turns red and Review and confirm is off, as FPL. So
   a full team is the only refusal a buy shows for money or cap (Craig, 16 and 18 Nov 2026).
-- A sold player stays in his place, faded, with ↺ to put him back, until a buy fills it, as FPL
-  (Craig, 18 Nov 2026).
+- A sold player's slot is a dashed empty slot with his role and `+`, as the front door's, and ↺
+  puts him back (Craig, 17 Nov 2026; kept over a faded tile, 18 Nov 2026).
 - Before anyone is sold, the list shows every player under All roles, and a + says to sell a
   player first, as FPL (Craig, 18 Nov 2026).
 - The list's role chips are All roles, the five roles, then Coach, so coaches can be browsed
@@ -204,6 +242,8 @@ F1 Fantasy, Sleeper and gol.gg).
     line's total, per game and points. Only Season, Form and line points are marked. No buttons, a
     Change link on the second player, and no mark on a series where the two meet (Craig, 16 Nov
     2026). No transfers row: "get rid of the fluff lines".
+  - The search lists every player of his role first, with no cap; typing narrows it, and Other
+    roles › opens the rest. A bare /compare, with no player, goes to Stats (Craig, 17 Nov 2026).
   - The picture is `docs/design/approved/compare/`.
 
 ## Settings
@@ -241,11 +281,21 @@ Grilled 13 Nov 2026.
     squad, remembered views and theme), with no analytics or ads.
   - The banner text is any text up to 20 characters, moderated like team names (spec/13); Latin
     letters are allowed, as in 바론 스틸 FC (Claude's call on Craig's "your call").
+- With the banner empty, the Settings preview shows a greyed 배너 in the hangul's place; Profile
+  shows just the team name (Craig, 17 Nov 2026).
+- The save bar counts and names every unsaved change, across all tabs. Example: "2 changes:
+  team name, theme" (Craig, 17 Nov 2026).
+- Privacy and Terms are their own pages, `/privacy` and `/terms`, linked from Settings' foot and
+  the sign-up tick (Craig, 17 Nov 2026).
 
 ## The coach card
 
 The same as the player card, with the coach's lines in place of a player's. A Roster tab, the
 team's players and prices, replaces Champions.
+
+- This week before his team's first series lists the week's series with opponent and time,
+  points as —, filling in as played, as the player card (Craig, 17 Nov 2026).
+- History shows a series being played, tagged Live, with its points so far (Craig, 17 Nov 2026).
 
 ## Buffs
 

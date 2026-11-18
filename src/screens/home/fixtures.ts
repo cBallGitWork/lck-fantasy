@@ -11,11 +11,13 @@ import {
   livePointsOf,
   MANAGER,
   MY_WEEK3,
+  PERFECT_OTHERS,
   PICK_TEAM_SQUAD,
   POINTS_AT,
   POINTS_WEEK,
   rawWeekOf,
   startOf,
+  statsOf,
   WEEK3_FINAL,
   WEEK3_SERIES_AT_POINTS,
   WEEK4_DEADLINE,
@@ -28,8 +30,10 @@ import { FOLLOWED_WEEK3, MANAGERS } from "../../fixtures/managers";
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
 import { DEFAULT_STREAM, STREAMS } from "../../fixtures/streams";
+import { sum } from "../../parts";
 import { flexPlays, isBench } from "../../rift";
-import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter } from "./types";
+import { starAndFlop, type WeekPlayer } from "./starFlop";
+import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter, SidePlayer } from "./types";
 
 const atPoints = (id: string) => seriesById(WEEK3_SERIES_AT_POINTS, id);
 const matchup = (s: Series) => `${s.home} v ${s.away}`;
@@ -98,6 +102,30 @@ const startsIn = countdown(IDLE_AT, startOf(next));
 /** A squad member's final Week 3, before the Captain's ×1.5, as star and flop show it. */
 const week3Of = (name: string) => rawWeekOf(finalPickOf(name));
 
+/** Week 3's made-up points for those neither in Baron Steal FC's squad nor the perfect game. */
+const OTHERS_WEEK3: Record<string, number> = { Keria: 14, Chovy: 17, Peyz: 12, Gumayusi: 10, Oner: 13, Kiin: 15, Doran: 8 };
+
+/** A final Week 3 by name: a squad member's and a perfect pick's worked from their games, the rest made up. */
+function week3PointsOf(name: string): number {
+  const perfect = PERFECT_OTHERS[name];
+  if (perfect) return sum(perfect.map((s) => s.points));
+  return OTHERS_WEEK3[name] ?? week3Of(name);
+}
+
+/** Week 3's made-up effective ownership, in per cent, most owned first. */
+const WEEK3_EO: Record<string, number> = {
+  Faker: 64, Keria: 52, Chovy: 48, Ruler: 45, Zeus: 41, Canyon: 37, Peyz: 33, kkOma: 30, Delight: 26, Gumayusi: 22,
+  Oner: 18, Kiin: 15, Duro: 14, Siwoo: 12, Doran: 10, BuLLDoG: 9, Pyosik: 7,
+};
+
+/** Week 3's players and coaches, final: role and team from Stats, points and effective ownership. */
+export const WEEK3_FIELD: (SidePlayer & WeekPlayer)[] = Object.entries(WEEK3_EO).map(([name, eoPct]) => {
+  const { role, team } = statsOf(name);
+  return { role, name, team, points: week3PointsOf(name), eoPct };
+});
+
+const lastWeek = starAndFlop(WEEK3_FIELD);
+
 /** Home with nothing live, Week 4 to come (idle.html). */
 export const HOME_IDLE: HomeIdleData = {
   ...SHARED,
@@ -107,6 +135,6 @@ export const HOME_IDLE: HomeIdleData = {
   lineup,
   next: { home: next.home, away: next.away, day: next.day, local: next.local, kst: next.kst, startsIn: { days: startsIn.days, hours: startsIn.hours } },
   week: { label: "Week 3", final: true, points: MY_WEEK3.finalTotal, ...WEEK3_FINAL },
-  star: { role: "mid", name: "Faker", team: "T1", points: week3Of("Faker") },
-  flop: { role: "sup", name: "Delight", team: "HLE", points: week3Of("Delight") },
+  stars: lastWeek.stars,
+  flops: lastWeek.flops,
 };

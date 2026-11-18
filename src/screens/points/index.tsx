@@ -4,6 +4,7 @@ import { Empty, PageFrame, rememberedView, rememberView, VIEW_KEYS } from "../..
 import { LATEST_WEEK, POINTS_WEEKS } from "./fixtures";
 import { PointsPage } from "./PointsPage";
 import { POINTS_VIEWS, type PointsView } from "./types";
+import { WORDS } from "./words";
 
 /** Points shares its view with Pick Team and Perfect game (spec/12). */
 const keepView = (view: PointsView) => rememberView(VIEW_KEYS.board, view);
@@ -23,7 +24,7 @@ export function PointsScreen() {
   if (!data)
     return (
       <PageFrame screen="points" active="points" account={MANAGER.team}>
-        <Empty title="No such week" />
+        <Empty title={WORDS.noWeek} />
       </PageFrame>
     );
   // Keyed by week, so stepping to another week closes the open breakdown.

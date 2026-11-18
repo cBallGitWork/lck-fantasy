@@ -13,7 +13,6 @@ export const WORDS = {
   cancel: "Cancel",
   on: "On",
   onUnsaved: "On · unsaved",
-  transfers: "Transfers",
   form: "Form",
   owned: "Owned",
   season: "Season",

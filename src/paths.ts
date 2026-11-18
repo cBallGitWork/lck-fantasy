@@ -18,6 +18,8 @@ export const PATHS = {
   compare: "/compare/$playerId",
   perfectGame: "/perfect-game",
   priceChanges: "/price-changes",
+  /** One week's new prices, so a week can be linked: `/price-changes/4`. */
+  priceChangesWeek: "/price-changes/$week",
   settings: "/settings",
   lckHub: "/lck",
   playerCard: "/player/$playerId",
@@ -46,6 +48,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   compare: "Compare",
   perfectGame: "Perfect game",
   priceChanges: "Price changes",
+  priceChangesWeek: "Price changes",
   settings: "Settings",
   lckHub: "LCK",
   playerCard: "Player",
@@ -81,6 +84,16 @@ export type Go = { [K in ScreenKey]: GoTo<(typeof PATHS)[K]> }[ScreenKey];
 export function pathTo(go: Go): string {
   const params: Record<string, string> = go.params ?? {};
   return go.to.replace(/\$(\w+)/g, (_, name: string) => encodeURIComponent(params[name] ?? ""));
+}
+
+/**
+ * The week a `$week` path names, among `weeks`: none in the path is the `latest`, `/points/2` is
+ * Week 2; undefined for a week there isn't, or anything not a number.
+ */
+export function weekInPath(param: string | undefined, weeks: { has: (week: number) => boolean }, latest: number): number | undefined {
+  if (param === undefined) return latest;
+  const week = /^\d+$/.test(param) ? Number(param) : NaN;
+  return weeks.has(week) ? week : undefined;
 }
 
 /** A player's card, or the coach's card for a coach. */

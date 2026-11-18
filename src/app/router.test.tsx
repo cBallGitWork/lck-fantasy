@@ -20,6 +20,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   compare: [{ to: PATHS.compare, params: { playerId: "faker" } }, "compare"],
   perfectGame: [{ to: PATHS.perfectGame }, "perfect-game"],
   priceChanges: [{ to: PATHS.priceChanges }, "price-changes"],
+  priceChangesWeek: [{ to: PATHS.priceChangesWeek, params: { week: "3" } }, "price-changes"],
   settings: [{ to: PATHS.settings }, "settings"],
   lckHub: [{ to: PATHS.lckHub }, "lck-hub"],
   playerCard: [{ to: PATHS.playerCard, params: { playerId: "faker" } }, "player-card"],

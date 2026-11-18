@@ -38,10 +38,10 @@ He looked at the built page and asked for these; they overrule the pictures wher
 - **A player on the squad**: sells him; the list filters to his role, or any role while the squad keeps one of each (spec/03). Any of the nine, coach included, can be sold.
 - **A row's +**: buys that player; a refused buy says why.
 - **Top strip**: free transfers left, the pending hit (−6 each), the bank.
-- **Confirmed · Week 4**: each confirm this week, newest first, with what it used (free or −6). Only the latest has **Undo**, until the deadline (spec/03). Undo also clears any unconfirmed changes. A confirm under Remake or Limitless is listed with no Undo.
+- **Confirmed · Week 4**: each confirm this week, newest first, with what it used (free or −6). Only the latest has **Undo**, until the deadline (spec/03). Undo also clears any unconfirmed changes.
 - **Bottom bar**: the transfers so far, Reset, and Review and confirm.
 - **Confirm sheet**: what changes, the cost and the bank. Back or Confirm, with the deadline.
-- **Remake and Limitless**: the buff names alone, no "Play"; the transfer buffs (FPL's chips; renamed 14 Nov 2026, the pictures too), at the top beside the bank, as FPL's Wildcard and Free Hit. Bench Boost and Dual Carry stay on Pick Team.
+- **No buff keys**: Remake and Limitless, at the top beside the bank in the picture, were dropped (17 Nov 2026, spec/06). Every buff is played on Pick Team.
 
 ## Placeholders
 

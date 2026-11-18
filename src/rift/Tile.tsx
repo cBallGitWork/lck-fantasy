@@ -5,6 +5,7 @@ import { RiftMap } from "./RiftMap";
 import { Shirt } from "./Shirt";
 import type { SlotKey } from "./roles";
 import { slotLabel } from "./roles";
+import { SlotName } from "./SlotName";
 import type { RiftPoint } from "./slots";
 import { MarkBadge, type Mark } from "./MarkBadge";
 import "./Tile.css";
@@ -17,8 +18,6 @@ interface TileProps {
   /** Where the tile's centre stands on the Rift; a bench tile stands in its bar. */
   at?: RiftPoint;
   mark?: Mark;
-  /** Dual Carry is played: the V filled as the C, as the Vice-carry scores ×1.5 too (spec/06). */
-  dual?: boolean;
   /** His news flag (`Not starting`): a `!` at the shirt's top left, the word in his card. */
   flag?: string;
   /** One of your players. */
@@ -43,7 +42,7 @@ const share = (px: number) => `${(px / measure.rift) * 100}%`;
 
 /**
  * One player on the Rift or the bench, as FPL's tile (Craig, 16 Nov 2026): his price chip on Transfers,
- * the Flex's or Coach's label, his shirt on a faint card with C or V and his flag at its top corners, a
+ * the Flex's or Coach's label, his shirt on a faint card with C and his flag at its top corners, a
  * white name plate, then a band: his points and series, or his fixtures.
  */
 export function Tile(p: TileProps) {
@@ -55,7 +54,11 @@ export function Tile(p: TileProps) {
       {...selectable(p.onSelect, p.selected)}
     >
       {p.price !== undefined && <div className="tile__price num">{p.price}</div>}
-      {label && <div className={cx("tile__slot", p.slot === "flex" && "tile__slot--flex")}>{label}</div>}
+      {label && (
+        <div className={cx("tile__slot", p.slot === "flex" && "tile__slot--flex")}>
+          <SlotName slot={p.slot} label={label} />
+        </div>
+      )}
       <div className="tile__card">
         {p.sell && (
           <span className="tile__sell" aria-hidden="true">
@@ -70,7 +73,7 @@ export function Tile(p: TileProps) {
             </span>
           )}
           {p.mark && (
-            <MarkBadge mark={p.mark} dual={p.dual} className="tile__mark" />
+            <MarkBadge mark={p.mark} className="tile__mark" />
           )}
         </div>
       </div>

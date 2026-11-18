@@ -31,11 +31,6 @@
   align-items: center;
   margin-bottom: var(--s-3);
 }
-.transfers__keys {
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
-}
 
 /* The changes so far, Reset, and Review and confirm. */
 .transfers__changes {

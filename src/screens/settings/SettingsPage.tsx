@@ -1,6 +1,6 @@
 import { useId, type ReactNode } from "react";
 import { TEAMS } from "../../fixtures/week3";
-import { Deadline, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, TabPanel, Tabs, Tag, timeIn, ViewToggle } from "../../parts";
+import { cx, Deadline, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, TabPanel, Tabs, Tag, timeIn, ViewToggle } from "../../parts";
 import { CappedInput, LegalNames, plainOptions, ProviderMark, Row, Select, TEAM_OPTIONS } from "./form";
 import {
   BROWSER,
@@ -82,15 +82,16 @@ export function SettingsPage(props: SettingsProps) {
   );
 }
 
+/** The greyed word holding the hangul's place while the banner is empty (Profile then shows the team name alone). */
+const EMPTY_BANNER = "배너";
+
 /** Your team's banner as Profile shows it, redrawn as you type: the hangul and the team name (favourite team and country are the rows below). */
 function Banner({ values }: { values: SettingsValues }) {
   return (
     <div className="settings__banner">
-      {values.banner && (
-        <span className="settings__banner-hangul" lang="ko">
-          {values.banner}
-        </span>
-      )}
+      <span className={cx("settings__banner-hangul", !values.banner && "settings__banner-hangul--empty")} lang="ko">
+        {values.banner || EMPTY_BANNER}
+      </span>
       <b className="settings__banner-name">{values.teamName}</b>
     </div>
   );

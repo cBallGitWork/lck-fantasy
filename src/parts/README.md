@@ -28,7 +28,7 @@ Keys, links, tabs, sheets and fields.
 - `Menu.tsx`: a key that opens a list of links and actions (a league's Admin menu; the account menu once its items are settled).
 - `Modal.tsx`: a card (1056) or sheet (544) over a dimmed page; ✕, Esc, focus kept inside. A sheet shows its title, or its own `head` (Points' breakdown).
 - `Field.tsx`: a form field: label above, 40px, an error line under.
-- `Toast.tsx`: a short message at the foot of the page that goes by itself after `TOAST_MS` (`Kingen added`, `Team full: 2 from T1`).
+- `Toast.tsx`: a short message at the foot of the page that goes by itself after `TOAST_MS` (`Kingen added`, `Max 2 from T1`).
 - `MainAction.tsx`: the screen's one filled key; disabled with its reason.
 - `OutlinedKey.tsx`: any other key; disabled with its reason.
 
@@ -40,6 +40,7 @@ What shows a fact: tags, tables, lists, crests, states.
 - `Deadline.tsx`: `Deadline Wed 07:45  16:45 KST` and the countdown.
 - `Time.tsx`: your time, then KST in mid grey; the words over such times (`YOUR_TIME`, `TIME_NOTE`).
 - `MeDot.tsx`: your player's dot.
+- `Hint.tsx`: a word's hover (spec/12, Words): one short line on hover, or on tap on the phone; the words-alone lines (`HINTS`) and C's (`captainHint`).
 - `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a rule above a row starting a group (`ruleAbove`), a row's `›` (`open`); sticky head and name column for the wide table.
 - `SeriesList.tsx`: the week's series: day, teams, then score and state, or the time.
 - `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px `--text` rule, the next 3 with `Bo3`, the first in `--text` (player card, coach card).
@@ -47,7 +48,7 @@ What shows a fact: tags, tables, lists, crests, states.
 - `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `TierShield.tsx`: Overall's tier shield, filled and outlined, no text on it (spec/08); the page sizes it through its class name.
-- `Led.tsx`: a truck's line on its dotted LED panel, in capitals, drawn as Home's; `big` for the truck picker's preview.
+- `Led.tsx`: a cheer's or jeer's line on its dotted LED panel, in capitals, drawn as Home's; `big` for the picker's preview; `TruckHire`, the credit under one received; the kinds' words and `Cheer / Jeer`, the key.
 - `Move.tsx`: `PriceMove` (▲ 0.5, a page's class beside it) and `RankMove` (▲ 6,904, or a mid grey `—` when it held), the one rank move on every screen; no CSS of its own, base.css draws them.
 
 ## text/
@@ -64,4 +65,5 @@ Helpers with no look of their own.
 - `cx.ts`: joins class names.
 - `selectable.ts`: makes a tile or card a key: click, Enter or Space.
 - `sum.ts`: numbers added up; none gives 0.
+- `rememberedView.ts`: the view a manager last chose, kept in the browser under `VIEW_KEYS` (Pick Team, Points and Perfect game share one; Transfers its own).
 - `devState.ts`: `useDevState`, the approved picture's state a screen opens on `?state=` in dev only (`src/app/devStates.ts` lists them).

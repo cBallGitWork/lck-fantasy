@@ -28,21 +28,35 @@ export const SEASON = "LCK 2027";
 export const COMPETITION_TITLE = `${COMPETITION} 2027`;
 
 /**
- * The competition's values the pictures share: the Carry's multiplier, each series' length, the
- * most players from one team, the points a transfer over the free ones costs, the four buffs (spec/06).
- * The multiplier, team cap and hit are data/lck/season-2027.json's settings.
+ * The competition's values the pictures share: the Captain's multiplier, each series' length, the
+ * most players from one team, the points a transfer over the free ones costs, the three buffs (spec/06).
+ * The multipliers, team cap, hit and buffs are data/lck/season-2027.json's settings.
  */
-export const CARRY_MULTIPLIER = season.settings.carryMultiplier;
+export const CAPTAIN_MULTIPLIER = season.settings.carryMultiplier;
 /** The games that count in a series: its best two (spec/05). */
 const COUNTED_PER_SERIES = 2;
 export const BEST_OF = 3;
 export const TEAM_CAP = season.settings.squad.teamCap;
 export const HIT_POINTS = season.settings.transfers.hitPoints;
-export const BUFFS = ["Bench Boost", "Dual Carry", "Remake", "Limitless"] as const;
+export const BUFFS = ["Bench Boost", "Double Captain", "Coach Diff"] as const;
 export type BuffName = (typeof BUFFS)[number];
 
-/** The Carry's points: ×1.5, rounded down, a minus towards zero (spec/05, The Carry). */
-export const carried = (points: number) => Math.trunc(points * CARRY_MULTIPLIER);
+/** A buff's multiplier, from the season's data: Double Captain's ×2, Coach Diff's ×3. */
+function buffMultiplier(name: BuffName): number {
+  const multiplier = season.settings.buffs.find((buff) => buff.name === name)?.multiplier;
+  if (multiplier === undefined) throw new Error(`The season data gives ${name} no multiplier.`);
+  return multiplier;
+}
+
+/** Each buff's one line (spec/06): its Pick Team card's. */
+export const BUFF_DOES: Record<BuffName, string> = {
+  "Bench Boost": "Your bench players score this week too",
+  "Double Captain": `A second Captain; both score ×${buffMultiplier("Double Captain")}`,
+  "Coach Diff": `Your coach scores ×${buffMultiplier("Coach Diff")} this week`,
+};
+
+/** The Captain's points: ×1.5, rounded down, a minus towards zero (spec/05, The Captain). */
+export const captained = (points: number) => Math.trunc(points * CAPTAIN_MULTIPLIER);
 
 /** The games of a series that count, by index: its best ones (spec/05). */
 export function countedGames(games: readonly number[]): Set<number> {

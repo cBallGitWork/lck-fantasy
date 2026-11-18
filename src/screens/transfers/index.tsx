@@ -1,10 +1,13 @@
 import { useSearch } from "@tanstack/react-router";
 import { useState } from "react";
-import { browserZone, timeIn, useDevState } from "../../parts";
+import { browserZone, rememberedView, rememberView, timeIn, useDevState, VIEW_KEYS } from "../../parts";
 import { SELL_SEARCH } from "../../paths";
 import { TRANSFERS_PICTURE } from "./fixtures";
 import { confirmTransfers, EMPTY_PLAN, remove, SQUAD_SLOTS, type Confirm, type SquadPlayer, type TransferRules } from "./plan";
-import { TransfersPage, type TransfersPageProps } from "./TransfersPage";
+import { TRANSFER_VIEWS, TransfersPage, type TransfersPageProps, type View } from "./TransfersPage";
+
+/** Transfers keeps its own view, apart from the one Pick Team, Points and Perfect game share (spec/12). */
+const keepView = (view: View) => rememberView(VIEW_KEYS.transfers, view);
 
 /** What a confirm changes: the nine, the bank and free transfers, and the week's confirms. */
 type Week = { squad: SquadPlayer[]; rules: TransferRules; confirms: Confirm[] };
@@ -35,5 +38,16 @@ export function TransfersScreen() {
   };
 
   const initialPlan = selling ? remove(squad, EMPTY_PLAN, selling).plan : TRANSFERS_PICTURE.initialPlan;
-  return <TransfersPage {...TRANSFERS_PICTURE} {...week} initialPlan={initialPlan} reviewing={reviewing} onConfirm={onConfirm} onUndo={onUndo} />;
+  return (
+    <TransfersPage
+      {...TRANSFERS_PICTURE}
+      {...week}
+      initialPlan={initialPlan}
+      view={rememberedView(VIEW_KEYS.transfers, TRANSFER_VIEWS)}
+      onViewChange={keepView}
+      reviewing={reviewing}
+      onConfirm={onConfirm}
+      onUndo={onUndo}
+    />
+  );
 }

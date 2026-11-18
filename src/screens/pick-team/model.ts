@@ -1,19 +1,19 @@
 // Pick Team's rules, kept apart from the page so they are tested without a browser (spec/12,
-// Pick Team; the picture's README, Controls). Swaps, the Carry, the Vice-carry and buffs change
+// Pick Team; the picture's README, Controls). Swaps, the Captain and buffs change
 // only the draft; Save makes the draft the saved team, Reset drops it.
 
 import { SAVED_NEWS } from "../../parts";
 import { isBench, markNews, type PersonRole, type SquadSlot } from "../../rift";
+import type { BuffEffect } from "../../../convex/squads/buffs";
 
-/** The two buffs played on this page; Remake and Limitless are played on Transfers. */
-export type PickBuff = "benchBoost" | "dualCarry";
+/** The buffs, each played and cancelled on this page (spec/06). */
+export type PickBuff = BuffEffect;
 
 /** A manager's team as the page edits it: who stands in each slot, the marks, the buff. */
 export interface PickTeam {
   /** Each slot's player id. */
   slots: Record<SquadSlot, string>;
-  carry: string;
-  viceCarry: string;
+  captain: string;
   buff?: PickBuff;
 }
 
@@ -31,8 +31,7 @@ export type PickAction =
   | { type: "select"; id: string }
   | { type: "close" }
   | { type: "view"; view: PickView }
-  | { type: "makeCarry"; id: string }
-  | { type: "makeViceCarry"; id: string }
+  | { type: "makeCaptain"; id: string }
   | { type: "playBuff"; buff: PickBuff }
   | { type: "cancelBuff" }
   | { type: "reset" }
@@ -65,7 +64,7 @@ export function swapIds(team: PickTeam, id: string, roleOf: (id: string) => Pers
   return new Set(partners.map((to) => team.slots[to]));
 }
 
-/** Who can take the Carry or the Vice-carry: a starter who isn't the coach (spec/01, spec/04). */
+/** Who can be Captain: a starter who isn't the coach (spec/01, spec/04). */
 const isMarkable = (team: PickTeam, id: string) => {
   const slot = slotOf(team, id);
   return slot !== undefined && !isBench(slot) && slot !== "coach";
@@ -73,8 +72,8 @@ const isMarkable = (team: PickTeam, id: string) => {
 
 /**
  * How many things the draft changes from the saved team: each swap (the fewest that turn the saved
- * places into the draft's, bench order included), each mark handed to another player in another
- * slot, the buff.
+ * places into the draft's, bench order included), the C handed to another player in another slot,
+ * the buff.
  */
 export function changeCount(saved: PickTeam, draft: PickTeam): number {
   const seen = new Set<SquadSlot>();
@@ -89,9 +88,9 @@ export function changeCount(saved: PickTeam, draft: PickTeam): number {
     }
     swaps += Math.max(length - 1, 0);
   }
-  // A mark counts when both its player and his slot change, so a swap that hands it on, or one that moves him, is one change.
-  const moved = (mark: "carry" | "viceCarry") => Number(saved[mark] !== draft[mark] && slotOf(saved, saved[mark]) !== slotOf(draft, draft[mark]));
-  return swaps + moved("carry") + moved("viceCarry") + Number(saved.buff !== draft.buff);
+  // The C counts when both its player and his slot change, so a swap that hands it on, or one that moves him, is one change.
+  const moved = Number(saved.captain !== draft.captain && slotOf(saved, saved.captain) !== slotOf(draft, draft.captain));
+  return swaps + moved + Number(saved.buff !== draft.buff);
 }
 
 const withDraft = (state: PickState, draft: PickTeam): PickState => ({
@@ -99,24 +98,22 @@ const withDraft = (state: PickState, draft: PickTeam): PickState => ({
   draft,
 });
 
-/** The draft after two players trade places. The Carry and Vice-carry stay on the field: whoever comes on takes the mark of whoever goes off (spec/04). */
+/** The draft after two players trade places. The Captain stays on the field: whoever comes on takes the C of whoever goes off (spec/04). */
 function swap(draft: PickTeam, a: string, b: string): PickTeam {
   const aSlot = slotOf(draft, a) as SquadSlot;
   const bSlot = slotOf(draft, b) as SquadSlot;
   const slots = { ...draft.slots, [aSlot]: b, [bSlot]: a };
-  const pass = (mark: string) => (mark === a && isBench(bSlot) ? b : mark === b && isBench(aSlot) ? a : mark);
-  return { ...draft, slots, carry: pass(draft.carry), viceCarry: pass(draft.viceCarry) };
+  const { captain } = draft;
+  return { ...draft, slots, captain: captain === a && isBench(bSlot) ? b : captain === b && isBench(aSlot) ? a : captain };
 }
 
 /**
- * What the live region says after an action: `Saved` for a save, the new Carry (or else Vice-carry)
- * when a mark key moved one (`Faker is your Carry`); nothing else.
+ * What the live region says after an action: `Saved` for a save, the new Captain when the key
+ * moved the C (`Faker is your Captain`); nothing else.
  */
 export function pickNews(action: PickAction, before: PickState, after: PickState, nameOf: (id: string) => string): string | undefined {
   if (action.type === "save") return SAVED_NEWS;
-  if (action.type !== "makeCarry" && action.type !== "makeViceCarry") return undefined;
-  if (after.draft.carry !== before.draft.carry) return markNews(nameOf(after.draft.carry), "C");
-  if (after.draft.viceCarry !== before.draft.viceCarry) return markNews(nameOf(after.draft.viceCarry), "V");
+  if (action.type === "makeCaptain" && after.draft.captain !== before.draft.captain) return markNews(nameOf(after.draft.captain), "C");
   return undefined;
 }
 
@@ -139,17 +136,9 @@ export function pickReducer(roleOf: (id: string) => PersonRole) {
         return { ...state, selected: undefined };
       case "view":
         return { ...state, view: action.view };
-      case "makeCarry": {
-        if (!isMarkable(draft, action.id) || draft.carry === action.id) return state;
-        // As FPL's armband: making the Vice-carry the Carry hands the old Carry the V.
-        const viceCarry = draft.viceCarry === action.id ? draft.carry : draft.viceCarry;
-        return withDraft(state, { ...draft, carry: action.id, viceCarry });
-      }
-      case "makeViceCarry": {
-        if (!isMarkable(draft, action.id) || draft.viceCarry === action.id) return state;
-        const carry = draft.carry === action.id ? draft.viceCarry : draft.carry;
-        return withDraft(state, { ...draft, viceCarry: action.id, carry });
-      }
+      case "makeCaptain":
+        if (!isMarkable(draft, action.id) || draft.captain === action.id) return state;
+        return withDraft(state, { ...draft, captain: action.id });
       case "playBuff":
         return draft.buff ? state : withDraft(state, { ...draft, buff: action.buff });
       case "cancelBuff":

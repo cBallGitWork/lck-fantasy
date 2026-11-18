@@ -31,6 +31,14 @@ Each team has a fun shirt and a crest, Flol's own drawings (Craig, 16 Nov 2026).
 - A row a role icon already leads takes no team mark: Stats, the Transfers list, Live, feeds,
   history.
 - A colour fill only where a crest won't fit, as Live's stream scorebug.
+- Player photos go on the player card and in Card view, the broadcast lineup; the Rift keeps
+  shirts, as FPL (Craig, 17 Nov 2026).
+- The photos are the LCK's media-day portraits from its Flickr, one per player per split, saved
+  and served by Flol, never hotlinked, and credited "Photo: LCK" (Craig, 17 Nov 2026).
+- Every page's foot carries Riot's Legal Jibber Jabber notice, and so do the Terms: "Flol was
+  created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot
+  Games does not endorse or sponsor this project." Riot's policy requires it (checked 17 Nov
+  2026, riotgames.com/en/legal; Craig, 17 Nov 2026).
 - The kit colours are data. DNS's, DK's and BFX's are guesses, fine for the beta (Craig, 16 Nov
   2026).
 

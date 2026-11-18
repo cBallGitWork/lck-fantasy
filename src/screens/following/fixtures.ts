@@ -1,9 +1,9 @@
 // The Following picture's made-up Split 1 Week 3 (docs/design/approved/following/), mid-week.
-// Names, teams and numbers are examples, not roster data. Truck lines are the unapproved drafts
+// Names, teams and numbers are examples, not roster data. Cheer and jeer lines are the unapproved drafts
 // (docs/research/truck-lines.md), filled with each receiver's numbers.
 import { FOLLOWED_WEEK3, MANAGERS } from "../../fixtures/managers";
 import { seriesById } from "../../fixtures/series";
-import { CARRY_MULTIPLIER, HIT_POINTS, WEEK2_SERIES, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS, type Series } from "../../fixtures/week3";
+import { CAPTAIN_MULTIPLIER, HIT_POINTS, WEEK2_SERIES, WEEK3_DEADLINE, WEEK3_SERIES_AT_POINTS, type Series } from "../../fixtures/week3";
 import type { FollowingData, SeriesItem } from "./feed";
 
 const { minji: MINJI, jae: JAE, dan: DAN, ella: ELLA, joe: JOE, tom: TOM, sam: SAM, priya: PRIYA } = MANAGERS;
@@ -24,13 +24,13 @@ const WEEK2_ENDED = { local: "Sun 12:30", kst: "21:30" } as const;
 export const FOLLOWING: FollowingData = {
   week: 3,
   followCap: 50,
-  carryMultiplier: CARRY_MULTIPLIER,
+  captainMultiplier: CAPTAIN_MULTIPLIER,
   feed: [
     {
       week: 3,
       notFinal: true,
       deadline: DEADLINE,
-      truckable: true,
+      cheerable: true,
       items: [
         {
           kind: "series",
@@ -53,7 +53,7 @@ export const FOLLOWING: FollowingData = {
           ...week3(FOLLOWED_WEEK3.jae.seriesId),
           players: [
             { name: "Rich", points: 4 },
-            { name: "ucal", points: 2, carry: {} },
+            { name: "ucal", points: 2, captain: {} },
             { name: "Lehends", points: 3 },
           ],
           ended: { local: "Fri 13:00", kst: "22:00" },
@@ -66,7 +66,7 @@ export const FOLLOWING: FollowingData = {
           ...week3(FOLLOWED_WEEK3.dan.seriesId),
           players: [
             { name: "Oner", points: 11 },
-            { name: "Faker", points: 18, carry: { before: 12 } },
+            { name: "Faker", points: 18, captain: { before: 12 } },
             { name: "Keria", points: 5 },
           ],
           ended: { local: "Wed 10:20", kst: "19:20" },
@@ -75,8 +75,9 @@ export const FOLLOWING: FollowingData = {
           kind: "deadline",
           id: "f4",
           manager: MINJI,
-          buff: "Limitless",
+          buff: "Bench Boost",
           transfers: 5,
+          hit: 3 * HIT_POINTS,
           swaps: [
             { out: "Doran", in: "Kiin", soFar: 9 },
             { out: "Peyz", in: "Ruler", soFar: 4 },
@@ -101,7 +102,7 @@ export const FOLLOWING: FollowingData = {
     },
     {
       week: 2,
-      truckable: false,
+      cheerable: false,
       items: [
         {
           kind: "series",
@@ -109,8 +110,8 @@ export const FOLLOWING: FollowingData = {
           manager: JAE,
           points: 21,
           ...WEEK2_GEN_BRO,
-          bigCarry: true,
-          players: [{ name: "Ruler", points: 21, carry: { before: 14 } }],
+          bigCaptain: true,
+          players: [{ name: "Ruler", points: 21, captain: { before: 14 } }],
           ended: WEEK2_ENDED,
         },
         {
@@ -126,41 +127,41 @@ export const FOLLOWING: FollowingData = {
     },
   ],
   requests: [ELLA, JOE],
-  trucks: [
-    { id: "t1", kind: "coffee", text: "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!", from: MINJI },
-    { id: "t2", kind: "protest", text: "THIS TRUCK WAS FUNDED BY YOUR −6.", from: DAN },
+  cheers: [
+    { id: "t1", kind: "cheer", text: "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!", from: MINJI },
+    { id: "t2", kind: "jeer", text: "−6 FOR A SIDEWAYS TRANSFER. WHO SIGNED THIS OFF?", from: DAN },
     { id: "t3", kind: "sponsor", text: "WINNER WINNER, GANK CHICKEN. 98 PTS.", league: "Pub League", sponsor: "갱 치킨 Gank Chicken" },
   ],
   following: [MINJI, DAN, JAE],
   followers: [MINJI, DAN, TOM, SAM, PRIYA],
-  sent: { dan: "coffee" },
+  sent: { dan: "cheer" },
   receivers: {
     jae: {
       pointsSoFar: 31,
       lines: [
-        { id: "c13", kind: "coffee", text: "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!" },
-        { id: "c14", kind: "coffee", text: "THIS COFFEE IS KERIA-TIER SUPPORT." },
-        { id: "c18", kind: "coffee", text: "AUTO-SUB SAVIOUR? NO, MATE. YOU ARE." },
-        { id: "p01", kind: "protest", text: "MANAGEMENT MUST EXPLAIN THIS CARRY PICK. 2 PTS." },
-        { id: "p15", kind: "protest", text: "NO TRANSFER AGAIN. IS ANYONE AT HEADQUARTERS?" },
-        { id: "p16", kind: "protest", text: "SET AND FORGET IS NOT A PHILOSOPHY. IT'S A NAP." },
-        { id: "p24", kind: "protest", text: "31 POINTS. WE ARE NOT ANGRY. WE ARE GUTTED." },
-        { id: "p26", kind: "protest", text: "THE TEMPLATE WAS RIGHT THERE, MATE." },
+        { id: "c13", kind: "cheer", text: "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!" },
+        { id: "c14", kind: "cheer", text: "THIS COFFEE IS KERIA-TIER SUPPORT." },
+        { id: "c18", kind: "cheer", text: "AUTO-SUB SAVIOUR? NO, MATE. YOU ARE." },
+        { id: "p01", kind: "jeer", text: "MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS." },
+        { id: "p15", kind: "jeer", text: "NO TRANSFER AGAIN. IS ANYONE AT HEADQUARTERS?" },
+        { id: "p16", kind: "jeer", text: "SET AND FORGET IS NOT A PHILOSOPHY. IT'S A NAP." },
+        { id: "p24", kind: "jeer", text: "31 POINTS. WE ARE NOT ANGRY. WE ARE GUTTED." },
+        { id: "p26", kind: "jeer", text: "THE TEMPLATE WAS RIGHT THERE, MATE." },
       ],
     },
     minji: {
       pointsSoFar: 58,
       lines: [
-        { id: "c09", kind: "coffee", text: "REMAKE OR LIMITLESS, EITHER WAY: CHEEKY. 화이팅!" },
-        { id: "c13", kind: "coffee", text: "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!" },
-        { id: "c14", kind: "coffee", text: "THIS COFFEE IS KERIA-TIER SUPPORT." },
-        { id: "p26", kind: "protest", text: "THE TEMPLATE WAS RIGHT THERE, MATE." },
-        { id: "p27", kind: "protest", text: "WE PARKED HERE. YOUR SQUAD ISN'T MOVING EITHER." },
-        { id: "p28", kind: "protest", text: "THE TRUCK DRIVER HAS ALSO LOST FAITH." },
+        { id: "c09", kind: "cheer", text: "BENCH BOOST IN WEEK 3? BIG PLAY." },
+        { id: "c13", kind: "cheer", text: "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!" },
+        { id: "c14", kind: "cheer", text: "THIS COFFEE IS KERIA-TIER SUPPORT." },
+        { id: "p26", kind: "jeer", text: "THE TEMPLATE WAS RIGHT THERE, MATE." },
+        { id: "p27", kind: "jeer", text: "WE PARKED HERE. YOUR SQUAD ISN'T MOVING EITHER." },
+        { id: "p29", kind: "jeer", text: "MANAGEMENT IS STILL IN BASE. RECALL IS NOT A PLAN." },
       ],
     },
   },
 };
 
-/** The truck picker as drawn (truck.html): opened from Jae's row, Protest picked. */
-export const PICKER_AS_DRAWN = { managerId: JAE.id, kind: "protest", lineId: "p01" } as const;
+/** The cheer picker as drawn (truck.html): opened from Jae's row, Jeer picked. */
+export const PICKER_AS_DRAWN = { managerId: JAE.id, kind: "jeer", lineId: "p01" } as const;

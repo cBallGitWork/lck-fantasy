@@ -3,8 +3,13 @@
   margin-top: var(--s-3);
 }
 
-/* The bar under the pitch: what changed, Reset, the deadline, Save team. */
+/* The bar under the pitch: what changed, Reset, the deadline, Save team. It sticks to the window's
+   foot over the pitch's tiles (z 2) and under a menu (z 4), so Save is always in view; at the page's
+   end it rests in its place under the pitch. */
 .pick-team__bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
   display: flex;
   gap: var(--s-5);
   align-items: center;

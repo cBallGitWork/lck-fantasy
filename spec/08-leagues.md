@@ -45,6 +45,10 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 ## Private leagues
 
 - Any manager can make a private league and invite others with a code or a link, as in FPL.
+- A link only fills in the code: it opens Join a league with the code in, and the manager presses
+  Join. A visitor with no account lands on the front door, picks a squad and signs up first; then
+  Join a league opens with the code in. Nobody joins a league without pressing Join (Craig,
+  17 Nov 2026).
 - A private league's scoring starts from the gameweek its maker picks. Example: a league made in
   gameweek 4 can count from gameweek 4. The choice is this gameweek or a later one, this one by
   default (Craig, 14 Nov 2026).
@@ -53,8 +57,7 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 - The maker can't leave without deleting the league (Craig, 14 Nov 2026).
 - A manager the maker removes can't rejoin that league, as FPL bans them. The confirm reads
   "Remove Baron Steal FC? They can't rejoin." (Craig, 17 Nov 2026).
-- Ties on points go to fewer transfers, as in FPL. Only regular transfers count: those made in a
-  Remake or Limitless week don't (Craig, 14 Nov 2026).
+- Ties on points go to fewer transfers, as in FPL. Only regular transfers count (Craig, 14 Nov 2026).
 - A manager can be in up to 25 private leagues, and a private league has no size cap, as in FPL.
   Both numbers are data.
 - A code no league has keeps the Join sheet open, with "No league with that code" under the box,
@@ -118,7 +121,7 @@ As FPL's (Craig, 13 Nov 2026):
   1,920 ▲, Pub League 3rd.
 - A league's table shows rank, a movement arrow, team and manager name, gameweek points and total,
   with the season and each split as tabs above it. A row opens that manager's team.
-- A Carry column shows each manager's Carry for the gameweek in the Week column, on every tab.
+- A Captain column shows each manager's Captain for the gameweek in the Week column, on every tab.
   It shows only once that gameweek's deadline has passed, as FPL hides picks until then (Craig,
   14 Nov 2026).
 - A chase tag on the manager's own row shows the points to the rank above (16 pts to 1st), their

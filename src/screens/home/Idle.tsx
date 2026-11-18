@@ -11,7 +11,7 @@ function plateRole(s: LineupStarter): string {
   return s.slot === "flex" && s.plays ? `${ROLE_NAME.flex} · ${ROLE_NAME[s.plays]}` : ROLE_NAME[s.slot];
 }
 
-/** One starter on the broadcast stage: his shirt, C or V, and his angled name plate. */
+/** One starter on the broadcast stage: his shirt, C, and his angled name plate. */
 function Starter({ starter }: { starter: LineupStarter }) {
   return (
     <li className="home__starter">

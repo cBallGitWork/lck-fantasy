@@ -121,13 +121,13 @@ test("the Delete sheet lists what goes, then Back and Delete account", () => {
   const out = text(<DeleteSheet team={SAVED.teamName} rows={DELETE_ROWS} onBack={noop} onDelete={noop} onDownload={noop} />);
   expectInOrder(out, [
     "Delete account?",
-    "Baron Steal FC is erased at once and can't be brought back.",
+    "Baron Steal FC goes for good. You can't undo this.",
     "Team and squad",
     "Points and historyWeeks 1–3 · 187 pts",
     "Ranks in 5 leaguesOverall, United Kingdom, T1, 2 private",
     "Follows12 following · 9 followers",
     "Pub Leaguepasses to Haru's Tower Divers",
-    "Backups clear within 30 days. Download my data first to keep a copy.",
+    "Backups go within 30 days. Download my data first to keep a copy.",
     "Back",
     "Delete account",
   ]);

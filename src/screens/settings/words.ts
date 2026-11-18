@@ -45,7 +45,7 @@ export const WORDS = {
   privacyEmail: "privacy email",
   /** The Delete account sheet. */
   deleteTitle: "Delete account?",
-  backups: "Backups clear within 30 days.",
+  backups: "Backups go within 30 days.",
   keepCopy: "first to keep a copy.",
   back: "Back",
 } as const;
@@ -77,5 +77,5 @@ export const sentTo = (email: string) => `Sent to ${email}`;
 /** Which sign-in the email came from: `from Google`. */
 export const fromProvider = (provider: string) => `from ${provider}`;
 
-/** The Delete sheet's lead: `Baron Steal FC is erased at once and can't be brought back.` */
-export const erased = (team: string) => `${team} is erased at once and can't be brought back.`;
+/** The Delete sheet's lead: `Baron Steal FC goes for good. You can't undo this.` */
+export const erased = (team: string) => `${team} goes for good. You can't undo this.`;

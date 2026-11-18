@@ -1,4 +1,4 @@
-// Test fixtures for following and trucks: follows and settings, never product data.
+// Test fixtures for following and cheers: follows and settings, never product data.
 import type { LineSettings } from "./fit";
 import { acceptFollow, requestFollow, type Follows } from "./follows";
 

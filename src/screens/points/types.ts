@@ -43,6 +43,8 @@ export interface PointsPlayer {
   birthday?: boolean;
   /** The week's points; absent when he didn't play. */
   points?: number;
+  /** His points count towards the total: false for a bench player with no Bench Boost and no auto-sub (spec/12, Points). */
+  counts: boolean;
   series: PointsSeries[];
 }
 
@@ -56,7 +58,7 @@ export interface PointsStarter extends PointsPlayer {
 
 /** A line of Your week: Star, Flop or Killer. */
 export interface WeekPick {
-  label: string;
+  label: "Star" | "Flop" | "Killer";
   name: string;
   points: number;
   ownedPct: number;
@@ -66,6 +68,8 @@ export interface WeekPick {
 
 export interface LeagueRank {
   name: string;
+  /** Overall's tier after its name (`Overall · Emerald I`). */
+  tier?: string;
   rank: string;
   /** Places moved: up when positive. */
   move: number;
@@ -93,6 +97,3 @@ export interface PointsData {
 }
 
 export { VIEWS as POINTS_VIEWS, type BoardView as PointsView } from "../../rift";
-
-/** A player with no games this week, on his tile and his bench tile. */
-export const DIDNT_PLAY = "Didn't play";

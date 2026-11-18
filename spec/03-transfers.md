@@ -46,11 +46,8 @@ Grilled 14 Nov 2026.
   may spend money an earlier one freed.
 - Undo puts the old players back at their old prices and gives back exactly what the confirm
   used: free transfers return to the week's count (never above the bank cap of 3), and its −6s
-  are dropped. It isn't offered for transfers made under Remake or Limitless.
-- Undo also clears any changes the manager hasn't confirmed yet. A confirm made under Remake or
-  Limitless is still listed, with no Undo (Craig, 14 Nov 2026).
-- Playing Remake or Limitless wipes that gameweek's −6s, as FPL's Wildcard and Free Hit do
-  ([spec/06](06-buffs.md)).
+  are dropped.
+- Undo also clears any changes the manager hasn't confirmed yet (Craig, 14 Nov 2026).
 
 ## Between the splits
 
@@ -60,9 +57,11 @@ Craig, 13 Nov 2026:
 - They reopen 2 weeks before Split 2's first deadline, unlimited and free. Example: Split 2's
   first series is Wednesday 17:00 KST, so the deadline is 16:45; transfers open at 16:45 two
   Wednesdays before.
-- The budget raise from Road to MSI ([spec/10](10-season-and-gameweeks.md)) comes back off every
-  manager's bank when Split 2 starts, so a bank can fall below zero. Price rises earned in Split 1
-  are kept. Example: a raise of ₩5m and a bank of ₩1m leave −₩4m.
+- Each split has a fresh set of prices (Craig, 17 Nov 2026). When Split 2's transfers reopen,
+  every squad is repriced at them and its bank becomes the split's budget minus the squad's new
+  value, so team value resets and the Road to MSI raise ([spec/10](10-season-and-gameweeks.md))
+  is gone. A bank can fall below zero. Example: a budget of ₩100m and a squad now worth ₩103m
+  leave −₩3m.
 - In that window every squad must get back to a bank of zero or more and to the regular cap of 2
   per team, the coach included.
 - A squad still over at the deadline is fixed by Flol, at no points cost:

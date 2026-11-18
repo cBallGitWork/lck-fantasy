@@ -1,5 +1,6 @@
 // What the league forms do to the manager's leagues, kept apart from how they are drawn.
 import type { LeagueSummary, LeagueView, NewTable, PrivateEntry, PrivateLeague } from "./types";
+import { atCap } from "./words";
 
 /** Which sheet is open over the page, and the league it is about. */
 export type OpenForm =
@@ -17,11 +18,8 @@ export interface MyLeagues {
 
 export const privateCount = ({ list }: MyLeagues) => list.filter((league) => league.kind === "private").length;
 
-/** `Private leagues: 2 of 25`. */
-export const privateCountLine = (count: number, cap: number) => `Private leagues: ${count} of ${cap}`;
-
 /** Why a manager at the cap can't create or join another (spec/08); nothing below it. */
-export const capReason = (count: number, cap: number) => (count >= cap ? `${cap} leagues already` : undefined);
+export const capReason = (count: number, cap: number) => (count >= cap ? atCap(cap) : undefined);
 
 /** A new league, its maker first of one, its table not yet started. */
 export function makeLeague(name: string, scoringFrom: number, code: string, table: NewTable): PrivateEntry {

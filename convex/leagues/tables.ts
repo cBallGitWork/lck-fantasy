@@ -5,8 +5,7 @@ import { sum } from "../../src/parts/util/sum";
 export interface EntryGameweek {
   gameweek: number;
   points: number;
-  /** Transfers made, for the tie-break. Remake and Limitless weeks count none, as FPL leaves out
-   *  Wildcard and Free Hit transfers. */
+  /** Regular transfers made, for the tie-break (spec/08, Tables). */
   transfers: number;
 }
 

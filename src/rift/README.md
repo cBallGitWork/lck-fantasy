@@ -7,6 +7,7 @@ The Rift view and Card view: the map, the tiles, the shirts, the role icons, the
 - `slots.ts`: where each starter stands, in px of the 720 square: `RIFT_SLOTS` (Pick Team, Points, Perfect game): top in top lane, jungle in the jungle, mid in mid lane, Bot over Support in bot lane, Coach and Flex by the blue base. A tile stands at the same share of the Rift at any width.
 - `Lineup.tsx`: Card view: `Lineup`, the seven `LineupCard`s (not the Player card screen) in the broadcast's order, with photo or crest, role head (Flex plays X, Coach 감독), C and a footer, dim or fit.
 - `MarkBadge.tsx`: the Captain's C, round and filled, one way everywhere, `small`, `card` or `sheet`; `Mark` and `MARK_NAME`. The page places it.
+- `SlotName.tsx`: a slot's label on a tile or a lineup card; the Flex's with its hover, Any role.
 - `RoleIcon.tsx`: the role icons: top, jungle, mid, bot, support, coach, flex.
 - `Shirt.tsx`: the plain shirt with a team code.
 - `roles.ts`: role names, the five player roles (`ROLE_KEYS`), the lineup order, the squad's size, each slot's icon and tag, the role a Flex plays (`flexPlays`); a player's role or coach (`PersonRole`), and the squad's nine places (`SquadSlot`, `BENCH_SLOTS`, `isBench`).

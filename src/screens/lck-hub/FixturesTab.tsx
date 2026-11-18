@@ -28,7 +28,7 @@ export function Fixtures({
     <section>
       <WeekTitle week={week} bestOf={bestOf} onPrev={onPrev} onNext={onNext} />
       <div className="lck-hub__time-heads quiet">
-        <span>{WORDS.yours}</span>
+        <span>{WORDS.local}</span>
         <span>{WORDS.kst}</span>
       </div>
       <ByDay

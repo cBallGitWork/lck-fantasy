@@ -9,7 +9,7 @@ export function News({ news }: { news: HubNews }) {
       {news.headlines.map((h) => (
         <a key={h.headline} className="lck-hub__story" href={h.url} target="_blank" rel="noreferrer">
           <span className="lck-hub__thumb">
-            <Placeholder word={WORDS.thumbnail} fill />
+            <Placeholder word={WORDS.photo} fill />
           </span>
           <span>
             <b className="lck-hub__headline hover-line">{h.headline}</b>

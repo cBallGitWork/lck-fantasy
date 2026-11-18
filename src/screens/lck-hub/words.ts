@@ -9,12 +9,12 @@ export const WORDS = {
   /** The stage toggle's name, for a reader. */
   stage: "Stage",
   /** Fixtures' two time columns: the manager's own time, then Korea's. */
-  yours: "Yours",
+  local: "Local",
   kst: "KST",
   versus: "v",
   news: "News",
   /** A headline's picture until the news feed brings its own (#116). */
-  thumbnail: "thumbnail",
+  photo: "Photo",
   /** The team picker's name, for a reader. */
   team: "Team",
 } as const;
@@ -27,8 +27,8 @@ export const STANDINGS_HEADS = {
   team: "Team",
   won: "W",
   lost: "L",
-  gamesWon: "Sets W",
-  gamesLost: "Sets L",
+  gamesWon: "Games W",
+  gamesLost: "Games L",
   diff: "+/−",
   pct: "Win %",
   last5: "Last 5",

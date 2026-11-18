@@ -36,7 +36,7 @@ describe("each state renders from the fixture, in the picture's order", () => {
       ...STAGES,
       "‹Week 4›",
       "20–24 Jan · Bo3",
-      "Yours",
+      "Local",
       "KST",
       "Wed20 Jan",
       "08:0017:004–2HLEvDK3–3›",
@@ -86,7 +86,7 @@ describe("each state renders from the fixture, in the picture's order", () => {
     expect(html(page("Results"))).not.toMatch(/lck-hub__loser">T1</);
   });
 
-  test("Standings: the two groups, each team named once by its code, its W, L, sets, +/−, Win % and last 5", () => {
+  test("Standings: the two groups, each team named once by its code, its W, L, games, +/−, Win % and last 5", () => {
     const out = text(page("Standings"));
     expectInOrder(out, [
       ...HEAD,
@@ -94,7 +94,7 @@ describe("each state renders from the fixture, in the picture's order", () => {
       ...STAGES,
       "Baron group",
       "바론 그룹",
-      "TeamWLSets WSets L+/−Win %Last 5",
+      "TeamWLGames WGames L+/−Win %Last 5",
       "1T151114+783%WWWWW",
       "2DK3387+150%WLWWL",
       "3KRX3378−150%LWLWW",

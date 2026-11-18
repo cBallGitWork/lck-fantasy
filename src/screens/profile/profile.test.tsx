@@ -80,7 +80,7 @@ describe("Points", () => {
     expectInOrder(week2, ["Week 2", "112"]);
     expect(week2).not.toContain("Not final");
     expect(week2).not.toContain("Cheers and jeers");
-    expect(html(page("Points", PROFILE, 2))).toContain("Week 2&#x27;s team");
+    expect(html(page("Points", PROFILE, 2))).toContain("Loading Week 2&#x27;s team");
   });
 });
 
@@ -88,7 +88,7 @@ describe("History", () => {
   test("shows each week's row, newest first, then the buffs left", () => {
     expectInOrder(text(page("History")), [
       ...BANNER,
-      "Week", "Pts", "Total", "Week rank", "Overall", "Move", "Transfers", "Cost", "Bank", "Value", "Buff",
+      "Week", "Pts", "Total", "Week rank", "Overall rank", "Rank move", "Transfers", "Cost", "Bank", "Value", "Buff",
       "Week 3", "93", "315", "—", "21,804", "3,112", "5", `−${3 * HIT_POINTS}`, "₩0.5m", "₩100.9m", "Bench Boost", "›",
       "Week 2", "112", "222", "4,211", "24,916", "9,870", "1", "—", "₩1.0m", "₩100.6m", "—", "›",
       "Week 1", "110", "110", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",

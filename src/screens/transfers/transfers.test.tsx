@@ -60,7 +60,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
   });
 
   test("the week's confirms, newest first, Undo on the newest only", () => {
-    expectInOrder(out, ["Confirmed · Week 4", "your time · KST", "Tue 21:10", "06:10 KST", "Kiin → Zeus", "−6", "Undo", "Mon 18:02", "03:02 KST", "Peyz → Ruler, Lehends → Delight", "Free"]);
+    expectInOrder(out, ["Confirmed · Week 4", "your time · KST", "Tue 21:10", "06:10 KST", "Kiin → Zeus", "−6", "Undo", "Mon 18:02", "03:02 KST", "Peyz → Ruler, Lehends → Delight", "No cost"]);
     expect(out.match(/Undo/g)).toHaveLength(1);
   });
 
@@ -72,7 +72,7 @@ describe("List view (Craig, 16 Nov 2026)", () => {
   test("the nine by role, as FPL's list: last week, price, form, total, next, ×", () => {
     expectInOrder(out, [
       "Player",
-      "Wk 3",
+      "Week 3",
       "Price",
       "Form",
       "Total",

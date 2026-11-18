@@ -2,6 +2,7 @@
 // them. Every name and number is an example.
 
 import season from "../../data/lck/season-2027.json";
+import { REGION } from "../region";
 
 export const TEAMS = {
   T1: "T1",
@@ -21,11 +22,11 @@ export type TeamCode = keyof typeof TEAMS;
 /** The split the pictures show, Split 1 the beta (spec/10). */
 export const COMPETITION = "Split 1";
 
-/** The season the splits belong to, as Overall's head names it. */
-export const SEASON = "LCK 2027";
+/** The season the splits belong to, as Overall's head names it: the region's and the year's. */
+export const SEASON = REGION.season;
 
 /** The split with its year, as the LCK hub and the cards title it. */
-export const COMPETITION_TITLE = `${COMPETITION} 2027`;
+export const COMPETITION_TITLE = `${COMPETITION} ${season.year}`;
 
 /**
  * The competition's values the pictures share: the Captain's multiplier, each series' length, the

@@ -1,8 +1,10 @@
 // The Series page's words, named once. Every word a player reads on this screen lives here.
 
+import { REGION } from "../../region";
+
 export const WORDS = {
-  /** The way back to the LCK hub, above the scorebug. */
-  backToLck: "‹ LCK",
+  /** The way back to the region's hub, above the scorebug: `‹ LCK`. */
+  backToHub: `‹ ${REGION.name}`,
   /** Between the two codes before a series starts. */
   versus: "v",
   /** By the Live and Not final tags: what isn't scored until the series is final. */
@@ -17,8 +19,8 @@ export const WORDS = {
   /** The grid's last column: the player's points for the series. */
   series: "Series",
   noSuchSeries: "No such series",
-  /** The way on from a missing series. */
-  lckHub: "LCK hub",
+  /** The way on from a missing series: `LCK hub`. */
+  hub: `${REGION.name} hub`,
 } as const;
 
 /** `Split 1 Week 3`: the competition and week a series is in (spec/12, The Broadcast voice). */

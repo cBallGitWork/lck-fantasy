@@ -1,5 +1,5 @@
 // A competition's season as data (docs/data-model.md, The real world and Gameweeks): its settings,
-// splits, gameweeks and prices, loaded from data/lck/. A load run again updates each row in place.
+// splits, gameweeks and prices, loaded from its region's data/<region>/. A load run again updates each row in place.
 import { v, type Infer } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
 import { internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "../_generated/server";
@@ -8,7 +8,7 @@ import type { Prices } from "../squads/budget";
 import { pickKey, type Pick } from "../squads/squad";
 import season2027 from "../../data/lck/season-2027.json";
 
-/** A season file in data/lck/, such as season-2027.json. */
+/** A season file in data/<region>/, such as data/lck/season-2027.json. */
 export const seasonFile = v.object({
   note: v.optional(v.string()),
   madeUp: v.boolean(),

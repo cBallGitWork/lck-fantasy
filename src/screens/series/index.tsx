@@ -12,9 +12,9 @@ export function SeriesScreen() {
   const view = useDevState({ live: SERIES_VIEWS.live }) ?? (seriesId === undefined ? undefined : SERIES_BY_ID[seriesId]);
   if (!view)
     return (
-      <PageFrame screen="series" active="lckHub" account={MANAGER.team}>
+      <PageFrame screen="series" active="hub" account={MANAGER.team}>
         <Empty title={WORDS.noSuchSeries}>
-          <LinkGo go={{ to: PATHS.lckHub }}>{WORDS.lckHub}</LinkGo>
+          <LinkGo go={{ to: PATHS.hub }}>{WORDS.hub}</LinkGo>
         </Empty>
       </PageFrame>
     );

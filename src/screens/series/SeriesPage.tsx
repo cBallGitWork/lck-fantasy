@@ -8,9 +8,9 @@ import { weekLine, WORDS } from "./words";
 
 function Frame({ account, children }: { account: string | null; children: ReactNode }) {
   return (
-    <PageFrame screen="series" active="lckHub" account={account}>
+    <PageFrame screen="series" active="hub" account={account}>
       <div className="series__crumb">
-        <GoLink go={{ to: PATHS.lckHub }}>{WORDS.backToLck}</GoLink>
+        <GoLink go={{ to: PATHS.hub }}>{WORDS.backToHub}</GoLink>
       </div>
       {children}
     </PageFrame>

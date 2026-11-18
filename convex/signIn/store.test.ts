@@ -3,8 +3,8 @@ import { ConvexError } from "convex/values";
 import { describe, expect, test } from "vitest";
 import { WON_PER_M } from "../../src/parts/text/money";
 import { internal } from "../_generated/api";
-import { HOUR_MS } from "../lck/fixtures";
-import { LCK_2027, type SeasonFile } from "../lck/season";
+import { HOUR_MS } from "../world/fixtures";
+import { LCK_2027, type SeasonFile } from "../world/season";
 import schema from "../schema";
 import type { Pick, Squad } from "../squads/squad";
 import { modules } from "../test.setup";
@@ -44,7 +44,7 @@ const SQUAD: Squad = {
 
 async function world(data = season()) {
   const t = convexTest(schema, modules);
-  await t.mutation(internal.lck.season.loadSeason, { data });
+  await t.mutation(internal.world.season.loadSeason, { data });
   const t1 = await t.run((ctx) => ctx.db.insert("teams", { name: "T1", oeId: "oe-t1" }));
   const save = (fields: Partial<{ squad: Squad; teamName: string; favouriteTeam: string; country: string; account: string }> = {}) =>
     t.mutation(store.saveNewTeam, {

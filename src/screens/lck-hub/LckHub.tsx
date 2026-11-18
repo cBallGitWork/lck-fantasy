@@ -45,12 +45,12 @@ export function LckHub({ data, account, tab }: { data: LckHubData; account: stri
   const stageNames = data.stages.map((s) => s.name);
   const tabsId = useId();
   return (
-    <PageFrame screen="lck-hub" active="lckHub" account={account}>
+    <PageFrame screen="lck-hub" active="hub" account={account}>
       <div className="lck-hub__head">
         <PageHead title={data.title} hangul={data.hangul} />
         <Deadline {...data.deadline} />
       </div>
-      <Tabs id={tabsId} tabs={HUB_TABS} chosen={state.tab} onChoose={(t) => act({ type: "tab", tab: t })} label="LCK hub" />
+      <Tabs id={tabsId} tabs={HUB_TABS} chosen={state.tab} onChoose={(t) => act({ type: "tab", tab: t })} label={WORDS.hub} />
       {state.tab !== "Teams" && (
         <div className="lck-hub__stages">
           <ViewToggle

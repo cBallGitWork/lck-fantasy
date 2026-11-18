@@ -24,7 +24,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   priceChanges: [{ to: PATHS.priceChanges }, "price-changes"],
   priceChangesWeek: [{ to: PATHS.priceChangesWeek, params: { week: "3" } }, "price-changes"],
   settings: [{ to: PATHS.settings }, "settings"],
-  lckHub: [{ to: PATHS.lckHub }, "lck-hub"],
+  hub: [{ to: PATHS.hub }, "lck-hub"],
   playerCard: [{ to: PATHS.playerCard, params: { playerId: "faker" } }, "player-card"],
   coachCard: [{ to: PATHS.coachCard, params: { coachId: "kkoma" } }, "coach-card"],
   profile: [{ to: PATHS.profile, params: { managerId: "minji" } }, "profile"],

@@ -25,8 +25,6 @@ import type * as following_fit from "../following/fit.js";
 import type * as following_follows from "../following/follows.js";
 import type * as following_lines from "../following/lines.js";
 import type * as gameweeks_starAndFlop from "../gameweeks/starAndFlop.js";
-import type * as lck_season from "../lck/season.js";
-import type * as lck_series from "../lck/series.js";
 import type * as leagues_membership from "../leagues/membership.js";
 import type * as leagues_store from "../leagues/store.js";
 import type * as leagues_tables from "../leagues/tables.js";
@@ -45,6 +43,8 @@ import type * as squads_splitBreak from "../squads/splitBreak.js";
 import type * as squads_squad from "../squads/squad.js";
 import type * as squads_transfers from "../squads/transfers.js";
 import type * as stats_gameStats from "../stats/gameStats.js";
+import type * as world_season from "../world/season.js";
+import type * as world_series from "../world/series.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -67,8 +67,6 @@ declare const fullApi: ApiFromModules<{
   "following/follows": typeof following_follows;
   "following/lines": typeof following_lines;
   "gameweeks/starAndFlop": typeof gameweeks_starAndFlop;
-  "lck/season": typeof lck_season;
-  "lck/series": typeof lck_series;
   "leagues/membership": typeof leagues_membership;
   "leagues/store": typeof leagues_store;
   "leagues/tables": typeof leagues_tables;
@@ -87,6 +85,8 @@ declare const fullApi: ApiFromModules<{
   "squads/squad": typeof squads_squad;
   "squads/transfers": typeof squads_transfers;
   "stats/gameStats": typeof stats_gameStats;
+  "world/season": typeof world_season;
+  "world/series": typeof world_series;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

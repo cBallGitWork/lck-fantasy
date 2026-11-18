@@ -4,8 +4,8 @@
 import { v } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
 import { internalMutation, type MutationCtx } from "../_generated/server";
-import { groupSeries, pairKey } from "../lck/series";
 import { rawRow } from "../schema";
+import { groupSeries, pairKey } from "../world/series";
 import { playerGameStats, seriesSettledStats } from "../stats/gameStats";
 import { v5Extras } from "./leaguepedia";
 import { oeGame, oeGames, oeSeriesGame, type OeGame, type OeTeamGame } from "./oraclesElixir";

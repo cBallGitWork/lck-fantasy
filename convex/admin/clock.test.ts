@@ -2,9 +2,9 @@ import { convexTest } from "convex-test";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { internal } from "../_generated/api";
 import type { Id } from "../_generated/dataModel";
-import { HOUR_MS, SPEC_FINAL_AFTER_MS } from "../lck/fixtures";
-import { LCK_2027, type SeasonFile } from "../lck/season";
-import { seriesState } from "../lck/series";
+import { HOUR_MS, SPEC_FINAL_AFTER_MS } from "../world/fixtures";
+import { LCK_2027, type SeasonFile } from "../world/season";
+import { seriesState } from "../world/series";
 import schema from "../schema";
 import { firstScoringGameweek } from "../signIn/signUp";
 import { modules } from "../test.setup";
@@ -33,7 +33,7 @@ afterEach(() => vi.unstubAllEnvs());
 async function sim() {
   vi.stubEnv(SIM_SETTING, "true");
   const t = convexTest(schema, modules);
-  await t.mutation(internal.lck.season.loadSeason, { data: SEASON });
+  await t.mutation(internal.world.season.loadSeason, { data: SEASON });
   const teams = await t.run(async (ctx) => [
     await ctx.db.insert("teams", { name: "T1", oeId: "oe-t1" }),
     await ctx.db.insert("teams", { name: "Gen.G", oeId: "oe-gen" }),
@@ -109,7 +109,7 @@ describe("the sim's clock (#398)", () => {
     vi.useFakeTimers({ now: kst(5, 9), toFake: ["Date"] });
     try {
       const t = convexTest(schema, modules);
-      await t.mutation(internal.lck.season.loadSeason, { data: SEASON });
+      await t.mutation(internal.world.season.loadSeason, { data: SEASON });
       expect(await t.query(clock.clockNow, {})).toBe(kst(5, 9));
       await expect(t.mutation(clock.nextDay, LCK)).rejects.toThrow("only the sim");
       await expect(t.mutation(clock.startSimClock, { at: 0 })).rejects.toThrow("only the sim");

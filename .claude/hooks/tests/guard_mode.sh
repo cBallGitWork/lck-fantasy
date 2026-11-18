@@ -49,7 +49,10 @@ for go in "ok build it" "go ahead" "file it as an issue" "ship it" "merge that" 
   "yes but what about a sixth man" "yes, objectives matter" "yes merge confilcts are annoying" \
   "Save" "save it" "save the design" "1a 2b" "1 a
 2 a
-3 a" "1. a" "3 a" "1) b, 2) c"; do
+3 a" "1. a" "3 a" "1) b, 2) c" "and go, file the issues" "skills - your call
+repo ok
+
+and go, file the issues"; do
   said "$go"
   check allow guard_mode.py "$(bash_call 'gh issue create --title t')"
   check allow guard_mode.py "$(edit "$tmp/spec/05-scoring.md")"

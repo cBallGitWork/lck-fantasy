@@ -13,6 +13,10 @@ has no following, so most of this is Flol's own. Open questions are in
 - By request, one-way: a manager asks to follow Minji, she accepts, and Minji's week shows in his
   feed. She sees his only if she asks too.
 - A manager can unfollow, and can remove or block a follower.
+- Block asks first: "Block Minji? They can't follow you again." Remove is one tap (Craig, 17 Nov
+  2026).
+- An empty part says so in one short line: `No requests`, `No cheers or jeers this week`, `You
+  follow no one` (Craig, 17 Nov 2026).
 - Profiles stay public, as in FPL ([spec/12](12-pages.md)); the feed is what needs the yes.
 - A follow request is sent from the manager's profile, which opens from any league table. There
   is no search (Craig, 14 Nov 2026).
@@ -43,6 +47,8 @@ truck hire as a sponsor").
   mocks it, as the protest trucks do.
 - The key on a feed row reads `Cheer / Jeer ›` and opens the picker, on Home and on Following
   (Craig, 16 Nov 2026).
+- The picker opens on Cheer with its first line chosen; nothing sends until Send (Craig, 17 Nov
+  2026).
 - What arrives is drawn as the truck's dotted LED panel, with the sender's name and a small
   credit to a made-up truck-hire sponsor (Craig, 16 Nov 2026). Example: SELL YOUR BOT LANER,
   Jeer from Minji, Truck hire by …. The sponsor's name is drafted with the other made-up sponsors

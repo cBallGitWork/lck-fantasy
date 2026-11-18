@@ -30,6 +30,8 @@ export const PATHS = {
   following: "/following",
   privacy: "/privacy",
   terms: "/terms",
+  /** Help's guide and Rules; `/help#prices` opens one rule (spec/12, Help). */
+  help: "/help",
 } as const;
 
 export type ScreenKey = keyof typeof PATHS;
@@ -60,6 +62,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   following: "Following",
   privacy: "Privacy",
   terms: "Terms",
+  help: "Help",
 };
 
 /** The product's name, the tab's title on a page with none of its own. */
@@ -78,7 +81,10 @@ type ParamName<P extends string> = P extends `${string}$${infer Name}/${infer Re
     ? Name
     : never;
 
-type GoTo<P extends string> = [ParamName<P>] extends [never] ? { to: P; params?: never } : { to: P; params: Record<ParamName<P>, string> };
+type GoTo<P extends string> = ([ParamName<P>] extends [never] ? { to: P; params?: never } : { to: P; params: Record<ParamName<P>, string> }) & {
+  /** A place on the page, after `#`: `/help#prices`. */
+  hash?: string;
+};
 
 /** Where a link goes inside Flol: a screen's path and every param it names, checked by the typecheck. */
 export type Go = { [K in ScreenKey]: GoTo<(typeof PATHS)[K]> }[ScreenKey];
@@ -86,7 +92,8 @@ export type Go = { [K in ScreenKey]: GoTo<(typeof PATHS)[K]> }[ScreenKey];
 /** A link's path with its `$params` filled in. */
 export function pathTo(go: Go): string {
   const params: Record<string, string> = go.params ?? {};
-  return go.to.replace(/\$(\w+)/g, (_, name: string) => encodeURIComponent(params[name] ?? ""));
+  const path = go.to.replace(/\$(\w+)/g, (_, name: string) => encodeURIComponent(params[name] ?? ""));
+  return go.hash ? `${path}#${go.hash}` : path;
 }
 
 /** A player's card, or the coach's card for a coach. */
@@ -114,6 +121,15 @@ export const compareGo = (id: string): Go => ({ to: PATHS.compare, params: { pla
 
 /** A series' page. */
 export const seriesGo = (id: string): Go => ({ to: PATHS.series, params: { seriesId: id } });
+
+/** Help at one rule or guide page: `/help#prices`. */
+export const helpGo = (id?: string): Go => ({ to: PATHS.help, hash: id });
+
+/** `/help#rules`: Help's Rules tab, its first rule open. */
+export const RULES_HASH = "rules";
+
+/** The rule on prices, which Price changes' How prices move › opens (spec/12, Help). */
+export const PRICES_RULE = "prices";
 
 /** A manager's profile. */
 export const profileGo = (id: string): Go => ({ to: PATHS.profile, params: { managerId: id } });

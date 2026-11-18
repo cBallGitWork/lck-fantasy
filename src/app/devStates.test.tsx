@@ -62,6 +62,10 @@ const KEY: Record<string, string> = {
   "profile/transfers": "Pts gained",
   "following/following": "Cheer / Jeer ›",
   "following/truck": "One cheer or jeer to Jae a week.",
+  "help/help": "Flol is a free fantasy game",
+  "help/help-step4": "‹ Choose your Captain",
+  "help/rules": "Selecting your squad",
+  "help/rules-open": "₩15.5m",
 };
 
 const named = DEV_STATES.map((s) => ({ ...s, name: `${s.page}/${s.state}` }));
@@ -81,7 +85,7 @@ test.each(named)("$name opens at $url and shows its picture's key content", asyn
   const warn = vi.spyOn(console, "warn");
   expect(await htmlAt(url)).toContain(KEY[name]);
   expect(warn).not.toHaveBeenCalled();
-  expect(picture).toMatch(/^docs\/design\/approved\/[a-z-]+\/1440(-\w+)?\.png$/);
+  expect(picture).toMatch(/^docs\/design\/approved\/[a-z-]+\/1440(-[\w-]+)?\.png$/);
 });
 
 test.each(named)("$name says Truck only in the truck-hire credit", async ({ url }) => {

@@ -12,6 +12,9 @@ export type TopBarItem = (typeof TOP_BAR_ITEMS)[number];
 /** A visitor's items: only what needs no team (front door picture, Craig 17 Nov 2026). */
 const VISITOR_ITEMS: readonly TopBarItem[] = ["stats", "lckHub"];
 
+/** The team-name ▾ menu: Settings, and Help (spec/12, Help). */
+const ACCOUNT_MENU: MenuItem[] = (["settings", "help"] as const).map((key) => ({ label: SCREEN_NAME[key], go: { to: PATHS[key] } }));
+
 /** The link a visitor with an account takes (spec/09, Signing in again). */
 export const LOG_IN = "Log in ›";
 
@@ -26,9 +29,10 @@ export function TopBar({
 }: {
   active?: TopBarItem;
   account: string | null;
-  /** The account menu's items. Until a picture settles them, the team name links to Settings. */
+  /** The account menu's items: Settings and Help, until a picture settles more. */
   accountMenu?: MenuItem[];
 }) {
+  const menu = accountMenu ?? ACCOUNT_MENU;
   return (
     <nav className="top-bar" aria-label={PRODUCT}>
       <GoLink className="top-bar__word" go={{ to: PATHS.home }}>
@@ -52,12 +56,8 @@ export function TopBar({
         <GoLink className="top-bar__me" go={{ to: PATHS.pickTeam }}>
           {LOG_IN}
         </GoLink>
-      ) : accountMenu ? (
-        <Menu label={`${account} ▾`} items={accountMenu} className="top-bar__me" />
       ) : (
-        <GoLink className="top-bar__me" go={{ to: PATHS.settings }}>
-          {account} ▾
-        </GoLink>
+        <Menu label={`${account} ▾`} items={menu} className="top-bar__me" />
       )}
     </nav>
   );

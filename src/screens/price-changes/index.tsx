@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { helpGo, PRICES_RULE } from "../../paths";
 import { PRICE_WEEKS } from "./fixtures";
 import { PriceChangesPage } from "./PriceChangesPage";
 
@@ -17,5 +18,5 @@ export function PriceChangesScreen() {
     const to = stepWeek(at, step, PRICE_WEEKS.length);
     return to === undefined ? undefined : () => setAt(to);
   };
-  return <PriceChangesPage week={week} onPrev={stepTo(-1)} onNext={stepTo(1)} />;
+  return <PriceChangesPage week={week} onPrev={stepTo(-1)} onNext={stepTo(1)} howPricesMove={helpGo(PRICES_RULE)} />;
 }

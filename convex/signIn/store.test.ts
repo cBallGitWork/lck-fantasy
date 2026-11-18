@@ -137,4 +137,15 @@ describe("logging in (spec/09, Signing in again)", () => {
     expect(await refusal(save({ teamName: "Second Go" }))).toEqual({ rule: "hasTeam" });
     expect(await t.query(store.hasTeam, { ...LCK, account: "discord|sam" })).toBe(false);
   });
+
+  test("an account back for a new season keeps its one manager, with this sign-up's answers", async () => {
+    const { t, t1, save } = await world();
+    // A manager from an earlier season, with no entry in this one.
+    await t.run((ctx) => ctx.db.insert("managers", { account: ACCOUNT, country: "KR", favouriteTeam: t1, agreed: { at: 0, version: "2026-01-01" } }));
+    await save();
+    const { managers, entries } = await stored(t);
+    expect(managers).toMatchObject([{ account: ACCOUNT, country: "GB", agreed: { version: "2026-11-18" } }]);
+    expect(entries).toMatchObject([{ manager: managers[0]!._id }]);
+    expect(await t.query(store.hasTeam, { ...LCK, account: ACCOUNT })).toBe(true);
+  });
 });

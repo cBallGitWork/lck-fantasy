@@ -59,12 +59,16 @@ export const saveNewTeam = internalMutation({
     });
     if (problems.length > 0) throw refuse({ rule: "signUp", problems });
 
-    const manager = await ctx.db.insert("managers", {
-      account: args.account,
+    // One manager per person (docs/data-model.md): an account back for a later season keeps its
+    // manager, with this sign-up's answers.
+    const answers = {
       country: args.country.trim(),
       favouriteTeam: args.favouriteTeam as Id<"teams">,
       agreed: { at: now, version: args.agreedVersion },
-    });
+    };
+    const existing = await managerOf(ctx, args.account);
+    if (existing !== null) await ctx.db.patch(existing._id, answers);
+    const manager = existing?._id ?? (await ctx.db.insert("managers", { account: args.account, ...answers }));
     const cost = sum(allPicks(args.squad).map((p) => requirePrice(p, prices)));
     const entry = await ctx.db.insert("entries", {
       manager,
@@ -98,9 +102,13 @@ export const hasTeam = internalQuery({
   },
 });
 
+/** The account's manager, if it has signed up before. */
+const managerOf = (ctx: QueryCtx, account: string) =>
+  ctx.db.query("managers").withIndex("by_account", (q) => q.eq("account", account)).unique();
+
 /** The account's entry for a season, if it has one. */
 async function entryOf(ctx: QueryCtx, account: string, season: Id<"seasons">) {
-  const manager = await ctx.db.query("managers").withIndex("by_account", (q) => q.eq("account", account)).unique();
+  const manager = await managerOf(ctx, account);
   if (manager === null) return null;
   return ctx.db.query("entries").withIndex("by_manager", (q) => q.eq("manager", manager._id).eq("season", season)).unique();
 }

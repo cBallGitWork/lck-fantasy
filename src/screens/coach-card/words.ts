@@ -1,4 +1,5 @@
 // The coach card's words, named once. Every word a player reads on this screen lives here.
+import { count } from "../../parts";
 
 /** The card's tabs, in their order; each is also the tab's key. Roster replaces the player card's Champions (spec/12). */
 export const TABS = ["This week", "Fixtures", "History", "Roster"] as const;
@@ -17,10 +18,10 @@ export const WORDS = {
   series: "Series",
   games: "Games",
   /** History: his price that week, on the week's first row. */
-  weekPrice: "Price",
+  weekPrice: "Week price",
   pts: "Pts",
   /** History: the week's points, on the week's first row. */
-  weekPts: "Week",
+  weekPts: "Week pts",
   perGame: "Per game",
   total: "Total",
   kst: "KST",
@@ -29,7 +30,7 @@ export const WORDS = {
   /** Roster: a player's price now. */
   rosterPrice: "Price",
   /** Roster: a player's season points. */
-  seasonPts: "Season",
+  seasonPts: "Season pts",
   owned: "Owned",
   seriesWon: "Series won",
   seriesLost: "Series lost",
@@ -45,8 +46,8 @@ export const EMPTY_TAB = {
 
 export const dot = " · ";
 
-/** `kkOma, coach`: the card's name, for a reader. */
-export const cardTitle = (name: string) => `${name}, coach`;
+/** `Coach kkOma`: the card's name, for a reader. */
+export const cardTitle = (name: string) => `Coach ${name}`;
 
 /** `10 coaches`: what his season's place is among. */
 export const coachesOf = (n: number) => `${n} coaches`;
@@ -58,11 +59,11 @@ export const seasonPlace = (place: string) => `${WORDS.season}${dot}${place}`;
 export const formPlace = (place: string) => `form${dot}${place}`;
 export const ownedPlace = (place: string) => `owned${dot}${place}`;
 
-/** `+310 / −95 this week`: the week's transfers in and out. */
-export const transfersThisWeek = (inOut: string) => `${inOut} this week`;
+/** `+310 / −95 transfers this week`: the week's transfers in and out. */
+export const transfersThisWeek = (inOut: string) => `${inOut} transfers this week`;
 
-/** `15 games`: beside the Season panel's head. */
-export const gamesCount = (n: string) => `${n} games`;
+/** `15 games`, `1 game`: beside the Season panel's head. */
+export const gamesCount = (n: number) => `${count(n)} ${n === 1 ? "game" : "games"}`;
 
 /** `Week 3`: This week's total row. */
 export const weekNo = (week: number) => `${WORDS.week} ${week}`;

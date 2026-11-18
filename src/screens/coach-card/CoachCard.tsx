@@ -1,5 +1,5 @@
 import { useId, type ReactNode } from "react";
-import { beyondStrip, count, Crest, Empty, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, TabPanel, Tabs, Tag } from "../../parts";
+import { beyondStrip, Crest, Empty, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, TabPanel, Tabs, Tag } from "../../parts";
 import { playerId } from "../../fixtures/competition";
 import { compareGo } from "../../paths";
 import { ROLE_NAME } from "../../rift";
@@ -102,7 +102,7 @@ function Figure({ figure, children }: { figure: string; children: ReactNode }) {
 /** Each coach line's season: total, per game (blank on the series lines) and points. */
 function SeasonPanel({ season }: { season: CoachSeason }) {
   return (
-    <SideSection title={WORDS.season} note={gamesCount(count(season.games))}>
+    <SideSection title={WORDS.season} note={gamesCount(season.games)}>
       <Table<SeasonLine>
         label={WORDS.season}
         rowKey={(l) => l.name}

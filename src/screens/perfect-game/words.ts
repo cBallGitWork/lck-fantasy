@@ -13,8 +13,8 @@ export const WORDS = {
   noWeek: "No perfect game for this week",
 } as const;
 
-/** `Split 1 · Week 3`: the competition and week in the head. */
-export const weekLine = (competition: string, week: number) => `${competition} · Week ${week}`;
+/** `Split 1 Week 3`: the competition and week in the head (spec/12, The Broadcast voice). */
+export const weekLine = (competition: string, week: number) => `${competition} Week ${week}`;
 
 /** `Week 3 series`: the side column's series section. */
 export const weekSeries = (week: number) => `Week ${week} series`;

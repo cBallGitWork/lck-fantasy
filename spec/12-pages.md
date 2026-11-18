@@ -139,17 +139,20 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
 - **Following**: the feed, follows, requests and cheers and jeers received
   ([spec/14](14-following.md)).
-- **Help**: the rules, as FPL's Rules page (Craig, 17 Nov 2026).
-  - One page of sections, each a heading and a few short lines, with a contents list at the top:
-    Squad, Transfers, Captain, Scoring, Buffs, Prices, Leagues, Ranks. Each section has its own
-    link, such as `/help#prices`. No questions-and-answers section in the beta.
+- **Help**, as FPL's Help (Craig, 17 Nov 2026; its picture is `docs/design/approved/help/`): two
+  tabs. **Help** is a beginner's guide (Flol in 60 seconds, how a week works, seven steps saying
+  where to click, a weekly checklist, a glossary) with a Help menu beside it. **Rules** is every
+  rule, in groups of items that open and close: Squad, Transfers, Captain, Scoring, Buffs, Prices,
+  Leagues, Ranks. A link such as `/help#prices` opens its item. No questions-and-answers section
+  in the beta. (The first answer that day was one page of rules; Craig's look at the picture made
+  it two tabs, as FPL's.)
   - Scoring shows the full points table, every line for players and the coach with its points,
     read from the same data the scoring uses ([spec/05](05-scoring.md)).
   - Prices explains a price move in plain words with one example, not the formula
     ([spec/02](02-prices-and-budget.md)).
   - Ranks holds the tier cut-offs ([spec/08](08-leagues.md#overall-tiers)).
   - Reached from a Help link in every page's foot, beside Privacy and Terms, and in the team-name
-    ▾ menu; links such as Price changes' How prices move › open its section. Not in the top bar.
+    ▾ menu; links such as Price changes' How prices move › open its item. Not in the top bar.
 - **Settings** ([below](#settings)).
 
 ## Home

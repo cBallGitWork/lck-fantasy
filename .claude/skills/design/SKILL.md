@@ -1,6 +1,6 @@
 ---
 name: design
-description: Draw one screen and get it approved, with the same quality control code has. A brief from the spec, references, a 1440 mock-up, a look at the rendered picture, a review panel of four agents, then Craig's yes and a docs PR saving the picture. The first round also writes docs/design/plate.md. Use before any screen's layout changes, or when Craig asks for a screen to be designed.
+description: Draw one screen and get it approved, with the same quality control code has. A brief from the spec, references, a 1440 mock-up, a look at the rendered picture, a review panel of agents and a sceptic, then Craig's yes and a docs PR saving the picture. The first round also writes docs/design/plate.md. Use before any screen's layout changes, or when Craig asks for a screen to be designed.
 argument-hint: "[the screen, by its name or route]"
 ---
 
@@ -83,19 +83,25 @@ what each round tried, and hand it to Craig instead of a fourth round.
 
 ## 5. The review panel
 
-Four reviewers, run in parallel in one message, each a read-only agent:
+Read-only agents, run in parallel in one message, under `docs/design/panel-rules.md` (blind, lettered
+pictures, a ringer when directions are compared; Craig, 18 Nov 2026):
 
-| Agent | Lens |
-|---|---|
-| `design-fpl-player` | an FPL manager doing his weekly jobs: fast, where FPL puts it, what is new explained |
-| `design-lck-fan` | a long-time LCK viewer: does it feel like the LCK; roles, teams and series as fans think of them |
-| `design-ux` | layout, density, scan speed, the plate and its Never list, far from the AI look |
-| `design-pm` | matches SPEC and the brief, nothing invented, build cost, which screens it reaches |
+| Agent | Lens | Runs |
+|---|---|---|
+| `design-fpl-player` | an FPL manager doing his weekly jobs: fast, where FPL puts it, what is new explained | always |
+| `design-ucl-player` | a UCL Fantasy player: one squad picture, the week at a glance, points explained | always |
+| `design-lck-fan` | a long-time LCK viewer: does it feel like the LCK; roles, teams and series as fans think of them | an LCK picture |
+| `design-lec-fan` | a long-time LEC viewer: the LEC, not the LCK in other colours | an LEC picture |
+| `design-ux` | layout, density, scan speed, the plate and its Never list, far from the AI look | always |
+| `design-visual` | a look of its own, or any app: side by side with real apps and a generic version | always |
+| `design-mobile` | a phone at 390: thumb reach, nothing covered or cut, dense tables | a 390 shot |
+| `design-pm` | matches SPEC and the brief, nothing invented, build cost, which screens it reaches | always |
 
-Give each the screenshot paths and the brief. Each returns numbered findings and Craig's calls.
-Fix the clear-cut findings (a broken plate rule, an invented control, a missing fact the brief
-holds, a role or team shown wrongly), then look again. Where two reviewers disagree, or a finding
-is taste, it goes to Craig.
+Give each the lettered screenshot paths and the brief, nothing more. Then `design-sceptic` gets every
+finding with the pictures and tries to knock each down; only what stands counts.
+Fix the clear-cut findings that stand (a broken plate rule, an invented control, a missing fact the
+brief holds, a role or team shown wrongly), then look again. Where two reviewers disagree, or a
+finding is taste, it goes to Craig.
 
 ## 6. Show Craig
 

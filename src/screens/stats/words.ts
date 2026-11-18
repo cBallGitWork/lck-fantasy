@@ -12,7 +12,7 @@ export const WORDS = {
   maxPrice: "Max price",
   /** Max price's choice for no limit. */
   anyPrice: "Any",
-  span: "Span",
+  span: "Weeks",
   season: "Season",
   /** The Totals and Per game toggle's name, for a reader. */
   figuresLabel: "Totals or per game",
@@ -24,8 +24,8 @@ export const WORDS = {
   pts: "Pts",
   games: "Games",
   series: "Series",
-  pageBefore: "Page before",
-  pageAfter: "Page after",
+  pageBefore: "Previous page",
+  pageAfter: "Next page",
 } as const;
 
 /** The tabs, each its own word. */
@@ -44,7 +44,7 @@ export const LINE_HEADS = {
   firstBlood: "First blood",
   deathless: "Deathless",
   quadra: "Quadra+",
-  steals: "Obj. steals",
+  steals: "Steals",
   firstTower: "First tower",
   drakes: "Most drakes",
   barons: "Most barons",

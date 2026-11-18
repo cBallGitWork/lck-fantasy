@@ -45,6 +45,7 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 12 | [Pages](spec/12-pages.md) | Home (a status page), Pick Team, Transfers, Points, Leagues, Stats, an LCK hub for the LCK's fixtures, standings and rosters, a series page, player and coach pop-ups, public manager profiles, Perfect game (the week's best team), Price changes (the new prices each gameweek), Live (a stream picker: official broadcasts and co-streamers beside live points), Help and Settings. | partly built: star and flop rules, and every page but Help built to its picture on made-up data; no backend wired yet |
 | 13 | [Korean touches](spec/13-korean-touches.md) | Made-up Korean sponsors from LCK memes, each explaining its meme on tap; cheers, jeers and sponsor cheers, each an LED truck from a made-up truck-hire sponsor ([spec/14](spec/14-following.md)); a birthday cake on a player's week; a hangul banner for your team; fun team shirts and crests, and where each shows. No points. | not built |
 | 14 | [Following, cheers and jeers](spec/14-following.md) | Follow other managers by request, one-way, in the beta. A feed of their series points, big Captains and transfers. Cheer or jeer anyone you follow once a gameweek, from a database of preset lines; a sponsor cheer to each private league's weekly top. | partly built: follows, the feed and cheers and jeers as rules, and the Following page on made-up data; no storage yet |
+| 15 | [Regions](spec/15-regions.md) | One game per region, the LCK and the LEC, on one account: a team per region, with its own leagues and ranks. The LEC from Spring 2027, in euros, on the LCK's pages with its own culture; every series in a week counts. Each region at its own address; one profile shows both. | not built |
 
 ## Later
 
@@ -70,6 +71,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A line chart of the manager's Overall rank by week, on the profile above History (Craig, 17
   Nov 2026). FPL's Gameweek History has a table only, as Flol's profile does now.
 - A trophy room of a manager's big achievements, on their profile, and a difficulty rating for each series (Craig, 13 Nov 2026).
+- The LEC's buffs and stage values, once Craig has reviewed the 2027 Spring schedule and its
+  roadtrips (Craig, 18 Nov 2026) ([spec/15](spec/15-regions.md)).
 
 ## Out of scope
 
@@ -90,6 +93,9 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - Renaming Killer or the other buffs: a hover explains them (Craig, 16 Nov 2026). Carry became
   Captain, and Dual Carry Double Captain (Craig, 17 Nov 2026).
 - Keys, legends or explainer lines for a word ([spec/12](spec/12-pages.md#words)).
+- The LEC's first split (Versus) in 2027: its series are single games (Craig, 18 Nov 2026).
+- A sign-up per region; private leagues across regions; Legend and Rise in the LEC; the Korean
+  theme in the LEC; players' flags in the LCK (Craig, 18 Nov 2026) ([spec/15](spec/15-regions.md)).
 
 ## Glossary
 
@@ -115,3 +121,4 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | buff | A one-off a manager plays in a gameweek, such as Bench Boost: FPL's chip (Craig, 14 Nov 2026). | chip, boost |
 | Card view | The starters as the LCK broadcast's lineup, on Pick Team, Points and Perfect game (Craig, 16 Nov 2026). | List view |
 | List view | Transfers' squad as FPL's list: rows grouped by role, with prices and fixtures (Craig, 16 Nov 2026). | Card view |
+| region | One of Flol's games, by its LoL league: the LCK or the LEC. Each has its own squads, prices and leagues (Craig, 18 Nov 2026). | game, competition, mode |

@@ -3,22 +3,13 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
-## An LEC game, talk only (17 Nov 2026)
-- A second game for the LEC, which starts 15 Jan 2027 with three splits; its schedule differs
-  from the LCK's. Each split as last summer's: 8 weeks, some with 5 match days (Craig, from the
-  LEC's commissioner, 17 Nov 2026).
-- An Overall league that runs all year, across the three splits.
-- The same core as the LCK (budget and the like), with buffs and other settings tuned for it.
-- The same pages as the LCK's, with the LEC's differences, and its own sponsors (Craig, 17 Nov
-  2026).
-- Each player's country flag beside his name in the player list and pop-up; not in the LCK, where
-  nearly all are Korean. Needs players' nationality in the data (Craig, 17 Nov 2026).
-- In both games, each manager's country flag beside his name in league tables and on his
-  profile; the country is already set at sign-up (Craig, 17 Nov 2026).
+## The LEC, left over (18 Nov 2026)
+
 - Crests for the LEC teams made as the LCK's were ([docs/design/approved/crests](design/approved/crests/README.md)):
   the real logos fetched from the web, then one designer describes each to another, with the
   team's memes, fanbase, mascots and lore, and the second draws from that alone (Craig, 17 Nov
   2026).
+
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

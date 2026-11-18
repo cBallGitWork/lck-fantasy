@@ -4,7 +4,7 @@
 
 import { MANAGERS, MINJI_EARLIER_WEEKS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { playedFromSide, seriesById } from "../../fixtures/series";
-import { playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
+import { HIT_POINTS, playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
 import { score, type CheerKind } from "../../parts";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
@@ -70,7 +70,8 @@ export interface HistoryRow {
   /** Places moved on Overall: up is positive. */
   move?: number;
   transfers?: number;
-  hits?: number;
+  /** The points the week's transfers took over the free ones: 6 for one extra (spec/03); absent for none. */
+  cost?: number;
   bankM: number;
   valueM: number;
   buff?: BuffName;
@@ -101,8 +102,6 @@ export interface LeagueRow {
   move: number;
   /** Overall's tier (spec/08): its name and division. */
   tier?: { name: string; division: string };
-  /** A private league shows its rank as a place: `3rd`. */
-  ordinal?: boolean;
 }
 
 export interface ProfileData {
@@ -163,8 +162,8 @@ export const PROFILE: ProfileData = {
     },
   ],
   history: [
-    { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, hits: 3, bankM: 0.5, valueM: 100.9, buff: "Bench Boost" },
-    { week: 2, points: W2, total: W1 + W2, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, hits: 0, bankM: 1.0, valueM: 100.6 },
+    { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, cost: 3 * HIT_POINTS, bankM: 0.5, valueM: 100.9, buff: "Bench Boost" },
+    { week: 2, points: W2, total: W1 + W2, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, bankM: 1.0, valueM: 100.6 },
     { week: 1, points: W1, total: W1, weekRank: 34_786, overall: 34_786, bankM: 2.5, valueM: 100.0 },
   ],
   buffsLeft: ["Double Captain", "Coach Diff"],
@@ -192,6 +191,6 @@ export const PROFILE: ProfileData = {
     { id: "overall", name: "Overall", rank: 21_804, move: 3_112, tier: { name: "Emerald", division: "I" } },
     { id: "south-korea", name: "South Korea", rank: 2_310, move: 402 },
     { id: "gen-supporters", name: "GEN supporters", rank: 1_977, move: 288 },
-    { id: "pub-league", name: "Pub League", rank: 3, move: -1, ordinal: true },
+    { id: "pub-league", name: "Pub League", rank: 3, move: -1 },
   ],
 };

@@ -13,10 +13,10 @@ export type ProfileTab = (typeof PROFILE_TABS)[number];
 
 const FOLLOW_LABEL: Record<Exclude<FollowState, "self">, string> = { following: "Following ✓", follow: "Follow", requested: "Requested" };
 
-/** Following unfollows; Follow sends a request, Requested until they accept (spec/14). */
+/** Following unfollows; Follow sends a request; Requested cancels it, with no confirm (spec/14). */
 export function nextFollow(state: FollowState): FollowState {
-  if (state === "following") return "follow";
   if (state === "follow") return "requested";
+  if (state === "following" || state === "requested") return "follow";
   return state;
 }
 
@@ -89,7 +89,7 @@ function Banner({ manager, follow, onFollow }: { manager: ProfileManager; follow
       </p>
       {follow !== "self" && (
         <span className="profile__follow">
-          <OutlinedKey onClick={follow === "requested" ? undefined : onFollow}>{FOLLOW_LABEL[follow]}</OutlinedKey>
+          <OutlinedKey onClick={onFollow}>{FOLLOW_LABEL[follow]}</OutlinedKey>
         </span>
       )}
     </header>

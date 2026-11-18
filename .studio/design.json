@@ -1,0 +1,27 @@
+{
+  "_about": "Flol's slop-lint config, read by scripts/design/lint.mjs. Every value here is Flol's; the script holds none. Values from docs/design/plate.md, which wins on any difference. A rule's level is off, flag or fail; lowering one from fail needs its reason.",
+  "names": {
+    "hidden": [],
+    "_why": "names never shown on screen; Flol hides none yet"
+  },
+  "radius": {
+    "default": "0",
+    "allow": [
+      { "value": "50%", "reason": "plate Parts, Marks: C, the live dot, your-player dot and a radio button are round" },
+      { "selector": ".tile__card", "reason": "a Rift tile's card, its top rounded, the one rounded shape (plate Parts, The Rift; Craig, 16 Nov 2026)" }
+    ]
+  },
+  "gradient": {
+    "allow": [
+      { "selector": ".led, .led2, .following__led, .home__led, .profile__led", "reason": "a cheer's or jeer's LED panel, drawn dotted (plate Never 2)" },
+      { "selector": ".pitch", "reason": "the pitch behind the LEC kit sheet, approved/lec-shirts/" }
+    ]
+  },
+  "caps": {
+    "allow": [".led", ".led2", ".following__led", ".home__led", ".profile__led"],
+    "_why": "the LED panel is in capitals (plate Never 2)"
+  },
+  "levels": {
+    "middle-dot": "off: the approved pictures draw `GEN 2–0 KT · Wed`; keeping middle dots is an open call for Craig (the long draft's P14)"
+  }
+}

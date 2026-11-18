@@ -32,13 +32,19 @@ export function PlayerCard({ state, player: p, dispatch }: Omit<ViewProps, "data
       )}
       <dl className="pick-team__rows">
         <Row k={WORDS.form}>
-          <b className="num">{oneDecimal(p.form)}</b> · {ranked(p.formRank)}
+          <b className="num">{oneDecimal(p.form)}</b>
+          {dot}
+          {ranked(p.formRank)}
         </Row>
         <Row k={WORDS.owned}>
-          <b className="num">{pct(p.ownedPct)}</b> · {ranked(p.ownedRank)}
+          <b className="num">{pct(p.ownedPct)}</b>
+          {dot}
+          {ranked(p.ownedRank)}
         </Row>
         <Row k={WORDS.season}>
-          <b className="num">{p.season}</b> · {ranked(p.seasonRank)}
+          <b className="num">{p.season}</b>
+          {dot}
+          {ranked(p.seasonRank)}
         </Row>
       </dl>
       <dl className="pick-team__rows">

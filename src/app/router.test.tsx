@@ -19,6 +19,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   series: [{ to: PATHS.series, params: { seriesId: "w3-sat-2" } }, "series"],
   compare: [{ to: PATHS.compare }, "compare"],
   perfectGame: [{ to: PATHS.perfectGame }, "perfect-game"],
+  perfectGameWeek: [{ to: PATHS.perfectGameWeek, params: { week: "2" } }, "perfect-game"],
   priceChanges: [{ to: PATHS.priceChanges }, "price-changes"],
   settings: [{ to: PATHS.settings }, "settings"],
   lckHub: [{ to: PATHS.lckHub }, "lck-hub"],

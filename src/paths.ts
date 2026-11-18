@@ -16,6 +16,8 @@ export const PATHS = {
   series: "/series/$seriesId",
   compare: "/compare",
   perfectGame: "/perfect-game",
+  /** Perfect game for one week, so a week can be shared: `/perfect-game/3`. */
+  perfectGameWeek: "/perfect-game/$week",
   priceChanges: "/price-changes",
   settings: "/settings",
   lckHub: "/lck",
@@ -44,6 +46,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   series: "Series",
   compare: "Compare",
   perfectGame: "Perfect game",
+  perfectGameWeek: "Perfect game",
   priceChanges: "Price changes",
   settings: "Settings",
   lckHub: "LCK",

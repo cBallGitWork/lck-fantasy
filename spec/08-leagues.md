@@ -55,9 +55,15 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 - The maker can rename the league, remove a manager and delete it. Any member can leave. As in
   FPL.
 - The maker can't leave without deleting the league (Craig, 14 Nov 2026).
+- A manager the maker removes can't rejoin that league, as FPL bans them. The confirm reads
+  "Remove Baron Steal FC? They can't rejoin." (Craig, 17 Nov 2026).
 - Ties on points go to fewer transfers, as in FPL. Only regular transfers count (Craig, 14 Nov 2026).
 - A manager can be in up to 25 private leagues, and a private league has no size cap, as in FPL.
   Both numbers are data.
+- A code no league has keeps the Join sheet open, with "No league with that code" under the box,
+  as FPL (Craig, 17 Nov 2026).
+- At the cap, Create and Join stay off with "25 leagues already" as the reason, under the count
+  line "Private leagues: 25 of 25" (Craig, 17 Nov 2026).
 
 ## Overall tiers
 
@@ -120,3 +126,11 @@ As FPL's (Craig, 13 Nov 2026):
   14 Nov 2026).
 - A chase tag on the manager's own row shows the points to the rank above (16 pts to 1st), their
   lead over 2nd when 1st (+16 clear), and nothing when level (Craig, 14 Nov 2026).
+- Leagues in the top bar opens Overall's table, the manager's leagues listed beside it (Craig,
+  17 Nov 2026).
+- A table opens on its Season tab, as FPL (Craig, 17 Nov 2026).
+- A table shows 50 rows a page, as FPL, and Find me opens the page holding the manager's row. The
+  page size is data (Craig, 17 Nov 2026).
+- A row's › opens that manager's Points for the latest gameweek, as FPL (Craig, 17 Nov 2026).
+- Under a league's name, the competition and season, with the split on a split tab: `LCK 2027`,
+  `LCK 2027 · Split 1` (Craig, 17 Nov 2026).

@@ -56,10 +56,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Pick Team: what counts as one change in the bar; Make Carry on a player not starting; can a swap
   start from the bench, as FPL allows?
 - Points: a Series win row for the Coach; a week total under non-Carry players; bench taps.
-- Leagues: what a bare /leagues opens; the default tab; page size and Find me; the line under
-  Overall's name per tab; where a row's › goes.
-- League forms: what Copy link copies; Join with a bad code; the 25-league cap message; Remove's
-  confirm text.
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
 - Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
   History's week total with or without the Carry's ×1.5.

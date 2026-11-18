@@ -1,12 +1,10 @@
-import { useNavigate } from "@tanstack/react-router";
 import { COUNTRIES } from "../../fixtures/managers";
 import { useAnnounce, useDevState } from "../../parts";
-import { PATHS } from "../../paths";
 import { COMPETITION_ID, NAME_MAX, NEXT, PART_SQUAD, PLAYERS, RULES, TEAMS, WEEK } from "./fixtures";
 import { FrontDoor } from "./FrontDoor";
 import { forgetGuestSquad, keepGuestSquad, readGuestSquad } from "./guestSquad";
 import { countryFrom, EMPTY_SQUAD } from "./pick";
-import { joinedCheer } from "./words";
+import { SAVE_NOT_LIVE } from "./words";
 
 /** This browser's storage; none outside a browser. */
 const browserStorage = () => (typeof localStorage === "undefined" ? undefined : localStorage);
@@ -37,12 +35,11 @@ const keptSquad = () =>
 
 /**
  * The front door (docs/design/approved/front-door/), on its made-up Week 4 until the backend feeds it.
- * The squad is kept in this browser as it changes. Save team, until Convex Auth is wired, drops the
- * kept squad, cheers the new team and lands on Pick Team (spec/09). `?state=part` opens the
- * part-picked picture, in dev.
+ * The squad is kept in this browser as it changes. Until Convex Auth is wired and Save team calls
+ * `saveNewTeam`, Save team stores nothing: it keeps the squad and says sign-up isn't open yet, so
+ * no cheer and no Pick Team (spec/09). `?state=part` opens the part-picked picture, in dev.
  */
 export function FrontDoorScreen() {
-  const navigate = useNavigate();
   const announce = useAnnounce();
   const dev = useDevState({ part: PART_SQUAD });
   return (
@@ -57,11 +54,7 @@ export function FrontDoorScreen() {
       nameMax={NAME_MAX}
       initialSquad={dev ?? keptSquad()}
       onSquad={(squad) => withStorage((storage) => keepGuestSquad(storage, COMPETITION_ID, squad), undefined)}
-      onSave={({ answers }) => {
-        withStorage(forgetGuestSquad, undefined);
-        announce(joinedCheer(answers.teamName));
-        void navigate({ to: PATHS.pickTeam });
-      }}
+      onSave={() => announce(SAVE_NOT_LIVE)}
     />
   );
 }

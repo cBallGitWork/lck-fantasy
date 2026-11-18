@@ -76,5 +76,8 @@ export const continueWith = (provider: string) => `Continue with ${provider}`;
 /** `1 of 2`: the sign-up step. */
 export const stepOf = (step: number) => `${step} of 2`;
 
+/** Save team until sign-in is live: nothing is stored, and the squad stays kept. */
+export const SAVE_NOT_LIVE = "Not saved. Sign-up isn't open yet. Your squad is kept in this browser.";
+
 /** `Baron Steal FC is in. 화이팅!`: the one cheer on Save team (spec/09). */
 export const joinedCheer = (teamName: string) => `${teamName.trim()} is in. 화이팅!`;

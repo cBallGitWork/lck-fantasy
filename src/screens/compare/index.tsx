@@ -47,7 +47,7 @@ export function ComparePage({
 }
 
 /** The first player Compare has lines for, by id; none for a bare /compare or a player it has no lines for. */
-export const firstPlayer = (id: string | undefined): ComparePlayer | undefined => Object.values(COMPARE_PLAYERS).find((p) => p.id === id);
+const firstPlayer = (id: string | undefined): ComparePlayer | undefined => Object.values(COMPARE_PLAYERS).find((p) => p.id === id);
 
 /** Before Compare loads: with no player, it goes to Stats (spec/12, Compare). */
 export function toStatsWithNoPlayer(playerId: string | undefined): void {

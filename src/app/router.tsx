@@ -50,7 +50,7 @@ const compareRoute = createRoute({
 });
 const bareCompareRoute = createRoute({ getParentRoute: () => rootRoute, path: BARE_COMPARE, beforeLoad: () => toStatsWithNoPlayer(undefined) });
 
-const routeTree =rootRoute.addChildren([
+const routeTree = rootRoute.addChildren([
   screen(PATHS.home, HomeScreen),
   screen(PATHS.pickTeam, PickTeamScreen),
   screen(PATHS.transfers, TransfersScreen),

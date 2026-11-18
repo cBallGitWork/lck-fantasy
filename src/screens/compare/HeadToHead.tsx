@@ -3,7 +3,7 @@ import { cx, money, Modal, oneDecimal, pct, perGame, Placeholder, placeOf, Price
 import { ROLE_NAME } from "../../rift";
 import { better, type Side } from "./rules";
 import type { ComparePlayer, NextSeries, PastSeries } from "./fixtures";
-import { among as amongRole, compareOne, faceOff, seriesWhen, versus, WORDS } from "./words";
+import { compareOne, rankedAmong, faceOff, seriesWhen, versus, WORDS } from "./words";
 import "./compare.css";
 
 /** One side's lower third: portrait, role and team, name and hangul; Change › under the second player. */
@@ -70,7 +70,7 @@ function Season({ player }: { player: ComparePlayer }) {
     <>
       {points}
       <small className="compare__rank">
-        {placeOf(rank, amongRole(among, player.role))}
+        {placeOf(rank, rankedAmong(among, player.role))}
       </small>
     </>
   );

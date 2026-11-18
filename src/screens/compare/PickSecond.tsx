@@ -2,10 +2,10 @@ import { useState } from "react";
 import { cx, money, selectable } from "../../parts";
 import { searchGroups } from "./rules";
 import type { ComparePlayer, SearchRow } from "./fixtures";
-import { allOf, ROLE_PLURAL, WORDS } from "./words";
+import { findA, ROLE_PLURAL, WORDS } from "./words";
 
 /**
- * The second player not picked yet: a search, his role listed first, then `All mids · Other roles ›`.
+ * The second player not picked yet: a search, his role listed first, then `Other roles ›`.
  * A row is picked only where Compare has his lines (`canPick`).
  */
 export function PickSecond({
@@ -29,8 +29,8 @@ export function PickSecond({
       <input
         className="compare__find"
         type="search"
-        placeholder={WORDS.find}
-        aria-label={WORDS.find}
+        placeholder={findA(first.role)}
+        aria-label={findA(first.role)}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
@@ -62,7 +62,7 @@ export function PickSecond({
       ))}
       {showMore && (
         <button type="button" className="compare__go key-bare hover-line compare__more" onClick={() => setWide(true)}>
-          {allOf(first.role)}
+          {WORDS.otherRoles}
         </button>
       )}
     </div>

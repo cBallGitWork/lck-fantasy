@@ -16,8 +16,7 @@ export const WORDS = {
   total: "Total",
   perGame: "Per game",
   pts: "Pts",
-  /** The search's hint and its name for a reader. */
-  find: "Find a player",
+  /** Under the second player's role in the search: opens the rest. */
   otherRoles: "Other roles ›",
 } as const;
 
@@ -32,16 +31,16 @@ export const ROLE_PLURAL: Record<PersonRole, string> = {
 };
 
 /** `10 mids`: who a season rank is among. */
-export const among = (n: number, role: PersonRole) => `${n} ${ROLE_PLURAL[role].toLowerCase()}`;
+export const rankedAmong = (n: number, role: PersonRole) => `${n} ${ROLE_PLURAL[role].toLowerCase()}`;
 
 /** `v KT`: a series' other side. */
 export const versus = (opponent: string) => `${WORDS.versus} ${opponent}`;
 
-/** `W4 · Wed`: a series' week and day, as the card's strip shows it. */
-export const seriesWhen = (week: number, day: string) => `W${week} · ${day}`;
+/** `Week 4 · Wed`: a series' week and day, in the Last 3 and Next 3 strips. */
+export const seriesWhen = (week: number, day: string) => `Week ${week} · ${day}`;
 
-/** `All mids · Other roles ›`: opens the rest of the search. */
-export const allOf = (role: PersonRole) => `All ${ROLE_PLURAL[role].toLowerCase()} · ${WORDS.otherRoles}`;
+/** `Find a player`, `Find a coach`: the search's hint and its name for a reader. */
+export const findA = (role: PersonRole) => (role === "coach" ? "Find a coach" : "Find a player");
 
 /** `Faker v Chovy`: the card's title, for a reader. */
 export const faceOff = (left: string, right: string) => `${left} ${WORDS.versus} ${right}`;

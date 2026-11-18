@@ -4,7 +4,7 @@ One folder per screen in the site map (`docs/design/site-map.html`), named as it
 
 So each screen's issue touches only its own folder:
 
-- A screen imports from `src/parts`, `src/rift`, `src/theme`, `src/fixtures` and `src/paths` (and `convex/squads/squad` for the guest squad's shape), never from another screen.
+- A screen imports from `src/parts`, `src/rift`, `src/theme`, `src/fixtures` and `src/paths` (and `convex/squads` and `convex/signIn` for the guest squad's rules), never from another screen.
 - Its page is a `PageFrame` with `screen` set to its folder's name; `src/app/router.test.tsx` checks only that.
 - Every class in its CSS starts with its folder's name: `.points`, `.points__side`, `.points--live` (`screens.test.ts`).
 - Its files are named one way: the screen's own CSS and tests after its folder (`points.css`, `points.test.tsx`), a component's CSS after the component (`BreakdownSheet.css`).
@@ -30,4 +30,4 @@ So each screen's issue touches only its own folder:
 - `profile/`: a manager's profile (`/manager/$managerId`).
 - `following/`: the managers you follow.
 - `legal/`: Privacy (`/privacy`) and Terms (`/terms`), `docs/legal/`'s text as plain pages, with no picture (spec/12, Settings).
-- `pick-team-signed-out/`: the front door (`docs/design/site-flow.md`, Pick team (signed out)). Only `guestSquad.ts` so far, the guest's squad kept in the browser (spec/09); no route until it has its approved picture.
+- `pick-team-signed-out/`: the front door (`/create-team`, picture `front-door/`): pick a squad as a guest, Auto-fill, kept in the browser (`guestSquad.ts`), and the two sign-up sheets on Save team (spec/09).

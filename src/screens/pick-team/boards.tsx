@@ -1,3 +1,4 @@
+import { photoOf } from "../../fixtures/photos";
 import { money, oneDecimal } from "../../parts";
 import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS, Rift, Tile, type LineupCardProps } from "../../rift";
 import type { PickPlayer } from "./fixtures";
@@ -58,6 +59,7 @@ export function CardBoard(props: ViewProps) {
     plays: flexPlays(slot, p.role),
     name: p.name,
     team: p.team,
+    photo: photoOf(p.name),
     mark: markOf(state, p.id),
     news: p.news?.flag,
     next: fixtureLine(data.series, p.team),

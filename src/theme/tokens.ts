@@ -161,8 +161,9 @@ export const measure = {
   sponsorTopW: 120,
 } as const;
 
-/** Opacities: the band across a tier shield; a dimmed tile's shirt drawing, never its words. */
-export const opacity = { tierBand: 0.45, dim: 0.5 } as const;
+/** Opacities: the band across a tier shield; a dimmed tile's shirt drawing, never its words; an
+ *  empty slot's shirt outline (front door picture). */
+export const opacity = { tierBand: 0.45, dim: 0.5, emptyShirt: 0.25 } as const;
 
 /** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
 export const stroke = { shirt: 1.6, dash: 3 } as const;

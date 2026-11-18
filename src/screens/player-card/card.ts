@@ -128,6 +128,8 @@ export interface PlayerCardData {
   legalName: string;
   role: RoleKey;
   team: TeamCode;
+  /** His media-day portrait for the split; his team's crest until it is saved. */
+  photo?: string;
   /** An admin's news line, shown as a bar over the card. */
   news?: string;
   season: { points: number; place: number; field: string; games: number; lines: SeasonLine[] };

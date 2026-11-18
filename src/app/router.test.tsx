@@ -8,6 +8,7 @@ import { htmlAt } from "../testing/render";
 const ROUTES: Record<ScreenKey, [Go, string]> = {
   home: [{ to: PATHS.home }, "home"],
   pickTeam: [{ to: PATHS.pickTeam }, "pick-team"],
+  createTeam: [{ to: PATHS.createTeam }, "pick-team-signed-out"],
   transfers: [{ to: PATHS.transfers }, "transfers"],
   points: [{ to: PATHS.points }, "points"],
   pointsWeek: [{ to: PATHS.pointsWeek, params: { week: "2" } }, "points"],

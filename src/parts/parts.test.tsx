@@ -19,6 +19,7 @@ import {
   PageFrame,
   PageHead,
   Placeholder,
+  RIOT_NOTICE,
   SeriesList,
   SideSection,
   SponsorNote,
@@ -38,11 +39,14 @@ describe("top bar", () => {
     expect(out).toBe("FlolHomePick TeamTransfersPointsLeaguesStatsLCKLivepresented by SponsorBaron Steal FC ▾");
   });
 
-  test("marks the active item and offers Sign in to a visitor", () => {
-    const out = html(<TopBar active="leagues" account={null} />);
+  test("marks the active item", () => {
+    const out = html(<TopBar active="leagues" account={MANAGER.team} />);
     expect(out).toMatch(/aria-current="page"[^>]*>Leagues/);
     expect(out).toContain('href="/leagues"');
-    expect(out).toContain(">Sign in<");
+  });
+
+  test("a visitor's bar: Stats and LCK, then Log in (front door picture)", () => {
+    expect(text(<TopBar account={null} />)).toBe("FlolStatsLCKpresented by SponsorLog in ›");
   });
 
   test("opens the account menu when it has items", () => {
@@ -284,4 +288,16 @@ test("the page frame puts the side column after the main", () => {
   expect(right.indexOf("main")).toBeLessThan(right.indexOf("side</p>"));
   expect(right).toContain("page-frame--two");
   expect(right).toContain('data-screen="points"');
+});
+
+test("every page's foot carries Riot's Legal Jibber Jabber notice, after the page (spec/13)", () => {
+  const out = text(
+    <PageFrame screen="points" account={null}>
+      <p>main</p>
+    </PageFrame>,
+  );
+  expect(out.endsWith(RIOT_NOTICE)).toBe(true);
+  expect(RIOT_NOTICE).toBe(
+    `Flol was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.`,
+  );
 });

@@ -11,16 +11,6 @@ export function better(left: number, right: number): Side {
   return left > right ? "left" : "right";
 }
 
-/** A role named as a group of players: the search's heads and the season rank (`2nd of 10 mids`). */
-export const ROLE_PLURAL: Record<PersonRole, string> = {
-  top: "Tops",
-  jng: "Junglers",
-  mid: "Mids",
-  bot: "Bots",
-  sup: "Supports",
-  coach: "Coaches",
-};
-
 export interface SearchGroup {
   role: PersonRole;
   rows: SearchRow[];

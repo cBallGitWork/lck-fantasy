@@ -111,8 +111,8 @@ function refusal(squad: SquadPlayer[], plan: Plan, slot: SquadSlot, player: List
   return missing.length > stillOpen ? roleEmpty(ROLE_NAME[missing[0]!]) : undefined;
 }
 
-/** No empty slot he fits: remove a player, or the coach, first. */
-const noRoom = (role: PersonRole) => (role === "coach" ? WORDS.removeCoach : WORDS.removePlayer);
+/** No empty slot he fits: sell a player, or the coach, first (spec/12, Before anyone is sold). */
+const noRoom = (role: PersonRole) => (role === "coach" ? WORDS.sellCoach : WORDS.sellPlayer);
 
 /**
  * A row's `+`: buys him into the slot being filled, or the first empty one he fits, then moves on to the
@@ -238,7 +238,9 @@ export interface AfterConfirm {
 
 /**
  * A confirm applied, as the page hands it over: each transfer by id and the nine by slot. A player kept
- * keeps his C; one bought comes at his list price. Free transfers and the bank are what is left.
+ * keeps his C; a sold Captain's C goes to whoever starts in his slot once the squad is arranged
+ * (spec/04, Selling the Captain); one bought comes at his list price. Free transfers and the bank are
+ * what is left.
  */
 export function confirmTransfers(
   squad: SquadPlayer[],
@@ -254,8 +256,13 @@ export function confirmTransfers(
     return p;
   };
   const pairs = transfers.map((t) => ({ out: find(t.out), in: find(t.in) }));
+  const soldIds = new Set(transfers.map((t) => t.out));
+  const passed = new Map(squad.filter((p) => p.mark && soldIds.has(p.id)).map((p) => [p.slot, p.mark]));
   return {
-    squad: SQUAD_SLOTS.map((slot) => ({ ...find(lineup[slot]), slot })),
+    squad: SQUAD_SLOTS.map((slot) => {
+      const p: SquadPlayer = { ...find(lineup[slot]), slot };
+      return p.mark || !passed.has(slot) ? p : { ...p, mark: passed.get(slot) };
+    }),
     rules: { ...rules, freeTransfers: freeLeft(rules, pairs.length), bank: pairs.reduce((sum, m) => sum + m.out.priceWon - m.in.priceWon, rules.bank) },
     moves: pairs.map((m) => ({ out: m.out.name, in: m.in.name })),
     hit: pendingHit(rules, pairs.length),

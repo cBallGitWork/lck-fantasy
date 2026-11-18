@@ -22,6 +22,8 @@ export const PATHS = {
   /** Perfect game for one week, so a week can be shared: `/perfect-game/3`. */
   perfectGameWeek: "/perfect-game/$week",
   priceChanges: "/price-changes",
+  /** One week's new prices, so a week can be linked: `/price-changes/4`. */
+  priceChangesWeek: "/price-changes/$week",
   settings: "/settings",
   lckHub: "/lck",
   playerCard: "/player/$playerId",
@@ -52,6 +54,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   perfectGame: "Perfect game",
   perfectGameWeek: "Perfect game",
   priceChanges: "Price changes",
+  priceChangesWeek: "Price changes",
   settings: "Settings",
   lckHub: "LCK",
   playerCard: "Player",
@@ -94,11 +97,17 @@ export function cardGo(id: string, coach: boolean): Go {
   return coach ? { to: PATHS.coachCard, params: { coachId: id } } : { to: PATHS.playerCard, params: { playerId: id } };
 }
 
-/** The search key Transfers opens with a slot already sold under: `/transfers?sell=coach`. */
+/** The search key Transfers opens with one of the nine already sold under, by slot or by player: `/transfers?sell=coach`, `/transfers?sell=faker`. */
 export const SELL_SEARCH = "sell";
 
 /** Transfers with one of the nine already sold, as a card's Transfer out opens it. */
-export const transfersSelling = (slot: string) => `${PATHS.transfers}?${SELL_SEARCH}=${encodeURIComponent(slot)}`;
+export const transfersSelling = (slotOrId: string) => `${PATHS.transfers}?${SELL_SEARCH}=${encodeURIComponent(slotOrId)}`;
+
+/** The search key Pick Team opens with a player already tapped under: `/pick-team?swap=faker`. */
+export const SWAP_SEARCH = "swap";
+
+/** Pick Team with a player tapped and those he can swap with lit, as the player card's Swap with bench opens it (spec/12). */
+export const pickTeamSwapping = (id: string) => `${PATHS.pickTeam}?${SWAP_SEARCH}=${encodeURIComponent(id)}`;
 
 /** A league's page. */
 export const leagueGo = (id: string): Go => ({ to: PATHS.league, params: { leagueId: id } });

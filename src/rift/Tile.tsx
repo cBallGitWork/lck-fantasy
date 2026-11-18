@@ -27,14 +27,16 @@ interface TileProps {
   price?: ReactNode;
   /** A `×` at the card's top left: tapping the tile sells him (Transfers). */
   sell?: boolean;
+  /** A `↺` in the same corner: tapping the tile puts a sold player back (Transfers). */
+  restore?: boolean;
   /** The week's points, in the dark band under the name (Points, Perfect game). */
   points?: ReactNode;
   /** The band's line: the week's fixtures (Pick Team, Transfers), or each series' points under the points. */
   line?: ReactNode;
   selected?: boolean;
-  /** `dim` while another tile is being moved, a sold one's empty place, or a bench player who didn't play; `fit` where it could go. */
+  /** `dim` while another tile is being moved, or a bench player who didn't play; `fit` where it could go. */
   state?: "dim" | "fit";
-  /** An empty slot (front door): dashed, `name` its role, `+` under it. */
+  /** An empty slot (front door, a sold one on Transfers): dashed, `name` its role, `+` under it. */
   empty?: boolean;
   onSelect?: () => void;
 }
@@ -62,9 +64,9 @@ export function Tile(p: TileProps) {
         </div>
       )}
       <div className="tile__card">
-        {p.sell && (
+        {(p.sell || p.restore) && (
           <span className="tile__sell" aria-hidden="true">
-            ×
+            {p.restore ? "↺" : "×"}
           </span>
         )}
         <div className="tile__kit">

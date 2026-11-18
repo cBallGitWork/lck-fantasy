@@ -5,6 +5,7 @@ import { compareGo } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CoachFixtures, CoachHistoryTab, CoachRoster, CoachThisWeek } from "./CoachTabs";
 import { COACH_TABS, type CoachCardData, type CoachFrom, type CoachSeason, type CoachTab, type SeasonLine } from "./types";
+import { coachesOf, EMPTY_TAB, formPlace, gamesCount, ownedPlace, seasonPlace, transfersThisWeek, WORDS } from "./words";
 
 /**
  * The coach card's body, inside the card the page opens (spec/12, The coach card): the header,
@@ -42,27 +43,27 @@ export function CoachCard({
           <p className="coach-card__hero">
             <b className="coach-card__hero-figure num">{season.points}</b>
             <span className="quiet">
-              Season · {placeOf(season.rank, `${season.of} coaches`)}
+              {seasonPlace(placeOf(season.rank, coachesOf(season.of)))}
             </span>
           </p>
           <div className="coach-card__acts">
-            {from === "pickTeam" && <OutlinedKey onClick={onTransferOut}>Transfer out</OutlinedKey>}
-            <LinkGo go={compareGo(playerId(head.name))}>Compare</LinkGo>
+            {from === "pickTeam" && <OutlinedKey onClick={onTransferOut}>{WORDS.transferOut}</OutlinedKey>}
+            <LinkGo go={compareGo(playerId(head.name))}>{WORDS.compare}</LinkGo>
           </div>
         </div>
       </header>
       <div className="coach-card__meta">
         <Figure figure={money(meta.priceM)}>
-          price <PriceMove money={meta.moveM} />
+          {WORDS.price} <PriceMove money={meta.moveM} />
         </Figure>
-        <Figure figure={oneDecimal(meta.form)}>form · {ordinal(meta.formRank)}</Figure>
-        <Figure figure={pct(meta.ownedPct)}>owned · {ordinal(meta.ownedRank)}</Figure>
-        <span className="quiet">{inOut(meta.transfersIn, meta.transfersOut)} this week</span>
+        <Figure figure={oneDecimal(meta.form)}>{formPlace(ordinal(meta.formRank))}</Figure>
+        <Figure figure={pct(meta.ownedPct)}>{ownedPlace(ordinal(meta.ownedRank))}</Figure>
+        <span className="quiet">{transfersThisWeek(inOut(meta.transfersIn, meta.transfersOut))}</span>
       </div>
       <div className="coach-card__body">
         <div className="coach-card__left">
           <SeriesStrip past={data.past} next={data.next} />
-          <Tabs id={tabsId} tabs={COACH_TABS} chosen={tab} onChoose={onTab} label="Coach card" />
+          <Tabs id={tabsId} tabs={COACH_TABS} chosen={tab} onChoose={onTab} label={WORDS.card} />
           <TabPanel id={tabsId} className="coach-card__main">
             <TabBody data={data} tab={tab} />
           </TabPanel>
@@ -74,14 +75,6 @@ export function CoachCard({
     </article>
   );
 }
-
-/** What an opening without data for a tab shows there, so the panel is never blank. */
-export const EMPTY_TAB: Record<CoachTab, string> = {
-  "This week": "No series yet",
-  Fixtures: "No fixtures left",
-  History: "No history yet",
-  Roster: "No roster yet",
-};
 
 /** The chosen tab's panel, or its empty state when this opening has no data for it. */
 function TabBody({ data, tab }: { data: CoachCardData; tab: CoachTab }) {
@@ -109,16 +102,16 @@ function Figure({ figure, children }: { figure: string; children: ReactNode }) {
 /** Each coach line's season: total, per game (blank on the series lines) and points. */
 function SeasonPanel({ season }: { season: CoachSeason }) {
   return (
-    <SideSection title="Season" note={`${count(season.games)} games`}>
+    <SideSection title={WORDS.season} note={gamesCount(count(season.games))}>
       <Table<SeasonLine>
-        label="Season"
+        label={WORDS.season}
         rowKey={(l) => l.name}
         rows={season.lines}
         columns={[
           { key: "line", head: "", cell: (l) => l.name },
-          { key: "total", head: "Total", figure: true, cell: (l) => l.total },
-          { key: "per", head: "Per game", figure: true, cell: (l) => (l.series ? "" : <span className="coach-card__soft">{perGame(l.total, season.games)}</span>) },
-          { key: "pts", head: "Pts", figure: true, cell: (l) => <b>{signed(l.points)}</b> },
+          { key: "total", head: WORDS.total, figure: true, cell: (l) => l.total },
+          { key: "per", head: WORDS.perGame, figure: true, cell: (l) => (l.series ? "" : <span className="coach-card__soft">{perGame(l.total, season.games)}</span>) },
+          { key: "pts", head: WORDS.pts, figure: true, cell: (l) => <b>{signed(l.points)}</b> },
         ]}
       />
     </SideSection>

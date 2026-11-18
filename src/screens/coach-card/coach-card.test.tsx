@@ -2,7 +2,8 @@
 import { describe, expect, test } from "vitest";
 import { PATHS } from "../../paths";
 import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
-import { CoachCard, EMPTY_TAB } from "./CoachCard";
+import { CoachCard } from "./CoachCard";
+import { EMPTY_TAB } from "./words";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
 import { CoachCardPage, FIRST_TAB, TRANSFER_OUT } from "./index";
 import type { CoachCardData, CoachFrom, CoachTab } from "./types";

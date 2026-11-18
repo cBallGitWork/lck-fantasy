@@ -47,7 +47,7 @@ export const saveNewTeam = internalMutation({
     const seasonId = found.season._id;
     const { settings } = found.season;
     if ((await entryOf(ctx, args.account, seasonId)) !== null) throw refuse({ rule: "hasTeam" });
-    if (!settings.signUpOpen) {
+    if (settings.signUpOpen === false) {
       const turnedAway = await admit(ctx, args.account, args.invite, at);
       if (turnedAway !== null) throw refuse(turnedAway);
     }

@@ -37,8 +37,8 @@ export const seasonSettings = v.object({
   buffs: v.array(v.object({ name: v.string(), effect: literals(BUFF_EFFECTS), multiplier: v.optional(v.number()), perSplit: v.number() })),
   teamNameMaxLength: v.number(),
   /** False while it runs as a closed test: only an account with a personal invite signs up (spec/10,
-   *  The road to launch). */
-  signUpOpen: v.boolean(),
+   *  The road to launch). Missing, as on a season stored before it, is open. */
+  signUpOpen: v.optional(v.boolean()),
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */

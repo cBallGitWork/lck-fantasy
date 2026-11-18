@@ -175,6 +175,12 @@ describe("a closed test signs up only those Craig invites (spec/10, The road to 
     expect(await stored(t)).toEqual({ managers: [], entries: [], picks: [] });
   });
 
+  test("an open season signs up anyone and ignores an invite code", async () => {
+    const { t, save } = await world();
+    await save({ invite: "NOPE-NOPE" });
+    expect(await t.query(store.hasTeam, { ...LCK, account: ACCOUNT })).toBe(true);
+  });
+
   test("an invite someone else used turns a second person away", async () => {
     const { t, save } = await world(closed());
     const code = await t.mutation(invites.makeInvite, { for: "Sam" });

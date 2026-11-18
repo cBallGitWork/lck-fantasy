@@ -1,5 +1,5 @@
 // Auto-fill (spec/09-onboarding.md, Picking as a guest): fill a guest's empty slots with a valid
-// squad under budget, as UCL Fantasy and FPL do.
+// squad under budget, as UCL Fantasy and FPL do, at random but spending close to the budget.
 import { sum } from "../../src/parts/util/sum";
 import { priceOf, requirePrice, type Prices } from "../squads/budget";
 import {
@@ -11,15 +11,29 @@ import {
  *  first in tests. */
 export type Chooser = (candidates: Pick[]) => Pick;
 
+/** Any candidate, evenly: a new squad each press. `random` returns a number in [0, 1), as
+ *  Math.random does; tests seed it. */
+export const randomChooser = (random: () => number): Chooser => (candidates) =>
+  candidates[Math.floor(random() * candidates.length)]!;
+
+/** The budget, null for none, and how far under it Auto-fill aims to spend at most: both in won,
+ *  both the season's data (spec/09: "spends close to the budget"). */
+export interface AutoFillMoney {
+  budget: number | null;
+  gap: number;
+}
+
 /** The squad with every empty slot filled from `pool`. Each choice leaves a fill of the slots still
- *  empty, the cheapest distinct picks within the cap, that the budget covers (null: no budget).
- *  Throws when no valid fill exists, rather than hand back a squad that breaks a rule. */
+ *  empty, the cheapest distinct picks within the cap, that the budget covers. Among those it chooses
+ *  from the picks that still let the squad reach the budget less the gap, where any do; where none
+ *  do, it takes the dearest, the closest it can get. Throws when no valid fill exists, rather than
+ *  hand back a squad that breaks a rule. */
 export function autoFill(
   squad: Squad,
   pool: readonly Pick[],
   prices: Prices,
   settings: SquadSettings,
-  budget: number | null,
+  { budget, gap }: AutoFillMoney,
   choose: Chooser,
 ): Squad {
   const starters = [...squad.starters];
@@ -43,15 +57,18 @@ export function autoFill(
         (settings.teamCap === null || (perTeam.get(pick.teamId) ?? 0) < settings.teamCap),
     );
   };
-  /** The cost of filling `slots` with the cheapest distinct picks within the cap; null if none. */
-  const cheapestCompletion = (picks: Pick[], slots: (StarterSlot | "bench")[]): number | null => {
+  const cheapestFirst = (a: Pick, b: Pick) => cost(a) - cost(b);
+  const dearestFirst = (a: Pick, b: Pick) => cost(b) - cost(a);
+  /** The cost of filling `slots` in turn, each with the first distinct pick within the cap in
+   *  `order`; null if a slot has none. */
+  const completion = (picks: Pick[], slots: (StarterSlot | "bench")[], order: typeof cheapestFirst): number | null => {
     const chosen = [...picks];
     let total = 0;
     for (const slot of slots) {
-      const cheapest = fill(chosen, slot).sort((a, b) => cost(a) - cost(b))[0];
-      if (!cheapest) return null;
-      chosen.push(cheapest);
-      total += cost(cheapest);
+      const next = fill(chosen, slot).sort(order)[0];
+      if (!next) return null;
+      chosen.push(next);
+      total += cost(next);
     }
     return total;
   };
@@ -61,11 +78,15 @@ export function autoFill(
     const picks = [...starters.map((s) => s.pick), ...bench];
     const spent = sum(picks.map((pick) => requirePrice(pick, prices)));
     const candidates = fill(picks, slot).filter((pick) => {
-      const rest = cheapestCompletion([...picks, pick], empty);
+      const rest = completion([...picks, pick], empty, cheapestFirst);
       return rest !== null && (budget === null || spent + cost(pick) + rest <= budget);
     });
     if (candidates.length === 0) throw new Error(`Auto-fill found no pick for the ${slot} slot within the rules.`);
-    const pick = choose(candidates);
+    const near = budget === null ? candidates : candidates.filter((pick) => {
+      const most = completion([...picks, pick], empty, dearestFirst);
+      return most !== null && spent + cost(pick) + most >= budget - gap;
+    });
+    const pick = near.length > 0 ? choose(near) : [...candidates].sort(dearestFirst)[0]!;
     if (slot === "bench") bench.push(pick);
     else starters.push({ slot, pick });
   }

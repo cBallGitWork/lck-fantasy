@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { Modal, PageFrame, useAnnounce, useDevState } from "../../parts";
 import { playerId } from "../../fixtures/competition";
-import { compareGo, PATHS } from "../../paths";
+import { compareGo, pickTeamSwapping, transfersSelling } from "../../paths";
 import { markNews, type Mark } from "../../rift";
 import type { CardMark, CardTab, PlayerCardData } from "./card";
 import { CARD_FROM_PICK_TEAM, CARD_FROM_POINTS, CARD_WITH_NEWS, MARK_AT_PICK_TEAM } from "./fixtures";
@@ -36,6 +36,7 @@ export function PlayerCardPage({
   const navigate = useNavigate();
   const [mark, setMark] = useState<CardMark>(initialMark);
   const announce = useAnnounce();
+  const id = playerId(card.name);
   const actions =
     openedFrom === "pickTeam"
       ? {
@@ -44,14 +45,14 @@ export function PlayerCardPage({
             if (next !== mark) announce(markNews(card.name, next));
             setMark(next);
           },
-          onSwap: () => void navigate({ to: PATHS.pickTeam }),
-          onTransferOut: () => void navigate({ to: PATHS.transfers }),
+          onSwap: () => void navigate({ href: pickTeamSwapping(id) }),
+          onTransferOut: () => void navigate({ href: transfersSelling(id) }),
         }
       : undefined;
   return (
     <PageFrame screen="player-card" account={MANAGER.team}>
       <Modal kind="card" title={card.name} onClose={() => router.history.back()}>
-        <PlayerCard card={card} actions={actions} compare={compareGo(playerId(card.name))} initialTab={initialTab} />
+        <PlayerCard card={card} actions={actions} compare={compareGo(id)} initialTab={initialTab} />
       </Modal>
     </PageFrame>
   );

@@ -28,7 +28,7 @@ export const WORDS = {
   /** The tabs, for a reader. */
   table: "Table",
   /** Overall's groups, for a reader. */
-  group: "Group",
+  group: "Overall group",
   noTable: "No table yet",
   /** The pager, for a reader. */
   pages: "Pages",
@@ -49,7 +49,7 @@ export const WORDS = {
   noCode: "No code",
   openLeague: "Open league",
   /** The Join sheet's error: the code finds no league. */
-  noSuchCode: "No league has that code",
+  noSuchCode: "No league has that code. Check it and try again.",
   deleteKey: "Delete league",
 } as const;
 
@@ -77,8 +77,8 @@ export const nameCount = (length: number, max: number) => `${length} / ${max}`;
 /** `Private leagues: 2 of 25`. */
 export const privateCountLine = (count: number, cap: number) => `Private leagues: ${count} of ${cap}`;
 
-/** `25 leagues already`: why a manager at the cap can't create or join another. */
-export const atCap = (cap: number) => `${cap} leagues already`;
+/** `Max 25 private leagues`: why a manager at the cap can't create or join another. */
+export const atCap = (cap: number) => `Max ${cap} private leagues`;
 
 /** `Leave Flol Discord?`. */
 export const leaveTitle = (name: string) => `Leave ${name}?`;

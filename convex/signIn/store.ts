@@ -5,6 +5,7 @@ import { ConvexError, v } from "convex/values";
 import { sum } from "../../src/parts/util/sum";
 import type { Id } from "../_generated/dataModel";
 import { internalMutation, internalQuery, type QueryCtx } from "../_generated/server";
+import { now } from "../admin/clock";
 import { findSeason, pricedPickOf, pricesFor } from "../lck/season";
 import { joinAutoLeagues } from "../leagues/store";
 import { literals } from "../schema";
@@ -37,7 +38,7 @@ export const saveNewTeam = internalMutation({
     agreedVersion: v.string(),
   },
   handler: async (ctx, args) => {
-    const now = Date.now();
+    const at = await now(ctx);
     const found = await findSeason(ctx, args.competition, args.year);
     if (found === null) throw new Error(`No ${args.competition} ${args.year} season is stored.`);
     const seasonId = found.season._id;
@@ -45,7 +46,7 @@ export const saveNewTeam = internalMutation({
     if ((await entryOf(ctx, args.account, seasonId)) !== null) throw refuse({ rule: "hasTeam" });
 
     const gameweeks = await ctx.db.query("gameweeks").withIndex("by_season", (q) => q.eq("season", seasonId)).collect();
-    const firstGameweek = firstScoringGameweek(now, gameweeks);
+    const firstGameweek = firstScoringGameweek(at, gameweeks);
     if (firstGameweek === null) throw refuse({ rule: "seasonOver" });
     const prices = pricesFor(await ctx.db.query("prices").withIndex("by_season", (q) => q.eq("season", seasonId)).collect(), firstGameweek);
     const teamIds = (await ctx.db.query("teams").collect()).map((team) => team._id as string);
@@ -64,7 +65,7 @@ export const saveNewTeam = internalMutation({
     const answers = {
       country: args.country.trim(),
       favouriteTeam: args.favouriteTeam as Id<"teams">,
-      agreed: { at: now, version: args.agreedVersion },
+      agreed: { at, version: args.agreedVersion },
     };
     const existing = await managerOf(ctx, args.account);
     if (existing !== null) await ctx.db.patch(existing._id, answers);

@@ -122,7 +122,8 @@ export default defineSchema({
   })
     .index("by_oeId", ["oeId"])
     .index("by_pair", ["pair"])
-    .index("by_series", ["series"]),
+    .index("by_series", ["series"])
+    .index("by_startedAt", ["startedAt"]),
   gameLineups: defineTable({
     game: v.id("games"),
     player: v.id("players"),
@@ -207,4 +208,7 @@ export default defineSchema({
     .index("by_entry", ["entry"]),
   /** Managers a private league's maker removed: they can't rejoin it (spec/08). */
   leagueRemovals: defineTable({ league: v.id("leagues"), entry: v.id("entries") }).index("by_league", ["league", "entry"]),
+
+  // The sim (convex/admin/clock.ts): its one stored moment, which Next day and Play to end move (spec/10).
+  simClock: defineTable({ now: v.number() }),
 });

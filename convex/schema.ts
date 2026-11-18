@@ -36,6 +36,9 @@ export const seasonSettings = v.object({
   /** Each buff, its multiplier where its effect has one, and how many a manager gets per split (spec/06). */
   buffs: v.array(v.object({ name: v.string(), effect: literals(BUFF_EFFECTS), multiplier: v.optional(v.number()), perSplit: v.number() })),
   teamNameMaxLength: v.number(),
+  /** False while it runs as a closed test: only an account with a personal invite signs up (spec/10,
+   *  The road to launch). Missing, as on a season stored before it, is open. */
+  signUpOpen: v.optional(v.boolean()),
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */
@@ -160,6 +163,16 @@ export default defineSchema({
     /** When the manager ticked the Terms and Privacy, and which version (spec/09). */
     agreed: v.object({ at: v.number(), version: v.string() }),
   }).index("by_account", ["account"]),
+  /** A personal invite to the closed tests, one person each (spec/10, The road to launch). */
+  invites: defineTable({
+    code: v.string(),
+    /** Who Craig made it for, as he wrote it. */
+    for: v.string(),
+    /** The account that signed up with it, and when; unset while unused. */
+    used: v.optional(v.object({ account: v.string(), at: v.number() })),
+  })
+    .index("by_code", ["code"])
+    .index("by_account", ["used.account"]),
   entries: defineTable({
     manager: v.id("managers"),
     season: v.id("seasons"),

@@ -1,4 +1,5 @@
 import { count, cx } from "../../parts";
+import { WORDS } from "./words";
 
 /** Pages shown before `⋯` and the last page, as the picture's `1 2 3 ⋯ 1,063`. */
 const LEADING_PAGES = 3;
@@ -12,7 +13,7 @@ export function Pager({ pages, page, onPage, onFindMe }: { pages: number; page: 
     </button>
   );
   return (
-    <nav className="leagues__pager" aria-label="Pages">
+    <nav className="leagues__pager" aria-label={WORDS.pages}>
       {leading.map(key)}
       {pages > LEADING_PAGES && (
         <>
@@ -21,7 +22,7 @@ export function Pager({ pages, page, onPage, onFindMe }: { pages: number; page: 
         </>
       )}
       <button type="button" className="leagues__page" onClick={onFindMe}>
-        Find me
+        {WORDS.findMe}
       </button>
     </nav>
   );

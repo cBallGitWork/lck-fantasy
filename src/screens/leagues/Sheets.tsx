@@ -3,8 +3,9 @@
 import { useId, useState, type ReactNode } from "react";
 import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf, plural } from "../../parts";
 import { leagueGo } from "../../paths";
-import { capReason, privateCountLine } from "./forms";
+import { capReason } from "./forms";
 import type { PrivateLeague, ScoringWeek, ScoringWeeks } from "./types";
+import { deleteLine, deleteTitle, leaveTitle, nameCount, privateCountLine, scoringFrom, weekStarts, WORDS } from "./words";
 import "./Sheets.css";
 
 /** Back, a text link in every sheet (as in the Transfers confirm), then the sheet's main action. */
@@ -12,7 +13,7 @@ function SheetKeys({ onBack, children }: { onBack: () => void; children: ReactNo
   return (
     <div className="leagues__sheet-keys">
       <button type="button" className="leagues__back key-bare" onClick={onBack}>
-        Back
+        {WORDS.back}
       </button>
       {children}
     </div>
@@ -27,7 +28,7 @@ interface PrivateCount {
 
 const CountLine = ({ count, cap }: PrivateCount) => <p className="leagues__count quiet">{privateCountLine(count, cap)}</p>;
 
-const weekLabel = ({ week, starts }: ScoringWeek) => `Week ${week} · ${starts}`;
+const weekLabel = ({ week, starts }: ScoringWeek) => weekStarts(week, starts);
 
 /** Create a league: its name, and the week scoring starts, this week by default (create.html). */
 export function CreateSheet({
@@ -50,11 +51,11 @@ export function CreateSheet({
   const weekId = useId();
   const trimmed = name.trim();
   return (
-    <Modal kind="sheet" title="Create a league" onClose={onClose}>
-      <Field label="Name" value={name} maxLength={nameMax} aside={`${name.length} / ${nameMax}`} onChange={(e) => setName(e.target.value)} />
+    <Modal kind="sheet" title={WORDS.create} onClose={onClose}>
+      <Field label={WORDS.name} value={name} maxLength={nameMax} aside={nameCount(name.length, nameMax)} onChange={(e) => setName(e.target.value)} />
       <div className="leagues__week">
         <label className="leagues__label" htmlFor={weekId}>
-          Scoring starts
+          {WORDS.scoringStarts}
         </label>
         <select id={weekId} className="leagues__select" value={week} onChange={(e) => setWeek(Number(e.target.value))}>
           {weeks.map((w) => (
@@ -65,8 +66,8 @@ export function CreateSheet({
         </select>
       </div>
       <SheetKeys onBack={onClose}>
-        <MainAction disabledReason={capReason(privates.count, privates.cap) ?? (trimmed === "" ? "No name" : undefined)} onClick={() => onCreate(trimmed, week)}>
-          Create
+        <MainAction disabledReason={capReason(privates.count, privates.cap) ?? (trimmed === "" ? WORDS.noName : undefined)} onClick={() => onCreate(trimmed, week)}>
+          {WORDS.createKey}
         </MainAction>
       </SheetKeys>
       <CountLine {...privates} />
@@ -88,15 +89,15 @@ export function CreatedSheet({
 }) {
   return (
     <Modal kind="sheet" title={league.name} onClose={onClose}>
-      <p className="leagues__sheet-sub">Scoring from Week {league.scoringFrom}</p>
+      <p className="leagues__sheet-sub">{scoringFrom(league.scoringFrom)}</p>
       <div className="leagues__made">
         <b className="leagues__made-code num">{league.code}</b>
-        <OutlinedKey onClick={onCopyCode}>Copy code</OutlinedKey>
-        <OutlinedKey onClick={onCopyLink}>Copy link</OutlinedKey>
+        <OutlinedKey onClick={onCopyCode}>{WORDS.copyCode}</OutlinedKey>
+        <OutlinedKey onClick={onCopyLink}>{WORDS.copyLink}</OutlinedKey>
       </div>
       <div className="leagues__sheet-keys">
         <GoLink className="leagues__open" go={leagueGo(league.id)}>
-          Open league
+          {WORDS.openLeague}
         </GoLink>
       </div>
     </Modal>
@@ -120,13 +121,13 @@ export function JoinSheet({
 }) {
   const [code, setCode] = useState(initialCode);
   return (
-    <Modal kind="sheet" title="Join a league" onClose={onClose}>
+    <Modal kind="sheet" title={WORDS.join} onClose={onClose}>
       <div className="leagues__code-field">
-        <Field label="Code or link" value={code} error={error} onChange={(e) => setCode(e.target.value)} />
+        <Field label={WORDS.codeOrLink} value={code} error={error} onChange={(e) => setCode(e.target.value)} />
       </div>
       <SheetKeys onBack={onClose}>
-        <MainAction disabledReason={capReason(privates.count, privates.cap) ?? (code.trim() === "" ? "No code" : undefined)} onClick={() => onJoin(code)}>
-          Join
+        <MainAction disabledReason={capReason(privates.count, privates.cap) ?? (code.trim() === "" ? WORDS.noCode : undefined)} onClick={() => onJoin(code)}>
+          {WORDS.joinKey}
         </MainAction>
       </SheetKeys>
       <CountLine {...privates} />
@@ -137,12 +138,12 @@ export function JoinSheet({
 /** A member leaving: the league, their rank in it, then Leave (leave.html). */
 export function LeaveSheet({ name, rank, size, onLeave, onClose }: { name: string; rank: number; size: number; onLeave: () => void; onClose: () => void }) {
   return (
-    <Modal kind="sheet" title={`Leave ${name}?`} onClose={onClose}>
+    <Modal kind="sheet" title={leaveTitle(name)} onClose={onClose}>
       <p>
         {placeOf(rank, count(size))}
       </p>
       <SheetKeys onBack={onClose}>
-        <MainAction onClick={onLeave}>Leave</MainAction>
+        <MainAction onClick={onLeave}>{WORDS.leave}</MainAction>
       </SheetKeys>
     </Modal>
   );
@@ -152,7 +153,7 @@ export function LeaveSheet({ name, rank, size, onLeave, onClose }: { name: strin
 export function DeleteSheet({
   name,
   size,
-  scoringFrom,
+  scoringFrom: firstWeek,
   onDelete,
   onClose,
 }: {
@@ -163,12 +164,10 @@ export function DeleteSheet({
   onClose: () => void;
 }) {
   return (
-    <Modal kind="sheet" title={`Delete ${name}?`} onClose={onClose}>
-      <p>
-        {plural(size, "manager")} · scoring from Week {scoringFrom}
-      </p>
+    <Modal kind="sheet" title={deleteTitle(name)} onClose={onClose}>
+      <p>{deleteLine(plural(size, WORDS.manager), firstWeek)}</p>
       <SheetKeys onBack={onClose}>
-        <MainAction onClick={onDelete}>Delete league</MainAction>
+        <MainAction onClick={onDelete}>{WORDS.deleteKey}</MainAction>
       </SheetKeys>
     </Modal>
   );

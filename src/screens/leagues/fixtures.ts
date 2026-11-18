@@ -204,6 +204,3 @@ export const JOINABLE: PrivateEntry[] = [
     view: { kind: "private", id: "gank-squad", name: "Gank Squad", code: "GANK-4TQ1", scoringFrom: 2, role: "member", ...NEW_TABLE, tables: {} },
   },
 ];
-
-/** Made up: the pictures draw no wrong code. */
-export const NO_SUCH_CODE = "No league has that code";

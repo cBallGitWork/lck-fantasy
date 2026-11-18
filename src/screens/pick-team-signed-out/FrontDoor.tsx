@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { allPicks, type Squad } from "../../../convex/squads/squad";
 import type { TeamCode } from "../../fixtures/week3";
 import { cx, Deadline, formatWon, MainAction, NONE, OutlinedKey, PageFrame, PageHead, Toast, ViewToggle } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchTile, LINEUP_ORDER, Rift, RIFT_SLOTS, RIFT_VIEW, ROLE_NAME, Tile, type SquadSlot } from "../../rift";
+import { BENCH_SLOTS, BenchBar, BenchTile, isBench, LINEUP_ORDER, Rift, RIFT_SLOTS, RIFT_VIEW, ROLE_NAME, Tile, type SquadSlot } from "../../rift";
 import { PlayerList, type ListFilters } from "./PlayerList";
 import {
   add,
@@ -94,7 +94,7 @@ export function FrontDoor(props: FrontDoorProps) {
     const p = held[slot];
     return p
       ? { name: p.name, team: p.team, price: formatWon(p.priceWon), sell: true, line: props.next[p.team] ? `${WORDS.versus} ${props.next[p.team]}` : NONE }
-      : { name: slot === "flex" || slot.startsWith("bench") ? WORDS.anyRole : ROLE_NAME[slot as keyof typeof ROLE_NAME], team: "", empty: true, line: "+" };
+      : { name: slot === "flex" || isBench(slot) ? WORDS.anyRole : ROLE_NAME[slot as keyof typeof ROLE_NAME], team: "", empty: true, line: "+" };
   };
 
   return (

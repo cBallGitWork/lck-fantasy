@@ -1,11 +1,11 @@
-// Which truck lines fit the receiver's week, and filling a line with the receiver's own numbers
-// (spec/14-following.md, Truck lines). What each trigger means is Craig's answer on issue #90:
+// Which cheer lines fit the receiver's week, and filling a line with the receiver's own numbers
+// (spec/14-following.md, Lines). What each trigger means is Craig's answer on issue #90:
 // the week read is the receiver's last final gameweek, and every number is the competition's data
 // (`LineSettings`).
 import { count } from "../../src/parts/text/figures";
 import { formatWon } from "../../src/parts/text/money";
 import { sum } from "../../src/parts/util/sum";
-import { isOneOf, PLACEHOLDER_PATTERN, PLACEHOLDERS, type Placeholder, type TruckKind, type TruckLine, type Trigger } from "./lines";
+import { isOneOf, PLACEHOLDER_PATTERN, PLACEHOLDERS, type Placeholder, type CheerKind, type CheerLine, type Trigger } from "./lines";
 
 export interface LineSettings {
   /** A Carry on this many or fewer for the week, after the multiplier, blanked: 2. */
@@ -46,7 +46,7 @@ export interface ReceiverWeek {
 }
 
 /** The private leagues the receiver tops or props up, by name: those shared with the sender, or,
- *  for a sponsor truck, the one league sending it. */
+ *  for a sponsor cheer, the one league sending it. */
 export interface LeagueStanding {
   topOf: readonly string[];
   bottomOf: readonly string[];
@@ -115,7 +115,7 @@ function fitsTrigger(trigger: Trigger, receiver: Receiver, settings: LineSetting
 /** A placeholder's value for this receiver and line, or undefined when the week has none. */
 function placeholderValue(
   placeholder: Placeholder,
-  line: TruckLine,
+  line: CheerLine,
   receiver: Receiver,
   settings: LineSettings,
 ): string | undefined {
@@ -150,7 +150,7 @@ function placeholderValue(
 }
 
 /** A line with the receiver's numbers in, or undefined when one of its placeholders has no value. */
-export function fillLine(line: TruckLine, receiver: Receiver, settings: LineSettings): string | undefined {
+export function fillLine(line: CheerLine, receiver: Receiver, settings: LineSettings): string | undefined {
   let missing = false;
   const text = line.text.replace(PLACEHOLDER_PATTERN, (_, name: string) => {
     const value = isOneOf(PLACEHOLDERS, name) ? placeholderValue(name, line, receiver, settings) : undefined;
@@ -161,14 +161,14 @@ export function fillLine(line: TruckLine, receiver: Receiver, settings: LineSett
 }
 
 export interface FittingLine {
-  line: TruckLine;
+  line: CheerLine;
   text: string;
 }
 
 /** The approved lines of `kind` that fit the receiver's week, filled in; each keeps its weight. */
 export function linesThatFit(
-  lines: readonly TruckLine[],
-  kind: TruckKind,
+  lines: readonly CheerLine[],
+  kind: CheerKind,
   receiver: Receiver,
   settings: LineSettings,
 ): FittingLine[] {

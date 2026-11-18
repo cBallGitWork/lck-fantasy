@@ -91,9 +91,9 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 
 | Term | Meaning | Not |
 |---|---|---|
-| gameweek | The window one squad and one captain score for, with one deadline. | week |
+| week | The window one squad and one captain score for, with one deadline: one LCK week, as LoL fans and Riot number it. Shown as Split 1 Week 3, or Week 3 where the split is clear (Craig, 18 Nov 2026). FPL calls it a gameweek; the spec's prose still may. | gameweek, matchweek, GW |
 | series | One fixture between two teams, a Bo3 or Bo5. | match |
-| game | One game within a series. | map |
+| game | One game within a series (Craig, 18 Nov 2026: game and series only). | map, set |
 | stage | A part of a competition with its own settings: groups, Road to MSI, play-in, playoffs. | phase |
 | round | One round of a knockout bracket. | |
 | Captain | The player whose points are multiplied this gameweek, as in FPL. There is no vice-captain. | Carry |

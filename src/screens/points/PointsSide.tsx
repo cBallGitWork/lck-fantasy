@@ -1,4 +1,4 @@
-import { LinkGo, MeDot, pct, RankMove, SideSection } from "../../parts";
+import { Hint, HINTS, LinkGo, MeDot, pct, RankMove, SideSection } from "../../parts";
 import { PATHS } from "../../paths";
 import type { PointsData, WeekPick } from "./types";
 
@@ -10,7 +10,7 @@ export function YourWeek({ picks }: { picks: WeekPick[] }) {
     <SideSection title="Your week">
       {picks.map((p) => (
         <div key={p.label} className="points__pick">
-          <span className="points__pick-label">{p.label}</span>
+          <span className="points__pick-label">{p.label === "Killer" ? <Hint line={HINTS.killer}>{p.label}</Hint> : p.label}</span>
           <b>
             {p.name}
             {p.mine && <MeDot />}
@@ -29,14 +29,22 @@ export function Leagues({ leagues, nextTier }: Pick<PointsData, "leagues" | "nex
       <div className="points__ranks">
         {leagues.map((l) => (
           <div key={l.name} className="points__rank">
-            <span>{l.name}</span>
+            <span>
+              {l.name}
+              {l.tier && (
+                <>
+                  {" · "}
+                  <Hint line={HINTS.tier}>{l.tier}</Hint>
+                </>
+              )}
+            </span>
             <b className="points__rank-place num">{l.rank}</b>
             <RankMove move={l.move} />
           </div>
         ))}
       </div>
       <p className="points__tier quiet">
-        <b>≈{nextTier.points} pts</b> to {nextTier.tier}
+        <b>≈{nextTier.points} pts</b> to <Hint line={HINTS.tier}>{nextTier.tier}</Hint>
       </p>
       <LinkGo go={{ to: PATHS.leagues }}>All leagues</LinkGo>
     </SideSection>

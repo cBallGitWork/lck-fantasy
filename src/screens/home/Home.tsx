@@ -1,15 +1,13 @@
 import type { ReactNode } from "react";
-import { Columns, count, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, RankMove, SectionHead, SponsorNote, TierShield, Time } from "../../parts";
-import { Following, Leagues } from "./band";
+import { Columns, count, Hint, HINTS, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, RankMove, SectionHead, SponsorNote, TierShield, Time } from "../../parts";
+import { Following, Leagues, type Cheering } from "./band";
 import "./home.css";
-import type { Countdown, FeedItem, HomeShared, OverallTier } from "./types";
+import type { Countdown, HomeShared, OverallTier } from "./types";
 
 /** What Home's keys do; the route wires them. */
-export interface HomeActions {
+export interface HomeActions extends Cheering {
   onPickTeam?: () => void;
   onTransfers?: () => void;
-  /** Truck › on a Following item: opens the truck picker (spec/14). */
-  onTruck?: (item: FeedItem) => void;
 }
 
 /** The team name and hangul; beside it, Overall as a tier, its rank and move, the sponsor's badge. */
@@ -21,7 +19,7 @@ function HomeHead({ team, hangul, overall }: { team: string; hangul: string; ove
         <TierShield className="home__shield" />
         <div>
           <div className="home__tier-name">
-            {overall.tier}
+            <Hint line={HINTS.tier}>{overall.tier}</Hint>
             <span className="home__tier-hangul quiet" lang="ko">
               {overall.hangul}
             </span>
@@ -101,7 +99,7 @@ export function HomeFrame({
         <aside className="home__side">{side}</aside>
       </Columns>
       <Columns className="home__row home__row--band">
-        <Following items={data.following} onTruck={actions.onTruck} />
+        <Following items={data.following} sent={actions.sent} onCheer={actions.onCheer} />
         <Leagues leagues={data.leagues} />
       </Columns>
       <div className="home__sponsor">

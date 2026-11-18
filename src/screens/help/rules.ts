@@ -201,9 +201,9 @@ export const RULES: readonly { group: string; items: readonly Item[] }[] = [
         blocks: [
           {
             list: [
-              "Your place in Overall is shown as a League of Legends rank, from Iron at the bottom to Challenger at the top. Only Overall has ranks.",
-              "Everyone is Unranked until the first week's points are final. After that, your rank can change whenever a series is confirmed.",
-              "Iron to Diamond each have four steps, IV up to I, and I is the best, as in League.",
+              "Your place in Overall is shown as a League of Legends tier, from Iron at the bottom to Challenger at the top. Only Overall has tiers.",
+              "Everyone is Unranked until the first week's points are final. After that, your tier can change whenever a series is confirmed.",
+              "Iron to Diamond each have four divisions, IV up to I, and I is the best, as in League.",
             ],
           },
           { table: "tiers" },

@@ -75,9 +75,9 @@ function perRole(noun: string, groups: readonly RoleGroup[]): string {
 }
 
 const MULTIKILL: Record<number, string> = {
-  2: "A double kill (two kills in quick succession)",
-  3: "A triple kill (three kills in quick succession)",
-  4: "A quadra kill (four kills in quick succession)",
+  2: "A double kill (two kills close together)",
+  3: "A triple kill (three kills close together)",
+  4: "A quadra kill (four kills close together)",
   5: "A penta kill (five). Only the biggest multikill in a game scores",
 };
 

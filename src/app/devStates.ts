@@ -134,7 +134,7 @@ export const DEV_STATES: readonly DevState[] = [
   ]),
   ...page("help", [
     { state: "help", go: helpGo() },
-    { state: "help-step4", go: helpGo("points-scored"), picture: "1440-help-step4.png" },
+    { state: "help-step4", go: helpGo("points-scored") },
     { state: "rules", go: helpGo(RULES_HASH) },
     { state: "rules-open", go: helpGo(PRICES_RULE) },
   ]),

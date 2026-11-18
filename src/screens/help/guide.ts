@@ -26,7 +26,7 @@ export const GUIDE: readonly Item[] = [
           ["Bench", `${BENCH}`, "come on if a starter doesn't play"],
           ["Budget", BUDGET, "game money, not real money"],
           ["Captain", `×${CAPTAIN_MULTIPLIER}`, `his points count ${CAPTAIN_TIMES}`],
-          ["Buffs", `${BUFFS.length}`, "one-off boosts, one a week at most"],
+          ["Buffs", `${BUFFS.length}`, "one-offs you play, one a week at most"],
         ],
       },
       { p: "Your players score for what they do in real games, such as kills, assists and staying alive. Transfers let you swap players as the season goes on. The aim is the most points over the season: climb the rankings and beat your friends in leagues." },
@@ -40,7 +40,7 @@ export const GUIDE: readonly Item[] = [
       {
         facts: [
           ["Days", "Usually Wednesday to Sunday"],
-          ["Series", `Each of the ${TEAM_COUNT} teams plays two, at about 17:00 and 19:30 Korea time. A series is one match between two teams: best of 3 games, or best of 5 in the playoffs.`],
+          ["Series", `Each of the ${TEAM_COUNT} teams plays two, at about 17:00 and 19:30 Korea time. A series is two teams playing best of 3 games, or best of 5 in the playoffs.`],
           ["Deadline", `${DEADLINE_RULE} Save your changes by then. Home shows it in your own time.`],
           ["Points", "Go up live during the games, and are final about 3 hours after each series"],
         ],
@@ -114,7 +114,7 @@ export const GUIDE: readonly Item[] = [
     step: 6,
     title: "Use buffs at the right time",
     blocks: [
-      { p: "Buffs are boosts for big weeks. You get each one once a split, and can play only one in any week." },
+      { p: "Buffs are for big weeks. You get each one once a split, and can play only one in any week." },
       { table: "buffs" },
       { p: "Play them on Pick Team; you can cancel one until the deadline." },
     ],
@@ -154,9 +154,9 @@ export const GLOSSARY: readonly { group: string; terms: readonly (readonly [stri
   {
     group: "The week",
     terms: [
-      ["Week", "One LCK match week, usually Wednesday to Sunday. Most teams play two series in it, and your players score for what they do in them."],
+      ["Week", "One LCK week, usually Wednesday to Sunday. Most teams play two series in it, and your players score for what they do in them."],
       ["Deadline", `${DEADLINE_RULE} Make your changes before it.`],
-      ["Series", "A match between two LCK teams, best of 3 or best of 5 games."],
+      ["Series", "Two LCK teams playing best of 3 or best of 5 games."],
       ["Split", "Half of the LCK season. Buffs reset each split."],
       ["Playoffs", `The knockout end of a split, with unlimited transfers and up to ${KNOCKOUT_TEAM_CAP} players from one team.`],
     ],
@@ -174,7 +174,7 @@ export const GLOSSARY: readonly { group: string; terms: readonly (readonly [stri
       ["Transfer", "Selling one player and buying another."],
       ["Free transfer", "A transfer that costs no points."],
       ["Hit", `The ${HIT_POINTS} points taken off for each extra transfer.`],
-      ["Buff", `A one-off boost: ${orList(BUFFS)}.`],
+      ["Buff", `A one-off you play in a week: ${orList(BUFFS)}.`],
     ],
   },
   {
@@ -183,7 +183,7 @@ export const GLOSSARY: readonly { group: string; terms: readonly (readonly [stri
       ["Kill, assist, death", "Killing an enemy, helping a teammate kill one, and being killed."],
       ["Solo kill", "A kill with no help from a teammate."],
       ["First blood", "The first kill of a game."],
-      ["Multikill", "A quadra (four kills in quick succession) or a penta (five)."],
+      ["Multikill", "A quadra (four kills close together) or a penta (five)."],
       ["Gold lead", "Having more gold early in the game than the player in the same position on the other team."],
       ["Tower", "A defensive building. A team destroys towers on the way to winning."],
       ["Dragon, baron, elder dragon", "Big monsters the two teams fight over for boosts."],
@@ -197,7 +197,7 @@ export const GLOSSARY: readonly { group: string; terms: readonly (readonly [stri
       ["Price change", "When a player's price goes up or down, once a week at the deadline."],
       ["Overall", "The league with everyone in it."],
       ["Legend and Rise", "The top and bottom halves of Overall in Split 2."],
-      ["Rank", "Your place in Overall, shown as a League of Legends rank from Iron to Challenger."],
+      ["Tier", "Your place in Overall, shown as a League of Legends tier from Iron to Challenger."],
     ],
   },
 ];

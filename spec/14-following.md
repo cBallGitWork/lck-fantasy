@@ -24,7 +24,7 @@ One timeline of every manager followed, newest first, split by gameweek (Craig, 
 For each manager followed:
 
 - their points at the end of each series;
-- a big Carry: a Carry scoring 20 or more in a series after the ×1.5, about 1 series in 10 on
+- a big Captain: a Captain scoring 20 or more in a series after the ×1.5, about 1 series in 10 on
   2026's data. The 20 is data;
 - at each deadline, their transfers and buff, then how each swap is doing as series finish.
   Example: Chovy → Faker, +6 so far.
@@ -56,14 +56,14 @@ truck hire as a sponsor").
 
 - Lines are preset, never free text, so nothing needs moderating.
 - Lines are a database, as Football Manager's dialogue is: each line has its kind (cheer,
-  jeer, sponsor), the week it fits (a trigger, such as the Carry blanked, a hit taken, a green
+  jeer, sponsor), the week it fits (a trigger, such as the Captain blanked, a hit taken, a green
   arrow, top of the league, or any week), and a weight for how often it comes up. A manager picks
   from the lines that fit the receiver's week. An admin adds lines, and Craig approves each
   before it goes live.
 - What the triggers mean (Craig, 15 Nov 2026). Every number is data:
   - **Which week:** a line fits the receiver's last final gameweek, and the cheer or jeer parks for
     the current one. Before the first week is final, only any-week lines show.
-  - **Carry blank:** a Carry on 2 or fewer after the ×1.5, as FPL counts a blank. **A dear
+  - **Captain blank:** a Captain on 2 or fewer after the ×1.5, as FPL counts a blank. **A dear
     player's flop:** the receiver's dearest starter on 2 or fewer; `{price}` is his price.
   - **High and low score:** the global top 10% and bottom 10% of the gameweek.
   - **Top and bottom of the league:** first or last in a private league the sender and receiver
@@ -72,7 +72,7 @@ truck hire as a sponsor").
     the week ends below the global average; otherwise **buff played**.
 - Lines fill in the receiver's own numbers. Example: WE DID NOT PAY ₩12M FOR A BENCH WARMER.
 - A jeer's line never names a real player; it mocks the manager's own picks, in the protest trucks'
-  formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CARRY PICK. A cheer's line may praise
+  formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. A cheer's line may praise
   real players.
 - Lines use FPL's lingo (green arrow, hit, bench headache, template) and LCK's, in UK English.
 - The first draft set, written 14 Nov 2026 and not yet approved, is in

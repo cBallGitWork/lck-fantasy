@@ -51,8 +51,7 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 - The maker can rename the league, remove a manager and delete it. Any member can leave. As in
   FPL.
 - The maker can't leave without deleting the league (Craig, 14 Nov 2026).
-- Ties on points go to fewer transfers, as in FPL. Only regular transfers count: those made in a
-  Remake or Limitless week don't (Craig, 14 Nov 2026).
+- Ties on points go to fewer transfers, as in FPL. Only regular transfers count (Craig, 14 Nov 2026).
 - A manager can be in up to 25 private leagues, and a private league has no size cap, as in FPL.
   Both numbers are data.
 
@@ -112,7 +111,7 @@ As FPL's (Craig, 13 Nov 2026):
   1,920 ▲, Pub League 3rd.
 - A league's table shows rank, a movement arrow, team and manager name, gameweek points and total,
   with the season and each split as tabs above it. A row opens that manager's team.
-- A Carry column shows each manager's Carry for the gameweek in the Week column, on every tab.
+- A Captain column shows each manager's Captain for the gameweek in the Week column, on every tab.
   It shows only once that gameweek's deadline has passed, as FPL hides picks until then (Craig,
   14 Nov 2026).
 - A chase tag on the manager's own row shows the points to the rank above (16 pts to 1st), their

@@ -3,6 +3,24 @@
 What Craig hasn't settled yet. Nothing here is the product until a `/grill` moves it into
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
+## An LEC game, talk only (17 Nov 2026)
+
+- A second game for the LEC, which starts 15 Jan 2027 with three splits; its schedule differs
+  from the LCK's. Each split as last summer's: 8 weeks, some with 5 match days (Craig, from the
+  LEC's commissioner, 17 Nov 2026).
+- An Overall league that runs all year, across the three splits.
+- The same core as the LCK (budget and the like), with buffs and other settings tuned for it.
+- The same pages as the LCK's, with the LEC's differences, and its own sponsors (Craig, 17 Nov
+  2026).
+- Each player's country flag beside his name in the player list and pop-up; not in the LCK, where
+  nearly all are Korean. Needs players' nationality in the data (Craig, 17 Nov 2026).
+- In both games, each manager's country flag beside his name in league tables and on his
+  profile; the country is already set at sign-up (Craig, 17 Nov 2026).
+- Crests for the LEC teams made as the LCK's were ([docs/design/approved/crests](design/approved/crests/README.md)):
+  the real logos fetched from the web, then one designer describes each to another, with the
+  team's memes, fanbase, mascots and lore, and the second draws from that alone (Craig, 17 Nov
+  2026).
+
 ## Leagues, parked (14 Nov 2026)
 
 - A chart of the league's ranks week by week.
@@ -32,15 +50,6 @@ Claude's drafts and their sources are in
 ## Open from the foundations work (11 Nov 2026)
 
 - The screens and the look ([docs/design/](design/)). Craig asked whether player portraits can appear on the Rift (11 Nov 2026); shirts are settled in [spec/13](../spec/13-korean-touches.md#shirts-and-crests).
-
-## Live reading (17 Nov 2026)
-
-Left open by the live reading's review (#34), built as LoL has them until Craig says.
-
-- Are the 15:00 gold mark and the multikill timers (10 s a kill, 30 s for a penta) data per
-  competition, or the game's own constants?
-- A player with no same-role opponent in the feed scores 0 for gold lead at 15, with no log.
-  Should that raise an admin alert instead?
 
 ## Pages, built on made-up data (15 Nov 2026)
 

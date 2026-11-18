@@ -1,9 +1,13 @@
 import { describe, expect, test } from "vitest";
+import { SPEC_PLAYER_TABLE } from "../scoring/fixtures";
 import { DHOKLA, GEN, KIIN, LIVE_WINDOWS, LYON } from "./fixtures/live";
 import { biggestMultikill, feedStale, livePlayerStats, liveTeamStats, parseLiveWindow, readWindow, type LiveReading, type LiveWindow } from "./liveFeed";
 
 const { start, beforeFirstBlood, firstBlood, at15, end } = LIVE_WINDOWS;
-const fold = (...windows: (typeof start)[]) => windows.reduce<LiveReading | null>(readWindow, null)!;
+const GOLD_AT_MINUTES = SPEC_PLAYER_TABLE.goldLeadAt15.atMinutes;
+const foldAt = (goldAtMinutes: number, ...windows: LiveWindow[]) =>
+  windows.reduce<LiveReading | null>((reading, window) => readWindow(reading, window, goldAtMinutes), null)!;
+const fold = (...windows: LiveWindow[]) => foldAt(GOLD_AT_MINUTES, ...windows);
 const SECOND = 1000;
 
 describe("readWindow", () => {
@@ -23,6 +27,25 @@ describe("readWindow", () => {
     expect(livePlayerStats(reading, KIIN).goldDiffAt15).toBe(1457);
     expect(livePlayerStats(reading, DHOKLA).goldDiffAt15).toBe(-1457);
     expect(livePlayerStats(fold(start, firstBlood), KIIN).goldDiffAt15).toBeNull();
+  });
+
+  test("the gold mark is the scoring table's, not a fixed 15:00", () => {
+    const windows = [start, beforeFirstBlood, firstBlood, at15];
+    expect(livePlayerStats(foldAt(20, ...windows), KIIN).goldDiffAt15).toBeNull();
+    const at9 = livePlayerStats(foldAt(9, ...windows), KIIN).goldDiffAt15;
+    expect(at9).not.toBeNull();
+    expect(at9).not.toBe(1457);
+  });
+
+  test("a player with no same-role opponent shows 0 for gold lead, and an admin is told", () => {
+    const noGenTop = structuredClone(start);
+    noGenTop.gameMetadata.redTeamMetadata.participantMetadata.find((p) => p.participantId === KIIN)!.role = "mid";
+    expect(fold(noGenTop).alerts).toEqual([
+      "Live game 115660540726095042: LYON Dhokla (top) has no top on the other team, so his gold lead shows 0.",
+    ]);
+    expect(livePlayerStats(fold(noGenTop, firstBlood), DHOKLA).goldDiffAt15).toBeNull();
+    expect(livePlayerStats(fold(noGenTop, firstBlood, at15), DHOKLA).goldDiffAt15).toBe(0);
+    expect(fold(start, at15).alerts).toEqual([]);
   });
 
   test("the final window's kills, deaths and assists match Oracle's Elixir's for the game", () => {
@@ -55,7 +78,7 @@ describe("readWindow", () => {
 
   test("a window already read changes nothing", () => {
     const once = fold(start, firstBlood);
-    expect(readWindow(once, firstBlood)).toEqual(once);
+    expect(readWindow(once, firstBlood, GOLD_AT_MINUTES)).toEqual(once);
   });
 });
 

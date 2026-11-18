@@ -43,7 +43,7 @@ const FEED_ROLES: Record<string, PlayerRole> = { top: "top", jungle: "jungle", m
 const PLAYERS_PER_TEAM = 5;
 const ELDER = "elder";
 const FINISHED = "finished";
-const GOLD_AT_MS = 15 * 60 * 1000;
+const MS_PER_MINUTE = 60_000;
 /** LoL's own multikill timers: each kill within 10 s of the last, a penta within 30 s of the quadra. */
 const MULTIKILL_GAP_MS = 10_000;
 const PENTA_GAP_MS = 30_000;
@@ -63,8 +63,8 @@ export interface LivePlayer {
   deaths: number;
   assists: number;
   totalGold: number;
-  /** Total gold at 15:00, once the game has reached it. */
-  goldAt15: number | null;
+  /** Total gold at the gold lead's mark (the scoring table's `atMinutes`), once the game has reached it. */
+  goldAtMark: number | null;
   firstBloodKill: boolean;
   /** When each kill was seen, for multikills; null when the feed skipped the moment. */
   killTimes: (number | null)[];
@@ -88,6 +88,8 @@ export interface LiveReading {
   finished: boolean;
   players: LivePlayer[];
   teams: [LiveTeam, LiveTeam];
+  /** What an admin is told about this game: a player with no same-role opponent (spec/11, Live). */
+  alerts: string[];
 }
 
 /** The window as the feed sent it, checked. Throws on an unexpected shape, so a changed feed is
@@ -109,11 +111,17 @@ export function parseLiveWindow(json: unknown): LiveWindow {
   return window as LiveWindow;
 }
 
-/** The reading after one more window: every frame folded in, in order. */
-export function readWindow(previous: LiveReading | null, window: LiveWindow): LiveReading {
+/** The reading after one more window: every frame folded in, in order. Gold is read
+ *  `goldAtMinutes` in: the scoring table's `goldLeadAt15.atMinutes`. */
+export function readWindow(previous: LiveReading | null, window: LiveWindow, goldAtMinutes: number): LiveReading {
   let reading = previous ?? emptyReading(window);
-  for (const frame of window.frames) reading = readFrame(reading, frame);
+  for (const frame of window.frames) reading = readFrame(reading, frame, goldAtMinutes * MS_PER_MINUTE);
   return reading;
+}
+
+/** The other team's player in the same role: the lane opponent gold lead is read against. */
+function opponentOf(players: readonly LivePlayer[], player: LivePlayer): LivePlayer | undefined {
+  return players.find((p) => p.teamId !== player.teamId && p.role === player.role);
 }
 
 function emptyReading(window: LiveWindow): LiveReading {
@@ -124,20 +132,24 @@ function emptyReading(window: LiveWindow): LiveReading {
       if (role === undefined) throw new Error(`Unknown live feed role "${p.role}".`);
       return {
         participantId: p.participantId, esportsPlayerId: p.esportsPlayerId, name: p.summonerName, champion: p.championId,
-        teamId: team.esportsTeamId, role, kills: 0, deaths: 0, assists: 0, totalGold: 0, goldAt15: null, firstBloodKill: false, killTimes: [],
+        teamId: team.esportsTeamId, role, kills: 0, deaths: 0, assists: 0, totalGold: 0, goldAtMark: null, firstBloodKill: false, killTimes: [],
       };
     }),
   );
+  // A player with no lane opponent shows 0 for gold lead, and an admin is told, never silence.
+  const alerts = players
+    .filter((p) => opponentOf(players, p) === undefined)
+    .map((p) => `Live game ${window.esportsGameId}: ${p.name} (${p.role}) has no ${p.role} on the other team, so his gold lead shows 0.`);
   const team = (meta: FeedTeamMetadata, side: "blue" | "red"): LiveTeam => ({ teamId: meta.esportsTeamId, side, towers: 0, barons: 0, drakes: 0, elders: 0, firstTower: false });
-  return { gameId: window.esportsGameId, startedAt: null, lastFrameAt: 0, finished: false, players, teams: [team(blue, "blue"), team(red, "red")] };
+  return { gameId: window.esportsGameId, startedAt: null, lastFrameAt: 0, finished: false, players, teams: [team(blue, "blue"), team(red, "red")], alerts };
 }
 
-function readFrame(reading: LiveReading, frame: FeedFrame): LiveReading {
+function readFrame(reading: LiveReading, frame: FeedFrame, goldAtMs: number): LiveReading {
   const at = Date.parse(frame.rfc460Timestamp);
   if (at <= reading.lastFrameAt) return reading;
   const startedAt = reading.startedAt ?? (frame.blueTeam.totalGold + frame.redTeam.totalGold > 0 ? at : null);
   const firstBloodTaken = reading.players.some((p) => p.firstBloodKill);
-  const reaches15 = startedAt !== null && at >= startedAt + GOLD_AT_MS;
+  const reachesMark = startedAt !== null && at >= startedAt + goldAtMs;
   const byId = new Map([...frame.blueTeam.participants, ...frame.redTeam.participants].map((p) => [p.participantId, p]));
   // A reading's first frame is its baseline: kills and towers already there when it started
   // mid-game have no known order, so first blood and first tower wait for the final stats.
@@ -153,7 +165,7 @@ function readFrame(reading: LiveReading, frame: FeedFrame): LiveReading {
     return {
       ...player,
       kills: now.kills, deaths: now.deaths, assists: now.assists, totalGold: now.totalGold,
-      goldAt15: player.goldAt15 ?? (reaches15 ? now.totalGold : null),
+      goldAtMark: player.goldAtMark ?? (reachesMark ? now.totalGold : null),
       firstBloodKill: player.firstBloodKill || (!firstBloodTaken && scorers === 1 && gained > 0),
       killTimes: [...player.killTimes, ...Array<number | null>(gained).fill(timed ? at : null)],
     };
@@ -187,12 +199,14 @@ export function biggestMultikill(killTimes: readonly (number | null)[]): number 
 }
 
 /** A player's live stats in the scoring's shape. Gold lead at 15 is against the other team's
- *  player in the same role. Solo kills and steals are 0 until the series is final (spec/11). */
+ *  player in the same role; with none, it is 0 and the reading carries an alert. Solo kills and
+ *  steals are 0 until the series is final (spec/11). */
 export function livePlayerStats(reading: LiveReading, participantId: number): PlayerGameStats {
   const player = reading.players.find((p) => p.participantId === participantId);
   if (player === undefined) throw new Error(`No participant ${participantId} in live game ${reading.gameId}.`);
-  const opponent = reading.players.find((p) => p.teamId !== player.teamId && p.role === player.role);
-  const goldDiffAt15 = player.goldAt15 !== null && opponent?.goldAt15 != null ? player.goldAt15 - opponent.goldAt15 : null;
+  const opponent = opponentOf(reading.players, player);
+  const theirs = opponent === undefined ? player.goldAtMark : opponent.goldAtMark;
+  const goldDiffAt15 = player.goldAtMark === null || theirs === null ? null : player.goldAtMark - theirs;
   return {
     role: player.role, kills: player.kills, deaths: player.deaths, assists: player.assists, goldDiffAt15,
     soloKills: 0, firstBlood: player.firstBloodKill, biggestMultikill: biggestMultikill(player.killTimes), steals: 0,

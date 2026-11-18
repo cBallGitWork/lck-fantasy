@@ -5,7 +5,7 @@ import { cx } from "../util/cx";
 import { Placeholder } from "./Placeholder";
 import "./TopBar.css";
 
-const TOP_BAR_ITEMS = ["home", "pickTeam", "transfers", "points", "leagues", "stats", "lckHub", "live"] as const;
+const TOP_BAR_ITEMS = ["home", "pickTeam", "transfers", "points", "leagues", "stats", "hub", "live"] as const;
 
 export type TopBarItem = (typeof TOP_BAR_ITEMS)[number];
 

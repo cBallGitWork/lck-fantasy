@@ -107,10 +107,10 @@ export const DEV_STATES: readonly DevState[] = [
     { state: "delete", go: { to: PATHS.settings }, param: true },
   ]),
   ...page("lck-hub", [
-    { state: "hub", go: { to: PATHS.lckHub } },
-    { state: "results", go: { to: PATHS.lckHub }, param: true },
-    { state: "standings", go: { to: PATHS.lckHub }, param: true },
-    { state: "teams", go: { to: PATHS.lckHub }, param: true },
+    { state: "hub", go: { to: PATHS.hub } },
+    { state: "results", go: { to: PATHS.hub }, param: true },
+    { state: "standings", go: { to: PATHS.hub }, param: true },
+    { state: "teams", go: { to: PATHS.hub }, param: true },
   ]),
   ...page("player-card", [
     { state: "card", go: faker },

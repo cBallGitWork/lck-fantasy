@@ -157,8 +157,8 @@ describe("before it starts (1440-next.png)", () => {
 test("a link to a series that doesn't exist shows No such series and LCK hub › (spec/12, Series page)", async () => {
   const out = await htmlAt(pathTo(seriesGo("w99-sun-9")));
   expect(out).toContain('data-screen="series"');
-  expectInOrder(plain(out), [WORDS.noSuchSeries, `${WORDS.lckHub} ›`]);
-  expect(out).toMatch(new RegExp(`href="${PATHS.lckHub}"[^>]*>${WORDS.lckHub} ›`));
+  expectInOrder(plain(out), [WORDS.noSuchSeries, `${WORDS.hub} ›`]);
+  expect(out).toMatch(new RegExp(`href="${PATHS.hub}"[^>]*>${WORDS.hub} ›`));
 });
 
 test("each series a link opens is in the fixture, at the hub's moment", () => {

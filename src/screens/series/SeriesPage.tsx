@@ -1,15 +1,15 @@
 import type { ReactNode } from "react";
 import { cx, FinalTag, GoLink, LinkGo, LiveTag, NotFinalTag, PageFrame, score, Tag, Time } from "../../parts";
-import { PATHS } from "../../paths";
+import { PATHS, SCREEN_NAME } from "../../paths";
 import "./series.css";
 import { gameWon, RosterList, TeamGrid } from "./TeamGrid";
 import type { NextSeries, PlayedSeries, SeriesView, SeriesWhen, Side } from "./types";
 
 function Frame({ account, children }: { account: string | null; children: ReactNode }) {
   return (
-    <PageFrame screen="series" active="lckHub" account={account}>
+    <PageFrame screen="series" active="hub" account={account}>
       <div className="series__crumb">
-        <GoLink go={{ to: PATHS.lckHub }}>‹ LCK</GoLink>
+        <GoLink go={{ to: PATHS.hub }}>‹ {SCREEN_NAME.hub}</GoLink>
       </div>
       {children}
     </PageFrame>

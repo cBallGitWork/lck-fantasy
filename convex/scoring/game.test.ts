@@ -79,7 +79,7 @@ describe("the table is data", () => {
   test("a line's value changes without code, and a re-score of the same stats gives the new points", () => {
     const stats = OE_2025_BRION_DRX.clozer;
     const before = total(scorePlayerGame(stats, SPEC_PLAYER_TABLE));
-    const richerGold = { ...SPEC_PLAYER_TABLE, goldLeadAt15: { on: true, points: 3 } };
+    const richerGold = { ...SPEC_PLAYER_TABLE, goldLeadAt15: { ...SPEC_PLAYER_TABLE.goldLeadAt15, points: 3 } };
     expect(total(scorePlayerGame(stats, richerGold))).toBe(before + 2);
   });
 

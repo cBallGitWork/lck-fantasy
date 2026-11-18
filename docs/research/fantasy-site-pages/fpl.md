@@ -1,13 +1,13 @@
 # Fantasy Premier League (FPL): page inventory
 
-**Contents:** top navigation and grouping · each page · app-only and web-only features · URL patterns
+**Contents:** top navigation and grouping · each page · signed in, seen 14 Nov 2026 · app-only and web-only features · URL patterns
 
-Method and date note: the live site was read directly on 13 Nov 2026 in a signed-out browser. By then the game is in its 2026/27 season, so what the live pages show is 2026/27. Where a 2026/27 page differs from 2025/26 it is flagged below. Signed-in-only pages (Pick Team, Transfers, squad selection, account settings) could not be opened. They are described from official help text and articles, and anything not found in a source is listed under Gaps. "Live site" below means fantasy.premierleague.com as read on 13 Nov 2026.
+Method and date note: the live site was read directly on 13 Nov 2026 in a signed-out browser, and signed in, on Craig's own team, on 14 Nov 2026 (see [Signed in](#signed-in-seen-14-nov-2026); nothing was changed). By then the game is in its 2026/27 season, so what the live pages show is 2026/27. Where a 2026/27 page differs from 2025/26 it is flagged below. On 13 Nov the signed-in-only pages (Pick Team, Transfers, squad selection, account settings) could not be opened, so the sections before [Signed in](#signed-in-seen-14-nov-2026) describe them from official help text and articles; that section says what was seen on 14 Nov. "Live site" below means fantasy.premierleague.com as read on 13 Nov 2026.
 
 ## Top navigation, signed out and signed in, and how pages are grouped
 
 ### Takeaway
-Signed out, the FPL bar has 8 items: Home, Prizes, The Scout, Price Changes, Injuries, Podcast, Help and Statistics. Above it sits a "Fantasy" switcher for FPL Challenge and FPL Draft, and above that the wider Premier League site bar. Every URL now carries a language prefix (`/en/`). Signed-in team pages (Points, Pick Team, Transfers) exist and are named in the official FAQ, but I could not see the signed-in bar itself.
+Signed out, the FPL bar has 8 items: Home, Prizes, The Scout, Price Changes, Injuries, Podcast, Help and Statistics. Above it sits a "Fantasy" switcher for FPL Challenge and FPL Draft, and above that the wider Premier League site bar. Every URL now carries a language prefix (`/en/`). Signed-in team pages (Points, Pick Team, Transfers) exist and are named in the official FAQ, but I could not see the signed-in bar itself on 13 Nov. (Seen 14 Nov 2026; see [Signed in](#signed-in-seen-14-nov-2026).)
 
 ### Cited Findings
 - On the signed-out live site, the FPL sub-nav reads "Home, Prizes, The Scout, Price Changes, Injuries, Podcast, Help, Statistics". Above it, a "Fantasy" product switcher links "FPL Challenge" (fplchallenge.premierleague.com) and "FPL Draft" (draft.premierleague.com) — [FPL home, live site](https://fantasy.premierleague.com/en/)
@@ -24,7 +24,7 @@ Signed out, the FPL bar has 8 items: Home, Prizes, The Scout, Price Changes, Inj
 - Fixtures is not in the signed-out nav, yet `/en/fixtures` loads signed out. It is reached from the fixtures panel on Points pages, and probably from the signed-in nav.
 
 ### Gaps
-- I could not see the signed-in nav bar. Before 2025 it was, from memory without a source: Status (home), Points, Pick Team, Transfers, Leagues & Cups, Fixtures, The Scout, Podcast, Stats, Prizes, Help. Whether 2025/26 kept a "Status" page is unconfirmed; no source mentioned one.
+- I could not see the signed-in nav bar. Before 2025 it was, from memory without a source: Status (home), Points, Pick Team, Transfers, Leagues & Cups, Fixtures, The Scout, Podcast, Stats, Prizes, Help. Whether 2025/26 kept a "Status" page is unconfirmed; no source mentioned one. (Closed 14 Nov 2026: the bar was seen and Status exists; see [Signed in](#signed-in-seen-14-nov-2026).)
 - I could not confirm the account menu (sign-out, team details, email preferences). The FAQ has a question "How do I change my team name or the team I support?", but its answer was collapsed.
 
 ## Each page: what it shows and what the manager does there
@@ -148,10 +148,38 @@ A manager needs these pages: the Points view of any manager (pitch or list, game
 - The manager sidebar (ranks, leagues, cups, transfers, finance) appears on every entry page, so a copy needs it as one shared component, not a separate page.
 
 ### Gaps
-- No source showed the Pick Team or Transfers screens themselves: chip button placement, the confirm-transfers dialog wording, how a hit is displayed, or the Wildcard/Free Hit confirmation modal. They need a signed-in look.
+- No source showed the Pick Team or Transfers screens themselves: chip button placement, the confirm-transfers dialog wording, how a hit is displayed, or the Wildcard/Free Hit confirmation modal. They need a signed-in look. (Partly closed 14 Nov 2026: Pick Team and Transfers were seen, chip tiles included; see [Signed in](#signed-in-seen-14-nov-2026).)
 - I did not see the create-league form (fields such as classic or H2H, start gameweek, H2H knock-out option, closing entries) or the cup page once a cup has started.
 - I found no source on account settings or email preferences; they live in the myPremierLeague account on premierleague.com.
-- I found no source confirming whether a "Status" home page still exists for signed-in managers in 2025/26.
+- I found no source confirming whether a "Status" home page still exists for signed-in managers in 2025/26. (Closed 14 Nov 2026: it does; see below.)
+
+## Signed in, seen 14 Nov 2026
+
+### Takeaway
+Signed in, the bar is Pick Team, Points, Transfers, Leagues, Help, The Scout, Price Changes, Status, Fixtures, Injuries, Statistics, Podcast, Prizes, Sign Out. Status exists and is the busiest page: the gameweek's whole story in one place. Every team page shares the manager sidebar on the left and puts the pitch on the right; a player opens in a drawer from the right, not a modal. Seen in Gameweek 11, deadline Sat 21 Nov 11:00 local time, on Craig's team (no transfers, captain or chip changes were made).
+
+### Seen
+- **Shared sidebar**, on Pick Team, Points, Transfers and Status: team name and manager; Points & Rankings (overall points, overall rank, total players, gameweek points, a Gameweek History link); Team Badge with Edit My Badge (made with Adobe Express, a sponsor); Fan League (the favourite club's crest, View League); My Leagues, grouped invitational classic, invitational head-to-head and general, each with rank and a green up or red down arrow; My Cups; Transfers (this gameweek's, total, Transfer History); Finance (squad value, in the bank); Admin (Team Details, User Profile).
+- **Pick Team**: gameweek and deadline at the top; four chip tiles in a row, each saying "Played GWn" once used; a hint line "To change your captain use the menu which appears when clicking on a player"; Pitch or List; a dropdown that changes the line under every shirt: Opponent, Points, Current Price, Selling Price, FDR, Form, Ownership, Price Change. Shirts carry small badges: C, V, an injury triangle, and a yellow name bar for a doubt. The bench sits under the pitch as GKP, then 1, 2, 3 with each one's position. A share button sits beside the title. Below the pitch: a Team news carousel by fixture, then the gameweek's fixtures by day, each marked "Watch Live On" a broadcaster.
+- **Points**: gameweek arrows either side of "Gameweek 10"; a strip of Average Points (55), Highest Points (139, a link to that team), Total Points in a large tile (63), GW Rank, and Transfers (a link); a Team of the Week link under it; Pitch or List; the same dropdown, set to Points. A player opens a right-hand drawer: name, the match and score with its broadcaster, then a Points breakdown table of Statistic, Value, Points (e.g. Minutes played 85 → 2 pts, Goals scored 1 → 4 pts) and View full profile.
+- **Transfers**: Player Selection on the left (search by name, position filter, sort, a max-price filter, a "566 players shown" bar, players grouped by position with price and total points, owned players greyed with a ×); the pitch on the right with each player's selling price above the shirt; above it the Wildcard and Free Hit tiles and four counters: Players selected 15/15, Budget £0.2m, Free transfers 2, Cost 0 pts. Auto Pick, Reset and Make Transfers sit under the pitch.
+- **Leagues & Cups**: Leagues and Cups tabs; Join a League, Create a League, Renew Your Leagues (carries last season's leagues on); tables with Current Rank and Last Rank. Craig's general leagues: Adobe Express Badge League (sponsor), country (Cocos Islands), Gameweek 1 (the start week), Newcastle (club), Overall, Second Chance, Top 10% 25/26 (last season's top 10%).
+- **A league table**: name, a Report Offensive Name button, View Cup info, a phase filter (Overall), "Last updated Sat 14 Nov 13:53", then Rank with movement, Team & Manager, GW, Total. The viewer's own row is highlighted.
+- **Status**: each match day of the last gameweek as CONFIRMED; transfers made (9,423,215), wildcards played, most transferred in, most captained; top 5 transfers in and out with counts; Player of the Week for every gameweek of the season (GW1 to GW38, blank ahead); Team of the Week; Player Availability (injury lines such as "Calf injury - 75% chance of playing", "Suspended until 5 Dec"); Most Valuable Teams; Best Leagues (average of each league's top 5); The Scout feed; the manager's last gameweek beside average and highest; a live countdown to the next deadline; Upcoming Deadlines.
+
+### Inferences
+- Status is its own page in the bar, beside Pick Team and Points. Flol's Home ([spec/12](../../../spec/12-pages.md)) folds a status page into Home; FPL's Status shows what such a page holds once the season is running.
+- The pitch dropdown is one control that turns the pitch into a price, form, ownership or fixture view. It covers what Flol's Transfers picture handles with separate views.
+- League housekeeping FPL treats as standard: renewing leagues into a new season, reporting an offensive team name, and showing when a table last updated.
+
+### For Flol: seen in FPL, not in the spec yet
+Claude's notes, not Craig's wants. Each is FPL's rule, so it already applies where a spec file is silent ([SPEC.md](../../../SPEC.md), the base assumption), but none has been asked:
+- Reporting an offensive team name, and what an admin does with one.
+- Renewing private leagues into the next season.
+- Status lines: most captained, top transfers in and out, how many played each chip, Player of the Week for every gameweek.
+- Average and highest points on the Points page, the highest linking to that team.
+- A broadcaster under each series ("Watch Live On"), which Flol's Live page could feed.
+- The leagues FPL adds beyond Overall, country and club: a league per start gameweek, Second Chance (points from a later gameweek), and last season's top 10%.
 
 ## App-only and web-only features
 
@@ -197,6 +225,6 @@ API mirrors, all under `/api/`:
 - Head-to-head standings probably follow `/en/leagues/{id}/standings/h`, mirroring `/c` for classic. Not verified.
 
 ### Gaps
-- I could not see the signed-in paths for Pick Team, Transfers, squad selection or create/join league forms.
+- I could not see the signed-in paths for Pick Team, Transfers, squad selection or create/join league forms. (Partly closed 14 Nov 2026: Pick Team, Transfers and Leagues & Cups were seen; see [Signed in](#signed-in-seen-14-nov-2026).)
 - From memory without a source, before 2025 they were `/my-team`, `/transfers`, `/squad-selection`, `/leagues/create`, `/leagues/join`. Whether they now carry `/en/` is unconfirmed.
 - The old `/dream-team/{gw}` path is gone, replaced by `/en/team-of-the-week/{gw}`, as observed.

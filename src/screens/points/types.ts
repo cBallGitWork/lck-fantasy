@@ -43,6 +43,8 @@ export interface PointsPlayer {
   birthday?: boolean;
   /** The week's points; absent when he didn't play. */
   points?: number;
+  /** His points count towards the total: false for a bench player with no Bench Boost and no auto-sub (spec/12, Points). */
+  counts: boolean;
   series: PointsSeries[];
 }
 

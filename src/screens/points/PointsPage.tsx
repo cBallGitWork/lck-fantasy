@@ -91,7 +91,7 @@ export function PointsPage({
               points={p.points ?? NONE}
               state={played ? undefined : "out"}
               selected={p.name === open}
-              onSelect={played ? () => setOpen(p.name) : undefined}
+              onSelect={() => setOpen(p.name)}
             />
           );
         })}

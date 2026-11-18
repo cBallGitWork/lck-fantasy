@@ -19,27 +19,6 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
   the real logos fetched from the web, then one designer describes each to another, with the
   team's memes, fanbase, mascots and lore, and the second draws from that alone (Craig, 17 Nov
   2026).
-## Achievements, parked (13 Nov 2026)
-
-Not grilled until Craig picks the achievement book up again. Open then: how achievements cap
-and rank (a separate column, and do base points decide ties?).
-
-Craig's drafts (12–13 Nov 2026), with his names:
-
-- Unkillable Demon King: win with Faker when he has 0 deaths.
-- Flame Horizon: your laner beats their lane opponent by 100 CS.
-- Got excited: own a KT player; KT wins game 1, then loses the series.
-- Church of Chovy (named only).
-- Get the trucks: you start two T1 players who lose.
-- Cut the western shit: your coach loses a game in under 25 minutes.
-- LS: win a game on Renekton. Supportal Kombat (DoA). OK Bro (OKSavingsBank BRION).
-- Champion achievements tied to lore, such as your bot on Xayah and your support on Rakan in
-  the same gameweek.
-
-How Craig wants them: Xbox-style achievements from LCK and wider LoL memes (Reddit, casters, old
-heads, teams, champions), never FPL-style stat trophies; once a year, worth a point or two.
-Claude's drafts and their sources are in
-[docs/research/achievement-memes.md](research/achievement-memes.md); none is the product.
 
 ## Open from the foundations work (11 Nov 2026)
 

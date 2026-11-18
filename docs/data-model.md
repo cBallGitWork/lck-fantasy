@@ -95,8 +95,6 @@ Notes:
 | `entryGameweeks` | an entry's result for a gameweek | entry, gameweek, points, hits, rank, the auto-subs made |
 | `leagues` | a mini-league | name, kind (overall, country, supporter, private, Legend, Rise), join code |
 | `leagueEntries` | an entry in a league | league, entry, joined from gameweek |
-| `achievements` | one page of the achievement book | name, the story, the rule that awards it, points |
-| `achievementAwards` | an entry earning one | entry, achievement, series, gameweek |
 
 - **A squad before sign-up.** The onboarding rule (pick first, sign up after) means a squad can
   exist with no manager. The draft squad lives in the browser, and becomes an `entries` row on
@@ -117,7 +115,7 @@ Things FPL never has to handle, which the model above allows for:
 3. **Ten teams, five roles.** The player pool is about 50 starters, against FPL's 500 or more.
    Squads will overlap far more, so prices and the flex slot carry more of the game.
 4. **Fearless Draft** in the post-season means a player's champions run out over a series. The
-   lineup keeps the champion, so a later rule or achievement can read it.
+   lineup keeps the champion, so a later rule can read it.
 5. **Roster moves mid-split** arrive as new contracts, and a benched starter is the LCK's
    version of an injury.
 6. **Long breaks.** MSI leaves about six weeks with no series. Gameweeks simply stop and start.

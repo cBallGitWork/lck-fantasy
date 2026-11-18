@@ -62,7 +62,6 @@ Each folder has a README saying what goes in it.
 | `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, buffs, prices. |
 | `convex/leagues/` | Global, supporter and private leagues, and their tables. |
 | `convex/following/` | Follow requests, blocks, the feed of followed managers, and cheers and jeers. |
-| `convex/achievements/` | The achievement book: the pages, the rules that award them, the awards. |
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
@@ -85,7 +84,7 @@ Each folder has a README saying what goes in it.
 The rules:
 
 - A feature's server code, its tests and its fixtures sit in its one `convex/` folder.
-- `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`, `achievements`). The game reads the real world; it never writes it.
+- `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`). The game reads the real world; it never writes it.
 - Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
 - A screen never imports from another screen (src/screens/README.md).
 - Every word a player reads on a screen lives in that screen's `words.ts`, next to its code; words two screens share, such as the Carry's C, live in `src/parts` or `src/rift`. Moved one screen at a time, Pick Team first (Craig, 18 Nov 2026).

@@ -6,7 +6,21 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## The season
 
-- The LCK Cup is dropped: Split 1 is the beta (Craig, 16 Nov 2026).
+- Whether the LCK Cup is played is undecided: dropped on 16 Nov 2026, then "not confirmed"
+  (Craig, 18 Nov 2026).
+
+## The road to launch
+
+Craig, 18 Nov 2026:
+
+1. **A simulated season.** Flol replays a past season, the LCK's 2026, from its old data, with
+   time skipped forward week by week, like a Championship Manager save.
+2. **The test: the LEC's Winter split** (from 15 Jan 2027). Flol runs on the real split with live
+   data and live points from day one, played by bots and some invited real accounts. It is not
+   open to the public.
+3. **Public launch in spring**, if the Winter test goes well: the LEC's Spring split and the
+   LCK's Split 1 open together, the site open 3 weeks before spring starts. January is too soon:
+   opening 3 weeks before 15 Jan would mean promoting over Christmas.
 - The real test is the main season's knockouts: Road to MSI and the LCK playoffs.
 - The main game splits into Split 1 and Split 2, and buffs reset at the split, the way FPL's chips
   reset at GW19.

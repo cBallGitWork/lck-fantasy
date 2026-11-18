@@ -51,15 +51,6 @@ Claude's drafts and their sources are in
 
 - The screens and the look ([docs/design/](design/)). Craig asked whether player portraits can appear on the Rift (11 Nov 2026); shirts are settled in [spec/13](../spec/13-korean-touches.md#shirts-and-crests).
 
-## Live reading (17 Nov 2026)
-
-Left open by the live reading's review (#34), built as LoL has them until Craig says.
-
-- Are the 15:00 gold mark and the multikill timers (10 s a kill, 30 s for a penta) data per
-  competition, or the game's own constants?
-- A player with no same-role opponent in the feed scores 0 for gold lead at 15, with no log.
-  Should that raise an admin alert instead?
-
 ## Pages, built on made-up data (15 Nov 2026)
 
 States and rules the approved pictures don't draw. Each page shows what is drawn; these wait.

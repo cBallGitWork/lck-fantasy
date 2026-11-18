@@ -1,7 +1,23 @@
 import { useId, type ReactNode } from "react";
 import { TEAMS } from "../../fixtures/week3";
-import { cx, Deadline, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, TabPanel, Tabs, Tag, timeIn, ViewToggle } from "../../parts";
-import { CappedInput, LegalNames, plainOptions, ProviderMark, Row, Select, TEAM_OPTIONS } from "./form";
+import {
+  cx,
+  Deadline,
+  MainAction,
+  OutlinedKey,
+  PageFrame,
+  PageHead,
+  Placeholder,
+  plainOptions,
+  ProviderMark,
+  Select,
+  TabPanel,
+  Tabs,
+  Tag,
+  timeIn,
+  ViewToggle,
+} from "../../parts";
+import { CappedInput, LegalNames, Row, TEAM_OPTIONS } from "./form";
 import {
   BROWSER,
   changedFields,

@@ -14,6 +14,8 @@ export { MainAction } from "./controls/MainAction";
 export { MeDot } from "./display/MeDot";
 export { Menu, type MenuItem } from "./controls/Menu";
 export { Modal, wrapFocus } from "./controls/Modal";
+export { plainOptions, Select } from "./controls/Select";
+export { ProviderMark } from "./display/ProviderMark";
 export {
   bestOf,
   count,
@@ -41,10 +43,11 @@ export { browserZone, timeIn } from "./text/time";
 export { PriceMove, RankMove } from "./display/Move";
 export { rememberedView, rememberView, VIEW_KEYS, type ViewKey } from "./util/rememberedView";
 export { OutlinedKey } from "./controls/OutlinedKey";
-export { PageFrame } from "./frame/PageFrame";
+export { PageFrame, RIOT_NOTICE } from "./frame/PageFrame";
 export { PageHead, type WeekNav } from "./frame/PageHead";
 export { focusPage, inertOutside, openerOf, returnTo, type InertNode, type Opener } from "./frame/pageFocus";
 export { Placeholder } from "./frame/Placeholder";
+export { PHOTO_CREDIT, PlayerPhoto } from "./display/PlayerPhoto";
 export { chooseOnKey, selectable } from "./util/selectable";
 export { sum } from "./util/sum";
 export { weekInPath, weekSteps } from "./util/weeks";

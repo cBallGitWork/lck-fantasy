@@ -14,6 +14,7 @@ import { LeaguesScreen } from "../screens/leagues";
 import { LiveScreen } from "../screens/live";
 import { PerfectGameScreen } from "../screens/perfect-game";
 import { PickTeamScreen } from "../screens/pick-team";
+import { FrontDoorScreen } from "../screens/pick-team-signed-out";
 import { PlayerCardScreen } from "../screens/player-card";
 import { PointsScreen } from "../screens/points";
 import { PriceChangesScreen } from "../screens/price-changes";
@@ -53,6 +54,7 @@ const bareCompareRoute = createRoute({ getParentRoute: () => rootRoute, path: BA
 const routeTree = rootRoute.addChildren([
   screen(PATHS.home, HomeScreen),
   screen(PATHS.pickTeam, PickTeamScreen),
+  screen(PATHS.createTeam, FrontDoorScreen),
   screen(PATHS.transfers, TransfersScreen),
   screen(PATHS.points, PointsScreen),
   screen(PATHS.pointsWeek, PointsScreen),

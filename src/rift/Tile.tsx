@@ -12,7 +12,7 @@ import "./Tile.css";
 
 interface TileProps {
   /** His slot; a Flex's tile says Flex, never the role he plays, which his card says (Craig, 16 Nov 2026). */
-  slot: SlotKey;
+  slot?: SlotKey;
   name: string;
   team: string;
   /** Where the tile's centre stands on the Rift; a bench tile stands in its bar. */
@@ -34,6 +34,8 @@ interface TileProps {
   selected?: boolean;
   /** `dim` while another tile is being moved, a sold one's empty place, or a bench player who didn't play; `fit` where it could go. */
   state?: "dim" | "fit";
+  /** An empty slot (front door): dashed, `name` its role, `+` under it. */
+  empty?: boolean;
   onSelect?: () => void;
 }
 
@@ -46,15 +48,15 @@ const share = (px: number) => `${(px / measure.rift) * 100}%`;
  * white name plate, then a band: his points and series, or his fixtures.
  */
 export function Tile(p: TileProps) {
-  const label = slotLabel(p.slot);
+  const label = p.slot && slotLabel(p.slot);
   return (
     <div
-      className={cx("tile", !p.at && "tile--bench", p.selected && "tile--selected", p.state && `tile--${p.state}`)}
+      className={cx("tile", !p.at && "tile--bench", p.selected && "tile--selected", p.state && `tile--${p.state}`, p.empty && "tile--empty")}
       style={p.at && { left: share(p.at[0]), top: share(p.at[1]) }}
       {...selectable(p.onSelect, p.selected)}
     >
       {p.price !== undefined && <div className="tile__price num">{p.price}</div>}
-      {label && (
+      {p.slot && label && (
         <div className={cx("tile__slot", p.slot === "flex" && "tile__slot--flex")}>
           <SlotName slot={p.slot} label={label} />
         </div>

@@ -8,7 +8,7 @@ import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
 /** A source's row as it sent it: column name to text (ARCHITECTURE.md, Data). */
 export const rawRow = v.record(v.string(), v.string());
 
-const literals = <T extends string>(values: readonly [T, T, ...T[]]) =>
+export const literals = <T extends string>(values: readonly [T, T, ...T[]]) =>
   v.union(...values.map((value) => v.literal(value)));
 
 /** A number for each of `keys`: slot sizes, role minimums. */
@@ -150,9 +150,37 @@ export default defineSchema({
     .index("by_game", ["game"])
     .index("by_player", ["player"]),
 
-  // The game. Managers and entries hold only what leagues need; sign-up (#42) adds the rest.
-  managers: defineTable({ country: v.string(), favouriteTeam: v.id("teams") }),
-  entries: defineTable({ manager: v.id("managers"), teamName: v.string() }),
+  // The game (convex/signIn makes a manager, its entry and its picks on sign-up).
+  managers: defineTable({
+    /** The signed-in account: Google or Discord, through Convex Auth (spec/09). */
+    account: v.string(),
+    country: v.string(),
+    favouriteTeam: v.id("teams"),
+    /** When the manager ticked the Terms and Privacy, and which version (spec/09). */
+    agreed: v.object({ at: v.number(), version: v.string() }),
+  }).index("by_account", ["account"]),
+  entries: defineTable({
+    manager: v.id("managers"),
+    season: v.id("seasons"),
+    teamName: v.string(),
+    /** The first gameweek it scores; it starts on 0 points (spec/09, Joining late). */
+    firstGameweek: v.number(),
+    /** In won: the budget less what the squad cost. Null for a season with no budget. */
+    bank: v.union(v.number(), v.null()),
+  }).index("by_manager", ["manager", "season"]),
+  /** An entry's squad for one gameweek (docs/data-model.md, `picks`). */
+  picks: defineTable({
+    entry: v.id("entries"),
+    gameweek: v.number(),
+    slot: v.union(literals(STARTER_SLOTS), v.literal("bench")),
+    /** On the bench: 1 is bench 1. */
+    benchOrder: v.optional(v.number()),
+    ...pricedPick,
+    /** The Captain; there is no vice-captain (spec/04). */
+    captain: v.boolean(),
+    /** In won: the price it was bought at. */
+    buyPrice: v.number(),
+  }).index("by_entry", ["entry", "gameweek"]),
 
   // Leagues (convex/leagues): Overall, country and team leagues exist once each (spec/08).
   leagues: defineTable(

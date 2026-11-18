@@ -1,3 +1,4 @@
+import { photoOf } from "../../fixtures/photos";
 import { NONE } from "../../parts";
 import { Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import type { PointsSeries, PointsStarter } from "./types";
@@ -57,6 +58,7 @@ export function PointsCards({ starters, open, onOpen }: TeamProps) {
         plays: p.plays,
         name: p.name,
         team: p.team,
+        photo: photoOf(p.name),
         mark: p.mark,
         next: <SeriesLine series={p.series} />,
         footer: <span className="points__card-points num">{p.points ?? NONE}</span>,

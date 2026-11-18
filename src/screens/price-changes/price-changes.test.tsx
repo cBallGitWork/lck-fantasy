@@ -1,6 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { STATS_PLAYERS } from "../../fixtures/week3";
+import { RIOT_NOTICE } from "../../parts";
 import { expectInOrder, html, noop, text } from "../../testing/render";
 import { stepWeek } from ".";
 import { WEEK3_PRICES, WEEK4_PRICES } from "./fixtures";
@@ -15,7 +16,7 @@ describe("Week 4 prices", () => {
 
   test("lists each move in the picture's order: name, team and role, was, now, owned", () => {
     const rises = out.slice(out.indexOf("Rises"), out.indexOf("Falls"));
-    const falls = out.slice(out.indexOf("Falls"));
+    const falls = out.slice(out.indexOf("Falls"), out.indexOf(RIOT_NOTICE));
     expect(rises).toContain("PlayerWasNowOwnedFakerT1 · Mid₩18.0m₩18.5m46%ChovyGEN · Mid₩17.0m₩17.5m41%");
     expect(rises.endsWith("HypeKRX · Bot₩5.0m₩5.5m1%")).toBe(true);
     expect(falls).toContain("PlayerWasNowOwnedGumayusiHLE · Bot₩16.0m₩15.5m26%");

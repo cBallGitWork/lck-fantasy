@@ -1,5 +1,5 @@
 import { useId, useState, type ReactNode } from "react";
-import { beyondStrip, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, TabPanel, Tabs, Tag } from "../../parts";
+import { beyondStrip, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, placeOf, PlayerPhoto, PriceMove, SeriesStrip, TabPanel, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
 import { markKey, ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
@@ -48,7 +48,7 @@ export function PlayerCard({
       {card.news !== undefined && <p className="player-card__news">! {card.news}</p>}
       <header className="player-card__head">
         <span className="player-card__portrait">
-          <Placeholder word="portrait" fill />
+          <PlayerPhoto photo={card.photo} name={card.name} team={card.team} crest="crestSheet" />
         </span>
         <div>
           <Tag>

@@ -4,7 +4,6 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 [SPEC.md](../SPEC.md). A grill deletes the lines it settles.
 
 ## An LEC game, talk only (17 Nov 2026)
-
 - A second game for the LEC, which starts 15 Jan 2027 with three splits; its schedule differs
   from the LCK's. Each split as last summer's: 8 weeks, some with 5 match days (Craig, from the
   LEC's commissioner, 17 Nov 2026).
@@ -20,11 +19,6 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
   the real logos fetched from the web, then one designer describes each to another, with the
   team's memes, fanbase, mascots and lore, and the second draws from that alone (Craig, 17 Nov
   2026).
-
-## Leagues, parked (14 Nov 2026)
-
-- A chart of the league's ranks week by week.
-
 ## Achievements, parked (13 Nov 2026)
 
 Not grilled until Craig picks the achievement book up again. Open then: how achievements cap

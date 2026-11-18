@@ -6,7 +6,7 @@ import { PATHS } from "../../paths";
 import { expectInOrder, html, htmlAt, text } from "../../testing/render";
 import { stepWeek, weekOf } from ".";
 import { WEEK3_PRICES, WEEK4_PRICES, type PriceMove } from "./fixtures";
-import { biggestFirst, cardOf, NO_MOVES, PriceChangesPage } from "./PriceChangesPage";
+import { biggestFirst, cardOf, PriceChangesPage } from "./PriceChangesPage";
 import { WORDS } from "./words";
 
 const WEEK3 = { to: PATHS.priceChangesWeek, params: { week: "3" } } as const;
@@ -124,7 +124,7 @@ describe("each week has its own address (spec/12)", () => {
 describe("before the first move", () => {
   test("both lists read No moves yet", () => {
     const out = text(<PriceChangesPage week={WEEK3_PRICES} next={WEEK4} />);
-    expect(out).toContain(`Week 3 prices›Rises${NO_MOVES}Falls${NO_MOVES}`);
+    expect(out).toContain(`Week 3 prices›${WORDS.rises}${WORDS.noMoves}${WORDS.falls}${WORDS.noMoves}`);
     expect(out).not.toContain("Set ");
   });
 });

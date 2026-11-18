@@ -4,8 +4,7 @@ import { cardGo, type Go } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { PriceMove, PriceWeek } from "./fixtures";
 import "./price-changes.css";
-
-export const NO_MOVES = "No moves yet";
+import { teamRole, weekPrices, WORDS } from "./words";
 
 /** A name opens the player's card, or the coach's. */
 export const cardOf = (row: PriceMove) => cardGo(row.id, row.role === "coach");
@@ -17,7 +16,7 @@ export const biggestFirst = (rows: readonly PriceMove[]): PriceMove[] =>
 const COLUMNS: Column<PriceMove>[] = [
   {
     key: "player",
-    head: "Player",
+    head: WORDS.player,
     cell: (row) => (
       <>
         <GoLink go={cardOf(row)} className="price-changes__name hover-line">
@@ -25,21 +24,21 @@ const COLUMNS: Column<PriceMove>[] = [
         </GoLink>
         {row.mine && <MeDot />}
         <small className="price-changes__meta quiet">
-          {row.team} · {ROLE_NAME[row.role]}
+          {teamRole(row.team, ROLE_NAME[row.role])}
         </small>
       </>
     ),
   },
-  { key: "was", head: "Was", figure: true, cell: (row) => <span className="price-changes__was">{money(row.wasM)}</span> },
-  { key: "now", head: "Now", figure: true, cell: (row) => <b>{money(row.nowM)}</b> },
-  { key: "owned", head: "Owned", figure: true, cell: (row) => pct(row.ownedPct) },
+  { key: "was", head: WORDS.was, figure: true, cell: (row) => <span className="price-changes__was">{money(row.wasM)}</span> },
+  { key: "now", head: WORDS.now, figure: true, cell: (row) => <b>{money(row.nowM)}</b> },
+  { key: "owned", head: WORDS.owned, figure: true, cell: (row) => pct(row.ownedPct) },
 ];
 
 function MoveList({ kind, title, rows }: { kind: "rise" | "fall"; title: string; rows: PriceMove[] }) {
   return (
     <section className={cx("price-changes__list", `price-changes__list--${kind}`)}>
       <h2 className="price-changes__list-title">{title}</h2>
-      {rows.length === 0 ? <Empty title={NO_MOVES} /> : <Table columns={COLUMNS} rows={biggestFirst(rows)} rowKey={(row) => row.id} label={title} />}
+      {rows.length === 0 ? <Empty title={WORDS.noMoves} /> : <Table columns={COLUMNS} rows={biggestFirst(rows)} rowKey={(row) => row.id} label={title} />}
     </section>
   );
 }
@@ -64,24 +63,24 @@ export function PriceChangesPage({
   return (
     <PageFrame screen="price-changes" active="stats" account={MANAGER.team}>
       <div className="price-changes__head">
-        <PageHead title="Price changes" hangul="가격 변동" />
+        <PageHead title={WORDS.title} hangul={WORDS.hangul} />
         <WeekStep prev={prev} next={next} className="price-changes__week">
-          Week {week.week} prices
+          {weekPrices(week.week)}
         </WeekStep>
       </div>
       {(week.set || howPricesMove) && (
         <div className="price-changes__when">
           {week.set && (
             <span>
-              Set <Time local={week.set.local} kst={week.set.kst} />
+              {WORDS.set} <Time local={week.set.local} kst={week.set.kst} />
             </span>
           )}
-          {howPricesMove && <LinkGo go={howPricesMove}>How prices move</LinkGo>}
+          {howPricesMove && <LinkGo go={howPricesMove}>{WORDS.howPricesMove}</LinkGo>}
         </div>
       )}
       <div className="price-changes__lists">
-        <MoveList kind="rise" title="Rises" rows={week.rises} />
-        <MoveList kind="fall" title="Falls" rows={week.falls} />
+        <MoveList kind="rise" title={WORDS.rises} rows={week.rises} />
+        <MoveList kind="fall" title={WORDS.falls} rows={week.falls} />
       </div>
     </PageFrame>
   );

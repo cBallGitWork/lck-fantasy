@@ -200,8 +200,6 @@ Grilled 14 Nov 2026.
   player first, as FPL (Craig, 18 Nov 2026).
 - The list's role chips are All roles, the five roles, then Coach, so coaches can be browsed
   without selling yours first (Craig, 18 Nov 2026).
-- The player card's Swap with bench opens Pick Team with him already tapped, those he can swap
-  with lit, as FPL's Substitute; Transfer out opens Transfers with him sold (Craig, 18 Nov 2026).
 - Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the
   deadline, [spec/02](02-prices-and-budget.md)); his card shows the amount. Example: Faker
   ▲ ₩0.5m. Before a player's price first moves, nothing shows.
@@ -232,6 +230,12 @@ F1 Fantasy, Sleeper and gol.gg).
   totals, beside every tab (Craig, 14 Nov 2026).
 - **Buttons**, as FPL's, by where it opened: transfer in or out, Make Captain,
   substitute.
+  - Swap with bench closes the card and opens Pick Team with him already tapped, those he can
+    swap with lit, as FPL's Substitute; Transfer out opens Transfers with him already sold (Craig,
+    17 and 18 Nov 2026).
+- This week before any of his games lists the week's series with opponent and time, points as
+  —, filling in game by game (Craig, 17 Nov 2026).
+- History's week totals are his own points, never your Captain's ×1.5, as FPL (Craig, 17 Nov 2026).
 - **Compare**, in the beta: two players side by side, with header stats, form, scoring lines and
   next series.
   - A sheet over the card. The second player comes from a search, his role listed first. Any role

@@ -1,15 +1,17 @@
 import { NONE } from "../../parts";
 import { Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
-import { DIDNT_PLAY, type PointsSeries, type PointsStarter } from "./types";
+import type { PointsSeries, PointsStarter } from "./types";
+import { dot, versus, WORDS } from "./words";
 
 /** Each series' points after its opponent, as a starter's line shows them: `v HLE 12 · v DK 5`. Live is the head's bar. */
 export function SeriesLine({ series }: { series: PointsSeries[] }) {
-  if (series.length === 0) return <>{DIDNT_PLAY}</>;
+  if (series.length === 0) return <>{WORDS.didntPlay}</>;
   return (
     <>
       {series.map((s, i) => (
         <span key={s.id}>
-          {i > 0 && " · "}v {s.opponent} {s.points}
+          {i > 0 && dot}
+          {versus(s.opponent)} {s.points}
         </span>
       ))}
     </>
@@ -57,9 +59,7 @@ export function PointsCards({ starters, open, onOpen }: TeamProps) {
         team: p.team,
         mark: p.mark,
         next: <SeriesLine series={p.series} />,
-        footer: (
-<span className="points__card-points num">{p.points ?? NONE}</span>
-        ),
+        footer: <span className="points__card-points num">{p.points ?? NONE}</span>,
         selected: p.name === open,
         onSelect: () => onOpen(p.name),
       }))}

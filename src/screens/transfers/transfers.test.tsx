@@ -2,6 +2,7 @@
 import { describe, expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
 import { PATHS } from "../../paths";
+import { BUFFS } from "../../fixtures/competition";
 import { expectDeadlinePart, html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICTURE_PLAN, TRANSFERS_PICTURE } from "./fixtures";
@@ -33,8 +34,6 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
       "Bank ₩5.5m",
       "Rift view",
       "List view",
-      "Remake",
-      "Limitless",
     ]);
     expect(out).not.toContain("Show:");
     expect(out).not.toContain("Card view");
@@ -61,14 +60,10 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
   });
 
   test("the week's confirms, newest first, Undo on the newest only", () => {
-    expectInOrder(out, ["Confirmed · Week 4", "your time · KST", "Tue 21:10", "06:10 KST", "Kiin → Zeus", "−6", "Undo", "Mon 18:02", "03:02 KST", "Peyz → Ruler, Lehends → Delight", "Free"]);
+    expectInOrder(out, ["Confirmed · Week 4", "your time · KST", "Tue 21:10", "06:10 KST", "Kiin → Zeus", "−6", "Undo", "Mon 18:02", "03:02 KST", "Peyz → Ruler, Lehends → Delight", "No cost"]);
     expect(out.match(/Undo/g)).toHaveLength(1);
   });
 
-  test("a confirm made under a buff has no Undo", () => {
-    const confirms = [{ ...TRANSFERS_PICTURE.confirms[0]!, buff: "Remake" }];
-    expect(text(<TransfersPage {...TRANSFERS_PICTURE} confirms={confirms} />)).not.toContain("Undo");
-  });
 });
 
 describe("List view (Craig, 16 Nov 2026)", () => {
@@ -77,7 +72,7 @@ describe("List view (Craig, 16 Nov 2026)", () => {
   test("the nine by role, as FPL's list: last week, price, form, total, next, ×", () => {
     expectInOrder(out, [
       "Player",
-      "Wk 3",
+      "Week 3",
       "Price",
       "Form",
       "Total",
@@ -188,4 +183,9 @@ describe("Rift view or List view", () => {
     stubStorage(blockedStorage);
     expect(chosenView(await htmlAt(PATHS.transfers))).toBe("Rift view");
   });
+});
+
+test("Transfers has no buff keys: every buff is played on Pick Team (spec/06)", () => {
+  const out = text(<TransfersPage {...TRANSFERS_PICTURE} />);
+  for (const buff of [...BUFFS, "Remake", "Limitless"]) expect(out).not.toContain(buff);
 });

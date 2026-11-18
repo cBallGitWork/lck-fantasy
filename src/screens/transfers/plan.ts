@@ -2,7 +2,8 @@
 // Pure, so the page's every control is tested without a browser. The rules themselves are built
 // in convex/squads/; this is only what the page shows while the manager is still choosing.
 
-import { BENCH_SLOTS, isBench, LINEUP_ORDER, ROLE_KEYS, ROLE_NAME, type Mark, type PersonRole, type RoleKey, type SquadSlot } from "../../rift";
+import { BENCH_SLOTS, isBench, LINEUP_ORDER, ROLE_KEYS, ROLE_NAME, type Mark, type PersonRole, type SquadSlot } from "../../rift";
+import { added, removed, restored, roleEmpty, teamFull, WORDS } from "./words";
 
 /** A player or coach as Transfers shows him: price in won, the last week's points, form, season total. */
 export interface ListPlayer {
@@ -19,7 +20,7 @@ export interface ListPlayer {
   ownedPct: number;
 }
 
-/** One of the nine: his slot, his sell price, his C or V. */
+/** One of the nine: his slot, his sell price, his C. */
 export interface SquadPlayer extends ListPlayer {
   slot: SquadSlot;
   mark?: Mark;
@@ -74,11 +75,6 @@ export function inSlot(squad: SquadPlayer[], plan: Plan, slot: SquadSlot): ListP
 /** The coach's slot takes a coach; any other takes a player of any role (the squad rule, 16 Nov 2026). */
 export const fits = (slot: SquadSlot, role: PersonRole) => (slot === "coach") === (role === "coach");
 
-/** `Kingen added`, `Siwoo removed`, `Siwoo restored`. */
-export const added = (name: string) => `${name} added`;
-export const removed = (name: string) => `${name} removed`;
-export const restored = (name: string) => `${name} restored`;
-
 /** Takes the one standing in a slot out: an original sold, or a buy undone. The list then fills that slot. */
 export function remove(squad: SquadPlayer[], plan: Plan, slot: SquadSlot): Step {
   const who = inSlot(squad, plan, slot) ?? outOf(squad, slot);
@@ -100,11 +96,6 @@ function targetFor(plan: Plan, role: PersonRole): SquadSlot | undefined {
   return open.find((slot) => slot === plan.replacing) ?? open[0];
 }
 
-/** `Team full: 2 from T1`. */
-const teamFull = (cap: number, team: string) => `Team full: ${cap} from ${team}`;
-/** `No Top left`. */
-const roleEmpty = (role: RoleKey) => `No ${ROLE_NAME[role]} left`;
-
 /**
  * Why a buy into a slot can never be valid, or nothing: his team at the cap, or a role left with no one
  * that the other empty slots can't still fill (the squad keeps at least one of each role). Over the
@@ -117,11 +108,11 @@ function refusal(squad: SquadPlayer[], plan: Plan, slot: SquadSlot, player: List
   const roles = new Set([...others.map((p) => p?.role), player.role]);
   const missing = ROLE_KEYS.filter((role) => !roles.has(role));
   const stillOpen = emptyList(plan).filter((s) => s !== slot && s !== "coach").length;
-  return missing.length > stillOpen ? roleEmpty(missing[0]!) : undefined;
+  return missing.length > stillOpen ? roleEmpty(ROLE_NAME[missing[0]!]) : undefined;
 }
 
-/** `Remove a player first`, `Remove your coach first`: no empty slot he fits. */
-const noRoom = (role: PersonRole) => (role === "coach" ? "Remove your coach first" : "Remove a player first");
+/** No empty slot he fits: remove a player, or the coach, first. */
+const noRoom = (role: PersonRole) => (role === "coach" ? WORDS.removeCoach : WORDS.removePlayer);
 
 /**
  * A row's `+`: buys him into the slot being filled, or the first empty one he fits, then moves on to the
@@ -171,9 +162,9 @@ export function bankNow(squad: SquadPlayer[], plan: Plan, bank: number): number 
 
 /** Why Review and confirm is off: a slot still empty, nothing to confirm, or over the budget. */
 export function reviewBlock(squad: SquadPlayer[], plan: Plan, rules: TransferRules): string | undefined {
-  if (emptySlots(plan) > 0) return "Slot empty";
-  if (transfersMade(squad, plan) === 0) return "No changes";
-  if (bankNow(squad, plan, rules.bank) < 0) return "Over budget";
+  if (emptySlots(plan) > 0) return WORDS.slotEmpty;
+  if (transfersMade(squad, plan) === 0) return WORDS.noChanges;
+  if (bankNow(squad, plan, rules.bank) < 0) return WORDS.overBudget;
   return undefined;
 }
 
@@ -225,21 +216,17 @@ export interface Fixture {
 /** `v DK`: a team's next opponent alone, or nothing. */
 export const nextAgainst = (fixtures: Record<string, Fixture[]>, team: string) => {
   const next = fixtures[team]?.[0];
-  return next ? `v ${next.opponent}` : "";
+  return next ? `${WORDS.versus} ${next.opponent}` : "";
 };
 
-/** One confirm this week: when, who went out and came in, its hit (0 is free), and the buff it was under. */
+/** One confirm this week: when, who went out and came in, and its hit (0 is free). */
 export interface Confirm {
   id: string;
   local: string;
   kst: string;
   moves: { out: string; in: string }[];
   hit: number;
-  buff?: string;
 }
-
-/** The toast once a confirm goes through. */
-export const CONFIRMED = "Transfers confirmed";
 
 /** The week after a confirm: the nine as arranged, the bank and free transfers left, and the line Confirmed lists. */
 export interface AfterConfirm {
@@ -251,7 +238,7 @@ export interface AfterConfirm {
 
 /**
  * A confirm applied, as the page hands it over: each transfer by id and the nine by slot. A player kept
- * keeps his C or V; one bought comes at his list price. Free transfers and the bank are what is left.
+ * keeps his C; one bought comes at his list price. Free transfers and the bank are what is left.
  */
 export function confirmTransfers(
   squad: SquadPlayer[],

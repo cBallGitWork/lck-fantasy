@@ -17,7 +17,7 @@ interface Pick {
   team: TeamCode;
   role: IconKey;
   mark?: Mark;
-  /** His week points, the Carry ×1.5 included. */
+  /** His week points, the Captain ×1.5 included. */
   points: number;
 }
 

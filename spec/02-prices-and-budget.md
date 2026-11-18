@@ -24,6 +24,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## Price moves
 
+- Each split starts from a fresh set of prices, set like the first ones; team value resets
+  ([spec/03](03-transfers.md), Craig, 17 Nov 2026).
+
 - Prices move once a week, at the deadline.
 - A move is mostly on recent points, a little on transfers in and out, and down when relatively
   few managers own the player, since that means his price is too high.

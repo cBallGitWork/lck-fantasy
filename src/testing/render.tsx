@@ -1,8 +1,9 @@
 import { createMemoryHistory, RouterContextProvider, RouterProvider } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { isValidElement, type ReactElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { expect } from "vitest";
 import { makeRouter } from "../app/router";
+import { TRUCK_HIRE } from "../parts";
 
 // Renders a part or a screen to HTML for a test, inside the app's router so its links resolve.
 const router = makeRouter(createMemoryHistory({ initialEntries: ["/"] }));
@@ -50,3 +51,29 @@ export function expectDeadlinePart(out: string, local: string) {
 
 /** A handler that does nothing, for props a test doesn't press. */
 export const noop = () => {};
+
+/** Every "truck" in a screen's text outside the truck-hire credit: none, since a screen says Cheer and Jeer (plate.md, One name per thing). */
+export const trucksOutsideCredit = (out: string) => out.replaceAll(TRUCK_HIRE, "").match(/truck/gi) ?? [];
+
+/** Presses the key a screen reader names `label` in what a hook-free part returns, as a click would: its `onClick` runs. Fails when there is no such key. */
+export function press(node: ReactNode, label: string): void {
+  const key = findLabelled(node, label);
+  expect(key, `a key named "${label}"`).toBeDefined();
+  key?.props.onClick?.();
+}
+
+type Pressable = ReactElement<{ "aria-label"?: string; onClick?: () => void; children?: ReactNode }>;
+
+function findLabelled(node: ReactNode, label: string): Pressable | undefined {
+  if (Array.isArray(node)) {
+    for (const child of node as ReactNode[]) {
+      const found = findLabelled(child, label);
+      if (found) return found;
+    }
+    return undefined;
+  }
+  if (!isValidElement(node)) return undefined;
+  const element = node as Pressable;
+  if (element.props["aria-label"] === label) return element;
+  return findLabelled(element.props.children, label);
+}

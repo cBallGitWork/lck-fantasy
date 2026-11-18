@@ -50,7 +50,7 @@ export { sum } from "./util/sum";
 export { SectionHead } from "./frame/SectionHead";
 export { SeriesList, type SeriesRow, type SeriesState } from "./display/SeriesList";
 export { beyondStrip, SeriesStrip, type StripNext, type StripPast } from "./display/SeriesStrip";
-export { Led } from "./display/Led";
+export { CHEER_KEY, CHEER_KINDS, CHEER_LABEL, CHEER_WORD, CHEERS_RECEIVED, type CheerKind, Led, TRUCK_HIRE, TruckHire } from "./display/Led";
 export { SideSection } from "./frame/SideSection";
 export { SponsorNote } from "./frame/SponsorNote";
 export { Empty, ErrorState, Loading } from "./display/States";

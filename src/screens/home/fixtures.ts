@@ -37,7 +37,7 @@ const matchup = (s: Series) => `${s.home} v ${s.away}`;
 /** A followed manager's Week 3 series as Home's feed lists it. */
 function followed(who: keyof typeof FOLLOWED_WEEK3) {
   const { seriesId, points } = FOLLOWED_WEEK3[who];
-  return { id: `${who}-${seriesId}`, manager: MANAGERS[who].first, series: matchup(atPoints(seriesId)), points };
+  return { id: `${who}-${seriesId}`, managerId: MANAGERS[who].id, manager: MANAGERS[who].first, series: matchup(atPoints(seriesId)), points };
 }
 
 const SHARED: Omit<HomeShared, "countdown"> = {
@@ -50,7 +50,7 @@ const SHARED: Omit<HomeShared, "countdown"> = {
     { kind: "series", ...followed("minji") },
     { kind: "captain", ...followed("dan"), player: FOLLOWED_WEEK3.dan.captain },
     { kind: "series", ...followed("jae") },
-    { kind: "truck", id: "truck-minji-w3", line: "Sell your bot laner", from: MANAGERS.minji.first, week: 3 },
+    { kind: "received", cheer: "jeer", id: "jeer-minji-w3", line: "Sell your bot laner", from: MANAGERS.minji.first, week: 3 },
   ],
   leagues: MY_LEAGUES.map(({ id, name, kind, rank, move }) => ({ id, name, kind, rank, move })),
 };

@@ -2,7 +2,7 @@
 import { afterEach, expect, test, vi } from "vitest";
 import { DEV_STATE_PARAM } from "../parts";
 import { DEV_STATES, DEV_STATES_PATH } from "./devStates";
-import { htmlAt } from "../testing/render";
+import { htmlAt, plain, trucksOutsideCredit } from "../testing/render";
 
 /** What each picture shows that marks its state, as the page draws it. */
 const KEY: Record<string, string> = {
@@ -58,8 +58,8 @@ const KEY: Record<string, string> = {
   "profile/points": "Highest",
   "profile/history": "Week rank",
   "profile/transfers": "Pts gained",
-  "following/following": "Truck ›",
-  "following/truck": "시위 트럭",
+  "following/following": "Cheer / Jeer ›",
+  "following/truck": "One cheer or jeer to Jae a week.",
 };
 
 const named = DEV_STATES.map((s) => ({ ...s, name: `${s.page}/${s.state}` }));
@@ -80,6 +80,10 @@ test.each(named)("$name opens at $url and shows its picture's key content", asyn
   expect(await htmlAt(url)).toContain(KEY[name]);
   expect(warn).not.toHaveBeenCalled();
   expect(picture).toMatch(/^docs\/design\/approved\/[a-z-]+\/1440(-\w+)?\.png$/);
+});
+
+test.each(named)("$name says Truck only in the truck-hire credit", async ({ url }) => {
+  expect(trucksOutsideCredit(plain(await htmlAt(url)))).toEqual([]);
 });
 
 test.each(withParam)("$name is the param's doing: its route alone doesn't show it", async ({ name, url }) => {

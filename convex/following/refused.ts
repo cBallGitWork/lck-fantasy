@@ -1,6 +1,6 @@
-// A follow, truck line or truck change that breaks a rule is thrown, never applied silently.
+// A follow, cheer line or cheer change that breaks a rule is thrown, never applied silently.
 
-/** Thrown with the rule broken: `Truck refused: alreadySent.` */
+/** Thrown with the rule broken: `Cheer refused: alreadySent.` */
 export class Refused<P extends { rule: string }> extends Error {
   constructor(what: string, readonly problem: P) {
     super(`${what} refused: ${problem.rule}.`);

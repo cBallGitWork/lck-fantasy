@@ -56,10 +56,10 @@ export const more = (n: number) => `+ ${n} more`;
 export const sent = (kind: string) => `${kind} sent`;
 
 /** `topping Pub League`: the league a sponsor's cheer went to the top of. */
-export const leagueTop = (league: string) => `topping ${league}`;
+export const topping = (league: string) => `topping ${league}`;
 
 /** `1 transfer`, `5 transfers`. */
-export const transfers = (n: number) => plural(n, "transfer");
+export const transferCount = (n: number) => plural(n, "transfer");
 
 /** `12 × 1.5`: the Captain's points before the multiplier, and the multiplier. */
 export const captainSum = (before: number, multiplier: number) => `${before} × ${multiplier}`;

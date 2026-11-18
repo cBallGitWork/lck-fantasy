@@ -2,7 +2,7 @@
 // without a browser. The backend feeds `FollowingData` later (#89, #90); the page takes it as props.
 import type { BuffName, TeamCode } from "../../fixtures/week3";
 import { type CheerKind, type Score, signed } from "../../parts";
-import { captainSum, ptsSoFar, transfers as transferCount, weekHead, WORDS } from "./words";
+import { captainSum, ptsSoFar, transferCount, weekHead, WORDS } from "./words";
 
 export interface Manager {
   id: string;

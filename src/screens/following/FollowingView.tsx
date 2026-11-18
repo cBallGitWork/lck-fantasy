@@ -34,7 +34,7 @@ import {
   type ReceivedCheer,
   type SeriesItem,
 } from "./feed";
-import { followCount, leagueTop, more, named, sent, WORDS, weekHead } from "./words";
+import { followCount, more, named, sent, topping, WORDS, weekHead } from "./words";
 import "./following.css";
 
 export interface FollowingActions {
@@ -204,7 +204,7 @@ function Received({ cheer }: { cheer: ReceivedCheer }) {
         {cheer.kind === "sponsor" ? (
           <>
             <span>
-              {WORDS.sponsorCheer} <b>{leagueTop(cheer.league)}</b>
+              {WORDS.sponsorCheer} <b>{topping(cheer.league)}</b>
             </span>
             <span>{cheer.sponsor}</span>
           </>

@@ -52,8 +52,8 @@ describe("Points", () => {
     const markup = html(page("Points"));
     expect(markup).toContain('data-screen="profile"');
     expect(markup).toMatch(/aria-selected="true"[^>]*>Points</);
-    expect(markup).toContain('aria-label="Week before"');
-    expect(markup).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
+    expect(markup).toContain('aria-label="Previous week"');
+    expect(markup).toContain('<button type="button" class="week-arrow key-off" aria-label="Next week" disabled="">›</button>');
   });
 
   test("her team is the Table part's, Bench a sub-row above the bench", () => {

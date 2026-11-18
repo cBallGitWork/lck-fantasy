@@ -15,6 +15,7 @@ const ALLOWED: readonly { phrase: string; why: string }[] = [
   { phrase: "Bench Boost", why: "a buff's own name (spec/06); boost is banned as a word for buff" },
   { phrase: "leagues", why: "leagues are real (spec/08); league is banned only as a name for a tier" },
   { phrase: "league", why: "the same" },
+  { phrase: "Truck hire", why: "the made-up sponsor's credit (spec/14: Craig, \"we can add truck hire as a sponsor\"); truck is banned as a name for a cheer or jeer" },
 ];
 
 const NOT = GLOSSARY.flatMap((row) => cellWords(row[2] ?? "").map((word) => ({ word, term: row[0] ?? "" }))).filter(

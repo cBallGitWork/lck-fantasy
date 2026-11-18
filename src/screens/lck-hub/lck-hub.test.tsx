@@ -184,9 +184,9 @@ describe("controls", () => {
 
   test("an arrow is a key only where there is a week that way", () => {
     const out = html(page("Results", twoWeeks));
-    expect(out).toMatch(/<button[^>]*aria-label="Week before"(?![^>]*disabled)/);
-    expect(out).toMatch(/<button[^>]*aria-label="Week after"[^>]*disabled/);
-    expect(html(page("Fixtures"))).toMatch(/<button[^>]*aria-label="Week before"[^>]*disabled/);
+    expect(out).toMatch(/<button[^>]*aria-label="Previous week"(?![^>]*disabled)/);
+    expect(out).toMatch(/<button[^>]*aria-label="Next week"[^>]*disabled/);
+    expect(html(page("Fixtures"))).toMatch(/<button[^>]*aria-label="Previous week"[^>]*disabled/);
   });
 
   test("a stage with no series yet says when it starts, from the competition's data", () => {
@@ -202,8 +202,8 @@ describe("controls", () => {
     };
     const out = html(page("Fixtures", midSplit));
     expect(text(page("Fixtures", midSplit))).toContain("‹Week 4›");
-    expect(out).toMatch(/<button[^>]*aria-label="Week before"[^>]*disabled/);
-    expect(out).toMatch(/<button[^>]*aria-label="Week after"(?![^>]*disabled)/);
+    expect(out).toMatch(/<button[^>]*aria-label="Previous week"[^>]*disabled/);
+    expect(out).toMatch(/<button[^>]*aria-label="Next week"(?![^>]*disabled)/);
     expect(run([{ type: "week", tab: "Fixtures", step: -1 }], midSplit).fixturesWeek).toBe(0);
     expect(run([{ type: "week", tab: "Fixtures", step: 1 }, { type: "week", tab: "Fixtures", step: 1 }], midSplit).fixturesWeek).toBe(1);
   });

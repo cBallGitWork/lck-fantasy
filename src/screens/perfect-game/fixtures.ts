@@ -60,3 +60,9 @@ export const PERFECT_WEEK3: PerfectGameData = {
   players: PERFECT_PLAYERS,
   series: WEEK3_SERIES_FINAL,
 };
+
+/** Perfect game by week number: made-up Week 3 alone until the backend picks each week's. */
+export const PERFECT_WEEKS: ReadonlyMap<number, PerfectGameData> = new Map([[3, PERFECT_WEEK3]]);
+
+/** The current week, where `/perfect-game` opens. */
+export const PERFECT_LATEST_WEEK = Math.max(...PERFECT_WEEKS.keys());

@@ -67,7 +67,7 @@ export function PerfectGame({
   game: PerfectGameData;
   view: PerfectView;
   onView?: (view: PerfectView) => void;
-  /** The week before and after; the route takes no week yet. */
+  /** The week before and after, by the router. */
   weekNav?: Omit<WeekNav, "label">;
 } & Selection) {
   const total = sum(game.players.map((p) => p.points));

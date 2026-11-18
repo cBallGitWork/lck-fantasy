@@ -17,6 +17,8 @@ export const PATHS = {
   /** Compare, opened from a player's or a coach's card: `/compare/faker`. */
   compare: "/compare/$playerId",
   perfectGame: "/perfect-game",
+  /** Perfect game for one week, so a week can be shared: `/perfect-game/3`. */
+  perfectGameWeek: "/perfect-game/$week",
   priceChanges: "/price-changes",
   settings: "/settings",
   lckHub: "/lck",
@@ -45,6 +47,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   series: "Series",
   compare: "Compare",
   perfectGame: "Perfect game",
+  perfectGameWeek: "Perfect game",
   priceChanges: "Price changes",
   settings: "Settings",
   lckHub: "LCK",

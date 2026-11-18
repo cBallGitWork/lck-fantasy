@@ -1,5 +1,5 @@
 import { CHEER_KINDS, CHEER_LABEL, CHEER_WORD, cx, Led, MainAction, Modal, ViewToggle, type CheerKind } from "../../parts";
-import type { CheerLine, Manager } from "./feed";
+import { firstName, type CheerLine, type Manager } from "./feed";
 import "./following.css";
 
 const KIND_OPTIONS = CHEER_KINDS.map((kind) => ({ value: kind, label: CHEER_WORD[kind] }));
@@ -32,7 +32,7 @@ export function CheerPicker({
 }) {
   const shown = lines.filter((l) => l.kind === kind);
   const preview = shown.find((l) => l.id === picked);
-  const first = receiver.name.split(" ")[0];
+  const first = firstName(receiver);
   return (
     <Modal kind="sheet" title={`${CHEER_LABEL} ${receiver.name}`} onClose={onClose}>
       <p className="following__picker-sub">{line}</p>

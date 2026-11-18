@@ -1,0 +1,12 @@
+.sheet-keys {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+.sheet-keys__back {
+  margin-right: var(--s-2);
+  color: var(--text);
+  text-decoration: underline;
+}

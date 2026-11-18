@@ -163,5 +163,8 @@ export const FOLLOWING: FollowingData = {
   },
 };
 
+/** A manager new to Following: no one followed, no requests, nothing received, no one following. */
+export const FOLLOWING_EMPTY: FollowingData = { ...FOLLOWING, feed: [], requests: [], cheers: [], following: [], followers: [], sent: {}, receivers: {} };
+
 /** The cheer picker as drawn (truck.html): opened from Jae's row, Jeer picked. */
 export const PICKER_AS_DRAWN = { managerId: JAE.id, kind: "jeer", lineId: "p01" } as const;

@@ -29,6 +29,7 @@ Keys, links, tabs, sheets and fields.
 - `Modal.tsx`: a card (1056) or sheet (544) over a dimmed page; ✕, Esc, focus kept inside. A sheet shows its title, or its own `head` (Points' breakdown).
 - `Field.tsx`: a form field: label above, 40px, an error line under.
 - `Toast.tsx`: a short message at the foot of the page that goes by itself after `TOAST_MS` (`Kingen added`, `Max 2 from T1`).
+- `SheetKeys.tsx`: a sheet's foot: `Back`, a text link, then its main action (a league's Leave, Following's Block).
 - `MainAction.tsx`: the screen's one filled key; disabled with its reason.
 - `OutlinedKey.tsx`: any other key; disabled with its reason.
 

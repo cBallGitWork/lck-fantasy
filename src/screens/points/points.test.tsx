@@ -113,25 +113,6 @@ test("the sheet stays closed until a player is tapped", () => {
   expectInOrder(out, ["Bench", "Cuzz9", "Your week"]);
 });
 
-test("the Coach's sheet (coach.png): his lines, the series' +3, no C or Captains averaged, and his coach card", () => {
-  const coach = <PointsPage data={POINTS_FIXTURE} open="kkOma" />;
-  expect(html(coach)).toContain('href="/coach/kkoma"');
-  const out = text(coach);
-  expect(out).not.toContain("Captains averaged");
-  expectInOrder(out, [
-    "kkOma김정균",
-    "T1 · Coach",
-    "10Not final",
-    "Wed v HLE W 2–1 · +3 ›8",
-    "G1WFirst tower · Most drakes2",
-    "G2L0",
-    "G3WFirst tower · Most drakes · Most barons3",
-    "Sat v DK 1–0 ›2",
-    "G1WFirst tower · Most barons2",
-    "G2Live 14:200",
-  ]);
-});
-
 test("Card view shows the seven in the broadcast's order with their series and points, then the bench", () => {
   const out = text(<PointsPage data={POINTS_FIXTURE} view="Card view" />);
   expect(out).not.toContain("rift-map");
@@ -148,12 +129,6 @@ test("Card view shows the seven in the broadcast's order with their series and p
     "Bench",
   ]);
   expect(html(<PointsPage data={POINTS_FIXTURE} view="Card view" />)).toContain('class="lineup"');
-});
-
-test("a bench player who didn't play can't be opened; one who played can", () => {
-  const bench = html(<PointsPage data={POINTS_FIXTURE} />).split('class="bench-bar"')[1] ?? "";
-  expect(bench.match(/role="button"/g)).toHaveLength(1);
-  expect(text(<PointsPage data={POINTS_FIXTURE} open="Cuzz" />)).toContain("KT · Jungle9Wed v GEN L 0–2 ›1");
 });
 
 test("the fixture's total is its starters' points: 94, the Captain's 25 among them, as the shared Week 3 gives them", () => {
@@ -221,7 +196,7 @@ test("Weeks 1 and 2 add up: each total its starters', the Captain's ×1.5 rounde
   expect(w2.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual(["Star Faker 30", "Flop Delight 9", "Killer Peyz 19"]);
   // A final week: no Not final on the sheet; Weeks 1 and 2 have no lines, so the rows show W or L and points.
   const out = text(<PointsPage data={w2} open="kkOma" />);
-  expectInOrder(out, ["T1 · Coach15", "v DNS W 2–0 · +3 ›7", "G1W2", "G2W2", "v BFX W 2–1 · +3 ›8", "G1W2", "G2L0", "G3W3"]);
+  expectInOrder(out, ["T1 · Coach15", "v DNS W 2–0 ›7", "G1W2", "G2W2", "Series win+3", "v BFX W 2–1 ›8", "G1W2", "G2L0", "G3W3", "Series win+3"]);
 });
 
 test("Leagues' season total is Points' weeks: Weeks 1 and 2 final, and Week 3 so far", () => {

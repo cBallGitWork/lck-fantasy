@@ -73,6 +73,8 @@ function playerOf(list: readonly Series[], pick: PointsPick, games: Record<strin
     mark: pick.mark,
     birthday: pick.birthday,
     points: pick.subbedOut ? undefined : sum(series.map((s) => s.points)),
+    // No week here plays a Bench Boost or makes an auto-sub, so only the seven count.
+    counts: pick.slot !== "bench",
     series,
   };
 }

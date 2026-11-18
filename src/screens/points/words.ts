@@ -16,6 +16,9 @@ export const WORDS = {
   leagues: "Leagues",
   allLeagues: "All leagues",
   fullStats: "Full stats",
+  /** The coach's row under a series' games, before his +3 or −1. */
+  seriesWin: "Series win",
+  seriesLoss: "Series loss",
   versus: "v",
   to: "to",
 } as const;

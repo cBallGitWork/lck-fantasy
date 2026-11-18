@@ -17,7 +17,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   stats: [{ to: PATHS.stats }, "stats"],
   live: [{ to: PATHS.live }, "live"],
   series: [{ to: PATHS.series, params: { seriesId: "w3-sat-2" } }, "series"],
-  compare: [{ to: PATHS.compare }, "compare"],
+  compare: [{ to: PATHS.compare, params: { playerId: "faker" } }, "compare"],
   perfectGame: [{ to: PATHS.perfectGame }, "perfect-game"],
   priceChanges: [{ to: PATHS.priceChanges }, "price-changes"],
   settings: [{ to: PATHS.settings }, "settings"],

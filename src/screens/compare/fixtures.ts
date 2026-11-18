@@ -148,6 +148,10 @@ export const RYU: ComparePlayer = {
 /** Every player Compare has lines for, by name. */
 export const COMPARE_PLAYERS: Record<string, ComparePlayer> = Object.fromEntries([FAKER, CHOVY, KKOMA, RYU].map((p) => [p.name, p]));
 
+/** The made-up second player against `first`: the next one Compare has lines for, a coach only against a coach. */
+export const fixtureSecond = (first: ComparePlayer): ComparePlayer | null =>
+  Object.values(COMPARE_PLAYERS).find((p) => p.id !== first.id && (p.role === "coach") === (first.role === "coach")) ?? null;
+
 /** A row of the second player's search: name, team, price in m, season points. */
 export interface SearchRow {
   name: string;

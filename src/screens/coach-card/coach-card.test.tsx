@@ -109,10 +109,10 @@ describe("History, from Pick Team (1440.png)", () => {
     ]);
   });
 
-  test("marks the price's rise and links Compare", () => {
+  test("marks the price's rise and links Compare, him first", () => {
     const out = html(card(FROM_PICK_TEAM, "pickTeam", "History"));
     expect(out).toContain('<span class="rise" role="img" aria-label="up 0.5">0.5</span>');
-    expect(out).toContain('href="/compare"');
+    expect(out).toContain('href="/compare/kkoma"');
   });
 
   test("draws a rule above each new week, none above the first", () => {

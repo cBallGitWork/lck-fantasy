@@ -2,7 +2,7 @@
 // picture it is checked against. /dev/states lists them; the UI checks read them from here.
 import { LIVE_SERIES_ID } from "../fixtures/week3";
 import { DEV_STATE_PARAM } from "../parts";
-import { leagueGo, PATHS, pathTo, profileGo, seriesGo, type Go } from "../paths";
+import { compareGo, leagueGo, PATHS, pathTo, profileGo, seriesGo, type Go } from "../paths";
 
 /** The dev-only page listing every state. */
 export const DEV_STATES_PATH = "/dev/states";
@@ -90,9 +90,9 @@ export const DEV_STATES: readonly DevState[] = [
     { state: "next", go: seriesGo("w4-wed-1") },
   ]),
   ...page("compare", [
-    { state: "compare", go: { to: PATHS.compare } },
-    { state: "pick", go: { to: PATHS.compare }, param: true },
-    { state: "coaches", go: { to: PATHS.compare }, param: true },
+    { state: "compare", go: compareGo("faker") },
+    { state: "pick", go: compareGo("faker"), param: true },
+    { state: "coaches", go: compareGo("kkoma") },
   ]),
   ...page("perfect-game", [
     { state: "rift", go: { to: PATHS.perfectGame }, param: true },

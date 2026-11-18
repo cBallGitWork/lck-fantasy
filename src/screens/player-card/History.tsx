@@ -23,9 +23,9 @@ export function History({ history, shown }: { history: CardHistory; shown: Histo
           { key: "series", head: WORDS.series, cell: (r) => `${r.day}${dot}${result(r.score)} ${r.opponent}` },
           { key: "games", head: WORDS.games, figure: true, cell: (r) => r.games },
           { key: "kda", head: WORDS.kda, figure: true, cell: (r) => r.kda },
-          { key: "price", head: WORDS.pricePaid, figure: true, cell: (r) => <span className="player-card__quiet quiet">{onStart(r, money(r.priceM))}</span> },
+          { key: "price", head: WORDS.weekPrice, figure: true, cell: (r) => <span className="player-card__quiet quiet">{onStart(r, money(r.priceM))}</span> },
           { key: "points", head: WORDS.pts, figure: true, cell: (r) => <b>{r.points}</b> },
-          { key: "weekPoints", head: WORDS.week, figure: true, cell: (r) => <b>{onStart(r, weekPoints(r.week))}</b> },
+          { key: "weekPoints", head: WORDS.weekPts, figure: true, cell: (r) => <b>{onStart(r, weekPoints(r.week))}</b> },
         ]}
       />
       <h3 className="player-card__section">

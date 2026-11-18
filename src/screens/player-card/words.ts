@@ -18,8 +18,11 @@ export const WORDS = {
   series: "Series",
   games: "Games",
   kda: "K / D / A",
-  pricePaid: "Price",
+  /** History: his price that week, on the week's first row. */
+  weekPrice: "Week price",
   pts: "Pts",
+  /** History: the week's points, his own, on the week's first row. */
+  weekPts: "Week pts",
   perGame: "Per game",
   total: "Total",
   record: "W–L",
@@ -39,14 +42,14 @@ export const seasonPlace = (place: string) => `${WORDS.season}${dot}${place}`;
 export const formPlace = (place: string) => `form${dot}${place}`;
 export const ownedPlace = (place: string) => `owned${dot}${place}`;
 
-/** `+1,204 / −310 this week`: the week's transfers in and out. */
-export const transfersThisWeek = (inOut: string) => `${inOut} this week`;
+/** `+1,204 / −310 transfers this week`: the week's transfers in and out. */
+export const transfersThisWeek = (inOut: string) => `${inOut} transfers this week`;
 
-/** `15 games`: beside the Season panel's head. */
-export const gamesCount = (n: number) => `${n} games`;
+/** `15 games`, `1 game`: beside the Season panel's head. */
+export const gamesCount = (n: number) => `${n} ${n === 1 ? "game" : "games"}`;
 
 /** `Week 3`: This week's total row. */
 export const weekNo = (week: number) => `${WORDS.week} ${week}`;
 
-/** `17 × 1.5 Captain`: his points before the Captain, and the multiplier. */
-export const captainSum = (raw: number, multiplier: number) => `${raw} × ${multiplier} Captain`;
+/** `Captain 17 × 1.5, rounded down`: his points before the Captain, and the multiplier (spec/05). */
+export const captainSum = (raw: number, multiplier: number) => `Captain ${raw} × ${multiplier}, rounded down`;

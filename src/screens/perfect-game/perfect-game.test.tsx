@@ -135,7 +135,7 @@ test("each week has its own address (spec/12): /perfect-game and /perfect-game/3
     const head = (await htmlAt(at)).split('class="page-head__key-line"')[0] ?? "";
     expect(head, at).toContain("Split 1 Week 3");
     expect(head, at).toMatch(/href="\/perfect-game\/2"[^>]*>‹/);
-    expect(head, at).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
+    expect(head, at).toContain('<button type="button" class="week-arrow key-off" aria-label="Next week" disabled="">›</button>');
   }
 });
 

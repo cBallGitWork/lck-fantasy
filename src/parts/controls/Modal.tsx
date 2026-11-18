@@ -1,7 +1,7 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { inertOutside } from "../frame/pageFocus";
 import { cx } from "../util/cx";
-import { WORDS } from "../words";
+import { CLOSE } from "../words";
 import "./Modal.css";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -73,7 +73,7 @@ export function Modal({
     <div ref={shell} className="modal">
       <div className="modal__dim" onClick={onClose} />
       <div ref={box} className={cx("modal__box", `modal__box--${kind}`, strong && "modal__box--strong")} role="dialog" aria-modal="true" aria-label={title}>
-        <button type="button" className="modal__close key-bare" aria-label={WORDS.close} onClick={onClose}>
+        <button type="button" className="modal__close key-bare" aria-label={CLOSE} onClick={onClose}>
           ✕
         </button>
         {kind === "sheet" && (head ?? <h2 className="modal__title">{title}</h2>)}

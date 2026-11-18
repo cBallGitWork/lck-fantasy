@@ -76,6 +76,7 @@ export {
   CHEER_WORD,
   CHEERS_RECEIVED,
   type CheerKind,
+  CLOSE,
   HINTS,
   LOG_IN,
   PHOTO_CREDIT,

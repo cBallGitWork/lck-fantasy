@@ -20,13 +20,11 @@ export const WORDS = {
   tryAgain: "Try again ›",
   /** A buff card's key. */
   play: "Play",
-  /** A pop-up's ✕, for a screen reader. */
-  close: "Close",
   /** A table's ›'s column, for a screen reader. */
   open: "Open",
   /** The week arrows, for a screen reader. */
-  weekBefore: "Week before",
-  weekAfter: "Week after",
+  weekBefore: "Previous week",
+  weekAfter: "Next week",
   /** The dot after your player's name, for a screen reader. */
   yourPlayer: "Your player",
 } as const;
@@ -42,6 +40,9 @@ export const SAVED_NEWS = "Saved";
 
 /** Ends a page that shows a sponsor (spec/13). */
 export const SPONSOR_NOTE = "All sponsors are made up.";
+
+/** A pop-up's or a panel's ✕, for a screen reader. */
+export const CLOSE = "Close";
 
 /** A sheet's way out, the same in every sheet. */
 export const BACK = "Back";

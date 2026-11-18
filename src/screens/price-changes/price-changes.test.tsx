@@ -86,7 +86,7 @@ describe("controls", () => {
   test("‹ and › link to a week's address only where there is one; the other is a disabled key", () => {
     const latest = html(<PriceChangesPage week={WEEK4_PRICES} prev={WEEK3} />);
     expect(latest).toMatch(/<a[^>]*href="\/price-changes\/3"[^>]*>‹<\/a>/);
-    expect(latest).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">');
+    expect(latest).toContain('<button type="button" class="week-arrow key-off" aria-label="Next week" disabled="">');
   });
 
   test("stepping goes to the week's address and stops at the first and the latest week", () => {

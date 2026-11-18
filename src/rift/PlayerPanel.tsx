@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { cx, gameNo, LinkGo } from "../parts";
+import { CLOSE, cx, gameNo, LinkGo } from "../parts";
 import type { Go } from "../paths";
 import { Shirt } from "./Shirt";
 import { WORDS } from "./words";
@@ -28,7 +28,7 @@ export function PlayerPanel({
           <b className="player-panel__name">{name}</b>
           <span className="player-panel__meta">{meta}</span>
         </div>
-        <button type="button" className="player-panel__close key-bare" aria-label={WORDS.close} onClick={onClose}>
+        <button type="button" className="player-panel__close key-bare" aria-label={CLOSE} onClick={onClose}>
           ✕
         </button>
       </header>

@@ -6,8 +6,6 @@ import type { RoleKey, SlotKey } from "./roles";
 export const WORDS = {
   /** The bench bar's head. */
   bench: "Bench",
-  /** The player panel's ✕, for a screen reader. */
-  close: "Close",
   /** The player panel's foot, to his card. */
   fullStats: "Full stats",
 } as const;

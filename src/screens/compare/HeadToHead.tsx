@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 import { cx, money, Modal, oneDecimal, pct, perGame, Placeholder, placeOf, PriceMove, signed, Tag } from "../../parts";
 import { ROLE_NAME } from "../../rift";
-import { better, ROLE_PLURAL, type Side } from "./rules";
+import { better, type Side } from "./rules";
 import type { ComparePlayer, NextSeries, PastSeries } from "./fixtures";
+import { among as amongRole, compareOne, faceOff, seriesWhen, versus, WORDS } from "./words";
 import "./compare.css";
 
 /** One side's lower third: portrait, role and team, name and hangul; Change › under the second player. */
@@ -24,7 +25,7 @@ function Face({ player, right, onChange }: { player: ComparePlayer; right?: bool
         </h2>
         {onChange && (
           <button type="button" className="compare__go key-bare hover-line" onClick={onChange}>
-            Change ›
+            {WORDS.change}
           </button>
         )}
       </div>
@@ -37,7 +38,7 @@ function Faces({ left, right, onChange }: { left: ComparePlayer; right: CompareP
   return (
     <div className="compare__faces">
       <Face player={left} />
-      <span className="compare__v">v</span>
+      <span className="compare__v">{WORDS.versus}</span>
       {right ? <Face player={right} right onChange={onChange} /> : <span />}
     </div>
   );
@@ -69,7 +70,7 @@ function Season({ player }: { player: ComparePlayer }) {
     <>
       {points}
       <small className="compare__rank">
-        {placeOf(rank, `${among} ${ROLE_PLURAL[player.role].toLowerCase()}`)}
+        {placeOf(rank, amongRole(among, player.role))}
       </small>
     </>
   );
@@ -80,9 +81,10 @@ function Past({ series }: { series: PastSeries[] }) {
   return (
     <span className="compare__strip">
       {series.map((s) => (
-        <span key={s.when + s.opponent} className="compare__series">
-          {s.when}
-          <b className="compare__series-points">{s.points}</b>v {s.opponent}
+        <span key={s.week + s.day + s.opponent} className="compare__series">
+          {seriesWhen(s.week, s.day)}
+          <b className="compare__series-points">{s.points}</b>
+          {versus(s.opponent)}
         </span>
       ))}
     </span>
@@ -94,9 +96,9 @@ function Next({ series }: { series: NextSeries[] }) {
   return (
     <span className="compare__strip">
       {series.map((s, i) => (
-        <span key={s.when + s.opponent} className="compare__series">
-          {s.when}
-          <em className={cx("compare__series-opp", i === 0 && "compare__series-opp--first")}>v {s.opponent}</em>
+        <span key={s.week + s.day + s.opponent} className="compare__series">
+          {seriesWhen(s.week, s.day)}
+          <em className={cx("compare__series-opp", i === 0 && "compare__series-opp--first")}>{versus(s.opponent)}</em>
         </span>
       ))}
     </span>
@@ -118,12 +120,12 @@ export function HeadToHead({ left, right }: { left: ComparePlayer; right: Compar
           <col />
         </colgroup>
         <tbody>
-          <Row label="Season" kind="big" left={<Season player={left} />} right={<Season player={right} />} mark={better(left.season.points, right.season.points)} />
-          <Row label="Form" left={oneDecimal(left.form)} right={oneDecimal(right.form)} mark={better(left.form, right.form)} />
-          <Row label="Price" left={<Price player={left} />} right={<Price player={right} />} />
-          <Row label="Owned" left={pct(left.ownedPct)} right={pct(right.ownedPct)} />
-          <Row label="Last 3" kind="strip" left={<Past series={left.last3} />} right={<Past series={right.last3} />} />
-          <Row label="Next 3" kind="strip" left={<Next series={left.next3} />} right={<Next series={right.next3} />} />
+          <Row label={WORDS.season} kind="big" left={<Season player={left} />} right={<Season player={right} />} mark={better(left.season.points, right.season.points)} />
+          <Row label={WORDS.form} left={oneDecimal(left.form)} right={oneDecimal(right.form)} mark={better(left.form, right.form)} />
+          <Row label={WORDS.price} left={<Price player={left} />} right={<Price player={right} />} />
+          <Row label={WORDS.owned} left={pct(left.ownedPct)} right={pct(right.ownedPct)} />
+          <Row label={WORDS.last3} kind="strip" left={<Past series={left.last3} />} right={<Past series={right.last3} />} />
+          <Row label={WORDS.next3} kind="strip" left={<Next series={left.next3} />} right={<Next series={right.next3} />} />
         </tbody>
       </table>
       <table className="compare__lines">
@@ -138,13 +140,13 @@ export function HeadToHead({ left, right }: { left: ComparePlayer; right: Compar
         </colgroup>
         <thead>
           <tr>
-            <th className="compare__left">Total</th>
-            <th className="compare__left">Per game</th>
-            <th className="compare__left">Pts</th>
+            <th className="compare__left">{WORDS.total}</th>
+            <th className="compare__left">{WORDS.perGame}</th>
+            <th className="compare__left">{WORDS.pts}</th>
             <th />
-            <th className="compare__right">Pts</th>
-            <th className="compare__right">Per game</th>
-            <th className="compare__right">Total</th>
+            <th className="compare__right">{WORDS.pts}</th>
+            <th className="compare__right">{WORDS.perGame}</th>
+            <th className="compare__right">{WORDS.total}</th>
           </tr>
         </thead>
         <tbody>
@@ -185,7 +187,7 @@ export function CompareSheet({
   children: ReactNode;
 }) {
   return (
-    <Modal kind="card" title={right ? `${left.name} v ${right.name}` : `Compare ${left.name}`} onClose={onClose}>
+    <Modal kind="card" title={right ? faceOff(left.name, right.name) : compareOne(left.name)} onClose={onClose}>
       <div className="compare">
         <Faces left={left} right={right} onChange={onChange} />
         {children}

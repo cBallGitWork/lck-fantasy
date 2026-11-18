@@ -54,8 +54,8 @@ Each folder has a README saying what goes in it.
 
 | Folder | What lives there |
 |---|---|
-| `convex/lck/` | The real world: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. |
-| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload. |
+| `convex/world/` | The real world, for every region: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. A region is a data folder (`data/<region>/`), never code here. |
+| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/world` and `convex/stats`, and keeps the raw payload. |
 | `convex/stats/` | Per-player stats for each game, as the feed sent them, plus the latest live reading. |
 | `convex/scoring/` | Scoring rules as data, the engine that turns stats into series points, and the re-score. |
 | `convex/gameweeks/` | Gameweeks, deadlines and settling a gameweek. |

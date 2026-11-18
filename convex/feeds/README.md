@@ -1,6 +1,6 @@
 # convex/feeds
 
-One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload.
+One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/world` and `convex/stats`, and keeps the raw payload.
 
 - `oraclesElixir.ts`: the daily CSV into one record per game, each row kept (spec/11, Final).
 - `leaguepedia.ts`: solo kills and steals from a game's match-v5 data, by participant id.

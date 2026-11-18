@@ -64,7 +64,7 @@ const teamLine = v.object({
 });
 
 export default defineSchema({
-  // The real world (convex/lck): filled by feeds, corrected by an admin, never written by the game.
+  // The real world (convex/world): filled by feeds, corrected by an admin, never written by the game.
   competitions: defineTable(competitionFields).index("by_name", ["name"]),
   seasons: defineTable({
     competition: v.id("competitions"),

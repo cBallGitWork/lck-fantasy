@@ -185,8 +185,23 @@ Grilled 14 Nov 2026.
   - The choice is kept in the browser, so per device, and a guest's is kept too.
 - On Pick Team, swaps, the Captain and buffs take effect only when the manager
   presses Save (Craig, 13 Nov 2026). Reset clears what isn't saved.
-- On Transfers, a player the manager can't buy (over the budget, or his team is full) stays in
-  the list, greyed, with why, and sorts last.
+- Pick Team's bar counts the changes not yet saved: each swap is one, a new Captain one, a buff
+  one; anything put back as it was saved counts none. Example: swap Zeus to the bench, make Chovy
+  Captain and play Bench Boost: 3 changes (Craig, 18 Nov 2026).
+- Make Captain shows only on a starter, never on the bench or the coach, as FPL
+  ([spec/04](04-captain.md)). Any starter can be made Captain, one not starting this week
+  included, as FPL; his card says Not starting (Craig, 17 Nov 2026).
+- On Transfers no row is greyed: a buy Flol refuses says why at the foot of the page. Over the
+  budget is allowed while choosing; the bank turns red and Review and confirm is off, as FPL. So
+  a full team is the only refusal a buy shows for money or cap (Craig, 16 and 18 Nov 2026).
+- A sold player's slot is a dashed empty slot with his role and `+`, as the front door's, and ↺
+  puts him back (Craig, 17 Nov 2026; kept over a faded tile, 18 Nov 2026).
+- Before anyone is sold, the list shows every player under All roles, and a + says to sell a
+  player first, as FPL (Craig, 18 Nov 2026).
+- The list's role chips are All roles, the five roles, then Coach, so coaches can be browsed
+  without selling yours first (Craig, 18 Nov 2026).
+- The player card's Swap with bench opens Pick Team with him already tapped, those he can swap
+  with lit, as FPL's Substitute; Transfer out opens Transfers with him sold (Craig, 18 Nov 2026).
 - Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the
   deadline, [spec/02](02-prices-and-budget.md)); his card shows the amount. Example: Faker
   ▲ ₩0.5m. Before a player's price first moves, nothing shows.

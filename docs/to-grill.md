@@ -51,11 +51,6 @@ Claude's drafts and their sources are in
 
 States and rules the approved pictures don't draw. Each page shows what is drawn; these wait.
 
-- Transfers: how a sold slot looks before a buy; what the list shows when no one is sold; which
-  reason shows when over budget and team full; does a Carry's replacement take the C; Coach chip.
-- Pick Team: what counts as one change in the bar; Make Carry on a player not starting; can a swap
-  start from the bench, as FPL allows?
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
-- Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
-  History's week total with or without the Carry's ×1.5.
-- Transfers Undo: a confirm made under a buff has no Undo, so the confirm before it can't be undone.
+- Player card: This week before any game; History's week total with or without the Captain's
+  ×1.5.

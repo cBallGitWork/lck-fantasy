@@ -20,5 +20,8 @@ rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
 - If the Captain plays no game in the gameweek, nobody takes the multiplier.
 - Benching the Captain passes the armband to the player who comes on: Faker (Captain) goes off
   for Bdd, so Bdd is the Captain (Craig, 15 Nov 2026).
+- Selling the Captain passes the armband the same way: it goes to whoever starts in his slot once Flol has arranged the squad
+  ([spec/03](03-transfers.md#roles-in-a-transfer)). Example: sell Captain Chovy (mid) for a
+  jungler; the bench mid starts at mid and is the Captain (Craig, 18 Nov 2026).
 - Under the Double Captain buff a second Captain is picked by the same rules, both wear C, and
   both score ×2 that week ([spec/06](06-buffs.md)).

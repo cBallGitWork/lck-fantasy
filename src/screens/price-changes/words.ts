@@ -13,8 +13,8 @@ export const WORDS = {
   falls: "Falls",
   /** A list before the first move. */
   noMoves: "No moves yet",
-  /** Before when the week's prices were set. */
-  set: "Set",
+  /** Before when the week's prices changed: `Changed Wed 13 Jan 07:45 16:45 KST`. */
+  changed: "Changed",
   /** The way to the Help page's formula (spec/02). */
   howPricesMove: "How prices move",
   /** A week in the address with no prices, such as `/price-changes/99`. */

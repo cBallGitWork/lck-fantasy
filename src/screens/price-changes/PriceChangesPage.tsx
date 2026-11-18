@@ -72,7 +72,7 @@ export function PriceChangesPage({
         <div className="price-changes__when">
           {week.set && (
             <span>
-              {WORDS.set} <Time local={week.set.local} kst={week.set.kst} />
+              {WORDS.changed} <Time local={week.set.local} kst={week.set.kst} />
             </span>
           )}
           {howPricesMove && <LinkGo go={howPricesMove}>{WORDS.howPricesMove}</LinkGo>}

@@ -49,6 +49,8 @@ export interface SidePlayer {
   mark?: Mark;
   stat?: string;
   points: number;
+  /** Effective ownership in per cent, beside the points for star and flop: `22 · 31%`. */
+  eoPct?: number;
 }
 
 export interface WeekPoints {
@@ -115,8 +117,9 @@ export interface HomeIdleData extends HomeShared {
   lineup: LineupStarter[];
   next: NextSeries;
   week: WeekPoints;
-  star: SidePlayer;
-  flop: SidePlayer;
+  /** Last week's star and flop, the same for every manager (spec/12); more than one each when still tied. */
+  stars: SidePlayer[];
+  flops: SidePlayer[];
 }
 
 export type HomeData = HomeLiveData | HomeIdleData;

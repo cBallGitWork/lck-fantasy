@@ -34,12 +34,12 @@ export interface PickPlayer {
   news?: { flag: string; note: string };
 }
 
-/** A buff's box: name, one line (spec/06), how many are left; `here` when it is played on this page. */
+/** A buff's box: name, one line (spec/06), how many are left, and the buff it plays. */
 export interface PickBuffInfo {
   name: BuffName;
   does: string;
   left: number;
-  here?: PickBuff;
+  here: PickBuff;
 }
 
 /** Everything the page shows that the backend will feed. */
@@ -103,9 +103,8 @@ export const PICK_TEAM_DATA: PickTeamData = {
   deadline: WEEK4_DEADLINE,
   buffs: [
     { name: "Bench Boost", does: BUFF_DOES["Bench Boost"], left: 1, here: "benchBoost" },
-    { name: "Double Captain", does: BUFF_DOES["Double Captain"], left: 1, here: "dualCarry" },
-    { name: "Remake", does: BUFF_DOES.Remake, left: 1 },
-    { name: "Limitless", does: BUFF_DOES.Limitless, left: 1 },
+    { name: "Double Captain", does: BUFF_DOES["Double Captain"], left: 1, here: "doubleCaptain" },
+    { name: "Coach Diff", does: BUFF_DOES["Coach Diff"], left: 1, here: "coachMultiplier" },
   ],
 };
 

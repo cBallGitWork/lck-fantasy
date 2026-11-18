@@ -31,8 +31,8 @@ export const seasonSettings = v.object({
   /** convex/squads/transfers.ts's TransferSettings. */
   transfers: v.object({ freePerGameweek: v.number(), bankCap: v.number(), hitPoints: v.number(), freeAfterUnlimited: v.number() }),
   carryMultiplier: v.number(),
-  /** Each buff and how many a manager gets per split (spec/06). */
-  buffs: v.array(v.object({ name: v.string(), effect: literals(BUFF_EFFECTS), perSplit: v.number() })),
+  /** Each buff, its multiplier where its effect has one, and how many a manager gets per split (spec/06). */
+  buffs: v.array(v.object({ name: v.string(), effect: literals(BUFF_EFFECTS), multiplier: v.optional(v.number()), perSplit: v.number() })),
   teamNameMaxLength: v.number(),
 });
 
@@ -175,4 +175,6 @@ export default defineSchema({
   leagueEntries: defineTable({ league: v.id("leagues"), entry: v.id("entries") })
     .index("by_league", ["league", "entry"])
     .index("by_entry", ["entry"]),
+  /** Managers a private league's maker removed: they can't rejoin it (spec/08). */
+  leagueRemovals: defineTable({ league: v.id("leagues"), entry: v.id("entries") }).index("by_league", ["league", "entry"]),
 });

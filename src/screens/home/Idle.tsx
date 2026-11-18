@@ -75,8 +75,8 @@ export function HomeIdle({ data, ...actions }: { data: HomeIdleData } & HomeActi
           <PlayerList
             label="Star and flop"
             players={[
-              { ...data.star, stat: "Star" },
-              { ...data.flop, stat: "Flop" },
+              ...data.stars.map((p) => ({ ...p, stat: "Star" })),
+              ...data.flops.map((p) => ({ ...p, stat: "Flop" })),
             ]}
           />
           <div className="home__more">

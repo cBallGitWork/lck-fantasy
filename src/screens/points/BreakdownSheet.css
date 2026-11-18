@@ -36,6 +36,10 @@
   font-size: var(--size-key);
   line-height: var(--lh-tight);
 }
+/* A bench player's points that don't count. */
+.points__breakdown-total--off b {
+  color: var(--mid);
+}
 .points__breakdown-total-note {
   display: block;
   margin-top: var(--s-1);
@@ -75,6 +79,14 @@
   align-items: center;
   min-height: var(--m-row-sheet);
   border-top: var(--m-rule) solid var(--line);
+}
+
+/* The coach's Series win or Series loss row: its words across to the points. */
+.points__breakdown-coach-what {
+  grid-column: 1 / -2;
+}
+.points__breakdown-none {
+  margin-top: var(--s-5);
 }
 
 .points__breakdown-game-what {

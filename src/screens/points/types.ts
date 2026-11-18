@@ -43,6 +43,8 @@ export interface PointsPlayer {
   birthday?: boolean;
   /** The week's points; absent when he didn't play. */
   points?: number;
+  /** His points count towards the total: false for a bench player with no Bench Boost and no auto-sub (spec/12, Points). */
+  counts: boolean;
   series: PointsSeries[];
 }
 
@@ -95,6 +97,3 @@ export interface PointsData {
 }
 
 export { VIEWS as POINTS_VIEWS, type BoardView as PointsView } from "../../rift";
-
-/** A player with no games this week, on his tile and his bench tile. */
-export const DIDNT_PLAY = "Didn't play";

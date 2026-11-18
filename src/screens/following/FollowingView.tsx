@@ -5,6 +5,7 @@ import {
   CHEERS_RECEIVED,
   Columns,
   Deadline,
+  Empty,
   GoLink,
   Led,
   NotFinalTag,
@@ -33,6 +34,7 @@ import {
   type ReceivedCheer,
   type SeriesItem,
 } from "./feed";
+import { WORDS } from "./words";
 import "./following.css";
 
 export interface FollowingActions {
@@ -51,12 +53,15 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
       <PageHead title="Following" hangul="팔로잉" />
       <Columns className="following__grid">
         <div className="following__feed">
-          {data.feed.map((week) => (
-            <Week key={week.week} week={week} data={data} onCheer={act.onCheer} />
-          ))}
+          {data.following.length === 0 ? (
+            <Empty title={WORDS.followNoOne} />
+          ) : (
+            data.feed.map((week) => <Week key={week.week} week={week} data={data} onCheer={act.onCheer} />)
+          )}
         </div>
         <div className="following__side">
           <SideSection title="Requests" note={data.requests.length}>
+            {data.requests.length === 0 && <Empty title={WORDS.noRequests} />}
             {data.requests.map((m) => (
               <div key={m.id} className="following__request">
                 <Who manager={m} />
@@ -70,6 +75,7 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
             ))}
           </SideSection>
           <SideSection title={CHEERS_RECEIVED}>
+            {data.cheers.length === 0 && <Empty title={WORDS.noCheers} />}
             {data.cheers.map((c) => (
               <Received key={c.id} cheer={c} />
             ))}
@@ -82,7 +88,7 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
               people={data.followers}
               actions={[
                 { label: "Remove", on: act.onRemove },
-                { label: "Block", on: act.onBlock },
+                { label: WORDS.block, on: act.onBlock },
               ]}
             />
           </SideSection>

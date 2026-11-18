@@ -7,7 +7,7 @@ export const SPEC_PLAYER_TABLE: PlayerTable = {
   kills: { on: true, per: { top: 2, support: 2, jungle: 3, mid: 3, bot: 3 }, max: 3 },
   assists: { on: true, per: 5, max: 3 },
   deaths: { on: true, per: { top: 3, jungle: 3, mid: 3, bot: 3, support: 4 }, max: 3 },
-  goldLeadAt15: { on: true, points: 1 },
+  goldLeadAt15: { on: true, points: 1, atMinutes: 15 },
   soloKill: { on: true, points: 1 },
   firstBlood: { on: true, points: 1 },
   deathless: { on: true, points: 1 },

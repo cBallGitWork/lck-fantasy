@@ -138,7 +138,7 @@
 }
 .home__player {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) calc(var(--s-7) * 2) var(--s-6);
+  grid-template-columns: minmax(0, 1fr) calc(var(--s-7) * 2) minmax(var(--s-6), auto);
   align-items: center;
   height: var(--m-row);
   border-bottom: var(--m-rule) solid var(--fill);
@@ -154,7 +154,8 @@
   vertical-align: middle;
 }
 .home__player-team,
-.home__player-stat {
+.home__player-stat,
+.home__player-eo {
   font-size: var(--size-small);
   color: var(--mid);
 }

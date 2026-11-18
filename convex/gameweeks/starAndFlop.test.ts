@@ -3,22 +3,23 @@ import { byPick, CARRY_MULTIPLIER, chovy, coach, faker, player, zeus } from "../
 import { pickKey, type Pick } from "../squads/squad";
 import { starAndFlop, type ManagerLineup } from "./starAndFlop";
 
-const SETTINGS = { carryMultiplier: CARRY_MULTIPLIER, flopPoolSize: 10 }; // fixture values: the real ones are the competition's data
+const SETTINGS = { flopPoolSize: 10 }; // fixture values: the real ones are the competition's data
 
 interface Owned {
   pick: Pick;
-  /** How many managers start him, and how many of those carry him. */
+  /** How many managers start him, and how many of those multiply him. */
   starts: number;
   carries?: number;
 }
 
-/** `count` managers' line-ups: manager i starts a pick when i < starts, and carries it when i < carries. */
-function managers(count: number, owned: readonly Owned[]): ManagerLineup[] {
+/** `count` managers' line-ups: manager i starts a pick when i < starts, and multiplies it by
+ *  `multiplier` when i < carries. */
+function managers(count: number, owned: readonly Owned[], multiplier = CARRY_MULTIPLIER): ManagerLineup[] {
   return Array.from({ length: count }, (_, i) => {
     const mine = owned.filter((o) => i < o.starts);
     return {
       lineup: mine.map((o) => ({ slot: o.pick.role === "coach" ? "coach" : "flex", pick: o.pick })),
-      carrying: new Set(mine.filter((o) => i < (o.carries ?? 0)).map((o) => o.pick.id)),
+      multipliers: new Map(mine.filter((o) => i < (o.carries ?? 0)).map((o) => [pickKey(o.pick), multiplier])),
     };
   });
 }
@@ -34,10 +35,18 @@ describe("effective ownership", () => {
     expect(result.ownership.get(pickKey(faker))?.effectiveOwnership).toBe(0.5);
   });
 
-  test("a coach counts as started, never as a Carry", () => {
-    const lineups = managers(4, [{ pick: genCoach, starts: 2 }]).map((m) => ({ ...m, carrying: new Set([genCoach.id]) }));
-    const result = starAndFlop(lineups, byPick([[genCoach, 3]]), SETTINGS);
-    expect(result.ownership.get(pickKey(genCoach))?.effectiveOwnership).toBe(0.5);
+  test("under Double Captain both Captains count 2: 40% start Faker, 20% make him a Captain, so 60%", () => {
+    const lineups = managers(10, [{ pick: faker, starts: 4, carries: 2 }, { pick: chovy, starts: 2, carries: 2 }], 2);
+    const result = starAndFlop(lineups, byPick([[faker, 5], [chovy, 5]]), SETTINGS);
+    expect(result.ownership.get(pickKey(faker))?.effectiveOwnership).toBe(0.6);
+    expect(result.ownership.get(pickKey(chovy))?.effectiveOwnership).toBe(0.4);
+  });
+
+  test("a coach counts as started, and ×3 as it scored under Coach Diff", () => {
+    const started = starAndFlop(managers(4, [{ pick: genCoach, starts: 2 }]), byPick([[genCoach, 3]]), SETTINGS);
+    expect(started.ownership.get(pickKey(genCoach))?.effectiveOwnership).toBe(0.5);
+    const coachDiff = starAndFlop(managers(4, [{ pick: genCoach, starts: 2, carries: 1 }], 3), byPick([[genCoach, 3]]), SETTINGS);
+    expect(coachDiff.ownership.get(pickKey(genCoach))?.effectiveOwnership).toBe(1);
   });
 
   test("a pick who scored but nobody started is 0%", () => {

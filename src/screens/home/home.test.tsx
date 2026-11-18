@@ -75,6 +75,14 @@ describe("live", () => {
     expect(text(<Home data={{ ...HOME_LIVE, pickedStream: "caedrel" }} />)).toContain("Caedrel · English · Twitch");
   });
 
+  test("plays the official English stream when the remembered pick isn't live, without saving it as the pick", () => {
+    const remembered = { ...HOME_LIVE, pickedStream: "kameto" };
+    const saved: string[] = [];
+    expect(html(<Home data={remembered} onPickStream={(id) => saved.push(id)} />)).toMatch(/aria-pressed="true"[^>]*>LCK · English<small[^>]*>Twitch/);
+    expect(text(<Home data={remembered} />)).toContain("LCK · English · Twitch");
+    expect(saved).toEqual([]);
+  });
+
   test("shows Live's one streams list: Kameto sixth, under More ▾", () => {
     expect(HOME_LIVE.streams).toBe(STREAMS);
     expect(STREAMS[5]?.name).toBe("Kameto");
@@ -105,7 +113,7 @@ describe("idle", () => {
       ...["HLE", "Zeus", "Top", "GEN", "Canyon", "Jungle", "T1", "C", "Faker", "Mid", "GEN", "Ruler", "Bot"],
       ...["HLE", "Delight", "Support", "DK", "Siwoo", "Flex · Top", "T1", "kkOma", "Coach"],
       ...["Week 3", "Final", "109", "Average 79", "Highest 128›"],
-      ...["Faker", "T1", "Star", "22", "Delight", "HLE", "Flop", "9", "Points ›"],
+      ...["Pyosik", "DNS", "Star", "21", " · 7%", "Delight", "HLE", "Flop", "9", " · 26%", "Points ›"],
       ...BAND,
     ]);
   });
@@ -119,6 +127,11 @@ describe("idle", () => {
     expect(markup).not.toContain("home__shield-division");
     expect(out).not.toContain("Not final");
     expect(html(<Home data={HOME_IDLE} />)).toContain('href="/pick-team"');
+  });
+
+  test("shows the same star and flop to every manager, each with points and effective ownership, and every one still tied", () => {
+    const tied = { ...HOME_IDLE, stars: [{ role: "top" as const, name: "Kiin", team: "GEN", points: 15, eoPct: 8 }, { role: "top" as const, name: "Doran", team: "T1", points: 15, eoPct: 8 }] };
+    expectInOrder(text(<Home data={tied} />), ["Kiin", "Star", "15", " · 8%", "Doran", "Star", "15", " · 8%", "Delight", "Flop"]);
   });
 
   test("sets each starter's role upright on his slanted plate, as his name is", () => {
@@ -142,8 +155,8 @@ describe("cheers and jeers on the Following card (spec/14)", () => {
     expect(opened).toEqual(["minji"]);
     expectInOrder(text(<Home data={HOME_LIVE} initialPicking={pickerOn(FOLLOWING, "minji")} />), [
       "Cheer or jeer Minji Park",
-      "Chovy Was Right There · Week 3 · 58 pts so far, Limitless, 5 transfers",
-      "REMAKE OR LIMITLESS, EITHER WAY: CHEEKY. 화이팅!",
+      "Chovy Was Right There · Week 3 · 58 pts so far, Bench Boost, 5 transfers, −18",
+      "BENCH BOOST IN WEEK 3? BIG PLAY.",
       "Send",
     ]);
   });

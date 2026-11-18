@@ -5,12 +5,12 @@ import { MY_SEASON_TOTAL } from "../../fixtures/myLeagues";
 import { MANAGER, MY_WEEK3, SEASON } from "../../fixtures/week3";
 import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
 import { COMPETITION, LEAGUE_LIST, LEAGUE_NAME_MAX, LEAGUES, NEW_LEAGUE, NEW_TABLE } from "./fixtures";
-import { chaseText } from "./format";
 import { makeLeague } from "./forms";
 import { LeagueList } from "./LeagueList";
 import { adminItems, LeagueTable, type LeagueActions, type TableProps } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
 import { tableKey, type LeagueView } from "./types";
+import { chaseText } from "./words";
 
 const ACTIONS: LeagueActions = { onCopyLink: noop, onRename: noop, onRemoveManager: noop, onDelete: noop, onLeave: noop };
 
@@ -136,6 +136,13 @@ describe("the page", () => {
   test("a league in the list opens its table", async () => {
     expect(await htmlAt("/leagues/flol-discord")).toContain("FLOL-22XB");
     expect(await htmlAt("/leagues/overall")).toContain("Unkillable FC");
+  });
+
+  test("spec/08: a league's link opens Join a league with its code in, and joins nobody until Join is pressed", async () => {
+    const out = await htmlAt("/leagues/join/gank-4tq1");
+    expectInOrder(plain(out), ["Join a league", "Code or link", "Back", "Join"]);
+    expect(out).toContain('value="GANK-4TQ1"');
+    expect(plain(out)).not.toContain("Gank Squad");
   });
 
   test("a row opens that manager's team", async () => {

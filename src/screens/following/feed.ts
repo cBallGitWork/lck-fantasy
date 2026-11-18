@@ -104,7 +104,7 @@ export interface FollowingData {
 /** Swaps a deadline row lists before `+ 2 more` (the picture). */
 export const SWAPS_SHOWN = 3;
 
-/** `Limitless, 5 transfers`, `2 transfers, −6`, `no transfers`. */
+/** `Bench Boost, 5 transfers, −18`, `2 transfers, −6`, `no transfers`. */
 export function movesSummary(item: DeadlineItem): string {
   const transfers = item.transfers === 0 ? "no transfers" : `${item.transfers} transfer${item.transfers === 1 ? "" : "s"}`;
   return [item.buff, transfers, item.hit ? signed(-item.hit) : undefined].filter(Boolean).join(", ");
@@ -120,6 +120,9 @@ export function playersLine(players: SeriesPlayer[], multiplier: number): string
     })
     .join(" · ");
 }
+
+/** `Minji` of Minji Park, as a sheet speaks to or of a manager. */
+export const firstName = (manager: Manager) => manager.name.split(" ")[0] ?? manager.name;
 
 /** A picker's line under its title: `Deft Tomorrow · Week 3 · 31 pts so far, no transfers`. */
 export function receiverLine(data: FollowingData, manager: Manager): string {

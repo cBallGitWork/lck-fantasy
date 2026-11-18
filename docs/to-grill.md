@@ -55,7 +55,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
   reason shows when over budget and team full; does a Carry's replacement take the C; Coach chip.
 - Pick Team: what counts as one change in the bar; Make Carry on a player not starting; can a swap
   start from the bench, as FPL allows?
-- Points: a Series win row for the Coach; a week total under non-Carry players; bench taps.
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
 - Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
   History's week total with or without the Carry's ×1.5.

@@ -3,11 +3,12 @@ import { cardGo, seriesGo } from "../../paths";
 import { MARK_NAME, MarkBadge, ROLE_NAME } from "../../rift";
 import "./BreakdownSheet.css";
 import type { PointsGame, PointsPlayer, PointsSeries, PointsStarter } from "./types";
+import { averageOf, dot, versus, WORDS } from "./words";
 
 /** A series' result: `W 2–1`, `1–0` while live (its game row says Live), a Not final tag till it is; the coach's `· +3`. */
 function SeriesResult({ s }: { s: PointsSeries }) {
   const shown = seriesResult(s.score, s.state === "live");
-  const coach = s.coachResult === undefined ? "" : ` · ${signed(s.coachResult)}`;
+  const coach = s.coachResult === undefined ? "" : `${dot}${signed(s.coachResult)}`;
   return (
     <span className="points__breakdown-result num">
       {shown}
@@ -38,7 +39,7 @@ function GameRow({ g }: { g: PointsGame }) {
         )}
       </span>
       <span className="points__breakdown-kda num">{g.kda?.join("/")}</span>
-      <span className="quiet">{g.lines.join(" · ")}</span>
+      <span className="quiet">{g.lines.join(dot)}</span>
       <span className="points__breakdown-points num">{g.counted ? <b className="points__breakdown-counted counted">{g.points}</b> : g.points}</span>
     </div>
   );
@@ -60,20 +61,20 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
         <h2 className="points__breakdown-name">
           {player.name}
           <span className="points__breakdown-hangul">{player.hangul}</span>
-          {player.mark && (
-            <MarkBadge mark={player.mark} size="sheet" className="points__breakdown-mark" />
-          )}
+          {player.mark && <MarkBadge mark={player.mark} size="sheet" className="points__breakdown-mark" />}
         </h2>
         <span className="points__breakdown-mid">
-          {player.team} · {role}
+          {player.team}
+          {dot}
+          {role}
         </span>
       </div>
       <div className="points__breakdown-total">
         <b className="num">{player.points ?? NONE}</b>
         <span className="points__breakdown-total-note quiet">
           {!final && <NotFinalTag />}
-          {!final && player.captain && " · "}
-          {player.captain && `Average ${MARK_NAME.C} ${player.captain.average}`}
+          {!final && player.captain && dot}
+          {player.captain && averageOf(MARK_NAME.C, player.captain.average)}
         </span>
       </div>
     </header>
@@ -81,10 +82,10 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
   return (
     <Modal kind="sheet" title={player.name} head={head} onClose={onClose}>
       {player.series.map((s) => (
-        <section key={s.id} className="points__breakdown-series" aria-label={`v ${s.opponent}`}>
+        <section key={s.id} className="points__breakdown-series" aria-label={versus(s.opponent)}>
           <h3 className="points__breakdown-series-head">
             <GoLink go={seriesGo(s.id)} className="points__breakdown-series-go hover-line">
-              <span className="points__breakdown-day quiet">{s.day}</span> v {s.opponent} <SeriesResult s={s} /> ›
+              <span className="points__breakdown-day quiet">{s.day}</span> {versus(s.opponent)} <SeriesResult s={s} /> ›
             </GoLink>
             <b className="points__breakdown-series-points num">{s.points}</b>
           </h3>
@@ -94,7 +95,7 @@ export function BreakdownSheet({ player, onClose }: { player: PointsPlayer & Par
         </section>
       ))}
       <footer className="points__breakdown-foot">
-        <LinkGo go={cardGo(player.cardId, coach)}>Full stats</LinkGo>
+        <LinkGo go={cardGo(player.cardId, coach)}>{WORDS.fullStats}</LinkGo>
       </footer>
     </Modal>
   );

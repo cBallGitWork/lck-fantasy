@@ -5,7 +5,8 @@ import { expectDeadlinePart, expectInOrder, html, noop, text } from "../../testi
 import { DeleteSheet } from "./DeleteSheet";
 import { BROWSER_ZONE, DEADLINE_AT, DELETE_ROWS, DRAFT, REMINDER_HOURS, SAVED } from "./fixtures";
 import { Settings } from "./index";
-import { capName, changedFields, changeLine, counter, dirtyTabs, hoursBefore, type SettingsTab } from "./settings";
+import { capName, changedFields, counter, dirtyTabs, type SettingsTab } from "./settings";
+import { changeLine, hoursBefore } from "./words";
 
 const PICTURE = { draft: DRAFT, browserZone: BROWSER_ZONE };
 

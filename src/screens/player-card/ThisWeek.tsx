@@ -1,5 +1,6 @@
 import { cx, gameNo, NONE, seriesResult, seriesTitle, sum, Time } from "../../parts";
 import type { CardWeek, PlayedSeries, WeekSeries } from "./card";
+import { captainSum, weekNo } from "./words";
 
 /** A series' points: the games that count. */
 const seriesPoints = (s: PlayedSeries) => sum(s.games.filter((g) => g.counts).map((g) => g.points));
@@ -48,8 +49,8 @@ export function ThisWeek({ week }: { week: CardWeek }) {
       <table className="player-card__games player-card__total">
         <tbody>
           <tr>
-            <td colSpan={2}>Week {week.week}</td>
-            <td className="player-card__right player-card__quiet quiet num">{started && week.captain !== undefined && `${raw} × ${week.captain} Captain`}</td>
+            <td colSpan={2}>{weekNo(week.week)}</td>
+            <td className="player-card__right player-card__quiet quiet num">{started && week.captain !== undefined && captainSum(raw, week.captain)}</td>
             <td className="player-card__right player-card__points num">{started ? week.total : NONE}</td>
           </tr>
         </tbody>

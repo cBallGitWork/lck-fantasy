@@ -3,8 +3,9 @@
 import type { TeamCode } from "../../fixtures/week3";
 import type { Score } from "../../parts";
 import type { Mark, RoleKey } from "../../rift";
+import { TABS } from "./words";
 
-export const CARD_TABS = ["This week", "Fixtures", "History", "Champions"] as const;
+export const CARD_TABS = TABS;
 export type CardTab = (typeof CARD_TABS)[number];
 
 /** A series already played, in the strip: his points, `live` while it is. */

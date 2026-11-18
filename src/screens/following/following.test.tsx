@@ -39,7 +39,7 @@ describe("the page (1440.png)", () => {
       "Oner 11 · Faker 18 (12 × 1.5) · Keria 5",
       "Cheer sent",
       "Minji Park",
-      "Limitless, 5 transfers",
+      "Bench Boost, 5 transfers, −18",
       "so far",
       "Doran → Kiin+9",
       "Peyz → Ruler+4",
@@ -134,7 +134,7 @@ describe("the page (1440.png)", () => {
   });
 
   test("the screen renders on its fixture", () => {
-    expect(text(<FollowingScreen />)).toContain("Limitless, 5 transfers");
+    expect(text(<FollowingScreen />)).toContain("Bench Boost, 5 transfers, −18");
   });
 });
 
@@ -224,6 +224,6 @@ describe("the controls", () => {
 test("summaries read as the picture writes them", () => {
   const moves = (over: Partial<DeadlineItem>): DeadlineItem => ({ kind: "deadline", id: "x", manager: FOLLOWING.following[0]!, transfers: 0, swaps: [], ...over });
   expect(movesSummary(moves({ transfers: 1 }))).toBe("1 transfer");
-  expect(movesSummary(moves({ buff: "Limitless", transfers: 5 }))).toBe("Limitless, 5 transfers");
+  expect(movesSummary(moves({ buff: "Bench Boost", transfers: 5, hit: 18 }))).toBe("Bench Boost, 5 transfers, −18");
   expect(playersLine([{ name: "Faker", points: 18, captain: { before: 12 } }], 1.5)).toBe("Faker 18 (12 × 1.5)");
 });

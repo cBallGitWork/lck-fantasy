@@ -2,9 +2,8 @@
 import { describe, expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
 import { PATHS } from "../../paths";
-import { BUFF_DOES } from "../../fixtures/competition";
-import { expectDeadlinePart, hovers, html, htmlAt, text } from "../../testing/render";
-import { PICK_TEAM_DATA } from "../pick-team/fixtures";
+import { BUFFS } from "../../fixtures/competition";
+import { expectDeadlinePart, html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICTURE_PLAN, TRANSFERS_PICTURE } from "./fixtures";
 import { lineupIds } from "./lineup";
@@ -35,8 +34,6 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
       "Bank ₩5.5m",
       "Rift view",
       "List view",
-      "Remake",
-      "Limitless",
     ]);
     expect(out).not.toContain("Show:");
     expect(out).not.toContain("Card view");
@@ -67,10 +64,6 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
     expect(out.match(/Undo/g)).toHaveLength(1);
   });
 
-  test("a confirm made under a buff has no Undo", () => {
-    const confirms = [{ ...TRANSFERS_PICTURE.confirms[0]!, buff: "Remake" }];
-    expect(text(<TransfersPage {...TRANSFERS_PICTURE} confirms={confirms} />)).not.toContain("Undo");
-  });
 });
 
 describe("List view (Craig, 16 Nov 2026)", () => {
@@ -192,10 +185,7 @@ describe("Rift view or List view", () => {
   });
 });
 
-test("Remake's and Limitless's keys carry their Pick Team card's line as their hover (spec/12, Words)", () => {
-  const out = hovers(html(<TransfersPage {...TRANSFERS_PICTURE} />));
-  expect(out).toContainEqual(["Remake", BUFF_DOES.Remake]);
-  expect(out).toContainEqual(["Limitless", BUFF_DOES.Limitless]);
-  const cards = Object.fromEntries(PICK_TEAM_DATA.buffs.map((b) => [b.name, b.does]));
-  expect(cards).toMatchObject({ Remake: BUFF_DOES.Remake, Limitless: BUFF_DOES.Limitless });
+test("Transfers has no buff keys: every buff is played on Pick Team (spec/06)", () => {
+  const out = text(<TransfersPage {...TRANSFERS_PICTURE} />);
+  for (const buff of [...BUFFS, "Remake", "Limitless"]) expect(out).not.toContain(buff);
 });

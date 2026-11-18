@@ -142,8 +142,8 @@ describe("cheers and jeers on the Following card (spec/14)", () => {
     expect(opened).toEqual(["minji"]);
     expectInOrder(text(<Home data={HOME_LIVE} initialPicking={pickerOn(FOLLOWING, "minji")} />), [
       "Cheer or jeer Minji Park",
-      "Chovy Was Right There · Week 3 · 58 pts so far, Limitless, 5 transfers",
-      "REMAKE OR LIMITLESS, EITHER WAY: CHEEKY. 화이팅!",
+      "Chovy Was Right There · Week 3 · 58 pts so far, Bench Boost, 5 transfers, −18",
+      "BENCH BOOST IN WEEK 3? BIG PLAY.",
       "Send",
     ]);
   });

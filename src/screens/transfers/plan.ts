@@ -228,14 +228,13 @@ export const nextAgainst = (fixtures: Record<string, Fixture[]>, team: string) =
   return next ? `v ${next.opponent}` : "";
 };
 
-/** One confirm this week: when, who went out and came in, its hit (0 is free), and the buff it was under. */
+/** One confirm this week: when, who went out and came in, and its hit (0 is free). */
 export interface Confirm {
   id: string;
   local: string;
   kst: string;
   moves: { out: string; in: string }[];
   hit: number;
-  buff?: string;
 }
 
 /** The toast once a confirm goes through. */

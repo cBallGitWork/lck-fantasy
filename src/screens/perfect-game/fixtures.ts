@@ -18,6 +18,7 @@ import {
   type PerfectPick,
 } from "../../fixtures/week3";
 import type { PerfectGameData, PerfectPlayer, PlayerSeries } from "./types";
+import { weekLine, weekSeries } from "./words";
 
 /** Whose games the picture draws, champion and win, from every page's games (src/fixtures/games.ts). */
 const DRAWN = new Set(["Faker"]);
@@ -52,11 +53,11 @@ const PERFECT_PLAYERS: PerfectPlayer[] = PERFECT_GAME.map((pick) => ({ ...pick, 
 
 /** Week 3's perfect game as the picture shows it: Faker tapped. */
 export const PERFECT_WEEK3: PerfectGameData = {
-  week: `${COMPETITION} · Week 3`,
+  week: weekLine(COMPETITION, 3),
   final: true,
   ...WEEK3_FINAL,
   yours: MY_WEEK3.finalTotal,
-  seriesTitle: "Week 3 series",
+  seriesTitle: weekSeries(3),
   players: PERFECT_PLAYERS,
   series: WEEK3_SERIES_FINAL,
 };

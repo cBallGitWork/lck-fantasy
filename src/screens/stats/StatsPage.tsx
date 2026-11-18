@@ -1,6 +1,6 @@
 import { useId, type ChangeEvent, type ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
-import { cx, money, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, TabPanel, Tabs, ViewToggle, type Column } from "../../parts";
+import { cx, Empty, money, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, TabPanel, Tabs, ViewToggle, type Column } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import {
@@ -21,11 +21,15 @@ import {
   type SortKey,
   type StatsRow,
   type StatsView,
+  type Tab,
 } from "./stats";
-import { findA, pageName, WORDS } from "./words";
+import { findA, noneFound, pageName, WORDS } from "./words";
 import "./stats.css";
 
 type Ranked = StatsRow & { rank: number };
+
+/** Who a tab lists, as its words name him. */
+const who = (tab: Tab) => (tab === PLAYERS ? "player" : "coach");
 
 export interface StatsPageProps {
   /** The account menu's team name; null for a visitor. */
@@ -51,18 +55,24 @@ export function StatsPage({ account, view, rows, spans, onChange }: StatsPagePro
         <Tabs id={tabsId} tabs={TABS} chosen={view.tab} onChoose={(tab) => onChange({ tab })} label={WORDS.tabsLabel} />
         <TabPanel id={tabsId}>
           <Controls view={view} rows={rows} spans={spans} onChange={onChange} />
-          <Table<Ranked>
-            columns={columns(view, onChange)}
-            rows={pageRows(listed, page)}
-            rowKey={(r) => r.id}
-            stickyHead
-            stickyFirst
-            label={view.tab}
-          />
-          <div className="stats__foot">
-            <span>{pageLabel(listed.length, page)}</span>
-            <Pages page={page} pages={pages} onPage={(p) => onChange({ page: p })} />
-          </div>
+          {listed.length === 0 ? (
+            <Empty title={noneFound(who(view.tab))} />
+          ) : (
+            <>
+              <Table<Ranked>
+                columns={columns(view, onChange)}
+                rows={pageRows(listed, page)}
+                rowKey={(r) => r.id}
+                stickyHead
+                stickyFirst
+                label={view.tab}
+              />
+              <div className="stats__foot">
+                <span>{pageLabel(listed.length, page)}</span>
+                <Pages page={page} pages={pages} onPage={(p) => onChange({ page: p })} />
+              </div>
+            </>
+          )}
         </TabPanel>
       </div>
     </PageFrame>
@@ -71,7 +81,6 @@ export function StatsPage({ account, view, rows, spans, onChange }: StatsPagePro
 
 function Controls({ view, rows, spans, onChange }: Omit<StatsPageProps, "account">) {
   const players = view.tab === PLAYERS;
-  const who = players ? "player" : "coach";
   return (
     <div className="stats__controls">
       {players && (
@@ -116,8 +125,8 @@ function Controls({ view, rows, spans, onChange }: Omit<StatsPageProps, "account
       <input
         className="stats__find"
         type="search"
-        placeholder={findA(who)}
-        aria-label={findA(who)}
+        placeholder={findA(who(view.tab))}
+        aria-label={findA(who(view.tab))}
         value={view.search}
         onChange={(e) => onChange({ search: e.target.value })}
       />

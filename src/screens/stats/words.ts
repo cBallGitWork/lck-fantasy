@@ -52,6 +52,9 @@ export const LINE_HEADS = {
   quickWins: "Quick wins",
 } as const;
 
+/** `No players`, `No coaches`: in place of the table when the filters match no one. */
+export const noneFound = (who: "player" | "coach") => (who === "player" ? "No players" : "No coaches");
+
 /** `Find a player`, `Find a coach`: the search's hint and its name for a reader. */
 export const findA = (who: "player" | "coach") => `Find a ${who}`;
 

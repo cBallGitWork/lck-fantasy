@@ -11,15 +11,16 @@ import { joinAutoLeagues } from "../leagues/store";
 import { literals } from "../schema";
 import { requirePrice } from "../squads/budget";
 import { allPicks, PLAYER_ROLES, STARTER_SLOTS } from "../squads/squad";
+import { admit, type InviteRefusal } from "./invites";
 import { firstCaptain, firstScoringGameweek, signUpProblems, type SignUpProblem } from "./signUp";
 
 const pick = v.object({ id: v.string(), teamId: v.string(), role: literals([...PLAYER_ROLES, "coach"]) });
 const squad = v.object({ starters: v.array(v.object({ slot: literals(STARTER_SLOTS), pick })), bench: v.array(pick) });
 const season = { competition: v.string(), year: v.number() };
 
-/** Why a Save was refused, for the sheet to say: a sign-up rule, every deadline gone, or an account
- *  that already has a team this season. */
-export type SaveRefusal = { rule: "signUp"; problems: SignUpProblem[] } | { rule: "seasonOver" } | { rule: "hasTeam" };
+/** Why a Save was refused, for the sheet to say: a sign-up rule, every deadline gone, an account
+ *  that already has a team this season, or a closed test it has no invite to. */
+export type SaveRefusal = { rule: "signUp"; problems: SignUpProblem[] } | { rule: "seasonOver" } | { rule: "hasTeam" } | InviteRefusal;
 
 const refuse = (refusal: SaveRefusal) => new ConvexError(refusal);
 
@@ -36,6 +37,8 @@ export const saveNewTeam = internalMutation({
     country: v.string(),
     /** The version of the Terms and Privacy the box was ticked against. */
     agreedVersion: v.string(),
+    /** The code in a personal invite's link, while the season runs as a closed test. */
+    invite: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const at = await now(ctx);
@@ -44,6 +47,10 @@ export const saveNewTeam = internalMutation({
     const seasonId = found.season._id;
     const { settings } = found.season;
     if ((await entryOf(ctx, args.account, seasonId)) !== null) throw refuse({ rule: "hasTeam" });
+    if (!settings.signUpOpen) {
+      const turnedAway = await admit(ctx, args.account, args.invite, at);
+      if (turnedAway !== null) throw refuse(turnedAway);
+    }
 
     const gameweeks = await ctx.db.query("gameweeks").withIndex("by_season", (q) => q.eq("season", seasonId)).collect();
     const firstGameweek = firstScoringGameweek(at, gameweeks);

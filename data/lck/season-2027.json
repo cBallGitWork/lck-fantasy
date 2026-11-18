@@ -20,7 +20,8 @@
       { "name": "Double Captain", "effect": "doubleCaptain", "multiplier": 2, "perSplit": 1 },
       { "name": "Coach Diff", "effect": "coachMultiplier", "multiplier": 3, "perSplit": 1 }
     ],
-    "teamNameMaxLength": 20
+    "teamNameMaxLength": 20,
+    "signUpOpen": true
   },
   "gameweeks": [
     { "number": 1, "split": 1, "deadline": "2026-12-30T07:45:00Z", "state": "final" },

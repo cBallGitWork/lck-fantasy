@@ -242,6 +242,12 @@ Grilled 13 Nov 2026.
     squad, remembered views and theme), with no analytics or ads.
   - The banner text is any text up to 20 characters, moderated like team names (spec/13); Latin
     letters are allowed, as in 바론 스틸 FC (Claude's call on Craig's "your call").
+- With the banner empty, the Settings preview shows a greyed 배너 in the hangul's place; Profile
+  shows just the team name (Craig, 17 Nov 2026).
+- The save bar counts and names every unsaved change, across all tabs. Example: "2 changes:
+  team name, theme" (Craig, 17 Nov 2026).
+- Privacy and Terms are their own pages, `/privacy` and `/terms`, linked from Settings' foot and
+  the sign-up tick (Craig, 17 Nov 2026).
 
 ## The coach card
 

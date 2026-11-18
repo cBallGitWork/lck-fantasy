@@ -31,8 +31,11 @@ Copies UCL Fantasy: the first page is one where you can just pick a team, with n
   change until the manager's first gameweek starts, then are fixed (Craig, 15 Nov 2026). The
   sheet says when: "Both lock when your first gameweek starts: Wed 07:45."
 - One tick: "I'm 16 or over and accept the Terms and Privacy", unticked. Save team stays off
-  until it is ticked and a team picked, and the account is made on Save team, not at the Google
+  until it is ticked, a team picked and a team name typed (spaces alone count as empty; Craig,
+  17 Nov 2026), and the account is made on Save team, not at the Google
   or Discord step (Craig, 15 Nov 2026). The account keeps when they agreed and to which version.
+- On Save team, one cheer: "Baron Steal FC is in. 화이팅!" (the team's own name; Craig, 17 Nov
+  2026).
 - On Save team the squad is bought at that moment's prices. If a deadline has moved prices since
   it was picked and it no longer fits, Save team stays off and the bar says by how much, such
   as ₩0.3m over, until a swap (Craig, 17 Nov 2026).

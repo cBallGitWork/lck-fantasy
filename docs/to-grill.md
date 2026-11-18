@@ -67,8 +67,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Series: VOD as ↗ or ›; an unknown series id; a coach's empty game as — or 0.
 - Compare: the search's role groups and caps; what /compare opens with no players.
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.
-- Settings: an empty hangul banner; the save bar's list; Save team's rules; Privacy and Terms
-  routes. The picture draws the reminder On; spec/12 says both emails are off by default (built off).
 - Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
   History's week total with or without the Carry's ×1.5.
 - Profile: cancelling a follow request; how a week's transfer cost reads; place or number ranks;

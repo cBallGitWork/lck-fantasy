@@ -11,7 +11,7 @@ function plateRole(s: LineupStarter): string {
   return s.slot === "flex" && s.plays ? `${ROLE_NAME.flex} · ${ROLE_NAME[s.plays]}` : ROLE_NAME[s.slot];
 }
 
-/** One starter on the broadcast stage: his shirt, C or V, and his angled name plate. */
+/** One starter on the broadcast stage: his shirt, C, and his angled name plate. */
 function Starter({ starter }: { starter: LineupStarter }) {
   return (
     <li className="home__starter">
@@ -75,8 +75,8 @@ export function HomeIdle({ data, ...actions }: { data: HomeIdleData } & HomeActi
           <PlayerList
             label="Star and flop"
             players={[
-              { ...data.star, stat: "Star" },
-              { ...data.flop, stat: "Flop" },
+              ...data.stars.map((p) => ({ ...p, stat: "Star" })),
+              ...data.flops.map((p) => ({ ...p, stat: "Flop" })),
             ]}
           />
           <div className="home__more">

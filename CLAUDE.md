@@ -32,5 +32,7 @@ The app is being built: the scaffold and the game rules land issue by issue. Spl
 - Where a spec file is silent, ask Craig: never build on a guessed rule, and never offer a rule only the code holds as a grill recommendation.
 - Don't ask Craig what his standing answers already settle (small look details, fixes and upkeep): act and say so in one line. A question is asked once, five to a batch (`guard_ask.py`).
 - Fewer words, in UK English: short replies, the shortest label on a screen, plain sentences. What Craig must decide goes first, with an example.
+- Every word a player reads is written to the Broadcast voice (`.claude/agents/broadcast.md`) and lives in its screen's `words.ts`. A build that adds or changes words runs the `broadcast` agent on its words files before the PR.
+- Every PR or issue named to Craig gets its full GitHub URL.
 - `ui-verifier` (an agent that shoots the built screens and reads them against their pictures) waits until there is an app to shoot.
 - Add a rule here only after Claude gets something wrong, and add a hook rather than a rule where possible. `/retro` before clearing the chat finds those moments; `/wait-what` re-says a reply that didn't land; `/handover` writes the next session its start.

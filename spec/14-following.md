@@ -13,9 +13,14 @@ has no following, so most of this is Flol's own. Open questions are in
 - By request, one-way: a manager asks to follow Minji, she accepts, and Minji's week shows in his
   feed. She sees his only if she asks too.
 - A manager can unfollow, and can remove or block a follower.
+- Block asks first: "Block Minji? They can't follow you again." Remove is one tap (Craig, 17 Nov
+  2026).
+- An empty part says so in one short line: `No requests`, `No cheers or jeers this week`, `You
+  follow no one` (Craig, 17 Nov 2026).
 - Profiles stay public, as in FPL ([spec/12](12-pages.md)); the feed is what needs the yes.
 - A follow request is sent from the manager's profile, which opens from any league table. There
   is no search (Craig, 14 Nov 2026).
+- Tapping Requested cancels the request, back to Follow, with no confirm (Craig, 17 Nov 2026).
 - A manager can follow up to a cap, held as data per competition (drawn as 50).
 
 ## The feed
@@ -24,7 +29,7 @@ One timeline of every manager followed, newest first, split by gameweek (Craig, 
 For each manager followed:
 
 - their points at the end of each series;
-- a big Carry: a Carry scoring 20 or more in a series after the ×1.5, about 1 series in 10 on
+- a big Captain: a Captain scoring 20 or more in a series after the ×1.5, about 1 series in 10 on
   2026's data. The 20 is data;
 - at each deadline, their transfers and buff, then how each swap is doing as series finish.
   Example: Chovy → Faker, +6 so far.
@@ -43,6 +48,8 @@ truck hire as a sponsor").
   mocks it, as the protest trucks do.
 - The key on a feed row reads `Cheer / Jeer ›` and opens the picker, on Home and on Following
   (Craig, 16 Nov 2026).
+- The picker opens on Cheer with its first line chosen; nothing sends until Send (Craig, 17 Nov
+  2026).
 - What arrives is drawn as the truck's dotted LED panel, with the sender's name and a small
   credit to a made-up truck-hire sponsor (Craig, 16 Nov 2026). Example: SELL YOUR BOT LANER,
   Jeer from Minji, Truck hire by …. The sponsor's name is drafted with the other made-up sponsors
@@ -50,20 +57,21 @@ truck hire as a sponsor").
 - It parks on the receiver's profile for the gameweek.
 - A **sponsor cheer** sends itself: each private league's top manager of the gameweek gets one
   from a made-up sponsor ([spec/13](13-korean-touches.md)), shown on their profile and in the
-  league.
+  league. Its panel credits only the sponsor, as its sender: no truck-hire line (Craig, 17 Nov
+  2026).
 
 ## Lines
 
 - Lines are preset, never free text, so nothing needs moderating.
 - Lines are a database, as Football Manager's dialogue is: each line has its kind (cheer,
-  jeer, sponsor), the week it fits (a trigger, such as the Carry blanked, a hit taken, a green
+  jeer, sponsor), the week it fits (a trigger, such as the Captain blanked, a hit taken, a green
   arrow, top of the league, or any week), and a weight for how often it comes up. A manager picks
   from the lines that fit the receiver's week. An admin adds lines, and Craig approves each
   before it goes live.
 - What the triggers mean (Craig, 15 Nov 2026). Every number is data:
   - **Which week:** a line fits the receiver's last final gameweek, and the cheer or jeer parks for
     the current one. Before the first week is final, only any-week lines show.
-  - **Carry blank:** a Carry on 2 or fewer after the ×1.5, as FPL counts a blank. **A dear
+  - **Captain blank:** a Captain on 2 or fewer after the ×1.5, as FPL counts a blank. **A dear
     player's flop:** the receiver's dearest starter on 2 or fewer; `{price}` is his price.
   - **High and low score:** the global top 10% and bottom 10% of the gameweek.
   - **Top and bottom of the league:** first or last in a private league the sender and receiver
@@ -72,7 +80,7 @@ truck hire as a sponsor").
     the week ends below the global average; otherwise **buff played**.
 - Lines fill in the receiver's own numbers. Example: WE DID NOT PAY ₩12M FOR A BENCH WARMER.
 - A jeer's line never names a real player; it mocks the manager's own picks, in the protest trucks'
-  formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CARRY PICK. A cheer's line may praise
+  formal-demand style. Example: MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. A cheer's line may praise
   real players.
 - Lines use FPL's lingo (green arrow, hit, bench headache, template) and LCK's, in UK English.
 - The first draft set, written 14 Nov 2026 and not yet approved, is in

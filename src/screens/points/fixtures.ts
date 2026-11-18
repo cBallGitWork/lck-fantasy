@@ -6,7 +6,7 @@
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { playedFromSide, seriesById } from "../../fixtures/series";
 import {
-  carried,
+  captained,
   COMPETITION,
   countedGames,
   gameAt,
@@ -73,6 +73,8 @@ function playerOf(list: readonly Series[], pick: PointsPick, games: Record<strin
     mark: pick.mark,
     birthday: pick.birthday,
     points: pick.subbedOut ? undefined : sum(series.map((s) => s.points)),
+    // No week here plays a Bench Boost or makes an auto-sub, so only the seven count.
+    counts: pick.slot !== "bench",
     series,
   };
 }
@@ -80,20 +82,20 @@ function playerOf(list: readonly Series[], pick: PointsPick, games: Record<strin
 /** Owned % of the players a week's Star or Flop can be. */
 const OWNED_PCT: Record<string, number> = { Faker: 46, Siwoo: 6, Delight: 18 };
 
-function mine(label: string, p: PointsStarter): WeekPick {
+function mine(label: WeekPick["label"], p: PointsStarter): WeekPick {
   const ownedPct = OWNED_PCT[p.name];
   if (ownedPct === undefined || p.points === undefined) throw new Error(`No ${label} figures for ${p.name}`);
   return { label, name: p.name, points: p.points, ownedPct, mine: true };
 }
 
-/** What a week adds to its series and squad: its head's figures, the average Carry and the Killer. */
+/** What a week adds to its series and squad: its head's figures, the average Captain and the Killer. */
 interface WeekFacts {
   week: number;
   series: readonly Series[];
   squad: PointsPick[];
   average: number;
   highest: number;
-  averageCarry: number;
+  averageCaptain: number;
   killer: { name: string; points: number; ownedPct: number };
   /** Each game's champion, K/D/A and lines, where the week has them. */
   games?: Record<string, GameDetail[][]>;
@@ -107,7 +109,7 @@ const WEEKS: WeekFacts[] = [
     squad: squadIn(WEEK1_PLAYED),
     average: 61,
     highest: 118,
-    averageCarry: 20,
+    averageCaptain: 20,
     killer: { name: "Chovy", points: 22, ownedPct: 41 },
   },
   {
@@ -116,7 +118,7 @@ const WEEKS: WeekFacts[] = [
     squad: squadIn(WEEK2_PLAYED),
     average: 70,
     highest: 124,
-    averageCarry: 23,
+    averageCaptain: 23,
     killer: { name: "Peyz", points: 19, ownedPct: 28 },
   },
   {
@@ -125,7 +127,7 @@ const WEEKS: WeekFacts[] = [
     squad: POINTS_SQUAD,
     average: POINTS_WEEK.average,
     highest: POINTS_WEEK.highest,
-    averageCarry: 19,
+    averageCaptain: 19,
     killer: { name: "Chovy", points: 15, ownedPct: 41 },
     games: WEEK3_GAMES,
   },
@@ -151,9 +153,9 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     const player = playerOf(list, pick, games);
     const plays = flexPlays(pick.slot, pick.role);
     if (pick.mark !== "C") return [{ ...player, slot: pick.slot, plays }];
-    // The Carry's points ×1.5, a minus towards zero (spec/05-scoring.md); his own are already the result.
-    const points = player.points === undefined ? undefined : carried(player.points);
-    return [{ ...player, slot: pick.slot, plays, points, carry: { average: facts.averageCarry } }];
+    // The Captain's points ×1.5, a minus towards zero (spec/05-scoring.md); his own are already the result.
+    const points = player.points === undefined ? undefined : captained(player.points);
+    return [{ ...player, slot: pick.slot, plays, points, captain: { average: facts.averageCaptain } }];
   });
   const played = starters.filter((p) => p.points !== undefined);
   const byPoints = [...played].sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
@@ -174,7 +176,7 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     bench: squad.filter((p) => p.slot === "bench").map((p) => playerOf(list, p, games)),
     yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, mine: false }],
     leagues: [
-      { name: `Overall · ${MY_OVERALL.tier}`, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
+      { name: "Overall", tier: MY_OVERALL.tier,rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
       ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),
     ],
     nextTier: { points: 6, tier: "Diamond IV" },

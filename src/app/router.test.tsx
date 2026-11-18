@@ -13,6 +13,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   pointsWeek: [{ to: PATHS.pointsWeek, params: { week: "2" } }, "points"],
   leagues: [{ to: PATHS.leagues }, "leagues"],
   league: [{ to: PATHS.league, params: { leagueId: "pub-league" } }, "leagues"],
+  leagueJoin: [{ to: PATHS.leagueJoin, params: { code: "GANK-4TQ1" } }, "leagues"],
   stats: [{ to: PATHS.stats }, "stats"],
   live: [{ to: PATHS.live }, "live"],
   series: [{ to: PATHS.series, params: { seriesId: "w3-sat-2" } }, "series"],
@@ -25,6 +26,8 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   coachCard: [{ to: PATHS.coachCard, params: { coachId: "kkoma" } }, "coach-card"],
   profile: [{ to: PATHS.profile, params: { managerId: "minji" } }, "profile"],
   following: [{ to: PATHS.following }, "following"],
+  privacy: [{ to: PATHS.privacy }, "legal"],
+  terms: [{ to: PATHS.terms }, "legal"],
 };
 
 test.each(Object.keys(PATHS) as ScreenKey[])("the %s route renders its screen with the top bar", async (key) => {

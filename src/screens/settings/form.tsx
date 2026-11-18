@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
+import { GoLink } from "../../parts";
+import { PATHS } from "../../paths";
 import { capName, counter, type Account } from "./settings";
 
 // The form pieces Settings and the sign-up sheets share.
@@ -67,15 +69,16 @@ export const ProviderMark = ({ provider }: { provider: Account["provider"] }) =>
   </span>
 );
 
-/**
- * Privacy and Terms are plain text pages (docs/legal/) with no route yet, so they are named, not
- * linked; the privacy email waits for Flol's domain.
- */
+/** Links to Privacy and Terms, the plain pages of docs/legal/; the privacy email waits for Flol's domain. */
 export function LegalNames() {
   return (
     <>
-      <span className="settings__go">Privacy ›</span>
-      <span className="settings__go">Terms ›</span>
+      <GoLink go={{ to: PATHS.privacy }} className="settings__go">
+        Privacy ›
+      </GoLink>
+      <GoLink go={{ to: PATHS.terms }} className="settings__go">
+        Terms ›
+      </GoLink>
     </>
   );
 }

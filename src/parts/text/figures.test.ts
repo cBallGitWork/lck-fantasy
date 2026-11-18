@@ -11,7 +11,7 @@ test("a place takes st, nd, rd or th, the teens th, and marks its thousands", ()
   ]);
 });
 
-test("signed points carry + or the minus sign, zero bare", () => {
+test("signed points show + or the minus sign, zero bare", () => {
   expect([6, 0, -1].map(signed)).toEqual(["+6", "0", "−1"]);
   expect(MINUS).toBe("−");
   expect(inOut(1204, 310)).toBe("+1,204 / −310");
@@ -22,7 +22,7 @@ test("a score, its result and a per-game figure", () => {
   expect([outcome(true), outcome(false)]).toEqual(["W", "L"]);
   expect([result([2, 1]), result([1, 2])]).toEqual(["W 2–1", "L 1–2"]);
   expect(perGame(49, 10)).toBe("4.9");
-  expect(perGame(5, 0)).toBe("0.0");
+  expect(perGame(5, 0)).toBe(NONE);
   expect([perGameValue(49, 10), perGameValue(5, 0)]).toEqual([4.9, 0]);
 });
 

@@ -24,7 +24,7 @@ export type LeagueRefusal =
   | { rule: "noName" }
   | { rule: "startGameweek"; choices: number[] }
   | { rule: "noCode"; code: string }
-  | { rule: "notMaker" | "makerLeaves" | "notMember" }
+  | { rule: "notMaker" | "makerLeaves" | "notMember" | "removed" }
   | { rule: "favouriteTeamFixed" };
 
 const refuse = (refusal: LeagueRefusal) => new ConvexError(refusal);
@@ -40,11 +40,12 @@ export const enterAutoLeagues = internalMutation({
   },
 });
 
-/** The favourite team, and with it the team league, until the first gameweek scores (spec/08). */
+/** The favourite team, and with it the team league, until the deadline of the entry's first
+ *  gameweek, in ms since the epoch (spec/08). */
 export const changeFavouriteTeam = internalMutation({
-  args: { entry: v.id("entries"), team: v.id("teams"), firstScoredGameweek: v.union(v.number(), v.null()) },
-  handler: async (ctx, { entry, team, firstScoredGameweek }) => {
-    if (!canChangeFavouriteTeam(firstScoredGameweek)) throw refuse({ rule: "favouriteTeamFixed" });
+  args: { entry: v.id("entries"), team: v.id("teams"), firstDeadline: v.number() },
+  handler: async (ctx, { entry, team, firstDeadline }) => {
+    if (!canChangeFavouriteTeam(firstDeadline, Date.now())) throw refuse({ rule: "favouriteTeamFixed" });
     const manager = await managerOf(ctx, entry);
     // Every entry joins its team's league at sign-up, so one that isn't in it is a broken row, said so.
     const old = await membership(ctx, await autoLeague(ctx, { kind: "team", teamId: manager.favouriteTeam }), entry);
@@ -73,13 +74,15 @@ export const createPrivateLeague = internalMutation({
   },
 });
 
-/** Join a private league by its code, any case. Joining one already in changes nothing. */
+/** Join a private league by its code, any case. Joining one already in changes nothing; a manager
+ *  its maker removed can't rejoin (spec/08). */
 export const joinPrivateLeague = internalMutation({
   args: { entry: v.id("entries"), code: v.string(), settings },
   handler: async (ctx, { entry, code, settings }) => {
     const league = await leagueByCode(ctx, normalCode(code));
     if (league === null) throw refuse({ rule: "noCode", code });
     if ((await membership(ctx, league._id, entry)) === null) {
+      if ((await removal(ctx, league._id, entry)) !== null) throw refuse({ rule: "removed" });
       await checkJoin(ctx, entry, (await members(ctx, league._id)).length, settings);
       await join(ctx, league._id, entry);
     }
@@ -97,22 +100,25 @@ export const renamePrivateLeague = internalMutation({
   },
 });
 
-/** The maker takes a manager out of the league. */
+/** The maker takes a manager out of the league for good: they can't rejoin it (spec/08). */
 export const removeFromPrivateLeague = internalMutation({
   args: { entry: v.id("entries"), league: v.id("leagues"), member: v.id("entries") },
   handler: async (ctx, { entry, league, member }) => {
     await allowed(ctx, "remove", entry, league);
     if (member === entry) throw refuse({ rule: "makerLeaves" });
     await leave(ctx, league, member);
+    await ctx.db.insert("leagueRemovals", { league, entry: member });
   },
 });
 
-/** The maker deletes the league, and every membership with it. */
+/** The maker deletes the league, and every membership and removal with it. */
 export const deletePrivateLeague = internalMutation({
   args: { entry: v.id("entries"), league: v.id("leagues") },
   handler: async (ctx, { entry, league }) => {
     await allowed(ctx, "delete", entry, league);
     for (const row of await members(ctx, league)) await ctx.db.delete(row._id);
+    const removals = await ctx.db.query("leagueRemovals").withIndex("by_league", (q) => q.eq("league", league)).collect();
+    for (const row of removals) await ctx.db.delete(row._id);
     await ctx.db.delete(league);
   },
 });
@@ -177,6 +183,9 @@ const members = (ctx: QueryCtx, league: Id<"leagues">) =>
 
 const membership = (ctx: QueryCtx, league: Id<"leagues">, entry: Id<"entries">) =>
   ctx.db.query("leagueEntries").withIndex("by_league", (q) => q.eq("league", league).eq("entry", entry)).first();
+
+const removal = (ctx: QueryCtx, league: Id<"leagues">, entry: Id<"entries">) =>
+  ctx.db.query("leagueRemovals").withIndex("by_league", (q) => q.eq("league", league).eq("entry", entry)).first();
 
 async function join(ctx: MutationCtx, league: Id<"leagues">, entry: Id<"entries">) {
   if ((await membership(ctx, league, entry)) === null) await ctx.db.insert("leagueEntries", { league, entry });

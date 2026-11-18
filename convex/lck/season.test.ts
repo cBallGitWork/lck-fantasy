@@ -44,7 +44,11 @@ describe("a season loaded from data/lck", () => {
     expect(squad.teamCap).toBe(2);
     expect(transfers.hitPoints).toBe(6);
     expect(got.settings.carryMultiplier).toBe(1.5);
-    expect(got.settings.buffs.map((b) => [b.effect, b.perSplit])).toEqual([["remake", 1], ["limitless", 1], ["benchBoost", 1], ["dualCarry", 1]]);
+    expect(got.settings.buffs.map((b) => [b.name, b.effect, b.multiplier, b.perSplit])).toEqual([
+      ["Bench Boost", "benchBoost", undefined, 1],
+      ["Double Captain", "doubleCaptain", 2, 1],
+      ["Coach Diff", "coachMultiplier", 3, 1],
+    ]);
   });
 
   test("a setting changed in the file is stored, never a value in code", async () => {

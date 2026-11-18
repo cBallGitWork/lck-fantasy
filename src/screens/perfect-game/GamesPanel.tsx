@@ -12,7 +12,7 @@ function seriesHead(team: string, s: PlayerSeries, week: readonly Series[]) {
   return { title: seriesTitle(series.day, side.opponent), outcome: side.score && result(side.score) };
 }
 
-/** A tapped starter's games: each series, each game boxed if it counted, then his sum (the Carry's result only) and Full stats. */
+/** A tapped starter's games: each series, each game boxed if it counted, then his sum (the Captain's result only) and Full stats. */
 export function GamesPanel({
   player,
   week,
@@ -23,7 +23,7 @@ export function GamesPanel({
   onClose?: () => void;
 }) {
   const role = ROLE_NAME[player.slot];
-  // The Carry is named by his C and his sum's label, so the meta leaves it out.
+  // The Captain is named by his C and his sum's label, so the meta leaves it out.
   const meta = `${player.team} · ${role}`;
   const sum = player.series.map((s) => s.points).join(" + ");
   return (
@@ -47,7 +47,7 @@ export function GamesPanel({
           </PanelSeries>
         );
       })}
-      <PanelSum lines={player.carry ? <PanelSumLabel>{MARK_NAME.C}</PanelSumLabel> : sum} figure={player.points} />
+      <PanelSum lines={player.captain ? <PanelSumLabel>{MARK_NAME.C}</PanelSumLabel> : sum} figure={player.points} />
       <PanelFoot go={cardGo(player.id, player.slot === "coach")} />
     </PlayerPanel>
   );

@@ -3,7 +3,7 @@
 // owned % and season points are Stats'; Faker's and kkOma's last three series are the T1 season's.
 
 import { FAKER_SEASON, KKOMA_SEASON, last3, type T1MemberSeason } from "../../fixtures/t1Season";
-import { CARRY_MULTIPLIER, COMPETITION, finalPickOf, MANAGER, PICK_TEAM_SQUAD, playerId, seriesPointsOf, statsOf, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
+import { BUFF_DOES, COMPETITION, finalPickOf, MANAGER, PICK_TEAM_SQUAD, playerId, seriesPointsOf, statsOf, WEEK4_DEADLINE, WEEK4_SERIES, type BuffName, type PickTeamPick, type Series, type TeamCode } from "../../fixtures/week3";
 import type { Mark, PersonRole, SquadSlot } from "../../rift";
 import type { PickBuff, PickState, PickTeam } from "./model";
 
@@ -34,12 +34,12 @@ export interface PickPlayer {
   news?: { flag: string; note: string };
 }
 
-/** A buff's box: name, one line (spec/06), how many are left; `here` when it is played on this page. */
+/** A buff's box: name, one line (spec/06), how many are left, and the buff it plays. */
 export interface PickBuffInfo {
   name: BuffName;
   does: string;
   left: number;
-  here?: PickBuff;
+  here: PickBuff;
 }
 
 /** Everything the page shows that the backend will feed. */
@@ -102,10 +102,9 @@ export const PICK_TEAM_DATA: PickTeamData = {
   series: WEEK4_SERIES,
   deadline: WEEK4_DEADLINE,
   buffs: [
-    { name: "Bench Boost", does: "Your bench players score this week too", left: 1, here: "benchBoost" },
-    { name: "Dual Carry", does: `Your Vice-carry scores ×${CARRY_MULTIPLIER} too`, left: 1, here: "dualCarry" },
-    { name: "Remake", does: "Unlimited free transfers; your new squad stays", left: 1 },
-    { name: "Limitless", does: "One week, no budget or team cap; then your squad returns", left: 1 },
+    { name: "Bench Boost", does: BUFF_DOES["Bench Boost"], left: 1, here: "benchBoost" },
+    { name: "Double Captain", does: BUFF_DOES["Double Captain"], left: 1, here: "doubleCaptain" },
+    { name: "Coach Diff", does: BUFF_DOES["Coach Diff"], left: 1, here: "coachMultiplier" },
   ],
 };
 
@@ -118,8 +117,7 @@ const markOf = (mark: Mark) => {
 /** Baron Steal FC's saved team at the picture's moment. */
 export const SAVED_TEAM: PickTeam = {
   slots: Object.fromEntries(PICK_TEAM_SQUAD.map((p) => [p.slot, playerId(p.name)])) as Record<SquadSlot, string>,
-  carry: markOf("C"),
-  viceCarry: markOf("V"),
+  captain: markOf("C"),
 };
 
 /** The three states the picture folder draws. */

@@ -78,22 +78,22 @@ describe("several transfers in one go", () => {
 
   test("a buy that would leave a role empty is refused, with why", () => {
     const plan = removed("bot");
-    expect(add(SQUAD, plan, named("Clozer"), RULES)).toEqual({ plan, toast: "No Bot left" });
+    expect(add(SQUAD, plan, named("Clozer"), RULES)).toEqual({ plan, toast: "You'd have no Bot" });
     expect(add(SQUAD, plan, named("Hype"), RULES).toast).toBe("Hype added");
   });
 
   test("with two of a squad's only roles out, one buy of another role is refused, the second open slot can't fill both", () => {
-    expect(add(SQUAD, removed("bot", "sup"), named("Clozer"), RULES).toast).toBe("No Bot left");
+    expect(add(SQUAD, removed("bot", "sup"), named("Clozer"), RULES).toast).toBe("You'd have no Bot");
     expect(add(SQUAD, removed("bot", "flex"), named("Clozer"), RULES).toast).toBe("Clozer added");
   });
 
   test("a third from one team is refused, with the cap and the team", () => {
-    expect(add(SQUAD, removed("top"), named("Chovy"), RULES).toast).toBe("Team full: 2 from GEN");
+    expect(add(SQUAD, removed("top"), named("Chovy"), RULES).toast).toBe("Max 2 from GEN");
   });
 
   test("with no open slot he fits, the + asks for a removal first", () => {
-    expect(add(SQUAD, EMPTY_PLAN, named("DuDu"), RULES).toast).toBe("Remove a player first");
-    expect(add(SQUAD, removed("top"), named("Ryu"), RULES).toast).toBe("Remove your coach first");
+    expect(add(SQUAD, EMPTY_PLAN, named("DuDu"), RULES).toast).toBe("Squad's full. Remove a player first");
+    expect(add(SQUAD, removed("top"), named("Ryu"), RULES).toast).toBe("One coach only. Remove yours first");
   });
 
   test("over the budget is allowed while choosing and stops the confirm, the bank below zero", () => {
@@ -104,7 +104,7 @@ describe("several transfers in one go", () => {
 
   test("Review and confirm is off with no changes or a slot still empty", () => {
     expect(reviewBlock(SQUAD, EMPTY_PLAN, RULES)).toBe("No changes");
-    expect(reviewBlock(SQUAD, removed("top", "flex"), RULES)).toBe("Slot empty");
+    expect(reviewBlock(SQUAD, removed("top", "flex"), RULES)).toBe("Fill every slot");
     expect(reviewBlock(SQUAD, PICTURE_PLAN, RULES)).toBeUndefined();
   });
 });
@@ -192,11 +192,10 @@ describe("a confirm applied (#215)", () => {
   const transfers = [{ out: SQUAD.find((p) => p.name === "Siwoo")!.id, in: named("Kingen").id }];
   const after = confirmTransfers(SQUAD, PLAYERS, RULES, transfers, lineupIds(SQUAD, PICTURE_PLAN));
 
-  test("Kingen stands in Siwoo's place at his list price; the rest keep their slots and their C and V", () => {
+  test("Kingen stands in Siwoo's place at his list price; the rest keep their slots and the C", () => {
     expect(after.squad.find((p) => p.slot === "flex")).toMatchObject({ name: "Kingen", priceWon: named("Kingen").priceWon });
     expect(after.squad.map((p) => p.name)).not.toContain("Siwoo");
     expect(after.squad.find((p) => p.name === "Faker")!.mark).toBe("C");
-    expect(after.squad.find((p) => p.name === "Ruler")!.mark).toBe("V");
   });
 
   test("the bank, free transfers and the hit are what the changes showed", () => {

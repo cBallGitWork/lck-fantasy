@@ -58,7 +58,7 @@ test("the picture's state holds its head, Rift, bench and side column, in its or
     "Your week",
     "StarFaker25 · owned by 46%",
     "FlopSiwoo8 · owned by 6%",
-    "KillerChovy15 · not owned · 41%",
+    "KillerChovy15 · not yours · owned by 41%",
     "Sponsor",
     "All sponsors are made up.",
   ]);
@@ -76,7 +76,7 @@ test("the picture's state boxes the counted games, greys the dropped one and mar
   expect(out.match(/rank-down/g)).toHaveLength(1);
 });
 
-test("the Carry shows only his result, and no one's tile, card or games show an auto-sub line", () => {
+test("the Captain shows only his result, and no one's tile, card or games show an auto-sub line", () => {
   for (const view of ["Rift view", "Card view"] as const) {
     const out = text(<PointsPage data={POINTS_FIXTURE} view={view} open="Faker" />);
     expect(out).not.toMatch(/×|Subbed in/);
@@ -113,11 +113,11 @@ test("the sheet stays closed until a player is tapped", () => {
   expectInOrder(out, ["Bench", "Cuzz9", "Your week"]);
 });
 
-test("the Coach's sheet (coach.png): his lines, the series' +3, no C or Average Carry, and his coach card", () => {
+test("the Coach's sheet (coach.png): his lines, the series' +3, no C or Captains averaged, and his coach card", () => {
   const coach = <PointsPage data={POINTS_FIXTURE} open="kkOma" />;
   expect(html(coach)).toContain('href="/coach/kkoma"');
   const out = text(coach);
-  expect(out).not.toContain("Average Carry");
+  expect(out).not.toContain("Captains averaged");
   expectInOrder(out, [
     "kkOma김정균",
     "T1 · Coach",
@@ -156,13 +156,13 @@ test("a bench player who didn't play can't be opened; one who played can", () =>
   expect(text(<PointsPage data={POINTS_FIXTURE} open="Cuzz" />)).toContain("KT · Jungle9Wed v GEN L 0–2 ›1");
 });
 
-test("the fixture's total is its starters' points: 94, the Carry's 25 among them, as the shared Week 3 gives them", () => {
+test("the fixture's total is its starters' points: 94, the Captain's 25 among them, as the shared Week 3 gives them", () => {
   const { starters, total } = POINTS_FIXTURE;
   expect(total).toBe(MY_WEEK3.liveTotal);
   expect(starters.map((p) => p.points)).toEqual([14, 14, 25, 14, 9, 8, 10]);
   expect(Object.fromEntries(starters.map((p) => [p.cardId, p.points]))).toEqual(MY_WEEK3.live);
   const faker = starters.find((p) => p.mark === "C");
-  expect(faker?.carry).toEqual({ average: 19 });
+  expect(faker?.captain).toEqual({ average: 19 });
 });
 
 test("Points opens on Rift the first time, then on the view shared with Pick Team, and on Rift where storage is blocked", async () => {
@@ -210,7 +210,7 @@ test("a final week says Final once, as the head's tag (Craig, 16 Nov 2026): no N
   }
 });
 
-test("Weeks 1 and 2 add up: each total its starters', the Carry's ×1.5 rounded down, Star the top and Flop the lowest", () => {
+test("Weeks 1 and 2 add up: each total its starters', the Captain's ×1.5 rounded down, Star the top and Flop the lowest", () => {
   const w1 = week(1);
   expect(w1.starters.map((p) => p.points)).toEqual([15, 14, 27, 16, 9, 6, 9]);
   expect(w1.total).toBe(96);
@@ -266,7 +266,7 @@ test("the sheet shows the picture: Faker's crest, name, hangul and C, his 25, th
   expectInOrder(text(PICTURE), [
     "Faker이상혁C",
     "T1 · Mid",
-    "25Not final · Average Carry 19",
+    "25Not final · Captains averaged 19",
     "Wed v HLE W 2–1 ›12",
     "G1AzirW6/1/9Gold · Solo5",
     "G2TaliyahL2/4/5Gold · First blood2",

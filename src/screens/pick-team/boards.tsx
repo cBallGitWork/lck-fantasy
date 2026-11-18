@@ -3,6 +3,7 @@ import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
 import { swapIds } from "./model";
+import { WORDS } from "./words";
 
 /** The starter in each slot, in the broadcast's order. */
 const starters = ({ data, state }: ViewProps) =>
@@ -35,7 +36,6 @@ export function RiftBoard(props: ViewProps) {
             team={p.team}
             at={RIFT_SLOTS[slot]}
             mark={markOf(state, p.id)}
-            dual={state.draft.buff === "dualCarry"}
             line={fixtureLine(data.series, p.team)}
             flag={p.news?.flag}
             selected={p.id === state.selected}
@@ -59,13 +59,12 @@ export function CardBoard(props: ViewProps) {
     name: p.name,
     team: p.team,
     mark: markOf(state, p.id),
-    dual: state.draft.buff === "dualCarry",
     news: p.news?.flag,
     next: fixtureLine(data.series, p.team),
     footer: (
       <>
         <span>
-          Form <b>{oneDecimal(p.form)}</b>
+          {WORDS.form} <b>{oneDecimal(p.form)}</b>
         </span>
         <b>{money(p.priceM)}</b>
       </>

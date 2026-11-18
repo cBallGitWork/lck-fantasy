@@ -82,6 +82,9 @@
   font-size: var(--size-head);
   font-weight: var(--w-bold);
 }
+.settings__banner-hangul--empty {
+  color: var(--mid);
+}
 .settings__banner-name {
   display: block;
   color: var(--text);

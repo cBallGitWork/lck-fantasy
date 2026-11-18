@@ -6,7 +6,8 @@ import { BreakdownSheet } from "./BreakdownSheet";
 import "./points.css";
 import { Leagues, YourWeek } from "./PointsSide";
 import { PointsCards, PointsRift } from "./PointsTeam";
-import { DIDNT_PLAY, POINTS_VIEWS, type PointsData, type PointsView } from "./types";
+import { POINTS_VIEWS, type PointsData, type PointsView } from "./types";
+import { liveGame, WORDS } from "./words";
 
 /**
  * Points: your week. The head and the live bar; Rift or Card view with the bench under it; on the
@@ -38,12 +39,12 @@ export function PointsPage({
   const side = (
     <>
       <Leagues leagues={data.leagues} nextTier={data.nextTier} />
-      <SideSection title="This week's series" note={TIME_NOTE}>
+      <SideSection title={WORDS.seriesTitle} note={TIME_NOTE}>
         <SeriesList series={data.series} />
       </SideSection>
       <YourWeek picks={data.yourWeek} />
       <div className="points__sponsor">
-        <Placeholder word="Sponsor" fill />
+        <Placeholder word={WORDS.sponsor} fill />
       </div>
       <SponsorNote />
     </>
@@ -58,21 +59,19 @@ export function PointsPage({
         figure={data.total}
         tags={<FinalTag final={data.final} />}
         figures={[
-          { label: "Average", value: data.average },
-          { label: "Highest", value: data.highest, go: { to: PATHS.perfectGame } },
+          { label: WORDS.average, value: data.average },
+          { label: WORDS.highest, value: data.highest, go: { to: PATHS.perfectGame } },
         ]}
       >
         {data.live && (
           <div className="points__live">
             <LiveTag />
-            <b>
-              {data.live.home} v {data.live.away}, game {data.live.game}
-            </b>
-            <LinkGo go={{ to: PATHS.live }}>Watch</LinkGo>
+            <b>{liveGame(data.live.home, data.live.away, data.live.game)}</b>
+            <LinkGo go={{ to: PATHS.live }}>{WORDS.watch}</LinkGo>
           </div>
         )}
       </PageHead>
-      <ViewToggle options={POINTS_VIEWS} chosen={view} onChoose={chooseView} label="View" />
+      <ViewToggle options={POINTS_VIEWS} chosen={view} onChoose={chooseView} label={WORDS.view} />
       {view === "Rift view" ? (
         <PointsRift starters={data.starters} open={open} onOpen={setOpen} />
       ) : (
@@ -88,7 +87,7 @@ export function PointsPage({
               role={p.role}
               name={p.name}
               team={p.team}
-              detail={played ? undefined : DIDNT_PLAY}
+              detail={played ? undefined : WORDS.didntPlay}
               points={p.points ?? NONE}
               state={played ? undefined : "out"}
               selected={p.name === open}

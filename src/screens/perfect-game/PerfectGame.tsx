@@ -6,7 +6,7 @@ import { GamesPanel } from "./GamesPanel";
 import "./perfect-game.css";
 import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectView, type Selection } from "./types";
 
-/** Rift view: the seven on the Rift, each with his points and series, C on the Carry. */
+/** Rift view: the seven on the Rift, each with his points and series, C on the Captain. */
 export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGameData } & Selection) {
   return (
     <Rift>
@@ -17,7 +17,7 @@ export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGam
           name={p.name}
           team={p.team}
           at={RIFT_SLOTS[p.slot]}
-          mark={p.carry ? "C" : undefined}
+          mark={p.captain ? "C" : undefined}
           me={p.mine}
           points={p.points}
           line={p.line}
@@ -39,7 +39,7 @@ export function PerfectGameCards({ game, selected, onSelect }: { game: PerfectGa
           plays: flexPlays(p.slot, p.role),
           name: p.name,
           team: p.team,
-          mark: p.carry ? "C" : undefined,
+          mark: p.captain ? "C" : undefined,
           me: p.mine,
           next: p.line.split(" · ").map((series) => (
             <span key={series} className="perfect-game__card-series">

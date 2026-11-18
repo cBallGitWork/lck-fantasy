@@ -7,12 +7,12 @@ import { News } from "./News";
 import { Results } from "./ResultsTab";
 import { Standings } from "./StandingsTab";
 import { Teams } from "./TeamsTab";
-import { HUB_TABS, type HubStage, type HubTab, type LckHubData } from "./types";
-import { WORDS } from "./words";
+import type { HubStage, HubTab, LckHubData } from "./types";
+import { HUB_TABS, starts, WORDS } from "./words";
 import "./lck-hub.css";
 
 /** A stage with nothing to show yet, the Play-In before it starts, says when it starts. */
-const NotStarted = ({ stage }: { stage: HubStage }) => <Empty title={WORDS.starts(stage.starts)} />;
+const NotStarted = ({ stage }: { stage: HubStage }) => <Empty title={starts(stage.starts)} />;
 
 const recordsOf = (data: LckHubData, stage: number): Partial<Record<TeamCode, string>> =>
   Object.fromEntries((data.stages[stage]?.groups ?? []).flatMap((g) => g.rows.map((r) => [r.team, score([r.won, r.lost])])));
@@ -57,7 +57,7 @@ export function LckHub({ data, account, tab }: { data: LckHubData; account: stri
             options={stageNames}
             chosen={stageNames[state.stage] ?? ""}
             onChoose={(name) => act({ type: "stage", stage: stageNames.indexOf(name) })}
-            label="Stage"
+            label={WORDS.stage}
           />
         </div>
       )}

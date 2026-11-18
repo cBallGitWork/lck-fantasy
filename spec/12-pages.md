@@ -43,6 +43,11 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Sheep Esports' latest LCK headlines sit beside the tabs, each with a thumbnail, linking out.
     They come from Sheep's LCK tag page (Craig, 15 Nov 2026).
   - The picture is `docs/design/approved/lck-hub/`.
+  - Fixtures' ‹ stops at the current week; past weeks are on Results (Craig, 17 Nov 2026).
+  - A stage not yet started says when it starts, from the competition's data. Example: "Starts
+    Wed 12 Mar" (Craig, 17 Nov 2026).
+  - Every LCK team has an academy roster in the LCK CL, so Teams has no empty academy column
+    (Craig, 17 Nov 2026).
 - **Series page**: one series, its games and each player's lines in each game.
   - A page with its own link, opened from every series row anywhere (Craig, 16 Nov 2026).
   - One grid per team: its players down the side, the games as columns, as in the Points drawer.

@@ -1,33 +1,30 @@
 ---
 name: verify
-description: Run the local gate before a commit or a pull request (the contents-list check and the hook checks) and report what ran. Use before any commit, after /refactor and before pr-reviewer, and whenever Craig asks whether it passes.
+description: Run the project's local gate before a commit, a push or a pull request, and report exactly what ran and what it printed. Use before any commit, after /refactor and before the reviewer, and whenever Craig asks whether it passes.
+argument-hint: "[--push]"
 ---
 
 # Verify
 
-```bash
-npm run verify   # scripts/contents-lists.mjs (a doc over 100 lines opens with a contents list),
-                 # then .claude/hooks/test.sh (every hook's checks, and their wiring in settings.json)
-.claude/hooks/tests/<suite>.sh   # one hook's checks alone
-```
+**The gate is the project's:** `.studio/skills.md`, section *Verify*, names its commands in order,
+and any extra ones for `--push`. Run them all, in that order, in full. With no `.studio/skills.md`,
+use the gate `CLAUDE.md` or `README.md` names, and say which you used.
 
-`npm run verify` is the whole gate today: the repo holds docs and its working setup, no app code.
-It needs Node, Python 3.9+, git and `/usr/bin/jq`, and no `npm install`. When app code arrives,
-its tests, typecheck and lint join the `verify` script in `package.json`, and this file lists them.
+**A gate you did not run did not pass.** If one is skipped (a tool missing, no network, a build
+already running), say so in those words, never three greens reported as four.
 
-**A gate you did not run did not pass.** If one is skipped (no Node, no `jq`), say so in those
-words.
+**Say what it printed.** Quote failing lines before anything else. Report counts ("669 passed"),
+not "tests pass"; if a count fell against the last run you know of, say which file lost tests
+first.
 
-**Say what it printed.** "hooks: all checks pass" is the hook runner's own last line; a suite
-that fails prints `FAIL` lines naming the hook, what it expected and the payload. Quote those
-before anything else.
-
-**Never cut a test** to get to green (`docs/PHILOSOPHY.md`). A check that is wrong is fixed in
-the open, in the same pull request, with the reason in its commit message.
+**Never cut a test, skip one or switch a rule off** to get to green. A check that is wrong is
+fixed in the open, in the same pull request, with the reason in its commit message. No disable
+comment without its reason on the same line.
 
 ## Report
 
+One line per command, in the order run:
+
 ```
-contents   every long doc has one / FAILED (<which docs>)
-hooks      all checks pass / <n> FAIL (<which suites>)
+<command>   passed (<count>) / FAILED (<what>) / not run (<why>)
 ```

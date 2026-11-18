@@ -1,7 +1,8 @@
 # Handover, {DATE}: {ONE-LINE SUBJECT}
 
 **Main at:** `{SHA}` ({date}). **Range:** `{START_SHA}..{SHA}`, or "no earlier handover".
-**Verify:** {what `npm run verify` printed, with the date} / not run.
+**Branch:** {name}, {ahead/behind}, tree {clean / what is uncommitted}.
+**Gate:** {what /verify printed, with the date} / not run.
 
 ## 1. The one thing to know first
 
@@ -10,7 +11,7 @@ command, Craig's words.}
 
 ## 2. What merged
 
-- {Pull request title} — {full GitHub URL} — {what a manager or the repo has now, one line}
+- {Pull request title} — {full GitHub URL} — {what users or the repo have now, one line}
 
 ## 3. Open, and whose move it is
 
@@ -18,16 +19,20 @@ command, Craig's words.}
 
 ## 4. Craig's answers this session
 
-- "{his words}" ({date}) — filed in {SPEC.md / spec/NN-name.md / issue URL / docs/decisions.md}
+- "{his words}" ({date}) — filed in {the spec / issue URL / decisions log}
 
 ## 5. Waiting on Craig
 
-1. {A question in plain words, with an example.} Options: {a} / {b}. Recommend: {a}, {why}.
+1. {A question in plain words, with an example.} Options: {a} / {b}. Recommend: {a}, {why}. Holds up: {what}.
 
-## 6. Next
+## 6. Hazards
 
-1. {The next piece of work, by its issue URL.} It is not a go-ahead: wait for Craig's word.
+- {Parallel sessions, running servers, scheduled jobs, local settings.}
 
-## 7. Not done, on purpose
+## 7. Next
+
+1. {The next piece of work, by its issue URL.} Not a go-ahead: wait for Craig's word.
+
+## 8. Not done, on purpose
 
 - {What was left, and why.}

@@ -57,12 +57,8 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 
 - Home: can a stream that isn't live be picked? How many streams before More ▾ (built 5)? Do star
   and flop show effective ownership, as spec/12 says (Faker 22 · 31%)?
-- Transfers: how a sold slot looks before a buy; what the list shows when no one is sold; which
-  reason shows when over budget and team full; does a Carry's replacement take the C; Coach chip.
 - Following: empty lines for no requests, cheers or follows; does Block confirm first; is cheer
   or jeer, or a line, picked when the picker opens?
-- Pick Team: what counts as one change in the bar; Make Carry on a player not starting; can a swap
-  start from the bench, as FPL allows?
 - Points: a Series win row for the Coach; a week total under non-Carry players; bench taps.
 - Leagues: what a bare /leagues opens; the default tab; page size and Find me; the line under
   Overall's name per tab; where a row's › goes.
@@ -79,9 +75,8 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
 - Settings: an empty hangul banner; the save bar's list; Save team's rules; Privacy and Terms
   routes. The picture draws the reminder On; spec/12 says both emails are off by default (built off).
 - LCK hub: ‹ on Fixtures for a past week; a stage before it starts; an academy with no roster.
-- Player card: the Vice-carry's keys; This week before any game; what Swap and Transfer out do;
-  History's week total with or without the Carry's ×1.5.
+- Player card: This week before any game; History's week total with or without the Captain's
+  ×1.5.
 - Coach card: This week before any series; mid-series History.
 - Profile: cancelling a follow request; how a week's transfer cost reads; place or number ranks;
   a sponsor cheer's credit line.
-- Transfers Undo: a confirm made under a buff has no Undo, so the confirm before it can't be undone.

@@ -1,6 +1,6 @@
 # The build pipeline
 
-Issues get built, reviewed and merged on GitHub without a chat session. It is ported from draft-platform and cut down for a repo with no app yet. Nothing runs until the setup steps at the end are done: every workflow says what is missing and stops green.
+Issues get built, reviewed and merged on GitHub without a chat session. It is ported from draft-platform and has been live since 14 Nov 2026 (`PIPELINE_ON`). A workflow that is missing a secret or setting says which and stops green.
 
 ## The workflows
 

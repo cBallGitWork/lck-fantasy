@@ -1,7 +1,14 @@
 {
   "permissions": {
     "deny": [
-      "Read(./.env*)"
+      "Read(./.env*)",
+      "Bash(vercel --prod*)",
+      "Bash(vercel * --prod*)",
+      "Bash(vercel promote*)",
+      "Bash(vercel rollback*)",
+      "Bash(npx vercel --prod*)",
+      "Bash(npx vercel * --prod*)",
+      "Bash(npx vercel promote*)"
     ]
   },
   "hooks": {

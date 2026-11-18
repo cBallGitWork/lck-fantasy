@@ -64,9 +64,6 @@ States and rules the approved pictures don't draw. Each page shows what is drawn
   Overall's name per tab; where a row's › goes.
 - League forms: what Copy link copies; Join with a bad code; the 25-league cap message; Remove's
   confirm text.
-- Stats: a `+` on each row that opens Transfers with that player chosen, so a scout isn't a dead
-  end (design panel, 16 Nov 2026).
-- Stats: second click flips the sort; Max price steps; 0.0 or — for no games; an empty result.
 - Series: VOD as ↗ or ›; an unknown series id; a coach's empty game as — or 0.
 - Compare: the search's role groups and caps; what /compare opens with no players.
 - Perfect game: open with no one tapped or the Carry; the sum row's label; the week in the URL.

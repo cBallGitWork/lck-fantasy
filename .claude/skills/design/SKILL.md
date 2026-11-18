@@ -90,6 +90,7 @@ pictures, a ringer when directions are compared; Craig, 18 Nov 2026):
 |---|---|---|
 | `design-fpl-player` | an FPL manager doing his weekly jobs: fast, where FPL puts it, what is new explained | always |
 | `design-ucl-player` | a UCL Fantasy player: one squad picture, the week at a glance, points explained | always |
+| `design-lol-player` | a League player who follows no league: roles, stats, sides and the Rift read as League, none of Riot's artwork | always |
 | `design-lck-fan` | a long-time LCK viewer: does it feel like the LCK; roles, teams and series as fans think of them | an LCK picture |
 | `design-lec-fan` | a long-time LEC viewer: the LEC, not the LCK in other colours | an LEC picture |
 | `design-ux` | layout, density, scan speed, the plate and its Never list, far from the AI look | always |

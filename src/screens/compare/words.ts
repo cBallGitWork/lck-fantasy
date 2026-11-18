@@ -16,8 +16,6 @@ export const WORDS = {
   total: "Total",
   perGame: "Per game",
   pts: "Pts",
-  /** Under the second player's role in the search: opens the rest. */
-  otherRoles: "Other roles ›",
 } as const;
 
 /** A role named as a group of players: the search's heads and the season rank (`2nd of 10 mids`). */
@@ -35,6 +33,9 @@ export const rankedAmong = (n: number, role: PersonRole) => `${n} ${ROLE_PLURAL[
 
 /** `v KT`: a series' other side. */
 export const versus = (opponent: string) => `${WORDS.versus} ${opponent}`;
+
+/** `All mids · Other roles ›`: under the second player's role in the search, opens the rest. */
+export const moreRoles = (role: PersonRole) => `All ${ROLE_PLURAL[role].toLowerCase()} · Other roles ›`;
 
 /** `Week 4 · Wed`: a series' week and day, in the Last 3 and Next 3 strips. */
 export const seriesWhen = (week: number, day: string) => `Week ${week} · ${day}`;

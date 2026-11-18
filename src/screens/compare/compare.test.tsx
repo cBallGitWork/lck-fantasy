@@ -62,7 +62,7 @@ describe("the second player not picked yet", () => {
 
   test("shows Faker alone, then the search with mids first", () => {
     expectInOrder(out, ["Mid · T1", "Faker", "이상혁", "v", "Mids", "Chovy", "GEN", "₩17.5m", "61", "Zeka", "HLE", "₩15.0m", "41"]);
-    expectInOrder(out, ["BuLLDoG", "DNS", "₩11.0m", "36", "ShowMaker", "DK", "₩13.0m", "33", "Other roles ›"]);
+    expectInOrder(out, ["BuLLDoG", "DNS", "₩11.0m", "36", "ShowMaker", "DK", "₩13.0m", "33", "All mids · Other roles ›"]);
     expect(out).not.toContain("Change ›");
     expect(html(<ComparePage right={null} onClose={noop} />)).toContain('placeholder="Find a player"');
   });

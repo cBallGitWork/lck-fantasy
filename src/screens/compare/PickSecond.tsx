@@ -2,10 +2,10 @@ import { useState } from "react";
 import { cx, money, selectable } from "../../parts";
 import { searchGroups } from "./rules";
 import type { ComparePlayer, SearchRow } from "./fixtures";
-import { findA, ROLE_PLURAL, WORDS } from "./words";
+import { findA, moreRoles, ROLE_PLURAL } from "./words";
 
 /**
- * The second player not picked yet: a search, his role listed first, then `Other roles ›`.
+ * The second player not picked yet: a search, his role listed first, then `All mids · Other roles ›`.
  * A row is picked only where Compare has his lines (`canPick`).
  */
 export function PickSecond({
@@ -62,7 +62,7 @@ export function PickSecond({
       ))}
       {showMore && (
         <button type="button" className="compare__go key-bare hover-line compare__more" onClick={() => setWide(true)}>
-          {WORDS.otherRoles}
+          {moreRoles(first.role)}
         </button>
       )}
     </div>

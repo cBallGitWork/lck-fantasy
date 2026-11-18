@@ -14,6 +14,8 @@ export { MainAction } from "./controls/MainAction";
 export { MeDot } from "./display/MeDot";
 export { Menu, type MenuItem } from "./controls/Menu";
 export { Modal, wrapFocus } from "./controls/Modal";
+export { plainOptions, Select } from "./controls/Select";
+export { ProviderMark } from "./display/ProviderMark";
 export {
   bestOf,
   count,

@@ -3,7 +3,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { expect, test } from "vitest";
 
-// All CSS is global, so each screen's classes carry its folder's name: `.points__side`, never
+// All CSS is global, so each screen's classes captain its folder's name: `.points__side`, never
 // `.side`. Two screens can then never restyle each other, nor a screen restyle a shared part.
 const SCREENS = import.meta.dirname;
 

@@ -70,6 +70,7 @@ is one.
 Short labels ("6th"), no caption that says what the screen already shows, nothing explained that
 any fantasy manager knows. What is new to an FPL manager (roles, series, the flex and coach
 slots, the buffs' names) gets a line where he meets it.
+Every label on the picture is written in the Broadcast voice (`.claude/agents/broadcast.md`), because the builder copies it.
 
 ## 4. Look at it
 

@@ -69,7 +69,7 @@ describe("players, totals (1440.png)", () => {
       "All",
       "Max price",
       "Any",
-      "Span",
+      "Weeks",
       "Season",
       "Totals",
       "Per game",
@@ -96,7 +96,7 @@ describe("players, totals (1440.png)", () => {
       "First blood",
       "Deathless",
       "Quadra+",
-      "Obj. steals",
+      "Steals",
     ]);
     expect(out).toMatch(/aria-sort="descending"[^>]*><button[^>]*>Pts</);
   });

@@ -8,7 +8,7 @@ import { weekStarts } from "./WeekCell";
 const HEAD = ["Mid · T1", "Faker", "이상혁", "Lee Sang-hyeok"];
 const STRIP_NEXT = ["W4 · Wed · Bo3", "v KT", "W4 · Sat · Bo3", "v GEN", "W5 · Thu · Bo3", "v BRO"];
 const TABS = ["This week", "Fixtures", "History", "Champions"];
-const PICK_TEAM_KEYS = ["✓ Carry", "Make Vice-carry", "Swap with bench", "Transfer out", "Compare ›"];
+const PICK_TEAM_KEYS = ["✓ Captain", "Swap with bench", "Transfer out", "Compare ›"];
 const PICK_TEAM_META = ["₩18.5m", "price 0.5", "19.3", "form · 2nd", "46%", "owned · 1st", "+1,204 / −310 this week"];
 const PICK_TEAM_STRIP = ["W2 · Fri", "10", "v BFX", "W3 · Wed", "12", "v HLE", "W3 · Sat", "10", "v DK", ...STRIP_NEXT];
 const PICK_TEAM_SEASON = ["Season", "15 games", "Total", "Per game", "Pts", "Kills", "73", "4.9", "+22", "Deaths", "26", "1.7", "−4", "Steals", "2", "0.1", "+2"];
@@ -69,7 +69,7 @@ describe("This week, opened from Points with T1 v DK game 2 live", () => {
       "Sat · v DK", "1–0", "5",
       "G1", "Orianna", "· W", "5/2/8", "4",
       "G2", "Sylas", "· 14:20", "1/0/2", "1",
-      "Week 3", "17 × 1.5 Carry", "25",
+      "Week 3", "17 × 1.5 Captain", "25",
       "Season", "10 games", "Kills", "43", "4.3", "+13", "Deaths", "22", "2.2", "−3", "Steals", "1", "0.1", "+1",
     ]);
   });
@@ -152,10 +152,10 @@ describe("Champions", () => {
 });
 
 describe("the Pick Team keys", () => {
-  test("offer Make Carry and show ✓ Vice-carry when he is the Vice-carry", () => {
-    const out = text(<PlayerCardPage initialMark="V" />);
-    expectInOrder(out, ["Make Carry", "✓ Vice-carry", "Swap with bench"]);
-    expect(out).not.toContain("✓ Carry");
+  test("offer one mark key, the Captain's", () => {
+    const out = text(<PlayerCardPage />);
+    expectInOrder(out, ["✓ Captain", "Swap with bench"]);
+    expect(out).not.toContain("Make ");
   });
 });
 

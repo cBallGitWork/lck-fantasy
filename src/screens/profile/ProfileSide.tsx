@@ -1,11 +1,9 @@
-import { count, GoLink, Led, ordinal, RankMove, SideSection, TierShield } from "../../parts";
+import { CHEER_WORD, CHEERS_RECEIVED, count, GoLink, Led, ordinal, RankMove, SideSection, TierShield, TruckHire } from "../../parts";
 import { leagueGo } from "../../paths";
-import type { LeagueRow, Truck } from "./fixtures";
+import type { LeagueRow, Parked } from "./fixtures";
 
-const TRUCK_KIND: Record<Truck["kind"], string> = { coffee: "Coffee", protest: "Protest" };
-
-/** The side column: her leagues, her tier beside Overall, and on Points the trucks parked on her that week. */
-export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?: { week: number; list: Truck[] } }) {
+/** The side column: her leagues, her tier beside Overall, and on Points the cheers and jeers parked on her that week. */
+export function ProfileSide({ leagues, cheers }: { leagues: LeagueRow[]; cheers?: { week: number; list: Parked[] } }) {
   return (
     <>
       <SideSection title="Leagues">
@@ -32,13 +30,14 @@ export function ProfileSide({ leagues, trucks }: { leagues: LeagueRow[]; trucks?
           ))}
         </ul>
       </SideSection>
-      {trucks && trucks.list.length > 0 && (
-        <SideSection title={`Trucks · Week ${trucks.week}`} note={trucks.list.length}>
-          {trucks.list.map((truck) => (
-            <div key={truck.from} className="profile__truck">
-              <Led>{truck.line}</Led>
-              <p className="profile__truck-by quiet">
-                {TRUCK_KIND[truck.kind]} from <b>{truck.from}</b>
+      {cheers && cheers.list.length > 0 && (
+        <SideSection title={`${CHEERS_RECEIVED} · Week ${cheers.week}`} note={cheers.list.length}>
+          {cheers.list.map((cheer) => (
+            <div key={cheer.from} className="profile__cheer">
+              <Led>{cheer.line}</Led>
+              <p className="profile__cheer-by quiet">
+                {CHEER_WORD[cheer.kind]} from <b>{cheer.from}</b>
+                <TruckHire />
               </p>
             </div>
           ))}

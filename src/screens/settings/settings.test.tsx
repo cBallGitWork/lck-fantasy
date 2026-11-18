@@ -185,7 +185,7 @@ describe("the rules", () => {
     expect(joinedCheer("  Baron Steal FC ")).toBe("Baron Steal FC is in. 화이팅!");
   });
 
-  test("the save bar names every change, and their tabs carry the dot", () => {
+  test("the save bar names every change, and their tabs captain the dot", () => {
     const draft = { ...SAVED, banner: "바론", theme: "Dark" as const, weeklyRecap: true };
     const changed = changedFields(SAVED, draft);
     expect(changeLine(changed)).toBe("3 changes: hangul banner, theme, weekly recap");

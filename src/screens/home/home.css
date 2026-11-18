@@ -166,7 +166,7 @@
   margin-top: var(--s-2);
 }
 
-/* Following: each item, Truck › on its right; a truck received on its LED panel. */
+/* Following: each item, Cheer / Jeer › on its right; a cheer or jeer received on its LED panel. */
 .home__feed-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -175,16 +175,19 @@
   padding: var(--s-2) 0;
   border-bottom: var(--m-rule) solid var(--fill);
 }
-.home__feed-row--truck {
+.home__feed-row--received {
   grid-template-columns: calc(var(--s-7) * 3 + var(--s-2)) minmax(0, 1fr);
 }
 .home__feed-small {
   display: block;
 }
-.home__truck {
+.home__cheer,
+.home__sent {
   display: inline-flex;
   align-items: center;
   min-height: var(--m-target);
+}
+.home__cheer {
   color: var(--text);
 }
 

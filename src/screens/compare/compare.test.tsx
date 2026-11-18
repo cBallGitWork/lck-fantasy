@@ -1,10 +1,12 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, noop, text } from "../../testing/render";
+import { isRedirect } from "@tanstack/react-router";
+import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
+import { BARE_COMPARE, compareGo, PATHS, pathTo } from "../../paths";
 import { sum } from "../../parts";
 import { better, searchGroups } from "./rules";
 import { CHOVY, COMPARE_PLAYERS, FAKER, KKOMA, RYU, SEARCH_ROWS } from "./fixtures";
-import { ComparePage } from ".";
+import { ComparePage, toStatsWithNoPlayer } from ".";
 
 /** The text of each bold (better) cell, in order. */
 const bold = (out: string) => [...out.matchAll(/compare__better">([^<]*)/g)].map((m) => m[1]);
@@ -105,7 +107,45 @@ describe("kkOma v Ryu", () => {
   });
 });
 
+/** Where Compare's guard sends a player id: the redirect's path, or undefined when Compare opens. */
+function sentTo(id: string | undefined): unknown {
+  try {
+    toStatsWithNoPlayer(id);
+  } catch (err) {
+    return isRedirect(err) ? err.options.to : err;
+  }
+  return undefined;
+}
+
+describe("the route", () => {
+  test("a bare /compare, with no player, goes to Stats, never a made-up comparison (spec/12, Compare)", async () => {
+    expect(sentTo(undefined)).toBe(PATHS.stats);
+    expect(await htmlAt(BARE_COMPARE)).not.toContain('data-screen="compare"');
+  });
+
+  test("a player Compare has no lines for is no player: Stats too", async () => {
+    expect(sentTo("nobody")).toBe(PATHS.stats);
+    expect(await htmlAt(pathTo(compareGo("nobody")))).not.toContain('data-screen="compare"');
+  });
+
+  test("opens on the player whose card it came from, from both cards", async () => {
+    expect(sentTo(FAKER.id)).toBeUndefined();
+    expectInOrder(text(<ComparePage left={KKOMA} onClose={noop} />), ["kkOma", "v", "Ryu"]);
+    expectInOrder(plain(await htmlAt(pathTo(compareGo(CHOVY.id)))), ["Chovy", "v", "Faker"]);
+    expect(await htmlAt(pathTo({ to: PATHS.playerCard, params: { playerId: FAKER.id } }))).toContain(`href="${pathTo(compareGo(FAKER.id))}"`);
+    expect(await htmlAt(pathTo({ to: PATHS.coachCard, params: { coachId: KKOMA.id } }))).toContain(`href="${pathTo(compareGo(KKOMA.id))}"`);
+  });
+});
+
 describe("the rules", () => {
+  test("the search lists every player of his role, with no cap; typing narrows it (spec/12, Compare)", () => {
+    const mids = SEARCH_ROWS.filter((r) => r.role === "mid" && r.name !== FAKER.name).map((r) => r.name);
+    const out = text(<ComparePage right={null} onClose={noop} />);
+    for (const name of mids) expect(out).toContain(name);
+    expect(searchGroups(SEARCH_ROWS, FAKER, "", false).flatMap((g) => g.rows.map((r) => r.name)).sort()).toEqual([...mids].sort());
+    expect(searchGroups(SEARCH_ROWS, FAKER, "cho", false).flatMap((g) => g.rows.map((r) => r.name))).toEqual([CHOVY.name]);
+  });
+
   test("the higher number is better, and level is unmarked", () => {
     expect(better(-4, -2)).toBe("right");
     expect(better(22, 24)).toBe("right");

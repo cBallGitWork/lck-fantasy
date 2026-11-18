@@ -3,9 +3,9 @@ import type { ReactElement } from "react";
 import { DEV_STATES_PATH } from "./devStates";
 import { DevStatesPage } from "./DevStatesPage";
 import { AppFrame } from "../parts";
-import { PATHS, type ScreenKey } from "../paths";
+import { BARE_COMPARE, PATHS, type ScreenKey } from "../paths";
 import { CoachCardScreen } from "../screens/coach-card";
-import { CompareScreen } from "../screens/compare";
+import { CompareScreen, toStatsWithNoPlayer } from "../screens/compare";
 import { FollowingScreen } from "../screens/following";
 import { HomeScreen } from "../screens/home";
 import { PrivacyScreen, TermsScreen } from "../screens/legal";
@@ -41,7 +41,16 @@ const rootRoute = createRootRoute({ component: Root });
 const screen = <P extends (typeof PATHS)[ScreenKey]>(path: P, component: () => ReactElement) =>
   createRoute({ getParentRoute: () => rootRoute, path, component });
 
-const routeTree = rootRoute.addChildren([
+// Compare with no player, bare or one it has no lines for, goes to Stats.
+const compareRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: PATHS.compare,
+  component: CompareScreen,
+  beforeLoad: ({ params }) => toStatsWithNoPlayer(params.playerId),
+});
+const bareCompareRoute = createRoute({ getParentRoute: () => rootRoute, path: BARE_COMPARE, beforeLoad: () => toStatsWithNoPlayer(undefined) });
+
+const routeTree =rootRoute.addChildren([
   screen(PATHS.home, HomeScreen),
   screen(PATHS.pickTeam, PickTeamScreen),
   screen(PATHS.transfers, TransfersScreen),
@@ -53,7 +62,8 @@ const routeTree = rootRoute.addChildren([
   screen(PATHS.stats, StatsScreen),
   screen(PATHS.live, LiveScreen),
   screen(PATHS.series, SeriesScreen),
-  screen(PATHS.compare, CompareScreen),
+  compareRoute,
+  bareCompareRoute,
   screen(PATHS.perfectGame, PerfectGameScreen),
   screen(PATHS.priceChanges, PriceChangesScreen),
   screen(PATHS.settings, SettingsScreen),

@@ -1,10 +1,10 @@
-import { useNavigate } from "@tanstack/react-router";
+import { Navigate, redirect, useNavigate, useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { PageFrame, useDevState } from "../../parts";
 import { PATHS } from "../../paths";
 import { CompareSheet, HeadToHead } from "./HeadToHead";
-import { CHOVY, COMPARE_PLAYERS, FAKER, KKOMA, RYU, SEARCH_ROWS, type ComparePlayer, type SearchRow } from "./fixtures";
+import { COMPARE_PLAYERS, FAKER, fixtureSecond, SEARCH_ROWS, type ComparePlayer, type SearchRow } from "./fixtures";
 import { PickSecond } from "./PickSecond";
 
 /**
@@ -14,7 +14,7 @@ import { PickSecond } from "./PickSecond";
  */
 export function ComparePage({
   left = FAKER,
-  right = CHOVY,
+  right = fixtureSecond(left),
   players = COMPARE_PLAYERS,
   rows = SEARCH_ROWS,
   onClose,
@@ -46,7 +46,19 @@ export function ComparePage({
   );
 }
 
-/** The route: Faker v Chovy, from the fixture. `?state=pick` or `coaches` opens those pictures, in dev. */
+/** The first player Compare has lines for, by id; none for a bare /compare or a player it has no lines for. */
+export const firstPlayer = (id: string | undefined): ComparePlayer | undefined => Object.values(COMPARE_PLAYERS).find((p) => p.id === id);
+
+/** Before Compare loads: with no player, it goes to Stats (spec/12, Compare). */
+export function toStatsWithNoPlayer(playerId: string | undefined): void {
+  if (!firstPlayer(playerId)) throw redirect({ to: PATHS.stats });
+}
+
+/** The route `/compare/$playerId`: him v the fixture's second player (`/compare/kkoma` is kkOma v Ryu). `?state=pick` opens the search, in dev. */
 export function CompareScreen() {
-  return <ComparePage {...useDevState({ pick: { right: null }, coaches: { left: KKOMA, right: RYU } })} />;
+  const { playerId } = useParams({ strict: false });
+  const dev = useDevState({ pick: { right: null } });
+  const left = firstPlayer(playerId);
+  if (!left) return <Navigate to={PATHS.stats} replace />;
+  return <ComparePage left={left} {...dev} />;
 }

@@ -1,6 +1,7 @@
 import { useId, type ReactNode } from "react";
 import { beyondStrip, count, Crest, Empty, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, perGame, placeOf, PriceMove, SeriesStrip, SideSection, signed, Table, TabPanel, Tabs, Tag } from "../../parts";
-import { PATHS } from "../../paths";
+import { playerId } from "../../fixtures/competition";
+import { compareGo } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import { CoachFixtures, CoachHistoryTab, CoachRoster, CoachThisWeek } from "./CoachTabs";
 import { COACH_TABS, type CoachCardData, type CoachFrom, type CoachSeason, type CoachTab, type SeasonLine } from "./types";
@@ -46,7 +47,7 @@ export function CoachCard({
           </p>
           <div className="coach-card__acts">
             {from === "pickTeam" && <OutlinedKey onClick={onTransferOut}>Transfer out</OutlinedKey>}
-            <LinkGo go={{ to: PATHS.compare }}>Compare</LinkGo>
+            <LinkGo go={compareGo(playerId(head.name))}>Compare</LinkGo>
           </div>
         </div>
       </header>

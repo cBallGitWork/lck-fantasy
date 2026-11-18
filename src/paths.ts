@@ -14,7 +14,8 @@ export const PATHS = {
   stats: "/stats",
   live: "/live",
   series: "/series/$seriesId",
-  compare: "/compare",
+  /** Compare, opened from a player's or a coach's card: `/compare/faker`. */
+  compare: "/compare/$playerId",
   perfectGame: "/perfect-game",
   priceChanges: "/price-changes",
   settings: "/settings",
@@ -98,6 +99,12 @@ export const leagueGo = (id: string): Go => ({ to: PATHS.league, params: { leagu
 
 /** A private league's link, as Copy link gives it: it fills in the code, never joins (spec/08). */
 export const leagueJoinGo = (code: string): Go => ({ to: PATHS.leagueJoin, params: { code } });
+
+/** Compare with no player: it goes to Stats (spec/12, Compare). */
+export const BARE_COMPARE = "/compare";
+
+/** Compare, its first player the one whose card opened it. */
+export const compareGo = (id: string): Go => ({ to: PATHS.compare, params: { playerId: id } });
 
 /** A series' page. */
 export const seriesGo = (id: string): Go => ({ to: PATHS.series, params: { seriesId: id } });

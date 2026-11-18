@@ -2,7 +2,8 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { Modal, PageFrame, useAnnounce, useDevState } from "../../parts";
-import { PATHS } from "../../paths";
+import { playerId } from "../../fixtures/competition";
+import { compareGo, PATHS } from "../../paths";
 import { markNews, type Mark } from "../../rift";
 import type { CardMark, CardTab, PlayerCardData } from "./card";
 import { CARD_FROM_PICK_TEAM, CARD_FROM_POINTS, CARD_WITH_NEWS, MARK_AT_PICK_TEAM } from "./fixtures";
@@ -50,7 +51,7 @@ export function PlayerCardPage({
   return (
     <PageFrame screen="player-card" account={MANAGER.team}>
       <Modal kind="card" title={card.name} onClose={() => router.history.back()}>
-        <PlayerCard card={card} actions={actions} compare={{ to: PATHS.compare }} initialTab={initialTab} />
+        <PlayerCard card={card} actions={actions} compare={compareGo(playerId(card.name))} initialTab={initialTab} />
       </Modal>
     </PageFrame>
   );

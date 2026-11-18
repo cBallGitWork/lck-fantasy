@@ -22,6 +22,8 @@ export const PATHS = {
   /** Perfect game for one week, so a week can be shared: `/perfect-game/3`. */
   perfectGameWeek: "/perfect-game/$week",
   priceChanges: "/price-changes",
+  /** One week's new prices, so a week can be linked: `/price-changes/4`. */
+  priceChangesWeek: "/price-changes/$week",
   settings: "/settings",
   lckHub: "/lck",
   playerCard: "/player/$playerId",
@@ -52,6 +54,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   perfectGame: "Perfect game",
   perfectGameWeek: "Perfect game",
   priceChanges: "Price changes",
+  priceChangesWeek: "Price changes",
   settings: "Settings",
   lckHub: "LCK",
   playerCard: "Player",

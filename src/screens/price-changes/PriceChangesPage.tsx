@@ -10,6 +10,10 @@ export const NO_MOVES = "No moves yet";
 /** A name opens the player's card, or the coach's. */
 export const cardOf = (row: PriceMove) => cardGo(row.id, row.role === "coach");
 
+/** A list's rows, the biggest move first, then the most owned (spec/12, Price changes). */
+export const biggestFirst = (rows: readonly PriceMove[]): PriceMove[] =>
+  [...rows].sort((a, b) => Math.abs(b.nowM - b.wasM) - Math.abs(a.nowM - a.wasM) || b.ownedPct - a.ownedPct);
+
 const COLUMNS: Column<PriceMove>[] = [
   {
     key: "player",
@@ -35,24 +39,25 @@ function MoveList({ kind, title, rows }: { kind: "rise" | "fall"; title: string;
   return (
     <section className={cx("price-changes__list", `price-changes__list--${kind}`)}>
       <h2 className="price-changes__list-title">{title}</h2>
-      {rows.length === 0 ? <Empty title={NO_MOVES} /> : <Table columns={COLUMNS} rows={rows} rowKey={(row) => row.id} label={title} />}
+      {rows.length === 0 ? <Empty title={NO_MOVES} /> : <Table columns={COLUMNS} rows={biggestFirst(rows)} rowKey={(row) => row.id} label={title} />}
     </section>
   );
 }
 
 /**
  * Price changes: one week's new prices, rises left and falls right; before the first move both
- * lists read `No moves yet`. ‹ › step to the week before or after, absent where there is none.
+ * lists read `No moves yet`. Each list puts the biggest move first. ‹ › go to the week before or
+ * after by its address (`/price-changes/3`), absent where there is none.
  */
 export function PriceChangesPage({
   week,
-  onPrev,
-  onNext,
+  prev,
+  next,
   howPricesMove,
 }: {
   week: PriceWeek;
-  onPrev?: () => void;
-  onNext?: () => void;
+  prev?: Go;
+  next?: Go;
   /** The Help page's formula (spec/02), once Help has a route. */
   howPricesMove?: Go;
 }) {
@@ -60,7 +65,7 @@ export function PriceChangesPage({
     <PageFrame screen="price-changes" active="stats" account={MANAGER.team}>
       <div className="price-changes__head">
         <PageHead title="Price changes" hangul="가격 변동" />
-        <WeekStep prev={onPrev} next={onNext} className="price-changes__week">
+        <WeekStep prev={prev} next={next} className="price-changes__week">
           Week {week.week} prices
         </WeekStep>
       </div>

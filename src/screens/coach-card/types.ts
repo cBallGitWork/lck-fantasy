@@ -2,12 +2,13 @@
 import type { TeamCode } from "../../fixtures/week3";
 import type { Score, StripNext, StripPast } from "../../parts";
 import type { RoleKey } from "../../rift";
+import { TABS } from "./words";
 
 /** Where the card was opened: from Pick Team it can transfer the coach out; from Points it only compares. */
 export type CoachFrom = "pickTeam" | "points";
 
-/** The card's tabs, in order; Roster replaces the player card's Champions (spec/12). */
-export const COACH_TABS = ["This week", "Fixtures", "History", "Roster"] as const;
+/** The card's tabs, in order (`words.ts`). */
+export const COACH_TABS = TABS;
 export type CoachTab = (typeof COACH_TABS)[number];
 
 /** A place among the coaches, written 1st, 2nd, 3rd. */

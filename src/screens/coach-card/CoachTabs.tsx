@@ -3,6 +3,7 @@ import { Fragment } from "react";
 import { gameNo, LiveTag, money, MeDot, NONE, pct, perGame, seriesResult, seriesTitle, signed, sum, Table, Time, YOUR_TIME } from "../../parts";
 import { ROLE_NAME } from "../../rift";
 import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, PlayedSeries, RosterRow, WeekSeries } from "./types";
+import { dot, scoredBy, seriesIfs, versus, weekNo, WORDS } from "./words";
 
 
 const isPlayed = (s: WeekSeries): s is PlayedSeries => s.state !== "upcoming";
@@ -44,7 +45,7 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
       <table className="coach-card__games">
         <tbody>
           <tr className="coach-card__total">
-            <td>Week {week.week}</td>
+            <td>{weekNo(week.week)}</td>
             <td className="coach-card__pts num">{started ? week.total : NONE}</td>
           </tr>
         </tbody>
@@ -57,10 +58,10 @@ export function CoachThisWeek({ week }: { week: CoachWeek }) {
 function SeriesLine({ series, week }: { series: PlayedSeries; week: CoachWeek }) {
   const [label, points] =
     series.state === "live"
-      ? [`Series · ${signed(week.seriesWon)} if won, ${signed(week.seriesLost)} if lost`, NONE]
+      ? [seriesIfs(signed(week.seriesWon), signed(week.seriesLost)), NONE]
       : series.score[0] > series.score[1]
-        ? ["Series won", signed(week.seriesWon)]
-        : ["Series lost", signed(week.seriesLost)];
+        ? [WORDS.seriesWon, signed(week.seriesWon)]
+        : [WORDS.seriesLost, signed(week.seriesLost)];
   return (
     <tr>
       <td className="coach-card__soft" colSpan={3}>
@@ -75,26 +76,26 @@ function SeriesLine({ series, week }: { series: PlayedSeries; week: CoachWeek })
 export function CoachFixtures({ rows, team }: { rows: FixtureRow[]; team: string }) {
   return (
     <Table<FixtureRow>
-      label="Fixtures"
+      label={WORDS.fixtures}
       rows={rows}
       rowKey={(r) => `${r.week}-${r.day}`}
       columns={[
-        { key: "week", head: "Week", width: "goCol", cell: (r) => (firstOfWeek(rows, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
+        { key: "week", head: WORDS.week, width: "goCol", cell: (r) => (firstOfWeek(rows, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
         {
           key: "series",
-          head: "Series",
+          head: WORDS.series,
           cell: (r) => (
             <>
-              {r.day} ·{" "}
-              <b>
-                {team} v {r.opponent}
-              </b>{" "}
-              · {r.format}
+              {r.day}
+              {dot}
+              <b>{versus(team, r.opponent)}</b>
+              {dot}
+              {r.format}
             </>
           ),
         },
         { key: "local", head: YOUR_TIME, figure: true, cell: (r) => r.local },
-        { key: "kst", head: "KST", figure: true, cell: (r) => <span className="coach-card__soft">{r.kst}</span> },
+        { key: "kst", head: WORDS.kst, figure: true, cell: (r) => <span className="coach-card__soft">{r.kst}</span> },
       ]}
     />
   );
@@ -115,35 +116,35 @@ export function CoachHistoryTab({ history, shown, team }: { history: CoachHistor
         rowKey={(r) => `${r.week}-${r.day}`}
         ruleAbove={(r) => r !== shown[0] && firstOfWeek(shown, r)}
         columns={[
-          { key: "week", head: "Week", width: "goCol", cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
+          { key: "week", head: WORDS.week, width: "goCol", cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{r.week}</span> : "") },
           {
             key: "series",
-            head: "Series",
+            head: WORDS.series,
             cell: (r) => (
               <>
-                {`${r.day} · ${seriesResult(r.score, r.live ?? false)} ${r.opponent}`}
+                {`${r.day}${dot}${seriesResult(r.score, r.live ?? false)} ${r.opponent}`}
                 {r.live && <> <LiveTag /></>}
               </>
             ),
           },
-          { key: "games", head: "Games", figure: true, cell: (r) => r.games },
-          { key: "price", head: "Price", figure: true, cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{money(r.priceM)}</span> : "") },
-          { key: "pts", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },
-          { key: "weekPts", head: "Week", figure: true, cell: (r) => (firstOfWeek(shown, r) ? <b>{weekTotal(r.week)}</b> : "") },
+          { key: "games", head: WORDS.games, figure: true, cell: (r) => r.games },
+          { key: "price", head: WORDS.weekPrice, figure: true, cell: (r) => (firstOfWeek(shown, r) ? <span className="coach-card__soft">{money(r.priceM)}</span> : "") },
+          { key: "pts", head: WORDS.pts, figure: true, cell: (r) => <b>{r.points}</b> },
+          { key: "weekPts", head: WORDS.weekPts, figure: true, cell: (r) => (firstOfWeek(shown, r) ? <b>{weekTotal(r.week)}</b> : "") },
         ]}
       />
       <h2 className="coach-card__block">
-        Past seasons <span className="coach-card__soft">{team}, scored by Flol</span>
+        {WORDS.pastSeasons} <span className="coach-card__soft">{scoredBy(team)}</span>
       </h2>
       <Table<PastSeason>
-        label="Past seasons"
+        label={WORDS.pastSeasons}
         rows={history.past}
         rowKey={(r) => r.season}
         columns={[
-          { key: "season", head: "Season", cell: (r) => r.season },
-          { key: "games", head: "Games", figure: true, cell: (r) => r.games },
-          { key: "per", head: "Per game", figure: true, cell: (r) => <span className="coach-card__soft">{perGame(r.points, r.games)}</span> },
-          { key: "pts", head: "Pts", figure: true, cell: (r) => <b>{r.points}</b> },
+          { key: "season", head: WORDS.season, cell: (r) => r.season },
+          { key: "games", head: WORDS.games, figure: true, cell: (r) => r.games },
+          { key: "per", head: WORDS.perGame, figure: true, cell: (r) => <span className="coach-card__soft">{perGame(r.points, r.games)}</span> },
+          { key: "pts", head: WORDS.pts, figure: true, cell: (r) => <b>{r.points}</b> },
         ]}
       />
     </div>
@@ -155,14 +156,14 @@ export function CoachRoster({ rows }: { rows: RosterRow[] }) {
   return (
     <div className="coach-card__roster">
       <Table<RosterRow>
-        label="Roster"
+        label={WORDS.roster}
         rows={rows}
         rowKey={(r) => r.name}
         columns={[
-          { key: "role", head: "Role", cell: (r) => <span className="coach-card__soft">{ROLE_NAME[r.role]}</span> },
+          { key: "role", head: WORDS.role, cell: (r) => <span className="coach-card__soft">{ROLE_NAME[r.role]}</span> },
           {
             key: "player",
-            head: "Player",
+            head: WORDS.player,
             cell: (r) => (
               <>
                 {r.name}
@@ -170,9 +171,9 @@ export function CoachRoster({ rows }: { rows: RosterRow[] }) {
               </>
             ),
           },
-          { key: "price", head: "Price", figure: true, cell: (r) => money(r.priceM) },
-          { key: "season", head: "Season", figure: true, cell: (r) => <b>{r.points}</b> },
-          { key: "owned", head: "Owned", figure: true, cell: (r) => <span className="coach-card__soft">{pct(r.ownedPct)}</span> },
+          { key: "price", head: WORDS.rosterPrice, figure: true, cell: (r) => money(r.priceM) },
+          { key: "season", head: WORDS.seasonPts, figure: true, cell: (r) => <b>{r.points}</b> },
+          { key: "owned", head: WORDS.owned, figure: true, cell: (r) => <span className="coach-card__soft">{pct(r.ownedPct)}</span> },
         ]}
       />
     </div>

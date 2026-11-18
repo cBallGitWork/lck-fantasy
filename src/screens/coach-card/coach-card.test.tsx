@@ -38,13 +38,52 @@ describe("the page", () => {
 
 describe("a tab without data", () => {
   test("shows its empty state, never a blank panel", () => {
-    expect(FROM_POINTS.history).toBeUndefined();
     expect(FROM_POINTS.roster).toBeUndefined();
-    expect(FROM_PICK_TEAM.week).toBeUndefined();
-    expect(text(card(FROM_POINTS, "points", "History"))).toContain(EMPTY_TAB.History);
+    expect(text(card({ ...FROM_POINTS, history: undefined }, "points", "History"))).toContain(EMPTY_TAB.History);
     expect(text(card(FROM_POINTS, "points", "Roster"))).toContain(EMPTY_TAB.Roster);
-    expect(text(card(FROM_PICK_TEAM, "pickTeam", "This week"))).toContain(EMPTY_TAB["This week"]);
+    expect(text(card({ ...FROM_PICK_TEAM, week: undefined }, "pickTeam", "This week"))).toContain(EMPTY_TAB["This week"]);
+    expect(text(card(FROM_PICK_TEAM, "pickTeam", "This week"))).not.toContain(EMPTY_TAB["This week"]);
     expect(text(card(FROM_PICK_TEAM, "pickTeam", "History"))).not.toContain(EMPTY_TAB.History);
+  });
+});
+
+describe("This week before his team's first series (spec/12, The coach card)", () => {
+  const out = text(card(FROM_PICK_TEAM, "pickTeam", "This week"));
+
+  test("lists the week's series with opponent and time, points as —", () => {
+    expectInOrder(out, ["Roster", "Wed · v KT", "10:30 19:30 KST", "—", "Sat · v GEN", "08:00 17:00 KST", "—", "Week 4", "—", "Season"]);
+  });
+
+  test("shows no games, no score and no series line yet", () => {
+    const tab = out.slice(out.indexOf("Roster") + "Roster".length, out.indexOf("Season15 games"));
+    expect(tab).toBe("Wed · v KT 10:30 19:30 KST—Sat · v GEN 08:00 17:00 KST—Week 4—");
+  });
+
+  test("fills in as played: a started series shows its games and series line, the next still —", () => {
+    const week = FROM_PICK_TEAM.week;
+    const [first, second] = week?.series ?? [];
+    if (!week || !first || !second) throw new Error("Week 4 has two T1 series");
+    const game = { result: "W" as const, lines: ["First tower"], points: 1, counts: true };
+    const started = { id: first.id, day: first.day, opponent: first.opponent, state: "live" as const, score: [1, 0] as [number, number], games: [game], points: 1 };
+    const live = text(card({ ...FROM_PICK_TEAM, week: { ...week, series: [started, second], total: 1 } }, "pickTeam", "This week"));
+    expectInOrder(live, ["Wed · v KT 1–01", "G1WFirst tower1", "Series · +3 if won, −1 if lost—", "Sat · v GEN 08:00 17:00 KST—", "Week 41"]);
+  });
+});
+
+describe("History mid-series (spec/12, The coach card)", () => {
+  const out = text(card(FROM_POINTS, "points", "History"));
+  const rows = html(card(FROM_POINTS, "points", "History")).match(/<tr[^>]*>.*?<\/tr>/g) ?? [];
+  const live = rows.find((r) => r.includes("tag--live"));
+
+  test("shows the series being played, tagged Live, with its points so far and in the week's total", () => {
+    expect(live?.replace(/<[^>]+>/g, "")).toBe("3Sat · 1–0 DK Live2₩7.0m210");
+    expectInOrder(out, ["Split 1 2027", "WeekSeriesGamesPricePtsWeek", "3Sat · 1–0 DK Live", "2Wed · W 2–0 DNS", "Past seasons"]);
+  });
+
+  test("never as a result, and the strip's played series still show once", () => {
+    expect(out).not.toContain("Sat · W 2–0 DK");
+    expect(out).not.toContain("Wed · W 2–1 HLE");
+    expect(html(card(FROM_POINTS, "points", "History")).match(/tag--live/g)).toHaveLength(2);
   });
 });
 

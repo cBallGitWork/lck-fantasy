@@ -46,8 +46,8 @@ export const WORDS = {
   /** The toast once a confirm goes through. */
   confirmed: "Transfers confirmed",
   /** No empty slot he fits. */
-  removePlayer: "Squad's full. Sell a player first",
-  removeCoach: "One coach only. Sell yours first",
+  sellPlayer: "Squad's full. Sell a player first",
+  sellCoach: "One coach only. Sell your coach first",
 } as const;
 
 export const SORT_WORDS = { points: "Points", price: "Price", owned: "Owned" } as const satisfies Record<SortKey, string>;

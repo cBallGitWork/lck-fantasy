@@ -20,13 +20,14 @@ describe("the page", () => {
   });
 
   test("Transfer out opens Transfers with the coach sold, his slot picked for the list to fill", async () => {
-    const soldTile = /class="tile tile--selected tile--dim"(?:(?!class="tile ).)*title="kkOma"/;
+    // His slot is the dashed empty Coach, ↺ to put him back (spec/12, A sold player's slot).
+    const soldTile = /class="tile tile--selected tile--empty"(?:(?!class="tile[ "]).)*title="Coach"/;
     expect(TRANSFER_OUT).toBe("/transfers?sell=coach");
     expect(await htmlAt(TRANSFER_OUT)).toMatch(soldTile);
     const unsold = await htmlAt(PATHS.transfers);
-    expect(unsold).not.toContain("tile--dim");
+    expect(unsold).not.toContain("tile--empty");
     expect(plain(unsold)).toContain("Siwoo ₩11.5m → Kingen ₩6.5m");
-    expect(await htmlAt("/transfers?sell=nobody")).not.toContain("tile--dim");
+    expect(await htmlAt("/transfers?sell=nobody")).not.toContain("tile--empty");
   });
 
   test("from Points, opens on This week with Points marked", () => {

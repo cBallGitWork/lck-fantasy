@@ -34,7 +34,7 @@ interface TileProps {
   /** The band's line: the week's fixtures (Pick Team, Transfers), or each series' points under the points. */
   line?: ReactNode;
   selected?: boolean;
-  /** `dim` while another tile is being moved, a sold one's empty place, or a bench player who didn't play; `fit` where it could go. */
+  /** `dim` while another tile is being moved, or a bench player who didn't play; `fit` where it could go. */
   state?: "dim" | "fit";
   /** An empty slot (front door, a sold one on Transfers): dashed, `name` its role, `+` under it. */
   empty?: boolean;

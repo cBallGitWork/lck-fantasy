@@ -171,7 +171,10 @@ describe("the Pick Team keys go on", () => {
 
   test("Transfer out to Transfers with him already sold", async () => {
     expect(goes.transferOut).toBe("/transfers?sell=faker");
-    expect(await htmlAt(goes.transferOut)).toMatch(/class="tile tile--selected tile--dim"(?:(?!class="tile ).)*title="Faker"/);
+    // His slot is the dashed empty Mid, ↺ to put him back (spec/12, A sold player's slot).
+    const markup = await htmlAt(goes.transferOut);
+    expect(markup).toMatch(/class="tile tile--selected tile--empty"(?:(?!class="tile[ "]).)*title="Mid"/);
+    expect(markup).not.toContain('title="Faker"');
   });
 });
 

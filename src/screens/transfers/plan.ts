@@ -111,8 +111,8 @@ function refusal(squad: SquadPlayer[], plan: Plan, slot: SquadSlot, player: List
   return missing.length > stillOpen ? roleEmpty(ROLE_NAME[missing[0]!]) : undefined;
 }
 
-/** No empty slot he fits: remove a player, or the coach, first. */
-const noRoom = (role: PersonRole) => (role === "coach" ? WORDS.removeCoach : WORDS.removePlayer);
+/** No empty slot he fits: sell a player, or the coach, first (spec/12, Before anyone is sold). */
+const noRoom = (role: PersonRole) => (role === "coach" ? WORDS.sellCoach : WORDS.sellPlayer);
 
 /**
  * A row's `+`: buys him into the slot being filled, or the first empty one he fits, then moves on to the
@@ -260,7 +260,7 @@ export function confirmTransfers(
   const passed = new Map(squad.filter((p) => p.mark && soldIds.has(p.id)).map((p) => [p.slot, p.mark]));
   return {
     squad: SQUAD_SLOTS.map((slot) => {
-      const p = { ...find(lineup[slot]), slot };
+      const p: SquadPlayer = { ...find(lineup[slot]), slot };
       return p.mark || !passed.has(slot) ? p : { ...p, mark: passed.get(slot) };
     }),
     rules: { ...rules, freeTransfers: freeLeft(rules, pairs.length), bank: pairs.reduce((sum, m) => sum + m.out.priceWon - m.in.priceWon, rules.bank) },

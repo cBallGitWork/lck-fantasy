@@ -93,7 +93,7 @@ describe("several transfers in one go", () => {
 
   test("with no open slot he fits, the + says to sell a player first (spec/12, Before anyone is sold)", () => {
     expect(add(SQUAD, EMPTY_PLAN, named("DuDu"), RULES)).toEqual({ plan: EMPTY_PLAN, toast: "Squad's full. Sell a player first" });
-    expect(add(SQUAD, removed("top"), named("Ryu"), RULES).toast).toBe("One coach only. Sell yours first");
+    expect(add(SQUAD, removed("top"), named("Ryu"), RULES).toast).toBe("One coach only. Sell your coach first");
   });
 
   test("over the budget is allowed while choosing and stops the confirm, the bank below zero", () => {

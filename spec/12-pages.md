@@ -84,6 +84,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   ([spec/08](08-leagues.md#overall-tiers)). Its private leagues show too, as in FPL; a History row
   opens that week's team (Craig, 14 Nov 2026). Its layout is the approved picture
   (`docs/design/approved/profile/`).
+  - History's Cost column shows the points a week's transfers took, such as −6 for one extra
+    ([spec/03](03-transfers.md)), and — for none (Craig, 17 Nov 2026).
+  - League ranks are plain numbers everywhere (1, 12, 1,234), as FPL (Craig, 17 Nov 2026).
 - **Perfect game**: the gameweek's best team, a Captain and 7 starters, picked under the squad
   rules, such as the team cap ([spec/01](01-squad-and-slots.md)).
   - The 7 starter slots, with one of them as Captain; the Captain's ×1.5 counts in its total. The cap

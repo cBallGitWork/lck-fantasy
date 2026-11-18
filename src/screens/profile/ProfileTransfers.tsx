@@ -2,6 +2,7 @@ import { money, GoLink, signed, Table, Time, type Column } from "../../parts";
 import { cardGo } from "../../paths";
 import { ROLE_NAME } from "../../rift";
 import type { Transfer, TransferWeek } from "./fixtures";
+import { weekNo, WORDS } from "./words";
 
 /** A swap and its week, whose head sits above the week's first swap. */
 type SwapRow = { week: TransferWeek; swap: Transfer };
@@ -20,7 +21,7 @@ export function ProfileTransfers({ weeks }: { weeks: TransferWeek[] }) {
             ? {
                 head: (
                   <>
-                    <b>Week {week.week}</b> · <Time local={week.at.local} kst={week.at.kst} />
+                    <b>{weekNo(week.week)}</b> · <Time local={week.at.local} kst={week.at.kst} />
                   </>
                 ),
                 aside: week.cost,
@@ -33,10 +34,10 @@ export function ProfileTransfers({ weeks }: { weeks: TransferWeek[] }) {
 }
 
 const SWAP_COLUMNS: Column<SwapRow>[] = [
-  { key: "slot", head: "Slot", width: "colSwap", cell: ({ swap }) => <small>{ROLE_NAME[swap.slot]}</small> },
+  { key: "slot", head: WORDS.slot, width: "colSwap", cell: ({ swap }) => <small>{ROLE_NAME[swap.slot]}</small> },
   {
     key: "out",
-    head: "Out",
+    head: WORDS.out,
     width: "colOut",
     cell: ({ swap }) => (
       <>
@@ -50,7 +51,7 @@ const SWAP_COLUMNS: Column<SwapRow>[] = [
   { key: "arrow", head: "", width: "colArrow", cell: () => "→" },
   {
     key: "in",
-    head: "In",
+    head: WORDS.in,
     width: "colIn",
     cell: ({ swap }) => (
       <>
@@ -64,5 +65,5 @@ const SWAP_COLUMNS: Column<SwapRow>[] = [
     ),
   },
   { key: "space", head: "", cell: () => null },
-  { key: "gained", head: "Pts gained", figure: true, width: "colSwap", cell: ({ swap }) => signed(swap.gained) },
+  { key: "gained", head: WORDS.ptsGained, figure: true, width: "colSwap", cell: ({ swap }) => signed(swap.gained) },
 ];

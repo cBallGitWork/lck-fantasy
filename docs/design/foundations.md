@@ -35,8 +35,8 @@ A draft for Craig to correct. It fills the design file's first section.
 
 The trial picks the values; its output is the foundations filled in for Flol, not a picture alone.
 
-1. **One screen** (Craig's call: Pick Team recommended, for the Rift; Stats is the densest table), on
-   one made-up dataset where one fact has one value everywhere.
+1. **One screen: Pick Team** (Craig, 18 Nov 2026), because it holds the Rift, the object the look
+   should come from. One made-up dataset, where one fact has one value everywhere.
 2. **Three directions,** each written first as token values (ground, accent, type pair, row height,
    what sits above the fold), then drawn at 1440 and 390. Directions that differ only in colour count
    as one. Before drawing, each choice is asked: would I do this for any similar page?

@@ -37,7 +37,6 @@ export const WORDS = {
   teamManager: "Team · Manager",
   captain: "Captain",
   total: "Total",
-  back: "Back",
   name: "Name",
   scoringStarts: "Scoring starts",
   createKey: "Create",

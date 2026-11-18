@@ -121,6 +121,9 @@ export function playersLine(players: SeriesPlayer[], multiplier: number): string
     .join(" · ");
 }
 
+/** `Minji` of Minji Park, as a sheet speaks to or of a manager. */
+export const firstName = (manager: Manager) => manager.name.split(" ")[0] ?? manager.name;
+
 /** A picker's line under its title: `Deft Tomorrow · Week 3 · 31 pts so far, no transfers`. */
 export function receiverLine(data: FollowingData, manager: Manager): string {
   const moves = data.feed

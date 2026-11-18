@@ -1,24 +1,12 @@
 // The league forms as the pictures draw them (docs/design/approved/leagues/): each a sheet over the
 // Leagues page. Each is fed by props; the screen (index.tsx) holds the leagues.
-import { useId, useState, type ReactNode } from "react";
-import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf, plural } from "../../parts";
+import { useId, useState } from "react";
+import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf, plural, SheetKeys } from "../../parts";
 import { leagueGo } from "../../paths";
 import { capReason } from "./forms";
 import type { PrivateLeague, ScoringWeeks } from "./types";
 import { deleteLine, deleteTitle, leaveTitle, nameCount, privateCountLine, scoringFrom, weekStarts, WORDS } from "./words";
 import "./Sheets.css";
-
-/** Back, a text link in every sheet (as in the Transfers confirm), then the sheet's main action. */
-function SheetKeys({ onBack, children }: { onBack: () => void; children: ReactNode }) {
-  return (
-    <div className="leagues__sheet-keys">
-      <button type="button" className="leagues__back key-bare" onClick={onBack}>
-        {WORDS.back}
-      </button>
-      {children}
-    </div>
-  );
-}
 
 /** How many private leagues you're in, and the cap. */
 interface PrivateCount {
@@ -93,7 +81,7 @@ export function CreatedSheet({
         <OutlinedKey onClick={onCopyCode}>{WORDS.copyCode}</OutlinedKey>
         <OutlinedKey onClick={onCopyLink}>{WORDS.copyLink}</OutlinedKey>
       </div>
-      <div className="leagues__sheet-keys">
+      <div className="sheet-keys">
         <GoLink className="leagues__open" go={leagueGo(league.id)}>
           {WORDS.openLeague}
         </GoLink>

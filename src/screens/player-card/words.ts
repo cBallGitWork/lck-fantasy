@@ -1,5 +1,7 @@
 // The player card's words, named once. Every word a player reads on this screen lives here.
 
+import { REGION } from "../../region";
+
 /** The card's tabs, in their order; each is also the tab's key. */
 export const TABS = ["This week", "Fixtures", "History", "Champions"] as const;
 
@@ -27,7 +29,8 @@ export const WORDS = {
   total: "Total",
   record: "W–L",
   average: "Avg pts",
-  kst: "KST",
+  /** Fixtures' league time column: its zone, as the league's data names it. */
+  kst: REGION.timeZoneLabel,
   versus: "v",
   pastSeasons: "Past seasons",
   scoredBy: "LCK, scored by Flol",

@@ -24,7 +24,6 @@ export const WORDS = {
   weekPts: "Week pts",
   perGame: "Per game",
   total: "Total",
-  kst: "KST",
   role: "Role",
   player: "Player",
   /** Roster: a player's price now. */

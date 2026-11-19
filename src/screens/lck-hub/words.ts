@@ -8,9 +8,9 @@ export const WORDS = {
   hub: `${REGION.name} hub`,
   /** The stage toggle's name, for a reader. */
   stage: "Stage",
-  /** Fixtures' two time columns: the manager's own time, then Korea's. */
+  /** Fixtures' two time columns: the manager's own time, then the league's, its zone as its data names it. */
   local: "Local",
-  kst: "KST",
+  kst: REGION.timeZoneLabel,
   versus: "v",
   news: "News",
   /** A headline's picture until the news feed brings its own (#116). */

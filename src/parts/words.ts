@@ -2,6 +2,7 @@
 // format (`2–1`, `Bo3`, `G2`) stays in text/figures.ts.
 
 import { PRODUCT } from "../paths";
+import { REGION } from "../region";
 
 export const WORDS = {
   /** The page frame's first link, unseen until focused. */
@@ -12,8 +13,8 @@ export const WORDS = {
   sponsor: "Sponsor",
   /** The deadline's word, before its time. */
   deadline: "Deadline",
-  /** After a time in Korea. */
-  kst: "KST",
+  /** After a time in the league's zone, as its data names it (`KST`). */
+  zone: REGION.timeZoneLabel,
   /** A loading state's name for a screen reader. */
   loading: "Loading",
   /** An error state's way to try again. */
@@ -50,8 +51,8 @@ export const BACK = "Back";
 /** A times column's head. */
 export const YOUR_TIME = "Your time";
 
-/** The note under times drawn yours first, then KST. */
-export const TIME_NOTE = "your time · KST";
+/** The note under times drawn yours first, then the league's. */
+export const TIME_NOTE = `your time · ${REGION.timeZoneLabel}`;
 
 /** The credit on every player photo (spec/13, Shirts and crests). */
 export const PHOTO_CREDIT = "Photo: LCK";

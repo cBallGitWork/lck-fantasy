@@ -7,10 +7,17 @@ import { REGION, regionOf } from "./region";
 describe("the region's names come from its data (#374)", () => {
   test("the hub's name, address and the season label are the LCK's season file's", () => {
     expect([SCREEN_NAME.hub, PATHS.hub, SEASON]).toEqual([season.competition.name, `/${season.competition.name.toLowerCase()}`, `${season.competition.name} ${season.year}`]);
-    expect(REGION).toEqual({ name: "LCK", hub: "/lck", season: "LCK 2027" });
+    expect(REGION).toEqual({ name: "LCK", hub: "/lck", season: "LCK 2027", timeZone: "Asia/Seoul", timeZoneLabel: "KST", currency: "₩" });
   });
 
-  test("another region's data gives its own names, with no new code", () => {
-    expect(regionOf({ competition: { name: "LEC" }, year: 2027 })).toEqual({ name: "LEC", hub: "/lec", season: "LEC 2027" });
+  test("another region's data gives its own names, zone and money, with no new code", () => {
+    expect(regionOf({ competition: { name: "LEC", timeZone: "Europe/Berlin", timeZoneLabel: "CET", currency: "€" }, year: 2027 })).toEqual({
+      name: "LEC",
+      hub: "/lec",
+      season: "LEC 2027",
+      timeZone: "Europe/Berlin",
+      timeZoneLabel: "CET",
+      currency: "€",
+    });
   });
 });

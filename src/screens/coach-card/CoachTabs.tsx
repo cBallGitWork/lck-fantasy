@@ -1,6 +1,7 @@
 // The coach card's tabs: This week, Fixtures, History and Roster (coach.html; Fixtures as the player card's).
 import { Fragment } from "react";
 import { gameNo, LiveTag, money, MeDot, NONE, pct, perGame, seriesResult, seriesTitle, signed, sum, Table, Time, YOUR_TIME } from "../../parts";
+import { REGION } from "../../region";
 import { ROLE_NAME } from "../../rift";
 import type { CoachHistory, CoachWeek, FixtureRow, HistoryRow, PastSeason, PlayedSeries, RosterRow, WeekSeries } from "./types";
 import { dot, scoredBy, seriesIfs, versus, weekNo, WORDS } from "./words";
@@ -72,7 +73,7 @@ function SeriesLine({ series, week }: { series: PlayedSeries; week: CoachWeek })
   );
 }
 
-/** The team's next series: each week's number once, your time and KST. */
+/** The team's next series: each week's number once, your time and the league's. */
 export function CoachFixtures({ rows, team }: { rows: FixtureRow[]; team: string }) {
   return (
     <Table<FixtureRow>
@@ -95,7 +96,7 @@ export function CoachFixtures({ rows, team }: { rows: FixtureRow[]; team: string
           ),
         },
         { key: "local", head: YOUR_TIME, figure: true, cell: (r) => r.local },
-        { key: "kst", head: WORDS.kst, figure: true, cell: (r) => <span className="coach-card__soft">{r.kst}</span> },
+        { key: "kst", head: REGION.timeZoneLabel, figure: true, cell: (r) => <span className="coach-card__soft">{r.kst}</span> },
       ]}
     />
   );

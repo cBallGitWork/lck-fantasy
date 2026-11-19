@@ -106,7 +106,7 @@ export function teamCapLine(squad: Squad, cap: number | null): string {
   return team === null ? of : `${team} ${of}`;
 }
 
-/** Why Save team is off, for the bar: `5 to pick`, or `₩0.3m over` (spec/09); none when it can save. */
+/** Why Save team is off, for the bar: `5 to pick`, or `0.3m over` after the money sign (spec/09); none when it can save. */
 export function saveBlock(squad: Squad, players: readonly GuestPlayer[], rules: FrontDoorRules): string | undefined {
   const left = leftToPick(squad, rules.squad);
   if (left > 0) return toPick(left);

@@ -6,7 +6,7 @@ import { ByDay, WeekTitle } from "./Week";
 import { WORDS } from "./words";
 
 /**
- * Fixtures: one week by day. Each series: your time and KST, each team's record beside its code,
+ * Fixtures: one week by day. Each series: your time and the league's, each team's record beside its code,
  * blue side left, then `›`; the whole row opens the Series page.
  */
 export function Fixtures({

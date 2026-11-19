@@ -30,8 +30,8 @@ export interface PriceSettings {
   spacing: number;
   /** An academy player's price, by hand (The formula, 8). */
   academy: number;
-  /** Form is points per series over this many of his last series (Price moves). */
-  formSeries: number;
+  /** Form is points per series over this many of his last gameweeks (Price moves). */
+  formWeeks: number;
   /** A gap of this or more between form and price moves him (Price moves). */
   formGap: number;
   /** One move, up or down, of any kind (Price moves). */
@@ -204,9 +204,9 @@ export interface PriceWeek {
   won: number;
   /** His team strength, from first prices. */
   teamShare: number;
-  /** His points in each of his series so far, oldest first, reaching back into earlier splits and
-   *  seasons: form reads the last few. */
-  seriesPoints: number[];
+  /** His points in each of his series so far, one list per gameweek, oldest first, reaching back
+   *  into earlier splits and seasons: form reads the last few weeks he played. */
+  weekSeriesPoints: number[][];
   /** Whether he played a series this gameweek: form moves only a pick who did. */
   playedThisWeek: boolean;
   /** Managers who bought him this gameweek, less those who sold him. */
@@ -215,10 +215,10 @@ export interface PriceWeek {
   owners: number;
 }
 
-/** His form price: points per series over his last few series, through the first prices' line;
- *  undefined before his first series. */
+/** His form price: points per series over his last few gameweeks with a series, through the first
+ *  prices' line; undefined before his first series. */
 export function formPrice(week: PriceWeek, line: PriceLine, settings: PriceSettings): number | undefined {
-  const recent = week.seriesPoints.slice(-settings.formSeries);
+  const recent = week.weekSeriesPoints.filter((w) => w.length > 0).slice(-settings.formWeeks).flat();
   if (recent.length === 0) return undefined;
   return linePrice(line, settings, mean(recent), week.teamShare, week.role === "coach");
 }

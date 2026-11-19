@@ -220,8 +220,8 @@ Grilled 14 Nov 2026.
 What opens when a manager taps a player (the `/grill` of 13 Nov 2026, after a look at FPL,
 F1 Fantasy, Sleeper and gol.gg).
 
-- **Header**, as FPL's: team, role, price, owned by %, form (average of the last 4 gameweeks)
-  and season total. The stats show their rank. Example: form 7.3, 2nd of 10 mids. Once the game
+- **Header**, as FPL's: team, role, price, owned by %, form (average of the last 2 gameweeks,
+  Craig, 19 Nov 2026) and season total. The stats show their rank. Example: form 7.3, 2nd of 10 mids. Once the game
   is live it also shows the gameweek's transfers in and out.
 - **News**: a short line and a flag an admin writes by hand, as FPL's staff do. Example: Benched
   for the Wednesday series.

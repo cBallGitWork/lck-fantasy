@@ -61,7 +61,7 @@ export const seasonSettings = v.object({
     gap: v.object({ low: v.number(), high: v.number() }),
     spacing: v.number(),
     academy: v.number(),
-    formSeries: v.number(),
+    formWeeks: v.number(),
     formGap: v.number(),
     step: v.number(),
     transferShare: v.number(),

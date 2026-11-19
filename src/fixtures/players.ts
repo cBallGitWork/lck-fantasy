@@ -103,8 +103,12 @@ export const OFF_PAGE_PLAYERS: StatsPlayer[] = ([
   { role: "coach", name: "Mowgli", team: "BFX", move: 0, ownedPct: 1, points: 3 },
 ] satisfies Unpriced[]).map(priced);
 
-/** Form, the last 4 weeks' average, is season points ÷ 3 until Week 4 is final. */
-export const formOf = (points: number) => Math.round((points / 3) * 10) / 10;
+/** Weeks 1 to 3 are final at the pictures' moment. */
+const WEEKS_FINAL = 3;
+
+/** Form, the last 2 weeks' average: Weeks 2 and 3. The list holds season points only, made up as
+ *  even over Weeks 1 to 3, so every week, and so the average of any of them, is a third. */
+export const formOf = (points: number) => Math.round((points / WEEKS_FINAL) * 10) / 10;
 
 /** A player or coach in the Stats list; one missing from it is a broken fixture. */
 export function statsOf(name: string): StatsPlayer {

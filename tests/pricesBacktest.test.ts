@@ -117,7 +117,7 @@ describe("the price formula over 2026 (spec/02, First prices)", () => {
           role: p.role,
           won: before.get(p.key)!,
           teamShare: FIRST.find((f) => f.key === p.key)!.teamShare,
-          seriesPoints: series(p.key).map((s) => s.points),
+          weekSeriesPoints: weeks.filter((w) => w <= week).map((w) => series(p.key).filter((s) => weekOf(s.endedAt) === w).map((s) => s.points)),
           playedThisWeek: series(p.key).some((s) => weekOf(s.endedAt) === week),
           netTransfers: 0,
           owners: 0,

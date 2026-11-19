@@ -37,7 +37,7 @@
       "gap": { "low": 17500000, "high": 21000000 },
       "spacing": 500000,
       "academy": 5000000,
-      "formSeries": 8,
+      "formWeeks": 2,
       "formGap": 3000000,
       "step": 200000,
       "transferShare": 0.05,

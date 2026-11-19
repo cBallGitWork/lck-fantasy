@@ -1,0 +1,49 @@
+{
+  "note": "The test managers (spec/10, The road to launch, steps 1 and 2; spec/15, Test managers; Craig, 19 Nov 2026 on #400). plans: how many play each competition, by run: the sim's 1,000 in the LCK, and January's 400 in both regions, 300 LCK only, 300 LEC only. favouriteTeams: each team code's weight, like real fans, T1 and Gen.G most; a team not listed weighs otherTeams. countries: each country's weight, mostly Korea. names: made-up team and manager names, Korean and Western mixed, never a real player's or caster's. habits: how they play. convex/admin/testManagerStore.ts reads it.",
+  "plans": {
+    "sim": [{ "competitions": ["LCK"], "managers": 1000 }],
+    "january": [
+      { "competitions": ["LCK", "LEC"], "managers": 400 },
+      { "competitions": ["LCK"], "managers": 300 },
+      { "competitions": ["LEC"], "managers": 300 }
+    ]
+  },
+  "favouriteTeams": { "T1": 30, "GEN": 20, "HLE": 12, "DK": 10, "KT": 8 },
+  "otherTeams": 4,
+  "countries": {
+    "South Korea": 70,
+    "Vietnam": 5,
+    "United States": 4,
+    "Philippines": 3,
+    "China": 3,
+    "Japan": 2,
+    "United Kingdom": 3,
+    "Germany": 2,
+    "France": 2,
+    "Spain": 2,
+    "Poland": 2,
+    "Brazil": 2
+  },
+  "names": {
+    "teamFirst": [
+      "Drake Soul", "Elder", "Blue Buff", "Red Buff", "Nexus", "Baron", "Herald", "Rift", "Late Game", "Level 1", "Flash", "Ramyun",
+      "Soju", "PC Bang", "Hangang", "Gangnam", "Busan", "Wardless", "Dive", "Split Push", "Gochujang", "Kimbap", "Night Owl", "Inhib",
+      "Tteokbokki", "Chimaek", "Mapo", "Teamfight", "Backdoor", "Mid Prio", "Base Race", "Grubs"
+    ],
+    "teamLast": [
+      "Diff", "Enjoyers", "FC", "Gaming", "Club", "Crew", "Army", "Academy", "Squad", "United", "Five", "Merchants",
+      "Society", "Fan Club", "Believers", "Lads", "Kings", "Gap"
+    ],
+    "people": [
+      {
+        "given": ["Minjun", "Seoyeon", "Jiho", "Hayoon", "Dohyun", "Jiwoo", "Seojun", "Yuna", "Hyunwoo", "Eunji", "Taeyang", "Sora"],
+        "initials": ["K", "L", "P", "C", "J", "Y", "H", "S"]
+      },
+      {
+        "given": ["Tom", "Lucy", "Jack", "Emma", "Lukas", "Sofia", "Mateo", "Chloe", "Finn", "Amelie", "Marco", "Nina"],
+        "initials": ["S", "M", "B", "T", "W", "R", "D", "F"]
+      }
+    ]
+  },
+  "habits": { "bankChance": 0.3, "hitChance": 0.15, "buffChance": 0.25, "unlimitedTransfers": 3, "shortlist": 3 }
+}

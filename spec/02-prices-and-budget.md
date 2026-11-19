@@ -67,19 +67,30 @@ are set the same way for its Winter test.
   ([spec/03](03-transfers.md), Craig, 17 Nov 2026).
 
 - Prices move once a week, at the deadline.
-- A move is mostly on recent points, a little on transfers in and out, and down when relatively
+- A move follows big swings in transfers first, then recent points, and is down when relatively
   few managers own the player, since that means his price is too high.
-- Moves are driven by form and ownership (Craig, 14 Nov 2026), as in the
-  [draft](../docs/research/prices-formula.md), one step a week at most: form as below, and a step
-  down when few own him.
+- Moves are driven by demand, form and ownership (Craig, 14 Nov 2026), as in the
+  [draft](../docs/research/prices-formula.md), one step a week at most, in the order below.
 - A pick rises a step when net transfers in reach 5% of managers in a week, and falls a step at 5%
   net out. One owned by under 2% of managers, with form not above his price, falls a step. Both
   thresholds are data (Craig, 14 Nov 2026).
 - Form is points per series over his last 8 series, put through the same line as first prices.
-  A gap of ₩3m or more between form and price moves him ₩0.2m that week (Craig, approved
+  A gap of ₩3m or more between form and price moves him a step that week (Craig, approved
   18 Nov 2026).
 - No price falls below a floor.
 - The coach moves by the same rule, on its own score.
+- Every step is ₩0.2m, from form, transfers or ownership alike (Craig, 19 Nov 2026).
+- Each week the signals are read in order, and the first that moves him decides: net transfers
+  of 5% in or out; then form; then the low-ownership step down. Demand beats form: Kiin's form
+  says rise, but 6% of managers sold him for bad fixtures, so he falls ₩0.2m (Craig, 19 Nov
+  2026).
+- Form moves only a pick who played that gameweek; transfers and ownership count every week.
+  Example: DRX have a bye, so DuDu's form doesn't move him that week.
+- Form reaches back into the earlier split or season when he has played under 8 series this
+  split; a rookie's form uses only the series he has played. Example: in week 1 Peyz's form is
+  his last 8 series, 6 of them from last split (Craig, 19 Nov 2026).
+- "Managers" in the 5% and 2% thresholds means every manager with a saved squad in that
+  competition at the deadline, as FPL counts every team (Craig, 19 Nov 2026).
 - Step sizes, the ownership step's included, weights and the floor are data. The formula is
   public, on a help page.
 

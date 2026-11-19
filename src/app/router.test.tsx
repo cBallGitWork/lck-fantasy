@@ -32,6 +32,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   privacy: [{ to: PATHS.privacy }, "legal"],
   terms: [{ to: PATHS.terms }, "legal"],
   help: [{ to: PATHS.help }, "help"],
+  admin: [{ to: PATHS.admin }, "admin"],
 };
 
 test.each(Object.keys(PATHS) as ScreenKey[])("the %s route renders its screen with the top bar", async (key) => {

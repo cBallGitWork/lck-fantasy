@@ -37,6 +37,8 @@ export const PATHS = {
   terms: "/terms",
   /** Help's guide and Rules; `/help#prices` opens one rule (spec/12, Help). */
   help: "/help",
+  /** The admin section: Sim and Alerts, behind the admin key, with no picture (Craig, 19 Nov 2026). */
+  admin: "/admin",
 } as const;
 
 export type ScreenKey = keyof typeof PATHS;
@@ -69,6 +71,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   privacy: "Privacy",
   terms: "Terms",
   help: "Help",
+  admin: "Admin",
 };
 
 /** The product's name, the tab's title on a page with none of its own. */

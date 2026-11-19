@@ -5,7 +5,7 @@
   margin-top: var(--s-5);
   color: var(--text);
 }
-.admin__key,
+.admin__password,
 .admin__presses {
   display: flex;
   align-items: flex-end;

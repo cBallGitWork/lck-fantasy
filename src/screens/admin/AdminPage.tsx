@@ -33,16 +33,23 @@ export function playedLine({ to, series, deadlines }: Played): string {
   return to === null ? WORDS.noGamesLeft : WORDS.played(simMoment(to - 1, false), series, deadlines);
 }
 
-/** The key form: the admin types the key once a visit; it is never stored. */
-export function KeyForm({ onKey, refused }: { onKey: (key: string) => void; refused?: string }) {
-  const [key, setKey] = useState("");
+/** The password form: the admin types it once a visit; it is never stored. */
+export function PasswordForm({ onPassword, refused }: { onPassword: (password: string) => void; refused?: string }) {
+  const [password, setPassword] = useState("");
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    onKey(key);
+    onPassword(password);
   };
   return (
-    <form className="admin__key" onSubmit={submit}>
-      <Field label={WORDS.keyLabel} type="password" autoComplete="off" value={key} onChange={(e) => setKey(e.target.value)} error={refused} />
+    <form className="admin__password" onSubmit={submit}>
+      <Field
+        label={WORDS.passwordLabel}
+        type="password"
+        autoComplete="off"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        error={refused}
+      />
       <button type="submit" className="admin__press">
         {WORDS.open}
       </button>

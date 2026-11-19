@@ -6,55 +6,55 @@ import type { AdminRefusal } from "../../../convex/admin/access";
 import type { SimState } from "../../../convex/admin/sim";
 import { Empty } from "../../parts";
 import { REGION } from "../../region";
-import { AdminFrame, AdminPage, KeyForm, type Alert, type Press, type Read } from "./AdminPage";
+import { AdminFrame, AdminPage, PasswordForm, type Alert, type Press, type Read } from "./AdminPage";
 import { WORDS } from "./words";
 
-/** The refusal an admin read failed with, if it was refused for its key. */
-function refusalOf(read: unknown): AdminRefusal | undefined {
-  return read instanceof ConvexError ? (read.data as AdminRefusal) : undefined;
+/** Why an admin read was refused, if it was refused for its password. */
+function refusalOf(read: unknown): AdminRefusal["rule"] | undefined {
+  return read instanceof ConvexError ? (read.data as AdminRefusal).rule : undefined;
 }
 
-/** The admin section, once the key is typed: the Sim tab's state, the alerts and the two presses. */
-function Opened({ adminKey, onRefused }: { adminKey: string; onRefused: (refusal: AdminRefusal) => void }) {
+/** The admin section, once the password is typed: the Sim tab's state, the alerts and the two presses. */
+function Opened({ password, onRefused }: { password: string; onRefused: (rule: AdminRefusal["rule"]) => void }) {
   const reads = useQueries({
-    sim: { query: api.admin.sim.simState, args: { key: adminKey } },
-    alerts: { query: api.admin.alerts.alertList, args: { key: adminKey } },
+    sim: { query: api.admin.sim.simState, args: { password } },
+    alerts: { query: api.admin.alerts.alertList, args: { password } },
   });
   const nextDay = useMutation(api.admin.sim.nextDay);
   const playToEnd = useMutation(api.admin.sim.playToEnd);
   const sim = reads.sim as Read<SimState>;
-  const refused = refusalOf(sim)?.rule;
-  // A refused key goes back to the key form, saying why.
+  const refused = refusalOf(sim);
+  // A refused password goes back to the password form, saying why.
   useEffect(() => {
-    if (refused !== undefined) onRefused({ rule: refused });
+    if (refused !== undefined) onRefused(refused);
   }, [refused, onRefused]);
-  const press = (which: Press) => (which === "nextDay" ? nextDay : playToEnd)({ key: adminKey, competition: REGION.name });
+  const press = (which: Press) => (which === "nextDay" ? nextDay : playToEnd)({ password, competition: REGION.name });
   return <AdminPage sim={sim} alerts={reads.alerts as Read<Alert[]>} onPress={press} />;
 }
 
 function Admin() {
-  const [key, setKey] = useState<string>();
+  const [password, setPassword] = useState<string>();
   const [refused, setRefused] = useState<string>();
-  const onRefused = useCallback((refusal: AdminRefusal) => {
-    setRefused(WORDS.refused[refusal.rule]);
-    setKey(undefined);
+  const onRefused = useCallback((rule: AdminRefusal["rule"]) => {
+    setRefused(WORDS.refused[rule]);
+    setPassword(undefined);
   }, []);
-  if (key === undefined)
+  if (password === undefined)
     return (
       <AdminFrame>
-        <KeyForm
+        <PasswordForm
           refused={refused}
-          onKey={(typed) => {
+          onPassword={(typed) => {
             setRefused(undefined);
-            setKey(typed);
+            setPassword(typed);
           }}
         />
       </AdminFrame>
     );
-  return <Opened adminKey={key} onRefused={onRefused} />;
+  return <Opened password={password} onRefused={onRefused} />;
 }
 
-/** The admin section (`/admin`): the key form, then Sim and Alerts; without Convex it says so. */
+/** The admin section (`/admin`): the password form, then Sim and Alerts; without Convex it says so. */
 export function AdminScreen() {
   if (!import.meta.env.VITE_CONVEX_URL)
     return (

@@ -30,5 +30,5 @@ So each screen's issue touches only its own folder:
 - `profile/`: a manager's profile (`/manager/$managerId`).
 - `following/`: the managers you follow.
 - `legal/`: Privacy (`/privacy`) and Terms (`/terms`), `docs/legal/`'s text as plain pages, with no picture (spec/12, Settings).
-- `admin/`: the admin section (`/admin`), behind the admin key: Sim (the sim's date, Next day, Play to end) and Alerts, a plain page with no picture (Craig, 19 Nov 2026).
+- `admin/`: the admin section (`/admin`), behind the admin password: Sim (the sim's date, Next day, Play to end) and Alerts, a plain page with no picture (Craig, 19 Nov 2026).
 - `pick-team-signed-out/`: the front door (`/create-team`, picture `front-door/`): pick a squad as a guest, Auto-fill, kept in the browser (`guestSquad.ts`), and the two sign-up sheets on Save team (spec/09).

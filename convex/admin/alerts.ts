@@ -3,7 +3,7 @@
 // later ones that day only add rows.
 import { internal } from "../_generated/api";
 import { internalQuery, query, type MutationCtx, type QueryCtx } from "../_generated/server";
-import { adminKey, requireAdmin } from "./access";
+import { adminPassword, requireAdmin } from "./access";
 import { nextMidnight, now } from "./clock";
 
 /** The email's subject: the message itself is its body. */
@@ -30,11 +30,11 @@ async function newestAlerts(ctx: QueryCtx) {
 /** The list, as the Convex dashboard and tests read it. */
 export const alerts = internalQuery({ args: {}, handler: newestAlerts });
 
-/** The list on the admin section's Alerts tab, for whoever holds the admin key. */
+/** The list on the admin section's Alerts tab, for whoever has the admin password. */
 export const alertList = query({
-  args: { key: adminKey },
-  handler: (ctx, { key }) => {
-    requireAdmin(key);
+  args: { password: adminPassword },
+  handler: (ctx, { password }) => {
+    requireAdmin(password);
     return newestAlerts(ctx);
   },
 });

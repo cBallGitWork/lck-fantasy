@@ -98,9 +98,12 @@ export async function playRest(ctx: MutationCtx, competition: string): Promise<C
 
 /** The end of the next day after `from` that a game starts on, or null when no game is left. */
 async function nextMatchDayEnd(ctx: QueryCtx, from: number, zone: string): Promise<number | null> {
-  const next = await ctx.db.query("games").withIndex("by_startedAt", (q) => q.gt("startedAt", from)).first();
+  const next = await nextGame(ctx, from);
   return next === null ? null : nextMidnight(next.startedAt, zone);
 }
+
+/** The first game starting after `from`, or null when no game is left. */
+export const nextGame = (ctx: QueryCtx, from: number) => ctx.db.query("games").withIndex("by_startedAt", (q) => q.gt("startedAt", from)).first();
 
 function requireSim() {
   if (!isSim()) throw new Error(`The real site's clock is the real time: only the sim (${SIM_SETTING}=true) moves it.`);

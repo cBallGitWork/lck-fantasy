@@ -5,12 +5,12 @@ export const TABS = ["Sim", "Alerts"] as const;
 export type AdminTab = (typeof TABS)[number];
 
 export const WORDS = {
-  keyLabel: "Admin key",
+  passwordLabel: "Admin password",
   open: "Open",
-  noConvex: "Not connected to Convex: set VITE_CONVEX_URL.",
+  noConvex: "Not connected to Convex: VITE_CONVEX_URL is empty.",
   refused: {
-    wrongKey: "That isn't the admin key.",
-    noKeySet: "No admin key is set: set ADMIN_KEY on this Convex deployment.",
+    wrongPassword: "That isn't the admin password.",
+    noPasswordSet: "This deployment has no admin password: add ADMIN_PASSWORD in Convex.",
   } satisfies Record<AdminRefusal["rule"], string>,
   failed: "That didn't work",
   notSim: "This is the real site: its clock is the real time.",

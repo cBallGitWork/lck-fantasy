@@ -7,10 +7,10 @@ import { HOUR_MS } from "../world/fixtures";
 import { LCK_2027, type SeasonFile } from "../world/season";
 import schema from "../schema";
 import { modules } from "../test.setup";
-import { ADMIN_KEY_SETTING, type AdminRefusal } from "./access";
+import { ADMIN_PASSWORD_SETTING, type AdminRefusal } from "./access";
 import { SIM_SETTING } from "./clock";
 
-const KEY = "admin-key";
+const PASSWORD = "admin-password";
 const sim = api.admin.sim;
 
 /** A moment on a made-up season's day, in KST (UTC+9): day 1 is Wed 13 Jan 2027. */
@@ -35,7 +35,7 @@ const GAMES = [
 afterEach(() => vi.unstubAllEnvs());
 
 async function setUp({ startClock = true } = {}) {
-  vi.stubEnv(ADMIN_KEY_SETTING, KEY);
+  vi.stubEnv(ADMIN_PASSWORD_SETTING, PASSWORD);
   vi.stubEnv(SIM_SETTING, "true");
   const t = convexTest(schema, modules);
   await t.mutation(internal.world.season.loadSeason, { data: SEASON });
@@ -61,7 +61,7 @@ async function setUp({ startClock = true } = {}) {
   return t;
 }
 
-const press = { key: KEY, competition: "LCK" };
+const press = { password: PASSWORD, competition: "LCK" };
 
 async function refusal(call: Promise<unknown>): Promise<AdminRefusal> {
   const error = await call.catch((e: unknown) => e);
@@ -72,14 +72,14 @@ async function refusal(call: Promise<unknown>): Promise<AdminRefusal> {
 describe("the admin's Sim page (#398)", () => {
   test("shows the sim's moment, and whether a game is left", async () => {
     const t = await setUp();
-    expect(await t.query(sim.simState, { key: KEY })).toEqual({ sim: true, now: kst(0, 12), gamesLeft: true });
+    expect(await t.query(sim.simState, { password: PASSWORD })).toEqual({ sim: true, now: kst(0, 12), gamesLeft: true });
   });
 
   test("Next day says the day it played to, its series and the deadline it passed", async () => {
     const t = await setUp();
     expect(await t.mutation(sim.nextDay, press)).toEqual({ to: kst(2, 0), series: 2, deadlines: [1] });
     expect(await t.mutation(sim.nextDay, press)).toEqual({ to: kst(4, 0), series: 1, deadlines: [2] });
-    expect(await t.query(sim.simState, { key: KEY })).toEqual({ sim: true, now: kst(4, 0), gamesLeft: false });
+    expect(await t.query(sim.simState, { password: PASSWORD })).toEqual({ sim: true, now: kst(4, 0), gamesLeft: false });
     expect(await t.mutation(sim.nextDay, press)).toEqual({ to: null, series: 0, deadlines: [] });
   });
 
@@ -90,23 +90,23 @@ describe("the admin's Sim page (#398)", () => {
 
   test("a sim whose clock isn't started says so", async () => {
     const t = await setUp({ startClock: false });
-    expect(await t.query(sim.simState, { key: KEY })).toEqual({ sim: true, now: null });
+    expect(await t.query(sim.simState, { password: PASSWORD })).toEqual({ sim: true, now: null });
   });
 
   test("the real site says it isn't the sim, and refuses a press", async () => {
-    vi.stubEnv(ADMIN_KEY_SETTING, KEY);
+    vi.stubEnv(ADMIN_PASSWORD_SETTING, PASSWORD);
     const t = convexTest(schema, modules);
     await t.mutation(internal.world.season.loadSeason, { data: SEASON });
-    expect(await t.query(sim.simState, { key: KEY })).toEqual({ sim: false });
+    expect(await t.query(sim.simState, { password: PASSWORD })).toEqual({ sim: false });
     await expect(t.mutation(sim.nextDay, press)).rejects.toThrow("only the sim");
   });
 
-  test("only the admin key opens it, and none works where no key is set", async () => {
+  test("only the admin password opens it, and none works where no password is set", async () => {
     const t = await setUp();
-    expect(await refusal(t.mutation(sim.nextDay, { ...press, key: "guess" }))).toEqual({ rule: "wrongKey" });
-    expect(await refusal(t.query(api.admin.alerts.alertList, { key: "guess" }))).toEqual({ rule: "wrongKey" });
-    expect(await t.query(api.admin.alerts.alertList, { key: KEY })).toEqual([]);
-    vi.stubEnv(ADMIN_KEY_SETTING, "");
-    expect(await refusal(t.query(sim.simState, { key: "" }))).toEqual({ rule: "noKeySet" });
+    expect(await refusal(t.mutation(sim.nextDay, { ...press, password: "guess" }))).toEqual({ rule: "wrongPassword" });
+    expect(await refusal(t.query(api.admin.alerts.alertList, { password: "guess" }))).toEqual({ rule: "wrongPassword" });
+    expect(await t.query(api.admin.alerts.alertList, { password: PASSWORD })).toEqual([]);
+    vi.stubEnv(ADMIN_PASSWORD_SETTING, "");
+    expect(await refusal(t.query(sim.simState, { password: "" }))).toEqual({ rule: "noPasswordSet" });
   });
 });

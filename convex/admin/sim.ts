@@ -2,8 +2,8 @@
 // played: the series and any deadline passed. Play to end skips the replay (Craig, 19 Nov 2026).
 import { v } from "convex/values";
 import { mutation, query, type QueryCtx } from "../_generated/server";
-import { adminKey, requireAdmin } from "./access";
-import { isSim, playNextDay, playRest, simClock, type ClockMove } from "./clock";
+import { adminPassword, requireAdmin } from "./access";
+import { isSim, nextGame, playNextDay, playRest, simClock, type ClockMove } from "./clock";
 
 /** The Sim page: not the sim, a sim whose clock isn't started, or its moment and whether a game is left. */
 export type SimState = { sim: false } | { sim: true; now: null } | { sim: true; now: number; gamesLeft: boolean };
@@ -13,31 +13,30 @@ export type SimState = { sim: false } | { sim: true; now: null } | { sim: true; 
 export type Played = { to: number | null; series: number; deadlines: number[] };
 
 export const simState = query({
-  args: { key: adminKey },
-  handler: async (ctx, { key }): Promise<SimState> => {
-    requireAdmin(key);
+  args: { password: adminPassword },
+  handler: async (ctx, { password }): Promise<SimState> => {
+    requireAdmin(password);
     if (!isSim()) return { sim: false };
     const clock = await simClock(ctx);
     if (clock === null) return { sim: true, now: null };
-    const next = await ctx.db.query("games").withIndex("by_startedAt", (q) => q.gt("startedAt", clock.now)).first();
-    return { sim: true, now: clock.now, gamesLeft: next !== null };
+    return { sim: true, now: clock.now, gamesLeft: (await nextGame(ctx, clock.now)) !== null };
   },
 });
 
-const pressArgs = { key: adminKey, competition: v.string() };
+const pressArgs = { password: adminPassword, competition: v.string() };
 
 export const nextDay = mutation({
   args: pressArgs,
-  handler: async (ctx, { key, competition }): Promise<Played> => {
-    requireAdmin(key);
+  handler: async (ctx, { password, competition }): Promise<Played> => {
+    requireAdmin(password);
     return played(ctx, competition, await playNextDay(ctx, competition));
   },
 });
 
 export const playToEnd = mutation({
   args: pressArgs,
-  handler: async (ctx, { key, competition }): Promise<Played> => {
-    requireAdmin(key);
+  handler: async (ctx, { password, competition }): Promise<Played> => {
+    requireAdmin(password);
     return played(ctx, competition, await playRest(ctx, competition));
   },
 });

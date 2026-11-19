@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { html, text } from "../../testing/render";
-import { AdminPage, KeyForm, playedLine, simMoment, type Alert, type Read } from "./AdminPage";
+import { AdminPage, PasswordForm, playedLine, simMoment, type Alert, type Read } from "./AdminPage";
 import type { SimState } from "../../../convex/admin/sim";
 import { WORDS } from "./words";
 
@@ -41,8 +41,8 @@ describe("the admin section (#398)", () => {
     expect(text(page({ sim: false }, [], "Alerts"))).toContain(WORDS.noAlerts);
   });
 
-  test("the key form says why a key was refused", () => {
-    expect(text(<KeyForm onKey={() => {}} refused={WORDS.refused.wrongKey} />)).toContain(WORDS.refused.wrongKey);
+  test("the password form says why a password was refused", () => {
+    expect(text(<PasswordForm onPassword={() => {}} refused={WORDS.refused.wrongPassword} />)).toContain(WORDS.refused.wrongPassword);
   });
 });
 

@@ -11,6 +11,7 @@ wiring=(  # event|matcher|script, the matcher empty where the entry has none
   'PreToolUse|Bash|Write|Edit|MultiEdit|mcp__github__.*|guard_mode.py'
   'UserPromptSubmit||last_prompt.py'
   'PostToolUse|Write|Edit|line_ceiling.py'
+  'PostToolUse|Write|Edit|words_voice.py'
   'PostToolUse|AskUserQuestion|guard_ask.py'
   'PostToolUse|AskUserQuestion|last_prompt.py'
   'UserPromptSubmit||context_size.py'

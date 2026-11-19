@@ -4,6 +4,7 @@ import { DEV_STATES_PATH } from "./devStates";
 import { DevStatesPage } from "./DevStatesPage";
 import { AppFrame } from "../parts";
 import { BARE_COMPARE, PATHS, type ScreenKey } from "../paths";
+import { AdminScreen } from "../screens/admin";
 import { CoachCardScreen } from "../screens/coach-card";
 import { CompareScreen, toStatsWithNoPlayer } from "../screens/compare";
 import { FollowingScreen } from "../screens/following";
@@ -80,6 +81,7 @@ const routeTree = rootRoute.addChildren([
   screen(PATHS.privacy, PrivacyScreen),
   screen(PATHS.terms, TermsScreen),
   screen(PATHS.help, HelpScreen),
+  screen(PATHS.admin, AdminScreen),
   // Dev only: a build drops it with the page.
   ...(import.meta.env.DEV ? [createRoute({ getParentRoute: () => rootRoute, path: DEV_STATES_PATH, component: DevStatesPage })] : []),
 ]);

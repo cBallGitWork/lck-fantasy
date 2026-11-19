@@ -40,7 +40,7 @@ describe("final, 2–0 (1440.png)", () => {
       "3–3 · Dplus KIA",
       "DK",
       "Final",
-      "Bo3 · Split 1 · Week 3 · Sat 16 Jan",
+      "Bo3 · Split 1 Week 3 · Sat 16 Jan",
       "10:30",
       "19:30 KST",
       "T1",
@@ -122,7 +122,7 @@ describe("live (1440-live.png)", () => {
   const out = html(view);
 
   test("shows the score so far, Live and Not final, and Watch ›", () => {
-    expectInOrder(text(view), ["T1", "4–1", "1–0", "3–2 · Dplus KIA", "DK", "Live", "Not final", "Solo kills, steals at final", "Bo3 · Split 1 · Week 3 · Sat 16 Jan", "10:30", "19:30 KST", "Watch ›", "G1 W · 31:42 · VOD ↗", "G2 14:20", "Series", "DK", "G1 L", "G2", "Series"]);
+    expectInOrder(text(view), ["T1", "4–1", "1–0", "3–2 · Dplus KIA", "DK", "Live", "Not final", "Solo kills and steals score at final", "Bo3 · Split 1 Week 3 · Sat 16 Jan", "10:30", "19:30 KST", "Watch ›", "G1 W · 31:42 · VOD ↗", "G2 14:20", "Series", "DK", "G1 L", "G2", "Series"]);
     expect(out).toContain('href="/live"');
     expect(out.match(/tag--live/g)).toHaveLength(1);
     expect(text(view).match(/14:20/g)).toHaveLength(1);
@@ -143,7 +143,7 @@ describe("before it starts (1440-next.png)", () => {
   const out = html(view);
 
   test("shows v, the format tag, the day and time, Watch ›, then both rosters", () => {
-    expectInOrder(text(view), ["HLE", "Hanwha Life · 4–2", "v", "3–3 · Dplus KIA", "DK", "Bo3", "Split 1 · Week 4 · Wed 20 Jan", "08:00", "17:00 KST", "Watch ›", "HLE", "Zeus", "DK"]);
+    expectInOrder(text(view), ["HLE", "Hanwha Life · 4–2", "v", "3–3 · Dplus KIA", "DK", "Bo3", "Split 1 Week 4 · Wed 20 Jan", "08:00", "17:00 KST", "Watch ›", "HLE", "Zeus", "DK"]);
     expect(text(view).match(/Hanwha Life/g)).toHaveLength(1);
   });
 
@@ -157,8 +157,8 @@ describe("before it starts (1440-next.png)", () => {
 test("a link to a series that doesn't exist shows No such series and LCK hub › (spec/12, Series page)", async () => {
   const out = await htmlAt(pathTo(seriesGo("w99-sun-9")));
   expect(out).toContain('data-screen="series"');
-  expectInOrder(plain(out), [WORDS.noSuchSeries, `${WORDS.lckHub} ›`]);
-  expect(out).toMatch(new RegExp(`href="${PATHS.lckHub}"[^>]*>${WORDS.lckHub} ›`));
+  expectInOrder(plain(out), [WORDS.noSuchSeries, `${WORDS.hub} ›`]);
+  expect(out).toMatch(new RegExp(`href="${PATHS.hub}"[^>]*>${WORDS.hub} ›`));
 });
 
 test("each series a link opens is in the fixture, at the hub's moment", () => {

@@ -4,9 +4,9 @@ import { html } from "../testing/render";
 import { captainHint, Columns, Hint, HINTS, Led, SectionHead, SeriesStrip, TierShield, WeekArrow } from ".";
 
 test("a week arrow is a key: it links, steps, or sits off as a disabled key", () => {
-  expect(html(<WeekArrow label="Week before" go={{ to: "/points" }}>‹</WeekArrow>)).toMatch(/<a[^>]*class="week-arrow"[^>]*aria-label="Week before"[^>]*>‹<\/a>/);
-  expect(html(<WeekArrow label="Week after" onStep={() => {}}>›</WeekArrow>)).toBe('<button type="button" class="week-arrow" aria-label="Week after">›</button>');
-  expect(html(<WeekArrow label="Week after">›</WeekArrow>)).toBe('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
+  expect(html(<WeekArrow label="Previous week" go={{ to: "/points" }}>‹</WeekArrow>)).toMatch(/<a[^>]*class="week-arrow"[^>]*aria-label="Previous week"[^>]*>‹<\/a>/);
+  expect(html(<WeekArrow label="Next week" onStep={() => {}}>›</WeekArrow>)).toBe('<button type="button" class="week-arrow" aria-label="Next week">›</button>');
+  expect(html(<WeekArrow label="Next week">›</WeekArrow>)).toBe('<button type="button" class="week-arrow key-off" aria-label="Next week" disabled="">›</button>');
 });
 
 test("a hover is one line tied to its word, which a tap focuses; a key takes the focus itself", () => {

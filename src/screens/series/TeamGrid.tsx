@@ -2,6 +2,7 @@ import { cx, gameNo, GoLink, LinkGo, MeDot, NONE, outcome, SectionHead, signed, 
 import { cardGo, type Go } from "../../paths";
 import { RoleIcon, ROLE_NAME, type IconKey } from "../../rift";
 import type { CoachLine, Game, Person, PlayerLine, Roster, TeamSheet } from "./types";
+import { subRole, WORDS } from "./words";
 
 /** The coach's series result as the picture draws it: `W +3`, `L −1`. */
 const resultLabel = (points: number) => `${outcome(points > 0)} ${signed(points)}`;
@@ -34,7 +35,7 @@ function Role({ icon, label }: { icon: IconKey; label: string }) {
 function Points({ points, counts, pog }: { points: number; counts: boolean; pog?: boolean }) {
   return (
     <span className="series__points num">
-      {pog && <Tag>POG</Tag>}
+      {pog && <Tag>{WORDS.pog}</Tag>}
       <span className={cx(counts && "counted")}>{points}</span>
     </span>
   );
@@ -52,7 +53,7 @@ function GameHead({ game, n, code, details }: { game: Game; n: number; code: str
   return (
     <th scope="col">
       {gameNo(n)} <b>{outcome(gameWon(game, code))}</b>
-      {details && <> · <span className="num">{game.length}</span> · <LinkGo out={game.vod}>VOD</LinkGo></>}
+      {details && <> · <span className="num">{game.length}</span> · <LinkGo out={game.vod}>{WORDS.vod}</LinkGo></>}
     </th>
   );
 }
@@ -60,7 +61,7 @@ function GameHead({ game, n, code, details }: { game: Game; n: number; code: str
 function PlayerRow({ p }: { p: PlayerLine }) {
   return (
     <tr>
-      <Role icon={p.role} label={p.sub ? `${ROLE_NAME[p.role]} · sub` : ROLE_NAME[p.role]} />
+      <Role icon={p.role} label={p.sub ? subRole(ROLE_NAME[p.role]) : ROLE_NAME[p.role]} />
       <Name person={p} go={cardGo(p.id, false)} />
       {p.games.map((game, i) =>
         game ? (
@@ -124,13 +125,13 @@ export function TeamGrid({ team, games, details = false }: { team: TeamSheet; ga
         </colgroup>
         <thead>
           <tr>
-            <th scope="col" aria-label="Role" />
-            <th scope="col" aria-label="Name" />
+            <th scope="col" aria-label={WORDS.role} />
+            <th scope="col" aria-label={WORDS.name} />
             {games.map((game, i) => (
               <GameHead key={i} game={game} n={i + 1} code={team.code} details={details} />
             ))}
             <th scope="col" className="series__figure">
-              Series
+              {WORDS.series}
             </th>
           </tr>
         </thead>

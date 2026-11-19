@@ -2,7 +2,8 @@
 import { describe, expect, test } from "vitest";
 import { PATHS } from "../../paths";
 import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
-import { CoachCard, EMPTY_TAB } from "./CoachCard";
+import { CoachCard } from "./CoachCard";
+import { EMPTY_TAB } from "./words";
 import { FROM_PICK_TEAM, FROM_POINTS } from "./fixtures";
 import { CoachCardPage, FIRST_TAB, TRANSFER_OUT } from "./index";
 import type { CoachCardData, CoachFrom, CoachTab } from "./types";
@@ -17,6 +18,12 @@ describe("the page", () => {
     expect(out).toMatch(/aria-current="page"[^>]*>Pick Team/);
     expect(out).toMatch(/aria-selected="true"[^>]*>History</);
     expect(FIRST_TAB).toEqual({ pickTeam: "History", points: "This week" });
+    expect(out).toContain("Coach kkOma");
+  });
+
+  test("a season of one game reads 1 game", () => {
+    const one = { ...FROM_PICK_TEAM, season: { ...FROM_PICK_TEAM.season, games: 1 } };
+    expect(text(card(one, "pickTeam", "History"))).toContain("Season1 game");
   });
 
   test("Transfer out opens Transfers with the coach sold, his slot picked for the list to fill", async () => {
@@ -78,7 +85,7 @@ describe("History mid-series (spec/12, The coach card)", () => {
 
   test("shows the series being played, tagged Live, with its points so far and in the week's total", () => {
     expect(live?.replace(/<[^>]+>/g, "")).toBe("3Sat · 1–0 DK Live2₩7.0m210");
-    expectInOrder(out, ["Split 1 2027", "WeekSeriesGamesPricePtsWeek", "3Sat · 1–0 DK Live", "2Wed · W 2–0 DNS", "Past seasons"]);
+    expectInOrder(out, ["Split 1 2027", "WeekSeriesGamesWeek pricePtsWeek pts", "3Sat · 1–0 DK Live", "2Wed · W 2–0 DNS", "Past seasons"]);
   });
 
   test("never as a result, and the strip's played series still show once", () => {
@@ -107,7 +114,7 @@ describe("History, from Pick Team (1440.png)", () => {
       "form · 1st",
       "24%",
       "owned · 2nd",
-      "+310 / −95 this week",
+      "+310 / −95 transfers this week",
       "W2 · Fri",
       "4",
       "v BFX",
@@ -128,7 +135,7 @@ describe("History, from Pick Team (1440.png)", () => {
       "History",
       "Roster",
       "Split 1 2027",
-      "WeekSeriesGamesPricePtsWeek",
+      "WeekSeriesGamesWeek pricePtsWeek pts",
       "2Wed · W 2–0 DNS2₩6.5m48",
       "1Sat · W 2–0 NS2₩6.5m33",
       "Wed · L 1–2 GEN30",
@@ -174,7 +181,7 @@ describe("This week, from Points (1440-week.png)", () => {
       "price",
       "5.5",
       "form · 2nd",
-      "+204 / −58 this week",
+      "+204 / −58 transfers this week",
       "W3 · Sat",
       "2Live",
       "Wed · v HLE W 2–18",
@@ -225,7 +232,7 @@ describe("Roster (1440-roster.png)", () => {
   test("lists the team's players with role, price, season and owned; yours marked", () => {
     const out = text(card(FROM_PICK_TEAM, "pickTeam", "Roster"));
     expectInOrder(out, [
-      "RolePlayerPriceSeasonOwned",
+      "RolePlayerPriceSeason ptsOwned",
       "TopDoran₩12.5m4518%",
       "JungleOner₩14.0m4322%",
       "MidFaker",

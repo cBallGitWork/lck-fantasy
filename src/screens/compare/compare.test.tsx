@@ -31,8 +31,8 @@ describe("Faker v Chovy", () => {
       "19.3", "Form", "20.3",
       "₩18.5m", "0.5", "Price", "₩17.5m", "0.5",
       "46%", "Owned", "41%",
-      "W2 · Fri", "10", "v BFX", "W3 · Wed", "12", "v HLE", "W3 · Sat", "10", "v DK", "Last 3", "W2 · Sat", "11", "v BRO",
-      "W4 · Wed", "v KT", "W4 · Sat", "v GEN", "W5 · Thu", "v BRO", "Next 3", "W4 · Thu", "v BRO", "W4 · Sat", "v T1", "W5 · Wed", "v DNS",
+      "Week 2 · Fri", "10", "v BFX", "Week 3 · Wed", "12", "v HLE", "Week 3 · Sat", "10", "v DK", "Last 3", "Week 2 · Sat", "11", "v BRO",
+      "Week 4 · Wed", "v KT", "Week 4 · Sat", "v GEN", "Week 5 · Thu", "v BRO", "Next 3", "Week 4 · Thu", "v BRO", "Week 4 · Sat", "v T1", "Week 5 · Wed", "v DNS",
     ]);
   });
 
@@ -104,6 +104,7 @@ describe("kkOma v Ryu", () => {
     const pick = text(<ComparePage left={KKOMA} right={null} onClose={noop} />);
     expectInOrder(pick, ["Coaches", "Ryu", "Homme", "Ssong", "cvMax", "Score", "Joker"]);
     expect(pick).not.toMatch(/Mids|Chovy|Other roles/);
+    expect(html(<ComparePage left={KKOMA} right={null} onClose={noop} />)).toContain('placeholder="Find a coach"');
   });
 });
 

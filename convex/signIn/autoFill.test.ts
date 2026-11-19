@@ -2,7 +2,7 @@ import { WON_PER_M } from "../../src/parts/text/money";
 import { describe, expect, test } from "vitest";
 import { sum } from "../../src/parts/util/sum";
 import { budgetProblems, type Prices } from "../squads/budget";
-import { byPick, coach, player, REGULAR_SETTINGS, validSquad } from "../squads/fixtures";
+import { byPick, coach, player, REGULAR_SETTINGS, seeded, validSquad } from "../squads/fixtures";
 import { allPicks, pickKey, PLAYER_ROLES, squadProblems, type Pick, type Squad, type SquadPick } from "../squads/squad";
 import { autoFill, randomChooser, type AutoFillMoney, type Chooser } from "./autoFill";
 
@@ -21,17 +21,6 @@ const emptySquad: Squad = { starters: [], bench: [] };
 function expectValid(squad: Squad, budget: number | null, squadPrices: Prices = prices) {
   expect(squadProblems(squad, REGULAR_SETTINGS)).toEqual([]);
   expect(budgetProblems(squad, squadPrices, budget)).toEqual([]);
-}
-
-/** A seeded random in [0, 1) (mulberry32), so a test's "random" squads are the same each run. */
-function seeded(seed: number): () => number {
-  let state = seed;
-  return () => {
-    state = (state + 0x6d2b79f5) | 0;
-    let t = Math.imul(state ^ (state >>> 15), 1 | state);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
 }
 
 describe("autoFill", () => {

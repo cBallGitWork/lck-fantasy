@@ -2,15 +2,14 @@ import { GoLink, Loading, NONE, NotFinalTag, Table, Tag, WeekStep, type Column }
 import { cardGo, PATHS } from "../../paths";
 import { isBench, MarkBadge, ROLE_NAME, SQUAD_SIZE } from "../../rift";
 import type { PointsWeek, ProfilePick } from "./fixtures";
-
-const BENCH = "Bench";
+import { dot, weekNo, weekTeam, WORDS } from "./words";
 
 const onBench = (pick: ProfilePick) => isBench(pick.slot);
 
 /** The slot as the table names it: `Top`, `Flex · Top`, `Bench 1 · Mid`. */
 function pickSlot(pick: ProfilePick): string {
-  const plays = pick.plays ? ` · ${ROLE_NAME[pick.plays]}` : "";
-  if (isBench(pick.slot)) return `${BENCH} ${pick.slot.slice(-1)}${plays}`;
+  const plays = pick.plays ? `${dot}${ROLE_NAME[pick.plays]}` : "";
+  if (isBench(pick.slot)) return `${WORDS.bench} ${pick.slot.slice(-1)}${plays}`;
   return `${ROLE_NAME[pick.slot]}${plays}`;
 }
 
@@ -22,20 +21,20 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
   const starters = week.team?.filter((pick) => !onBench(pick)) ?? [];
   const bench = week.team?.filter(onBench) ?? [];
   return (
-    <section className="profile__points" aria-label={`Week ${week.week}`}>
+    <section className="profile__points" aria-label={weekNo(week.week)}>
       <div className="profile__week">
         <WeekStep prev={hasPrev ? () => onWeek?.(week.week - 1) : undefined} next={hasNext ? () => onWeek?.(week.week + 1) : undefined}>
-          <h2 className="profile__week-name">Week {week.week}</h2>
+          <h2 className="profile__week-name">{weekNo(week.week)}</h2>
         </WeekStep>
         <b className="profile__week-points num">{week.points}</b>
         {week.average !== undefined && (
           <span className="profile__week-fig">
-            Average <b className="num">{week.average}</b>
+            {WORDS.average} <b className="num">{week.average}</b>
           </span>
         )}
         {week.highest !== undefined && (
           <GoLink className="profile__week-fig" go={{ to: PATHS.perfectGame }}>
-            Highest <b className="num">{week.highest}</b> ›
+            {WORDS.highest} <b className="num">{week.highest}</b> ›
           </GoLink>
         )}
         {!week.final && <NotFinalTag />}
@@ -46,20 +45,20 @@ export function ProfilePoints({ week, onWeek, hasPrev, hasNext }: { week: Points
           columns={PICK_COLUMNS}
           rows={[...starters, ...bench]}
           rowKey={(pick) => pick.slot}
-          subAbove={(pick) => (pick === bench[0] ? { head: BENCH } : undefined)}
+          subAbove={(pick) => (pick === bench[0] ? { head: WORDS.bench } : undefined)}
         />
       ) : (
-        <Loading rows={SQUAD_SIZE} label={`Week ${week.week}'s team`} />
+        <Loading rows={SQUAD_SIZE} label={weekTeam(week.week)} />
       )}
     </section>
   );
 }
 
 const PICK_COLUMNS: Column<ProfilePick>[] = [
-  { key: "slot", head: "Slot", width: "colSlot", cell: (pick) => <small>{pickSlot(pick)}</small> },
+  { key: "slot", head: WORDS.slot, width: "colSlot", cell: (pick) => <small>{pickSlot(pick)}</small> },
   {
     key: "player",
-    head: "Player",
+    head: WORDS.player,
     width: "colPlayer",
     cell: (pick) => (
       <>
@@ -70,10 +69,10 @@ const PICK_COLUMNS: Column<ProfilePick>[] = [
       </>
     ),
   },
-  { key: "pts", head: "Pts", figure: true, width: "colPts", cell: (pick) => pick.points ?? NONE },
+  { key: "pts", head: WORDS.pts, figure: true, width: "colPts", cell: (pick) => pick.points ?? NONE },
   {
     key: "series",
-    head: "Series",
+    head: WORDS.series,
     cell: (pick) => (
       <small>
         {pick.note ??

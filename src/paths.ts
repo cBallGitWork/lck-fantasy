@@ -1,5 +1,7 @@
 // Every screen's path, in one home: the router, the top bar and every link read it.
 
+import { REGION } from "./region";
+
 export const PATHS = {
   home: "/",
   pickTeam: "/pick-team",
@@ -25,7 +27,8 @@ export const PATHS = {
   /** One week's new prices, so a week can be linked: `/price-changes/4`. */
   priceChangesWeek: "/price-changes/$week",
   settings: "/settings",
-  lckHub: "/lck",
+  /** The region's hub at the region's own address: `/lck` (#374). */
+  hub: REGION.hub,
   playerCard: "/player/$playerId",
   coachCard: "/coach/$coachId",
   profile: "/manager/$managerId",
@@ -56,7 +59,7 @@ export const SCREEN_NAME: Record<ScreenKey, string> = {
   priceChanges: "Price changes",
   priceChangesWeek: "Price changes",
   settings: "Settings",
-  lckHub: "LCK",
+  hub: REGION.name,
   playerCard: "Player",
   coachCard: "Coach",
   profile: "Manager",

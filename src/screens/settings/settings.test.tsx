@@ -5,7 +5,8 @@ import { expectDeadlinePart, expectInOrder, html, noop, text } from "../../testi
 import { DeleteSheet } from "./DeleteSheet";
 import { BROWSER_ZONE, DEADLINE_AT, DELETE_ROWS, DRAFT, REMINDER_HOURS, SAVED } from "./fixtures";
 import { Settings } from "./index";
-import { capName, changedFields, changeLine, counter, dirtyTabs, hoursBefore, type SettingsTab } from "./settings";
+import { capName, changedFields, counter, dirtyTabs, type SettingsTab } from "./settings";
+import { changeLine, hoursBefore } from "./words";
 
 const PICTURE = { draft: DRAFT, browserZone: BROWSER_ZONE };
 
@@ -120,13 +121,13 @@ test("the Delete sheet lists what goes, then Back and Delete account", () => {
   const out = text(<DeleteSheet team={SAVED.teamName} rows={DELETE_ROWS} onBack={noop} onDelete={noop} onDownload={noop} />);
   expectInOrder(out, [
     "Delete account?",
-    "Baron Steal FC is erased at once and can't be brought back.",
+    "Baron Steal FC is deleted at once. You can't undo this.",
     "Team and squad",
     "Points and historyWeeks 1–3 · 187 pts",
     "Ranks in 5 leaguesOverall, United Kingdom, T1, 2 private",
-    "Follows12 following · 9 followers",
-    "Pub Leaguepasses to Haru's Tower Divers",
-    "Backups clear within 30 days. Download my data first to keep a copy.",
+    "Following and followers12 following · 9 followers",
+    "Pub LeagueHaru's Tower Divers becomes admin",
+    "Backups are deleted within 30 days. Download my data first to keep a copy.",
     "Back",
     "Delete account",
   ]);

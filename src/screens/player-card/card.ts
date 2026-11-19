@@ -3,8 +3,9 @@
 import type { TeamCode } from "../../fixtures/week3";
 import type { Score } from "../../parts";
 import type { Mark, RoleKey } from "../../rift";
+import { TABS } from "./words";
 
-export const CARD_TABS = ["This week", "Fixtures", "History", "Champions"] as const;
+export const CARD_TABS = TABS;
 export type CardTab = (typeof CARD_TABS)[number];
 
 /** A series already played, in the strip: his points, `live` while it is. */
@@ -48,7 +49,7 @@ export interface PlayedSeries {
   games: CardGame[];
 }
 
-/** A series in This week not yet started: its time, yours then KST, and no points yet (spec/12, The player card). */
+/** A series in This week not yet started: its time, yours then the league's, and no points yet (spec/12, The player card). */
 export interface UpcomingSeries {
   id: string;
   day: string;

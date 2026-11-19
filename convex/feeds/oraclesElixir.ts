@@ -1,8 +1,8 @@
 // Oracle's Elixir's daily file (spec/11, Final): its CSV rows into one record per game, each
 // player's and team's stats as the source sent them, with the raw row kept (ARCHITECTURE.md, Data).
 import Papa from "papaparse";
-import type { SeriesGame } from "../lck/series";
 import type { PlayerRole } from "../squads/squad";
+import type { SeriesGame } from "../world/series";
 
 export type OeRow = Record<string, string>;
 

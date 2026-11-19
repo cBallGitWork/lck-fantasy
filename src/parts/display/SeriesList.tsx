@@ -11,7 +11,7 @@ export type SeriesState = "final" | "notFinal" | "live" | "next";
 export interface SeriesRow {
   id: string;
   day: string;
-  /** The manager's time, then KST. */
+  /** The manager's time, then the league's. */
   local: string;
   kst: string;
   home: string;

@@ -52,7 +52,7 @@ a {
   content: "▼ ";
 }
 :focus-visible {
-  outline: var(--m-rule-heavy) solid var(--teal);
+  outline: var(--m-rule-heavy) solid var(--signal);
   outline-offset: var(--m-rule-heavy);
 }
 @media (prefers-reduced-motion: reduce) {

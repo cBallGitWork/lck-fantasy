@@ -3,10 +3,10 @@ import { GoLink, NONE } from "../../parts";
 import { seriesGo } from "../../paths";
 import type { HubWeek } from "./types";
 import { ByDay, WeekTitle } from "./Week";
-
+import { WORDS } from "./words";
 
 /**
- * Fixtures: one week by day. Each series: your time and KST, each team's record beside its code,
+ * Fixtures: one week by day. Each series: your time and the league's, each team's record beside its code,
  * blue side left, then `›`; the whole row opens the Series page.
  */
 export function Fixtures({
@@ -28,8 +28,8 @@ export function Fixtures({
     <section>
       <WeekTitle week={week} bestOf={bestOf} onPrev={onPrev} onNext={onNext} />
       <div className="lck-hub__time-heads quiet">
-        <span>Yours</span>
-        <span>KST</span>
+        <span>{WORDS.local}</span>
+        <span>{WORDS.kst}</span>
       </div>
       <ByDay
         series={week.series}
@@ -41,7 +41,7 @@ export function Fixtures({
               {record(s.home)}
               <b className="lck-hub__code num">{s.home}</b>
             </span>
-            <span className="lck-hub__versus">v</span>
+            <span className="lck-hub__versus">{WORDS.versus}</span>
             <span>
               <b className="lck-hub__code num">{s.away}</b>
               {record(s.away)}

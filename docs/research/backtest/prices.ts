@@ -6,7 +6,7 @@
 // Solo kills and steals score 0: the files don't hold them (Leaguepedia does).
 import { readFileSync } from "node:fs";
 import { oeGames, oeSeriesGame, parseOeCsv, type OeGame } from "../../../convex/feeds/oraclesElixir";
-import { groupSeries } from "../../../convex/lck/series";
+import { groupSeries } from "../../../convex/world/series";
 import { scoreCoachGame, scorePlayerGame, total } from "../../../convex/scoring/game";
 import { coachSeriesPoints, playerSeriesPoints } from "../../../convex/scoring/series";
 import { SPEC_COACH_TABLE, SPEC_PLAYER_TABLE, SPEC_SERIES_RULES } from "../../../convex/scoring/fixtures";

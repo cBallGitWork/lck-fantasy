@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { Go } from "../../paths";
 import { cx } from "../util/cx";
 import { GoLink } from "./GoLink";
+import { WORDS } from "../words";
 import "./WeekArrow.css";
 
 /**
@@ -31,11 +32,11 @@ const arrowTo = (way: WeekWay) => (typeof way === "function" ? { onStep: way } :
 export function WeekStep({ prev, next, className, children }: { prev: WeekWay; next: WeekWay; className?: string; children: ReactNode }) {
   return (
     <div className={cx("week-step", className)}>
-      <WeekArrow label="Week before" {...arrowTo(prev)}>
+      <WeekArrow label={WORDS.weekBefore} {...arrowTo(prev)}>
         ‹
       </WeekArrow>
       {children}
-      <WeekArrow label="Week after" {...arrowTo(next)}>
+      <WeekArrow label={WORDS.weekAfter} {...arrowTo(next)}>
         ›
       </WeekArrow>
     </div>

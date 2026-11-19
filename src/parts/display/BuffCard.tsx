@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cx } from "../util/cx";
+import { playBuff, WORDS } from "../words";
 import "./BuffCard.css";
 
 /**
@@ -26,8 +27,8 @@ export function BuffCard({
   const control =
     action ??
     (state === "ready" && (
-      <button type="button" className="buff-card__play" aria-label={`Play ${name}`} onClick={onPlay}>
-        Play
+      <button type="button" className="buff-card__play" aria-label={playBuff(name)} onClick={onPlay}>
+        {WORDS.play}
       </button>
     ));
   return (

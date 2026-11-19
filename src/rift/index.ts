@@ -11,7 +11,6 @@ export {
   LINEUP_ORDER,
   PERSON_ROLES,
   ROLE_KEYS,
-  ROLE_NAME,
   slotLabel,
   SQUAD_SIZE,
   type IconKey,
@@ -22,6 +21,7 @@ export {
 } from "./roles";
 export { Shirt } from "./Shirt";
 export { RIFT_SLOTS, type RiftPoint } from "./slots";
-export { MARK_NAME, MarkBadge, markKey, markNews, type Mark } from "./MarkBadge";
+export { MarkBadge, type Mark } from "./MarkBadge";
 export { Rift, Tile } from "./Tile";
-export { RIFT_VIEW, VIEWS, type BoardView } from "./views";
+export { RIFT_VIEW, type BoardView } from "./views";
+export { MARK_NAME, markKey, markNews, ROLE_NAME, VIEWS } from "./words";

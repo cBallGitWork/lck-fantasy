@@ -3,7 +3,7 @@ import { cx, formatWon, GoLink, NONE, SectionHead, ViewToggle } from "../../part
 import { cardGo } from "../../paths";
 import { RoleIcon, ROLE_NAME } from "../../rift";
 import type { Roster, TeamRosters } from "./types";
-
+import { WORDS } from "./words";
 
 function RosterTable({ roster }: { roster: Roster }) {
   return (
@@ -42,7 +42,7 @@ export function Teams({ teams, chosen, onChoose }: { teams: TeamRosters[]; chose
   return (
     <div>
       <div className="lck-hub__picker">
-        <ViewToggle options={teams.map((t) => t.team)} chosen={chosen} onChoose={onChoose} label="Team" />
+        <ViewToggle options={teams.map((t) => t.team)} chosen={chosen} onChoose={onChoose} label={WORDS.team} />
       </div>
       {shown && (
         <div className="lck-hub__two">

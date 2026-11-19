@@ -4,6 +4,7 @@
 
 import { MANAGER, WEEK4_DEADLINE } from "../../fixtures/week3";
 import { BROWSER, type Account, type DeleteRow, type SettingsValues } from "./settings";
+import { followCounts, leagueList, passesTo, ranksIn, weeksPoints, WORDS } from "./words";
 
 /** What Baron Steal FC has saved. */
 export const SAVED: SettingsValues = {
@@ -42,9 +43,9 @@ export const LOCKED = true;
 
 /** What the Delete sheet lists for Baron Steal FC. */
 export const DELETE_ROWS: DeleteRow[] = [
-  { what: "Team and squad" },
-  { what: "Points and history", detail: "Weeks 1–3 · 187 pts" },
-  { what: "Ranks in 5 leagues", detail: "Overall, United Kingdom, T1, 2 private" },
-  { what: "Follows", detail: "12 following · 9 followers" },
-  { what: "Pub League", detail: "passes to Haru's Tower Divers" },
+  { what: WORDS.teamAndSquad },
+  { what: WORDS.pointsAndHistory, detail: weeksPoints(1, 3, 187) },
+  { what: ranksIn(5), detail: leagueList(["Overall", "United Kingdom", "T1"], 2) },
+  { what: WORDS.follows, detail: followCounts(12, 9) },
+  { what: "Pub League", detail: passesTo("Haru's Tower Divers") },
 ];

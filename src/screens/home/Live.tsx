@@ -7,6 +7,7 @@ import { PlayerList, WeekTotal } from "./side";
 import { STREAM_DOT, streamLabel, type Stream } from "../../fixtures/streams";
 import { streamToPlay } from "./stream";
 import type { HomeLiveData, LiveSeries } from "./types";
+import { gameHead, WORDS } from "./words";
 
 /** The picker's rows before `More ▾`, as the picture draws them. */
 const PICKER_ROWS = 5;
@@ -23,10 +24,10 @@ function StreamScreen({ series, stream }: { series: LiveSeries; stream: Stream |
           {series.home} {score(series.score)} {series.away}
         </b>
         <small className="home__screen-small">
-          Game {series.game} · {bestOf(series.bestOf)} · {series.label}
+          {gameHead(series.game)} · {bestOf(series.bestOf)} · {series.label}
         </small>
         <span className="home__screen-space" />
-        <LinkGo go={{ to: PATHS.live }}>Live</LinkGo>
+        <LinkGo go={{ to: PATHS.live }}>{WORDS.live}</LinkGo>
       </div>
       <div className="home__screen-video">{stream && streamName(stream)}</div>
     </div>
@@ -38,7 +39,7 @@ function StreamPicker({ streams, picked, onPick }: { streams: Stream[]; picked: 
   const shown = streams.slice(0, PICKER_ROWS);
   const more = streams.slice(PICKER_ROWS);
   return (
-    <div className="home__picker" role="group" aria-label="Stream">
+    <div className="home__picker" role="group" aria-label={WORDS.stream}>
       {shown.map((s) => (
         <button
           key={s.id}
@@ -55,7 +56,7 @@ function StreamPicker({ streams, picked, onPick }: { streams: Stream[]; picked: 
       {more.length > 0 && (
         <Menu
           className="home__stream home__stream--more"
-          label="More ▾"
+          label={WORDS.moreStreams}
           items={more.map((s) => ({ label: streamName(s), onChoose: () => onPick(s.id) }))}
         />
       )}
@@ -84,15 +85,15 @@ export function HomeLive({ data, onPickStream, ...actions }: { data: HomeLiveDat
       side={
         <SideSection title={data.week.label} note={<FinalTag final={data.week.final} />}>
           <WeekTotal week={data.week} />
-          <h3 className="home__sub">In this series</h3>
-          <PlayerList players={data.inSeries} label="In this series" />
+          <h3 className="home__sub">{WORDS.inThisSeries}</h3>
+          <PlayerList players={data.inSeries} label={WORDS.inThisSeries} />
           <h3 className="home__sub">
-            Still to play
-            {data.stillToPlay.length === 0 && <span className="home__sub-note quiet">None</span>}
+            {WORDS.stillToPlay}
+            {data.stillToPlay.length === 0 && <span className="home__sub-note quiet">{WORDS.none}</span>}
           </h3>
-          {data.stillToPlay.length > 0 && <PlayerList players={data.stillToPlay} label="Still to play" />}
+          {data.stillToPlay.length > 0 && <PlayerList players={data.stillToPlay} label={WORDS.stillToPlay} />}
           <div className="home__more">
-            <LinkGo go={{ to: PATHS.points }}>Points</LinkGo>
+            <LinkGo go={{ to: PATHS.points }}>{WORDS.points}</LinkGo>
           </div>
         </SideSection>
       }

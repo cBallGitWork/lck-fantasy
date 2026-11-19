@@ -2,6 +2,7 @@ import { GoLink, pct } from "../../parts";
 import { PATHS } from "../../paths";
 import { MarkBadge, RoleIcon } from "../../rift";
 import type { SidePlayer, WeekPoints } from "./types";
+import { WORDS } from "./words";
 
 /** Your week, or last week: the total with Average and Highest. */
 export function WeekTotal({ week }: { week: WeekPoints }) {
@@ -9,10 +10,10 @@ export function WeekTotal({ week }: { week: WeekPoints }) {
     <div className="home__total">
       <b className="home__total-figure num">{week.points}</b>
       <span className="home__fig">
-        Average <b className="num">{week.average}</b>
+        {WORDS.average} <b className="num">{week.average}</b>
       </span>
       <GoLink className="home__fig home__fig--link" go={{ to: PATHS.perfectGame }}>
-        Highest <b className="num">{week.highest}</b>
+        {WORDS.highest} <b className="num">{week.highest}</b>
         <i>›</i>
       </GoLink>
     </div>

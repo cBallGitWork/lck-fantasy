@@ -34,9 +34,10 @@ import { sum } from "../../parts";
 import { flexPlays, isBench } from "../../rift";
 import { starAndFlop, type WeekPlayer } from "./starFlop";
 import type { HomeIdleData, HomeLiveData, HomeShared, LineupStarter, SidePlayer } from "./types";
+import { splitWeek, versus, weekHead, WORDS } from "./words";
 
 const atPoints = (id: string) => seriesById(WEEK3_SERIES_AT_POINTS, id);
-const matchup = (s: Series) => `${s.home} v ${s.away}`;
+const matchup = (s: Series) => versus(s.home, s.away);
 
 /** A followed manager's Week 3 series as Home's feed lists it. */
 function followed(who: keyof typeof FOLLOWED_WEEK3) {
@@ -75,10 +76,10 @@ export const HOME_LIVE: HomeLiveData = {
   ...SHARED,
   state: "live",
   countdown: countdown(POINTS_AT, WEEK4_DEADLINE.at),
-  series: { home: live.home, away: live.away, score: live.score, game: live.liveGame, bestOf: BEST_OF, label: `${COMPETITION} Week 3` },
+  series: { home: live.home, away: live.away, score: live.score, game: live.liveGame, bestOf: BEST_OF, label: splitWeek(COMPETITION, 3) },
   streams: STREAMS,
   pickedStream: DEFAULT_STREAM,
-  week: { label: "Your week", final: false, points: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
+  week: { label: WORDS.yourWeek, final: false, points: MY_WEEK3.liveTotal, average: POINTS_WEEK.average, highest: POINTS_WEEK.highest },
   inSeries: [
     { role: "mid", name: "Faker", team: "T1", mark: "C", stat: liveKda("Faker"), points: livePointsOf("faker") },
     { role: "top", name: "Siwoo", team: "DK", stat: liveKda("Siwoo"), points: livePointsOf("siwoo") },
@@ -134,7 +135,7 @@ export const HOME_IDLE: HomeIdleData = {
   lineupWeek: 4,
   lineup,
   next: { home: next.home, away: next.away, day: next.day, local: next.local, kst: next.kst, startsIn: { days: startsIn.days, hours: startsIn.hours } },
-  week: { label: "Week 3", final: true, points: MY_WEEK3.finalTotal, ...WEEK3_FINAL },
+  week: { label: weekHead(3), final: true, points: MY_WEEK3.finalTotal, ...WEEK3_FINAL },
   stars: lastWeek.stars,
   flops: lastWeek.flops,
 };

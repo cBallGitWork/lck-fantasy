@@ -1,6 +1,7 @@
 import { CHEER_KEY, CHEER_LABEL, CHEER_WORD, count, Led, LinkGo, ordinal, RankMove, SideSection, Table, TruckHire, type CheerKind } from "../../parts";
 import { PATHS } from "../../paths";
 import type { FeedItem, HomeLeague } from "./types";
+import { captainOf, pts, ptsIn, sent as sentLine, weekHead, WORDS } from "./words";
 
 /** The Following card's cheering: the cheer or jeer sent each manager this week, by manager id, and the key's action. */
 export interface Cheering {
@@ -17,16 +18,16 @@ export function FeedRow({ item, sent, onCheer }: { item: FeedItem } & Cheering) 
         <Led>{item.line}</Led>
         <div>
           <b>
-            {CHEER_WORD[item.cheer]} from {item.from}
+            {CHEER_WORD[item.cheer]} {WORDS.from} {item.from}
           </b>
-          <small className="home__feed-small quiet">Week {item.week}</small>
+          <small className="home__feed-small quiet">{weekHead(item.week)}</small>
           <TruckHire />
         </div>
       </div>
     );
   }
-  const what = item.kind === "captain" ? `Captain ${item.player}` : item.series;
-  const small = item.kind === "captain" ? `${item.points} pts in ${item.series}` : `${item.points} pts`;
+  const what = item.kind === "captain" ? captainOf(item.player) : item.series;
+  const small = item.kind === "captain" ? ptsIn(item.points, item.series) : pts(item.points);
   const already = sent?.[item.managerId];
   return (
     <div className="home__feed-row">
@@ -35,7 +36,7 @@ export function FeedRow({ item, sent, onCheer }: { item: FeedItem } & Cheering) 
         <small className="home__feed-small quiet">{small}</small>
       </div>
       {already ? (
-        <span className="home__sent quiet">{CHEER_WORD[already]} sent</span>
+        <span className="home__sent quiet">{sentLine(CHEER_WORD[already])}</span>
       ) : (
         <button
           type="button"
@@ -52,12 +53,12 @@ export function FeedRow({ item, sent, onCheer }: { item: FeedItem } & Cheering) 
 
 export function Following({ items, ...cheering }: { items: FeedItem[] } & Cheering) {
   return (
-    <SideSection title="Following">
+    <SideSection title={WORDS.following}>
       {items.map((item) => (
         <FeedRow key={item.id} item={item} {...cheering} />
       ))}
       <div className="home__more">
-        <LinkGo go={{ to: PATHS.following }}>Following</LinkGo>
+        <LinkGo go={{ to: PATHS.following }}>{WORDS.following}</LinkGo>
       </div>
     </SideSection>
   );
@@ -66,19 +67,19 @@ export function Following({ items, ...cheering }: { items: FeedItem[] } & Cheeri
 /** Each league's rank and move; Overall is left out, since the head shows it. */
 export function Leagues({ leagues }: { leagues: HomeLeague[] }) {
   return (
-    <SideSection title="Leagues">
+    <SideSection title={WORDS.leagues}>
       <Table
-        label="Leagues"
+        label={WORDS.leagues}
         rows={leagues}
         rowKey={(l) => l.id}
         columns={[
-          { key: "name", head: "League", cell: (l) => l.name, fullText: (l) => l.name },
-          { key: "rank", head: "Rank", figure: true, cell: (l) => (l.kind === "private" ? ordinal(l.rank) : count(l.rank)) },
-          { key: "move", head: "Move", figure: true, width: "goCol", cell: (l) => <RankMove move={l.move} /> },
+          { key: "name", head: WORDS.league, cell: (l) => l.name, fullText: (l) => l.name },
+          { key: "rank", head: WORDS.rank, figure: true, cell: (l) => (l.kind === "private" ? ordinal(l.rank) : count(l.rank)) },
+          { key: "move", head: WORDS.move, figure: true, width: "goCol", cell: (l) => <RankMove move={l.move} /> },
         ]}
       />
       <div className="home__more">
-        <LinkGo go={{ to: PATHS.leagues }}>All leagues</LinkGo>
+        <LinkGo go={{ to: PATHS.leagues }}>{WORDS.allLeagues}</LinkGo>
       </div>
     </SideSection>
   );

@@ -3,6 +3,7 @@ import { Columns, count, Hint, HINTS, MainAction, OutlinedKey, PageFrame, PageHe
 import { Following, Leagues, type Cheering } from "./band";
 import "./home.css";
 import type { Countdown, HomeShared, OverallTier } from "./types";
+import { deadlineHead, freeTransfers, WORDS } from "./words";
 
 /** What Home's keys do; the route wires them. */
 export interface HomeActions extends Cheering {
@@ -30,7 +31,7 @@ function HomeHead({ team, hangul, overall }: { team: string; hangul: string; ove
           </div>
         </div>
         <span className="home__badge">
-          <Placeholder word="Badge" fill />
+          <Placeholder word={WORDS.badge} fill />
         </span>
       </div>
     </div>
@@ -41,11 +42,11 @@ function CountdownFigure({ countdown }: { countdown: Countdown }) {
   return (
     <div className="home__countdown num">
       {countdown.days}
-      <small>d</small>
+      <small>{WORDS.days}</small>
       {countdown.hours}
-      <small>h</small>
+      <small>{WORDS.hours}</small>
       {countdown.minutes}
-      <small>m</small>
+      <small>{WORDS.minutes}</small>
     </div>
   );
 }
@@ -56,7 +57,7 @@ function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions
   return (
     <section className="home__deadline">
       <SectionHead note={deadline.competition} className="home__deadline-title">
-        Week {deadline.week} deadline
+        {deadlineHead(deadline.week)}
       </SectionHead>
       <div className="home__deadline-left">
         <CountdownFigure countdown={data.countdown} />
@@ -65,10 +66,10 @@ function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions
         </div>
       </div>
       <div className="home__deadline-keys">
-        <MainAction onClick={actions.onPickTeam}>Pick Team</MainAction>
-        <OutlinedKey onClick={actions.onTransfers}>Transfers</OutlinedKey>
+        <MainAction onClick={actions.onPickTeam}>{WORDS.pickTeam}</MainAction>
+        <OutlinedKey onClick={actions.onTransfers}>{WORDS.transfers}</OutlinedKey>
         <span className="home__free">
-          <b className="num">{data.freeTransfers}</b> free {data.freeTransfers === 1 ? "transfer" : "transfers"}
+          <b className="num">{data.freeTransfers}</b> {freeTransfers(data.freeTransfers)}
         </span>
       </div>
     </section>
@@ -103,7 +104,7 @@ export function HomeFrame({
         <Leagues leagues={data.leagues} />
       </Columns>
       <div className="home__sponsor">
-        <Placeholder word="Sponsor" fill />
+        <Placeholder word={WORDS.sponsor} fill />
       </div>
       <SponsorNote />
     </PageFrame>

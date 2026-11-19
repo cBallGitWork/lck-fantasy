@@ -5,6 +5,7 @@ import { HomeFrame, type HomeActions } from "./Home";
 import "./Idle.css";
 import { PlayerList, WeekTotal } from "./side";
 import type { HomeIdleData, LineupStarter, NextSeries } from "./types";
+import { daysHours, lineupHead, versus, WORDS } from "./words";
 
 /** Under a starter's name: his role; a Flex's own role after it (`Flex · Top`). */
 function plateRole(s: LineupStarter): string {
@@ -32,15 +33,13 @@ function Starter({ starter }: { starter: LineupStarter }) {
 function NextOnStream({ next }: { next: NextSeries }) {
   return (
     <div className="home__next">
-      <span className="home__next-label">Next on stream</span>
+      <span className="home__next-label">{WORDS.nextOnStream}</span>
       <b className="home__next-teams">
-        {next.home} v {next.away}
+        {versus(next.home, next.away)}
       </b>
       <span className="home__next-when">
-        <Time local={`${next.day} ${next.local}`} kst={next.kst} /> · in{" "}
-        <b className="num">
-          {next.startsIn.days}d {next.startsIn.hours}h
-        </b>
+        <Time local={`${next.day} ${next.local}`} kst={next.kst} /> · {WORDS.startsIn}{" "}
+        <b className="num">{daysHours(next.startsIn.days, next.startsIn.hours)}</b>
       </span>
     </div>
   );
@@ -50,10 +49,10 @@ function NextOnStream({ next }: { next: NextSeries }) {
 function LineupStage({ data }: { data: HomeIdleData }) {
   return (
     <div className="home__stage">
-      <h2 className="home__stage-title">Week {data.lineupWeek} lineup</h2>
+      <h2 className="home__stage-title">{lineupHead(data.lineupWeek)}</h2>
       <NextOnStream next={data.next} />
       <span className="home__floor" />
-      <ol className="home__starters" aria-label={`Week ${data.lineupWeek} lineup`}>
+      <ol className="home__starters" aria-label={lineupHead(data.lineupWeek)}>
         {data.lineup.map((s) => (
           <Starter key={s.slot} starter={s} />
         ))}
@@ -73,14 +72,14 @@ export function HomeIdle({ data, ...actions }: { data: HomeIdleData } & HomeActi
         <SideSection title={data.week.label} note={<FinalTag final={data.week.final} />}>
           <WeekTotal week={data.week} />
           <PlayerList
-            label="Star and flop"
+            label={WORDS.starAndFlop}
             players={[
-              ...data.stars.map((p) => ({ ...p, stat: "Star" })),
-              ...data.flops.map((p) => ({ ...p, stat: "Flop" })),
+              ...data.stars.map((p) => ({ ...p, stat: WORDS.star })),
+              ...data.flops.map((p) => ({ ...p, stat: WORDS.flop })),
             ]}
           />
           <div className="home__more">
-            <LinkGo go={{ to: PATHS.points }}>Points</LinkGo>
+            <LinkGo go={{ to: PATHS.points }}>{WORDS.points}</LinkGo>
           </div>
         </SideSection>
       }

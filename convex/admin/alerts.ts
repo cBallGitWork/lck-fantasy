@@ -7,7 +7,8 @@ import { nextMidnight, now } from "./clock";
 
 /** The email's subject: the message itself is its body. */
 export const ALERT_SUBJECT = "Flol admin alert";
-/** How many of the newest alerts the admin's list shows. */
+/** How many of the newest alerts the admin's list shows: an alert is one game's feed going down, so
+ *  100 is weeks of them. Older rows stay in the `alerts` table, read in the Convex dashboard's data view. */
 const LIST_LENGTH = 100;
 
 /** Stores an alert, dated in the competition's `zone`; the first of its match day emails the admin. */

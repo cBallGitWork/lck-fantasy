@@ -42,7 +42,8 @@ export const seasonSettings = v.object({
   signUpOpen: v.optional(v.boolean()),
   /** Live points (spec/11, Live): how often each live game's feed is read, how long with no new
    *  reading counts as down, and the minute gold lead is read at (the scoring table's
-   *  `goldLeadAt15.atMinutes`, held here until the scoring table is stored). */
+   *  `goldLeadAt15.atMinutes`, held here until the scoring table is stored). Required, unlike
+   *  `signUpOpen`: no deployment has stored a season yet, and loading data/lck rewrites settings. */
   live: v.object({ pollSeconds: v.number(), downAfterSeconds: v.number(), goldLeadAtMinutes: v.number() }),
 });
 

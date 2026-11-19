@@ -1,6 +1,8 @@
-// Test fixtures for every convex test and the guest squad's: picks and settings, never product data.
+// Test fixtures for every convex test and the guest squad's: picks and settings, never product data; the price settings are read from the season file.
 import { allPicks, pickKey, type Pick, type PlayerRole, type Squad, type SquadSettings, type StarterSlot } from "./squad";
 import type { ConfirmedTransfer, TransferSettings } from "./transfers";
+import type { PriceSettings } from "./prices";
+import season2027 from "../../data/lck/season-2027.json";
 
 export const TRANSFER_SETTINGS: TransferSettings = { freePerGameweek: 1, bankCap: 3, hitPoints: 6, freeAfterUnlimited: 2 };
 
@@ -89,3 +91,7 @@ export function playedExcept(squad: Squad, ...sitOut: Pick[]): Set<string> {
   const out = new Set(sitOut.map(pickKey));
   return new Set(allPicks(squad).map(pickKey).filter((key) => !out.has(key)));
 }
+
+/** spec/02's approved formula and moves (The formula; Price moves), in won: the season file's, so
+ *  the tests and the backtest run on the numbers the data holds. */
+export const PRICE_SETTINGS: PriceSettings = season2027.settings.prices;

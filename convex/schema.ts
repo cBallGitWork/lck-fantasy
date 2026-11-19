@@ -48,6 +48,27 @@ export const seasonSettings = v.object({
    *  `goldLeadAt15.atMinutes`, held here until the scoring table is stored). Required, unlike
    *  `signUpOpen`: no deployment has stored a season yet, and loading data/lck rewrites settings. */
   live: v.object({ pollSeconds: v.number(), downAfterSeconds: v.number(), goldLeadAtMinutes: v.number() }),
+  /** convex/squads/prices.ts's PriceSettings: the formula and the weekly moves (spec/02). Required,
+   *  as `live` is. */
+  prices: v.object({
+    seasonWeights: v.array(v.number()),
+    minSeries: v.number(),
+    lowPercentile: v.number(),
+    teamWeight: v.number(),
+    bend: v.number(),
+    floor: v.number(),
+    top: v.number(),
+    coachTop: v.number(),
+    rounding: v.number(),
+    gap: v.object({ low: v.number(), high: v.number() }),
+    spacing: v.number(),
+    academy: v.number(),
+    formSeries: v.number(),
+    formGap: v.number(),
+    step: v.number(),
+    transferShare: v.number(),
+    lowOwnership: v.number(),
+  }),
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */

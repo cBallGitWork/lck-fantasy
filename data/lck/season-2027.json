@@ -23,7 +23,26 @@
     "teamNameMaxLength": 20,
     "signUpOpen": true,
     "overallSplits": true,
-    "live": { "pollSeconds": 60, "downAfterSeconds": 180, "goldLeadAtMinutes": 15 }
+    "live": { "pollSeconds": 60, "downAfterSeconds": 180, "goldLeadAtMinutes": 15 },
+    "prices": {
+      "seasonWeights": [0.75, 0.25],
+      "minSeries": 10,
+      "lowPercentile": 0.1,
+      "teamWeight": 0.45,
+      "bend": 1.1,
+      "floor": 6000000,
+      "top": 22500000,
+      "coachTop": 16500000,
+      "rounding": 500000,
+      "gap": { "low": 17500000, "high": 21000000 },
+      "spacing": 500000,
+      "academy": 5000000,
+      "formSeries": 8,
+      "formGap": 3000000,
+      "step": 200000,
+      "transferShare": 0.05,
+      "lowOwnership": 0.02
+    }
   },
   "gameweeks": [
     { "number": 1, "split": 1, "deadline": "2026-12-30T07:45:00Z", "state": "final" },

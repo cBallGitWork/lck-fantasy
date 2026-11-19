@@ -25,3 +25,10 @@ rule is FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open
   jungler; the bench mid starts at mid and is the Captain (Craig, 18 Nov 2026).
 - Under the Double Captain buff a second Captain is picked by the same rules, both wear C, and
   both score ×2 that week ([spec/06](06-buffs.md)).
+- Playing Double Captain puts the second C at once on the priciest starter who isn't Captain.
+  While it is on, every other starter's card also shows `Make 2nd Captain`, which moves it;
+  `Make Captain` still moves the first C. Example: Faker is Captain, Double Captain goes on and
+  the second C lands on Chovy (Craig, 19 Nov 2026).
+- Cancelling Double Captain before the deadline takes the second C off; the first Captain keeps
+  his. Playing it counts as one change, the second C it lands included; moving the second C
+  counts one more, as a new Captain does ([spec/12](12-pages.md)).

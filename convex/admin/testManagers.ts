@@ -48,9 +48,8 @@ export interface TestManagerGameweek extends BuffGameweek {
   unlimited: boolean;
 }
 
-/** The week's data: the stage's settings, the picks on offer, their prices and form. */
-export interface TestManagerWeek {
-  gameweek: TestManagerGameweek;
+/** What a first squad is picked from: the stage's squad rules, money, picks, prices and form. */
+export interface FirstSquadWeek {
   squadSettings: SquadSettings;
   /** In won; null when the stage has the budget off. */
   budget: number | null;
@@ -60,6 +59,11 @@ export interface TestManagerWeek {
   prices: Prices;
   /** Each pick's recent points, by `pickKey`; a pick with none has 0. */
   form: ReadonlyMap<string, number>;
+}
+
+/** The week's data: the stage's settings, the picks on offer, their prices and form, its buffs. */
+export interface TestManagerWeek extends FirstSquadWeek {
+  gameweek: TestManagerGameweek;
   buffs: readonly Buff[];
 }
 
@@ -83,20 +87,13 @@ export function testManagerWeek(
   random: () => number,
 ): TestManagerDecisions {
   const best = bestFirst(manager, week, random);
-  const shortlisted = (picks: readonly Pick[]) => {
-    const ranked = best(picks);
-    // A loyal fan takes his own team's best whenever he can.
-    const top = ranked[0];
-    if (manager.style === "loyal" && top !== undefined && top.teamId === manager.teamId) return top;
-    return ranked[Math.floor(random() * Math.min(habits.shortlist, ranked.length))]!;
-  };
+  const shortlisted = shortlister(manager, best, habits, random);
 
   let squad: Squad;
   let transfers: Transfer[] = [];
   let bank: number;
   if (entry.squad === null) {
-    const money = { budget: week.budget, gap: week.autoFillGap };
-    squad = autoFill({ starters: [], bench: [] }, week.pool, week.prices, week.squadSettings, money, shortlisted);
+    squad = firstSquad(week, shortlisted);
     bank = week.budget === null ? entry.bank : week.budget - sum(allPicks(squad).map((pick) => requirePrice(pick, week.prices)));
   } else {
     transfers = weekTransfers(entry.squad, entry.bank, transferCount(entry, week, habits, random), week, best, shortlisted);
@@ -114,9 +111,29 @@ export function testManagerWeek(
   return { squad, transfers, bank, armband, buffId: buff?.id ?? null };
 }
 
+/** A test manager's first squad, as he signs up: Auto-fill with his style as its chooser. */
+export function testManagerFirstSquad(manager: TestManager, week: FirstSquadWeek, habits: TestManagerHabits, random: () => number): Squad {
+  return firstSquad(week, shortlister(manager, bestFirst(manager, week, random), habits, random));
+}
+
+function firstSquad(week: FirstSquadWeek, shortlisted: (picks: readonly Pick[]) => Pick): Squad {
+  const money = { budget: week.budget, gap: week.autoFillGap };
+  return autoFill({ starters: [], bench: [] }, week.pool, week.prices, week.squadSettings, money, shortlisted);
+}
+
+/** One of the best few for his style, at random; a loyal fan takes his own team's best whenever he can. */
+function shortlister(manager: TestManager, best: (picks: readonly Pick[]) => Pick[], habits: TestManagerHabits, random: () => number) {
+  return (picks: readonly Pick[]): Pick => {
+    const ranked = best(picks);
+    const top = ranked[0];
+    if (manager.style === "loyal" && top !== undefined && top.teamId === manager.teamId) return top;
+    return ranked[Math.floor(random() * Math.min(habits.shortlist, ranked.length))]!;
+  };
+}
+
 /** The picks in the style's order, best first: by form; the favourite team's first, then form; by
  *  form for the price; or shuffled. */
-function bestFirst(manager: TestManager, week: TestManagerWeek, random: () => number) {
+function bestFirst(manager: TestManager, week: FirstSquadWeek, random: () => number) {
   const form = (pick: Pick) => week.form.get(pickKey(pick)) ?? 0;
   const value = (pick: Pick) => form(pick) / (priceOf(pick, week.prices) ?? Infinity);
   const loyal = (pick: Pick) => Number(pick.teamId === manager.teamId);

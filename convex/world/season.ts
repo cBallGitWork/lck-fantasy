@@ -3,7 +3,8 @@
 import { v, type Infer } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
 import { internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "../_generated/server";
-import { competitionFields, gameweekState, pricedPick, seasonSettings, split } from "../schema";
+import { competitionFields, gameweekState, pricedPick, split } from "../schema";
+import { seasonSettings } from "../seasonSettings";
 import type { Prices } from "../squads/budget";
 import { pickKey, type Pick } from "../squads/squad";
 import season2027 from "../../data/lck/season-2027.json";

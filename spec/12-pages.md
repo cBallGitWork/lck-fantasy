@@ -96,6 +96,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Reached from links on Points and Home.
   - Rift view or Card view, the shared remembered view (see [Pick Team and Transfers](#pick-team-and-transfers)). Your own players are marked
     (Craig, 15 Nov 2026).
+  - It opens with no one tapped: the right side shows the week's series until a player is
+    tapped, as FPL's Team of the Week (Craig, 17 Nov 2026).
+  - A tapped player's sum line reads as on Points: a starter's series added up (9 + 8), the
+    Captain's C and his result only (Craig, 17 Nov 2026).
+  - Each week has its own address, as Points: `/perfect-game/3` is Week 3, and bare
+    `/perfect-game` opens the current week (Craig, 17 Nov 2026).
 - **Price changes** (Craig, 16 Nov 2026: back from Patch update, which all five QA testers read as
   LoL patch notes): the new prices for a
   gameweek, set once the deadline before it passes ("just shows the new prices, thats it really").
@@ -133,17 +139,20 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Home embeds the stream while a series is live ([Home](#home)); it never redirects.
 - **Following**: the feed, follows, requests and cheers and jeers received
   ([spec/14](14-following.md)).
-- **Help**: the rules, as FPL's Rules page (Craig, 17 Nov 2026).
-  - One page of sections, each a heading and a few short lines, with a contents list at the top:
-    Squad, Transfers, Captain, Scoring, Buffs, Prices, Leagues, Ranks. Each section has its own
-    link, such as `/help#prices`. No questions-and-answers section in the beta.
+- **Help**, as FPL's Help (Craig, 17 Nov 2026; its picture is `docs/design/approved/help/`): two
+  tabs. **Help** is a beginner's guide (Flol in 60 seconds, how a week works, seven steps saying
+  where to click, a weekly checklist, a glossary) with a Help menu beside it. **Rules** is every
+  rule, in groups of items that open and close: Squad, Transfers, Captain, Scoring, Buffs, Prices,
+  Leagues, Ranks. A link such as `/help#prices` opens its item. No questions-and-answers section
+  in the beta. (The first answer that day was one page of rules; Craig's look at the picture made
+  it two tabs, as FPL's.)
   - Scoring shows the full points table, every line for players and the coach with its points,
     read from the same data the scoring uses ([spec/05](05-scoring.md)).
   - Prices explains a price move in plain words with one example, not the formula
     ([spec/02](02-prices-and-budget.md)).
   - Ranks holds the tier cut-offs ([spec/08](08-leagues.md#overall-tiers)).
   - Reached from a Help link in every page's foot, beside Privacy and Terms, and in the team-name
-    ▾ menu; links such as Price changes' How prices move › open its section. Not in the top bar.
+    ▾ menu; links such as Price changes' How prices move › open its item. Not in the top bar.
 - **Settings** ([below](#settings)).
 
 ## Home
@@ -200,8 +209,6 @@ Grilled 14 Nov 2026.
   player first, as FPL (Craig, 18 Nov 2026).
 - The list's role chips are All roles, the five roles, then Coach, so coaches can be browsed
   without selling yours first (Craig, 18 Nov 2026).
-- The player card's Swap with bench opens Pick Team with him already tapped, those he can swap
-  with lit, as FPL's Substitute; Transfer out opens Transfers with him sold (Craig, 18 Nov 2026).
 - Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the
   deadline, [spec/02](02-prices-and-budget.md)); his card shows the amount. Example: Faker
   ▲ ₩0.5m. Before a player's price first moves, nothing shows.
@@ -232,6 +239,12 @@ F1 Fantasy, Sleeper and gol.gg).
   totals, beside every tab (Craig, 14 Nov 2026).
 - **Buttons**, as FPL's, by where it opened: transfer in or out, Make Captain,
   substitute.
+  - Swap with bench closes the card and opens Pick Team with him already tapped, those he can
+    swap with lit, as FPL's Substitute; Transfer out opens Transfers with him already sold (Craig,
+    17 and 18 Nov 2026).
+- This week before any of his games lists the week's series with opponent and time, points as
+  —, filling in game by game (Craig, 17 Nov 2026).
+- History's week totals are his own points, never your Captain's ×1.5, as FPL (Craig, 17 Nov 2026).
 - **Compare**, in the beta: two players side by side, with header stats, form, scoring lines and
   next series.
   - A sheet over the card. The second player comes from a search, his role listed first. Any role

@@ -2,16 +2,20 @@ import { PATHS, PRODUCT, SCREEN_NAME } from "../../paths";
 import { GoLink } from "../controls/GoLink";
 import { Menu, type MenuItem } from "../controls/Menu";
 import { cx } from "../util/cx";
+import { LOG_IN, WORDS } from "../words";
 import { Placeholder } from "./Placeholder";
 import "./TopBar.css";
 
-const TOP_BAR_ITEMS = ["home", "pickTeam", "transfers", "points", "leagues", "stats", "lckHub", "live"] as const;
+const TOP_BAR_ITEMS = ["home", "pickTeam", "transfers", "points", "leagues", "stats", "hub", "live"] as const;
 
 export type TopBarItem = (typeof TOP_BAR_ITEMS)[number];
 
+/** A visitor's items: only what needs no team (front door picture, Craig 17 Nov 2026). */
+const VISITOR_ITEMS: readonly TopBarItem[] = ["stats", "hub"];
+
 /**
  * The same on every screen: Flol, the eight items (Live's dot always shown), `presented by` the
- * sponsor, then the account menu, or `Sign in` for a visitor (`account` null).
+ * sponsor, then the account menu. A visitor (`account` null) gets Stats and LCK, then `Log in ›`.
  */
 export function TopBar({
   active,
@@ -28,7 +32,7 @@ export function TopBar({
       <GoLink className="top-bar__word" go={{ to: PATHS.home }}>
         {PRODUCT}
       </GoLink>
-      {TOP_BAR_ITEMS.map((key) => (
+      {(account === null ? VISITOR_ITEMS : TOP_BAR_ITEMS).map((key) => (
         <GoLink
           key={key}
           go={{ to: PATHS[key] }}
@@ -40,11 +44,11 @@ export function TopBar({
       ))}
       <span className="top-bar__space" />
       <span className="top-bar__presented quiet">
-        presented by <Placeholder word="Sponsor" width="sponsorTopW" height="target" />
+        {WORDS.presentedBy} <Placeholder word={WORDS.sponsor} width="sponsorTopW" height="target" />
       </span>
       {account === null ? (
         <GoLink className="top-bar__me" go={{ to: PATHS.pickTeam }}>
-          Sign in
+          {LOG_IN}
         </GoLink>
       ) : accountMenu ? (
         <Menu label={`${account} ▾`} items={accountMenu} className="top-bar__me" />

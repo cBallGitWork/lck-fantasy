@@ -57,7 +57,7 @@ describe("the page (1440.png)", () => {
       "Week 2",
       "Jae Kim",
       "GEN 2–0 BRO",
-      "Big Captain",
+      "Captain haul",
       "Ruler 21 (14 × 1.5)",
       "Minji Park",
       "Chovy 21",
@@ -85,7 +85,7 @@ describe("the page (1440.png)", () => {
       "Jeer from Dan Okafor",
       "Truck hire by Sponsor",
       "WINNER WINNER, GANK CHICKEN. 98 PTS.",
-      "Sponsor cheer, Pub League top",
+      "Sponsor cheer for topping Pub League",
       "갱 치킨 Gank Chicken",
       "Following3 of 50",
       "Minji Park",
@@ -128,6 +128,15 @@ describe("the page (1440.png)", () => {
     expect(html(view())).toContain('<div class="led">−6 FOR A SIDEWAYS TRANSFER. WHO SIGNED THIS OFF?</div>');
   });
 
+  test("a sponsor cheer's panel credits only the sponsor, as its sender: no truck-hire line", () => {
+    const panels = html(view()).split('<div class="following__parked">').slice(1);
+    const sponsor = panels.filter((p) => p.includes("Sponsor cheer"));
+    expect(sponsor).toHaveLength(1);
+    expect(sponsor[0]).toContain("갱 치킨 Gank Chicken");
+    expect(sponsor[0]).not.toContain("Truck hire");
+    expect(panels.filter((p) => p.includes("Truck hire"))).toHaveLength(2);
+  });
+
   test("says Truck only in the truck-hire credit, a sponsor placeholder until its name is approved", () => {
     expect(trucksOutsideCredit(text(view()))).toEqual([]);
     expect(html(view())).toContain('Truck hire by <span class="placeholder quiet">Sponsor</span>');
@@ -166,7 +175,7 @@ describe("the cheer picker (1440-truck.png)", () => {
       "31 POINTS. WE ARE NOT ANGRY. WE ARE GUTTED.",
       "THE TEMPLATE WAS RIGHT THERE, MATE.",
       "MANAGEMENT MUST EXPLAIN THIS CAPTAIN PICK. 2 PTS.",
-      "One cheer or jeer to Jae a week.",
+      "You can send Jae one cheer or jeer a week.",
       "Cancel",
       "Send",
     ]);

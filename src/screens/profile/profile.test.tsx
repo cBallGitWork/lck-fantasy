@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { MANAGER } from "../../fixtures/week3";
+import { HIT_POINTS, MANAGER } from "../../fixtures/week3";
 import { expectInOrder, html, text } from "../../testing/render";
 import { PROFILE, type ProfileData } from "./fixtures";
 import { nextFollow, Profile, type ProfileTab } from ".";
@@ -10,7 +10,7 @@ const page = (tab: ProfileTab, data: ProfileData = PROFILE, week?: number) => (
 );
 
 const BANNER = ["쵸비는 바로 거기 있었다", "Chovy Was Right There", "Minji Park", "Following ✓", "Points", "History", "Transfers"];
-const LEAGUES = ["Leagues", "Overall", "Emerald I", "21,804", "3,112", "South Korea", "2,310", "402", "GEN supporters", "1,977", "288", "Pub League", "3rd", "1"];
+const LEAGUES = ["Leagues", "Overall", "Emerald I", "21,804", "3,112", "South Korea", "2,310", "402", "GEN supporters", "1,977", "288", "Pub League", "3", "1"];
 
 describe("Points", () => {
   const out = text(page("Points"));
@@ -52,8 +52,8 @@ describe("Points", () => {
     const markup = html(page("Points"));
     expect(markup).toContain('data-screen="profile"');
     expect(markup).toMatch(/aria-selected="true"[^>]*>Points</);
-    expect(markup).toContain('aria-label="Week before"');
-    expect(markup).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">›</button>');
+    expect(markup).toContain('aria-label="Previous week"');
+    expect(markup).toContain('<button type="button" class="week-arrow key-off" aria-label="Next week" disabled="">›</button>');
   });
 
   test("her team is the Table part's, Bench a sub-row above the bench", () => {
@@ -80,7 +80,7 @@ describe("Points", () => {
     expectInOrder(week2, ["Week 2", "112"]);
     expect(week2).not.toContain("Not final");
     expect(week2).not.toContain("Cheers and jeers");
-    expect(html(page("Points", PROFILE, 2))).toContain("Week 2&#x27;s team");
+    expect(html(page("Points", PROFILE, 2))).toContain("Loading Week 2&#x27;s team");
   });
 });
 
@@ -88,9 +88,9 @@ describe("History", () => {
   test("shows each week's row, newest first, then the buffs left", () => {
     expectInOrder(text(page("History")), [
       ...BANNER,
-      "Week", "Pts", "Total", "Week rank", "Overall", "Move", "Transfers", "Hits", "Bank", "Value", "Buff",
-      "Week 3", "93", "315", "—", "21,804", "3,112", "5", "3", "₩0.5m", "₩100.9m", "Bench Boost", "›",
-      "Week 2", "112", "222", "4,211", "24,916", "9,870", "1", "0", "₩1.0m", "₩100.6m", "—", "›",
+      "Week", "Pts", "Total", "Week rank", "Overall rank", "Rank move", "Transfers", "Cost", "Bank", "Value", "Buff",
+      "Week 3", "93", "315", "—", "21,804", "3,112", "5", `−${3 * HIT_POINTS}`, "₩0.5m", "₩100.9m", "Bench Boost", "›",
+      "Week 2", "112", "222", "4,211", "24,916", "9,870", "1", "—", "₩1.0m", "₩100.6m", "—", "›",
       "Week 1", "110", "110", "34,786", "34,786", "—", "—", "—", "₩2.5m", "₩100.0m", "—", "›",
       "Buffs left: Double Captain · Coach Diff",
       ...LEAGUES,
@@ -138,11 +138,29 @@ describe("the follow key", () => {
     expect(as("self")).not.toMatch(/Follow|Requested/);
   });
 
-  test("Following unfollows; Follow requests; Requested waits for her to accept", () => {
+  test("Following unfollows; Follow requests; Requested cancels, back to Follow", () => {
     expect(nextFollow("following")).toBe("follow");
     expect(nextFollow("follow")).toBe("requested");
-    expect(nextFollow("requested")).toBe("requested");
+    expect(nextFollow("requested")).toBe("follow");
   });
+
+  test("Requested is a live key, with no confirm", () => {
+    const markup = html(page("Points", { ...PROFILE, manager: { ...PROFILE.manager, follow: "requested" } }));
+    expect(markup).not.toMatch(/disabled=""[^>]*>Requested</);
+    expect(markup).not.toMatch(/confirm/i);
+  });
+});
+
+test("every league rank is a plain number, a private league's too", () => {
+  const out = text(page("Points"));
+  expectInOrder(out, ["Overall", "21,804", "Pub League", "3"]);
+  expect(out).not.toMatch(/\d(st|nd|rd|th)\b/);
+});
+
+test("History's Cost is the points a week's transfers took, — for none", () => {
+  const week1 = (cost?: number) => text(page("History", { ...PROFILE, history: PROFILE.history.filter((r) => r.week === 1).map((r) => ({ ...r, transfers: 2, cost })) }));
+  expectInOrder(week1(HIT_POINTS), ["Week 1", "110", "110", "34,786", "34,786", "—", "2", `−${HIT_POINTS}`, "₩2.5m"]);
+  expectInOrder(week1(), ["Week 1", "110", "110", "34,786", "34,786", "—", "2", "—", "₩2.5m"]);
 });
 
 test("a held rank, in Leagues or History, is RankMove's grey —", () => {

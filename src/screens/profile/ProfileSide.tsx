@@ -1,12 +1,13 @@
-import { CHEER_WORD, CHEERS_RECEIVED, count, GoLink, Led, ordinal, RankMove, SideSection, TierShield, TruckHire } from "../../parts";
+import { CHEER_WORD, CHEERS_RECEIVED, count, GoLink, Led, RankMove, SideSection, TierShield, TruckHire } from "../../parts";
 import { leagueGo } from "../../paths";
 import type { LeagueRow, Parked } from "./fixtures";
+import { cheersWeek, fromWord, WORDS } from "./words";
 
 /** The side column: her leagues, her tier beside Overall, and on Points the cheers and jeers parked on her that week. */
 export function ProfileSide({ leagues, cheers }: { leagues: LeagueRow[]; cheers?: { week: number; list: Parked[] } }) {
   return (
     <>
-      <SideSection title="Leagues">
+      <SideSection title={WORDS.leagues}>
         <ul className="profile__leagues">
           {leagues.map((league) => (
             <li key={league.id}>
@@ -23,7 +24,7 @@ export function ProfileSide({ leagues, cheers }: { leagues: LeagueRow[]; cheers?
                   )}
                 </span>
                 <span>
-                  <b className="num">{league.ordinal ? ordinal(league.rank) : count(league.rank)}</b> <RankMove move={league.move} />
+                  <b className="num">{count(league.rank)}</b> <RankMove move={league.move} />
                 </span>
               </GoLink>
             </li>
@@ -31,12 +32,12 @@ export function ProfileSide({ leagues, cheers }: { leagues: LeagueRow[]; cheers?
         </ul>
       </SideSection>
       {cheers && cheers.list.length > 0 && (
-        <SideSection title={`${CHEERS_RECEIVED} · Week ${cheers.week}`} note={cheers.list.length}>
+        <SideSection title={cheersWeek(CHEERS_RECEIVED, cheers.week)} note={cheers.list.length}>
           {cheers.list.map((cheer) => (
             <div key={cheer.from} className="profile__cheer">
               <Led>{cheer.line}</Led>
               <p className="profile__cheer-by quiet">
-                {CHEER_WORD[cheer.kind]} from <b>{cheer.from}</b>
+                {CHEER_WORD[cheer.kind]} {fromWord} <b>{cheer.from}</b>
                 <TruckHire />
               </p>
             </div>

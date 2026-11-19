@@ -1,3 +1,4 @@
+import { photoOf } from "../../fixtures/photos";
 import { MANAGER } from "../../fixtures/week3";
 import { FinalTag, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, sum, ViewToggle, type WeekNav } from "../../parts";
 import { PATHS } from "../../paths";
@@ -5,6 +6,7 @@ import { flexPlays, Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
 import { GamesPanel } from "./GamesPanel";
 import "./perfect-game.css";
 import { RIFT_VIEW, VIEWS, type PerfectGameData, type PerfectView, type Selection } from "./types";
+import { WORDS } from "./words";
 
 /** Rift view: the seven on the Rift, each with his points and series, C on the Captain. */
 export function PerfectGameRift({ game, selected, onSelect }: { game: PerfectGameData } & Selection) {
@@ -39,6 +41,7 @@ export function PerfectGameCards({ game, selected, onSelect }: { game: PerfectGa
           plays: flexPlays(p.slot, p.role),
           name: p.name,
           team: p.team,
+          photo: photoOf(p.name),
           mark: p.captain ? "C" : undefined,
           me: p.mine,
           next: p.line.split(" · ").map((series) => (
@@ -67,7 +70,7 @@ export function PerfectGame({
   game: PerfectGameData;
   view: PerfectView;
   onView?: (view: PerfectView) => void;
-  /** The week before and after; the route takes no week yet. */
+  /** The week before and after, by the router. */
   weekNav?: Omit<WeekNav, "label">;
 } & Selection) {
   const total = sum(game.players.map((p) => p.points));
@@ -84,25 +87,25 @@ export function PerfectGame({
           <SideSection title={game.seriesTitle}>
             <SeriesList series={game.series} />
           </SideSection>
-          <Placeholder word="Sponsor" height="sponsorH" />
+          <Placeholder word={WORDS.sponsor} height="sponsorH" />
           <SponsorNote />
         </>
       }
     >
       <PageHead
-        title="Perfect game"
-        hangul="퍼펙트 게임"
+        title={WORDS.title}
+        hangul={WORDS.hangul}
         week={{ label: game.week, ...weekNav }}
         figure={total}
         tags={<FinalTag final={game.final} />}
         figures={[
-          { label: "Average", value: game.average },
-          { label: "Highest", value: game.highest },
-          { label: "Your points", value: game.yours, go: { to: PATHS.points } },
+          { label: WORDS.average, value: game.average },
+          { label: WORDS.highest, value: game.highest },
+          { label: WORDS.yours, value: game.yours, go: { to: PATHS.points } },
         ]}
       />
       <div className="perfect-game__toggle">
-        <ViewToggle options={VIEWS} chosen={view} onChoose={onView} label="View" />
+        <ViewToggle options={VIEWS} chosen={view} onChoose={onView} label={WORDS.view} />
       </div>
       {view === RIFT_VIEW ? <PerfectGameRift {...viewProps} /> : <PerfectGameCards {...viewProps} />}
     </PageFrame>

@@ -38,32 +38,26 @@ export interface DeleteRow {
   detail?: string;
 }
 
-/** Each setting's tab and its name in the save bar, in the order the tabs show them. */
-const FIELDS: { [K in keyof SettingsValues]: { tab: SettingsTab; name: string } } = {
-  teamName: { tab: "Team", name: "team name" },
-  banner: { tab: "Team", name: "hangul banner" },
-  favouriteTeam: { tab: "Team", name: "favourite team" },
-  country: { tab: "Team", name: "country" },
-  timeZone: { tab: "Display", name: "time zone" },
-  theme: { tab: "Display", name: "theme" },
-  deadlineReminder: { tab: "Emails", name: "deadline reminder" },
-  weeklyRecap: { tab: "Emails", name: "weekly recap" },
+/** Each setting's tab, in the order the tabs show them. */
+const FIELD_TABS: { [K in keyof SettingsValues]: SettingsTab } = {
+  teamName: "Team",
+  banner: "Team",
+  favouriteTeam: "Team",
+  country: "Team",
+  timeZone: "Display",
+  theme: "Display",
+  deadlineReminder: "Emails",
+  weeklyRecap: "Emails",
 };
 
 /** The settings the draft changes from what is saved. */
 export function changedFields(saved: SettingsValues, draft: SettingsValues): (keyof SettingsValues)[] {
-  return (Object.keys(FIELDS) as (keyof SettingsValues)[]).filter((key) => saved[key] !== draft[key]);
-}
-
-/** The save bar's words: `1 change: hangul banner`. */
-export function changeLine(changed: (keyof SettingsValues)[]): string {
-  const count = changed.length;
-  return `${count} change${count === 1 ? "" : "s"}: ${changed.map((key) => FIELDS[key].name).join(", ")}`;
+  return (Object.keys(FIELD_TABS) as (keyof SettingsValues)[]).filter((key) => saved[key] !== draft[key]);
 }
 
 /** The tabs holding an unsaved change, which captain a dot. */
 export function dirtyTabs(changed: (keyof SettingsValues)[]): Set<SettingsTab> {
-  return new Set(changed.map((key) => FIELDS[key].tab));
+  return new Set(changed.map((key) => FIELD_TABS[key]));
 }
 
 /** Characters as a reader counts them, hangul syllables one each. */
@@ -77,13 +71,3 @@ export const counter = (text: string) => `${charCount(text)}/${NAME_MAX}`;
 
 /** The zone a time shows in: the browser's, or the one picked. */
 export const zoneOf = (timeZone: string, browserZone: string) => (timeZone === BROWSER ? browserZone : timeZone);
-
-/** The reminder's lead time as the Emails tab shows it: `24 hours before`. */
-export const hoursBefore = (hours: number) => `${hours} hour${hours === 1 ? "" : "s"} before`;
-
-/** Save team is offered once the team is named (spaces alone are no name), a favourite team picked and the 16+ box ticked (spec/09). */
-export const canSaveTeam = (teamName: string, favouriteTeam: TeamCode | null, ticked: boolean) =>
-  teamName.trim() !== "" && favouriteTeam !== null && ticked;
-
-/** The cheer a new manager sees on Save team: `Baron Steal FC is in. 화이팅!` (spec/09, Signing up). */
-export const joinedCheer = (teamName: string) => `${teamName.trim()} is in. 화이팅!`;

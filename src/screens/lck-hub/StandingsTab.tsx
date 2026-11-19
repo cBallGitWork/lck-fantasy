@@ -1,6 +1,6 @@
 import { cx, NONE, pct, SectionHead, signed, Table, type Column } from "../../parts";
 import type { StandingsGroup, StandingsRow } from "./types";
-
+import { STANDINGS_HEADS as HEADS } from "./words";
 
 /** `67%`; a team yet to play shows a dash. */
 export const winPct = ({ won, lost }: Pick<StandingsRow, "won" | "lost">) =>
@@ -10,18 +10,18 @@ const columns = (group: StandingsGroup): Column<StandingsRow>[] => [
   { key: "rank", head: "", width: "row", cell: (r) => <span className="lck-hub__rank num">{group.rows.indexOf(r) + 1}</span> },
   {
     key: "team",
-    head: "Team",
+    head: HEADS.team,
     cell: (r) => <b className="lck-hub__code num">{r.team}</b>,
   },
-  { key: "w", head: "W", figure: true, cell: (r) => r.won },
-  { key: "l", head: "L", figure: true, cell: (r) => r.lost },
-  { key: "sw", head: "Sets W", figure: true, cell: (r) => r.setsWon },
-  { key: "sl", head: "Sets L", figure: true, cell: (r) => r.setsLost },
-  { key: "diff", head: "+/−", figure: true, cell: (r) => signed(r.setsWon - r.setsLost) },
-  { key: "pct", head: "Win %", figure: true, cell: winPct },
+  { key: "w", head: HEADS.won, figure: true, cell: (r) => r.won },
+  { key: "l", head: HEADS.lost, figure: true, cell: (r) => r.lost },
+  { key: "sw", head: HEADS.gamesWon, figure: true, cell: (r) => r.setsWon },
+  { key: "sl", head: HEADS.gamesLost, figure: true, cell: (r) => r.setsLost },
+  { key: "diff", head: HEADS.diff, figure: true, cell: (r) => signed(r.setsWon - r.setsLost) },
+  { key: "pct", head: HEADS.pct, figure: true, cell: winPct },
   {
     key: "last5",
-    head: "Last 5",
+    head: HEADS.last5,
     figure: true,
     cell: (r) =>
       r.last5.map((result, i) => (

@@ -2,9 +2,10 @@ import type { ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
 import { GoLink } from "../../parts";
 import { PATHS } from "../../paths";
-import { capName, counter, type Account } from "./settings";
+import { capName, counter } from "./settings";
+import { WORDS } from "./words";
 
-// The form pieces Settings and the sign-up sheets share.
+// Settings' form pieces.
 
 /** A row of the form: its label at the left, the control at the right. */
 export function Row({ label, note, children }: { label: string; note?: string; children: ReactNode }) {
@@ -29,55 +30,17 @@ export function CappedInput({ label, value, onChange }: { label: string; value: 
   );
 }
 
-export function Select<T extends string>({
-  label,
-  value,
-  options,
-  onChange,
-  empty,
-}: {
-  label: string;
-  value: T | null;
-  options: { value: T; label: string }[];
-  onChange: (value: T) => void;
-  /** The words shown before anything is chosen (`Choose a team`). */
-  empty?: string;
-}) {
-  return (
-    <select className="settings__select" aria-label={label} value={value ?? ""} onChange={(e) => onChange(e.target.value as T)}>
-      {value === null && (
-        <option value="" disabled>
-          {empty}
-        </option>
-      )}
-      {options.map((o) => (
-        <option key={o.value} value={o.value}>
-          {o.label}
-        </option>
-      ))}
-    </select>
-  );
-}
-
 export const TEAM_OPTIONS = (Object.keys(TEAMS) as TeamCode[]).map((code) => ({ value: code, label: TEAMS[code] }));
-export const plainOptions = (values: string[]) => values.map((value) => ({ value, label: value }));
-
-/** The sign-in provider's mark: `G`, `D`. */
-export const ProviderMark = ({ provider }: { provider: Account["provider"] }) => (
-  <span className="settings__provider" aria-hidden="true">
-    {provider[0]}
-  </span>
-);
 
 /** Links to Privacy and Terms, the plain pages of docs/legal/; the privacy email waits for Flol's domain. */
 export function LegalNames() {
   return (
     <>
       <GoLink go={{ to: PATHS.privacy }} className="settings__go">
-        Privacy ›
+        {WORDS.privacy}
       </GoLink>
       <GoLink go={{ to: PATHS.terms }} className="settings__go">
-        Terms ›
+        {WORDS.terms}
       </GoLink>
     </>
   );

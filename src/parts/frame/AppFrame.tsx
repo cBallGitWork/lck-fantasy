@@ -8,9 +8,6 @@ const AnnounceContext = createContext<(line: string) => void>(() => {});
 /** The page's announcer: `announce("Saved")` reads the line out once, politely (WCAG 4.1.3). */
 export const useAnnounce = () => useContext(AnnounceContext);
 
-/** What the live region says when a save goes through. */
-export const SAVED_NEWS = "Saved";
-
 /** Announces `line` each time it changes, never on the first draw: a live score as it moves. */
 export function useAnnounceChange(line: string) {
   const announce = useAnnounce();

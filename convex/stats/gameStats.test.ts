@@ -2,9 +2,9 @@ import { describe, expect, test } from "vitest";
 import { leaguepediaGameKey, v5Extras } from "../feeds/leaguepedia";
 import { BRION, DRX, gameOnePlayer, OE_GAME_1, OE_SERIES_GAMES } from "../feeds/fixtures/oe";
 import { v5Game } from "../feeds/fixtures/v5-shape";
-import { HOUR_MS, SPEC_FINAL_AFTER_MS } from "../lck/fixtures";
-import { groupSeries, seriesState } from "../lck/series";
 import { OE_2025_BRION_DRX } from "../scoring/fixtures";
+import { HOUR_MS, SPEC_FINAL_AFTER_MS } from "../world/fixtures";
+import { groupSeries, seriesState } from "../world/series";
 import { playerGameStats, seriesSettledStats, teamGameStats } from "./gameStats";
 
 const game1 = OE_GAME_1;

@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 import "./BenchBar.css";
 import type { PersonRole } from "./roles";
-import { ROLE_NAME } from "./roles";
 import { Tile } from "./Tile";
+import { ROLE_NAME, WORDS } from "./words";
 
 /** The bench, under the Rift or the cards: `Bench`, then each bench player's tile. */
 export function BenchBar({ children }: { children: ReactNode }) {
   return (
     <div className="bench-bar">
-      <h3 className="bench-bar__title">Bench</h3>
+      <h3 className="bench-bar__title">{WORDS.bench}</h3>
       {children}
     </div>
   );
@@ -29,11 +29,17 @@ export function BenchTile({
   state,
   selected,
   onSelect,
+  ...tile
 }: {
   order: number;
-  role: PersonRole;
+  /** None for an empty bench slot (front door): `1.` alone. */
+  role?: PersonRole;
   name: string;
   team: string;
+  /** His price chip and `×` (front door), or an empty slot. */
+  price?: ReactNode;
+  sell?: boolean;
+  empty?: boolean;
   /** Under his points, such as `Didn't play`. */
   detail?: string;
   /** The week's fixtures. */
@@ -48,9 +54,10 @@ export function BenchTile({
   return (
     <div className="bench-slot">
       <span className="bench-slot__role quiet">
-        {order}. {ROLE_NAME[role]}
+        {order}.{role && ` ${ROLE_NAME[role]}`}
       </span>
       <Tile
+        {...tile}
         slot={role}
         name={name}
         team={team}

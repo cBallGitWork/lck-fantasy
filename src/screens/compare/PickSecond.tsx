@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { cx, money, selectable } from "../../parts";
-import { ROLE_PLURAL, searchGroups } from "./rules";
+import { searchGroups } from "./rules";
 import type { ComparePlayer, SearchRow } from "./fixtures";
-
-const FIND = "Find a player";
+import { findA, moreRoles, ROLE_PLURAL } from "./words";
 
 /**
  * The second player not picked yet: a search, his role listed first, then `All mids · Other roles ›`.
@@ -30,8 +29,8 @@ export function PickSecond({
       <input
         className="compare__find"
         type="search"
-        placeholder={FIND}
-        aria-label={FIND}
+        placeholder={findA(first.role)}
+        aria-label={findA(first.role)}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
@@ -63,7 +62,7 @@ export function PickSecond({
       ))}
       {showMore && (
         <button type="button" className="compare__go key-bare hover-line compare__more" onClick={() => setWide(true)}>
-          All {ROLE_PLURAL[first.role].toLowerCase()} · Other roles ›
+          {moreRoles(first.role)}
         </button>
       )}
     </div>

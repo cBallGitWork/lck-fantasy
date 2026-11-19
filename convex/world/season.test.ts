@@ -7,13 +7,14 @@ import type { TransferSettings } from "../squads/transfers";
 import { modules } from "../test.setup";
 import { LCK_2027, type SeasonFile } from "./season";
 
-const season = internal.lck.season;
+const season = internal.world.season;
+const LCK = { competition: LCK_2027.competition.name, year: LCK_2027.year };
 
 /** data/lck's 2027 season loaded, and how to read it back. */
 async function loaded(data?: SeasonFile) {
   const t = convexTest(schema, modules);
   await t.mutation(season.loadSeason, data === undefined ? {} : { data });
-  const read = () => t.query(season.seasonOf, { competition: "LCK", year: 2027 });
+  const read = () => t.query(season.seasonOf, LCK);
   return { t, read };
 }
 
@@ -28,9 +29,9 @@ const priceOf = (prices: { handle?: string; team: string; role: string; won: num
   prices.find((p) => p.handle === handle)?.won;
 
 describe("a season loaded from data/lck", () => {
-  test("the LCK is a competition in KST, with a 2027 season and Split 1", async () => {
+  test("the LCK is a competition in KST, paid in won, with a 2027 season and Split 1", async () => {
     const got = (await (await loaded()).read())!;
-    expect(got.competition).toEqual({ name: "LCK", region: "Korea", timeZone: "Asia/Seoul" });
+    expect(got.competition).toEqual({ name: "LCK", region: "Korea", timeZone: "Asia/Seoul", timeZoneLabel: "KST", currency: "₩" });
     expect(got.year).toBe(2027);
     expect(got.splits).toEqual([{ number: 1, name: "Split 1" }]);
     expect(got.madeUp).toBe(true);
@@ -97,7 +98,7 @@ describe("a season loaded from data/lck", () => {
 
   test("a season not loaded reads as none", async () => {
     const t = convexTest(schema, modules);
-    expect(await t.query(season.seasonOf, { competition: "LCK", year: 2027 })).toBeNull();
+    expect(await t.query(season.seasonOf, LCK)).toBeNull();
   });
 });
 

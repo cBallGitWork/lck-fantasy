@@ -1,5 +1,5 @@
 import { useId, useState, type ReactNode } from "react";
-import { beyondStrip, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, Placeholder, placeOf, PriceMove, SeriesStrip, TabPanel, Tabs, Tag } from "../../parts";
+import { beyondStrip, money, inOut, LinkGo, oneDecimal, ordinal, OutlinedKey, pct, placeOf, PlayerPhoto, PriceMove, SeriesStrip, TabPanel, Tabs, Tag } from "../../parts";
 import type { Go } from "../../paths";
 import { markKey, ROLE_NAME } from "../../rift";
 import { CARD_TABS, type CardActions, type CardTab, type PlayerCardData } from "./card";
@@ -8,6 +8,7 @@ import { FixturesTab } from "./FixturesTab";
 import { History } from "./History";
 import { SeasonRail } from "./SeasonRail";
 import { ThisWeek } from "./ThisWeek";
+import { formPlace, ownedPlace, seasonPlace, transfersThisWeek, WORDS } from "./words";
 import "./player-card.css";
 
 
@@ -48,7 +49,7 @@ export function PlayerCard({
       {card.news !== undefined && <p className="player-card__news">! {card.news}</p>}
       <header className="player-card__head">
         <span className="player-card__portrait">
-          <Placeholder word="portrait" fill />
+          <PlayerPhoto photo={card.photo} name={card.name} team={card.team} crest="crestSheet" />
         </span>
         <div>
           <Tag>
@@ -63,32 +64,33 @@ export function PlayerCard({
         <div className="player-card__side">
           <p className="player-card__hero">
             <b className="num">{card.season.points}</b>
-            <span className="player-card__quiet quiet">
-              Season · {placeOf(card.season.place, card.season.field)}
-            </span>
+            <span className="player-card__quiet quiet">{seasonPlace(placeOf(card.season.place, card.season.field))}</span>
           </p>
           <div className="player-card__actions">
             {actions && <PickTeamKeys actions={actions} />}
-            <LinkGo go={compare}>Compare</LinkGo>
+            <LinkGo go={compare}>{WORDS.compare}</LinkGo>
           </div>
         </div>
       </header>
       <div className="player-card__meta">
         <span className="player-card__quiet quiet">
-          <b className="player-card__figure num">{money(card.priceM)}</b>price <PriceMove money={card.priceMove} />
+          <b className="player-card__figure num">{money(card.priceM)}</b>
+          {WORDS.price} <PriceMove money={card.priceMove} />
         </span>
         <span className="player-card__quiet quiet">
-          <b className="player-card__figure num">{oneDecimal(card.form)}</b>form · {ordinal(card.formPlace)}
+          <b className="player-card__figure num">{oneDecimal(card.form)}</b>
+          {formPlace(ordinal(card.formPlace))}
         </span>
         <span className="player-card__quiet quiet">
-          <b className="player-card__figure num">{pct(card.ownedPct)}</b>owned · {ordinal(card.ownedPlace)}
+          <b className="player-card__figure num">{pct(card.ownedPct)}</b>
+          {ownedPlace(ordinal(card.ownedPlace))}
         </span>
-        <span className="player-card__quiet quiet">{inOut(card.transfersIn, card.transfersOut)} this week</span>
+        <span className="player-card__quiet quiet">{transfersThisWeek(inOut(card.transfersIn, card.transfersOut))}</span>
       </div>
       <div className="player-card__body">
         <div className="player-card__main">
           <SeriesStrip past={card.past} next={card.next} />
-          <Tabs id={tabsId} tabs={CARD_TABS} chosen={tab} onChoose={setTab} label="Player card" />
+          <Tabs id={tabsId} tabs={CARD_TABS} chosen={tab} onChoose={setTab} label={WORDS.card} />
           <TabPanel id={tabsId} className="player-card__tab">
             {tabBody(tab, card)}
           </TabPanel>
@@ -104,8 +106,8 @@ function PickTeamKeys({ actions }: { actions: CardActions }) {
   return (
     <>
       <OutlinedKey onClick={() => actions.onMark("C")}>{markKey("C", actions.mark === "C")}</OutlinedKey>
-      <OutlinedKey onClick={actions.onSwap}>Swap with bench</OutlinedKey>
-      <OutlinedKey onClick={actions.onTransferOut}>Transfer out</OutlinedKey>
+      <OutlinedKey onClick={actions.onSwap}>{WORDS.swap}</OutlinedKey>
+      <OutlinedKey onClick={actions.onTransferOut}>{WORDS.transferOut}</OutlinedKey>
     </>
   );
 }

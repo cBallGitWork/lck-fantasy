@@ -54,19 +54,18 @@ Each folder has a README saying what goes in it.
 
 | Folder | What lives there |
 |---|---|
-| `convex/lck/` | The real world: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. |
-| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload. |
+| `convex/world/` | The real world, for every region: competitions, seasons, stages, teams, players, contracts, series, games, lineups. Filled by feeds, corrected by an admin, never written by the game. A region is a data folder (`data/<region>/`), never code here. |
+| `convex/feeds/` | One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/world` and `convex/stats`, and keeps the raw payload. |
 | `convex/stats/` | Per-player stats for each game, as the feed sent them, plus the latest live reading. |
 | `convex/scoring/` | Scoring rules as data, the engine that turns stats into series points, and the re-score. |
 | `convex/gameweeks/` | Gameweeks, deadlines and settling a gameweek. |
 | `convex/squads/` | A manager's entry: picks, lineup, captain, bench, auto-subs, transfers, buffs, prices. |
 | `convex/leagues/` | Global, supporter and private leagues, and their tables. |
 | `convex/following/` | Follow requests, blocks, the feed of followed managers, and cheers and jeers. |
-| `convex/achievements/` | The achievement book: the pages, the rules that award them, the awards. |
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
 | `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
-| `src/` | Every screen's path (`paths.ts`), and the folders below. |
+| `src/` | Every screen's path (`paths.ts`), the region the app shows, its name, hub address and season label read from its data (`region.ts`), and the folders below. |
 | `src/app/` | The app's entry (`main.tsx`), its routes (`router.tsx`) and the dev states page. |
 | `src/theme/` | Every colour, font, size, gap and width, as tokens; nothing else holds a colour. |
 | `src/fixtures/` | Made-up data the screens are built on until the backend wires real data. |
@@ -85,7 +84,7 @@ Each folder has a README saying what goes in it.
 The rules:
 
 - A feature's server code, its tests and its fixtures sit in its one `convex/` folder.
-- `convex/lck` and `convex/stats` never import from the game's folders (`squads`, `leagues`, `achievements`). The game reads the real world; it never writes it.
+- `convex/world` and `convex/stats` never import from the game's folders (`squads`, `leagues`). The game reads the real world; it never writes it.
 - Only `convex/feeds` talks to a stats source, and only `convex/outbound` leaves the server.
 - A screen never imports from another screen (src/screens/README.md).
 - Every word a player reads on a screen lives in that screen's `words.ts`, next to its code; words two screens share, such as the Carry's C, live in `src/parts` or `src/rift`. Moved one screen at a time, Pick Team first (Craig, 18 Nov 2026).

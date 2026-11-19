@@ -27,8 +27,8 @@ import {
   type PointsPick,
   type Series,
 } from "../../fixtures/week3";
-import { count, ordinal, sum } from "../../parts";
-import { PATHS } from "../../paths";
+import { count, ordinal, sum, weekSteps } from "../../parts";
+import { PATHS, type Go } from "../../paths";
 import { flexPlays } from "../../rift";
 import { hangulOf } from "../../fixtures/rosters";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter, WeekPick } from "./types";
@@ -73,6 +73,8 @@ function playerOf(list: readonly Series[], pick: PointsPick, games: Record<strin
     mark: pick.mark,
     birthday: pick.birthday,
     points: pick.subbedOut ? undefined : sum(series.map((s) => s.points)),
+    // No week here plays a Bench Boost or makes an auto-sub, so only the seven count.
+    counts: pick.slot !== "bench",
     series,
   };
 }
@@ -131,17 +133,10 @@ const WEEKS: WeekFacts[] = [
   },
 ];
 
-/** The competition's first week: no ‹ before it. */
-const FIRST_WEEK = 1;
-
-/** The week's ‹ and ›, by the router: the week in the path (`/points/2`); none before Week 1 or past the latest. */
+/** The week's ‹ and ›, by the router: the week in the path (`/points/2`). */
 function weekNav(week: number, latest: number) {
-  const to = (n: number) => ({ to: PATHS.pointsWeek, params: { week: String(n) } });
-  return {
-    label: `${COMPETITION} · Week ${week}`,
-    prev: week > FIRST_WEEK ? to(week - 1) : undefined,
-    next: week < latest ? to(week + 1) : undefined,
-  };
+  const to = (n: number): Go => ({ to: PATHS.pointsWeek, params: { week: String(n) } });
+  return { label: `${COMPETITION} · Week ${week}`, ...weekSteps(week, latest, to) };
 }
 
 function pointsWeek(facts: WeekFacts, latest: number): PointsData {

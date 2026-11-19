@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
-import { PATHS } from "../../paths";
+import { PATHS, pickTeamSwapping } from "../../paths";
 import { html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
@@ -117,12 +117,12 @@ test("Card view: the seven starters as the broadcast lineup, the bench bar, then
   expectInOrder(out, [
     "Rift view",
     "Card view",
-    "TopPhotoZeusHLEv DK, NSForm 16.0₩14.0m",
-    "JunglePhotoCanyonGENv BRO, T1Form 16.7₩15.5m",
-    "MidPhotoCFakerT1v KT, GENForm 19.3₩18.5m",
-    "BotPhotoRulerGENv BRO, T1Form 18.7₩16.0m",
-    "SupportPhotoDelightHLEv DK, NSForm 12.7₩10.0m",
-    "Flexplays TopPhotoNot startingSiwooDKv HLE, KTForm 11.7₩11.5m",
+    "TopZeusHLEv DK, NSForm 16.0₩14.0m",
+    "JungleCanyonGENv BRO, T1Form 16.7₩15.5m",
+    "MidCFakerT1v KT, GENForm 19.3₩18.5m",
+    "BotRulerGENv BRO, T1Form 18.7₩16.0m",
+    "SupportDelightHLEv DK, NSForm 12.7₩10.0m",
+    "Flexplays TopNot startingSiwooDKv HLE, KTForm 11.7₩11.5m",
     "Coach감독",
     "kkOmaT1v KT, GENForm 9.0₩7.0m",
     "Bench",
@@ -272,6 +272,15 @@ test("Rift view | Card view sets the view; ✕ closes the card and ends the swap
   expect(closed.selected).toBeUndefined();
   expect(text(view(closed))).not.toContain("Last 3 series");
   expect(html(view(closed))).not.toMatch(/tile--(fit|dim)/);
+});
+
+test("arriving from a card's Swap with bench, the player is tapped and those he can swap with lit; anyone not in the squad is ignored", async () => {
+  const zeus = await htmlAt(pickTeamSwapping("zeus"));
+  expect(zeus).toMatch(/class="tile tile--selected[^"]*"(?:(?!class="tile ).)*title="Zeus"/);
+  // Zeus swaps only with Siwoo, the Flex.
+  expect(zeus.match(/tile--fit/g)).toHaveLength(1);
+  expect(zeus).toMatch(/class="tile [^"]*tile--fit[^"]*"(?:(?!class="tile ).)*title="Siwoo"/);
+  expect(await htmlAt(pickTeamSwapping("nobody"))).toBe(await htmlAt(PATHS.pickTeam));
 });
 
 test("Pick Team opens on Rift the first time, then on the view shared with Points, and on Rift where storage is blocked", async () => {

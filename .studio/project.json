@@ -3,6 +3,7 @@
   "quickCheckSeconds": 60,
   "build": {
     "check": "npm run verify",
-    "doneLabel": "lead:stale"
+    "doneLabel": "lead:stale",
+    "tools": "Bash(curl -s https://feed.lolesports.com/:*)"
   }
 }

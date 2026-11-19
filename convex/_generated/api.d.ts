@@ -15,8 +15,8 @@ import type {
 } from "convex/server";
 import type * as admin_alerts from "../admin/alerts.js";
 import type * as admin_clock from "../admin/clock.js";
+import type * as feeds_fixtures_leaguepedia from "../feeds/fixtures/leaguepedia.js";
 import type * as feeds_fixtures_oe from "../feeds/fixtures/oe.js";
-import type * as feeds_fixtures_v5_shape from "../feeds/fixtures/v5-shape.js";
 import type * as feeds_leaguepedia from "../feeds/leaguepedia.js";
 import type * as feeds_live from "../feeds/live.js";
 import type * as feeds_liveFeed from "../feeds/liveFeed.js";
@@ -64,8 +64,8 @@ import type * as world_series from "../world/series.js";
 declare const fullApi: ApiFromModules<{
   "admin/alerts": typeof admin_alerts;
   "admin/clock": typeof admin_clock;
+  "feeds/fixtures/leaguepedia": typeof feeds_fixtures_leaguepedia;
   "feeds/fixtures/oe": typeof feeds_fixtures_oe;
-  "feeds/fixtures/v5-shape": typeof feeds_fixtures_v5_shape;
   "feeds/leaguepedia": typeof feeds_leaguepedia;
   "feeds/live": typeof feeds_live;
   "feeds/liveFeed": typeof feeds_liveFeed;

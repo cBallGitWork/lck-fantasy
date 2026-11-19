@@ -105,10 +105,10 @@ export function tierRows(cutoffs: readonly TierCutoff[]): TierRow[] {
   return rows;
 }
 
-/** A deadline as the Time part shows it, the date in front: `Wed 30 Dec 07:45`, then `16:45` KST. */
-export function deadlineIn(instant: string, zone: string): { local: string; kst: string } {
-  const { local, kst } = timeIn(instant, zone);
+/** A deadline as the Time part shows it, the date in front: `Wed 30 Dec 07:45`. */
+export function deadlineIn(instant: string, zone: string): { local: string } {
+  const { local } = timeIn(instant, zone);
   const date = new Intl.DateTimeFormat("en-GB", { timeZone: zone, day: "numeric", month: "short" }).format(new Date(instant));
   const [day = "", time = ""] = local.split(" ");
-  return { local: `${day} ${date} ${time}`, kst };
+  return { local: `${day} ${date} ${time}` };
 }

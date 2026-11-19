@@ -50,7 +50,7 @@ export interface PickTeamData {
   week: string;
   players: Record<string, PickPlayer>;
   series: readonly Series[];
-  deadline: { local: string; kst: string; countdown: string };
+  deadline: { local: string; countdown: string };
   buffs: readonly PickBuffInfo[];
 }
 

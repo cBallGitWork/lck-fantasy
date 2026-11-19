@@ -37,7 +37,7 @@ function NextOnStream({ next }: { next: NextSeries }) {
         {next.home} v {next.away}
       </b>
       <span className="home__next-when">
-        <Time local={`${next.day} ${next.local}`} kst={next.kst} /> · in{" "}
+        <Time local={`${next.day} ${next.local}`} /> · in{" "}
         <b className="num">
           {next.startsIn.days}d {next.startsIn.hours}h
         </b>

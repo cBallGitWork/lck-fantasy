@@ -74,14 +74,13 @@ export interface PlayedSeries {
   points: number;
 }
 
-/** A series in This week not yet started: its time, yours then the league's, and no points yet (spec/12, The coach card). */
+/** A series in This week not yet started: its time, yours, and no points yet (spec/12, The coach card). */
 export interface UpcomingSeries {
   id: string;
   day: string;
   opponent: TeamCode;
   state: "upcoming";
   local: string;
-  kst: string;
 }
 
 export type WeekSeries = PlayedSeries | UpcomingSeries;
@@ -101,7 +100,6 @@ export interface FixtureRow {
   opponent: TeamCode;
   format: string;
   local: string;
-  kst: string;
 }
 
 export interface HistoryRow {

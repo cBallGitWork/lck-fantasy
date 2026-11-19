@@ -91,7 +91,7 @@ export function Idle({ next }: { next: NextSeries }) {
         {next.away}
       </div>
       <span className="live__idle-line">
-        <Time local={next.local} kst={next.kst} />
+        <Time local={next.local} />
       </span>
       <div className="live__idle-count num">
         {next.countdown.hours}

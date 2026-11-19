@@ -10,7 +10,7 @@ import type { HubTab, LckHubData } from "./types";
 
 const page = (tab: HubTab, data: LckHubData = LCK_HUB) => <LckHub data={data} account={MANAGER.team} tab={tab} />;
 
-const HEAD = ["Split 1 2027", "스플릿 1", "Deadline", "Wed 07:45", "16:45 KST", "9h 45m"];
+const HEAD = ["Split 1 2027", "스플릿 1", "Deadline", "Wed 07:45", "9h 45m"];
 const TABS = ["Fixtures", "Results", "Standings", "Teams"];
 const STAGES = ["Groups", "Play-In", "Playoffs"];
 const NEWS = [
@@ -28,31 +28,29 @@ const NEWS = [
 ];
 
 describe("each state renders from the fixture, in the picture's order", () => {
-  test("Fixtures: Week 4 by day, each series with its times and both records", () => {
+  test("Fixtures: Week 4 by day, each series with your time alone and both records", () => {
     const out = text(page("Fixtures"));
+    expect(out).not.toContain("KST");
     expectInOrder(out, [
       ...HEAD,
       ...TABS,
       ...STAGES,
       "‹Week 4›",
-      "20–24 Jan · Bo3",
-      "Local",
-      "KST",
-      "Wed20 Jan",
-      "08:0017:004–2HLEvDK3–3›",
-      "10:3019:305–1T1vKT3–3›",
+      "20–24 Jan · Bo3Wed20 Jan",
+      "08:004–2HLEvDK3–3›",
+      "10:305–1T1vKT3–3›",
       "Thu21 Jan",
-      "08:0017:005–1GENvBRO1–5›",
-      "10:3019:302–4NSvDNS3–3›",
+      "08:005–1GENvBRO1–5›",
+      "10:302–4NSvDNS3–3›",
       "Fri22 Jan",
-      "08:0017:003–3KRXvBFX1–5›",
-      "10:3019:303–3DKvKT3–3›",
+      "08:003–3KRXvBFX1–5›",
+      "10:303–3DKvKT3–3›",
       "Sat23 Jan",
-      "08:0017:005–1T1vGEN5–1›",
-      "10:3019:304–2HLEvNS2–4›",
+      "08:005–1T1vGEN5–1›",
+      "10:304–2HLEvNS2–4›",
       "Sun24 Jan",
-      "08:0017:001–5BROvBFX1–5›",
-      "10:3019:303–3KRXvDNS3–3›",
+      "08:001–5BROvBFX1–5›",
+      "10:303–3KRXvDNS3–3›",
       ...NEWS,
     ]);
   });

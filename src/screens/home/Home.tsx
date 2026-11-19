@@ -50,7 +50,7 @@ function CountdownFigure({ countdown }: { countdown: Countdown }) {
   );
 }
 
-/** The full-width deadline bar: the countdown, your time and the league's; on the side column's line, Pick Team, Transfers, free transfers. */
+/** The full-width deadline bar: the countdown and your time; on the side column's line, Pick Team, Transfers, free transfers. */
 function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions }) {
   const { deadline } = data;
   return (
@@ -61,7 +61,7 @@ function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions
       <div className="home__deadline-left">
         <CountdownFigure countdown={data.countdown} />
         <div className="home__deadline-when">
-          <Time local={deadline.local} kst={deadline.kst} />
+          <Time local={deadline.local} />
         </div>
       </div>
       <div className="home__deadline-keys">

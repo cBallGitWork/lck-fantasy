@@ -128,7 +128,7 @@ describe("Ranks holds the tier cut-offs (spec/08)", () => {
 });
 
 test("Deadlines lists the split's weeks from the season's data", () => {
-  expectInOrder(plain(page("deadlines")), ["Week 1", "Wed 30 Dec 07:45", "16:45 KST", "Week 4", "Wed 20 Jan 07:45"]);
+  expectInOrder(plain(page("deadlines")), ["Week 1", "Wed 30 Dec 07:45Week 2", "Week 4", "Wed 20 Jan 07:45"]);
 });
 
 describe("Help is reached from every page's foot and the team-name menu", () => {

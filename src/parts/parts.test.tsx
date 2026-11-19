@@ -118,9 +118,9 @@ test("a link ends with ›, and one leaving Flol with ↗", () => {
   expect(out).toContain('target="_blank"');
 });
 
-test("deadline and time put your time first, then KST", () => {
-  expect(text(<Deadline {...WEEK4_DEADLINE} />)).toBe("Deadline Wed 07:45 16:45 KST 9h 45m");
-  expect(text(<Time local="Sat 22:00" kst="07:00" />)).toBe("Sat 22:00 07:00 KST");
+test("deadline and time show your time alone, with no zone and no league time (Craig, 19 Nov 2026)", () => {
+  expect(text(<Deadline {...WEEK4_DEADLINE} />)).toBe("Deadline Wed 07:45 9h 45m");
+  expect(text(<Time local="Sat 22:00" />)).toBe("Sat 22:00");
 });
 
 test("your player is a dot named for screen readers", () => {
@@ -185,9 +185,7 @@ test("a table draws a sub-row above a row: a group's head with its aside, or a �
 });
 
 test("a side section has its title and note", () => {
-  expect(text(<SideSection title="This week's series" note="your time · KST">x</SideSection>)).toBe(
-    "This week's seriesyour time · KSTx",
-  );
+  expect(text(<SideSection title="Following" note="3 of 50">x</SideSection>)).toBe("Following3 of 50x");
 });
 
 test("a modal names itself, has ✕, and is a card or a sheet", () => {
@@ -273,7 +271,7 @@ test("the series list shows scores with their state, and times for the next", ()
   const out = text(<SeriesList series={WEEK3_SERIES_AT_POINTS} />);
   expect(out).toContain("SatGEN v HLE2–1 Not final");
   expect(out).toContain("SatT1 v DK1–0 Live");
-  expect(out).toContain("SunKRX v BRO08:00 17:00 KST");
+  expect(out).toContain("SunKRX v BRO08:00SunBFX v DNS10:30");
   expect(html(<SeriesList series={WEEK3_SERIES_AT_POINTS} go={(s) => ({ to: "/series/$seriesId", params: { seriesId: s.id } })} />)).toContain(
     'href="/series/w3-sat-1"',
   );

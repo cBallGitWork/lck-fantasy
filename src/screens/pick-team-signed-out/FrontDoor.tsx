@@ -42,7 +42,7 @@ export interface FrontDoorProps {
   teams: string[];
   competition: string;
   week: string;
-  deadline: { local: string; kst: string; countdown: string };
+  deadline: { local: string; countdown: string };
   countries: string[];
   /** Where the visitor is (spec/09: country is filled in from it). */
   country: string;

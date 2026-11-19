@@ -72,7 +72,7 @@ const WEEK3_AT_POINTS: CardWeek = {
 /** Week 4 at Pick Team's moment, Tuesday before T1's first series: each series with its time, no points yet. */
 const WEEK4_BEFORE_GAMES: CardWeek = {
   week: 4,
-  series: T1_FIXTURES.filter((s) => s.week === 4).map(({ id, day, opponent, local, kst }): WeekSeries => ({ id, day, opponent, state: "upcoming", local, kst })),
+  series: T1_FIXTURES.filter((s) => s.week === 4).map(({ id, day, opponent, local }): WeekSeries => ({ id, day, opponent, state: "upcoming", local })),
   total: 0,
 };
 

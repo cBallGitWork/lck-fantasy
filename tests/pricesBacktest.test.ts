@@ -14,6 +14,7 @@ import { PLAYER_ROLES, type Role } from "../convex/squads/squad";
 import { teamGameStats } from "../convex/stats/gameStats";
 import { groupSeries } from "../convex/world/series";
 import { WON_PER_M } from "../src/parts/text/money";
+import { sum } from "../src/parts/util/sum";
 
 const S = PRICE_SETTINGS;
 const m = (x: number) => x * WON_PER_M;
@@ -77,7 +78,7 @@ function cheapestSquad(chosen: typeof priced): number {
   if (!fill.some((p) => p.role === "coach")) fill.push(free.find((p) => p.role === "coach")!);
   for (const role of PLAYER_ROLES) if (!fill.some((p) => p.role === role)) fill.push(free.find((p) => p.role === role)!);
   for (const p of free) if (p.role !== "coach" && !fill.includes(p) && fill.length < 7) fill.push(p);
-  return fill.reduce((a, p) => a + p.won, 0) + 2 * S.academy;
+  return sum(fill.map((p) => p.won)) + 2 * S.academy;
 }
 
 describe("the price formula over 2026 (spec/02, First prices)", () => {

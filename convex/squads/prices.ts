@@ -1,6 +1,7 @@
 // Prices: first prices from the formula, and each week's move at the deadline (spec/02, First prices,
 // The formula and Price moves). Pure: past points and the settings in, prices out. Every amount is
 // whole won and every number Craig may tune is a setting, data per competition.
+import { sum } from "../../src/parts/util/sum";
 import type { Role } from "./squad";
 
 /** spec/02's formula and moves, each a setting. Amounts in won, shares 0 to 1. */
@@ -80,14 +81,14 @@ export interface FirstPrice {
 
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x));
 const scale = (x: number, low: number, high: number) => (high > low ? clamp01((x - low) / (high - low)) : 1);
-const mean = (xs: readonly number[]) => xs.reduce((a, b) => a + b, 0) / xs.length;
+const mean = (xs: readonly number[]) => sum(xs) / xs.length;
 const roundTo = (x: number, unit: number) => Math.round(x / unit) * unit;
 
 /** Weighted mean over the seasons that have a value, last season first; undefined with none. */
 function weighted(weights: readonly number[], values: readonly (number | undefined)[]): number | undefined {
   const pairs = values.flatMap((v, i) => (v === undefined ? [] : [[weights[i] ?? 0, v] as const]));
-  const total = pairs.reduce((a, [w]) => a + w, 0);
-  return total === 0 ? undefined : pairs.reduce((a, [w, v]) => a + w * v, 0) / total;
+  const total = sum(pairs.map(([w]) => w));
+  return total === 0 ? undefined : sum(pairs.map(([w, v]) => w * v)) / total;
 }
 
 /** A pick's blend, 0 to 1: a coach on his own points, a player on own record and team strength. */
@@ -127,7 +128,7 @@ export function firstPrices(
   const medianShare = lastSeason[Math.floor(lastSeason.length / 2)] ?? 0;
   const teamShareOf = (teamId: string) => weighted(settings.seasonWeights, teamShares.get(teamId) ?? []) ?? medianShare;
   const rows = picks.map((pick) => {
-    const series = pick.seasonPoints.reduce((a, xs) => a + xs.length, 0);
+    const series = sum(pick.seasonPoints.map((xs) => xs.length));
     const pointsPerSeries = weighted(settings.seasonWeights, pick.seasonPoints.map((xs) => (xs.length ? mean(xs) : undefined)));
     const rookie = pick.academy !== true && pick.byHand === undefined && series < settings.minSeries;
     return { pick, pointsPerSeries: pointsPerSeries ?? 0, teamShare: teamShareOf(pick.teamId), formula: !rookie && pick.academy !== true };

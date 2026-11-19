@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """UserPromptSubmit hook: keeps Craig's latest message, so guard_mode.py can tell talk from a go.
 The message's first PROMPT_BYTES go to a file named for the session under STATE_DIR; a message
-that is a slash command or a pasted block still counts (it is what he sent). A payload that isn't
+that is a slash command or a pasted block still counts (it is what he sent). Also a PostToolUse hook on
+AskUserQuestion: the answers Craig picked on a question card are his latest words, never the questions
+(19 Nov 2026: "Ship it now" picked on a card was refused as talk, and he had to type "ship both"). A payload that isn't
 JSON exits 1 with one line on stderr (hook_payload.py); a write that fails says nothing, and
 guard_mode.py then judges by the message before. Stdlib only, Python 3.9+.
 """
@@ -42,10 +44,24 @@ def remember(session, prompt):
         pass
 
 
+def answers(payload):
+    """The answers Craig picked on a question card, one a line; the questions and the options he didn't pick
+    are Claude's words and never count."""
+    for source in ("tool_input", "tool_response"):
+        picked = field(payload, source, dict, {}).get("answers")
+        if isinstance(picked, dict):
+            return "\n".join(str(answer) for answer in picked.values())
+    return ""
+
+
 def main():
     try:
         payload = read_payload()
-        remember(field(payload, "session_id", str, ""), field(payload, "prompt", str, ""))
+        session = field(payload, "session_id", str, "")
+        if field(payload, "tool_name", str, "") == "AskUserQuestion":
+            remember(session, answers(payload))
+        else:
+            remember(session, field(payload, "prompt", str, ""))
     except BadPayload as error:
         return report(error, "Craig's latest message wasn't kept")
     return 0

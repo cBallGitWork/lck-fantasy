@@ -44,7 +44,7 @@ silent guard_mode.py "$(bash_call 'gh issue view 10')"
 for go in "ok build it" "go ahead" "file it as an issue" "ship it" "merge that" "yes, do it" "sort it" \
   "plan and build the fixes" "/grill scoring" "open a PR for that" "crack on" "File" "file these" \
   "Yes." "go" "File them (this is silly)" "Yes, run the lead" "yes run it" "Yes, file them" "Yes, merge it" \
-  "yes please, open the PR" "merge it" "merge #1378" "ok merge them" \
+  "yes please, open the PR" "merge it" "merge #1378" "ok merge them" "merge both PRs" "merge all three" \
   "file answers" "File the answers on their issues" "yes but multiple workflows in one go" "yes, run them" \
   "yes but what about a sixth man" "yes, objectives matter" "yes merge confilcts are annoying" \
   "Save" "save it" "save the design" "1a 2b" "1 a
@@ -64,6 +64,17 @@ for talk in "file naming is odd" "go figure, the substitute rule again" "what if
   said "$talk"
   check deny guard_mode.py "$(bash_call 'gh issue create --title t')"
 done
+# a question card's picked answers are his words (19 Nov 2026); its questions and unpicked options are not
+answered() { printf '%s' "$("$jq" -nc --arg s "$session" --arg a "$1" \
+  '{session_id:$s,hook_event_name:"PostToolUse",tool_name:"AskUserQuestion",tool_input:{questions:[{question:"Merge it now? Ship it?",options:[{label:"Ship it now"},{label:"Not yet"}]}],answers:{"Merge it now? Ship it?":$a}},tool_response:{}}')" \
+  | "$hooks/last_prompt.py" || fail "last_prompt.py failed on the answer: $1"; }
+said "hmm, what about a sixth man though"
+answered "Ship it now (Recommended)"
+check allow guard_mode.py "$(bash_call 'gh pr merge 5 --squash')"
+answered "Not yet"
+check deny guard_mode.py "$(bash_call 'gh pr merge 5 --squash')"
+answered "Keep required (Recommended)"
+check deny guard_mode.py "$(bash_call 'gh pr merge 5 --squash')"
 # the latest message counts, not an earlier go
 said "hmm, what about a sixth man though"
 check deny guard_mode.py "$(bash_call 'gh pr create --title x --body-file b.md')"

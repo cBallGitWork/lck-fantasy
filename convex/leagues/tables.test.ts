@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { carryShown, chaseTag, leagueTable, legendAndRise, legendRiseTable, rankMovement, type LeagueMember } from "./tables";
+import { carryShown, chaseTag, leagueTable, legendAndRise, legendRiseTable, overallSplits, rankMovement, type LeagueMember } from "./tables";
 
 // Fixture calendar: Split 1 is gameweeks 1–4 (Road to MSI is gameweek 4), Split 2 is 5–6.
 const SEASON = { first: 1, last: 6 };
@@ -110,5 +110,13 @@ describe("legendAndRise", () => {
     const members = [member("a", [30, 0, 0, 0, 1, 1]), member("b", [20, 0, 0, 0, 5, 5])];
     const legend = leagueTable(members, SEASON, 1, 6);
     expect(legend.map((r) => [r.entryId, r.total])).toEqual([["a", 32], ["b", 30]]);
+  });
+});
+
+describe("overallSplits", () => {
+  test("the season's data says whether Overall splits: the LCK's does, the LEC's stays whole (spec/16)", () => {
+    expect(overallSplits({ overallSplits: true })).toBe(true);
+    expect(overallSplits({ overallSplits: false })).toBe(false);
+    expect(overallSplits({})).toBe(true);
   });
 });

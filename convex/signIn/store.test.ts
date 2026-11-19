@@ -81,8 +81,8 @@ describe("Save team makes the entry (spec/09, Signing up)", () => {
     const saved = await save();
     expect(saved).toMatchObject({ firstGameweek: 2, captain: "Faker" });
     const { managers, entries, picks } = await stored(t);
-    expect(managers).toMatchObject([{ account: ACCOUNT, country: "GB", favouriteTeam: t1, agreed: { version: "2026-11-18" } }]);
-    expect(entries).toMatchObject([{ teamName: "Baron Steal FC", firstGameweek: 2, bank: 6 * WON_PER_M }]);
+    expect(managers).toMatchObject([{ account: ACCOUNT, country: "GB", agreed: { version: "2026-11-18" } }]);
+    expect(entries).toMatchObject([{ teamName: "Baron Steal FC", favouriteTeam: t1, firstGameweek: 2, bank: 6 * WON_PER_M }]);
     expect(picks).toHaveLength(9);
     expect(picks.filter((p) => p.captain).map((p) => p.handle)).toEqual(["Faker"]);
     expect(picks.find((p) => p.slot === "coach")).toMatchObject({ team: "KT", role: "coach", buyPrice: 5.5 * WON_PER_M });
@@ -140,9 +140,9 @@ describe("logging in (spec/09, Signing in again)", () => {
   });
 
   test("an account back for a new season keeps its one manager, with this sign-up's answers", async () => {
-    const { t, t1, save } = await world();
+    const { t, save } = await world();
     // A manager from an earlier season, with no entry in this one.
-    await t.run((ctx) => ctx.db.insert("managers", { account: ACCOUNT, country: "KR", favouriteTeam: t1, agreed: { at: 0, version: "2026-01-01" } }));
+    await t.run((ctx) => ctx.db.insert("managers", { account: ACCOUNT, country: "KR", agreed: { at: 0, version: "2026-01-01" } }));
     await save();
     const { managers, entries } = await stored(t);
     expect(managers).toMatchObject([{ account: ACCOUNT, country: "GB", agreed: { version: "2026-11-18" } }]);

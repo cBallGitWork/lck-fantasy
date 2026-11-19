@@ -39,6 +39,9 @@ export const seasonSettings = v.object({
   /** False while it runs as a closed test: only an account with a personal invite signs up (spec/10,
    *  The road to launch). Missing, as on a season stored before it, is open. */
   signUpOpen: v.optional(v.boolean()),
+  /** Whether Overall splits into Legend and Rise in the season's second split: the LCK's does, the
+   *  LEC's doesn't (spec/08; spec/16). Missing, as on a season stored before it, splits. */
+  overallSplits: v.optional(v.boolean()),
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */
@@ -93,7 +96,8 @@ export default defineSchema({
     "fromGameweek",
   ]),
   teams: defineTable({ name: v.string(), oeId: v.string() }).index("by_oeId", ["oeId"]),
-  players: defineTable({ handle: v.string(), oeId: v.string() }).index("by_oeId", ["oeId"]),
+  /** `nationality` is the player's country, for his flag; unset until known (spec/16, Flags). */
+  players: defineTable({ handle: v.string(), oeId: v.string(), nationality: v.optional(v.string()) }).index("by_oeId", ["oeId"]),
   series: defineTable({
     /** Game 1: Oracle's Elixir has no series id, so a series is known by its opening game. */
     firstGame: v.id("games"),
@@ -160,8 +164,8 @@ export default defineSchema({
   managers: defineTable({
     /** The signed-in account: Google or Discord, through Convex Auth (spec/09). */
     account: v.string(),
+    /** The account's, set once, in every region (spec/16, One account, two regions). */
     country: v.string(),
-    favouriteTeam: v.id("teams"),
     /** When the manager ticked the Terms and Privacy, and which version (spec/09). */
     agreed: v.object({ at: v.number(), version: v.string() }),
   }).index("by_account", ["account"]),
@@ -179,6 +183,8 @@ export default defineSchema({
     manager: v.id("managers"),
     season: v.id("seasons"),
     teamName: v.string(),
+    /** One of its season's teams: each region's entry has its own (spec/16). */
+    favouriteTeam: v.id("teams"),
     /** The first gameweek it scores; it starts on 0 points (spec/09, Joining late). */
     firstGameweek: v.number(),
     /** In won: the budget less what the squad cost. Null for a season with no budget. */
@@ -198,13 +204,15 @@ export default defineSchema({
     buyPrice: v.number(),
   }).index("by_entry", ["entry", "gameweek"]),
 
-  // Leagues (convex/leagues): Overall, country and team leagues exist once each (spec/08).
+  // Leagues (convex/leagues): each belongs to one season, so to one region. Overall, country and team
+  // leagues exist once each per season (spec/08; spec/16).
   leagues: defineTable(
     v.union(
-      v.object({ kind: v.literal("overall") }),
-      v.object({ kind: v.literal("country"), country: v.string() }),
-      v.object({ kind: v.literal("team"), team: v.id("teams") }),
+      v.object({ season: v.id("seasons"), kind: v.literal("overall") }),
+      v.object({ season: v.id("seasons"), kind: v.literal("country"), country: v.string() }),
+      v.object({ season: v.id("seasons"), kind: v.literal("team"), team: v.id("teams") }),
       v.object({
+        season: v.id("seasons"),
         kind: v.literal("private"),
         name: v.string(),
         code: v.string(),
@@ -214,9 +222,9 @@ export default defineSchema({
       }),
     ),
   )
-    .index("by_kind", ["kind"])
-    .index("by_country", ["country"])
-    .index("by_team", ["team"])
+    .index("by_kind", ["season", "kind"])
+    .index("by_country", ["season", "country"])
+    .index("by_team", ["season", "team"])
     .index("by_code", ["code"]),
   leagueEntries: defineTable({ league: v.id("leagues"), entry: v.id("entries") })
     .index("by_league", ["league", "entry"])

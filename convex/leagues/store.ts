@@ -26,11 +26,13 @@ export type LeagueRefusal =
   | { rule: "startGameweek"; choices: number[] }
   | { rule: "noCode"; code: string }
   | { rule: "notMaker" | "makerLeaves" | "notMember" | "removed" }
-  | { rule: "favouriteTeamFixed" };
+  | { rule: "favouriteTeamFixed" }
+  | { rule: "otherSeason" };
 
 const refuse = (refusal: LeagueRefusal) => new ConvexError(refusal);
 
-/** A new entry joins Overall, its country's league and its favourite team's (spec/08). */
+/** A new entry joins its season's Overall, its country's league and its favourite team's (spec/08;
+ *  spec/16, Leagues in the LEC). */
 export const enterAutoLeagues = internalMutation({
   args: { entry: v.id("entries") },
   handler: (ctx, { entry }) => joinAutoLeagues(ctx, entry),
@@ -38,9 +40,9 @@ export const enterAutoLeagues = internalMutation({
 
 /** `enterAutoLeagues` inside another mutation: sign-up's (convex/signIn). */
 export async function joinAutoLeagues(ctx: MutationCtx, entry: Id<"entries">) {
-  const manager = await managerOf(ctx, entry);
-  for (const auto of autoLeagues({ country: manager.country, favouriteTeamId: manager.favouriteTeam })) {
-    await join(ctx, await autoLeague(ctx, auto), entry);
+  const { row, manager } = await entryAndManager(ctx, entry);
+  for (const auto of autoLeagues({ country: manager.country, favouriteTeamId: row.favouriteTeam })) {
+    await join(ctx, await autoLeague(ctx, row.season, auto), entry);
   }
 }
 
@@ -50,17 +52,18 @@ export const changeFavouriteTeam = internalMutation({
   args: { entry: v.id("entries"), team: v.id("teams"), firstDeadline: v.number() },
   handler: async (ctx, { entry, team, firstDeadline }) => {
     if (!canChangeFavouriteTeam(firstDeadline, await now(ctx))) throw refuse({ rule: "favouriteTeamFixed" });
-    const manager = await managerOf(ctx, entry);
+    const { row } = await entryAndManager(ctx, entry);
     // Every entry joins its team's league at sign-up, so one that isn't in it is a broken row, said so.
-    const old = await membership(ctx, await autoLeague(ctx, { kind: "team", teamId: manager.favouriteTeam }), entry);
+    const old = await membership(ctx, await autoLeague(ctx, row.season, { kind: "team", teamId: row.favouriteTeam }), entry);
     if (old === null) throw new Error(`Entry ${entry} isn't in its favourite team's league.`);
     await ctx.db.delete(old._id);
-    await ctx.db.patch(manager._id, { favouriteTeam: team });
-    await join(ctx, await autoLeague(ctx, { kind: "team", teamId: team }), entry);
+    await ctx.db.patch(entry, { favouriteTeam: team });
+    await join(ctx, await autoLeague(ctx, row.season, { kind: "team", teamId: team }), entry);
   },
 });
 
-/** A private league, its maker its first member, counting from this gameweek or a later one. */
+/** A private league in its maker's season, so its region, its maker its first member, counting from
+ *  this gameweek or a later one. */
 export const createPrivateLeague = internalMutation({
   args: { entry: v.id("entries"), name: v.string(), startGameweek: v.number(), currentGameweek: v.number(), lastGameweek: v.number(), settings },
   handler: async (ctx, { entry, name, startGameweek, currentGameweek, lastGameweek, settings }) => {
@@ -72,19 +75,22 @@ export const createPrivateLeague = internalMutation({
     let code: string;
     do code = joinCode(trimmed, Math.random);
     while ((await leagueByCode(ctx, code)) !== null);
-    const league = await ctx.db.insert("leagues", { kind: "private", name: trimmed, code, maker: entry, startGameweek });
+    const { season } = (await entryAndManager(ctx, entry)).row;
+    const league = await ctx.db.insert("leagues", { season, kind: "private", name: trimmed, code, maker: entry, startGameweek });
     await join(ctx, league, entry);
     return { league, code };
   },
 });
 
 /** Join a private league by its code, any case. Joining one already in changes nothing; a manager
- *  its maker removed can't rejoin (spec/08). */
+ *  its maker removed can't rejoin (spec/08). A code joins only its own season's entries, so never
+ *  another region's (spec/16). */
 export const joinPrivateLeague = internalMutation({
   args: { entry: v.id("entries"), code: v.string(), settings },
   handler: async (ctx, { entry, code, settings }) => {
     const league = await leagueByCode(ctx, normalCode(code));
     if (league === null) throw refuse({ rule: "noCode", code });
+    if (league.season !== (await entryAndManager(ctx, entry)).row.season) throw refuse({ rule: "otherSeason" });
     if ((await membership(ctx, league._id, entry)) === null) {
       if ((await removal(ctx, league._id, entry)) !== null) throw refuse({ rule: "removed" });
       await checkJoin(ctx, entry, (await members(ctx, league._id)).length, settings);
@@ -150,12 +156,12 @@ export const leaguesOf = internalQuery({
   },
 });
 
-async function managerOf(ctx: QueryCtx, entry: Id<"entries">): Promise<Doc<"managers">> {
+async function entryAndManager(ctx: QueryCtx, entry: Id<"entries">): Promise<{ row: Doc<"entries">; manager: Doc<"managers"> }> {
   const row = await ctx.db.get(entry);
   if (row === null) throw new Error(`No entry ${entry}.`);
   const manager = await ctx.db.get(row.manager);
   if (manager === null) throw new Error(`No manager for entry ${entry}.`);
-  return manager;
+  return { row, manager };
 }
 
 /** A membership's league; a membership whose league is gone is a broken row, said so. */
@@ -165,18 +171,19 @@ async function leagueOf(ctx: QueryCtx, row: Doc<"leagueEntries">): Promise<Doc<"
   return league;
 }
 
-/** The one league of an auto kind, made the first time a manager needs it. */
-async function autoLeague(ctx: MutationCtx, auto: AutoLeague): Promise<Id<"leagues">> {
+/** A season's one league of an auto kind, made the first time a manager needs it. */
+async function autoLeague(ctx: MutationCtx, season: Id<"seasons">, auto: AutoLeague): Promise<Id<"leagues">> {
+  const leagues = ctx.db.query("leagues");
   const found =
     auto.kind === "overall"
-      ? await ctx.db.query("leagues").withIndex("by_kind", (q) => q.eq("kind", "overall")).first()
+      ? await leagues.withIndex("by_kind", (q) => q.eq("season", season).eq("kind", "overall")).first()
       : auto.kind === "country"
-        ? await ctx.db.query("leagues").withIndex("by_country", (q) => q.eq("country", auto.country)).first()
-        : await ctx.db.query("leagues").withIndex("by_team", (q) => q.eq("team", auto.teamId as Id<"teams">)).first();
+        ? await leagues.withIndex("by_country", (q) => q.eq("season", season).eq("country", auto.country)).first()
+        : await leagues.withIndex("by_team", (q) => q.eq("season", season).eq("team", auto.teamId as Id<"teams">)).first();
   if (found !== null) return found._id;
-  if (auto.kind === "overall") return ctx.db.insert("leagues", { kind: "overall" });
-  if (auto.kind === "country") return ctx.db.insert("leagues", { kind: "country", country: auto.country });
-  return ctx.db.insert("leagues", { kind: "team", team: auto.teamId as Id<"teams"> });
+  if (auto.kind === "overall") return ctx.db.insert("leagues", { season, kind: "overall" });
+  if (auto.kind === "country") return ctx.db.insert("leagues", { season, kind: "country", country: auto.country });
+  return ctx.db.insert("leagues", { season, kind: "team", team: auto.teamId as Id<"teams"> });
 }
 
 const leagueByCode = (ctx: QueryCtx, code: string) =>

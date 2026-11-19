@@ -115,6 +115,12 @@ export function carryShown(deadline: number, now: number): boolean {
   return now >= deadline;
 }
 
+/** Whether a season's Overall splits into Legend and Rise: the LCK's does, the LEC's stays whole
+ *  (spec/16, Leagues in the LEC). Data per season; a season stored before it was data splits. */
+export function overallSplits(settings: { overallSplits?: boolean }): boolean {
+  return settings.overallSplits !== false;
+}
+
 /** Split 2's Overall groups: the top half of Split 1's Overall table goes to Legend, the rest to
  *  Rise, and anyone not in it (joined in Split 2) to Rise. Top half is rank ≤ half the managers, so
  *  managers tied on the line stay together. */

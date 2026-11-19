@@ -1,6 +1,6 @@
 # Achievement memes: drafts and sources
 
-Background for the achievement book ([spec/07](../../spec/07-achievement-book.md)), gathered with
+Background for the achievement book, now out of scope ([SPEC.md](../../SPEC.md#out-of-scope)), gathered with
 Craig on 12–13 Nov 2026. Claude's drafts, not the product: Craig's own ideas are in
 [docs/to-grill.md](../to-grill.md), and nothing is in until a `/grill`. Every unlock below reads
 only match data (Oracle's Elixir and Leaguepedia): kills, deaths, CS, gold, objectives,

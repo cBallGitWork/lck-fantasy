@@ -2,12 +2,13 @@
 import type { TeamCode } from "../../fixtures/week3";
 import type { Score, StripNext, StripPast } from "../../parts";
 import type { RoleKey } from "../../rift";
+import { TABS } from "./words";
 
 /** Where the card was opened: from Pick Team it can transfer the coach out; from Points it only compares. */
 export type CoachFrom = "pickTeam" | "points";
 
-/** The card's tabs, in order; Roster replaces the player card's Champions (spec/12). */
-export const COACH_TABS = ["This week", "Fixtures", "History", "Roster"] as const;
+/** The card's tabs, in order (`words.ts`). */
+export const COACH_TABS = TABS;
 export type CoachTab = (typeof COACH_TABS)[number];
 
 /** A place among the coaches, written 1st, 2nd, 3rd. */
@@ -61,7 +62,8 @@ export interface WeekGame {
   clock?: string;
 }
 
-export interface WeekSeries {
+/** A series in This week once it has started. */
+export interface PlayedSeries {
   id: string;
   day: string;
   opponent: TeamCode;
@@ -71,6 +73,18 @@ export interface WeekSeries {
   games: WeekGame[];
   points: number;
 }
+
+/** A series in This week not yet started: its time, yours then the league's, and no points yet (spec/12, The coach card). */
+export interface UpcomingSeries {
+  id: string;
+  day: string;
+  opponent: TeamCode;
+  state: "upcoming";
+  local: string;
+  kst: string;
+}
+
+export type WeekSeries = PlayedSeries | UpcomingSeries;
 
 export interface CoachWeek {
   week: number;
@@ -97,7 +111,10 @@ export interface HistoryRow {
   score: Score;
   games: number;
   priceM: number;
+  /** His points, so far while `live`. */
   points: number;
+  /** Being played: History shows it, tagged Live, though the strip shows it too (spec/12, The coach card). */
+  live?: boolean;
 }
 
 export interface PastSeason {

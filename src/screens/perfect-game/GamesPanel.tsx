@@ -4,6 +4,7 @@ import { outcome, result, seriesTitle } from "../../parts";
 import { cardGo } from "../../paths";
 import { MARK_NAME, PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel, ROLE_NAME } from "../../rift";
 import type { PerfectPlayer, PlayerSeries } from "./types";
+import { championLine, teamRole } from "./words";
 
 /** `Wed · v HLE` and `W 2–1`, from the side of the series the player's team was on. */
 function seriesHead(team: string, s: PlayerSeries, week: readonly Series[]) {
@@ -24,7 +25,7 @@ export function GamesPanel({
 }) {
   const role = ROLE_NAME[player.slot];
   // The Captain is named by his C and his sum's label, so the meta leaves it out.
-  const meta = `${player.team} · ${role}`;
+  const meta = teamRole(player.team, role);
   const sum = player.series.map((s) => s.points).join(" + ");
   return (
     <PlayerPanel name={player.name} meta={meta} onClose={onClose}>
@@ -42,7 +43,7 @@ export function GamesPanel({
             }
           >
             {s.games?.map((g, i) => (
-              <PanelGame key={i} no={i + 1} what={`${g.champion} · ${outcome(g.won)}`} points={g.points} counted={g.counted} />
+              <PanelGame key={i} no={i + 1} what={championLine(g.champion, outcome(g.won))} points={g.points} counted={g.counted} />
             ))}
           </PanelSeries>
         );

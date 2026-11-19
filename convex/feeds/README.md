@@ -1,12 +1,12 @@
 # convex/feeds
 
-One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/lck` and `convex/stats`, and keeps the raw payload.
+One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each maps what the source sends into `convex/world` and `convex/stats`, and keeps the raw payload.
 
 - `oraclesElixir.ts`: the daily CSV into one record per game, each row kept (spec/11, Final).
 - `leaguepedia.ts`: solo kills and steals from a game's match-v5 data, by participant id.
 - `load.ts`: stores both, grouped into series; a load run again replaces what the same game held.
-- `fixtures/`: BRION v DRX's rows cut from the 2025 file, a match-v5-shaped payload for tests, and
-  that series' three Leaguepedia pages (`v5-LOLTMNT03-*.json`, saved 17 Nov 2026), the match JSON
-  as the page holds it: flat, with `participants` at the top, not under `info`.
+- `liveFeed.ts`: Riot's live feed windows folded into a running reading per game, provisional (spec/11, Live).
+- `live.ts`: a live game watched by its feed id, each read stored in `liveFrames`, the next booked at the season's pace, and an admin alert when the feed goes down.
+- `fixtures/`: BRION v DRX's rows cut from the 2025 file, a match-v5-shaped payload, and five live feed windows of LYON v Gen.G (Worlds 2026) for tests; and that series' three Leaguepedia pages (`v5-LOLTMNT03-*.json`, saved 17 Nov 2026), the match JSON as the page holds it: flat, with `participants` at the top, not under `info`.
 
-Fetching either source is `convex/outbound/`'s job and isn't built yet.
+Fetching any source is `convex/outbound/`'s job; only the live feed's is built.

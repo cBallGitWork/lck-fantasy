@@ -3,14 +3,13 @@
 import type { Transfer } from "../squads/budget";
 import type { BuffEffect } from "../squads/buffs";
 import { sum } from "../../src/parts/util/sum";
-import { isCarrying, lineupPoints } from "../squads/carry";
+import { isCarrying, lineupPoints, type Multipliers } from "../squads/carry";
 import { pickKey, type Pick, type ScoringPick } from "../squads/squad";
 import { followedBy, type Follows } from "./follows";
 
 export interface FeedSettings {
   /** A Carry scoring this many or more in a series, after the multiplier, is a big Carry: 20 (spec/14). */
   bigCarryPoints: number;
-  carryMultiplier: number;
 }
 
 /** A finished series of the gameweek: each pick who played in it, by `pickKey`, with their series points. */
@@ -29,8 +28,8 @@ export interface FeedGameweek {
 export interface ManagerWeek {
   managerId: string;
   lineup: readonly ScoringPick[];
-  /** Player ids taking the multiplier (`carryingPlayers`). */
-  carrying: ReadonlySet<string>;
+  /** Who is multiplied, and by what (`buffLineup`). */
+  multipliers: Multipliers;
   transfers: readonly Transfer[];
   buff: BuffEffect | null;
 }
@@ -80,7 +79,7 @@ function movesItem(week: ManagerWeek, deadline: number, series: readonly Finishe
 function seriesItems(week: ManagerWeek, series: FinishedSeries, settings: FeedSettings): FeedItem[] {
   const played = week.lineup.filter((scoring) => series.points.has(pickKey(scoring.pick)));
   if (played.length === 0) return [];
-  const slots = lineupPoints(played, series.points, week.carrying, settings.carryMultiplier);
+  const slots = lineupPoints(played, series.points, week.multipliers);
   const at = series.finishedAt;
   const items: FeedItem[] = [
     {
@@ -92,7 +91,7 @@ function seriesItems(week: ManagerWeek, series: FinishedSeries, settings: FeedSe
     },
   ];
   for (const slot of slots) {
-    if (isCarrying(slot.pick, week.carrying) && slot.points >= settings.bigCarryPoints) {
+    if (isCarrying(slot.pick, week.multipliers) && slot.points >= settings.bigCarryPoints) {
       items.push({ kind: "bigCarry", managerId: week.managerId, at, seriesId: series.id, pick: slot.pick, points: slot.points });
     }
   }

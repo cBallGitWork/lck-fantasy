@@ -1,7 +1,7 @@
 // What Home shows, as the backend will feed it (issue #80's one query). Fixtures fill it until then.
 
 import type { Stream } from "../../fixtures/streams";
-import type { Score } from "../../parts";
+import type { CheerKind, Score } from "../../parts";
 import type { IconKey, Mark, RoleKey, SlotKey } from "../../rift";
 
 /** Overall as a LoL tier with divisions (spec/08): the tier with its division, its hangul, the rank and move. */
@@ -26,11 +26,11 @@ export interface HomeDeadline {
   kst: string;
 }
 
-/** A Following card item (spec/14): a manager's series points, a big Captain, or a truck received. */
+/** A Following card item (spec/14): a manager's series points, a big Captain, or a cheer or jeer received. */
 export type FeedItem =
-  | { kind: "series"; id: string; manager: string; series: string; points: number }
-  | { kind: "captain"; id: string; manager: string; player: string; series: string; points: number }
-  | { kind: "truck"; id: string; line: string; from: string; week: number };
+  | { kind: "series"; id: string; managerId: string; manager: string; series: string; points: number }
+  | { kind: "captain"; id: string; managerId: string; manager: string; player: string; series: string; points: number }
+  | { kind: "received"; cheer: CheerKind; id: string; line: string; from: string; week: number };
 
 /** One of your leagues: its rank and move. A private league's rank reads as a place (`2nd`). */
 export interface HomeLeague {
@@ -49,6 +49,8 @@ export interface SidePlayer {
   mark?: Mark;
   stat?: string;
   points: number;
+  /** Effective ownership in per cent, beside the points for star and flop: `22 · 31%`. */
+  eoPct?: number;
 }
 
 export interface WeekPoints {
@@ -115,8 +117,9 @@ export interface HomeIdleData extends HomeShared {
   lineup: LineupStarter[];
   next: NextSeries;
   week: WeekPoints;
-  star: SidePlayer;
-  flop: SidePlayer;
+  /** Last week's star and flop, the same for every manager (spec/12); more than one each when still tied. */
+  stars: SidePlayer[];
+  flops: SidePlayer[];
 }
 
 export type HomeData = HomeLiveData | HomeIdleData;

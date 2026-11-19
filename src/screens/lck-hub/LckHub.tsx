@@ -7,11 +7,12 @@ import { News } from "./News";
 import { Results } from "./ResultsTab";
 import { Standings } from "./StandingsTab";
 import { Teams } from "./TeamsTab";
-import { HUB_TABS, type HubTab, type LckHubData } from "./types";
+import type { HubStage, HubTab, LckHubData } from "./types";
+import { HUB_TABS, starts, WORDS } from "./words";
 import "./lck-hub.css";
 
-/** A stage with nothing to show yet: the Play-In before it starts. */
-const NOT_STARTED = "Not started";
+/** A stage with nothing to show yet, the Play-In before it starts, says when it starts. */
+const NotStarted = ({ stage }: { stage: HubStage }) => <Empty title={starts(stage.starts)} />;
 
 const recordsOf = (data: LckHubData, stage: number): Partial<Record<TeamCode, string>> =>
   Object.fromEntries((data.stages[stage]?.groups ?? []).flatMap((g) => g.rows.map((r) => [r.team, score([r.won, r.lost])])));
@@ -19,15 +20,14 @@ const recordsOf = (data: LckHubData, stage: number): Partial<Record<TeamCode, st
 /** The chosen tab's view, in the chosen stage. */
 function TabView({ data, state, act }: { data: LckHubData; state: HubState; act: (a: HubAction) => void }) {
   if (state.tab === "Teams") return <Teams teams={data.teams} chosen={state.team} onChoose={(team) => act({ type: "team", team })} />;
-  if (state.tab === "Standings") {
-    const groups = data.stages[state.stage]?.groups ?? [];
-    return groups.length ? <Standings groups={groups} /> : <Empty title={NOT_STARTED} />;
-  }
+  const stage = data.stages[state.stage];
+  if (!stage) throw new Error(`The LCK hub has no stage ${state.stage}`);
+  if (state.tab === "Standings") return stage.groups.length ? <Standings groups={stage.groups} /> : <NotStarted stage={stage} />;
   const tab: WeekTab = state.tab;
   const weeks = weeksOf(data, state, tab);
   const at = tab === "Fixtures" ? state.fixturesWeek : state.resultsWeek;
   const week = weeks[at];
-  if (!week) return <Empty title={NOT_STARTED} />;
+  if (!week) return <NotStarted stage={stage} />;
   const step = (s: -1 | 1) => (weeks[at + s] ? () => act({ type: "week", tab, step: s }) : undefined);
   return tab === "Fixtures" ? (
     <Fixtures week={week} bestOf={data.bestOf} records={recordsOf(data, state.stage)} onPrev={step(-1)} onNext={step(1)} />
@@ -45,19 +45,19 @@ export function LckHub({ data, account, tab }: { data: LckHubData; account: stri
   const stageNames = data.stages.map((s) => s.name);
   const tabsId = useId();
   return (
-    <PageFrame screen="lck-hub" active="lckHub" account={account}>
+    <PageFrame screen="lck-hub" active="hub" account={account}>
       <div className="lck-hub__head">
         <PageHead title={data.title} hangul={data.hangul} />
         <Deadline {...data.deadline} />
       </div>
-      <Tabs id={tabsId} tabs={HUB_TABS} chosen={state.tab} onChoose={(t) => act({ type: "tab", tab: t })} label="LCK hub" />
+      <Tabs id={tabsId} tabs={HUB_TABS} chosen={state.tab} onChoose={(t) => act({ type: "tab", tab: t })} label={WORDS.hub} />
       {state.tab !== "Teams" && (
         <div className="lck-hub__stages">
           <ViewToggle
             options={stageNames}
             chosen={stageNames[state.stage] ?? ""}
             onChoose={(name) => act({ type: "stage", stage: stageNames.indexOf(name) })}
-            label="Stage"
+            label={WORDS.stage}
           />
         </div>
       )}

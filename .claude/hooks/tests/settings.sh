@@ -12,6 +12,7 @@ wiring=(  # event|matcher|script, the matcher empty where the entry has none
   'UserPromptSubmit||last_prompt.py'
   'PostToolUse|Write|Edit|line_ceiling.py'
   'PostToolUse|AskUserQuestion|guard_ask.py'
+  'PostToolUse|AskUserQuestion|last_prompt.py'
   'UserPromptSubmit||context_size.py'
   'SessionStart||quick_check.py'
   'Stop||quick_check.py'

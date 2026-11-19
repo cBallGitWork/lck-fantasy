@@ -6,11 +6,41 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 
 ## The season
 
-- The LCK Cup is dropped: Split 1 is the beta (Craig, 16 Nov 2026).
+- The LCK Cup 2027 is played as a closed test, beside the LEC's Winter split (Craig, 18 Nov
+  2026: "a good test of 2 regions at same time"); it was dropped on 16 Nov 2026.
 - The real test is the main season's knockouts: Road to MSI and the LCK playoffs.
 - The main game splits into Split 1 and Split 2, and buffs reset at the split, the way FPL's chips
   reset at GW19.
 - Road to MSI counts in Split 1's table.
+
+## The road to launch
+
+Craig, 18 Nov 2026.
+
+1. **A simulated season** on its own copy of the site, which can be wiped and rerun, never
+   touching the real game's data.
+   - It replays the LCK's whole 2026 season under 2027's format: Split 1 with Road to MSI, Split 2
+     with Legend and Rise, the playoffs. Buffs reset at the split and prices refresh.
+   - Prices come from the approved formula ([spec/02](02-prices-and-budget.md)) run on 2025's
+     data, as if 2026 were starting.
+   - Time moves like a Championship Manager save: an admin's **Next day** plays one match day
+     and its deadline when it comes; a week runs over several presses, so points and tables are
+     seen updating mid-week. **Play to end** runs the rest without stopping.
+   - Each game replays its 2026 timeline through the live-points path at speed, about a minute a
+     game, so points tick live, then turn final.
+   - It is played by 1,000 test managers and Craig. Test managers have mixed styles (chases form,
+     loyal to one team, the cheap stars, close to random); each makes transfers, takes the odd
+     −6, picks a Captain and plays buffs.
+   - It is done when it runs a whole season with no errors or alerts left open, every week's
+     points match the backtest's own scorer re-derived for every test manager, and Craig says the
+     weekly loop feels right.
+2. **Two closed tests from mid-January 2027**, two regions at once: the LEC's Winter split (from
+   15 Jan) and the LCK Cup. Live data and live points from day one. Up to 50 people Craig
+   invites, each by a personal link, and 1,000 test managers play; sign-up is closed to everyone
+   else. Some play both regions, some one each. The cap of 50 is a setting.
+3. **Public launch in spring**, if the tests go well: the LEC's Spring split and the LCK's Split
+   1 open together, the site open 3 weeks before spring starts. January is too soon: opening 3
+   weeks before 15 Jan would mean promoting over Christmas.
 
 ## Stages and their settings
 

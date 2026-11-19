@@ -1,7 +1,8 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
 import { PICK_TEAM_SQUAD } from "../fixtures/week3";
-import { html, text } from "../testing/render";
+import { CAPTAIN_MULTIPLIER } from "../fixtures/competition";
+import { hovers, html, text } from "../testing/render";
 import { measure } from "../theme/tokens";
 import {
   BENCH_SLOTS,
@@ -61,7 +62,7 @@ test("a Points tile shows team, C, name, your dot, points (the Captain's result 
   );
   expect(out).toContain("rift-map");
   expect(out).toContain('class="shirt__code">T1');
-  expect(out).toContain('title="Captain">C');
+  expect(out).toContain('aria-label="Captain">C');
   expect(out).toContain('aria-label="Your player"');
   expect(out).toContain('class="tile__points num">25</div>');
   expect(out).toContain("v HLE 12 · v DK 5");
@@ -80,10 +81,27 @@ test("C reads as Captain, as the ! reads Not starting; the C is the only mark, n
       <Tile slot="bot" name="Gumayusi" team="T1" flag="Not starting" />
     </>,
   );
-  expect(out).toContain('role="img" aria-label="Captain" title="Captain">C</span>');
+  expect(out).toContain('role="img" aria-label="Captain">C</span>');
   expect(out).not.toContain("mark-badge--v");
   expect(out).toContain('role="img" aria-label="Not starting"');
   expect(markNews("Faker", "C")).toBe("Faker is your Captain");
+});
+
+test("C's hover is the competition's multiplier, and the Flex's label says Any role (spec/12, Words)", () => {
+  const out = html(
+    <>
+      <Tile slot="mid" name="Faker" team="T1" mark="C" />
+      <Tile slot="flex" name="Zeus" team="T1" />
+    </>,
+  );
+  expect(hovers(out)).toEqual([
+    ["C", `Scores ×${CAPTAIN_MULTIPLIER} this week`],
+    ["Flex", "Any role"],
+  ]);
+  expect(hovers(html(<LineupCard slot="flex" plays="top" name="Zeus" team="T1" mark="C" />))).toEqual([
+    ["Flex", "Any role"],
+    ["C", `Scores ×${CAPTAIN_MULTIPLIER} this week`],
+  ]);
 });
 
 test("a tile or a lineup card that can be chosen is a key the keyboard reaches", () => {
@@ -115,6 +133,16 @@ test("the slots place all seven starters, inside the square Rift", () => {
   for (const [x, y] of Object.values(RIFT_SLOTS)) expect([x, y].every((v) => v > 0 && v < measure.rift)).toBe(true);
 });
 
+test("a lineup card shows his split's photo credited Photo: LCK, or his team's crest without one (spec/13)", () => {
+  const withPhoto = html(<LineupCard slot="mid" name="Faker" team="T1" photo="/photos/faker.jpg" />);
+  expect(withPhoto).toContain('src="/photos/faker.jpg" alt="Faker"');
+  expect(text(<LineupCard slot="mid" name="Faker" team="T1" photo="/photos/faker.jpg" />)).toContain("Photo: LCK");
+  expect(withPhoto).not.toContain("T1 crest");
+  const without = html(<LineupCard slot="mid" name="Faker" team="T1" />);
+  expect(without).toContain('alt="T1 crest"');
+  expect(without).not.toContain("Photo: LCK");
+});
+
 test("Card view shows the seven in broadcast order, with photo, crest, C, and footer", () => {
   const starters = PICK_TEAM_SQUAD.filter((p): p is typeof p & { slot: SlotKey } => LINEUP_ORDER.includes(p.slot as SlotKey));
   // Given out of order, drawn in the broadcast's order.
@@ -123,6 +151,7 @@ test("Card view shows the seven in broadcast order, with photo, crest, C, and fo
     plays: p.slot === "flex" && p.role !== "coach" ? p.role : undefined,
     name: p.name,
     team: p.team,
+    photo: p.name === "Faker" ? "/photos/faker.jpg" : undefined,
     mark: p.mark,
     news: p.news ? "Not starting" : undefined,
     next: "v KT · v GEN",
@@ -134,10 +163,11 @@ test("Card view shows the seven in broadcast order, with photo, crest, C, and fo
   expect(out).toContain("Flexplays Top");
   expect(out).toContain("Coach감독");
   expect(html(<Lineup cards={cards} />)).toContain('alt="T1 crest"');
-  expect(out).toContain("Photo");
+  expect(html(<Lineup cards={cards} />)).toContain('alt="Faker"');
+  expect(html(<Lineup cards={cards} />)).toContain('alt="GEN crest"');
   expect(out).toContain("Not starting");
   expect(out).toContain("Form 19.3");
-  expect(html(<Lineup cards={cards} />)).toContain('title="Captain">C');
+  expect(html(<Lineup cards={cards} />)).toContain('aria-label="Captain">C');
 });
 
 test("the player panel shows name, meta, ✕ and its body", () => {

@@ -15,13 +15,14 @@ type Week = { squad: SquadPlayer[]; rules: TransferRules; confirms: Confirm[] };
 /**
  * Transfers, on the picture's made-up week until the backend feeds its props. A confirm changes the squad
  * and heads Confirmed · Week 4 until a reload; Undo puts back the week before it. `?sell=coach` opens
- * with that slot sold, as the coach card's Transfer out does. `?state=confirm` opens the confirm sheet, in dev.
+ * with that slot sold, as the coach card's Transfer out does; `?sell=faker` with that player's slot sold, as the player card's. `?state=confirm` opens the confirm sheet, in dev.
  */
 export function TransfersScreen() {
   const reviewing = useDevState({ confirm: true });
   const search: Record<string, unknown> = useSearch({ strict: false });
   const { squad, rules, confirms } = TRANSFERS_PICTURE;
-  const selling = SQUAD_SLOTS.find((slot) => slot === search[SELL_SEARCH]);
+  const sell = search[SELL_SEARCH];
+  const selling = SQUAD_SLOTS.find((slot) => slot === sell) ?? squad.find((p) => p.id === sell)?.slot;
   const [week, setWeek] = useState<Week>({ squad, rules, confirms });
   /** The week before each confirm made here, by its id. */
   const [before, setBefore] = useState<Record<string, Week>>({});

@@ -3,21 +3,23 @@
 // are the Stats and Transfers pictures'. Only these four have lines until the backend (#36).
 
 import { hangulOf } from "../../fixtures/rosters";
-import { FAKER_SEASON, KKOMA_SEASON, last3, T1_NEXT3, type T1MemberSeason, type T1Series } from "../../fixtures/t1Season";
+import { FAKER_SEASON, KKOMA_SEASON, last3, T1_NEXT3, type T1MemberSeason } from "../../fixtures/t1Season";
 import { pickedAt, playerId, statsOf, STATS_PLAYERS, type TeamCode } from "../../fixtures/week3";
 import type { PersonRole } from "../../rift";
 
 
 /** A series already played: its week and day, the opponent, his points. */
 export interface PastSeries {
-  when: string;
+  week: number;
+  day: string;
   opponent: TeamCode;
   points: number;
 }
 
 /** A series to come: its week and day, the opponent. */
 export interface NextSeries {
-  when: string;
+  week: number;
+  day: string;
   opponent: TeamCode;
 }
 
@@ -50,10 +52,7 @@ export interface ComparePlayer {
   lines: ScoringLine[];
 }
 
-/** A series' week and day: `W4 · Wed`. */
-const when = (s: T1Series) => `W${s.week} · ${s.day}`;
-
-const NEXT_T1: NextSeries[] = T1_NEXT3.map((s) => ({ when: when(s), opponent: s.opponent }));
+const NEXT_T1: NextSeries[] = T1_NEXT3.map(({ week, day, opponent }) => ({ week, day, opponent }));
 
 /** A T1 member's side, from his card's season figures, his Pick Team price and form, and Stats. */
 function t1Member(season: T1MemberSeason, role: PersonRole): ComparePlayer {
@@ -71,15 +70,15 @@ function t1Member(season: T1MemberSeason, role: PersonRole): ComparePlayer {
     priceM: pick.priceM,
     riseM: season.riseM,
     ownedPct: statsOf(name).ownedPct,
-    last3: last3(season).map((s) => ({ when: when(s), opponent: s.opponent, points: s.points })),
+    last3: last3(season).map(({ week, day, opponent, points }) => ({ week, day, opponent, points })),
     next3: NEXT_T1,
     lines: [...season.lines],
   };
 }
 const NEXT_GEN: NextSeries[] = [
-  { when: "W4 · Thu", opponent: "BRO" },
-  { when: "W4 · Sat", opponent: "T1" },
-  { when: "W5 · Wed", opponent: "DNS" },
+  { week: 4, day: "Thu", opponent: "BRO" },
+  { week: 4, day: "Sat", opponent: "T1" },
+  { week: 5, day: "Wed", opponent: "DNS" },
 ];
 
 export const FAKER: ComparePlayer = t1Member(FAKER_SEASON, "mid");
@@ -97,9 +96,9 @@ export const CHOVY: ComparePlayer = {
   riseM: 0.5,
   ownedPct: 41,
   last3: [
-    { when: "W2 · Sat", opponent: "BRO", points: 11 },
-    { when: "W3 · Wed", opponent: "KT", points: 9 },
-    { when: "W3 · Sat", opponent: "HLE", points: 8 },
+    { week: 2, day: "Sat", opponent: "BRO", points: 11 },
+    { week: 3, day: "Wed", opponent: "KT", points: 9 },
+    { week: 3, day: "Sat", opponent: "HLE", points: 8 },
   ],
   next3: NEXT_GEN,
   lines: [
@@ -129,9 +128,9 @@ export const RYU: ComparePlayer = {
   priceM: 7.0,
   ownedPct: 21,
   last3: [
-    { when: "W2 · Sat", opponent: "BRO", points: 5 },
-    { when: "W3 · Wed", opponent: "KT", points: 6 },
-    { when: "W3 · Sat", opponent: "HLE", points: 9 },
+    { week: 2, day: "Sat", opponent: "BRO", points: 5 },
+    { week: 3, day: "Wed", opponent: "KT", points: 6 },
+    { week: 3, day: "Sat", opponent: "HLE", points: 9 },
   ],
   next3: NEXT_GEN,
   lines: [
@@ -147,6 +146,10 @@ export const RYU: ComparePlayer = {
 
 /** Every player Compare has lines for, by name. */
 export const COMPARE_PLAYERS: Record<string, ComparePlayer> = Object.fromEntries([FAKER, CHOVY, KKOMA, RYU].map((p) => [p.name, p]));
+
+/** The made-up second player against `first`: the next one Compare has lines for, a coach only against a coach. */
+export const fixtureSecond = (first: ComparePlayer): ComparePlayer | null =>
+  Object.values(COMPARE_PLAYERS).find((p) => p.id !== first.id && (p.role === "coach") === (first.role === "coach")) ?? null;
 
 /** A row of the second player's search: name, team, price in m, season points. */
 export interface SearchRow {

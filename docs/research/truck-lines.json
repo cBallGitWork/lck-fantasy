@@ -1,7 +1,7 @@
 [
   {
     "id": "p01",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "MANAGEMENT MUST EXPLAIN THE ARMBAND. {carryPts} PTS.",
     "trigger": "carry_blank",
     "placeholders": [
@@ -12,7 +12,7 @@
   },
   {
     "id": "p02",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "WE DEMAND THE ARMBAND MEETING MINUTES. ALL OF THEM.",
     "trigger": "carry_blank",
     "placeholders": [],
@@ -21,7 +21,7 @@
   },
   {
     "id": "p03",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "CARRY PICKED BY COIN TOSS? 해명하라 (EXPLAIN).",
     "trigger": "carry_blank",
     "placeholders": [],
@@ -30,7 +30,7 @@
   },
   {
     "id": "p04",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "\"SHOULD'VE CAPTAINED\" IS NOT A STRATEGY. EXPLAIN.",
     "trigger": "carry_blank",
     "placeholders": [],
@@ -39,7 +39,7 @@
   },
   {
     "id": "p05",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "THIS TRUCK WAS FUNDED BY YOUR -{hits}.",
     "trigger": "took_hits",
     "placeholders": [
@@ -50,7 +50,7 @@
   },
   {
     "id": "p06",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "-{hits} FOR A SIDEWAYS TRANSFER. WHO SIGNED THIS OFF?",
     "trigger": "took_hits",
     "placeholders": [
@@ -61,7 +61,7 @@
   },
   {
     "id": "p07",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "RAGE TRANSFERS ARE NOT A RECOVERY PLAN.",
     "trigger": "took_hits",
     "placeholders": [],
@@ -70,7 +70,7 @@
   },
   {
     "id": "p08",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "RED ARROW, {move}. 책임져라 (TAKE RESPONSIBILITY).",
     "trigger": "rank_down",
     "placeholders": [
@@ -81,7 +81,7 @@
   },
   {
     "id": "p09",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "RED ARROW SEASON. WE WANT A TOWN HALL. 간담회 NOW.",
     "trigger": "rank_down",
     "placeholders": [],
@@ -90,7 +90,7 @@
   },
   {
     "id": "p10",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "{team} FANS DEMAND A HANDWRITTEN 사과문 (APOLOGY).",
     "trigger": "bottom_of_league",
     "placeholders": [
@@ -101,7 +101,7 @@
   },
   {
     "id": "p11",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "LAST IN {league}. PAST GLORY IS ALL WE HAVE LEFT.",
     "trigger": "bottom_of_league",
     "placeholders": [
@@ -112,7 +112,7 @@
   },
   {
     "id": "p12",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "BOTTOM OF {league}. EVEN YOUR RIVALS FEEL BAD, MATE.",
     "trigger": "bottom_of_league",
     "placeholders": [
@@ -123,7 +123,7 @@
   },
   {
     "id": "p13",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "{bench} ON THE BENCH. NOT A HEADACHE. A MIGRAINE.",
     "trigger": "bench_outscored_starters",
     "placeholders": [
@@ -134,7 +134,7 @@
   },
   {
     "id": "p14",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "THE BENCH OUTSCORED THE STARTERS. 해명하라 (EXPLAIN).",
     "trigger": "bench_outscored_starters",
     "placeholders": [],
@@ -143,7 +143,7 @@
   },
   {
     "id": "p15",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "NO TRANSFER AGAIN. IS ANYONE AT HEADQUARTERS?",
     "trigger": "no_transfer",
     "placeholders": [],
@@ -152,7 +152,7 @@
   },
   {
     "id": "p16",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "SET AND FORGET IS NOT A PHILOSOPHY. IT'S A NAP.",
     "trigger": "no_transfer",
     "placeholders": [],
@@ -161,7 +161,7 @@
   },
   {
     "id": "p17",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "PLAYING THE LONG GAME? THIS ISN'T A 50-MINUTE LCK MATCH.",
     "trigger": "no_transfer",
     "placeholders": [],
@@ -170,7 +170,7 @@
   },
   {
     "id": "p18",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "BUFF PLAYED. BUFF BOTTLED. 해명하라 (EXPLAIN).",
     "trigger": "buff_wasted",
     "placeholders": [],
@@ -179,7 +179,7 @@
   },
   {
     "id": "p19",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "BUFF SAVED SINCE WEEK 1. SPENT ON THIS? 각성하라 (WAKE UP).",
     "trigger": "buff_wasted",
     "placeholders": [],
@@ -188,7 +188,7 @@
   },
   {
     "id": "p20",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "{price} SPENT. WE DEMAND TO SEE THE SPREADSHEET.",
     "trigger": "price_flop",
     "placeholders": [
@@ -199,7 +199,7 @@
   },
   {
     "id": "p21",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "{price} ON ONE PICK. WHO APPROVED THIS BUDGET?",
     "trigger": "price_flop",
     "placeholders": [
@@ -210,7 +210,7 @@
   },
   {
     "id": "p22",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "PRICE-RISE CHASING IS NOT SCOUTING. 해명하라 (EXPLAIN).",
     "trigger": "price_flop",
     "placeholders": [],
@@ -219,7 +219,7 @@
   },
   {
     "id": "p23",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "FAN PATIENCE: 0/10/0. (A KDA)",
     "trigger": "low_score",
     "placeholders": [],
@@ -228,7 +228,7 @@
   },
   {
     "id": "p24",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "{points} POINTS. WE ARE NOT ANGRY. WE ARE GUTTED.",
     "trigger": "low_score",
     "placeholders": [
@@ -239,7 +239,7 @@
   },
   {
     "id": "p25",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "각성하라 (WAKE UP). {points} PTS IS NOT A STRATEGY.",
     "trigger": "low_score",
     "placeholders": [
@@ -250,7 +250,7 @@
   },
   {
     "id": "p26",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "THE TEMPLATE WAS RIGHT THERE, MATE.",
     "trigger": "any",
     "placeholders": [],
@@ -259,7 +259,7 @@
   },
   {
     "id": "p27",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "WE PARKED HERE. YOUR SQUAD ISN'T MOVING EITHER.",
     "trigger": "any",
     "placeholders": [],
@@ -268,7 +268,7 @@
   },
   {
     "id": "p28",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "THE TRUCK DRIVER HAS ALSO LOST FAITH.",
     "trigger": "any",
     "placeholders": [],
@@ -277,7 +277,7 @@
   },
   {
     "id": "p29",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "MANAGEMENT IS STILL IN BASE. RECALL IS NOT A PLAN.",
     "trigger": "any",
     "placeholders": [],
@@ -286,7 +286,7 @@
   },
   {
     "id": "p30",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "OVERALL RANK IS A NUMBER. YOURS IS A LONG ONE.",
     "trigger": "any",
     "placeholders": [],
@@ -295,7 +295,7 @@
   },
   {
     "id": "p31",
-    "kind": "protest",
+    "kind": "jeer",
     "text": "BANDWAGON MISSED. KNEE-JERK TAKEN. EXPLAIN.",
     "trigger": "any",
     "placeholders": [],
@@ -304,7 +304,7 @@
   },
   {
     "id": "c01",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "{carryPts} FROM {carry}. 수고했어요 (WELL PLAYED)!",
     "trigger": "carry_big",
     "placeholders": [
@@ -316,7 +316,7 @@
   },
   {
     "id": "c02",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "ARMBAND ON {carry}. PROPER CARRY PICK, MATE.",
     "trigger": "carry_big",
     "placeholders": [
@@ -327,7 +327,7 @@
   },
   {
     "id": "c03",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "GREEN ARROW, {move}. ICED AMERICANO ON THE HOUSE.",
     "trigger": "rank_up",
     "placeholders": [
@@ -338,7 +338,7 @@
   },
   {
     "id": "c04",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "GREEN ARROW SEASON. 화이팅 (YOU'VE GOT THIS)!",
     "trigger": "rank_up",
     "placeholders": [],
@@ -347,7 +347,7 @@
   },
   {
     "id": "c05",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "OR GOING GREEN. TEAM VALUE UP. 화이팅!",
     "trigger": "rank_up",
     "placeholders": [],
@@ -356,7 +356,7 @@
   },
   {
     "id": "c06",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "TOP OF {league}. YOUR MINI-LEAGUE RIVALS ARE GUTTED.",
     "trigger": "top_of_league",
     "placeholders": [
@@ -367,7 +367,7 @@
   },
   {
     "id": "c07",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "TOP OF {league}. 대박 (AMAZING). DRINK UP.",
     "trigger": "top_of_league",
     "placeholders": [
@@ -378,7 +378,7 @@
   },
   {
     "id": "c08",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "BUFF PLAYED, BUFF PAID. CHEEKY. 화이팅!",
     "trigger": "buff_played",
     "placeholders": [],
@@ -387,7 +387,7 @@
   },
   {
     "id": "c09",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "REMAKE OR LIMITLESS, EITHER WAY: CHEEKY. 화이팅!",
     "trigger": "buff_played",
     "placeholders": [],
@@ -396,7 +396,7 @@
   },
   {
     "id": "c10",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "BUFF WEEK DONE PROPER. LATTE INCOMING.",
     "trigger": "buff_played",
     "placeholders": [],
@@ -405,7 +405,7 @@
   },
   {
     "id": "c11",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "{points} POINTS! 커피차 (COFFEE TRUCK) FOR {team}!",
     "trigger": "high_score",
     "placeholders": [
@@ -417,7 +417,7 @@
   },
   {
     "id": "c12",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "{points} PTS. 대상혁 (FAKER, THE GOAT) WOULD APPROVE.",
     "trigger": "high_score",
     "placeholders": [
@@ -428,7 +428,7 @@
   },
   {
     "id": "c13",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "CHOVY CS. RULER DPS. YOUR SQUAD. 화이팅!",
     "trigger": "any",
     "placeholders": [],
@@ -437,7 +437,7 @@
   },
   {
     "id": "c14",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "THIS COFFEE IS KERIA-TIER SUPPORT.",
     "trigger": "any",
     "placeholders": [],
@@ -446,7 +446,7 @@
   },
   {
     "id": "c15",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "{player} IN YOUR SQUAD. PROPER TASTE, MATE.",
     "trigger": "any",
     "placeholders": [
@@ -457,7 +457,7 @@
   },
   {
     "id": "c16",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "{team}: A DIFFERENTIAL IN A TEMPLATE WORLD.",
     "trigger": "any",
     "placeholders": [
@@ -468,7 +468,7 @@
   },
   {
     "id": "c17",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "BENCH HEADACHE? HAVE A COFFEE, MATE.",
     "trigger": "any",
     "placeholders": [],
@@ -477,7 +477,7 @@
   },
   {
     "id": "c18",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "AUTO-SUB SAVIOUR? NO, MATE. YOU ARE.",
     "trigger": "any",
     "placeholders": [],
@@ -486,7 +486,7 @@
   },
   {
     "id": "c19",
-    "kind": "coffee",
+    "kind": "cheer",
     "text": "HAPPY GAMEWEEK. PLEASE PENTAKILL.",
     "trigger": "any",
     "placeholders": [],

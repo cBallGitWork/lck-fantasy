@@ -14,7 +14,6 @@ flowchart LR
   Home --> Transfers
   Home --> Leagues
   Home --> Fixtures
-  Home --> Book[The Book<br/>achievements]
   Points --> Series[Series page<br/>game by game]
   Leagues --> Rival[Another manager's team]
   Transfers -->|Buffs| Home
@@ -33,7 +32,6 @@ flowchart LR
 | Leagues | Overall, the country league, the supporter league and private leagues with a join code; Legend and Rise in Split 2. | Leagues & Cups |
 | Another manager's team | A rival's lineup and points, after the deadline. | Entry view |
 | Fixtures | The LCK's week: series, times in the visitor's time zone, results. | Fixtures |
-| The Book | The achievement book: pages earned, pages still blank, the story behind each. | none |
 
 ## The first pictures
 

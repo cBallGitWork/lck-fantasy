@@ -2,15 +2,17 @@
 import { afterEach, expect, test, vi } from "vitest";
 import { DEV_STATE_PARAM } from "../parts";
 import { DEV_STATES, DEV_STATES_PATH } from "./devStates";
-import { htmlAt } from "../testing/render";
+import { htmlAt, plain, trucksOutsideCredit } from "../testing/render";
 
 /** What each picture shows that marks its state, as the page draws it. */
 const KEY: Record<string, string> = {
   "home/live": "1/0/2",
   "home/idle": "Week 4 lineup",
   "pick-team/pick": "Rift view",
-  "pick-team/cards": "Photo",
+  "pick-team/cards": 'class="lineup"',
   "pick-team/swap": "On · unsaved",
+  "front-door/front": "9 to pick",
+  "front-door/part": "5 to pick",
   "transfers/transfers": "Review and confirm",
   "transfers/confirm": "Confirm your transfers",
   "points/points": "Zeus",
@@ -32,34 +34,38 @@ const KEY: Record<string, string> = {
   "series/series": "Doran",
   "series/f21": "Gen.G",
   "series/live": "Not final",
-  "series/next": "Split 1 · Week 4 · Wed 20 Jan",
+  "series/next": "Split 1 Week 4 · Wed 20 Jan",
   "compare/compare": "Chovy",
   "compare/pick": 'placeholder="Find a player"',
   "compare/coaches": "Coach · GEN",
   "perfect-game/rift": 'href="/player/faker"',
-  "perfect-game/card": "Photo",
+  "perfect-game/card": 'class="lineup"',
   "price-changes/patch": "Week 4",
   "settings/settings": "1 change: hangul banner",
   "settings/display": "Time zone",
   "settings/emails": "Deadline reminder",
   "settings/account": "Sign out",
-  "settings/delete": "Backups clear within 30 days",
+  "settings/delete": "Backups are deleted within 30 days",
   "lck-hub/hub": "20–24 Jan",
   "lck-hub/results": "13–17 Jan",
   "lck-hub/standings": "Baron group",
   "lck-hub/teams": "Academy",
-  "player-card/card": "+1,204 / −310 this week",
-  "player-card/week": "+842 / −126 this week",
+  "player-card/card": "+1,204 / −310 transfers this week",
+  "player-card/week": "+842 / −126 transfers this week",
   "player-card/fixtures": "Rested for Wednesday",
   "player-card/champs": "Avg pts",
-  "coach-card/coach": "+310 / −95 this week",
-  "coach-card/week": "+204 / −58 this week",
+  "coach-card/coach": "+310 / −95 transfers this week",
+  "coach-card/week": "+204 / −58 transfers this week",
   "coach-card/roster": "Oner",
   "profile/points": "Highest",
   "profile/history": "Week rank",
   "profile/transfers": "Pts gained",
-  "following/following": "Truck ›",
-  "following/truck": "시위 트럭",
+  "following/following": "Cheer / Jeer ›",
+  "following/truck": "You can send Jae one cheer or jeer a week.",
+  "help/help": "Flol is a free fantasy game",
+  "help/help-step4": "‹ Choose your Captain",
+  "help/rules": "Selecting your squad",
+  "help/rules-open": "₩15.5m",
 };
 
 const named = DEV_STATES.map((s) => ({ ...s, name: `${s.page}/${s.state}` }));
@@ -79,7 +85,11 @@ test.each(named)("$name opens at $url and shows its picture's key content", asyn
   const warn = vi.spyOn(console, "warn");
   expect(await htmlAt(url)).toContain(KEY[name]);
   expect(warn).not.toHaveBeenCalled();
-  expect(picture).toMatch(/^docs\/design\/approved\/[a-z-]+\/1440(-\w+)?\.png$/);
+  expect(picture).toMatch(/^docs\/design\/approved\/[a-z-]+\/1440(-[\w-]+)?\.png$/);
+});
+
+test.each(named)("$name says Truck only in the truck-hire credit", async ({ url }) => {
+  expect(trucksOutsideCredit(plain(await htmlAt(url)))).toEqual([]);
 });
 
 test.each(withParam)("$name is the param's doing: its route alone doesn't show it", async ({ name, url }) => {

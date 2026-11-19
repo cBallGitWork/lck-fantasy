@@ -3,10 +3,12 @@ import { expect, test, vi } from "vitest";
 import { PERFECT_GAME } from "../../fixtures/week3";
 import { sum, VIEW_KEYS } from "../../parts";
 import { PATHS } from "../../paths";
-import { expectInOrder, html, htmlAt, text } from "../../testing/render";
+import { expectInOrder, hovers, html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PERFECT_WEEK3 } from "./fixtures";
+import { perfectWeekNav, perfectWeekOf } from "./index";
 import { PerfectGame, PerfectGameCards, PerfectGameRift } from "./PerfectGame";
+import { WORDS } from "./words";
 
 const SEVEN = ["Zeus", "Pyosik", "Faker", "Ruler", "Duro", "BuLLDoG", "kkOma"];
 
@@ -16,7 +18,7 @@ test("Rift view, Faker tapped: the head, the seven on the Rift, his games, the w
     "Perfect game",
     "퍼펙트 게임",
     "‹",
-    "Split 1 · Week 3",
+    "Split 1 Week 3",
     "›",
     "130",
     "Final",
@@ -57,9 +59,10 @@ test("the Rift's tiles show each starter's points (the Captain's result only), s
   for (const p of PERFECT_GAME) expect(out).toContain(p.line);
   expect(out).toContain('class="tile__points num">33</div>');
   expect(text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />)).not.toContain("×");
-  expect(out).toContain('title="Captain">C');
+  expect(out).toContain('aria-label="Captain">C');
   expect(out.match(/aria-label="Your player"/g)).toHaveLength(4);
-  expect(out).toContain('class="tile__slot tile__slot--flex">Flex<');
+  expect(out).toContain('class="tile__slot tile__slot--flex"><span class="hint"');
+  expect(hovers(out)).toContainEqual(["Flex", "Any role"]);
   expect(out).not.toContain("plays Mid");
   expect(out).toContain("Coach 감독");
   expect(out.match(/tile--selected/g)).toHaveLength(1);
@@ -125,4 +128,33 @@ test("Perfect game opens on Rift the first time, then on the view shared with Po
   expect(chosenView(await htmlAt(PATHS.perfectGame))).toBe("Card view");
   stubStorage(blockedStorage);
   expect(chosenView(await htmlAt(PATHS.perfectGame))).toBe("Rift view");
+});
+
+test("each week has its own address (spec/12): /perfect-game and /perfect-game/3 open Week 3, ‹ links Week 2, › is off", async () => {
+  for (const at of [PATHS.perfectGame, "/perfect-game/3"]) {
+    const head = (await htmlAt(at)).split('class="page-head__key-line"')[0] ?? "";
+    expect(head, at).toContain("Split 1 Week 3");
+    expect(head, at).toMatch(/href="\/perfect-game\/2"[^>]*>‹/);
+    expect(head, at).toContain('<button type="button" class="week-arrow key-off" aria-label="Next week" disabled="">›</button>');
+  }
+});
+
+test("‹ › link the week before and after; none before Week 1", () => {
+  expect(perfectWeekNav(3)).toEqual({ prev: { to: PATHS.perfectGameWeek, params: { week: "2" } }, next: undefined });
+  expect(perfectWeekNav(2)).toEqual({
+    prev: { to: PATHS.perfectGameWeek, params: { week: "1" } },
+    next: { to: PATHS.perfectGameWeek, params: { week: "3" } },
+  });
+  expect(perfectWeekNav(1).prev).toBeUndefined();
+});
+
+test("a path names its week: /perfect-game the current one; a week with no perfect game says so", async () => {
+  expect(perfectWeekOf(undefined)).toBe(3);
+  expect(perfectWeekOf("3")).toBe(3);
+  for (const bad of ["2", "4", "03x", "two", ""]) expect(perfectWeekOf(bad), bad).toBeUndefined();
+  for (const at of ["/perfect-game/2", "/perfect-game/two"]) {
+    const out = await htmlAt(at);
+    expect(out, at).toContain(WORDS.noWeek);
+    expect(out, at).not.toContain("Split 1 Week 3");
+  }
 });

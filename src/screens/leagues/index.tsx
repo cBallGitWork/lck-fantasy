@@ -2,7 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { useDevState } from "../../parts";
-import { leagueGo, pathTo } from "../../paths";
+import { leagueJoinGo, pathTo } from "../../paths";
 import {
   COMPETITION,
   JOINABLE,
@@ -11,18 +11,18 @@ import {
   LEAGUES,
   NEW_LEAGUE,
   NEW_TABLE,
-  NO_SUCH_CODE,
   OPEN_LEAGUE_ID,
   PRIVATE_LEAGUE_CAP,
   SCORING_WEEKS,
 } from "./fixtures";
-import { capReason, findByCode, freeCode, makeLeague, privateCount, renameLeague, withLeague, withoutLeague, type MyLeagues, type OpenForm } from "./forms";
+import { capReason, codeOf, findByCode, freeCode, makeLeague, privateCount, renameLeague, withLeague, withoutLeague, type MyLeagues, type OpenForm } from "./forms";
 import { LeagueList } from "./LeagueList";
 import { LeaguesPage } from "./LeaguesPage";
 import { LeagueTable, type LeagueActions } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
 import { CreatedSheet, CreateSheet, DeleteSheet, JoinSheet, LeaveSheet } from "./Sheets";
 import { tableKey, type OverallGroup, type PrivateEntry, type TableTab } from "./types";
+import { WORDS } from "./words";
 
 /** The page the made-up tables are: the top rows and the rows round yours. */
 const FIRST_PAGE = 1;
@@ -33,8 +33,8 @@ const FIRST_PAGE = 1;
  */
 let kept: MyLeagues = { list: LEAGUE_LIST, views: LEAGUES };
 
-/** A league's link, as Copy link gives it. */
-const leagueLink = (leagueId: string) => new URL(pathTo(leagueGo(leagueId)), location.origin).href;
+/** A private league's link, as Copy link gives it: it opens Join a league with the code in (spec/08). */
+const joinLink = (code: string) => new URL(pathTo(leagueJoinGo(code)), location.origin).href;
 
 /** Copies to the clipboard; a missing or refused clipboard is logged, never dropped. */
 function copy(what: string, words: string) {
@@ -47,10 +47,11 @@ const removeManager = () => console.warn("Remove a manager: no picture of its ro
 
 /**
  * Leagues and one league's table (`/leagues/$leagueId`), on the shared Week 3 of Split 1, with the league forms as sheets over it.
+ * A league's link (`/leagues/join/$code`) opens Join a league with its code in; the manager still presses Join (spec/08).
  * In dev, `?state=` opens a picture's sheet over the league (`create`, `created`, `join`, `delete`, `leave`) or its Admin menu (`admin`).
  */
 export function LeaguesScreen() {
-  const { leagueId = OPEN_LEAGUE_ID } = useParams({ strict: false });
+  const { leagueId = OPEN_LEAGUE_ID, code: linkedCode } = useParams({ strict: false });
   const dev = useDevState<{ form?: OpenForm; adminOpen?: true }>({
     admin: { adminOpen: true },
     create: { form: { kind: "create" } },
@@ -73,7 +74,7 @@ export function LeaguesScreen() {
   const page = pages[league.id] ?? FIRST_PAGE;
   const setPage = (next: number) => setPages({ ...pages, [league.id]: next });
   // A sheet belongs to the league it opened over, so Open league, moving to another, closes it.
-  const [sheet, setSheet] = useState<{ on: string; form: OpenForm }>({ on: leagueId, form: dev?.form ?? null });
+  const [sheet, setSheet] = useState<{ on: string; form: OpenForm }>({ on: leagueId, form: dev?.form ?? (linkedCode ? { kind: "join" } : null) });
   const form = sheet.on === leagueId ? sheet.form : null;
   const open = (next: OpenForm) => setSheet({ on: leagueId, form: next });
   const close = () => open(null);
@@ -93,7 +94,7 @@ export function LeaguesScreen() {
   };
   const join = (codeOrLink: string) => {
     const found = findByCode(JOINABLE, codeOrLink);
-    if (!found) return setJoinError(NO_SUCH_CODE);
+    if (!found) return setJoinError(WORDS.noSuchCode);
     setJoinError(undefined);
     if (!(found.view.id in mine.views)) {
       if (capReason(privates.count, privates.cap)) return;
@@ -116,7 +117,9 @@ export function LeaguesScreen() {
     onFindMe: () => setPage(FIRST_PAGE),
   };
   const actions: LeagueActions = {
-    onCopyLink: () => copy("Copy link", leagueLink(league.id)),
+    onCopyLink: () => {
+      if (league.kind === "private") copy("Copy link", joinLink(league.code));
+    },
     onRename: (name) => setMine(renameLeague(mine, league.id, name)),
     onRemoveManager: removeManager,
     onDelete: () => open({ kind: "delete", id: league.id }),
@@ -150,14 +153,14 @@ export function LeaguesScreen() {
         <CreatedSheet
           league={form.league}
           onCopyCode={() => copy("Copy code", form.league.code)}
-          onCopyLink={() => copy("Copy link", leagueLink(form.league.id))}
+          onCopyLink={() => copy("Copy link", joinLink(form.league.code))}
           onClose={close}
         />
       )}
       {form?.kind === "join" && (
         <JoinSheet
           privates={privates}
-          initialCode={JOINABLE[0]?.view.code}
+          initialCode={linkedCode ? codeOf(linkedCode) : JOINABLE[0]?.view.code}
           error={joinError}
           onJoin={join}
           onClose={() => {

@@ -1,7 +1,8 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
-import { PATHS } from "../../paths";
+import { PATHS, transfersSelling } from "../../paths";
+import { BUFFS } from "../../fixtures/competition";
 import { expectDeadlinePart, html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICTURE_PLAN, TRANSFERS_PICTURE } from "./fixtures";
@@ -33,8 +34,6 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
       "Bank ₩5.5m",
       "Rift view",
       "List view",
-      "Remake",
-      "Limitless",
     ]);
     expect(out).not.toContain("Show:");
     expect(out).not.toContain("Card view");
@@ -61,14 +60,10 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
   });
 
   test("the week's confirms, newest first, Undo on the newest only", () => {
-    expectInOrder(out, ["Confirmed · Week 4", "your time · KST", "Tue 21:10", "06:10 KST", "Kiin → Zeus", "−6", "Undo", "Mon 18:02", "03:02 KST", "Peyz → Ruler, Lehends → Delight", "Free"]);
+    expectInOrder(out, ["Confirmed · Week 4", "your time · KST", "Tue 21:10", "06:10 KST", "Kiin → Zeus", "−6", "Undo", "Mon 18:02", "03:02 KST", "Peyz → Ruler, Lehends → Delight", "No cost"]);
     expect(out.match(/Undo/g)).toHaveLength(1);
   });
 
-  test("a confirm made under a buff has no Undo", () => {
-    const confirms = [{ ...TRANSFERS_PICTURE.confirms[0]!, buff: "Remake" }];
-    expect(text(<TransfersPage {...TRANSFERS_PICTURE} confirms={confirms} />)).not.toContain("Undo");
-  });
 });
 
 describe("List view (Craig, 16 Nov 2026)", () => {
@@ -77,7 +72,7 @@ describe("List view (Craig, 16 Nov 2026)", () => {
   test("the nine by role, as FPL's list: last week, price, form, total, next, ×", () => {
     expectInOrder(out, [
       "Player",
-      "Wk 3",
+      "Week 3",
       "Price",
       "Form",
       "Total",
@@ -188,4 +183,46 @@ describe("Rift view or List view", () => {
     stubStorage(blockedStorage);
     expect(chosenView(await htmlAt(PATHS.transfers))).toBe("Rift view");
   });
+});
+
+test("arriving from a player card's Transfer out, his slot is sold, whatever slot he stands in", async () => {
+  const sold = new RegExp(`class="tile tile--selected tile--empty"(?:(?!class="tile ).)*title="Mid"`);
+  expect(await htmlAt(transfersSelling("faker"))).toMatch(sold);
+  expect(await htmlAt(transfersSelling("bdd"))).toMatch(sold);
+  expect(await htmlAt(transfersSelling("nobody"))).not.toContain("tile--empty");
+});
+
+describe("a sold player's slot (spec/12, A sold player's slot)", () => {
+  const plan = { sold: { top: null }, replacing: "top" as const };
+  const page = html(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={plan} />);
+  const tile = page.match(/<div class="tile [^"]*tile--empty"(?:(?!<div class="tile[ "]).)*/)?.[0] ?? "";
+
+  test("is a dashed empty slot with his role and +, as the front door's, and ↺ to put him back", () => {
+    expect(page.match(/tile--empty/g)).toHaveLength(1);
+    expect(tile).toContain('title="Top"');
+    expect(tile).toContain('class="tile__sell" aria-hidden="true">↺');
+    expect(tile).toMatch(/class="tile__line[^"]*">\+</);
+    expect(tile).not.toContain("Zeus");
+    expect(tile).not.toContain("tile__price");
+    expect(page).not.toContain("tile--dim");
+  });
+});
+
+describe("before anyone is sold (spec/12)", () => {
+  const out = text(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />);
+  const page = html(<TransfersPage {...TRANSFERS_PICTURE} initialPlan={EMPTY_PLAN} />);
+
+  test("the list shows every player under All roles, coaches included", () => {
+    expect(page).toMatch(/aria-pressed="true"[^>]*>All roles/);
+    for (const p of TRANSFERS_PICTURE.players) expect(page).toContain(`aria-label="Buy ${p.name}"`);
+  });
+
+  test("the role chips are All roles, the five roles, then Coach", () => {
+    expectInOrder(out, ["All roles", "Top", "Jungle", "Mid", "Bot", "Support", "Coach", "Sort: Points ▾"]);
+  });
+});
+
+test("Transfers has no buff keys: every buff is played on Pick Team (spec/06)", () => {
+  const out = text(<TransfersPage {...TRANSFERS_PICTURE} />);
+  for (const buff of [...BUFFS, "Remake", "Limitless"]) expect(out).not.toContain(buff);
 });

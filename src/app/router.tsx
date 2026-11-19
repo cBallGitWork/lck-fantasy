@@ -3,10 +3,11 @@ import type { ReactElement } from "react";
 import { DEV_STATES_PATH } from "./devStates";
 import { DevStatesPage } from "./DevStatesPage";
 import { AppFrame } from "../parts";
-import { PATHS, type ScreenKey } from "../paths";
+import { BARE_COMPARE, PATHS, type ScreenKey } from "../paths";
 import { CoachCardScreen } from "../screens/coach-card";
-import { CompareScreen } from "../screens/compare";
+import { CompareScreen, toStatsWithNoPlayer } from "../screens/compare";
 import { FollowingScreen } from "../screens/following";
+import { HelpScreen } from "../screens/help";
 import { HomeScreen } from "../screens/home";
 import { PrivacyScreen, TermsScreen } from "../screens/legal";
 import { LckHubScreen } from "../screens/lck-hub";
@@ -14,6 +15,7 @@ import { LeaguesScreen } from "../screens/leagues";
 import { LiveScreen } from "../screens/live";
 import { PerfectGameScreen } from "../screens/perfect-game";
 import { PickTeamScreen } from "../screens/pick-team";
+import { FrontDoorScreen } from "../screens/pick-team-signed-out";
 import { PlayerCardScreen } from "../screens/player-card";
 import { PointsScreen } from "../screens/points";
 import { PriceChangesScreen } from "../screens/price-changes";
@@ -41,28 +43,43 @@ const rootRoute = createRootRoute({ component: Root });
 const screen = <P extends (typeof PATHS)[ScreenKey]>(path: P, component: () => ReactElement) =>
   createRoute({ getParentRoute: () => rootRoute, path, component });
 
+// Compare with no player, bare or one it has no lines for, goes to Stats.
+const compareRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: PATHS.compare,
+  component: CompareScreen,
+  beforeLoad: ({ params }) => toStatsWithNoPlayer(params.playerId),
+});
+const bareCompareRoute = createRoute({ getParentRoute: () => rootRoute, path: BARE_COMPARE, beforeLoad: () => toStatsWithNoPlayer(undefined) });
+
 const routeTree = rootRoute.addChildren([
   screen(PATHS.home, HomeScreen),
   screen(PATHS.pickTeam, PickTeamScreen),
+  screen(PATHS.createTeam, FrontDoorScreen),
   screen(PATHS.transfers, TransfersScreen),
   screen(PATHS.points, PointsScreen),
   screen(PATHS.pointsWeek, PointsScreen),
   screen(PATHS.leagues, LeaguesScreen),
   screen(PATHS.league, LeaguesScreen),
+  screen(PATHS.leagueJoin, LeaguesScreen),
   screen(PATHS.stats, StatsScreen),
   screen(PATHS.live, LiveScreen),
   screen(PATHS.series, SeriesScreen),
-  screen(PATHS.compare, CompareScreen),
+  compareRoute,
+  bareCompareRoute,
   screen(PATHS.perfectGame, PerfectGameScreen),
+  screen(PATHS.perfectGameWeek, PerfectGameScreen),
   screen(PATHS.priceChanges, PriceChangesScreen),
+  screen(PATHS.priceChangesWeek, PriceChangesScreen),
   screen(PATHS.settings, SettingsScreen),
-  screen(PATHS.lckHub, LckHubScreen),
+  screen(PATHS.hub, LckHubScreen),
   screen(PATHS.playerCard, PlayerCardScreen),
   screen(PATHS.coachCard, CoachCardScreen),
   screen(PATHS.profile, ProfileScreen),
   screen(PATHS.following, FollowingScreen),
   screen(PATHS.privacy, PrivacyScreen),
   screen(PATHS.terms, TermsScreen),
+  screen(PATHS.help, HelpScreen),
   // Dev only: a build drops it with the page.
   ...(import.meta.env.DEV ? [createRoute({ getParentRoute: () => rootRoute, path: DEV_STATES_PATH, component: DevStatesPage })] : []),
 ]);

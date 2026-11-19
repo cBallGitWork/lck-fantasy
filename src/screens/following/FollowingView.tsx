@@ -1,23 +1,44 @@
-import { Columns, Deadline, GoLink, Led, NotFinalTag, OutlinedKey, PageFrame, PageHead, score, SideSection, signed, SponsorNote, Tag, Time } from "../../parts";
+import {
+  CHEER_KEY,
+  CHEER_LABEL,
+  CHEER_WORD,
+  CHEERS_RECEIVED,
+  Columns,
+  Deadline,
+  Empty,
+  GoLink,
+  Led,
+  NotFinalTag,
+  OutlinedKey,
+  PageFrame,
+  PageHead,
+  score,
+  SideSection,
+  signed,
+  SponsorNote,
+  Tag,
+  Time,
+  TruckHire,
+} from "../../parts";
 import { MANAGER } from "../../fixtures/week3";
 import { profileGo } from "../../paths";
 import {
   movesSummary,
   playersLine,
   SWAPS_SHOWN,
-  TRUCK_WORD,
   type DeadlineItem,
   type FeedItem,
   type FeedWeek,
   type FollowingData,
   type Manager,
-  type ReceivedTruck,
+  type ReceivedCheer,
   type SeriesItem,
 } from "./feed";
+import { followCount, more, named, sent, topping, WORDS, weekHead } from "./words";
 import "./following.css";
 
 export interface FollowingActions {
-  onTruck: (managerId: string) => void;
+  onCheer: (managerId: string) => void;
   onAccept: (managerId: string) => void;
   onDecline: (managerId: string) => void;
   onUnfollow: (managerId: string) => void;
@@ -25,45 +46,49 @@ export interface FollowingActions {
   onBlock: (managerId: string) => void;
 }
 
-/** The Following page (1440.png): the feed on the left; requests, trucks, following and followers on the right. */
+/** The Following page (1440.png): the feed on the left; requests, cheers and jeers, following and followers on the right. */
 export function FollowingView({ data, ...act }: { data: FollowingData } & FollowingActions) {
   return (
     <PageFrame screen="following" account={MANAGER.team}>
-      <PageHead title="Following" hangul="팔로잉" />
+      <PageHead title={WORDS.following} hangul={WORDS.hangul} />
       <Columns className="following__grid">
         <div className="following__feed">
-          {data.feed.map((week) => (
-            <Week key={week.week} week={week} data={data} onTruck={act.onTruck} />
-          ))}
+          {data.following.length === 0 ? (
+            <Empty title={WORDS.followNoOne} />
+          ) : (
+            data.feed.map((week) => <Week key={week.week} week={week} data={data} onCheer={act.onCheer} />)
+          )}
         </div>
         <div className="following__side">
-          <SideSection title="Requests" note={data.requests.length}>
+          <SideSection title={WORDS.requests} note={data.requests.length}>
+            {data.requests.length === 0 && <Empty title={WORDS.noRequests} />}
             {data.requests.map((m) => (
               <div key={m.id} className="following__request">
                 <Who manager={m} />
-                <OutlinedKey onClick={() => act.onAccept(m.id)} label={named("Accept", m)}>
-                  Accept
+                <OutlinedKey onClick={() => act.onAccept(m.id)} label={named(WORDS.accept, m.name)}>
+                  {WORDS.accept}
                 </OutlinedKey>
-                <OutlinedKey onClick={() => act.onDecline(m.id)} label={named("Decline", m)}>
-                  Decline
+                <OutlinedKey onClick={() => act.onDecline(m.id)} label={named(WORDS.decline, m.name)}>
+                  {WORDS.decline}
                 </OutlinedKey>
               </div>
             ))}
           </SideSection>
-          <SideSection title="Trucks">
-            {data.trucks.map((t) => (
-              <Truck key={t.id} truck={t} />
+          <SideSection title={CHEERS_RECEIVED}>
+            {data.cheers.length === 0 && <Empty title={WORDS.noCheers} />}
+            {data.cheers.map((c) => (
+              <Received key={c.id} cheer={c} />
             ))}
           </SideSection>
-          <SideSection title="Following" note={`${data.following.length} of ${data.followCap}`}>
-            <People people={data.following} actions={[{ label: "Unfollow", on: act.onUnfollow }]} />
+          <SideSection title={WORDS.following} note={followCount(data.following.length, data.followCap)}>
+            <People people={data.following} actions={[{ label: WORDS.unfollow, on: act.onUnfollow }]} />
           </SideSection>
-          <SideSection title="Followers" note={data.followers.length}>
+          <SideSection title={WORDS.followers} note={data.followers.length}>
             <People
               people={data.followers}
               actions={[
-                { label: "Remove", on: act.onRemove },
-                { label: "Block", on: act.onBlock },
+                { label: WORDS.remove, on: act.onRemove },
+                { label: WORDS.block, on: act.onBlock },
               ]}
             />
           </SideSection>
@@ -73,12 +98,6 @@ export function FollowingView({ data, ...act }: { data: FollowingData } & Follow
     </PageFrame>
   );
 }
-
-/** A key's name for a screen reader, where the same key repeats down a list: `Accept Ella Wong`. */
-const named = (key: string, manager: Manager) => `${key} ${manager.name}`;
-
-/** The truck key's word; a screen reader hears it with the manager's name (`Truck Ella Wong`). */
-const TRUCK_KEY = "Truck";
 
 /** A manager's name, opening their profile, with their team under it. */
 function Who({ manager }: { manager: Manager }) {
@@ -92,11 +111,11 @@ function Who({ manager }: { manager: Manager }) {
   );
 }
 
-function Week({ week, data, onTruck }: { week: FeedWeek; data: FollowingData; onTruck: (id: string) => void }) {
+function Week({ week, data, onCheer }: { week: FeedWeek; data: FollowingData; onCheer: (id: string) => void }) {
   return (
     <section className="following__week">
       <h2 className="following__week-head">
-        Week {week.week}
+        {weekHead(week.week)}
         {week.notFinal && <NotFinalTag />}
       </h2>
       {week.deadline && (
@@ -110,7 +129,7 @@ function Week({ week, data, onTruck }: { week: FeedWeek; data: FollowingData; on
           <div className="following__what">
             {item.kind === "series" ? <Series item={item} multiplier={data.captainMultiplier} /> : <Moves item={item} />}
           </div>
-          <TruckCell item={item} week={week} data={data} onTruck={onTruck} />
+          <CheerCell item={item} week={week} data={data} onCheer={onCheer} />
         </div>
       ))}
     </section>
@@ -125,12 +144,12 @@ function Series({ item, multiplier }: { item: SeriesItem; multiplier: number }) 
       {item.bigCaptain && (
         <>
           {" "}
-          <Tag>Big Captain</Tag>
+          <Tag>{WORDS.bigCaptain}</Tag>
         </>
       )}
       <small className="following__sub">{playersLine(item.players, multiplier)}</small>
       <span className="following__when">
-        Ended <Time {...item.ended} />
+        {WORDS.ended} <Time {...item.ended} />
       </span>
     </>
   );
@@ -138,11 +157,11 @@ function Series({ item, multiplier }: { item: SeriesItem; multiplier: number }) 
 
 function Moves({ item }: { item: DeadlineItem }) {
   const shown = item.swaps.slice(0, SWAPS_SHOWN);
-  const more = item.swaps.length - shown.length;
+  const hidden = item.swaps.length - shown.length;
   return (
     <>
       {movesSummary(item)}
-      {item.swaps.length > 0 && <span className="following__so-far">so far</span>}
+      {item.swaps.length > 0 && <span className="following__so-far">{WORDS.soFar}</span>}
       {shown.length > 0 && (
         <span className="following__swaps num">
           {shown.map((s) => (
@@ -155,47 +174,50 @@ function Moves({ item }: { item: DeadlineItem }) {
           ))}
         </span>
       )}
-      {more > 0 && <small className="following__sub">+ {more} more</small>}
+      {hidden > 0 && <small className="following__sub">{more(hidden)}</small>}
     </>
   );
 }
 
-/** `Truck ›` on a truckable week's row, or the truck already sent to that manager this week. */
-function TruckCell({ item, week, data, onTruck }: { item: FeedItem; week: FeedWeek; data: FollowingData; onTruck: (id: string) => void }) {
-  if (!week.truckable) return <span />;
-  const sent = data.sent[item.manager.id];
-  if (sent) return <span className="following__sent">{TRUCK_WORD[sent]} sent</span>;
+/** `Cheer / Jeer ›` on a cheerable week's row, or the cheer or jeer already sent to that manager this week. */
+function CheerCell({ item, week, data, onCheer }: { item: FeedItem; week: FeedWeek; data: FollowingData; onCheer: (id: string) => void }) {
+  if (!week.cheerable) return <span />;
+  const kind = data.sent[item.manager.id];
+  if (kind) return <span className="following__sent">{sent(CHEER_WORD[kind])}</span>;
   return (
     <button
       type="button"
-      className="following__truck key-bare hover-line"
-      aria-label={named(TRUCK_KEY, item.manager)}
-      onClick={() => onTruck(item.manager.id)}
+      className="following__cheer key-bare hover-line"
+      aria-label={named(CHEER_LABEL, item.manager.name)}
+      onClick={() => onCheer(item.manager.id)}
     >
-      {TRUCK_KEY} ›
+      {CHEER_KEY} ›
     </button>
   );
 }
 
-function Truck({ truck }: { truck: ReceivedTruck }) {
+function Received({ cheer }: { cheer: ReceivedCheer }) {
   return (
     <div className="following__parked">
-      <Led>{truck.text}</Led>
+      <Led>{cheer.text}</Led>
       <div className="following__by quiet">
-        {truck.kind === "sponsor" ? (
+        {cheer.kind === "sponsor" ? (
           <>
             <span>
-              Sponsor truck, <b>{truck.league} top</b>
+              {WORDS.sponsorCheer} <b>{topping(cheer.league)}</b>
             </span>
-            <span>{truck.sponsor}</span>
+            <span>{cheer.sponsor}</span>
           </>
         ) : (
-          <span>
-            {TRUCK_WORD[truck.kind]} from{" "}
-            <GoLink className="following__name hover-line" go={profileGo(truck.from.id)}>
-              {truck.from.name}
-            </GoLink>
-          </span>
+          <>
+            <span>
+              {CHEER_WORD[cheer.kind]} {WORDS.from}{" "}
+              <GoLink className="following__name hover-line" go={profileGo(cheer.from.id)}>
+                {cheer.from.name}
+              </GoLink>
+            </span>
+            <TruckHire />
+          </>
         )}
       </div>
     </div>
@@ -210,7 +232,7 @@ function People({ people, actions }: { people: Manager[]; actions: { label: stri
           <Who manager={m} />
           <span className="following__acts">
             {actions.map((a) => (
-              <button key={a.label} type="button" className="following__act key-bare hover-line" aria-label={named(a.label, m)} onClick={() => a.on(m.id)}>
+              <button key={a.label} type="button" className="following__act key-bare hover-line" aria-label={named(a.label, m.name)} onClick={() => a.on(m.id)}>
                 {a.label}
               </button>
             ))}

@@ -78,22 +78,22 @@ describe("several transfers in one go", () => {
 
   test("a buy that would leave a role empty is refused, with why", () => {
     const plan = removed("bot");
-    expect(add(SQUAD, plan, named("Clozer"), RULES)).toEqual({ plan, toast: "No Bot left" });
+    expect(add(SQUAD, plan, named("Clozer"), RULES)).toEqual({ plan, toast: "You'd have no Bot" });
     expect(add(SQUAD, plan, named("Hype"), RULES).toast).toBe("Hype added");
   });
 
   test("with two of a squad's only roles out, one buy of another role is refused, the second open slot can't fill both", () => {
-    expect(add(SQUAD, removed("bot", "sup"), named("Clozer"), RULES).toast).toBe("No Bot left");
+    expect(add(SQUAD, removed("bot", "sup"), named("Clozer"), RULES).toast).toBe("You'd have no Bot");
     expect(add(SQUAD, removed("bot", "flex"), named("Clozer"), RULES).toast).toBe("Clozer added");
   });
 
   test("a third from one team is refused, with the cap and the team", () => {
-    expect(add(SQUAD, removed("top"), named("Chovy"), RULES).toast).toBe("Team full: 2 from GEN");
+    expect(add(SQUAD, removed("top"), named("Chovy"), RULES).toast).toBe("Max 2 from GEN");
   });
 
-  test("with no open slot he fits, the + asks for a removal first", () => {
-    expect(add(SQUAD, EMPTY_PLAN, named("DuDu"), RULES).toast).toBe("Remove a player first");
-    expect(add(SQUAD, removed("top"), named("Ryu"), RULES).toast).toBe("Remove your coach first");
+  test("with no open slot he fits, the + says to sell a player first (spec/12, Before anyone is sold)", () => {
+    expect(add(SQUAD, EMPTY_PLAN, named("DuDu"), RULES)).toEqual({ plan: EMPTY_PLAN, toast: "Squad's full. Sell a player first" });
+    expect(add(SQUAD, removed("top"), named("Ryu"), RULES).toast).toBe("One coach only. Sell your coach first");
   });
 
   test("over the budget is allowed while choosing and stops the confirm, the bank below zero", () => {
@@ -104,7 +104,7 @@ describe("several transfers in one go", () => {
 
   test("Review and confirm is off with no changes or a slot still empty", () => {
     expect(reviewBlock(SQUAD, EMPTY_PLAN, RULES)).toBe("No changes");
-    expect(reviewBlock(SQUAD, removed("top", "flex"), RULES)).toBe("Slot empty");
+    expect(reviewBlock(SQUAD, removed("top", "flex"), RULES)).toBe("Fill every slot");
     expect(reviewBlock(SQUAD, PICTURE_PLAN, RULES)).toBeUndefined();
   });
 });
@@ -142,6 +142,12 @@ describe("the list", () => {
     expect(names(PICTURE_PLAN).slice(0, 6)).toEqual(["Chovy", "Keria", "ShowMaker", "Aiming", "Clozer", "PerfecT"]);
     expect(names(PICTURE_PLAN)).not.toContain("Kingen");
     expect(names(EMPTY_PLAN)).toContain("Kingen");
+  });
+
+  test("with no one sold, coaches can be browsed under the Coach chip (spec/12, The list's role chips)", () => {
+    const coaches = PLAYERS.filter((p) => p.role === "coach").map((p) => p.name);
+    expect(coaches.length).toBeGreaterThan(0);
+    expect(names(EMPTY_PLAN, { role: "coach" }).sort()).toEqual([...coaches].sort());
   });
 
   test("a removed slot opens on the role of who stood there; the Flex and bench on all; the Coach on coaches", () => {
@@ -208,4 +214,14 @@ describe("a confirm applied (#215)", () => {
   test("the squad after it has no changes to review", () => {
     expect(reviewBlock(after.squad, EMPTY_PLAN, after.rules)).toBe("No changes");
   });
+});
+
+test("selling the Captain passes the C to whoever starts in his slot once the squad is arranged (spec/04)", () => {
+  // Captain Faker (mid) sold for Lucid, a jungler: Bdd, the bench mid, starts at mid and is the Captain.
+  const plan = bought(removed("mid"), "Lucid");
+  const lineup = lineupIds(SQUAD, plan);
+  const after = confirmTransfers(SQUAD, PLAYERS, RULES, [{ out: SQUAD.find((p) => p.name === "Faker")!.id, in: named("Lucid").id }], lineup);
+  const at = (slot: SquadSlot) => after.squad.find((p) => p.slot === slot)!;
+  expect([at("mid").name, at("mid").mark, at("bench1").name, at("bench1").mark]).toEqual(["Bdd", "C", "Lucid", undefined]);
+  expect(after.squad.filter((p) => p.mark)).toHaveLength(1);
 });

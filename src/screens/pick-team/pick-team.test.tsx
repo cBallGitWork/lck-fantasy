@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
-import { PATHS } from "../../paths";
+import { PATHS, pickTeamSwapping } from "../../paths";
 import { html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
@@ -30,11 +30,9 @@ const BUFFS = [
   "Bench Boost",
   "Your bench players score this week too",
   "Double Captain",
-  "A second Captain; both score ×1.5",
-  "Remake",
-  "Unlimited free transfers; your new squad stays",
-  "Limitless",
-  "One week, no budget or team cap; then your squad returns",
+  "A second Captain; both score ×2",
+  "Coach Diff",
+  "Your coach scores ×3 this week",
 ];
 
 const SIDE_TAIL = [
@@ -94,7 +92,7 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   ]);
   const markup = html(view(PICK_TEAM_STATES.rift));
   expect(markup).toContain('data-screen="pick-team"');
-  expect(markup).toContain('title="Captain">C');
+  expect(markup).toContain('aria-label="Captain">C');
   expect(markup.match(/class="mark-badge /g)).toHaveLength(1);
   expect(markup.match(/tile--selected/g)).toHaveLength(1);
   // Faker tapped: Bdd, the bench mid, is lit to swap with him; the Flex plays Top, so isn't; the other six starters and Cuzz dim.
@@ -108,8 +106,9 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expect(markup.match(/alt="T1 crest"/g)).toHaveLength(1);
   expect(markup).toMatch(/main-action__key[^"]*"[^>]*disabled/);
   expect(markup).not.toContain("Reset");
-  expect(markup.match(/buff-card__play/g)).toHaveLength(2);
-  expect(markup.match(/href="\/transfers"[^>]*class="link-go hover-line"|class="link-go hover-line"[^>]*href="\/transfers"/g)).toHaveLength(2);
+  // All three buffs play here; none links to Transfers (spec/06).
+  expect(markup.match(/buff-card__play/g)).toHaveLength(3);
+  expect(markup).not.toMatch(/class="link-go[^"]*" href="\/transfers"/);
   expect(markup).toContain('href="/player/faker"');
 });
 
@@ -118,12 +117,12 @@ test("Card view: the seven starters as the broadcast lineup, the bench bar, then
   expectInOrder(out, [
     "Rift view",
     "Card view",
-    "TopPhotoZeusHLEv DK, NSForm 16.0₩14.0m",
-    "JunglePhotoCanyonGENv BRO, T1Form 16.7₩15.5m",
-    "MidPhotoCFakerT1v KT, GENForm 19.3₩18.5m",
-    "BotPhotoRulerGENv BRO, T1Form 18.7₩16.0m",
-    "SupportPhotoDelightHLEv DK, NSForm 12.7₩10.0m",
-    "Flexplays TopPhotoNot startingSiwooDKv HLE, KTForm 11.7₩11.5m",
+    "TopZeusHLEv DK, NSForm 16.0₩14.0m",
+    "JungleCanyonGENv BRO, T1Form 16.7₩15.5m",
+    "MidCFakerT1v KT, GENForm 19.3₩18.5m",
+    "BotRulerGENv BRO, T1Form 18.7₩16.0m",
+    "SupportDelightHLEv DK, NSForm 12.7₩10.0m",
+    "Flexplays TopNot startingSiwooDKv HLE, KTForm 11.7₩11.5m",
     "Coach감독",
     "kkOmaT1v KT, GENForm 9.0₩7.0m",
     "Bench",
@@ -158,7 +157,7 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
     "Cancel",
     "Double Captain",
     "1 left",
-    "Remake",
+    "Coach Diff",
     "Siwoo",
     "Bench",
     "Bdd",
@@ -187,7 +186,7 @@ test("Siwoo, the Flex, tapped: Zeus and both bench players lit, Bench Boost on a
   expect(markup.match(/"tile tile--fit"/g)).toHaveLength(1);
   expect(markup.match(/tile--dim/g)).toHaveLength(5);
   expect(markup).toContain("buff-card--on");
-  expect(markup.match(/buff-card--off/g)).toHaveLength(3);
+  expect(markup.match(/buff-card--off/g)).toHaveLength(2);
   expect(markup).not.toContain("buff-card__play");
   expect(markup).not.toMatch(/main-action__key[^"]*"[^>]*disabled/);
 });
@@ -256,7 +255,7 @@ test("each buff is a heading, and Play names its buff", () => {
 });
 
 test("tapping one bench player then the other swaps bench 1 and 2, as FPL; one buff a week; Reset drops the draft and Save keeps it", () => {
-  const s = run(PICK_TEAM_STATES.rift, { type: "select", id: "faker" }, { type: "select", id: "bdd" }, { type: "select", id: "cuzz" }, { type: "playBuff", buff: "benchBoost" }, { type: "playBuff", buff: "dualCarry" });
+  const s = run(PICK_TEAM_STATES.rift, { type: "select", id: "faker" }, { type: "select", id: "bdd" }, { type: "select", id: "cuzz" }, { type: "playBuff", buff: "benchBoost" }, { type: "playBuff", buff: "doubleCaptain" });
   expect([s.draft.slots.bench1, s.draft.slots.bench2]).toEqual(["cuzz", "bdd"]);
   expect(s.draft.buff).toBe("benchBoost");
   expect(changeCount(s.saved, s.draft)).toBe(2);
@@ -273,6 +272,15 @@ test("Rift view | Card view sets the view; ✕ closes the card and ends the swap
   expect(closed.selected).toBeUndefined();
   expect(text(view(closed))).not.toContain("Last 3 series");
   expect(html(view(closed))).not.toMatch(/tile--(fit|dim)/);
+});
+
+test("arriving from a card's Swap with bench, the player is tapped and those he can swap with lit; anyone not in the squad is ignored", async () => {
+  const zeus = await htmlAt(pickTeamSwapping("zeus"));
+  expect(zeus).toMatch(/class="tile tile--selected[^"]*"(?:(?!class="tile ).)*title="Zeus"/);
+  // Zeus swaps only with Siwoo, the Flex.
+  expect(zeus.match(/tile--fit/g)).toHaveLength(1);
+  expect(zeus).toMatch(/class="tile [^"]*tile--fit[^"]*"(?:(?!class="tile ).)*title="Siwoo"/);
+  expect(await htmlAt(pickTeamSwapping("nobody"))).toBe(await htmlAt(PATHS.pickTeam));
 });
 
 test("Pick Team opens on Rift the first time, then on the view shared with Points, and on Rift where storage is blocked", async () => {

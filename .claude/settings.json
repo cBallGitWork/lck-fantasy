@@ -2,6 +2,9 @@
   "permissions": {
     "deny": [
       "Read(./.env*)"
+    ],
+    "allow": [
+      "Bash(gh api -X PUT repos/cBallGitWork/lck-fantasy/pulls/*/merge -f merge_method=squash*)"
     ]
   },
   "hooks": {
@@ -81,6 +84,11 @@
             "type": "command",
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/guard_ask.py",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/last_prompt.py",
+            "timeout": 10
           }
         ]
       }
@@ -113,5 +121,16 @@
         ]
       }
     ]
+  },
+  "extraKnownMarketplaces": {
+    "forge": {
+      "source": {
+        "source": "github",
+        "repo": "cBallGitWork/forge"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "forge@forge": true
   }
 }

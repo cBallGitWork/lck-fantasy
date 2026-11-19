@@ -4,6 +4,7 @@
 // - from Points: Week 3, Saturday, T1 v DK game 2 live (This week).
 
 import { CAPTAIN_MULTIPLIER, COMPETITION_TITLE, countedGames, gameAt, kdaText, LIVE_SERIES_ID, livePointsOf, pickedAt, playerId, POINTS_SQUAD, statsOf, WEEK3_SERIES_AT_POINTS, weekGamesOf, type TeamCode } from "../../fixtures/week3";
+import { photoOf } from "../../fixtures/photos";
 import { hangulOf } from "../../fixtures/rosters";
 import { playedFromSide, seriesById } from "../../fixtures/series";
 import { FAKER_SEASON, last3, playedBy, T1_FIXTURES, T1_NEXT3 } from "../../fixtures/t1Season";
@@ -68,7 +69,14 @@ const WEEK3_AT_POINTS: CardWeek = {
   total: livePointsOf(playerId(NAME)),
 };
 
-const FAKER = { name: NAME, hangul: hangulOf(NAME), legalName: "Lee Sang-hyeok", role: "mid", team: TEAM } as const;
+/** Week 4 at Pick Team's moment, Tuesday before T1's first series: each series with its time, no points yet. */
+const WEEK4_BEFORE_GAMES: CardWeek = {
+  week: 4,
+  series: T1_FIXTURES.filter((s) => s.week === 4).map(({ id, day, opponent, local, kst }): WeekSeries => ({ id, day, opponent, state: "upcoming", local, kst })),
+  total: 0,
+};
+
+const FAKER = { name: NAME, hangul: hangulOf(NAME), legalName: "Lee Sang-hyeok", role: "mid", team: TEAM, photo: photoOf(NAME) } as const;
 
 /** Opened from Pick Team, Week 4 Tuesday: the History, Fixtures and Champions pictures. */
 export const CARD_FROM_PICK_TEAM: PlayerCardData = {
@@ -90,6 +98,7 @@ export const CARD_FROM_PICK_TEAM: PlayerCardData = {
   transfersOut: 310,
   past: PAST,
   next: NEXT,
+  thisWeek: WEEK4_BEFORE_GAMES,
   fixtures: FIXTURES,
   history: {
     competition: COMPETITION_TITLE,

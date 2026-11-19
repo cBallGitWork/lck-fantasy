@@ -2,7 +2,8 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { Modal, PageFrame, useAnnounce, useDevState } from "../../parts";
-import { PATHS } from "../../paths";
+import { playerId } from "../../fixtures/competition";
+import { compareGo, pickTeamSwapping, transfersSelling } from "../../paths";
 import { markNews, type Mark } from "../../rift";
 import type { CardMark, CardTab, PlayerCardData } from "./card";
 import { CARD_FROM_PICK_TEAM, CARD_FROM_POINTS, CARD_WITH_NEWS, MARK_AT_PICK_TEAM } from "./fixtures";
@@ -17,6 +18,12 @@ export function PlayerCardScreen() {
   });
   return <PlayerCardPage {...dev} />;
 }
+
+/** Where the Pick Team keys go: Swap with bench to Pick Team with him tapped, Transfer out to Transfers with him sold (spec/12). */
+export const cardKeysGo = (card: PlayerCardData) => {
+  const id = playerId(card.name);
+  return { swap: pickTeamSwapping(id), transferOut: transfersSelling(id) };
+};
 
 /** The full player card over the page that opened it (docs/design/approved/player-card/). */
 export function PlayerCardPage({
@@ -35,6 +42,7 @@ export function PlayerCardPage({
   const navigate = useNavigate();
   const [mark, setMark] = useState<CardMark>(initialMark);
   const announce = useAnnounce();
+  const goes = cardKeysGo(card);
   const actions =
     openedFrom === "pickTeam"
       ? {
@@ -43,14 +51,14 @@ export function PlayerCardPage({
             if (next !== mark) announce(markNews(card.name, next));
             setMark(next);
           },
-          onSwap: () => void navigate({ to: PATHS.pickTeam }),
-          onTransferOut: () => void navigate({ to: PATHS.transfers }),
+          onSwap: () => void navigate({ href: goes.swap }),
+          onTransferOut: () => void navigate({ href: goes.transferOut }),
         }
       : undefined;
   return (
     <PageFrame screen="player-card" account={MANAGER.team}>
       <Modal kind="card" title={card.name} onClose={() => router.history.back()}>
-        <PlayerCard card={card} actions={actions} compare={{ to: PATHS.compare }} initialTab={initialTab} />
+        <PlayerCard card={card} actions={actions} compare={compareGo(playerId(card.name))} initialTab={initialTab} />
       </Modal>
     </PageFrame>
   );

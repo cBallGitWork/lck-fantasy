@@ -3,10 +3,10 @@ import { describe, expect, test } from "vitest";
 import { timeIn } from "../../parts";
 import { expectDeadlinePart, expectInOrder, html, noop, text } from "../../testing/render";
 import { DeleteSheet } from "./DeleteSheet";
-import { BROWSER_ZONE, COUNTRIES, DEADLINE_AT, DELETE_ROWS, DRAFT, REMINDER_HOURS, SAVED, SIGN_UP, SQUAD_SIZE } from "./fixtures";
+import { BROWSER_ZONE, DEADLINE_AT, DELETE_ROWS, DRAFT, REMINDER_HOURS, SAVED } from "./fixtures";
 import { Settings } from "./index";
-import { canSaveTeam, capName, changedFields, changeLine, counter, dirtyTabs, hoursBefore, joinedCheer, type SettingsTab } from "./settings";
-import { SignUpStepOne, SignUpStepTwo } from "./SignUp";
+import { capName, changedFields, counter, dirtyTabs, type SettingsTab } from "./settings";
+import { changeLine, hoursBefore } from "./words";
 
 const PICTURE = { draft: DRAFT, browserZone: BROWSER_ZONE };
 
@@ -121,70 +121,19 @@ test("the Delete sheet lists what goes, then Back and Delete account", () => {
   const out = text(<DeleteSheet team={SAVED.teamName} rows={DELETE_ROWS} onBack={noop} onDelete={noop} onDownload={noop} />);
   expectInOrder(out, [
     "Delete account?",
-    "Baron Steal FC is erased at once and can't be brought back.",
+    "Baron Steal FC is deleted at once. You can't undo this.",
     "Team and squad",
     "Points and historyWeeks 1–3 · 187 pts",
     "Ranks in 5 leaguesOverall, United Kingdom, T1, 2 private",
-    "Follows12 following · 9 followers",
-    "Pub Leaguepasses to Haru's Tower Divers",
-    "Backups clear within 30 days. Download my data first to keep a copy.",
+    "Following and followers12 following · 9 followers",
+    "Pub LeagueHaru's Tower Divers becomes admin",
+    "Backups are deleted within 30 days. Download my data first to keep a copy.",
     "Back",
     "Delete account",
   ]);
 });
 
-describe("sign-up", () => {
-  test("step 1 offers Google and Discord", () => {
-    const out = text(<SignUpStepOne squadSize={SQUAD_SIZE} onContinue={noop} onClose={noop} />);
-    expectInOrder(out, ["Save your team", "1 of 2", "Your squad of 9 is kept while you sign up.", "GContinue with Google", "DContinue with Discord", "No password is stored.", ...FOOT.slice(0, 2)]);
-  });
-
-  test("step 2 asks name, team and country, says when they lock, and holds Save team until a name, a team and the tick", () => {
-    const step = (answers = SIGN_UP) =>
-      html(
-        <SignUpStepTwo
-          answers={answers}
-          onChange={noop}
-          countries={COUNTRIES}
-          deadline={timeIn(DEADLINE_AT, BROWSER_ZONE)}
-          onBack={noop}
-          onSave={noop}
-          onClose={noop}
-        />,
-      );
-    const out = step();
-    expectInOrder(out, [
-      "Your team",
-      "2 of 2",
-      "Team name",
-      'value="Baron Steal FC"',
-      "14/20",
-      "Favourite team",
-      "Choose a team",
-      "Country",
-      'value="United Kingdom" selected',
-      "Both lock at your first deadline:",
-      "Wed 07:45",
-      "16:45 KST",
-      "I&#x27;m 16 or over and accept the",
-      "Terms",
-      "Privacy",
-      "Back",
-      "Save team",
-    ]);
-    expect(out).toMatch(/disabled="">Save team/);
-    expect(step({ ...SIGN_UP, favouriteTeam: "T1", ticked: true })).not.toMatch(/disabled="">Save team/);
-    expect(step({ ...SIGN_UP, teamName: "  ", favouriteTeam: "T1", ticked: true })).toMatch(/disabled="">Save team/);
-    expectInOrder(out, ["accept the", 'href="/terms"', ">Terms<", 'href="/privacy"', ">Privacy<"]);
-  });
-});
-
 describe("the rules", () => {
-  test("Save team cheers the new team by its name", () => {
-    expect(joinedCheer("Baron Steal FC")).toBe("Baron Steal FC is in. 화이팅!");
-    expect(joinedCheer("  Baron Steal FC ")).toBe("Baron Steal FC is in. 화이팅!");
-  });
-
   test("the save bar names every change, and their tabs captain the dot", () => {
     const draft = { ...SAVED, banner: "바론", theme: "Dark" as const, weeklyRecap: true };
     const changed = changedFields(SAVED, draft);
@@ -203,13 +152,5 @@ describe("the rules", () => {
     expect(timeIn(DEADLINE_AT, "Europe/London")).toEqual({ local: "Wed 07:45", kst: "16:45" });
     expect(timeIn(DEADLINE_AT, "America/New_York")).toEqual({ local: "Wed 02:45", kst: "16:45" });
     expect(timeIn(DEADLINE_AT, "Asia/Seoul")).toEqual({ local: "Wed 16:45", kst: "16:45" });
-  });
-
-  test("Save team needs a name, a team and the tick; spaces alone are no name", () => {
-    expect(canSaveTeam("Baron Steal FC", null, true)).toBe(false);
-    expect(canSaveTeam("Baron Steal FC", "T1", false)).toBe(false);
-    expect(canSaveTeam("", "T1", true)).toBe(false);
-    expect(canSaveTeam("   ", "T1", true)).toBe(false);
-    expect(canSaveTeam("Baron Steal FC", "T1", true)).toBe(true);
   });
 });

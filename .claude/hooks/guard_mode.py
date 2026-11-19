@@ -23,8 +23,10 @@ from last_prompt import state_file
 GO_WORDS = re.compile(
     r"\b(build|go ahead|go for it|do it|do that|do them|do all|do both|"
     # "save" is "file" for a design: Craig's "save" before a PR was refused as talk (15 Nov 2026)
-    r"(file|save) (it|them|that|these|those|all|both|the rest|an issue|issues)|"
-    r"ship|merge (it|them|that|this|these|those|the|a|an|now|#\d+)|open (a|the) (pr|pull request)|start (it|them|the build|building)|run it|make it|create|"
+    # "the issues" too: Craig's "and go, file the issues" was refused, 18 Nov 2026 (draft-platform#2595)
+    r"(file|save) (it|them|that|these|those|all|both|the rest|an issue|issues|the issues?)|"
+    # "both" and "all" too: Craig's "merge both PRs" was refused, 18 Nov 2026
+    r"ship|merge (it|them|that|this|these|those|both|all|everything|the|a|an|now|#\d+)|open (a|the) (pr|pull request)|start (it|them|the build|building)|run it|make it|create|"
     r"sort it|set it up|set up|implement|land|label it|fix (it|that|them|those|the|this|all|everything)|"
     r"just do|get on with|crack on|carry on|proceed|"
     # a yes that names the action: Claude's own reply buttons read so (9 Nov 2026: "Yes, run the lead" was refused)

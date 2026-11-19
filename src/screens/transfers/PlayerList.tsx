@@ -1,10 +1,11 @@
 import { cx, Empty, formatWon, GoLink, Menu, pct, SideSection } from "../../parts";
 import { cardGo } from "../../paths";
-import { ROLE_KEYS, ROLE_NAME, RoleIcon } from "../../rift";
+import { PERSON_ROLES, ROLE_NAME, RoleIcon } from "../../rift";
 import { ALL, listRows, nextAgainst, outOf, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
+import { keyFor, replacing, SORT_WORDS, sortLabel, teamLabel, WORDS } from "./words";
 
-const SORTS: Record<SortKey, string> = { points: "Points", price: "Price", owned: "Owned" };
-const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: ALL, label: "All roles" }, ...ROLE_KEYS.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
+/** All roles, the five roles, then Coach, so coaches can be browsed without selling yours first (Craig, 18 Nov 2026). */
+const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: ALL, label: WORDS.allRoles }, ...PERSON_ROLES.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
 
 /** The list: who can be bought, with role chips, search, sort and team; none greyed (Craig, 16 Nov 2026). */
 export function PlayerList({
@@ -29,7 +30,7 @@ export function PlayerList({
   const rows = listRows(squad, plan, players, filters);
   const out = plan.replacing ? outOf(squad, plan.replacing) : undefined;
   return (
-    <SideSection title={out ? `Replacing ${out.name}` : "Players"}>
+    <SideSection title={out ? replacing(out.name) : WORDS.players}>
       <div className="transfers__roles">
         {ROLE_CHIPS.map((chip) => (
           <button
@@ -47,35 +48,35 @@ export function PlayerList({
         <input
           className="transfers__search"
           type="search"
-          placeholder="Search a player"
-          aria-label="Search a player"
+          placeholder={WORDS.search}
+          aria-label={WORDS.search}
           value={filters.search}
           onChange={(e) => onFilters({ ...filters, search: e.target.value })}
         />
         <Menu
           className="transfers__tool"
-          label={`Sort: ${SORTS[filters.sort]} ▾`}
-          items={(Object.keys(SORTS) as SortKey[]).map((sort) => ({ label: SORTS[sort], onChoose: () => onFilters({ ...filters, sort }) }))}
+          label={sortLabel(SORT_WORDS[filters.sort])}
+          items={(Object.keys(SORT_WORDS) as SortKey[]).map((sort) => ({ label: SORT_WORDS[sort], onChoose: () => onFilters({ ...filters, sort }) }))}
         />
         <Menu
           className="transfers__tool"
-          label={`Team: ${filters.team === ALL ? "All" : filters.team} ▾`}
-          items={[ALL, ...teams].map((team) => ({ label: team === ALL ? "All" : team, onChoose: () => onFilters({ ...filters, team }) }))}
+          label={teamLabel(filters.team === ALL ? WORDS.all : filters.team)}
+          items={[ALL, ...teams].map((team) => ({ label: team === ALL ? WORDS.all : team, onChoose: () => onFilters({ ...filters, team }) }))}
         />
       </div>
       {rows.length === 0 ? (
-        <Empty title="No players" />
+        <Empty title={WORDS.noPlayers} />
       ) : (
         <table className="transfers__list">
           <thead>
             <tr>
-              <th aria-label="Role" />
-              <th>Player</th>
-              <th className="transfers__num">Price</th>
-              <th className="transfers__num">Pts</th>
-              <th className="transfers__num">Owned</th>
-              <th>Next</th>
-              <th aria-label="Buy" />
+              <th aria-label={WORDS.role} />
+              <th>{WORDS.player}</th>
+              <th className="transfers__num">{WORDS.price}</th>
+              <th className="transfers__num">{WORDS.pts}</th>
+              <th className="transfers__num">{WORDS.owned}</th>
+              <th>{WORDS.next}</th>
+              <th aria-label={WORDS.buy} />
             </tr>
           </thead>
           <tbody>
@@ -106,7 +107,7 @@ function ListRow({ p, next, onBuy }: { p: ListPlayer; next: string; onBuy: (p: L
       <td className="transfers__num num">{pct(p.ownedPct)}</td>
       <td className="transfers__next">{next}</td>
       <td>
-        <button type="button" className="transfers__add" aria-label={`Buy ${p.name}`} onClick={() => onBuy(p)}>
+        <button type="button" className="transfers__add" aria-label={keyFor(WORDS.buy, p.name)} onClick={() => onBuy(p)}>
           +
         </button>
       </td>

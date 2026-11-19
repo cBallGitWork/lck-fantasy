@@ -2,8 +2,8 @@
 
 import type { Series, TeamCode } from "../../fixtures/week3";
 import type { PersonRole } from "../../rift";
+import type { HUB_TABS } from "./words";
 
-export const HUB_TABS = ["Fixtures", "Results", "Standings", "Teams"] as const;
 export type HubTab = (typeof HUB_TABS)[number];
 
 /** One week's series, as Fixtures or Results shows them. */
@@ -38,9 +38,12 @@ export interface HubStage {
   name: string;
   fixtures: HubWeek[];
   results: HubWeek[];
-  /** The week each tab opens on. */
-  openFixtures: number;
+  /** This week, in `fixtures`: Fixtures opens on it and its ‹ stops there, as past weeks are on Results. */
+  thisWeek: number;
+  /** The week Results opens on. */
   openResults: number;
+  /** When the stage starts, from the competition's data: `Wed 10 Mar`. */
+  starts: string;
   groups: StandingsGroup[];
 }
 

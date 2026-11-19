@@ -1,8 +1,10 @@
+import { photoOf } from "../../fixtures/photos";
 import { money, oneDecimal } from "../../parts";
 import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS, Rift, Tile, type LineupCardProps } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
 import { swapIds } from "./model";
+import { WORDS } from "./words";
 
 /** The starter in each slot, in the broadcast's order. */
 const starters = ({ data, state }: ViewProps) =>
@@ -57,13 +59,14 @@ export function CardBoard(props: ViewProps) {
     plays: flexPlays(slot, p.role),
     name: p.name,
     team: p.team,
+    photo: photoOf(p.name),
     mark: markOf(state, p.id),
     news: p.news?.flag,
     next: fixtureLine(data.series, p.team),
     footer: (
       <>
         <span>
-          Form <b>{oneDecimal(p.form)}</b>
+          {WORDS.form} <b>{oneDecimal(p.form)}</b>
         </span>
         <b>{money(p.priceM)}</b>
       </>

@@ -10,6 +10,7 @@ import { FAKER_SEASON, KKOMA_SEASON, type T1MemberSeason } from "../../fixtures/
 import { formOf, MY_PLAYERS, OFF_PAGE_PLAYERS, playerId, STATS_PLAYERS, WEEK3_SERIES_FINAL, type TeamCode } from "../../fixtures/week3";
 import type { RoleKey } from "../../rift";
 import { COACH_LINES, PLAYER_LINES, SEASON, type StatsRow } from "./stats";
+import { weekSpan, WORDS } from "./words";
 
 /** A price move is 0.5m in the picture. */
 const MOVE_M = 0.5;
@@ -237,7 +238,7 @@ function weekRows(season: readonly StatsRow[], week: number): StatsRow[] {
 }
 
 /** Span's choices: the season, then each final week. */
-export const SPANS = [{ value: SEASON, label: "Season" }, ...WEEKS.map((w) => ({ value: `week-${w}`, label: `Week ${w}` }))];
+export const SPANS = [{ value: SEASON, label: WORDS.season }, ...WEEKS.map((w) => ({ value: `week-${w}`, label: weekSpan(w) }))];
 
 /** The list for each span, players and coaches. */
 export const STATS_BY_SPAN: Record<string, { players: StatsRow[]; coaches: StatsRow[] }> = {

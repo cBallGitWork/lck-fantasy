@@ -1,0 +1,25 @@
+/* Fills its box: the portrait, its credit in its bottom right corner; or the crest, centred. */
+.player-photo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+.player-photo__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+.player-photo__credit {
+  position: absolute;
+  right: var(--s-1);
+  bottom: var(--s-1);
+  padding: 0 var(--s-1);
+  background: var(--paper);
+  color: var(--mid);
+  font-size: var(--size-small);
+}

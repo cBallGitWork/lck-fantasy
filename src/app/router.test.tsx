@@ -8,25 +8,30 @@ import { htmlAt } from "../testing/render";
 const ROUTES: Record<ScreenKey, [Go, string]> = {
   home: [{ to: PATHS.home }, "home"],
   pickTeam: [{ to: PATHS.pickTeam }, "pick-team"],
+  createTeam: [{ to: PATHS.createTeam }, "pick-team-signed-out"],
   transfers: [{ to: PATHS.transfers }, "transfers"],
   points: [{ to: PATHS.points }, "points"],
   pointsWeek: [{ to: PATHS.pointsWeek, params: { week: "2" } }, "points"],
   leagues: [{ to: PATHS.leagues }, "leagues"],
   league: [{ to: PATHS.league, params: { leagueId: "pub-league" } }, "leagues"],
+  leagueJoin: [{ to: PATHS.leagueJoin, params: { code: "GANK-4TQ1" } }, "leagues"],
   stats: [{ to: PATHS.stats }, "stats"],
   live: [{ to: PATHS.live }, "live"],
   series: [{ to: PATHS.series, params: { seriesId: "w3-sat-2" } }, "series"],
-  compare: [{ to: PATHS.compare }, "compare"],
+  compare: [{ to: PATHS.compare, params: { playerId: "faker" } }, "compare"],
   perfectGame: [{ to: PATHS.perfectGame }, "perfect-game"],
+  perfectGameWeek: [{ to: PATHS.perfectGameWeek, params: { week: "2" } }, "perfect-game"],
   priceChanges: [{ to: PATHS.priceChanges }, "price-changes"],
+  priceChangesWeek: [{ to: PATHS.priceChangesWeek, params: { week: "3" } }, "price-changes"],
   settings: [{ to: PATHS.settings }, "settings"],
-  lckHub: [{ to: PATHS.lckHub }, "lck-hub"],
+  hub: [{ to: PATHS.hub }, "lck-hub"],
   playerCard: [{ to: PATHS.playerCard, params: { playerId: "faker" } }, "player-card"],
   coachCard: [{ to: PATHS.coachCard, params: { coachId: "kkoma" } }, "coach-card"],
   profile: [{ to: PATHS.profile, params: { managerId: "minji" } }, "profile"],
   following: [{ to: PATHS.following }, "following"],
   privacy: [{ to: PATHS.privacy }, "legal"],
   terms: [{ to: PATHS.terms }, "legal"],
+  help: [{ to: PATHS.help }, "help"],
 };
 
 test.each(Object.keys(PATHS) as ScreenKey[])("the %s route renders its screen with the top bar", async (key) => {
@@ -56,4 +61,5 @@ test("a page's title names it: Pick Team · Flol; any other route is Flol", () =
 test("a path takes its params, escaped", () => {
   expect(pathTo({ to: PATHS.series, params: { seriesId: "w3 sat" } })).toBe("/series/w3%20sat");
   expect(pathTo({ to: PATHS.stats })).toBe("/stats");
+  expect(pathTo({ to: PATHS.help, hash: "prices" })).toBe("/help#prices");
 });

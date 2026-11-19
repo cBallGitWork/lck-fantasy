@@ -1,7 +1,7 @@
 # lck-fantasy
 
 The product's name is Flol (Craig, 11 Nov 2026); the repo keeps its name. A free, season-long fantasy game for the LCK (League of Legends Champions Korea) that copies FPL's structure: a budget, a squad with a bench, weekly transfers, a captain, buffs, global and supporter leagues.
-The app is being built: the scaffold and the game rules land issue by issue. Split 1 of 2027 is the planned beta; the LCK Cup is dropped (Craig, 16 Nov 2026).
+The app is being built: the scaffold and the game rules land issue by issue. The plan: a simulated season on 2026's data, closed tests on the LEC's Winter split and the LCK Cup, then a public launch in spring with the LCK's Split 1 (Craig, 18 Nov 2026).
 
 ## The product is SPEC.md
 
@@ -25,13 +25,14 @@ The app is being built: the scaffold and the game rules land issue by issue. Spl
 - One branch and one squash-merged PR per task, its branch starting `feat/`, `fix/`, `refactor/`, `docs/` or `chore/`. Enforced by `guard_bash.py`: no commit on `main`, no push to `main`, no force push, no staging everything, no word on Craig's private list, and no PR from a branch without one of those prefixes.
 - A PR body is `## What` and a `Part of #n` or `Closes #n` line (`pr_body.py`). PRs ask nothing: small calls are stated as decided, real ones are asked in chat.
 - `npm run verify` before every commit: the contents-list check and the hook tests (`/verify`). A doc over 100 lines opens with a contents list (`scripts/contents-lists.mjs`). `.claude/hooks/test.sh` checks every hook.
-- One review round per PR. Once the pipeline is set up (`docs/PIPELINE.md`), `review.yml` runs `pr-reviewer` on every PR and posts its verdict; run `pr-reviewer` by hand only on a PR with no pipeline review. A builder tidies its own diff once first (`/refactor`).
-- The build pipeline, once it is set up, is `docs/PIPELINE.md`: the workflows that build, review and merge an issue without a session, the labels (`lane:auto` is an issue the lead builds, `lane:craig` one that waits for Craig) and the `Today` issue, the lead's one report.
+- One review round per PR. `review.yml` runs `pr-reviewer` on every PR (`docs/PIPELINE.md`) and posts its verdict; run `pr-reviewer` by hand only on a PR with no pipeline review. A builder tidies its own diff once first (`/refactor`).
+- The build pipeline is `docs/PIPELINE.md`: the workflows that build, review and merge an issue without a session, the labels (`lane:auto` is an issue the lead builds, `lane:craig` one that waits for Craig) and the `Today` issue, the lead's one report.
 - Before adding a helper, hook, script, words or test fixture, search for its home and reuse it. Name every meaningful literal once, in one home.
 - Talk is talk: an idea, a what-if or theory-crafting is filed, specced, built or shipped only after Craig says to (`guard_mode.py`).
 - Where a spec file is silent, ask Craig: never build on a guessed rule, and never offer a rule only the code holds as a grill recommendation.
 - Don't ask Craig what his standing answers already settle (small look details, fixes and upkeep): act and say so in one line. A question is asked once, five to a batch (`guard_ask.py`).
 - Fewer words, in UK English: short replies, the shortest label on a screen, plain sentences. What Craig must decide goes first, with an example.
+- Every word a player reads is written to the Broadcast voice (`.claude/agents/broadcast.md`) and lives in its screen's `words.ts`. A build that adds or changes words runs the `broadcast` agent on its words files before the PR.
 - Every PR or issue named to Craig gets its full GitHub URL.
 - `ui-verifier` (an agent that shoots the built screens and reads them against their pictures) waits until there is an app to shoot.
 - Add a rule here only after Claude gets something wrong, and add a hook rather than a rule where possible. `/retro` before clearing the chat finds those moments; `/wait-what` re-says a reply that didn't land; `/handover` writes the next session its start.

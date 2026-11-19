@@ -7,16 +7,14 @@ import { ProfileHistory } from "./ProfileHistory";
 import { ProfilePoints } from "./ProfilePoints";
 import { ProfileSide } from "./ProfileSide";
 import { ProfileTransfers } from "./ProfileTransfers";
+import { FOLLOW_LABEL, TABS, WORDS } from "./words";
 
-const PROFILE_TABS = ["Points", "History", "Transfers"] as const;
-export type ProfileTab = (typeof PROFILE_TABS)[number];
+export type ProfileTab = (typeof TABS)[number];
 
-const FOLLOW_LABEL: Record<Exclude<FollowState, "self">, string> = { following: "Following ✓", follow: "Follow", requested: "Requested" };
-
-/** Following unfollows; Follow sends a request, Requested until they accept (spec/14). */
+/** Following unfollows; Follow sends a request; Requested cancels it, with no confirm (spec/14). */
 export function nextFollow(state: FollowState): FollowState {
-  if (state === "following") return "follow";
   if (state === "follow") return "requested";
+  if (state === "following" || state === "requested") return "follow";
   return state;
 }
 
@@ -60,7 +58,7 @@ export function Profile({
   return (
     <PageFrame screen="profile" account={account}>
       <Banner manager={data.manager} follow={follow} onFollow={pressFollow} />
-      <Tabs id={tabsId} tabs={PROFILE_TABS} chosen={tab} onChoose={setTab} label="Profile" />
+      <Tabs id={tabsId} tabs={TABS} chosen={tab} onChoose={setTab} label={WORDS.profile} />
       <Columns className="profile__grid">
         <TabPanel id={tabsId} className="profile__main">
           {tab === "Points" && <ProfilePoints week={week} hasPrev={hasWeek(weekNo - 1)} hasNext={hasWeek(weekNo + 1)} onWeek={setWeekNo} />}
@@ -68,7 +66,7 @@ export function Profile({
           {tab === "Transfers" && <ProfileTransfers weeks={data.transfers} />}
         </TabPanel>
         <aside className="profile__side">
-          <ProfileSide leagues={data.leagues} trucks={tab === "Points" ? { week: week.week, list: week.trucks } : undefined} />
+          <ProfileSide leagues={data.leagues} cheers={tab === "Points" ? { week: week.week, list: week.cheers } : undefined} />
         </aside>
       </Columns>
       <SponsorNote />
@@ -89,7 +87,7 @@ function Banner({ manager, follow, onFollow }: { manager: ProfileManager; follow
       </p>
       {follow !== "self" && (
         <span className="profile__follow">
-          <OutlinedKey onClick={follow === "requested" ? undefined : onFollow}>{FOLLOW_LABEL[follow]}</OutlinedKey>
+          <OutlinedKey onClick={onFollow}>{FOLLOW_LABEL[follow]}</OutlinedKey>
         </span>
       )}
     </header>

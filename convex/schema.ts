@@ -1,5 +1,6 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { liveReading } from "./feeds/liveFeed";
 import { BUFF_EFFECTS } from "./squads/buffs";
 import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
 
@@ -8,7 +9,7 @@ import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
 /** A source's row as it sent it: column name to text (ARCHITECTURE.md, Data). */
 export const rawRow = v.record(v.string(), v.string());
 
-const literals = <T extends string>(values: readonly [T, T, ...T[]]) =>
+export const literals = <T extends string>(values: readonly [T, T, ...T[]]) =>
   v.union(...values.map((value) => v.literal(value)));
 
 /** A number for each of `keys`: slot sizes, role minimums. */
@@ -28,18 +29,30 @@ export const seasonSettings = v.object({
   }),
   /** In won; null for no budget (spec/10). */
   budget: v.union(v.number(), v.null()),
+  /** In won: Auto-fill aims to spend at least the budget less this (spec/09). */
+  autoFillGap: v.number(),
   /** convex/squads/transfers.ts's TransferSettings. */
   transfers: v.object({ freePerGameweek: v.number(), bankCap: v.number(), hitPoints: v.number(), freeAfterUnlimited: v.number() }),
   carryMultiplier: v.number(),
-  /** Each buff and how many a manager gets per split (spec/06). */
-  buffs: v.array(v.object({ name: v.string(), effect: literals(BUFF_EFFECTS), perSplit: v.number() })),
+  /** Each buff, its multiplier where its effect has one, and how many a manager gets per split (spec/06). */
+  buffs: v.array(v.object({ name: v.string(), effect: literals(BUFF_EFFECTS), multiplier: v.optional(v.number()), perSplit: v.number() })),
   teamNameMaxLength: v.number(),
+  /** False while it runs as a closed test: only an account with a personal invite signs up (spec/10,
+   *  The road to launch). Missing, as on a season stored before it, is open. */
+  signUpOpen: v.optional(v.boolean()),
+  /** Live points (spec/11, Live): how often each live game's feed is read, how long with no new
+   *  reading counts as down, and the minute gold lead is read at (the scoring table's
+   *  `goldLeadAt15.atMinutes`, held here until the scoring table is stored). Required, unlike
+   *  `signUpOpen`: no deployment has stored a season yet, and loading data/lck rewrites settings. */
+  live: v.object({ pollSeconds: v.number(), downAfterSeconds: v.number(), goldLeadAtMinutes: v.number() }),
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */
 export const gameweekState = literals(["toCome", "live", "final"]);
 
-export const competitionFields = { name: v.string(), region: v.string(), timeZone: v.string() };
+/** A competition: its name, region and time zone, the short name its times are written with (`KST`),
+ *  and the sign its money is written with (`₩`). */
+export const competitionFields = { name: v.string(), region: v.string(), timeZone: v.string(), timeZoneLabel: v.string(), currency: v.string() };
 export const split = v.object({ number: v.number(), name: v.string() });
 
 /** A price's pick, by team code: a player by role and handle, or the team's coach, which is the team
@@ -49,6 +62,10 @@ export const pricedPick = {
   role: v.union(playerRole, v.literal("coach")),
   handle: v.optional(v.string()),
 };
+
+/** A live game's feed: read once a minute while `polling`, then `finished`, or `down` when it
+ *  went quiet too long (spec/11, Live). */
+export const LIVE_FEED_STATES = ["polling", "finished", "down"] as const;
 
 /** One side of a game: its team's lines for the coach (spec/05, The coach). */
 const teamLine = v.object({
@@ -62,7 +79,7 @@ const teamLine = v.object({
 });
 
 export default defineSchema({
-  // The real world (convex/lck): filled by feeds, corrected by an admin, never written by the game.
+  // The real world (convex/world): filled by feeds, corrected by an admin, never written by the game.
   competitions: defineTable(competitionFields).index("by_name", ["name"]),
   seasons: defineTable({
     competition: v.id("competitions"),
@@ -120,7 +137,8 @@ export default defineSchema({
   })
     .index("by_oeId", ["oeId"])
     .index("by_pair", ["pair"])
-    .index("by_series", ["series"]),
+    .index("by_series", ["series"])
+    .index("by_startedAt", ["startedAt"]),
   gameLineups: defineTable({
     game: v.id("games"),
     player: v.id("players"),
@@ -147,10 +165,64 @@ export default defineSchema({
   })
     .index("by_game", ["game"])
     .index("by_player", ["player"]),
+  /** A game in play: the live feed's latest reading, folded from every window read so far (spec/11). */
+  liveFrames: defineTable({
+    /** The feed's own game id, from lolesports.com's schedule pages or pasted in by an admin. */
+    esportsGameId: v.string(),
+    season: v.id("seasons"),
+    state: literals(LIVE_FEED_STATES),
+    /** When reading began, in ms since the epoch: the quiet spell that counts as down starts here
+     *  until the first new reading. */
+    since: v.number(),
+    /** When the last new reading came in; null before the first. */
+    readAt: v.union(v.number(), v.null()),
+    /** What went wrong on the latest read, for the alert if the feed goes down. */
+    lastError: v.optional(v.string()),
+    /** Null until the first window is read: no live points yet. */
+    reading: v.union(liveReading, v.null()),
+  }).index("by_esportsGameId", ["esportsGameId"]),
 
-  // The game. Managers and entries hold only what leagues need; sign-up (#42) adds the rest.
-  managers: defineTable({ country: v.string(), favouriteTeam: v.id("teams") }),
-  entries: defineTable({ manager: v.id("managers"), teamName: v.string() }),
+  // The game (convex/signIn makes a manager, its entry and its picks on sign-up).
+  managers: defineTable({
+    /** The signed-in account: Google or Discord, through Convex Auth (spec/09). */
+    account: v.string(),
+    country: v.string(),
+    favouriteTeam: v.id("teams"),
+    /** When the manager ticked the Terms and Privacy, and which version (spec/09). */
+    agreed: v.object({ at: v.number(), version: v.string() }),
+  }).index("by_account", ["account"]),
+  /** A personal invite to the closed tests, one person each (spec/10, The road to launch). */
+  invites: defineTable({
+    code: v.string(),
+    /** Who Craig made it for, as he wrote it. */
+    for: v.string(),
+    /** The account that signed up with it, and when; unset while unused. */
+    used: v.optional(v.object({ account: v.string(), at: v.number() })),
+  })
+    .index("by_code", ["code"])
+    .index("by_account", ["used.account"]),
+  entries: defineTable({
+    manager: v.id("managers"),
+    season: v.id("seasons"),
+    teamName: v.string(),
+    /** The first gameweek it scores; it starts on 0 points (spec/09, Joining late). */
+    firstGameweek: v.number(),
+    /** In won: the budget less what the squad cost. Null for a season with no budget. */
+    bank: v.union(v.number(), v.null()),
+  }).index("by_manager", ["manager", "season"]),
+  /** An entry's squad for one gameweek (docs/data-model.md, `picks`). */
+  picks: defineTable({
+    entry: v.id("entries"),
+    gameweek: v.number(),
+    slot: v.union(literals(STARTER_SLOTS), v.literal("bench")),
+    /** On the bench: 1 is bench 1. */
+    benchOrder: v.optional(v.number()),
+    ...pricedPick,
+    /** The Captain; there is no vice-captain (spec/04). */
+    captain: v.boolean(),
+    /** In won: the price it was bought at. */
+    buyPrice: v.number(),
+  }).index("by_entry", ["entry", "gameweek"]),
 
   // Leagues (convex/leagues): Overall, country and team leagues exist once each (spec/08).
   leagues: defineTable(
@@ -175,4 +247,17 @@ export default defineSchema({
   leagueEntries: defineTable({ league: v.id("leagues"), entry: v.id("entries") })
     .index("by_league", ["league", "entry"])
     .index("by_entry", ["entry"]),
+  /** Managers a private league's maker removed: they can't rejoin it (spec/08). */
+  leagueRemovals: defineTable({ league: v.id("leagues"), entry: v.id("entries") }).index("by_league", ["league", "entry"]),
+
+  // The sim (convex/admin/clock.ts): its one stored moment, which Next day and Play to end move (spec/10).
+  simClock: defineTable({ now: v.number() }),
+
+  // Admin alerts (convex/admin/alerts.ts): what an admin must fix, never a silent gap (spec/11, Live).
+  alerts: defineTable({
+    at: v.number(),
+    /** The end of the match day it was raised on, in the competition's zone: one email per day. */
+    matchDayEnd: v.number(),
+    message: v.string(),
+  }).index("by_matchDayEnd", ["matchDayEnd"]),
 });

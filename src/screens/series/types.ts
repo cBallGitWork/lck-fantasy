@@ -3,7 +3,7 @@
 
 import type { RoleKey } from "../../rift";
 
-/** When and what the series is: `Bo3 · Split 1 · Week 3 · Sat 16 Jan`, then the time. */
+/** When and what the series is: `Bo3 · Split 1 Week 3 · Sat 16 Jan`, then the time. */
 export interface SeriesWhen {
   format: string;
   competition: string;

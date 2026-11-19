@@ -125,6 +125,22 @@
   outline: var(--m-rule-heavy) solid var(--text);
   outline-offset: var(--m-rule-heavy);
 }
+/* An empty slot (front door): a dashed card, its shirt faint, the role on a bare plate, then `+`. */
+.tile--empty .tile__card {
+  background: transparent;
+  outline: var(--m-rule) dashed var(--mid);
+  outline-offset: calc(-1 * var(--m-rule));
+}
+.tile--empty .tile__kit {
+  opacity: var(--opacity-empty-shirt);
+}
+.tile--empty .tile__name {
+  background: transparent;
+  color: var(--text);
+}
+.tile--empty .tile__line {
+  font-size: var(--size-lead);
+}
 .tile--fit {
   outline: var(--m-rule-heavy) dashed var(--text);
   outline-offset: var(--m-rule-heavy);

@@ -1,10 +1,12 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, noop, text } from "../../testing/render";
+import { isRedirect } from "@tanstack/react-router";
+import { expectInOrder, html, htmlAt, noop, plain, text } from "../../testing/render";
+import { BARE_COMPARE, compareGo, PATHS, pathTo } from "../../paths";
 import { sum } from "../../parts";
 import { better, searchGroups } from "./rules";
 import { CHOVY, COMPARE_PLAYERS, FAKER, KKOMA, RYU, SEARCH_ROWS } from "./fixtures";
-import { ComparePage } from ".";
+import { ComparePage, toStatsWithNoPlayer } from ".";
 
 /** The text of each bold (better) cell, in order. */
 const bold = (out: string) => [...out.matchAll(/compare__better">([^<]*)/g)].map((m) => m[1]);
@@ -29,8 +31,8 @@ describe("Faker v Chovy", () => {
       "19.3", "Form", "20.3",
       "₩18.5m", "0.5", "Price", "₩17.5m", "0.5",
       "46%", "Owned", "41%",
-      "W2 · Fri", "10", "v BFX", "W3 · Wed", "12", "v HLE", "W3 · Sat", "10", "v DK", "Last 3", "W2 · Sat", "11", "v BRO",
-      "W4 · Wed", "v KT", "W4 · Sat", "v GEN", "W5 · Thu", "v BRO", "Next 3", "W4 · Thu", "v BRO", "W4 · Sat", "v T1", "W5 · Wed", "v DNS",
+      "Week 2 · Fri", "10", "v BFX", "Week 3 · Wed", "12", "v HLE", "Week 3 · Sat", "10", "v DK", "Last 3", "Week 2 · Sat", "11", "v BRO",
+      "Week 4 · Wed", "v KT", "Week 4 · Sat", "v GEN", "Week 5 · Thu", "v BRO", "Next 3", "Week 4 · Thu", "v BRO", "Week 4 · Sat", "v T1", "Week 5 · Wed", "v DNS",
     ]);
   });
 
@@ -102,10 +104,49 @@ describe("kkOma v Ryu", () => {
     const pick = text(<ComparePage left={KKOMA} right={null} onClose={noop} />);
     expectInOrder(pick, ["Coaches", "Ryu", "Homme", "Ssong", "cvMax", "Score", "Joker"]);
     expect(pick).not.toMatch(/Mids|Chovy|Other roles/);
+    expect(html(<ComparePage left={KKOMA} right={null} onClose={noop} />)).toContain('placeholder="Find a coach"');
+  });
+});
+
+/** Where Compare's guard sends a player id: the redirect's path, or undefined when Compare opens. */
+function sentTo(id: string | undefined): unknown {
+  try {
+    toStatsWithNoPlayer(id);
+  } catch (err) {
+    return isRedirect(err) ? err.options.to : err;
+  }
+  return undefined;
+}
+
+describe("the route", () => {
+  test("a bare /compare, with no player, goes to Stats, never a made-up comparison (spec/12, Compare)", async () => {
+    expect(sentTo(undefined)).toBe(PATHS.stats);
+    expect(await htmlAt(BARE_COMPARE)).not.toContain('data-screen="compare"');
+  });
+
+  test("a player Compare has no lines for is no player: Stats too", async () => {
+    expect(sentTo("nobody")).toBe(PATHS.stats);
+    expect(await htmlAt(pathTo(compareGo("nobody")))).not.toContain('data-screen="compare"');
+  });
+
+  test("opens on the player whose card it came from, from both cards", async () => {
+    expect(sentTo(FAKER.id)).toBeUndefined();
+    expectInOrder(text(<ComparePage left={KKOMA} onClose={noop} />), ["kkOma", "v", "Ryu"]);
+    expectInOrder(plain(await htmlAt(pathTo(compareGo(CHOVY.id)))), ["Chovy", "v", "Faker"]);
+    expect(await htmlAt(pathTo({ to: PATHS.playerCard, params: { playerId: FAKER.id } }))).toContain(`href="${pathTo(compareGo(FAKER.id))}"`);
+    expect(await htmlAt(pathTo({ to: PATHS.coachCard, params: { coachId: KKOMA.id } }))).toContain(`href="${pathTo(compareGo(KKOMA.id))}"`);
   });
 });
 
 describe("the rules", () => {
+  test("the search lists every player of his role, with no cap; typing narrows it (spec/12, Compare)", () => {
+    const mids = SEARCH_ROWS.filter((r) => r.role === "mid" && r.name !== FAKER.name).map((r) => r.name);
+    const out = text(<ComparePage right={null} onClose={noop} />);
+    for (const name of mids) expect(out).toContain(name);
+    expect(searchGroups(SEARCH_ROWS, FAKER, "", false).flatMap((g) => g.rows.map((r) => r.name)).sort()).toEqual([...mids].sort());
+    expect(searchGroups(SEARCH_ROWS, FAKER, "cho", false).flatMap((g) => g.rows.map((r) => r.name))).toEqual([CHOVY.name]);
+  });
+
   test("the higher number is better, and level is unmarked", () => {
     expect(better(-4, -2)).toBe("right");
     expect(better(22, 24)).toBe("right");

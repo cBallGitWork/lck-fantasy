@@ -2,6 +2,31 @@
 .page-frame {
   padding: var(--s-5) var(--s-6) var(--s-7);
 }
+/* The foot: Riot's notice, small, under a rule. */
+.page-frame__foot {
+  margin: 0 var(--s-6);
+  padding: var(--s-4) 0 var(--s-6);
+  border-top: var(--m-rule) solid var(--soft);
+  font-size: var(--size-small);
+}
+.page-frame__foot p {
+  margin: 0;
+}
+/* Help, Privacy and Terms, in a row above the notice. */
+.page-frame__foot-links {
+  display: flex;
+  gap: var(--s-5);
+  margin-bottom: var(--s-3);
+}
+.page-frame__foot-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--m-target);
+  color: var(--mid);
+}
+.page-frame__foot-link[aria-current="page"] {
+  color: var(--text);
+}
 /* `Skip to content`: unseen until focused, then over the top bar's left. */
 .page-frame__skip {
   position: absolute;

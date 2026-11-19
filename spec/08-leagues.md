@@ -45,16 +45,25 @@ In Split 2 the Overall league splits in two, as the LCK splits into its Legend a
 ## Private leagues
 
 - Any manager can make a private league and invite others with a code or a link, as in FPL.
+- A link only fills in the code: it opens Join a league with the code in, and the manager presses
+  Join. A visitor with no account lands on the front door, picks a squad and signs up first; then
+  Join a league opens with the code in. Nobody joins a league without pressing Join (Craig,
+  17 Nov 2026).
 - A private league's scoring starts from the gameweek its maker picks. Example: a league made in
   gameweek 4 can count from gameweek 4. The choice is this gameweek or a later one, this one by
   default (Craig, 14 Nov 2026).
 - The maker can rename the league, remove a manager and delete it. Any member can leave. As in
   FPL.
 - The maker can't leave without deleting the league (Craig, 14 Nov 2026).
-- Ties on points go to fewer transfers, as in FPL. Only regular transfers count: those made in a
-  Remake or Limitless week don't (Craig, 14 Nov 2026).
+- A manager the maker removes can't rejoin that league, as FPL bans them. The confirm reads
+  "Remove Baron Steal FC? They can't rejoin." (Craig, 17 Nov 2026).
+- Ties on points go to fewer transfers, as in FPL. Only regular transfers count (Craig, 14 Nov 2026).
 - A manager can be in up to 25 private leagues, and a private league has no size cap, as in FPL.
   Both numbers are data.
+- A code no league has keeps the Join sheet open, with "No league with that code" under the box,
+  as FPL (Craig, 17 Nov 2026).
+- At the cap, Create and Join stay off with "25 leagues already" as the reason, under the count
+  line "Private leagues: 25 of 25" (Craig, 17 Nov 2026).
 
 ## Overall tiers
 
@@ -76,14 +85,19 @@ Overall shows each manager's place as a LoL ranked tier, Iron to Challenger (Cra
 - Where it shows:
   - Home: a shield, the tier and the rank beneath, by the team name, with no total of managers
     ([approved picture](../docs/design/approved/home/)).
-  - Points: the tier, and the points to promote or to avoid demotion. That is the gap to the
-    manager at the cut-off now, shown with ≈ as others still score. Example: ≈6 pts to
-    Diamond IV.
-  - The manager's profile, by the team name.
-  - The Leagues page's Overall table: a small shield on each row.
+  - Points: the tier, and the points to promote. That is the gap to the manager at the cut-off
+    now, shown with ≈ as others still score. Example: ≈6 pts to Diamond IV. The line to avoid
+    demotion shows only at Challenger, with no tier above (Craig, 18 Nov 2026).
+  - The manager's profile, by the team name in its banner, as on Home: the shield, tier, rank and
+    its move. It shows there only, not again in the Leagues column (Craig, 18 Nov 2026, over the
+    approved picture, which puts it beside Overall).
+  - The Leagues page's Overall table: a Tier column, the small shield and the short name, such as
+    `Emerald I` (Craig, 18 Nov 2026).
   - Help: a Ranks section with the cut-off table ([spec/09](09-onboarding.md)).
 - At the season's end each manager's final tier and rank are kept, and the profile's History tab
-  lists them per season. Example: LCK 2027, Diamond II, 2,104th.
+  lists them per season in a Past seasons table under the weeks, as FPL's: Season, Tier, Rank.
+  Example: LCK 2027, Diamond II, 2,104th. One row a season, no split rows; it is hidden until
+  a season has ended (Craig, 18 Nov 2026).
 
 Starting cut-offs (top % of Overall), from 2026 solo queue shares across all servers, split by
 Gold's division ratios, checked 14 Nov 2026
@@ -112,8 +126,16 @@ As FPL's (Craig, 13 Nov 2026):
   1,920 ▲, Pub League 3rd.
 - A league's table shows rank, a movement arrow, team and manager name, gameweek points and total,
   with the season and each split as tabs above it. A row opens that manager's team.
-- A Carry column shows each manager's Carry for the gameweek in the Week column, on every tab.
+- A Captain column shows each manager's Captain for the gameweek in the Week column, on every tab.
   It shows only once that gameweek's deadline has passed, as FPL hides picks until then (Craig,
   14 Nov 2026).
 - A chase tag on the manager's own row shows the points to the rank above (16 pts to 1st), their
   lead over 2nd when 1st (+16 clear), and nothing when level (Craig, 14 Nov 2026).
+- Leagues in the top bar opens Overall's table, the manager's leagues listed beside it (Craig,
+  17 Nov 2026).
+- A table opens on its Season tab, as FPL (Craig, 17 Nov 2026).
+- A table shows 50 rows a page, as FPL, and Find me opens the page holding the manager's row. The
+  page size is data (Craig, 17 Nov 2026).
+- A row's › opens that manager's Points for the latest gameweek, as FPL (Craig, 17 Nov 2026).
+- Under a league's name, the competition and season, with the split on a split tab: `LCK 2027`,
+  `LCK 2027 · Split 1` (Craig, 17 Nov 2026).

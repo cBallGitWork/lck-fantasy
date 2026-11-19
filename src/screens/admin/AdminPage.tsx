@@ -1,6 +1,10 @@
 import { useId, useState, type FormEvent, type ReactNode } from "react";
+import { ALERT_KINDS } from "../../../convex/admin/alertKinds";
+import type { ListedAlert } from "../../../convex/admin/alerts";
+import type { RoleSpread } from "../../../convex/admin/priceSpread";
+import type { SeasonReport } from "../../../convex/admin/seasonReport";
 import type { Played, SimState } from "../../../convex/admin/sim";
-import { Empty, ErrorState, Field, Loading, PageFrame, PageHead, TabPanel, Tabs } from "../../parts";
+import { Empty, ErrorState, Field, formatWon, Loading, NONE, PageFrame, PageHead, TabPanel, Tabs } from "../../parts";
 import { SCREEN_NAME } from "../../paths";
 import { REGION } from "../../region";
 import { TABS, WORDS, type AdminTab } from "./words";
@@ -9,7 +13,7 @@ import "./admin.css";
 /** A read from the server: undefined while loading, else its value or why it failed. */
 export type Read<T> = T | undefined | Error;
 
-export type Alert = { at: number; message: string };
+export type Alert = ListedAlert;
 export type Press = "nextDay" | "playToEnd";
 
 /** A moment as the Sim page shows it, in the region's zone: `Thu 15 Jan 00:00 KST`, or the day alone. */
@@ -100,34 +104,112 @@ function Sim({ state, onPress }: { state: Read<SimState>; onPress: (press: Press
   );
 }
 
-function Alerts({ alerts }: { alerts: Read<Alert[]> }) {
+function Alerts({ alerts, onClose }: { alerts: Read<Alert[]>; onClose: (id: string) => Promise<unknown> }) {
+  const [closeFailed, setCloseFailed] = useState<Error>();
   if (alerts === undefined) return <Loading />;
   if (alerts instanceof Error) return <Failed error={alerts} />;
   if (alerts.length === 0) return <Empty title={WORDS.noAlerts} />;
+  const close = (id: string) => {
+    setCloseFailed(undefined);
+    onClose(id).catch((e: unknown) => setCloseFailed(e instanceof Error ? e : new Error(String(e))));
+  };
   return (
-    <table className="admin__alerts">
-      <tbody>
-        {alerts.map((alert, i) => (
-          <tr key={i}>
-            <td className="num quiet">{simMoment(alert.at)}</td>
-            <td>{alert.message}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
+    <>
+      {closeFailed && <Failed error={closeFailed} />}
+      <table className="admin__alerts">
+        <tbody>
+          {alerts.map((alert) => (
+            <tr key={alert.id}>
+              <td className="num quiet">{simMoment(alert.at)}</td>
+              <td>{WORDS.kind[alert.kind]}</td>
+              <td>
+                {alert.message}
+                {alert.names.length > 0 && <div className="quiet">{alert.names.join(" · ")}</div>}
+              </td>
+              <td>
+                {alert.open ? (
+                  <button type="button" className="admin__press" onClick={() => close(alert.id)}>
+                    {WORDS.close}
+                  </button>
+                ) : (
+                  <span className="quiet">{WORDS.closedAlert}</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
   );
 }
 
-/** The admin section (Craig, 19 Nov 2026): a plain page with no picture, its Sim tab and its Alerts. */
+const priced = (p: { name: string; won: number }) => WORDS.priced(p.name, formatWon(p.won));
+const ends = (side: RoleSpread["start"]) => (side === null ? NONE : `${priced(side.dearest)}, ${priced(side.cheapest)}`);
+const movers = (list: { name: string; won: number }[]) => (list.length === 0 ? WORDS.none : list.map(priced).join(" · "));
+
+/** The end-of-season report (#401): open alerts by kind, the mismatches, and the prices. */
+function Report({ report }: { report: Read<SeasonReport> }) {
+  if (report === undefined) return <Loading rows={3} />;
+  if (report instanceof Error) return <Failed error={report} />;
+  const { openAlerts, mismatches, prices } = report;
+  return (
+    <section className="admin__report">
+      <h2>{report.season ?? WORDS.noSeason}</h2>
+      <p>
+        {WORDS.openAlerts}: {ALERT_KINDS.map((kind) => `${WORDS.kind[kind]} ${openAlerts[kind]}`).join(" · ")}
+      </p>
+      <p>
+        {WORDS.mismatches}: <b className="num">{mismatches}</b> <span className="quiet">({WORDS.mismatchesNote})</span>
+      </p>
+      <h3>{WORDS.prices}</h3>
+      <table className="admin__alerts">
+        <thead>
+          <tr>
+            <th>{WORDS.role}</th>
+            <th>
+              {WORDS.start} <span className="quiet">({WORDS.dearestCheapest})</span>
+            </th>
+            <th>{WORDS.end}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {prices.roles.map((role) => (
+            <tr key={role.role}>
+              <td>{role.role}</td>
+              <td className="num">{ends(role.start)}</td>
+              <td className="num">{ends(role.end)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p>
+        {WORDS.weeks}: {prices.weeks.length === 0 ? WORDS.none : prices.weeks.map((w) => WORDS.week(w.gameweek, w.rises, w.falls)).join(" · ")}
+      </p>
+      <p>
+        {WORDS.risers}: {movers(prices.risers)}
+      </p>
+      <p>
+        {WORDS.fallers}: {movers(prices.fallers)}
+      </p>
+    </section>
+  );
+}
+
+/** The admin section (Craig, 19 Nov 2026): a plain page with no picture, its Sim tab, its Alerts and
+ *  the season's Report. */
 export function AdminPage({
   sim,
   alerts,
+  report,
   onPress,
+  onClose,
   tab: firstTab = TABS[0],
 }: {
   sim: Read<SimState>;
   alerts: Read<Alert[]>;
+  report: Read<SeasonReport>;
   onPress: (press: Press) => Promise<Played>;
+  onClose: (alert: string) => Promise<unknown>;
   tab?: AdminTab;
 }) {
   const id = useId();
@@ -136,7 +218,9 @@ export function AdminPage({
     <AdminFrame>
       <Tabs id={id} tabs={TABS} chosen={tab} onChoose={setTab} />
       <TabPanel id={id} className="admin__panel">
-        {tab === "Sim" ? <Sim state={sim} onPress={onPress} /> : <Alerts alerts={alerts} />}
+        {tab === "Sim" && <Sim state={sim} onPress={onPress} />}
+        {tab === "Alerts" && <Alerts alerts={alerts} onClose={onClose} />}
+        {tab === "Report" && <Report report={report} />}
       </TabPanel>
     </AdminFrame>
   );

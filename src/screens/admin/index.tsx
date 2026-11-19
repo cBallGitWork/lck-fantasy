@@ -2,7 +2,9 @@ import { useMutation, useQueries } from "convex/react";
 import { ConvexError } from "convex/values";
 import { useCallback, useEffect, useState } from "react";
 import { api } from "../../../convex/_generated/api";
+import type { Id } from "../../../convex/_generated/dataModel";
 import type { AdminRefusal } from "../../../convex/admin/access";
+import type { SeasonReport } from "../../../convex/admin/seasonReport";
 import type { SimState } from "../../../convex/admin/sim";
 import { Empty } from "../../parts";
 import { REGION } from "../../region";
@@ -19,9 +21,11 @@ function Opened({ password, onRefused }: { password: string; onRefused: (rule: A
   const reads = useQueries({
     sim: { query: api.admin.sim.simState, args: { password } },
     alerts: { query: api.admin.alerts.alertList, args: { password } },
+    report: { query: api.admin.seasonReport.seasonReport, args: { password, competition: REGION.name } },
   });
   const nextDay = useMutation(api.admin.sim.nextDay);
   const playToEnd = useMutation(api.admin.sim.playToEnd);
+  const closeAlert = useMutation(api.admin.alerts.closeAlert);
   const sim = reads.sim as Read<SimState>;
   const refused = refusalOf(sim);
   // A refused password goes back to the password form, saying why.
@@ -29,7 +33,15 @@ function Opened({ password, onRefused }: { password: string; onRefused: (rule: A
     if (refused !== undefined) onRefused(refused);
   }, [refused, onRefused]);
   const press = (which: Press) => (which === "nextDay" ? nextDay : playToEnd)({ password, competition: REGION.name });
-  return <AdminPage sim={sim} alerts={reads.alerts as Read<Alert[]>} onPress={press} />;
+  return (
+    <AdminPage
+      sim={sim}
+      alerts={reads.alerts as Read<Alert[]>}
+      report={reads.report as Read<SeasonReport>}
+      onPress={press}
+      onClose={(alert) => closeAlert({ password, alert: alert as Id<"alerts"> })}
+    />
+  );
 }
 
 function Admin() {
@@ -54,7 +66,7 @@ function Admin() {
   return <Opened password={password} onRefused={onRefused} />;
 }
 
-/** The admin section (`/admin`): the password form, then Sim and Alerts; without Convex it says so. */
+/** The admin section (`/admin`): the password form, then Sim, Alerts and Report; without Convex it says so. */
 export function AdminScreen() {
   if (!import.meta.env.VITE_CONVEX_URL)
     return (

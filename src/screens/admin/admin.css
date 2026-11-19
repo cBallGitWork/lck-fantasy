@@ -12,12 +12,14 @@
   gap: var(--s-3);
 }
 .admin__panel,
-.admin__sim {
+.admin__sim,
+.admin__report {
   display: grid;
   gap: var(--s-4);
   margin-top: var(--s-4);
 }
-.admin__sim p {
+.admin__sim p,
+.admin__report :is(p, h2, h3) {
   margin: 0;
 }
 .admin__press {
@@ -28,7 +30,8 @@
   border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }
-.admin__alerts td {
+.admin__alerts :is(td, th) {
+  text-align: left;
   padding: var(--s-2) var(--s-3) var(--s-2) 0;
   vertical-align: top;
 }

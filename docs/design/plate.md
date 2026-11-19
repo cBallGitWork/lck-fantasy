@@ -92,9 +92,10 @@ Each part is drawn one way on every screen.
   16 Nov 2026).
 - **A link** ends with `›`, in `--text` (Craig, 16 Nov 2026), and names where it goes: `Full stats ›`. Not underlined, save
   a link inside a sentence. A link leaving Flol ends with `↗`.
-- **Deadline**, one way everywhere: `Deadline Wed 07:45  16:45 KST` and the countdown `9h 45m`.
-- **Times:** your time first, then KST in `--mid`: `Sat 22:00  07:00 KST`. A column of times
-  has a head.
+- **Deadline**, one way everywhere: `Deadline Wed 7:45am` and the countdown `9h 45m`.
+- **Times:** the manager's own only, with no zone, in am/pm: lower case, no space, no leading
+  zero (`8:00am`, `10:30pm`) (Craig, 19 Nov 2026). Game clocks (`12:04`) stay as they are. A column
+  of times has a head.
 - **Your player:** an 8px round `--text` dot after the name (Craig, 16 Nov 2026). **May not start:** the tag `Not starting`.
 - **Table:** name far left (after its slot, where a table lists a team) with team after it, figures right-aligned, 40px rows, 12px heads
   in `--mid`. No action column: what you can do to a row goes in its panel on the right. Two exceptions,

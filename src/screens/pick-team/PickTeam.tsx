@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import { Deadline, MainAction, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, TIME_NOTE, useAnnounce, ViewToggle } from "../../parts";
+import { Deadline, MainAction, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, useAnnounce, ViewToggle } from "../../parts";
 import { VIEWS as BOARD_VIEWS } from "../../rift";
 import { CardBoard, RiftBoard } from "./boards";
 import { Buffs } from "./Buffs";
@@ -28,7 +28,7 @@ export function PickTeamView({ data, state, dispatch }: ViewProps) {
       side={
         <>
           {selected && <PlayerCard state={state} dispatch={dispatch} player={selected} />}
-          <SideSection title={WORDS.seriesTitle} note={TIME_NOTE}>
+          <SideSection title={WORDS.seriesTitle}>
             <SeriesList series={data.series} />
           </SideSection>
           <Placeholder word={WORDS.sponsor} height="sponsorH" />

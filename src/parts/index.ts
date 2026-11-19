@@ -82,7 +82,6 @@ export {
   PHOTO_CREDIT,
   RIOT_NOTICE,
   SAVED_NEWS,
-  TIME_NOTE,
   TRUCK_HIRE,
   YOUR_TIME,
 } from "./words";

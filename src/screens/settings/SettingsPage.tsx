@@ -150,7 +150,7 @@ function TeamTab({ draft, onChange, locked, countries }: SettingsProps) {
   );
 }
 
-/** Display: time zone, with the next deadline in it and in the league's zone; theme. */
+/** Display: time zone, with the next deadline in it; theme. */
 function DisplayTab({ draft, onChange, browserZone, zones, deadlineAt }: SettingsProps) {
   const zoneOptions = [{ value: BROWSER, label: browserZoneLabel(browserZone) }, ...plainOptions(zones)];
   const deadline = timeIn(deadlineAt, zoneOf(draft.timeZone, browserZone));

@@ -16,7 +16,7 @@ describe("Week 4 prices", () => {
   const out = text(<PriceChangesPage week={WEEK4_PRICES} prev={WEEK3} />);
 
   test("shows the head, then when the prices were set, then Rises before Falls", () => {
-    expectInOrder(out, ["Price changes", "가격 변동", "‹", "Week 4 prices", "›", "Changed Wed 13 Jan 07:45 16:45 KST", "Rises", "Falls"]);
+    expectInOrder(out, ["Price changes", "가격 변동", "‹", "Week 4 prices", "›", "Changed Wed 13 Jan 07:45", "Rises", "Falls"]);
   });
 
   test("lists each move: name, team and role, was, now, owned", () => {
@@ -98,7 +98,7 @@ describe("controls", () => {
 
   test("How prices move › shows only once it has somewhere to go", () => {
     expect(text(<PriceChangesPage week={WEEK4_PRICES} />)).not.toContain("How prices move");
-    expect(text(<PriceChangesPage week={WEEK4_PRICES} howPricesMove={{ to: "/stats" }} />)).toContain("Changed Wed 13 Jan 07:45 16:45 KSTHow prices move ›");
+    expect(text(<PriceChangesPage week={WEEK4_PRICES} howPricesMove={{ to: "/stats" }} />)).toContain("Changed Wed 13 Jan 07:45How prices move ›");
   });
 });
 

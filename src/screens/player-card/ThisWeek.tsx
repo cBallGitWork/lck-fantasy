@@ -23,7 +23,7 @@ export function ThisWeek({ week }: { week: CardWeek }) {
             <span>
               {seriesTitle(s.day, s.opponent)}{" "}
               <span className="player-card__quiet quiet">
-                {isPlayed(s) ? seriesResult(s.score, s.state === "live") : <Time local={s.local} kst={s.kst} />}
+                {isPlayed(s) ? seriesResult(s.score, s.state === "live") : <Time local={s.local} />}
               </span>
             </span>
             <b className="num">{isPlayed(s) ? seriesPoints(s) : NONE}</b>

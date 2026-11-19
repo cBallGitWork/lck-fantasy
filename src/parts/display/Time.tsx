@@ -1,11 +1,6 @@
-import { WORDS } from "../words";
 import "./Time.css";
 
-/** A time: yours first, then the league's in mid grey, its zone named as its data holds it (`Sat 22:00  07:00 KST`). */
-export function Time({ local, kst }: { local: string; kst: string }) {
-  return (
-    <span className="time num">
-      {local} <span className="time__kst quiet">{kst} {WORDS.zone}</span>
-    </span>
-  );
+/** A time in the manager's own zone, with no label (`Sat 22:00`; Craig, 19 Nov 2026). */
+export function Time({ local }: { local: string }) {
+  return <span className="time num">{local}</span>;
 }

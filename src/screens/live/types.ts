@@ -80,7 +80,6 @@ export interface NextSeries {
   stage: string;
   format: string;
   local: string;
-  kst: string;
   countdown: { hours: number; minutes: number };
 }
 

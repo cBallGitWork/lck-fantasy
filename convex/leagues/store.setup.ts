@@ -31,7 +31,7 @@ export async function world() {
 /** A made-up LEC season beside the LCK's: euros, Spring and Summer, an Overall that stays whole. */
 export const LEC_2027: SeasonFile = {
   ...LCK_2027,
-  competition: { name: "LEC", region: "EMEA", timeZone: "Europe/Berlin", timeZoneLabel: "CET", currency: "€" },
+  competition: { name: "LEC", region: "EMEA", timeZone: "Europe/Berlin", currency: "€" },
   splits: [
     { number: 1, name: "Spring" },
     { number: 2, name: "Summer" },

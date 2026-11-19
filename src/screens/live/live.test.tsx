@@ -90,7 +90,7 @@ describe("nothing live", () => {
 
   test("shows the next series and its countdown, the last series final, and the week final", () => {
     expectInOrder(out, [
-      "Next · Sunday · Split 1 Week 3 · Bo3", "KRXvBRO", "08:00", "17:00 KST", "1h20m",
+      "Next · Sunday · Split 1 Week 3 · Bo3", "KRXvBRO", "08:00", "1h20m",
       "T1", "2–0", "DK", "Final", "Last series", "Saturday · Bo3 · Split 1 Week 3",
       ...CHIPS,
       "Your week", "109", "Average 79", "Highest 128›",

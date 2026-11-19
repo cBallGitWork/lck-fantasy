@@ -19,15 +19,6 @@
 }
 
 /* Fixtures and Results: one week by day, a day's series on paper. */
-.lck-hub__time-heads {
-  display: grid;
-  grid-template-columns: calc(var(--s-7) + var(--s-6) + var(--s-2)) calc(var(--s-7) + var(--s-4)) calc(var(--s-7) + var(--s-4));
-  padding-bottom: var(--s-1);
-}
-.lck-hub__time-heads span:first-child {
-  grid-column: 2;
-  padding-left: var(--s-4);
-}
 .lck-hub__day {
   display: grid;
   grid-template-columns: calc(var(--s-7) + var(--s-6) + var(--s-2)) 1fr;
@@ -43,7 +34,7 @@
 .lck-hub__series {
   display: grid;
   grid-template-columns:
-    calc(var(--s-7) + var(--s-4)) calc(var(--s-7) + var(--s-4)) calc(var(--s-7) * 2 + var(--s-4)) var(--s-6)
+    calc(var(--s-7) + var(--s-4)) calc(var(--s-7) * 2 + var(--s-4)) var(--s-6)
     calc(var(--s-7) * 2) var(--m-target) 1fr;
   align-items: center;
   height: var(--s-7);
@@ -59,9 +50,6 @@
 }
 .lck-hub__series:hover {
   background: var(--fill);
-}
-.lck-hub__kst {
-  color: var(--mid);
 }
 .lck-hub__home {
   text-align: right;

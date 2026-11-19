@@ -21,8 +21,8 @@ export interface PriceMove {
 /** One week's new prices: when they were set, then the rises and falls, in any order (the page sorts them). */
 export interface PriceWeek {
   week: number;
-  /** When the prices were set, your time then KST; absent before the first move. */
-  set?: { local: string; kst: string };
+  /** When the prices were set, your time; absent before the first move. */
+  set?: { local: string };
   rises: PriceMove[];
   falls: PriceMove[];
 }
@@ -36,7 +36,7 @@ const move = (name: string, wasM: number): PriceMove => {
 /** Week 4's prices, set at the Week 3 deadline (patch.html). */
 export const WEEK4_PRICES: PriceWeek = {
   week: 4,
-  set: { local: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.date} ${WEEK3_DEADLINE.time}`, kst: WEEK3_DEADLINE.kst },
+  set: { local: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.date} ${WEEK3_DEADLINE.time}` },
   rises: [
     move("Faker", 18.0),
     move("Chovy", 17.0),

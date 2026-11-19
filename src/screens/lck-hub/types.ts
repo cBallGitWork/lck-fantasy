@@ -87,7 +87,7 @@ export interface LckHubData {
   hangul: string;
   /** A series is best of this many games: 3 shows `Bo3`. */
   bestOf: number;
-  deadline: { local: string; kst: string; countdown: string };
+  deadline: { local: string; countdown: string };
   stages: HubStage[];
   teams: TeamRosters[];
   news: HubNews;

@@ -21,7 +21,7 @@ export function ProfileTransfers({ weeks }: { weeks: TransferWeek[] }) {
             ? {
                 head: (
                   <>
-                    <b>{weekNo(week.week)}</b> · <Time local={week.at.local} kst={week.at.kst} />
+                    <b>{weekNo(week.week)}</b> · <Time local={week.at.local} />
                   </>
                 ),
                 aside: week.cost,

@@ -57,7 +57,6 @@ export const seasonOf = internalQuery({
         name: competition.name,
         region: competition.region,
         timeZone: competition.timeZone,
-        timeZoneLabel: competition.timeZoneLabel,
         currency: competition.currency,
       },
       year: season.year,

@@ -1,7 +1,9 @@
 // The admin section's words: read by the admin alone, never a player.
 import type { AdminRefusal } from "../../../convex/admin/access";
 
-export const TABS = ["Sim", "Alerts"] as const;
+import type { AlertKind } from "../../../convex/admin/alertKinds";
+
+export const TABS = ["Sim", "Alerts", "Report"] as const;
 export type AdminTab = (typeof TABS)[number];
 
 export const WORDS = {
@@ -26,4 +28,28 @@ export const WORDS = {
     return `${day}: ${series} series played${passed}`;
   },
   noAlerts: "No alerts",
+  kind: {
+    feedDown: "Feed down",
+    noLaneOpponent: "No lane opponent",
+    pointsMismatch: "Points mismatch",
+  } satisfies Record<AlertKind, string>,
+  closedAlert: "Closed",
+  close: "Close",
+  noSeason: "No season loaded",
+  openAlerts: "Open alerts",
+  mismatches: "Points mismatches",
+  mismatchesNote: "every one raised, open or closed",
+  prices: "Prices",
+  role: "Role",
+  start: "Start",
+  end: "End",
+  /** `Faker ₩18.5m`. */
+  priced: (name: string, money: string) => `${name} ${money}`,
+  dearestCheapest: "dearest, cheapest",
+  weeks: "Moves",
+  /** `Week 2: 3 up, 1 down`. */
+  week: (gameweek: number, rises: number, falls: number) => `Week ${gameweek}: ${rises} up, ${falls} down`,
+  risers: "Biggest risers",
+  fallers: "Biggest fallers",
+  none: "None",
 } as const;

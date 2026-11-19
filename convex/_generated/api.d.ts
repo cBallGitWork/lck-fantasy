@@ -16,6 +16,7 @@ import type {
 import type * as admin_access from "../admin/access.js";
 import type * as admin_alerts from "../admin/alerts.js";
 import type * as admin_clock from "../admin/clock.js";
+import type * as admin_seasonReport from "../admin/seasonReport.js";
 import type * as admin_sim from "../admin/sim.js";
 import type * as admin_testManagerRoll from "../admin/testManagerRoll.js";
 import type * as admin_testManagerStore from "../admin/testManagerStore.js";
@@ -73,6 +74,7 @@ declare const fullApi: ApiFromModules<{
   "admin/access": typeof admin_access;
   "admin/alerts": typeof admin_alerts;
   "admin/clock": typeof admin_clock;
+  "admin/seasonReport": typeof admin_seasonReport;
   "admin/sim": typeof admin_sim;
   "admin/testManagerRoll": typeof admin_testManagerRoll;
   "admin/testManagerStore": typeof admin_testManagerStore;

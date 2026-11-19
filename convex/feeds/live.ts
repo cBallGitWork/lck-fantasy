@@ -54,7 +54,9 @@ export const storeLiveRead = internalMutation({
     const at = await now(ctx);
     if (reading !== null && reading.lastFrameAt > (row.reading?.lastFrameAt ?? 0)) {
       // The first reading names any player with no lane opponent (spec/11, Live).
-      if (row.reading === null) for (const alert of reading.alerts) await raiseAlert(ctx, alert, zone);
+      if (row.reading === null) {
+        for (const message of reading.alerts) await raiseAlert(ctx, { kind: "noLaneOpponent", message, names: [esportsGameId] }, zone);
+      }
       const state = reading.finished ? "finished" : "polling";
       await ctx.db.patch(row._id, { reading, readAt: at, state, lastError: undefined });
       if (state === "polling") await readAgain(ctx, esportsGameId, live.pollSeconds);
@@ -68,12 +70,10 @@ export const storeLiveRead = internalMutation({
     }
     await ctx.db.patch(row._id, { state: "down", lastError: problem });
     const why = problem ?? row.lastError;
-    await raiseAlert(
-      ctx,
+    const message =
       `Live game ${esportsGameId}: the feed is down, no new reading for ${live.downAfterSeconds / MINUTE_SECONDS} minutes` +
-        `${why === undefined ? "" : ` (${why})`}. Its live points stay at the last reading until final.`,
-      zone,
-    );
+      `${why === undefined ? "" : ` (${why})`}. Its live points stay at the last reading until final.`;
+    await raiseAlert(ctx, { kind: "feedDown", message, names: [esportsGameId] }, zone);
   },
 });
 

@@ -4,6 +4,7 @@
 import { v } from "convex/values";
 import { internal } from "../_generated/api";
 import { internalAction } from "../_generated/server";
+import { isSim } from "../admin/clock";
 
 /** The feed's latest window for a game, by the feed's game id (docs/research/live-data-sources.md, section 3). */
 const LIVE_FEED_WINDOW = "https://feed.lolesports.com/livestats/v1/window/";
@@ -13,6 +14,16 @@ export const readLiveGame = internalAction({
   handler: async (ctx, { esportsGameId }) => {
     let window: unknown = null;
     let error: string | undefined;
+    // The sim reads no feed: its replay answers as the feed would (convex/feeds/replay.ts).
+    if (isSim()) {
+      try {
+        window = await ctx.runQuery(internal.feeds.replay.replayRead, { esportsGameId });
+      } catch (e) {
+        error = `the replay couldn't be read: ${e instanceof Error ? e.message : String(e)}`;
+      }
+      await ctx.runMutation(internal.feeds.live.storeLiveRead, { esportsGameId, window, error });
+      return;
+    }
     try {
       const response = await fetch(LIVE_FEED_WINDOW + encodeURIComponent(esportsGameId));
       const body = await response.text();

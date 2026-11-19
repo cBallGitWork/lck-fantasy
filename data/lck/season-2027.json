@@ -21,7 +21,13 @@
       { "name": "Coach Diff", "effect": "coachMultiplier", "multiplier": 3, "perSplit": 1 }
     ],
     "teamNameMaxLength": 20,
-    "signUpOpen": true
+    "signUpOpen": true,
+    "knockoutTeamCap": 3,
+    "deadlineMinutesBefore": 15,
+    "finalAfterHours": 3,
+    "splitBreakReopenWeeks": 2,
+    "privateLeagueCap": 25,
+    "privateLeagueSize": null
   },
   "gameweeks": [
     { "number": 1, "split": 1, "deadline": "2026-12-30T07:45:00Z", "state": "final" },

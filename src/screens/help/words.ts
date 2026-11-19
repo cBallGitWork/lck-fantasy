@@ -3,10 +3,10 @@
 // value changes the text with it.
 import type { PlayerRole } from "../../../convex/squads/squad";
 import type { TierName } from "../../../convex/leagues/tiers";
-import { BUFF_DOES, CAPTAIN_MULTIPLIER, TEAM_CAP, type BuffName } from "../../fixtures/competition";
-import { NONE } from "../../parts";
+import { BUFF_DOES, CAPTAIN_MULTIPLIER, type BuffName } from "../../fixtures/competition";
+import { NONE, plural } from "../../parts";
 import { ROLE_NAME, type RoleKey } from "../../rift";
-import type { CoachRow, PlayerRow, RoleGroup } from "./facts";
+import { DEADLINE_MINUTES, FINAL_AFTER_HOURS, type CoachRow, type PlayerRow, type RoleGroup } from "./facts";
 
 export const HANGUL = "도움말";
 
@@ -38,9 +38,9 @@ const times = (m: number) => TIMES[m] ?? `×${m}`;
 export const CAPTAIN_TIMES = times(CAPTAIN_MULTIPLIER);
 /** The Captain's example score, as both the guide and Rules work it. */
 export const CAPTAIN_EXAMPLE = 9;
-/** The playoffs' cap: one more per team (spec/03, Knockouts). */
-export const KNOCKOUT_TEAM_CAP = TEAM_CAP + 1;
-export const DEADLINE_RULE = "The deadline is 15 minutes before the week's first series.";
+export const DEADLINE_RULE = `The deadline is ${plural(DEADLINE_MINUTES, "minute")} before the week's first series.`;
+/** When a series' points turn final: `about 3 hours after`. */
+export const FINAL_AFTER = `about ${plural(FINAL_AFTER_HOURS, "hour")} after`;
 
 /** `A, B or C`. */
 export const orList = (names: readonly string[]) => (names.length > 1 ? `${names.slice(0, -1).join(", ")} or ${names.at(-1)}` : (names[0] ?? ""));

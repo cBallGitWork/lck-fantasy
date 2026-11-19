@@ -39,6 +39,18 @@ export const seasonSettings = v.object({
   /** False while it runs as a closed test: only an account with a personal invite signs up (spec/10,
    *  The road to launch). Missing, as on a season stored before it, is open. */
   signUpOpen: v.optional(v.boolean()),
+  // Help reads these (spec/12, Help); missing on a season stored before them.
+  /** The most from one team in a knockout stage (spec/03, Knockouts). */
+  knockoutTeamCap: v.optional(v.number()),
+  /** A gameweek's deadline, in minutes before its first series (spec/10). */
+  deadlineMinutesBefore: v.optional(v.number()),
+  /** A series turns final this many hours after it ends (spec/11). */
+  finalAfterHours: v.optional(v.number()),
+  /** Transfers reopen this many weeks before the next split's first deadline (spec/03). */
+  splitBreakReopenWeeks: v.optional(v.number()),
+  /** The most private leagues a manager can be in, and a private league's size, null for none (spec/08). */
+  privateLeagueCap: v.optional(v.number()),
+  privateLeagueSize: v.optional(v.union(v.number(), v.null())),
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */

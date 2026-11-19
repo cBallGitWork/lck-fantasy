@@ -1,8 +1,8 @@
 // Help's guide: the intro, the pages the Help menu steps through, and the glossary (spec/12, Help).
 import { BUFFS, CAPTAIN_MULTIPLIER, captained, HIT_POINTS, TEAM_CAP, TEAMS } from "../../fixtures/competition";
 import { plural } from "../../parts";
-import { BANK_CAP, BENCH, BUDGET, FREE_PER_WEEK, SQUAD_SIZE, STARTERS } from "./facts";
-import { CAPTAIN_EXAMPLE, CAPTAIN_TIMES, DEADLINE_RULE, KNOCKOUT_TEAM_CAP, orList, type Item } from "./words";
+import { BANK_CAP, BENCH, BUDGET, FREE_PER_WEEK, KNOCKOUT_TEAM_CAP, SQUAD_SIZE, STARTERS } from "./facts";
+import { CAPTAIN_EXAMPLE, CAPTAIN_TIMES, DEADLINE_RULE, FINAL_AFTER, orList, type Item } from "./words";
 
 export const INTRO = {
   big: "Flol is a free fantasy game where you pick real LCK players, from Korea's League of Legends league, and score points from how they play in their actual games.",
@@ -42,7 +42,7 @@ export const GUIDE: readonly Item[] = [
           ["Days", "Usually Wednesday to Sunday"],
           ["Series", `Each of the ${TEAM_COUNT} teams plays two, at about 17:00 and 19:30 Korea time. A series is two teams playing best of 3 games, or best of 5 in the playoffs.`],
           ["Deadline", `${DEADLINE_RULE} Save your changes by then. Home shows it in your own time.`],
-          ["Points", "Go up live during the games, and are final about 3 hours after each series"],
+          ["Points", `Go up live during the games, and are final ${FINAL_AFTER} each series`],
         ],
       },
       { p: "In the playoffs, a team might play no series in a week, or several." },

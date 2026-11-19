@@ -19,6 +19,13 @@ export const BUDGET = formatWon(settings.budget);
 export const FREE_PER_WEEK = settings.transfers.freePerGameweek;
 export const BANK_CAP = settings.transfers.bankCap;
 export const FREE_AFTER_UNLIMITED = settings.transfers.freeAfterUnlimited;
+export const KNOCKOUT_TEAM_CAP = settings.knockoutTeamCap;
+export const DEADLINE_MINUTES = settings.deadlineMinutesBefore;
+export const FINAL_AFTER_HOURS = settings.finalAfterHours;
+export const REOPEN_WEEKS = settings.splitBreakReopenWeeks;
+export const PRIVATE_LEAGUE_CAP = settings.privateLeagueCap;
+/** A private league's size cap; null for none. */
+export const PRIVATE_LEAGUE_SIZE: number | null = settings.privateLeagueSize;
 
 /** The data Help's tables read: the scoring, and the competition's tier cut-offs and deadlines. */
 export interface HelpData {

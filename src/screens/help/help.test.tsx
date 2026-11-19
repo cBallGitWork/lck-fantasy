@@ -1,5 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
+import season from "../../../data/lck/season-2027.json";
 import { SPEC_TIER_CUTOFFS } from "../../../convex/leagues/fixtures";
 import { SPEC_COACH_TABLE, SPEC_PLAYER_TABLE } from "../../../convex/scoring/fixtures";
 import { BUFFS } from "../../fixtures/competition";
@@ -12,7 +13,7 @@ import { GUIDE } from "./guide";
 import { HelpPage, viewOf } from "./HelpPage";
 import { HELP_DATA } from "./index";
 import { FIRST_RULE, RULES } from "./rules";
-import { coachLine, playerLine } from "./words";
+import { coachLine, DEADLINE_RULE, playerLine } from "./words";
 
 const DATA: HelpData = { ...HELP_DATA, zone: "UTC" };
 const page = (hash: string, data = DATA) => html(<HelpPage hash={hash} data={data} />);
@@ -54,6 +55,16 @@ describe("Rules: every rule in groups that open and close", () => {
     const out = page(RULES_HASH);
     expectInOrder(plain(out), RULES.map((g) => g.group));
     expect(openRule(out)).toEqual([FIRST_RULE]);
+  });
+
+  test("its tunable figures are the season data's, never typed in", () => {
+    const text = (id: string) => JSON.stringify(RULES.flatMap((g) => g.items).find((i) => i.id === id)?.blocks);
+    const { settings } = season;
+    expect(text("per-team")).toContain(`In the playoffs it's ${settings.knockoutTeamCap}.`);
+    expect(text("between-splits")).toContain(`${settings.splitBreakReopenWeeks} weeks before the next split's first deadline`);
+    expect(text("live")).toContain(`about ${settings.finalAfterHours} hours after it ends`);
+    expect(text("private")).toContain(`You can be in up to ${settings.privateLeagueCap}, and there's no limit`);
+    expect(DEADLINE_RULE).toBe(`The deadline is ${settings.deadlineMinutesBefore} minutes before the week's first series.`);
   });
 
   test("covers Squad, Transfers, Captain, Scoring, Buffs, Prices, Leagues and Ranks", () => {

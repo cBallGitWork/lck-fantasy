@@ -2,8 +2,11 @@
 import { captained, HIT_POINTS, TEAM_CAP } from "../../fixtures/competition";
 import { MINUS, plural, signed } from "../../parts";
 import { PRICES_RULE } from "../../paths";
-import { BANK_CAP, BENCH, BUDGET, CAPTAIN_CHOICES, FREE_AFTER_UNLIMITED, FREE_PER_WEEK, SQUAD_SIZE, STARTERS } from "./facts";
-import { CAPTAIN_EXAMPLE, CAPTAIN_TIMES, DEADLINE_RULE, KNOCKOUT_TEAM_CAP, type Item } from "./words";
+import { BANK_CAP, BENCH, BUDGET, CAPTAIN_CHOICES, FREE_AFTER_UNLIMITED, FREE_PER_WEEK, KNOCKOUT_TEAM_CAP, PRIVATE_LEAGUE_CAP, PRIVATE_LEAGUE_SIZE, REOPEN_WEEKS, SQUAD_SIZE, STARTERS } from "./facts";
+import { CAPTAIN_EXAMPLE, CAPTAIN_TIMES, DEADLINE_RULE, FINAL_AFTER, type Item } from "./words";
+
+/** How many can join one private league: no limit, or `up to 50 people can join one`. */
+const LEAGUE_SIZE = PRIVATE_LEAGUE_SIZE === null ? "there's no limit on how many people join one" : `up to ${PRIVATE_LEAGUE_SIZE} people can join one`;
 
 /** A Captain's minus score, shown rounding towards zero. */
 const MINUS_EXAMPLE = -3;
@@ -108,7 +111,7 @@ export const RULES: readonly { group: string; items: readonly Item[] }[] = [
         blocks: [
           {
             list: [
-              "Once Split 1 ends, transfers are locked until 2 weeks before Split 2's first deadline. Then they're free and unlimited.",
+              `Once a split ends, transfers are locked until ${plural(REOPEN_WEEKS, "week")} before the next split's first deadline. Then they're free and unlimited.`,
               "Each split starts with new prices. Your squad is priced at them, so your bank can go below zero. Your squad must be back within budget, and back to the limit per team, by the deadline.",
               "If it isn't, Flol fixes it for you at no points cost, selling your most expensive extra players and buying the cheapest who fit.",
             ],
@@ -172,7 +175,7 @@ export const RULES: readonly { group: string; items: readonly Item[] }[] = [
       {
         id: "live",
         title: "Live and final points",
-        blocks: [{ list: ["Points go up live while a game is played, for the things the live feed shows: kills, deaths, assists, gold and more. They're marked Live until confirmed.", "A series' points are final about 3 hours after it ends, and the league tables move then.", "If the live feed is down, there are no live points, but final points still arrive."] }],
+        blocks: [{ list: ["Points go up live while a game is played, for the things the live feed shows: kills, deaths, assists, gold and more. They're marked Live until confirmed.", `A series' points are final ${FINAL_AFTER} it ends, and the league tables move then.`, "If the live feed is down, there are no live points, but final points still arrive."] }],
       },
     ],
   },
@@ -192,7 +195,7 @@ export const RULES: readonly { group: string; items: readonly Item[] }[] = [
       {
         id: "private",
         title: "Private leagues",
-        blocks: [{ list: ["Anyone can start a private league and invite friends with a code or link. You can be in up to 25, and there's no limit on how many people join one.", "When you make a league, choose the week it starts counting from: this week or a later one.", "The person who made it can rename it, remove someone or delete it. Anyone else can leave."] }],
+        blocks: [{ list: [`Anyone can start a private league and invite friends with a code or link. You can be in up to ${PRIVATE_LEAGUE_CAP}, and ${LEAGUE_SIZE}.`, "When you make a league, choose the week it starts counting from: this week or a later one.", "The person who made it can rename it, remove someone or delete it. Anyone else can leave."] }],
       },
       { id: "ties", title: "Ties", blocks: [{ list: ["If two people have the same points, the one who made fewer transfers goes ahead."] }] },
       {

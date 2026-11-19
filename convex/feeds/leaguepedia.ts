@@ -1,5 +1,6 @@
 // Leaguepedia's match data (spec/11, Final): its "V5 data:" page holds Riot's match-v5 JSON for a
 // pro game, the one free source of solo kills and steals (docs/research/lol-fantasy-scoring-and-steals.md).
+// The page holds the match flat: `participants` at the top level, not under match-v5's `info`.
 
 /** The page key for an Oracle's Elixir game: the one an admin pasted in when the match isn't found
  *  on its own, else the game's id with a space for each `_`. */
@@ -22,8 +23,8 @@ interface V5Participant {
 /** Each participant's solo kills and steals, by participant id (1–10, the same as Oracle's
  *  Elixir's). Throws when a field is missing, rather than score it 0. */
 export function v5Extras(payload: unknown): Map<number, V5Extras> {
-  const participants = (payload as { info?: { participants?: unknown } } | null)?.info?.participants;
-  if (!Array.isArray(participants)) throw new Error("Match data has no info.participants.");
+  const participants = (payload as { participants?: unknown } | null)?.participants;
+  if (!Array.isArray(participants)) throw new Error("Match data has no participants.");
   return new Map(
     (participants as V5Participant[]).map((p) => {
       const id = count(p.participantId, "participantId", "?");

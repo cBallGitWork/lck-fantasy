@@ -70,8 +70,8 @@ are set the same way for its Winter test.
 - A move is mostly on recent points, a little on transfers in and out, and down when relatively
   few managers own the player, since that means his price is too high.
 - Moves are driven by form and ownership (Craig, 14 Nov 2026), as in the
-  [draft](../docs/research/prices-formula.md): one step a week when a pick's form over his last
-  series is well above or below his price, and a step down when few own him.
+  [draft](../docs/research/prices-formula.md), one step a week at most: form as below, and a step
+  down when few own him.
 - A pick rises a step when net transfers in reach 5% of managers in a week, and falls a step at 5%
   net out. One owned by under 2% of managers, with form not above his price, falls a step. Both
   thresholds are data (Craig, 14 Nov 2026).
@@ -80,7 +80,8 @@ are set the same way for its Winter test.
   18 Nov 2026).
 - No price falls below a floor.
 - The coach moves by the same rule, on its own score.
-- Step sizes, weights and the floor are data. The formula is public, on a help page.
+- Step sizes, the ownership step's included, weights and the floor are data. The formula is
+  public, on a help page.
 
 ## Selling
 

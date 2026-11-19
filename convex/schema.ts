@@ -75,9 +75,9 @@ export const seasonSettings = v.object({
 /** A gameweek's state (docs/data-model.md, Gameweeks). */
 export const gameweekState = literals(["toCome", "live", "final"]);
 
-/** A competition: its name, region and time zone, the short name its times are written with (`KST`),
- *  and the sign its money is written with (`₩`). */
-export const competitionFields = { name: v.string(), region: v.string(), timeZone: v.string(), timeZoneLabel: v.string(), currency: v.string() };
+/** A competition: its name, region, time zone (never shown: every time on screen is the manager's own,
+ *  Craig, 19 Nov 2026) and the sign its money is written with (`₩`). */
+export const competitionFields = { name: v.string(), region: v.string(), timeZone: v.string(), currency: v.string() };
 export const split = v.object({ number: v.number(), name: v.string() });
 
 /** A price's pick, by team code: a player by role and handle, or the team's coach, which is the team

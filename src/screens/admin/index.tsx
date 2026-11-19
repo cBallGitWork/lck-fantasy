@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { api } from "../../../convex/_generated/api";
 import type { AdminRefusal } from "../../../convex/admin/access";
 import type { SimState } from "../../../convex/admin/sim";
-import { Empty } from "../../parts";
+import { browserZone, Empty } from "../../parts";
 import { REGION } from "../../region";
 import { AdminFrame, AdminPage, PasswordForm, type Alert, type Press, type Read } from "./AdminPage";
 import { WORDS } from "./words";
@@ -29,7 +29,7 @@ function Opened({ password, onRefused }: { password: string; onRefused: (rule: A
     if (refused !== undefined) onRefused(refused);
   }, [refused, onRefused]);
   const press = (which: Press) => (which === "nextDay" ? nextDay : playToEnd)({ password, competition: REGION.name });
-  return <AdminPage sim={sim} alerts={reads.alerts as Read<Alert[]>} onPress={press} />;
+  return <AdminPage sim={sim} alerts={reads.alerts as Read<Alert[]>} onPress={press} zone={browserZone()} />;
 }
 
 function Admin() {

@@ -74,7 +74,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - While live: provisional points, a Not final tag, solo kills and steals at final
     ([spec/11](11-live-points.md)).
   - A player who sat out a game shows a dash there; a sub has his own row.
-  - Before it starts: the time (yours and KST), the format, both rosters and Watch ›.
+  - Before it starts: the time (yours only, Craig, 19 Nov 2026), the format, both rosters and Watch ›.
   - The picture is `docs/design/approved/series/`.
 - **Player pop-up**: see [The player card](#the-player-card).
 - **Coach pop-up**: the coach has its own, since it scores different lines ("he's essentially the
@@ -268,8 +268,9 @@ Grilled 13 Nov 2026.
 - The hangul banner text ([spec/13](13-korean-touches.md), once it merges).
 - Favourite team and country: changeable until the manager's first gameweek starts, then shown
   "Locked since your first gameweek" ([spec/08](08-leagues.md)).
-- Time zone: the browser's, or one the manager picks. Example: a 16:45 KST deadline shows as
-  08:45 in London.
+- Time zone: the browser's, or one the manager picks. Every time shows in it alone, with no zone
+  and in am/pm (Craig, 19 Nov 2026). Example: a deadline at 4:45pm in Seoul shows as `7:45am`
+  in London.
 - Light, dark, or follow the device.
 - Sign out, and delete the account and its data. A private league the manager made passes to
   its next member (Craig, 16 Nov 2026): the one who joined earliest; a league with no other

@@ -31,7 +31,7 @@ const NEXT: StripNext[] = T1_NEXT3.map(({ week, day, opponent, bestOf }) => ({ w
 const PAST: StripPast[] = last3(KKOMA_SEASON).map(({ week, day, opponent, points }) => ({ week, day, opponent, points }));
 
 /** T1's next series, as the player card's Fixtures draws them. */
-const FIXTURES: FixtureRow[] = T1_FIXTURES.map(({ week, day, opponent, local, kst }) => ({ week, day, opponent, format: FORMAT, local, kst }));
+const FIXTURES: FixtureRow[] = T1_FIXTURES.map(({ week, day, opponent, local }) => ({ week, day, opponent, format: FORMAT, local }));
 
 /** His price in m in each of T1's series, in T1_PLAYED's order (newest first). */
 const HISTORY_PRICES = [7.0, 7.0, 6.5, 6.5, 6.5, 6.5];
@@ -78,7 +78,7 @@ const WEEK3: CoachWeek = {
 /** Week 4 at Pick Team's moment, Tuesday before T1's first series: each series with its time, no points yet. */
 const WEEK4_BEFORE_SERIES: CoachWeek = {
   week: 4,
-  series: T1_FIXTURES.filter((s) => s.week === 4).map(({ id, day, opponent, local, kst }): WeekSeries => ({ id, day, opponent, state: "upcoming", local, kst })),
+  series: T1_FIXTURES.filter((s) => s.week === 4).map(({ id, day, opponent, local }): WeekSeries => ({ id, day, opponent, state: "upcoming", local })),
   total: 0,
   seriesWon: SERIES_WON,
   seriesLost: SERIES_LOST,

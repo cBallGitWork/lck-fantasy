@@ -223,7 +223,6 @@ export const nextAgainst = (fixtures: Record<string, Fixture[]>, team: string) =
 export interface Confirm {
   id: string;
   local: string;
-  kst: string;
   moves: { out: string; in: string }[];
   hit: number;
 }

@@ -46,7 +46,7 @@ export interface TransfersPageProps {
   week: string;
   /** The last week whose points the List view shows. */
   lastWeek: number;
-  deadline: { local: string; kst: string; countdown: string };
+  deadline: { local: string; countdown: string };
   squad: SquadPlayer[];
   players: ListPlayer[];
   rules: TransferRules;

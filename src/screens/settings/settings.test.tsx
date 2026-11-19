@@ -60,9 +60,10 @@ describe("Settings, each tab as its picture draws it", () => {
     expectInOrder(settingsOn("Team"), ['href="/privacy"', "Privacy ›", 'href="/terms"', "Terms ›"]);
   });
 
-  test("Display: the browser's zone, the deadline in it and in KST, and the theme", () => {
+  test("Display: the browser's zone, the deadline in it alone, and the theme", () => {
     const out = settingsOn("Display");
-    expectInOrder(out, [">Team •<", 'aria-selected="true"', ">Display<", "Time zone", "Browser · Europe/London", "Deadline", "Wed 07:45", "16:45 KST", "Theme"]);
+    expectInOrder(out, [">Team •<", 'aria-selected="true"', ">Display<", "Time zone", "Browser · Europe/London", "Deadline", "Wed 07:45", "Theme"]);
+    expect(out).not.toContain("KST");
     expectInOrder(text(<Settings firstTab="Display" {...PICTURE} />), ["DeviceLightDark", ...SAVE_BAR, ...FOOT]);
     expect(out).toMatch(/aria-pressed="true">Device</);
   });
@@ -148,9 +149,9 @@ describe("the rules", () => {
     expect(capName("가".repeat(25))).toBe("가".repeat(20));
   });
 
-  test("the deadline shows in the chosen zone, then KST", () => {
-    expect(timeIn(DEADLINE_AT, "Europe/London")).toEqual({ local: "Wed 07:45", kst: "16:45" });
-    expect(timeIn(DEADLINE_AT, "America/New_York")).toEqual({ local: "Wed 02:45", kst: "16:45" });
-    expect(timeIn(DEADLINE_AT, "Asia/Seoul")).toEqual({ local: "Wed 16:45", kst: "16:45" });
+  test("the deadline shows in the chosen zone, and only there", () => {
+    expect(timeIn(DEADLINE_AT, "Europe/London")).toEqual({ local: "Wed 07:45" });
+    expect(timeIn(DEADLINE_AT, "America/New_York")).toEqual({ local: "Wed 02:45" });
+    expect(timeIn(DEADLINE_AT, "Asia/Seoul")).toEqual({ local: "Wed 16:45" });
   });
 });

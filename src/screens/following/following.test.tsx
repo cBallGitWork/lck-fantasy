@@ -16,23 +16,23 @@ describe("the page (1440.png)", () => {
   const out = text(view());
 
   test("shows the feed, newest first, under a head per gameweek", () => {
+    expect(out).not.toContain("KST");
     expectInOrder(out, [
       "Following",
       "팔로잉",
       "Week 3",
       "Not final",
-      "Deadline Wed 07:45 16:45 KST",
-      "Minji Park",
+      "Deadline Wed 07:45Minji Park",
       "Chovy Was Right There",
       "20",
       "GEN 2–1 HLE",
       "Kiin 5 · Canyon 7 · Chovy 8",
-      "Ended Sat 10:20 19:20 KST",
+      "Ended Sat 10:20",
       "Cheer / Jeer ›",
       "Jae Kim",
       "NS 0–2 KRX",
       "Rich 4 · ucal 2 (Captain) · Lehends 3",
-      "Ended Fri 13:00 22:00 KST",
+      "Ended Fri 13:00",
       "Cheer / Jeer ›",
       "Dan Okafor",
       "T1 2–1 HLE",
@@ -61,7 +61,7 @@ describe("the page (1440.png)", () => {
       "Ruler 21 (14 × 1.5)",
       "Minji Park",
       "Chovy 21",
-      "Ended Sun 12:30 21:30 KST",
+      "Ended Sun 12:30",
     ]);
   });
 

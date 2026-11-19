@@ -42,7 +42,7 @@ function Meta({ when, watch, children }: { when: SeriesWhen; watch: boolean; chi
   return (
     <div className="series__meta">
       {children}
-      <Time local={when.local} kst={when.kst} />
+      <Time local={when.local} />
       {watch && <LinkGo go={{ to: PATHS.live }}>{WORDS.watch}</LinkGo>}
     </div>
   );

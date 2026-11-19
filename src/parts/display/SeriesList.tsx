@@ -11,9 +11,8 @@ export type SeriesState = "final" | "notFinal" | "live" | "next";
 export interface SeriesRow {
   id: string;
   day: string;
-  /** The manager's time, then the league's. */
+  /** The manager's time. */
   local: string;
-  kst: string;
   home: string;
   away: string;
   /** Games won, home then away; absent until it starts. */
@@ -22,7 +21,7 @@ export interface SeriesRow {
 }
 
 function Result({ s }: { s: SeriesRow }) {
-  if (s.state === "next" || !s.score) return <Time local={s.local} kst={s.kst} />;
+  if (s.state === "next" || !s.score) return <Time local={s.local} />;
   const games = score(s.score);
   if (s.state === "live")
     return (

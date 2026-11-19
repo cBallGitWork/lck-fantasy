@@ -28,7 +28,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
     expectInOrder(out, [
       "Transfers",
       "이적",
-      "Split 1 Week 4 · Deadline Wed 07:45 16:45 KST 9h 45m",
+      "Split 1 Week 4 · Deadline Wed 07:45 9h 45m",
       "Free transfers 0",
       "Cost −6",
       "Bank ₩5.5m",
@@ -60,7 +60,7 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
   });
 
   test("the week's confirms, newest first, Undo on the newest only", () => {
-    expectInOrder(out, ["Confirmed · Week 4", "your time · KST", "Tue 21:10", "06:10 KST", "Kiin → Zeus", "−6", "Undo", "Mon 18:02", "03:02 KST", "Peyz → Ruler, Lehends → Delight", "No cost"]);
+    expectInOrder(out, ["Confirmed · Week 4Tue 21:10Kiin → Zeus", "−6", "Undo", "Mon 18:02Peyz → Ruler, Lehends → Delight", "No cost"]);
     expect(out.match(/Undo/g)).toHaveLength(1);
   });
 
@@ -124,7 +124,7 @@ describe("the confirm sheet (confirm.html, changed by Craig 16 Nov 2026)", () =>
       "0 of 0",
       "Back",
       "Confirm",
-      "Deadline Wed 07:45 16:45 KST",
+      "Deadline Wed 07:45",
     ]);
   });
 
@@ -150,7 +150,7 @@ describe("once Siwoo → Kingen is confirmed (#215)", () => {
   const { squad, players, rules, confirms } = TRANSFERS_PICTURE;
   const id = (name: string) => [...squad, ...players].find((p) => p.name === name)!.id;
   const after = confirmTransfers(squad, players, rules, [{ out: id("Siwoo"), in: id("Kingen") }], lineupIds(squad, PICTURE_PLAN));
-  const confirm = { id: "c3", local: "Tue 22:00", kst: "07:00", moves: after.moves, hit: after.hit };
+  const confirm = { id: "c3", local: "Tue 22:00", moves: after.moves, hit: after.hit };
   const out = text(<TransfersPage {...TRANSFERS_PICTURE} squad={after.squad} rules={after.rules} confirms={[confirm, ...confirms]} initialPlan={EMPTY_PLAN} />);
 
   test("the squad has Kingen, the bank is the new one, and nothing is left to review", () => {

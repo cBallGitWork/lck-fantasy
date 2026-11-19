@@ -73,7 +73,7 @@ export function SignUpStepTwo({
   /** The season's cap on a team name (data, spec/09). */
   nameMax: number;
   /** The manager's first deadline, when favourite team and country lock. */
-  deadline: { local: string; kst: string };
+  deadline: { local: string };
   onBack: () => void;
   onSave: () => void;
   onClose: () => void;

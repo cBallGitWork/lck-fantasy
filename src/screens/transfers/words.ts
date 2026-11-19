@@ -1,6 +1,5 @@
 // Transfers' words, named once. Every word a player reads on this screen lives here.
 
-import { REGION } from "../../region";
 import type { SortKey } from "./plan";
 
 export const WORDS = {
@@ -20,8 +19,6 @@ export const WORDS = {
   /** A move's arrow, for a reader. */
   for: "for",
   free: "No cost",
-  /** After a confirmed move's league time: its zone, as the league's data names it. */
-  kst: REGION.timeZoneLabel,
   undo: "Undo",
   players: "Players",
   allRoles: "All roles",

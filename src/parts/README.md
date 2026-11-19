@@ -39,8 +39,8 @@ Keys, links, tabs, sheets and fields.
 What shows a fact: tags, tables, lists, crests, states.
 
 - `Tag.tsx`: a tag: plain, `Live` filled, `Not final` dashed; `LiveTag`, `NotFinalTag` and `FinalTag` (Final or Not final) say the states one way everywhere.
-- `Deadline.tsx`: `Deadline Wed 07:45  16:45` and the league's zone, and the countdown.
-- `Time.tsx`: your time, then the league's in mid grey, its zone named from its data (`src/region.ts`); the words over such times (`YOUR_TIME`, `TIME_NOTE`).
+- `Deadline.tsx`: `Deadline Wed 07:45` in your time, and the countdown.
+- `Time.tsx`: your time alone, with no zone (`Sat 22:00`); the head over a column of them (`YOUR_TIME`).
 - `MeDot.tsx`: your player's dot.
 - `Hint.tsx`: a word's hover (spec/12, Words): one short line on hover, or on tap on the phone; the words-alone lines (`HINTS`) and C's (`captainHint`).
 - `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a rule above a row starting a group (`ruleAbove`), a row's `›` (`open`); sticky head and name column for the wide table.

@@ -24,11 +24,10 @@ export interface T1Played extends T1Series {
   games: number;
 }
 
-/** A series to come, with its times, London then KST. */
+/** A series to come, with its time in London. */
 export interface T1Fixture extends T1Series {
   bestOf: number;
   local: string;
-  kst: string;
 }
 
 const played = (id: string, week: number, day: string, opponent: TeamCode, score: Score): T1Played => ({
@@ -58,7 +57,7 @@ export const T1_PLAYED: readonly T1Played[] = (
 
 /** T1's series to come: Week 4's from its fixtures, then Weeks 5 and 6. */
 export const T1_FIXTURES: readonly T1Fixture[] = [
-  ...seriesOf(WEEK4_SERIES, T1).map((s) => ({ id: s.id, week: 4, day: s.day, opponent: opponent(s, T1), bestOf: BEST_OF, local: s.local, kst: s.kst })),
+  ...seriesOf(WEEK4_SERIES, T1).map((s) => ({ id: s.id, week: 4, day: s.day, opponent: opponent(s, T1), bestOf: BEST_OF, local: s.local })),
   { id: "w5-thu-2", week: 5, day: "Thu", opponent: "BRO", bestOf: BEST_OF, ...EARLY },
   { id: "w5-sun-2", week: 5, day: "Sun", opponent: "KRX", bestOf: BEST_OF, ...LATE },
   { id: "w6-wed-1", week: 6, day: "Wed", opponent: "DK", bestOf: BEST_OF, ...EARLY },

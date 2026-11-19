@@ -109,9 +109,7 @@ export const LIVE_IDLE: Omit<LiveIdleProps, "picker"> = {
     day: "Sunday",
     stage: STAGE,
     format: FORMAT,
-    local: NEXT_SERIES.local,
-    kst: NEXT_SERIES.kst,
-    countdown: { hours: 1, minutes: 20 },
+    local: NEXT_SERIES.local,    countdown: { hours: 1, minutes: 20 },
   },
   last: { ...bug(LAST_SERIES), day: "Saturday", format: FORMAT, stage: STAGE },
   panel: {

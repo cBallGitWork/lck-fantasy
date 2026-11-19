@@ -20,7 +20,7 @@ const side = (code: TeamCode, record: string) => ({ code, name: TEAMS[code], rec
 
 function when(list: Series[], id: string, week: number): SeriesWhen {
   const s = seriesById(list, id);
-  return { format: FORMAT, competition: COMPETITION, week, day: s.day, date: s.date, local: s.local, kst: s.kst };
+  return { format: FORMAT, competition: COMPETITION, week, day: s.day, date: s.date, local: s.local };
 }
 
 /** A game: champion, K/D/A, points; dropped from the best 2 when `counts` is false. */

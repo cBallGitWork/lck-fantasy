@@ -31,6 +31,7 @@ const ROUTES: Record<ScreenKey, [Go, string]> = {
   following: [{ to: PATHS.following }, "following"],
   privacy: [{ to: PATHS.privacy }, "legal"],
   terms: [{ to: PATHS.terms }, "legal"],
+  help: [{ to: PATHS.help }, "help"],
 };
 
 test.each(Object.keys(PATHS) as ScreenKey[])("the %s route renders its screen with the top bar", async (key) => {
@@ -60,4 +61,5 @@ test("a page's title names it: Pick Team · Flol; any other route is Flol", () =
 test("a path takes its params, escaped", () => {
   expect(pathTo({ to: PATHS.series, params: { seriesId: "w3 sat" } })).toBe("/series/w3%20sat");
   expect(pathTo({ to: PATHS.stats })).toBe("/stats");
+  expect(pathTo({ to: PATHS.help, hash: "prices" })).toBe("/help#prices");
 });

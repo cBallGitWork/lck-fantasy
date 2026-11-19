@@ -7,6 +7,7 @@ import { BARE_COMPARE, PATHS, type ScreenKey } from "../paths";
 import { CoachCardScreen } from "../screens/coach-card";
 import { CompareScreen, toStatsWithNoPlayer } from "../screens/compare";
 import { FollowingScreen } from "../screens/following";
+import { HelpScreen } from "../screens/help";
 import { HomeScreen } from "../screens/home";
 import { PrivacyScreen, TermsScreen } from "../screens/legal";
 import { LckHubScreen } from "../screens/lck-hub";
@@ -78,6 +79,7 @@ const routeTree = rootRoute.addChildren([
   screen(PATHS.following, FollowingScreen),
   screen(PATHS.privacy, PrivacyScreen),
   screen(PATHS.terms, TermsScreen),
+  screen(PATHS.help, HelpScreen),
   // Dev only: a build drops it with the page.
   ...(import.meta.env.DEV ? [createRoute({ getParentRoute: () => rootRoute, path: DEV_STATES_PATH, component: DevStatesPage })] : []),
 ]);

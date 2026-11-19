@@ -2,7 +2,7 @@
 // picture it is checked against. /dev/states lists them; the UI checks read them from here.
 import { LIVE_SERIES_ID } from "../fixtures/week3";
 import { DEV_STATE_PARAM } from "../parts";
-import { compareGo, leagueGo, PATHS, pathTo, profileGo, seriesGo, type Go } from "../paths";
+import { compareGo, helpGo, leagueGo, PATHS, pathTo, PRICES_RULE, profileGo, RULES_HASH, seriesGo, type Go } from "../paths";
 
 /** The dev-only page listing every state. */
 export const DEV_STATES_PATH = "/dev/states";
@@ -33,7 +33,7 @@ const page = (name: string, states: StateAt[]): DevState[] =>
     return {
       page: name,
       state,
-      url: pathTo(go) + (search ? `?${search}` : ""),
+      url: pathTo({ ...go, hash: undefined } as Go) + (search ? `?${search}` : "") + (go.hash ? `#${go.hash}` : ""),
       picture: `docs/design/approved/${name}/${picture ?? (i === 0 ? "1440.png" : `1440-${state}.png`)}`,
     };
   });
@@ -131,6 +131,12 @@ export const DEV_STATES: readonly DevState[] = [
     { state: "points", go: minji },
     { state: "history", go: minji, param: true },
     { state: "transfers", go: minji, param: true },
+  ]),
+  ...page("help", [
+    { state: "help", go: helpGo() },
+    { state: "help-step4", go: helpGo("points-scored") },
+    { state: "rules", go: helpGo(RULES_HASH) },
+    { state: "rules-open", go: helpGo(PRICES_RULE) },
   ]),
   ...page("following", [
     { state: "following", go: { to: PATHS.following } },

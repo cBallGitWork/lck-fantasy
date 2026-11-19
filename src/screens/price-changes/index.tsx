@@ -1,7 +1,7 @@
 import { useParams } from "@tanstack/react-router";
 import { MANAGER } from "../../fixtures/week3";
 import { Empty, PageFrame, weekInPath } from "../../parts";
-import { PATHS, type Go } from "../../paths";
+import { helpGo, PATHS, PRICES_RULE, type Go } from "../../paths";
 import { LATEST_PRICE_WEEK, PRICE_WEEKS } from "./fixtures";
 import { PriceChangesPage } from "./PriceChangesPage";
 import { WORDS } from "./words";
@@ -26,5 +26,5 @@ export function PriceChangesScreen() {
         <Empty title={WORDS.noWeek} />
       </PageFrame>
     );
-  return <PriceChangesPage week={data} prev={stepWeek(week, -1)} next={stepWeek(week, 1)} />;
+  return <PriceChangesPage week={data} prev={stepWeek(week, -1)} next={stepWeek(week, 1)} howPricesMove={helpGo(PRICES_RULE)} />;
 }

@@ -1,8 +1,8 @@
-// Test fixtures for every convex test and the guest squad's: picks and settings, never product data.
+// Test fixtures for every convex test and the guest squad's: picks and settings, never product data; the price settings are read from the season file.
 import { allPicks, pickKey, type Pick, type PlayerRole, type Squad, type SquadSettings, type StarterSlot } from "./squad";
 import type { ConfirmedTransfer, TransferSettings } from "./transfers";
 import type { PriceSettings } from "./prices";
-import { WON_PER_M } from "../../src/parts/text/money";
+import season2027 from "../../data/lck/season-2027.json";
 
 export const TRANSFER_SETTINGS: TransferSettings = { freePerGameweek: 1, bankCap: 3, hitPoints: 6, freeAfterUnlimited: 2 };
 
@@ -92,23 +92,6 @@ export function playedExcept(squad: Squad, ...sitOut: Pick[]): Set<string> {
   return new Set(allPicks(squad).map(pickKey).filter((key) => !out.has(key)));
 }
 
-/** spec/02's approved formula and moves (The formula; Price moves), in won. */
-export const PRICE_SETTINGS: PriceSettings = {
-  seasonWeights: [0.75, 0.25],
-  minSeries: 10,
-  lowPercentile: 0.1,
-  teamWeight: 0.45,
-  bend: 1.1,
-  floor: 6 * WON_PER_M,
-  top: 22.5 * WON_PER_M,
-  coachTop: 16.5 * WON_PER_M,
-  rounding: 0.5 * WON_PER_M,
-  gap: { low: 17.5 * WON_PER_M, high: 21 * WON_PER_M },
-  spacing: 0.5 * WON_PER_M,
-  academy: 5 * WON_PER_M,
-  formSeries: 8,
-  formGap: 3 * WON_PER_M,
-  step: 0.2 * WON_PER_M,
-  transferShare: 0.05,
-  lowOwnership: 0.02,
-};
+/** spec/02's approved formula and moves (The formula; Price moves), in won: the season file's, so
+ *  the tests and the backtest run on the numbers the data holds. */
+export const PRICE_SETTINGS: PriceSettings = season2027.settings.prices;

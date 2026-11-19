@@ -14,6 +14,7 @@ export const WORDS = {
   nextOnStream: "Next on stream",
   /** Before the time until the next series starts: `in 2d 6h`. */
   startsIn: "in",
+  /** The star and flop list, for a reader: spec/12's name for it. */
   starAndFlop: "Star and flop",
   star: "Star",
   flop: "Flop",
@@ -66,11 +67,14 @@ export const daysHours = (days: number, hours: number) => `${days}${WORDS.days} 
 /** Under the stream's score: `Game 2`. */
 export const gameHead = (n: number) => `Game ${n}`;
 
-/** A feed row's Captain: `Captain Faker`. */
-export const captainOf = (player: string) => `Captain ${player}`;
+/** A feed row's big Captain: `Captained Faker`. */
+export const captainOf = (player: string) => `Captained ${player}`;
 
 /** `31 pts`. */
-export const pts = (points: number) => `${points} pts`;
+const pts = (points: number) => `${points} pts`;
+
+/** A series row's line, the manager's points from it: `Scored 31 pts`. */
+export const scored = (points: number) => `Scored ${pts(points)}`;
 
 /** A Captain row's line: `31 pts in T1 v DK`. */
 export const ptsIn = (points: number, series: string) => `${pts(points)} in ${series}`;

@@ -1,7 +1,7 @@
 import { CHEER_KEY, CHEER_LABEL, CHEER_WORD, count, Led, LinkGo, ordinal, RankMove, SideSection, Table, TruckHire, type CheerKind } from "../../parts";
 import { PATHS } from "../../paths";
 import type { FeedItem, HomeLeague } from "./types";
-import { captainOf, pts, ptsIn, sent as sentLine, weekHead, WORDS } from "./words";
+import { captainOf, ptsIn, scored, sent as sentLine, weekHead, WORDS } from "./words";
 
 /** The Following card's cheering: the cheer or jeer sent each manager this week, by manager id, and the key's action. */
 export interface Cheering {
@@ -27,7 +27,7 @@ export function FeedRow({ item, sent, onCheer }: { item: FeedItem } & Cheering) 
     );
   }
   const what = item.kind === "captain" ? captainOf(item.player) : item.series;
-  const small = item.kind === "captain" ? ptsIn(item.points, item.series) : pts(item.points);
+  const small = item.kind === "captain" ? ptsIn(item.points, item.series) : scored(item.points);
   const already = sent?.[item.managerId];
   return (
     <div className="home__feed-row">

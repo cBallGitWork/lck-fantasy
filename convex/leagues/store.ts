@@ -26,7 +26,7 @@ export type LeagueRefusal =
   | { rule: "startGameweek"; choices: number[] }
   | { rule: "noCode"; code: string }
   | { rule: "notMaker" | "makerLeaves" | "notMember" | "removed" }
-  | { rule: "favouriteTeamFixed" }
+  | { rule: "favouriteTeamFixed" | "countryFixed" | "noCountry" }
   | { rule: "otherSeason" };
 
 const refuse = (refusal: LeagueRefusal) => new ConvexError(refusal);
@@ -59,6 +59,29 @@ export const changeFavouriteTeam = internalMutation({
     await ctx.db.delete(old._id);
     await ctx.db.patch(entry, { favouriteTeam: team });
     await join(ctx, await autoLeague(ctx, row.season, { kind: "team", teamId: team }), entry);
+  },
+});
+
+/** The country, and with it the country league in every region the manager plays, until the deadline
+ *  of their first gameweek, as the favourite team (spec/08; spec/09). The country is the account's
+ *  (spec/16), so that is the earliest first deadline of any of their entries. */
+export const changeCountry = internalMutation({
+  args: { entry: v.id("entries"), country: v.string() },
+  handler: async (ctx, { entry, country }) => {
+    const trimmed = country.trim();
+    if (trimmed === "") throw refuse({ rule: "noCountry" });
+    const { manager } = await entryAndManager(ctx, entry);
+    const entries = await ctx.db.query("entries").withIndex("by_manager", (q) => q.eq("manager", manager._id)).collect();
+    const deadlines = await Promise.all(entries.map((row) => firstDeadlineOf(ctx, row)));
+    if (!canChangeFavouriteTeam(Math.min(...deadlines), await now(ctx))) throw refuse({ rule: "countryFixed" });
+    for (const row of entries) {
+      // Every entry joins its country's league at sign-up, so one that isn't in it is a broken row, said so.
+      const old = await membership(ctx, await autoLeague(ctx, row.season, { kind: "country", country: manager.country }), row._id);
+      if (old === null) throw new Error(`Entry ${row._id} isn't in its country's league.`);
+      await ctx.db.delete(old._id);
+      await join(ctx, await autoLeague(ctx, row.season, { kind: "country", country: trimmed }), row._id);
+    }
+    await ctx.db.patch(manager._id, { country: trimmed });
   },
 });
 
@@ -162,6 +185,16 @@ async function entryAndManager(ctx: QueryCtx, entry: Id<"entries">): Promise<{ r
   const manager = await ctx.db.get(row.manager);
   if (manager === null) throw new Error(`No manager for entry ${entry}.`);
   return { row, manager };
+}
+
+/** The deadline of an entry's first gameweek, in ms since the epoch. */
+async function firstDeadlineOf(ctx: QueryCtx, entry: Doc<"entries">): Promise<number> {
+  const gameweek = await ctx.db
+    .query("gameweeks")
+    .withIndex("by_season", (q) => q.eq("season", entry.season).eq("number", entry.firstGameweek))
+    .unique();
+  if (gameweek === null) throw new Error(`No gameweek ${entry.firstGameweek} for entry ${entry._id}.`);
+  return gameweek.deadline;
 }
 
 /** A membership's league; a membership whose league is gone is a broken row, said so. */

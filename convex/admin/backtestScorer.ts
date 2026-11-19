@@ -76,12 +76,16 @@ export function rederiveWeek(week: ManagerWeek, games: WeekGames, rules: Scoring
 
   // spec/04 and spec/06: the Captain's multiplier, or the buff's on both Captains; Coach Diff's on the
   // coach. A Captain who played no game takes nothing.
-  const captainBy = effect === "doubleCaptain" ? week.buff!.multiplier! : rules.captainMultiplier;
+  const buffBy = () => {
+    if (week.buff?.multiplier === undefined) throw new Error(`${week.manager}, GW${week.gameweek}: the buff has no multiplier.`);
+    return week.buff.multiplier;
+  };
+  const captainBy = effect === "doubleCaptain" ? buffBy() : rules.captainMultiplier;
   const by = new Map<string, number>();
   const captains = [week.armband.captain, week.armband.secondCaptain].filter((id): id is string => id !== undefined);
   for (const id of captains) if ((games.get(`player:${id}`) ?? []).length > 0) by.set(`player:${id}`, captainBy);
   const coach = lineup.find((s) => s.slot === "coach");
-  if (effect === "coachMultiplier" && coach) by.set(keyOf(coach.pick), week.buff!.multiplier!);
+  if (effect === "coachMultiplier" && coach) by.set(keyOf(coach.pick), buffBy());
 
   const scoreOf = (pick: Pick) => {
     const base = weekOf.get(keyOf(pick)) ?? 0;

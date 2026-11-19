@@ -75,7 +75,8 @@ are set the same way for its Winter test.
 - A pick rises a step when net transfers in reach 5% of managers in a week, and falls a step at 5%
   net out. One owned by under 2% of managers, with form not above his price, falls a step. Both
   thresholds are data (Craig, 14 Nov 2026).
-- Form is points per series over his last 8 series, put through the same line as first prices.
+- Form is points per series over his last 2 gameweeks (Craig, 19 Nov 2026), put through the
+  same line as first prices.
   A gap of ₩3m or more between form and price moves him ₩0.2m that week (Craig, approved
   18 Nov 2026).
 - No price falls below a floor.

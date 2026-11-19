@@ -105,12 +105,10 @@ export const OFF_PAGE_PLAYERS: StatsPlayer[] = ([
 
 /** Weeks 1 to 3 are final at the pictures' moment. */
 const WEEKS_FINAL = 3;
-/** Form is the average of his last few gameweeks, as the season's prices hold it. */
-const FORM_WEEKS = season.settings.prices.formWeeks;
 
 /** Form, the last 2 weeks' average: Weeks 2 and 3. The list holds season points only, made up as
- *  even over Weeks 1 to 3, so the last 2 weeks hold two thirds of them. */
-export const formOf = (points: number) => Math.round(((points * FORM_WEEKS) / WEEKS_FINAL / FORM_WEEKS) * 10) / 10;
+ *  even over Weeks 1 to 3, so every week, and so the average of any of them, is a third. */
+export const formOf = (points: number) => Math.round((points / WEEKS_FINAL) * 10) / 10;
 
 /** A player or coach in the Stats list; one missing from it is a broken fixture. */
 export function statsOf(name: string): StatsPlayer {

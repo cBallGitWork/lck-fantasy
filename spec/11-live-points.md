@@ -16,12 +16,25 @@ questions are in [docs/to-grill.md](../docs/to-grill.md).
   every game's id before it starts (Craig, 13 Nov 2026). Leaguepedia does not hold these ids.
   No second public source was found. Riot's schedule API is not used: its key is Riot's own
   site's, not ours.
-- If the feed breaks or is switched off, there are no live points; final points still arrive.
+- If the feed is switched off before a series starts, there are no live points for it; final
+  points still arrive.
 - Gold lead is read at 15:00, a scoring value held as data per competition. The multikill
   timers (10 seconds between kills, 30 for a penta) are LoL's own rule, fixed in code (Craig,
   18 Nov 2026).
 - A player with no same-role opponent in the feed shows 0 for gold lead, and an admin alert names
   the game and the player, so it is fixed before the series turns final (Craig, 18 Nov 2026).
+- Live points move within a minute: Flol reads the feed once a minute for each live game, a
+  setting held as data per competition. Example: a kill at 12:04 shows by about 12:05 (Craig,
+  18 Nov 2026).
+- The feed counts as down after 3 minutes with no new reading while a game is live, also data
+  per competition, so a pause doesn't set it off. Example: G2 v Fnatic game 2, no reading from
+  18:00 to 21:00 (Craig, 18 Nov 2026).
+- If the feed dies mid-series, points already shown stay at the last reading, under the Not
+  final tag, until the final points land; nothing new is added. Example: Caps on 9 at 18:00
+  stays on 9 (Craig, 18 Nov 2026).
+- An admin alert is a stored row on an admin-only page, plus one email to the admin through
+  Resend, at most one per match day: the first alert of the day sends it, later ones only add
+  rows (Craig, 18 Nov 2026).
 
 ## Final
 

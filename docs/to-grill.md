@@ -5,8 +5,6 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 ## The LEC, left over (18 Nov 2026)
 
-- Which split is the beta: LEC Spring (Craig, 18 Nov 2026), or LEC Winter and the LCK Cup
-  (asked the same day)? Either changes spec/10's Split 1.
 - Crests for the LEC teams made as the LCK's were ([docs/design/approved/crests](design/approved/crests/README.md)):
   the real logos fetched from the web, then one designer describes each to another, with the
   team's memes, fanbase, mascots and lore, and the second draws from that alone (Craig, 17 Nov

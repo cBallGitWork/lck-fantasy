@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { playerGameStats, teamGameStats } from "../stats/gameStats";
 import { LCK_2027 } from "../world/season";
-import { OE_2026_GAMES } from "./fixtures/oe2026";
+import { OE_2026_GAMES } from "../../tests/support/oe2026";
 import { biggestMultikill, livePlayerStats, liveTeamStats, readWindow, type LiveReading } from "./liveFeed";
 import { nextReplayWindow, replayWindow } from "./replay";
 import type { OeGame } from "./oraclesElixir";

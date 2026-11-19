@@ -3,7 +3,8 @@
 import { v, type Infer } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
 import { internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "../_generated/server";
-import { competitionFields, gameweekState, pricedPick, seasonSettings, split } from "../schema";
+import { competitionFields, gameweekState, pricedPick } from "../schema";
+import { seasonSettings, split, stage } from "./seasonSettings";
 import type { Prices } from "../squads/budget";
 import { pickKey, type Pick } from "../squads/squad";
 import season2027 from "../../data/lck/season-2027.json";
@@ -16,8 +17,9 @@ export const seasonFile = v.object({
   year: v.number(),
   splits: v.array(split),
   settings: seasonSettings,
-  /** Each deadline in ISO 8601 UTC, such as 2027-01-20T07:45:00Z. */
-  gameweeks: v.array(v.object({ number: v.number(), split: v.number(), deadline: v.string(), state: gameweekState })),
+  stages: v.optional(v.array(stage)),
+  /** Each deadline in ISO 8601 UTC, such as 2027-01-20T07:45:00Z; its stage, where the season has stages. */
+  gameweeks: v.array(v.object({ number: v.number(), split: v.number(), deadline: v.string(), state: gameweekState, stage: v.optional(v.string()) })),
   prices: v.array(v.object({ fromGameweek: v.number(), picks: v.array(v.object({ ...pricedPick, won: v.number() })) })),
 });
 export type SeasonFile = Infer<typeof seasonFile>;
@@ -29,14 +31,17 @@ export const LCK_2027 = season2027 as SeasonFile;
  *  a competition by name, a season by year, a gameweek by number, a price by pick and gameweek. */
 export const loadSeason = internalMutation({
   args: { data: v.optional(seasonFile) },
-  handler: async (ctx, { data = LCK_2027 }) => {
-    const competition = await upsertCompetition(ctx, data.competition);
-    const season = await upsertSeason(ctx, competition, data);
-    await upsertGameweeks(ctx, season, data.gameweeks);
-    await upsertPrices(ctx, season, data.prices);
-    return season;
-  },
+  handler: (ctx, { data = LCK_2027 }) => storeSeason(ctx, data),
 });
+
+/** A season file stored, each row updated in place. */
+export async function storeSeason(ctx: MutationCtx, data: SeasonFile): Promise<Id<"seasons">> {
+  const competition = await upsertCompetition(ctx, data.competition);
+  const season = await upsertSeason(ctx, competition, data);
+  await upsertGameweeks(ctx, season, data.gameweeks, data.stages);
+  await upsertPrices(ctx, season, data.prices);
+  return season;
+}
 
 /** A season's settings, splits, gameweeks in number order and prices; null before it is loaded. */
 export const seasonOf = internalQuery({
@@ -59,7 +64,8 @@ export const seasonOf = internalQuery({
       madeUp: season.madeUp,
       splits: season.splits,
       settings: season.settings,
-      gameweeks: gameweeks.map(({ number, split, deadline, state }) => ({ number, split, deadline, state })),
+      stages: season.stages,
+      gameweeks: gameweeks.map(({ number, split, deadline, state, stage }) => ({ number, split, deadline, state, stage })),
       prices: prices.map(({ team, role, handle, fromGameweek, won }) => ({ team, role, handle, fromGameweek, won })),
     };
   },
@@ -84,7 +90,7 @@ async function upsertCompetition(ctx: MutationCtx, competition: SeasonFile["comp
 }
 
 async function upsertSeason(ctx: MutationCtx, competition: Id<"competitions">, data: SeasonFile): Promise<Id<"seasons">> {
-  const fields = { competition, year: data.year, splits: data.splits, settings: data.settings, madeUp: data.madeUp };
+  const fields = { competition, year: data.year, splits: data.splits, settings: data.settings, stages: data.stages, madeUp: data.madeUp };
   const existing = await ctx.db
     .query("seasons")
     .withIndex("by_competition", (q) => q.eq("competition", competition).eq("year", data.year))
@@ -94,9 +100,12 @@ async function upsertSeason(ctx: MutationCtx, competition: Id<"competitions">, d
   return existing._id;
 }
 
-async function upsertGameweeks(ctx: MutationCtx, season: Id<"seasons">, gameweeks: SeasonFile["gameweeks"]) {
-  for (const { number, split, deadline, state } of gameweeks) {
-    const fields = { season, number, split, deadline: utcMs(deadline), state };
+async function upsertGameweeks(ctx: MutationCtx, season: Id<"seasons">, gameweeks: SeasonFile["gameweeks"], stages: SeasonFile["stages"] = []) {
+  for (const { number, split, deadline, state, stage } of gameweeks) {
+    if (stage !== undefined && !stages.some((s) => s.name === stage && s.split === split)) {
+      throw new Error(`Gameweek ${number}'s stage ${stage} isn't one of split ${split}'s stages.`);
+    }
+    const fields = { season, number, split, deadline: utcMs(deadline), state, stage };
     const existing = await ctx.db
       .query("gameweeks")
       .withIndex("by_season", (q) => q.eq("season", season).eq("number", number))

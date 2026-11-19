@@ -60,46 +60,57 @@ export const startSimClock = internalMutation({
  *  passing that day's deadline if it has one. Null, and the clock unmoved, when no game is left. */
 export const nextDay = internalMutation({
   args: { competition: v.string() },
-  handler: async (ctx, { competition }) => playDay(ctx, await zoneOf(ctx, competition)),
+  handler: async (ctx, { competition }) => (await playNextDay(ctx, competition)).to,
 });
 
-/** Play to end: Next day until no game is left. Returns how many match days it played. Each day is
- *  one indexed read; the clock is written once, at the end, so a full split stays one small mutation. */
+/** Play to end: Next day until no game is left. Returns how many match days it played. */
 export const playToEnd = internalMutation({
   args: { competition: v.string() },
-  handler: async (ctx, { competition }) => {
-    const zone = await zoneOf(ctx, competition);
-    const clock = await startedSimClock(ctx);
-    let at = clock.now;
-    let days = 0;
-    for (let to = await nextMatchDayEnd(ctx, at, zone); to !== null; to = await nextMatchDayEnd(ctx, at, zone)) {
-      at = to;
-      days++;
-    }
-    if (days > 0) await ctx.db.patch(clock._id, { now: at });
-    return days;
-  },
+  handler: async (ctx, { competition }) => (await playRest(ctx, competition)).days,
 });
 
-/** One match day played: the clock's new moment, or null when no game is left. */
-async function playDay(ctx: MutationCtx, zone: string): Promise<number | null> {
+/** Where a press moved the clock: from its old moment to its new one, or null when no game was left. */
+export type ClockMove = { from: number; to: number | null };
+
+/** One match day played. */
+export async function playNextDay(ctx: MutationCtx, competition: string): Promise<ClockMove> {
+  const zone = await zoneOf(ctx, competition);
   const clock = await startedSimClock(ctx);
   const to = await nextMatchDayEnd(ctx, clock.now, zone);
   if (to !== null) await ctx.db.patch(clock._id, { now: to });
-  return to;
+  return { from: clock.now, to };
+}
+
+/** Every match day left played, and how many. Each day is one indexed read; the clock is written
+ *  once, at the end, so a full split stays one small mutation. */
+export async function playRest(ctx: MutationCtx, competition: string): Promise<ClockMove & { days: number }> {
+  const zone = await zoneOf(ctx, competition);
+  const clock = await startedSimClock(ctx);
+  let at = clock.now;
+  let days = 0;
+  for (let to = await nextMatchDayEnd(ctx, at, zone); to !== null; to = await nextMatchDayEnd(ctx, at, zone)) {
+    at = to;
+    days++;
+  }
+  if (days > 0) await ctx.db.patch(clock._id, { now: at });
+  return { from: clock.now, to: days > 0 ? at : null, days };
 }
 
 /** The end of the next day after `from` that a game starts on, or null when no game is left. */
 async function nextMatchDayEnd(ctx: QueryCtx, from: number, zone: string): Promise<number | null> {
-  const next = await ctx.db.query("games").withIndex("by_startedAt", (q) => q.gt("startedAt", from)).first();
+  const next = await nextGame(ctx, from);
   return next === null ? null : nextMidnight(next.startedAt, zone);
 }
+
+/** The first game starting after `from`, or null when no game is left. */
+export const nextGame = (ctx: QueryCtx, from: number) => ctx.db.query("games").withIndex("by_startedAt", (q) => q.gt("startedAt", from)).first();
 
 function requireSim() {
   if (!isSim()) throw new Error(`The real site's clock is the real time: only the sim (${SIM_SETTING}=true) moves it.`);
 }
 
-const simClock = (ctx: QueryCtx) => ctx.db.query("simClock").unique();
+/** The sim's clock row; null on a sim whose clock was never started. */
+export const simClock = (ctx: QueryCtx) => ctx.db.query("simClock").unique();
 
 async function startedSimClock(ctx: QueryCtx) {
   requireSim();

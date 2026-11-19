@@ -13,8 +13,10 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as admin_access from "../admin/access.js";
 import type * as admin_alerts from "../admin/alerts.js";
 import type * as admin_clock from "../admin/clock.js";
+import type * as admin_sim from "../admin/sim.js";
 import type * as feeds_fixtures_leaguepedia from "../feeds/fixtures/leaguepedia.js";
 import type * as feeds_fixtures_oe from "../feeds/fixtures/oe.js";
 import type * as feeds_leaguepedia from "../feeds/leaguepedia.js";
@@ -62,8 +64,10 @@ import type * as world_series from "../world/series.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  "admin/access": typeof admin_access;
   "admin/alerts": typeof admin_alerts;
   "admin/clock": typeof admin_clock;
+  "admin/sim": typeof admin_sim;
   "feeds/fixtures/leaguepedia": typeof feeds_fixtures_leaguepedia;
   "feeds/fixtures/oe": typeof feeds_fixtures_oe;
   "feeds/leaguepedia": typeof feeds_leaguepedia;

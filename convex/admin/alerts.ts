@@ -2,7 +2,8 @@
 // stored row on the admin's list; the first of a match day also emails the admin through Resend, and
 // later ones that day only add rows.
 import { internal } from "../_generated/api";
-import { internalQuery, type MutationCtx } from "../_generated/server";
+import { internalQuery, query, type MutationCtx, type QueryCtx } from "../_generated/server";
+import { adminPassword, requireAdmin } from "./access";
 import { nextMidnight, now } from "./clock";
 
 /** The email's subject: the message itself is its body. */
@@ -20,11 +21,20 @@ export async function raiseAlert(ctx: MutationCtx, message: string, zone: string
   if (earlier === null) await ctx.scheduler.runAfter(0, internal.outbound.email.emailAdmin, { subject: ALERT_SUBJECT, text: message });
 }
 
-/** The admin's list: the newest alerts first. Internal, so only an admin, from the Convex dashboard, reads it. */
-export const alerts = internalQuery({
-  args: {},
-  handler: async (ctx) => {
-    const rows = await ctx.db.query("alerts").order("desc").take(LIST_LENGTH);
-    return rows.map(({ at, message }) => ({ at, message }));
+/** The admin's list: the newest alerts first. */
+async function newestAlerts(ctx: QueryCtx) {
+  const rows = await ctx.db.query("alerts").order("desc").take(LIST_LENGTH);
+  return rows.map(({ at, message }) => ({ at, message }));
+}
+
+/** The list, as the Convex dashboard and tests read it. */
+export const alerts = internalQuery({ args: {}, handler: newestAlerts });
+
+/** The list on the admin section's Alerts tab, for whoever has the admin password. */
+export const alertList = query({
+  args: { password: adminPassword },
+  handler: (ctx, { password }) => {
+    requireAdmin(password);
+    return newestAlerts(ctx);
   },
 });

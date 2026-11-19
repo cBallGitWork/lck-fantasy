@@ -1,6 +1,7 @@
 // Who each test manager is (spec/10, The road to launch; Craig, 19 Nov 2026 on #400): his style, a
 // made-up manager and team name, his country and, in each region he plays, his favourite team. Pure,
 // and the same for test manager n on every run: data/testManagers.json holds every list and weight.
+import { sum } from "../../src/parts/util/sum";
 import { TEST_MANAGER_STYLES, type TestManagerStyle } from "./testManagers";
 
 /** Which competitions a run's test managers play, and how many play just those. */
@@ -32,7 +33,7 @@ export interface TestManagerRoll {
 export const testManagerAccount = (n: number) => `test-manager-${n}`;
 
 /** How many test managers a run's groups hold. */
-export const testManagerCount = (groups: readonly TestManagerGroup[]) => groups.reduce((total, group) => total + group.managers, 0);
+export const testManagerCount = (groups: readonly TestManagerGroup[]) => sum(groups.map((group) => group.managers));
 
 /** The competitions test manager `n` (from 0) plays: his group's, groups taking managers in order. */
 export function competitionsOf(n: number, groups: readonly TestManagerGroup[]): readonly string[] {
@@ -69,7 +70,7 @@ const oneOf = <T>(list: readonly T[], random: () => number): T => {
 /** One of `keys`, each as likely as its weight, `otherwise` where it has none. */
 function weighted(keys: readonly string[], weights: Weights, otherwise: number, random: () => number): string {
   const weightOf = (key: string) => weights[key] ?? otherwise;
-  const total = keys.reduce((sum, key) => sum + weightOf(key), 0);
+  const total = sum(keys.map(weightOf));
   if (total <= 0) throw new Error(`No weight among ${keys.join(", ")}.`);
   let left = random() * total;
   for (const key of keys) {

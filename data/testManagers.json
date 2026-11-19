@@ -27,9 +27,13 @@
   "names": {
     "teamFirst": [
       "Drake Soul", "Elder", "Blue Buff", "Red Buff", "Nexus", "Baron", "Herald", "Rift", "Late Game", "Level 1", "Flash", "Ramyun",
-      "Soju", "PC Bang", "Hangang", "Gangnam", "Busan", "Wardless", "Dive", "Solo Queue", "Gochujang", "Kimbap", "Night Owl", "Inhib"
+      "Soju", "PC Bang", "Hangang", "Gangnam", "Busan", "Wardless", "Dive", "Split Push", "Gochujang", "Kimbap", "Night Owl", "Inhib",
+      "Tteokbokki", "Chimaek", "Mapo", "Teamfight", "Backdoor", "Mid Prio", "Base Race", "Grubs"
     ],
-    "teamLast": ["Diff", "Enjoyers", "FC", "Gaming", "Club", "Crew", "Army", "Academy", "Squad", "United", "Five", "Merchants"],
+    "teamLast": [
+      "Diff", "Enjoyers", "FC", "Gaming", "Club", "Crew", "Army", "Academy", "Squad", "United", "Five", "Merchants",
+      "Society", "Fan Club", "Believers", "Lads", "Kings", "Gap"
+    ],
     "people": [
       {
         "given": ["Minjun", "Seoyeon", "Jiho", "Hayoon", "Dohyun", "Jiwoo", "Seojun", "Yuna", "Hyunwoo", "Eunji", "Taeyang", "Sora"],

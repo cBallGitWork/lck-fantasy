@@ -12,7 +12,7 @@ import { pickKey, type Pick } from "../squads/squad";
 import { findSeason, pickOfPrice } from "../world/season";
 import { now } from "./clock";
 import { competitionsOf, rollFavouriteTeam, rollTestManager, testManagerCount, type TestManagerGroup } from "./testManagerRoll";
-import { testManagerFirstSquad, type TestManagerHabits } from "./testManagers";
+import { testManagerFirstSquad, type FirstSquadWeek, type TestManagerHabits } from "./testManagers";
 import testManagerData from "../../data/testManagers.json";
 import lckTeams from "../../data/lck/teams.json";
 
@@ -78,7 +78,7 @@ function planOf(plan: string | undefined): TestManagerGroup[] {
 interface SeasonForTestManagers {
   season: Doc<"seasons">;
   market: SignUpMarket;
-  week: Parameters<typeof testManagerFirstSquad>[1];
+  week: FirstSquadWeek;
   teamCodes: string[];
   teamRow: (code: string) => Id<"teams">;
 }

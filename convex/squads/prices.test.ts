@@ -88,7 +88,7 @@ const week = (over: Partial<PriceWeek> = {}): PriceWeek => ({
   role: "top",
   won: m(15),
   teamShare: 1,
-  seriesPoints: Array<number>(8).fill(10),
+  weekSeriesPoints: [[10, 10], [10, 10]],
   playedThisWeek: true,
   netTransfers: 0,
   owners: 300,
@@ -105,15 +105,20 @@ describe("price moves (spec/02, Price moves)", () => {
   test("form ₩3m or more above his price lifts him ₩0.2m, and below drops him", () => {
     expect(formPrice(week(), LINE, S)).toBe(m(22.5));
     expect(next(week())).toBe(m(15.2));
-    expect(next(week({ seriesPoints: Array<number>(8).fill(0), teamShare: 0, won: m(9) }))).toBe(m(8.8));
+    expect(next(week({ weekSeriesPoints: [[0, 0], [0, 0]], teamShare: 0, won: m(9) }))).toBe(m(8.8));
   });
 
   test("form under ₩3m from his price doesn't move him", () => {
     expect(next(week({ won: m(20) }))).toBe(m(20));
   });
 
-  test("form is his last 8 series, older ones left out", () => {
-    const w = week({ seriesPoints: [...Array<number>(20).fill(0), ...Array<number>(8).fill(10)] });
+  test("form is his last 2 gameweeks, older ones left out", () => {
+    const w = week({ weekSeriesPoints: [[0, 0], [0], [10, 10], [10]] });
+    expect(formPrice(w, LINE, S)).toBe(m(22.5));
+  });
+
+  test("a gameweek he played no series is skipped: form reaches back to his last 2 with one", () => {
+    const w = week({ weekSeriesPoints: [[0], [10, 10], [], [10]] });
     expect(formPrice(w, LINE, S)).toBe(m(22.5));
   });
 
@@ -129,13 +134,13 @@ describe("price moves (spec/02, Price moves)", () => {
 
   test("owned by under 2% of managers, with form not above his price, he falls", () => {
     // Form ₩19.5m: under his price, but not by ₩3m.
-    expect(next(week({ won: m(20), owners: 19, seriesPoints: Array<number>(8).fill(7) }))).toBe(m(19.8));
-    expect(next(week({ won: m(20), owners: 20, seriesPoints: Array<number>(8).fill(7) }))).toBe(m(20));
+    expect(next(week({ won: m(20), owners: 19, weekSeriesPoints: [[7, 7], [7, 7]] }))).toBe(m(19.8));
+    expect(next(week({ won: m(20), owners: 20, weekSeriesPoints: [[7, 7], [7, 7]] }))).toBe(m(20));
     expect(next(week({ won: m(21), owners: 19 }))).toBe(m(21)); // form ₩22.5m, above: he holds
   });
 
   test("no price falls below the floor; an academy player under it never falls", () => {
-    const low = { owners: 0, seriesPoints: [], playedThisWeek: false };
+    const low = { owners: 0, weekSeriesPoints: [], playedThisWeek: false };
     expect(next(week({ ...low, won: S.floor }))).toBe(S.floor);
     expect(next(week({ ...low, won: m(6.1) }))).toBe(S.floor);
     expect(next(week({ ...low, won: S.academy }))).toBe(S.academy);

@@ -4,4 +4,6 @@ Per-player stats for each game, as the feed sent them, plus the latest live read
 
 - `gameStats.ts`: a game's settled stats in the shape the scoring reads, both sources joined.
 
-`convex/feeds/load.ts` stores each game's settled stats; the live reading isn't built yet.
+- `live.ts`: a live game's provisional lines from its latest reading, as a live query.
+
+`convex/feeds/load.ts` stores each game's settled stats; `convex/feeds/live.ts` stores the live reading.

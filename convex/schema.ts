@@ -1,5 +1,6 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { liveReading } from "./feeds/liveFeed";
 import { BUFF_EFFECTS } from "./squads/buffs";
 import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
 
@@ -39,6 +40,11 @@ export const seasonSettings = v.object({
   /** False while it runs as a closed test: only an account with a personal invite signs up (spec/10,
    *  The road to launch). Missing, as on a season stored before it, is open. */
   signUpOpen: v.optional(v.boolean()),
+  /** Live points (spec/11, Live): how often each live game's feed is read, how long with no new
+   *  reading counts as down, and the minute gold lead is read at (the scoring table's
+   *  `goldLeadAt15.atMinutes`, held here until the scoring table is stored). Required, unlike
+   *  `signUpOpen`: no deployment has stored a season yet, and loading data/lck rewrites settings. */
+  live: v.object({ pollSeconds: v.number(), downAfterSeconds: v.number(), goldLeadAtMinutes: v.number() }),
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */
@@ -56,6 +62,10 @@ export const pricedPick = {
   role: v.union(playerRole, v.literal("coach")),
   handle: v.optional(v.string()),
 };
+
+/** A live game's feed: read once a minute while `polling`, then `finished`, or `down` when it
+ *  went quiet too long (spec/11, Live). */
+export const LIVE_FEED_STATES = ["polling", "finished", "down"] as const;
 
 /** One side of a game: its team's lines for the coach (spec/05, The coach). */
 const teamLine = v.object({
@@ -155,6 +165,22 @@ export default defineSchema({
   })
     .index("by_game", ["game"])
     .index("by_player", ["player"]),
+  /** A game in play: the live feed's latest reading, folded from every window read so far (spec/11). */
+  liveFrames: defineTable({
+    /** The feed's own game id, from lolesports.com's schedule pages or pasted in by an admin. */
+    esportsGameId: v.string(),
+    season: v.id("seasons"),
+    state: literals(LIVE_FEED_STATES),
+    /** When reading began, in ms since the epoch: the quiet spell that counts as down starts here
+     *  until the first new reading. */
+    since: v.number(),
+    /** When the last new reading came in; null before the first. */
+    readAt: v.union(v.number(), v.null()),
+    /** What went wrong on the latest read, for the alert if the feed goes down. */
+    lastError: v.optional(v.string()),
+    /** Null until the first window is read: no live points yet. */
+    reading: v.union(liveReading, v.null()),
+  }).index("by_esportsGameId", ["esportsGameId"]),
 
   // The game (convex/signIn makes a manager, its entry and its picks on sign-up).
   managers: defineTable({
@@ -226,4 +252,12 @@ export default defineSchema({
 
   // The sim (convex/admin/clock.ts): its one stored moment, which Next day and Play to end move (spec/10).
   simClock: defineTable({ now: v.number() }),
+
+  // Admin alerts (convex/admin/alerts.ts): what an admin must fix, never a silent gap (spec/11, Live).
+  alerts: defineTable({
+    at: v.number(),
+    /** The end of the match day it was raised on, in the competition's zone: one email per day. */
+    matchDayEnd: v.number(),
+    message: v.string(),
+  }).index("by_matchDayEnd", ["matchDayEnd"]),
 });

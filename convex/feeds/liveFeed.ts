@@ -2,7 +2,8 @@
 // reading per game. Points from it are provisional; solo kills and steals come only when final.
 // The feed's shape: docs/research/live-data-sources.md, section 3.
 import type { PlayerGameStats, TeamGameStats } from "../scoring/game";
-import type { PlayerRole } from "../squads/squad";
+import { v, type Infer } from "convex/values";
+import { PLAYER_ROLES, type PlayerRole } from "../squads/squad";
 
 interface FeedParticipant {
   participantId: number;
@@ -52,45 +53,53 @@ const PENTA = 5;
  *  known time and can't make a multikill. */
 const FRAME_GAP_MS = 5_000;
 
-export interface LivePlayer {
-  participantId: number;
-  esportsPlayerId: string;
-  name: string;
-  champion: string;
-  teamId: string;
-  role: PlayerRole;
-  kills: number;
-  deaths: number;
-  assists: number;
-  totalGold: number;
+const nullableNumber = v.union(v.number(), v.null());
+
+/** A player's running reading. These validators are `liveFrames`' (convex/schema.ts), so the
+ *  stored row and the type are one shape. */
+const livePlayer = v.object({
+  participantId: v.number(),
+  esportsPlayerId: v.string(),
+  name: v.string(),
+  champion: v.string(),
+  teamId: v.string(),
+  role: v.union(...PLAYER_ROLES.map((role) => v.literal(role))),
+  kills: v.number(),
+  deaths: v.number(),
+  assists: v.number(),
+  totalGold: v.number(),
   /** Total gold at the gold lead's mark (the scoring table's `atMinutes`), once the game has reached it. */
-  goldAtMark: number | null;
-  firstBloodKill: boolean;
+  goldAtMark: nullableNumber,
+  firstBloodKill: v.boolean(),
   /** When each kill was seen, for multikills; null when the feed skipped the moment. */
-  killTimes: (number | null)[];
-}
+  killTimes: v.array(nullableNumber),
+});
+export type LivePlayer = Infer<typeof livePlayer>;
 
-export interface LiveTeam {
-  teamId: string;
-  side: "blue" | "red";
-  towers: number;
-  barons: number;
-  drakes: number;
-  elders: number;
-  firstTower: boolean;
-}
+const liveTeam = v.object({
+  teamId: v.string(),
+  side: v.union(v.literal("blue"), v.literal("red")),
+  towers: v.number(),
+  barons: v.number(),
+  drakes: v.number(),
+  elders: v.number(),
+  firstTower: v.boolean(),
+});
+export type LiveTeam = Infer<typeof liveTeam>;
 
-export interface LiveReading {
-  gameId: string;
+export const liveReading = v.object({
+  gameId: v.string(),
   /** The first frame with any gold: the game clock's 0:00. Null while the game loads. */
-  startedAt: number | null;
-  lastFrameAt: number;
-  finished: boolean;
-  players: LivePlayer[];
-  teams: [LiveTeam, LiveTeam];
+  startedAt: nullableNumber,
+  lastFrameAt: v.number(),
+  finished: v.boolean(),
+  players: v.array(livePlayer),
+  /** Blue, then red. */
+  teams: v.array(liveTeam),
   /** What an admin is told about this game: a player with no same-role opponent (spec/11, Live). */
-  alerts: string[];
-}
+  alerts: v.array(v.string()),
+});
+export type LiveReading = Infer<typeof liveReading>;
 
 /** The window as the feed sent it, checked. Throws on an unexpected shape, so a changed feed is
  *  an admin alert, never a silent gap (#34). */
@@ -181,7 +190,7 @@ function readFrame(reading: LiveReading, frame: FeedFrame, goldAtMs: number): Li
     const firstTower = team.firstTower || (noTowerYet && towerTakers === 1 && fed.towers > 0);
     return { ...team, towers: fed.towers, barons: fed.barons, elders, drakes: fed.dragons.length - elders, firstTower };
   };
-  return { ...reading, startedAt, lastFrameAt: at, finished: frame.gameState === FINISHED, players, teams: [teamNow(reading.teams[0]), teamNow(reading.teams[1])] };
+  return { ...reading, startedAt, lastFrameAt: at, finished: frame.gameState === FINISHED, players, teams: reading.teams.map(teamNow) };
 }
 
 /** The biggest multikill in a run of kill times: each kill within 10 s of the last, a penta 30 s. */
@@ -225,10 +234,4 @@ export function liveTeamStats(reading: LiveReading, teamId: string): TeamGameSta
     firstTower: ours.firstTower, drakes: ours.drakes, barons: ours.barons, elders: ours.elders,
     opponent: { drakes: theirs.drakes, barons: theirs.barons, elders: theirs.elders },
   };
-}
-
-/** True when no frame has come in `maxAgeMs` while the game isn't finished: the feed is down, so
- *  live points stop and an admin is told (spec/11; #34). */
-export function feedStale(reading: LiveReading, now: number, maxAgeMs: number): boolean {
-  return !reading.finished && now - reading.lastFrameAt > maxAgeMs;
 }

@@ -80,8 +80,7 @@ Overall shows each manager's place as a LoL ranked tier, Iron to Challenger (Cra
 - The tier moves whenever the rank does, when a series turns final
   ([spec/11](11-live-points.md)). No protection: a manager drops a tier as soon as their rank
   does. Example: T1 v Gen.G turns final at 10pm KST; Emerald IV becomes Emerald III.
-- Everyone is Unranked until gameweek 1 is final: the outlined shield and `Unranked`, with no
-  rank line.
+- Everyone is Unranked until gameweek 1 is final.
 - Only Overall has tiers. Country, team and private leagues show plain ranks.
 - Where it shows:
   - Home: a shield, the tier and the rank beneath, by the team name, with no total of managers

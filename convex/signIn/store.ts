@@ -71,7 +71,6 @@ export const saveNewTeam = internalMutation({
     // manager, with this sign-up's answers.
     const answers = {
       country: args.country.trim(),
-      favouriteTeam: args.favouriteTeam as Id<"teams">,
       agreed: { at, version: args.agreedVersion },
     };
     const existing = await managerOf(ctx, args.account);
@@ -82,6 +81,7 @@ export const saveNewTeam = internalMutation({
       manager,
       season: seasonId,
       teamName: args.teamName.trim(),
+      favouriteTeam: args.favouriteTeam as Id<"teams">,
       firstGameweek,
       bank: settings.budget === null ? null : settings.budget - cost,
     });

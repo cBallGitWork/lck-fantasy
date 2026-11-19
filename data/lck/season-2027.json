@@ -22,6 +22,7 @@
     ],
     "teamNameMaxLength": 20,
     "signUpOpen": true,
+    "overallSplits": true,
     "live": { "pollSeconds": 60, "downAfterSeconds": 180, "goldLeadAtMinutes": 15 }
   },
   "gameweeks": [

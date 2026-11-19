@@ -16,6 +16,7 @@ import type {
 import type * as admin_access from "../admin/access.js";
 import type * as admin_alerts from "../admin/alerts.js";
 import type * as admin_clock from "../admin/clock.js";
+import type * as admin_seasonReport from "../admin/seasonReport.js";
 import type * as admin_sim from "../admin/sim.js";
 import type * as feeds_fixtures_oe from "../feeds/fixtures/oe.js";
 import type * as feeds_fixtures_v5_shape from "../feeds/fixtures/v5-shape.js";
@@ -67,6 +68,7 @@ declare const fullApi: ApiFromModules<{
   "admin/access": typeof admin_access;
   "admin/alerts": typeof admin_alerts;
   "admin/clock": typeof admin_clock;
+  "admin/seasonReport": typeof admin_seasonReport;
   "admin/sim": typeof admin_sim;
   "feeds/fixtures/oe": typeof feeds_fixtures_oe;
   "feeds/fixtures/v5-shape": typeof feeds_fixtures_v5_shape;

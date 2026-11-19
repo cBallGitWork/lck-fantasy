@@ -1,5 +1,6 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { ALERT_KINDS } from "./admin/alertKinds";
 import { liveReading } from "./feeds/liveFeed";
 import { BUFF_EFFECTS } from "./squads/buffs";
 import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
@@ -287,6 +288,13 @@ export default defineSchema({
     at: v.number(),
     /** The end of the match day it was raised on, in the competition's zone: one email per day. */
     matchDayEnd: v.number(),
+    /** alertKinds.ts's `NewAlert`; required, as no live game has raised one yet. Unset `closedAt` is open. */
+    kind: literals(ALERT_KINDS),
     message: v.string(),
-  }).index("by_matchDayEnd", ["matchDayEnd"]),
+    names: v.array(v.string()),
+    closedAt: v.optional(v.number()),
+  })
+    .index("by_matchDayEnd", ["matchDayEnd"])
+    .index("by_kind", ["kind"])
+    .index("by_closedAt", ["closedAt"]),
 });

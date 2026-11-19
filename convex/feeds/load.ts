@@ -3,7 +3,7 @@
 // load can be run again: it replaces what the same game held, so an admin can re-run a day.
 import { v } from "convex/values";
 import type { Doc, Id } from "../_generated/dataModel";
-import { internalMutation, type MutationCtx } from "../_generated/server";
+import { internalMutation, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { rawRow } from "../schema";
 import { groupSeries, pairKey } from "../world/series";
 import { playerGameStats, seriesSettledStats } from "../stats/gameStats";
@@ -107,12 +107,12 @@ async function upsert<T extends "teams" | "players">(
   return existing._id;
 }
 
-function gameByOeId(ctx: MutationCtx, oeId: string) {
+export function gameByOeId(ctx: QueryCtx, oeId: string) {
   return ctx.db.query("games").withIndex("by_oeId", (q) => q.eq("oeId", oeId)).unique();
 }
 
 /** A stored game as Oracle's Elixir sent it, rebuilt from the rows kept. */
-async function storedOeGame(ctx: MutationCtx, game: Doc<"games">) {
+export async function storedOeGame(ctx: QueryCtx, game: Doc<"games">) {
   const stats = await ctx.db.query("gameStats").withIndex("by_game", (q) => q.eq("game", game._id)).collect();
   stats.sort((a, b) => a.participantId - b.participantId);
   return { oe: oeGame(game.oeId, [...stats.map((s) => s.raw), game.blue.raw, game.red.raw]), stats };

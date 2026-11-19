@@ -7,6 +7,7 @@ One adapter per stats source (Oracle's Elixir, Leaguepedia, the live feed). Each
 - `load.ts`: stores both, grouped into series; a load run again replaces what the same game held.
 - `liveFeed.ts`: Riot's live feed windows folded into a running reading per game, provisional (spec/11, Live).
 - `live.ts`: a live game watched by its feed id, each read stored in `liveFrames`, the next booked at the season's pace, and an admin alert when the feed goes down.
+- `replay.ts`: the sim's replay: a stored game's settled stats stepped through as live feed windows, read on the sim in place of the feed, and Next day's games started one after another (spec/15, The replay).
 - `fixtures/`: BRION v DRX's rows cut from the 2025 file and that series' three Leaguepedia pages (`v5-LOLTMNT03-*.json`, saved 17 Nov 2026, read by `leaguepedia.ts`), the match JSON as the page holds it: flat, with `participants` at the top, not under `info`; and five live feed windows of LYON v Gen.G (Worlds 2026), all for tests.
 
 Fetching any source is `convex/outbound/`'s job; only the live feed's is built.

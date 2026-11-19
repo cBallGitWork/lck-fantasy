@@ -2,8 +2,13 @@
 // settled stats as live feed windows, so it plays through the same live reader as a real game and
 // its live points end equal to its settled ones on every line the feed carries (spec/11, Live).
 // Saved timelines come in their own PR (Craig, 19 Nov 2026); until then every game steps.
-import type { OeGame, OePlayerGame, OeTeamGame } from "./oraclesElixir";
+import { v } from "convex/values";
+import { internalQuery, type MutationCtx } from "../_generated/server";
+import { findSeason } from "../world/season";
+import { liveRow, startWatching } from "./live";
 import { ELDER, FEED_ROLES, FINISHED, FRAME_GAP_MS, type FeedFrame, type FeedTeam, type LiveWindow } from "./liveFeed";
+import { gameByOeId, storedOeGame } from "./load";
+import type { OeGame, OePlayerGame, OeTeamGame } from "./oraclesElixir";
 
 /** LoL's own: every player starts a game with 500 gold, so the first frame has gold and starts the clock. */
 const STARTING_GOLD = 500;
@@ -21,6 +26,42 @@ const MS_PER_SECOND = 1000;
 const MS_PER_MINUTE = 60_000;
 
 const FEED_ROLE_OF = Object.fromEntries(Object.entries(FEED_ROLES).map(([feed, role]) => [role, feed]));
+
+/** On the sim, one read of a replayed game, as the live feed would answer it: the stored game's
+ *  next window after the reading so far. Its feed id is Oracle's Elixir's game id. A game plays out
+ *  over the season's `replaySeconds`, read every `pollSeconds`. */
+export const replayRead = internalQuery({
+  args: { esportsGameId: v.string() },
+  handler: async (ctx, { esportsGameId }): Promise<LiveWindow> => {
+    const game = await gameByOeId(ctx, esportsGameId);
+    const row = await liveRow(ctx, esportsGameId);
+    const season = row === null ? null : await ctx.db.get(row.season);
+    if (game === null || row === null || season === null) throw new Error(`No stored game ${esportsGameId} to replay.`);
+    const { live } = season.settings;
+    if (live.replaySeconds === undefined) throw new Error(`The ${season.year} season has no replaySeconds: only the sim's replays.`);
+    const reads = Math.max(1, Math.round(live.replaySeconds / live.pollSeconds));
+    const { oe } = await storedOeGame(ctx, game);
+    return nextReplayWindow(replayWindow(oe, live.goldLeadAtMinutes), row.reading?.lastFrameAt ?? 0, reads);
+  },
+});
+
+/** Next day's replays: every game that started from just after `from` up to `to`, one after
+ *  another, each `replaySeconds` after the last (spec/15, The clock). A game's season is its
+ *  competition's for the year it was played. Returns how many it started. */
+export async function replayDay(ctx: MutationCtx, competition: string, from: number, to: number): Promise<number> {
+  const games = await ctx.db
+    .query("games")
+    .withIndex("by_startedAt", (q) => q.gt("startedAt", from).lte("startedAt", to))
+    .collect();
+  for (const [i, game] of games.entries()) {
+    const year = new Date(game.startedAt).getUTCFullYear();
+    const found = await findSeason(ctx, competition, year);
+    const replaySeconds = found?.season.settings.live.replaySeconds;
+    if (found === null || replaySeconds === undefined) throw new Error(`No ${competition} ${year} season with replays is stored for game ${game.oeId}.`);
+    await startWatching(ctx, found.season._id, game.oeId, i * replaySeconds * MS_PER_SECOND);
+  }
+  return games.length;
+}
 
 interface Running {
   kills: number;

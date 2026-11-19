@@ -1,13 +1,22 @@
-import { describe, expect, test } from "vitest";
+import { convexTest } from "convex-test";
+import { afterEach, describe, expect, test, vi } from "vitest";
+import { api, internal } from "../_generated/api";
+import { ADMIN_PASSWORD_SETTING } from "../admin/access";
+import { SIM_SETTING } from "../admin/clock";
+import schema from "../schema";
+import { modules } from "../test.setup";
 import { playerGameStats, teamGameStats } from "../stats/gameStats";
 import { LCK_2027 } from "../world/season";
-import { OE_2026_GAMES } from "../../tests/support/oe2026";
+import { SIM_PLAN, simRows } from "../world/simSeason";
+import { OE_2026_GAMES, OE_2026_ROWS } from "../../tests/support/oe2026";
+import { oeGames } from "./oraclesElixir";
 import { biggestMultikill, livePlayerStats, liveTeamStats, readWindow, type LiveReading } from "./liveFeed";
 import { nextReplayWindow, replayWindow } from "./replay";
 import type { OeGame } from "./oraclesElixir";
 
 const GOLD_AT = LCK_2027.settings.live.goldLeadAtMinutes;
 const READS = 12;
+const PASSWORD = "admin-password";
 
 /** A game replayed read by read, as the sim's live reader takes it: the reading after each read. */
 function replayed(game: OeGame): LiveReading[] {
@@ -29,6 +38,37 @@ const settled = (game: OeGame, participantId: number) => {
   const player = game.players.find((p) => p.participantId === participantId)!;
   return playerGameStats(player, new Map([[participantId, { soloKills: 0, steals: 0 }]]));
 };
+
+describe("a sim day replayed through the live path", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.unstubAllEnvs();
+    vi.unstubAllGlobals();
+  });
+
+  test("Next day replays 1 Apr 2026's games read by read, and each ends on its settled stats", async () => {
+    vi.useFakeTimers();
+    vi.stubEnv(SIM_SETTING, "true");
+    vi.stubEnv(ADMIN_PASSWORD_SETTING, PASSWORD);
+    vi.stubGlobal("fetch", () => Promise.reject(new Error("The sim reads no feed.")));
+    const t = convexTest(schema, modules);
+    await t.mutation(internal.world.simSeason.loadSimSeason, {});
+    const rows = simRows(SIM_PLAN, OE_2026_ROWS).filter((row) => row.date!.startsWith("2026-04-01"));
+    await t.mutation(internal.feeds.load.loadOracleElixir, { rows, league: SIM_PLAN.league });
+    const games = oeGames(rows, SIM_PLAN.league);
+    await t.mutation(internal.admin.clock.startSimClock, { at: Math.min(...games.map((g) => g.startedAt)) - 1 });
+    await t.mutation(api.admin.sim.nextDay, { password: PASSWORD, competition: SIM_PLAN.league });
+    await t.finishAllScheduledFunctions(vi.runAllTimers);
+
+    for (const game of games) {
+      const live = (await t.query(api.stats.live.liveGame, { esportsGameId: game.gameId }))!;
+      expect(live.state, game.gameId).toBe("finished");
+      for (const p of game.players) expect(live.players.find((lp) => lp.esportsPlayerId === p.playerId)!.stats).toEqual(settled(game, p.participantId));
+      for (const team of game.teams) expect(live.teams.find((lt) => lt.teamId === team.teamId)!.stats).toEqual({ ...teamGameStats(game, team.teamId), won: false });
+    }
+    expect(await t.query(internal.admin.alerts.alerts, {})).toEqual([]);
+  });
+});
 
 describe("replayWindow", () => {
   test("every 2026 game's live stats end equal to its settled stats, on every line the feed carries", () => {

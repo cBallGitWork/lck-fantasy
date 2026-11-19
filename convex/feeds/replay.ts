@@ -8,7 +8,7 @@ import { findSeason } from "../world/season";
 import { liveRow, startWatching } from "./live";
 import { ELDER, FEED_ROLES, FINISHED, FRAME_GAP_MS, type FeedFrame, type FeedTeam, type LiveWindow } from "./liveFeed";
 import { gameByOeId, storedOeGame } from "./load";
-import type { OeGame, OePlayerGame, OeTeamGame } from "./oraclesElixir";
+import { num, type OeGame, type OePlayerGame, type OeTeamGame } from "./oraclesElixir";
 
 /** LoL's own: every player starts a game with 500 gold, so the first frame has gold and starts the clock. */
 const STARTING_GOLD = 500;
@@ -208,10 +208,4 @@ function metadata(game: OeGame, side: OeTeamGame) {
       .filter((p) => p.teamId === side.teamId)
       .map((p) => ({ participantId: p.participantId, esportsPlayerId: p.playerId, summonerName: p.playerName, championId: p.champion, role: FEED_ROLE_OF[p.role]! })),
   };
-}
-
-function num(row: Record<string, string>, column: string): number {
-  const value = Number(row[column]);
-  if (row[column] === undefined || row[column] === "" || !Number.isFinite(value)) throw new Error(`No ${column} in game ${row.gameid ?? "?"}.`);
-  return value;
 }

@@ -78,7 +78,7 @@ export function simSeasonFile(plan: SimPlan, games: readonly OeGame[], base: Sea
     year: plan.year,
     splits: plan.splits,
     settings: { ...base.settings, live: { ...base.settings.live, ...plan.live } },
-    stages: plan.stages.map(({ source: _, ...rest }) => rest),
+    stages: plan.stages.map(({ name, split, teamCap, budget, unlimitedTransfers }) => ({ name, split, teamCap, budget, unlimitedTransfers })),
     gameweeks,
     prices: [],
   };

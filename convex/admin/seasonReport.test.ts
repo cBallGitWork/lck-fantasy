@@ -77,7 +77,7 @@ describe("the report on the stored season", () => {
     expect(await report()).toMatchObject({ season: "LCK 2027", openAlerts: { feedDown: 0, noLaneOpponent: 0, pointsMismatch: 2 }, mismatches: 2 });
 
     const listed = await t.query(api.admin.alerts.alertList, { password: PASSWORD });
-    expect(listed[0]).toMatchObject({ kind: "pointsMismatch", names: ["Test 1", "GW2"], open: true });
+    expect(listed[0]).toMatchObject({ kind: "pointsMismatch", names: ["Test 1", "Week 2"], open: true });
     await t.mutation(api.admin.alerts.closeAlert, { password: PASSWORD, alert: listed[0]!.id as Id<"alerts"> });
     expect((await t.query(api.admin.alerts.alertList, { password: PASSWORD }))[0]?.open).toBe(false);
     expect(await report()).toMatchObject({ openAlerts: { pointsMismatch: 1 }, mismatches: 2 });

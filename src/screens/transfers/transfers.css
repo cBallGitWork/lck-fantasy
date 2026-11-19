@@ -163,11 +163,6 @@
 .transfers__when {
   font-size: var(--size-small);
 }
-.transfers__when small {
-  display: block;
-  color: var(--mid);
-  font-size: var(--size-small);
-}
 .transfers__cost {
   text-align: right;
 }

@@ -5,7 +5,7 @@ import type { PlayerGameStats, TeamGameStats } from "../scoring/game";
 import { v, type Infer } from "convex/values";
 import { PLAYER_ROLES, type PlayerRole } from "../squads/squad";
 
-interface FeedParticipant {
+export interface FeedParticipant {
   participantId: number;
   totalGold: number;
   kills: number;
@@ -13,7 +13,7 @@ interface FeedParticipant {
   assists: number;
 }
 
-interface FeedTeam {
+export interface FeedTeam {
   totalGold: number;
   towers: number;
   barons: number;
@@ -21,7 +21,7 @@ interface FeedTeam {
   participants: FeedParticipant[];
 }
 
-interface FeedFrame {
+export interface FeedFrame {
   rfc460Timestamp: string;
   gameState: string;
   blueTeam: FeedTeam;
@@ -40,10 +40,10 @@ export interface LiveWindow {
 }
 
 /** The feed's role names. A source's spelling, not a rule. */
-const FEED_ROLES: Record<string, PlayerRole> = { top: "top", jungle: "jungle", mid: "mid", bottom: "bot", support: "support" };
+export const FEED_ROLES: Record<string, PlayerRole> = { top: "top", jungle: "jungle", mid: "mid", bottom: "bot", support: "support" };
 const PLAYERS_PER_TEAM = 5;
-const ELDER = "elder";
-const FINISHED = "finished";
+export const ELDER = "elder";
+export const FINISHED = "finished";
 const MS_PER_MINUTE = 60_000;
 /** LoL's own multikill timers: each kill within 10 s of the last, a penta within 30 s of the quadra. */
 const MULTIKILL_GAP_MS = 10_000;
@@ -51,7 +51,7 @@ const PENTA_GAP_MS = 30_000;
 const PENTA = 5;
 /** Frames further apart than this mean the feed skipped a stretch, so kills seen then have no
  *  known time and can't make a multikill. */
-const FRAME_GAP_MS = 5_000;
+export const FRAME_GAP_MS = 5_000;
 
 const nullableNumber = v.union(v.number(), v.null());
 

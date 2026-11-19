@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { leaguepediaGameKey, v5Extras } from "../feeds/leaguepedia";
-import { BRION, DRX, gameOnePlayer, OE_GAME_1, OE_SERIES_GAMES } from "../feeds/fixtures/oe";
-import { v5Game } from "../feeds/fixtures/v5-shape";
+import { BRION, DRX, gameOnePlayer, OE_FIXTURE_GAMES, OE_GAME_1, OE_SERIES_GAMES, playerIn } from "../feeds/fixtures/oe";
+import { LEAGUEPEDIA_PAGES, leaguepediaPage } from "../feeds/fixtures/leaguepedia";
 import { OE_2025_BRION_DRX } from "../scoring/fixtures";
 import { HOUR_MS, SPEC_FINAL_AFTER_MS } from "../world/fixtures";
 import { groupSeries, seriesState } from "../world/series";
@@ -12,15 +12,18 @@ const player = gameOnePlayer;
 
 describe("playerGameStats", () => {
   test("loaded stats match the scoring's hand-copied fixture for the same game", () => {
-    const none = v5Extras(v5Game());
-    expect(playerGameStats(player("Clozer"), none)).toEqual(OE_2025_BRION_DRX.clozer);
-    expect(playerGameStats(player("Sponge"), none)).toEqual(OE_2025_BRION_DRX.sponge);
+    const extras = v5Extras(leaguepediaPage(game1.gameId));
+    expect(playerGameStats(player("Morgan"), extras)).toEqual(OE_2025_BRION_DRX.morgan);
+    expect(playerGameStats(player("Clozer"), extras)).toEqual(OE_2025_BRION_DRX.clozer);
+    expect(playerGameStats(player("Hype"), extras)).toEqual(OE_2025_BRION_DRX.hype);
+    expect(playerGameStats(player("Pollu"), extras)).toEqual(OE_2025_BRION_DRX.pollu);
+    expect(playerGameStats(player("Sponge"), extras)).toEqual(OE_2025_BRION_DRX.sponge);
   });
 
-  test("solo kills and steals join by participant id", () => {
-    const extras = v5Extras(v5Game({ 3: { soloKills: 2 }, 7: { objectivesStolen: 1 } }));
-    expect(playerGameStats(player("Clozer"), extras)).toMatchObject({ soloKills: 2, steals: 0 });
-    expect(playerGameStats(player("Sponge"), extras)).toMatchObject({ soloKills: 0, steals: 1 });
+  test("solo kills and steals join by participant id, whichever side a team is on", () => {
+    const [, game2, game3] = OE_FIXTURE_GAMES;
+    expect(playerGameStats(playerIn(game2!, "Sponge"), v5Extras(leaguepediaPage(game2!.gameId)))).toMatchObject({ soloKills: 0, steals: 1 });
+    expect(playerGameStats(playerIn(game3!, "Ucal"), v5Extras(leaguepediaPage(game3!.gameId)))).toMatchObject({ soloKills: 2, steals: 0 });
   });
 
   test("a player with no match data throws", () => {
@@ -31,7 +34,7 @@ describe("playerGameStats", () => {
 describe("seriesSettledStats", () => {
   const [series] = groupSeries(OE_SERIES_GAMES).series;
   const { endedAt, games } = series!;
-  const pages = (gameIds: readonly string[]) => new Map(gameIds.map((id) => [leaguepediaGameKey(id), v5Game()]));
+  const pages = (gameIds: readonly string[]) => new Map(gameIds.map((id) => [leaguepediaGameKey(id), LEAGUEPEDIA_PAGES[id]]));
   const allIds = games.map((g) => g.gameId);
   const stateAt = (now: number, stats: ReturnType<typeof seriesSettledStats>) => seriesState(endedAt, stats.settled, now, SPEC_FINAL_AFTER_MS);
 
@@ -55,7 +58,7 @@ describe("seriesSettledStats", () => {
   });
 
   test("an admin's pasted key finds a page the game's own id doesn't", () => {
-    const matchData = pages(allIds.slice(0, 2)).set("ESPORTSTMNT01 3400", v5Game());
+    const matchData = pages(allIds.slice(0, 2)).set("ESPORTSTMNT01 3400", LEAGUEPEDIA_PAGES[allIds[2]!]);
     expect(seriesSettledStats(games, matchData).settled).toBe(false);
     expect(seriesSettledStats(games, matchData, new Map([[allIds[2]!, "ESPORTSTMNT01 3400"]])).settled).toBe(true);
   });

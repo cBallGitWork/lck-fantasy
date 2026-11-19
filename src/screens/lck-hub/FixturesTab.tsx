@@ -6,7 +6,7 @@ import { ByDay, WeekTitle } from "./Week";
 import { WORDS } from "./words";
 
 /**
- * Fixtures: one week by day. Each series: your time and the league's, each team's record beside its code,
+ * Fixtures: one week by day. Each series: your time, each team's record beside its code,
  * blue side left, then `›`; the whole row opens the Series page.
  */
 export function Fixtures({
@@ -27,16 +27,11 @@ export function Fixtures({
   return (
     <section>
       <WeekTitle week={week} bestOf={bestOf} onPrev={onPrev} onNext={onNext} />
-      <div className="lck-hub__time-heads quiet">
-        <span>{WORDS.local}</span>
-        <span>{WORDS.kst}</span>
-      </div>
       <ByDay
         series={week.series}
         row={(s) => (
           <GoLink key={s.id} className="lck-hub__series" go={seriesGo(s.id)}>
             <span className="num">{s.local}</span>
-            <span className="lck-hub__kst num">{s.kst}</span>
             <span className="lck-hub__home">
               {record(s.home)}
               <b className="lck-hub__code num">{s.home}</b>

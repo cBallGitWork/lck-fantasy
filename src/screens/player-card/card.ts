@@ -49,14 +49,13 @@ export interface PlayedSeries {
   games: CardGame[];
 }
 
-/** A series in This week not yet started: its time, yours then the league's, and no points yet (spec/12, The player card). */
+/** A series in This week not yet started: its time, yours, and no points yet (spec/12, The player card). */
 export interface UpcomingSeries {
   id: string;
   day: string;
   opponent: TeamCode;
   state: "upcoming";
   local: string;
-  kst: string;
 }
 
 export type WeekSeries = PlayedSeries | UpcomingSeries;
@@ -77,7 +76,6 @@ export interface FixtureRow {
   opponent: TeamCode;
   bestOf: number;
   local: string;
-  kst: string;
 }
 
 /** A series in History: his points, and that week's price. */

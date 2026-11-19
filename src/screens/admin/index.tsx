@@ -6,7 +6,7 @@ import type { Id } from "../../../convex/_generated/dataModel";
 import type { AdminRefusal } from "../../../convex/admin/access";
 import type { SeasonReport } from "../../../convex/admin/seasonReport";
 import type { SimState } from "../../../convex/admin/sim";
-import { Empty } from "../../parts";
+import { browserZone, Empty } from "../../parts";
 import { REGION } from "../../region";
 import { AdminFrame, AdminPage, PasswordForm, type Alert, type Press, type Read } from "./AdminPage";
 import { WORDS } from "./words";
@@ -40,6 +40,7 @@ function Opened({ password, onRefused }: { password: string; onRefused: (rule: A
       report={reads.report as Read<SeasonReport>}
       onPress={press}
       onClose={(alert) => closeAlert({ password, alert: alert as Id<"alerts"> })}
+      zone={browserZone()}
     />
   );
 }

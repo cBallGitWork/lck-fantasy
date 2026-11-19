@@ -6,11 +6,12 @@ import { modules } from "../test.setup";
 import { groupSeries, seriesState } from "../world/series";
 import { OE_2025_BRION_DRX } from "../scoring/fixtures";
 import { HOUR_MS, SPEC_FINAL_AFTER_MS } from "../world/fixtures";
-import { BRION, DRX, gameOnePlayer, OE_FIXTURE_GAMES, OE_FIXTURE_LEAGUE, OE_FIXTURE_ROWS, OE_GAME_1, OE_SERIES_GAMES } from "./fixtures/oe";
-import { v5Game } from "./fixtures/v5-shape";
+import { BRION, DRX, gameOnePlayer, OE_FIXTURE_GAMES, OE_FIXTURE_LEAGUE, OE_FIXTURE_ROWS, OE_GAME_1, OE_SERIES_GAMES, playerIn } from "./fixtures/oe";
+import { leaguepediaPage } from "./fixtures/leaguepedia";
 import { leaguepediaGameKey } from "./leaguepedia";
 
 const GAME_IDS = OE_FIXTURE_GAMES.map((g) => g.gameId);
+const [, GAME_2, GAME_3] = OE_FIXTURE_GAMES;
 
 async function loaded() {
   const t = convexTest(schema, modules);
@@ -18,7 +19,7 @@ async function loaded() {
   return t;
 }
 
-const loadPage = (t: Awaited<ReturnType<typeof loaded>>, gameId: string, payload: unknown = v5Game()) =>
+const loadPage = (t: Awaited<ReturnType<typeof loaded>>, gameId: string, payload: unknown = leaguepediaPage(gameId)) =>
   t.mutation(internal.feeds.load.loadLeaguepedia, { gameId, key: leaguepediaGameKey(gameId), payload });
 
 /** Everything stored, with each row's ids swapped for the feed's, to compare across loads. */
@@ -49,6 +50,10 @@ function snapshot(t: Awaited<ReturnType<typeof loaded>>) {
 
 const statsOf = (snap: Awaited<ReturnType<typeof snapshot>>, gameId: string, playerName: string) =>
   snap.stats.find((s) => s.game === gameId && s.player === gameOnePlayer(playerName).playerId)!;
+
+/** Each game's players' solo kills and steals as stored, where either isn't 0. */
+const extrasStored = (snap: Awaited<ReturnType<typeof snapshot>>) =>
+  snap.stats.filter((s) => (s.soloKills ?? 0) + (s.steals ?? 0) > 0).map((s) => ({ game: s.game, player: s.player, soloKills: s.soloKills, steals: s.steals }));
 
 describe("loadOracleElixir", () => {
   test("a series appears with its two teams, its games, and who played each in which role on which champion", async () => {
@@ -96,13 +101,16 @@ describe("loadOracleElixir", () => {
 });
 
 describe("loadLeaguepedia", () => {
-  test("solo kills and steals join each player's stats by participant id", async () => {
+  test("the saved pages load into each player's stats by participant id, matching the scoring's fixture", async () => {
     const t = await loaded();
-    await loadPage(t, GAME_IDS[0]!, v5Game({ 3: { soloKills: 2 }, 7: { objectivesStolen: 1 } }));
+    for (const id of GAME_IDS) await loadPage(t, id);
     const snap = await snapshot(t);
-    expect(statsOf(snap, GAME_IDS[0]!, "Clozer")).toMatchObject({ soloKills: 2, steals: 0 });
-    expect(statsOf(snap, GAME_IDS[0]!, "Sponge")).toMatchObject({ soloKills: 0, steals: 1 });
-    expect(snap.games[0]!.matchDataKey).toBe(leaguepediaGameKey(GAME_IDS[0]!));
+    expect(statsOf(snap, GAME_IDS[0]!, "Clozer")).toMatchObject({ soloKills: OE_2025_BRION_DRX.clozer.soloKills, steals: OE_2025_BRION_DRX.clozer.steals });
+    expect(extrasStored(snap)).toEqual([
+      { game: GAME_2!.gameId, player: playerIn(GAME_2!, "Sponge").playerId, soloKills: 0, steals: 1 },
+      { game: GAME_3!.gameId, player: playerIn(GAME_3!, "Ucal").playerId, soloKills: 2, steals: 0 },
+    ]);
+    expect(snap.games.map((g) => g.matchDataKey)).toEqual(GAME_IDS.map((id) => leaguepediaGameKey(id)));
   });
 
   test("the series turns final 3 hours after it ends, once every game's page is in", async () => {
@@ -120,15 +128,15 @@ describe("loadLeaguepedia", () => {
 
   test("a game not loaded yet, or a page with a field missing, throws", async () => {
     const t = await loaded();
-    await expect(loadPage(t, "LOLTMNT03_000000")).rejects.toThrow("No game LOLTMNT03_000000: load Oracle's Elixir's rows first.");
-    await expect(loadPage(t, GAME_IDS[0]!, { info: {} })).rejects.toThrow("Match data has no info.participants.");
+    await expect(loadPage(t, "LOLTMNT03_000000", leaguepediaPage(GAME_IDS[0]!))).rejects.toThrow("No game LOLTMNT03_000000: load Oracle's Elixir's rows first.");
+    await expect(loadPage(t, GAME_IDS[0]!, { info: leaguepediaPage(GAME_IDS[0]!) })).rejects.toThrow("Match data has no participants.");
   });
 });
 
 describe("re-running a load", () => {
   test("loading the same rows again changes nothing, and keeps Leaguepedia's join", async () => {
     const t = await loaded();
-    await loadPage(t, GAME_IDS[0]!, v5Game({ 3: { soloKills: 2 } }));
+    await loadPage(t, GAME_3!.gameId);
     const first = await snapshot(t);
     await t.mutation(internal.feeds.load.loadOracleElixir, { rows: OE_FIXTURE_ROWS, league: OE_FIXTURE_LEAGUE });
     expect(await snapshot(t)).toEqual(first);

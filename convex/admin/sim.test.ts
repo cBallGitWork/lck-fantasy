@@ -20,6 +20,7 @@ const kst = (day: number, hour: number) => Date.UTC(2027, 0, 12 + day, hour - 9)
 // two games; day 3 has one series.
 const SEASON: SeasonFile = {
   ...LCK_2027,
+  settings: { ...LCK_2027.settings, live: { ...LCK_2027.settings.live, replaySeconds: 60 } },
   gameweeks: [
     { number: 1, split: 1, deadline: new Date(kst(1, 16)).toISOString(), state: "toCome" },
     { number: 2, split: 1, deadline: new Date(kst(3, 16)).toISOString(), state: "toCome" },
@@ -83,9 +84,20 @@ describe("the admin's Sim page (#398)", () => {
     expect(await t.mutation(sim.nextDay, press)).toEqual({ to: null, series: 0, deadlines: [] });
   });
 
-  test("Play to end plays every day left at once", async () => {
+  test("Next day replays the day's games one after another, a minute apart", async () => {
+    const t = await setUp();
+    await t.mutation(sim.nextDay, press);
+    const watched = await t.run((ctx) => ctx.db.query("liveFrames").collect());
+    expect(watched.map((row) => [row.esportsGameId, row.state])).toEqual([["game-0", "polling"], ["game-1", "polling"], ["game-2", "polling"]]);
+    const reads = await t.run((ctx) => ctx.db.system.query("_scheduled_functions").collect());
+    const at = reads.filter((job) => job.name.includes("readLiveGame")).map((job) => job.scheduledTime - reads[0]!.scheduledTime);
+    expect(at.map((ms) => Math.round(ms / 1000))).toEqual([0, 60, 120]);
+  });
+
+  test("Play to end plays every day left at once, with no replays", async () => {
     const t = await setUp();
     expect(await t.mutation(sim.playToEnd, press)).toEqual({ to: kst(4, 0), series: 3, deadlines: [1, 2] });
+    expect(await t.run((ctx) => ctx.db.query("liveFrames").collect())).toEqual([]);
   });
 
   test("a sim whose clock isn't started says so", async () => {

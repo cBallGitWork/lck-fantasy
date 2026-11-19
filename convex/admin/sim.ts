@@ -1,7 +1,9 @@
 // The admin's Sim page (#398): the sim's date, and its Next day and Play to end, each saying what it
-// played: the series and any deadline passed. Play to end skips the replay (Craig, 19 Nov 2026).
+// played: the series and any deadline passed. Next day replays the day's games through the live
+// path (convex/feeds/replay.ts); Play to end skips the replay (Craig, 19 Nov 2026).
 import { v } from "convex/values";
 import { mutation, query, type QueryCtx } from "../_generated/server";
+import { replayDay } from "../feeds/replay";
 import { adminPassword, requireAdmin } from "./access";
 import { isSim, nextGame, playNextDay, playRest, simClock, type ClockMove } from "./clock";
 
@@ -29,7 +31,9 @@ export const nextDay = mutation({
   args: pressArgs,
   handler: async (ctx, { password, competition }): Promise<Played> => {
     requireAdmin(password);
-    return played(ctx, competition, await playNextDay(ctx, competition));
+    const move = await playNextDay(ctx, competition);
+    if (move.to !== null) await replayDay(ctx, competition, move.from, move.to);
+    return played(ctx, competition, move);
   },
 });
 

@@ -23,7 +23,6 @@ export interface HomeDeadline {
   week: number;
   competition: string;
   local: string;
-  kst: string;
 }
 
 /** A Following card item (spec/14): a manager's series points, a big Captain, or a cheer or jeer received. */
@@ -107,7 +106,6 @@ export interface NextSeries {
   away: string;
   day: string;
   local: string;
-  kst: string;
   startsIn: Omit<Countdown, "minutes">;
 }
 

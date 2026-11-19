@@ -1,7 +1,10 @@
+// A season's settings and its stages' (docs/data-model.md): every value Craig may tune, as data.
 import { v } from "convex/values";
-import { BUFF_EFFECTS } from "./squads/buffs";
-import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
-import { literals } from "./validators";
+import { BUFF_EFFECTS } from "../squads/buffs";
+import { PLAYER_ROLES, STARTER_SLOTS } from "../squads/squad";
+
+export const literals = <T extends string>(values: readonly [T, T, ...T[]]) =>
+  v.union(...values.map((value) => v.literal(value)));
 
 /** A number for each of `keys`: slot sizes, role minimums. */
 const countPer = <K extends string>(keys: readonly K[]) =>
@@ -36,7 +39,13 @@ export const seasonSettings = v.object({
    *  reading counts as down, and the minute gold lead is read at (the scoring table's
    *  `goldLeadAt15.atMinutes`, held here until the scoring table is stored). Required, unlike
    *  `signUpOpen`: no deployment has stored a season yet, and loading data/lck rewrites settings. */
-  live: v.object({ pollSeconds: v.number(), downAfterSeconds: v.number(), goldLeadAtMinutes: v.number() }),
+  live: v.object({
+    pollSeconds: v.number(),
+    downAfterSeconds: v.number(),
+    goldLeadAtMinutes: v.number(),
+    /** The sim's only: how long a replayed game takes, about a minute (spec/10, The road to launch). */
+    replaySeconds: v.optional(v.number()),
+  }),
   /** convex/squads/prices.ts's PriceSettings: the formula and the weekly moves (spec/02). Required,
    *  as `live` is. */
   prices: v.object({
@@ -58,4 +67,17 @@ export const seasonSettings = v.object({
     transferShare: v.number(),
     lowOwnership: v.number(),
   }),
+});
+
+export const split = v.object({ number: v.number(), name: v.string() });
+
+/** A stage and its settings, which stand in for the season's in its gameweeks (spec/10, Stages and
+ *  their settings): the cap on one team's players, the budget in won (null for none), and whether
+ *  transfers are unlimited, with no hits. */
+export const stage = v.object({
+  name: v.string(),
+  split: v.number(),
+  teamCap: v.union(v.number(), v.null()),
+  budget: v.union(v.number(), v.null()),
+  unlimitedTransfers: v.boolean(),
 });

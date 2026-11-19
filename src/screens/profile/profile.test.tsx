@@ -109,13 +109,13 @@ describe("Transfers", () => {
     expectInOrder(text(page("Transfers")), [
       ...BANNER,
       "Slot", "Out", "In", "Pts gained",
-      "Week 3", "Tue 09:00", "18:00 KST", "Bench Boost · 3 hits",
+      "Week 3", "Tue 09:00", "Bench Boost · 3 hits",
       "Top", "Doran", "T1 · ₩13.0m", "→", "Kiin", "GEN · ₩13.5m", "+1",
       "Bot", "Peyz", "T1 · ₩13.0m", "→", "Ruler", "GEN · ₩16.0m", "+4",
       "Support", "Lehends", "NS · ₩10.0m", "→", "Keria", "T1 · ₩12.0m", "−1",
       "Flex", "Siwoo", "DK · ₩11.0m", "→", "Kingen", "NS · ₩6.0m", "−4",
       "Jungle", "Peanut", "NS · ₩15.5m", "→", "Canyon", "GEN · ₩15.5m", "+2",
-      "Week 2", "Mon 12:40", "21:40 KST", "1 free",
+      "Week 2", "Mon 12:40", "1 free",
       "Bot", "Smash", "T1 · ₩6.0m", "→", "Peyz", "T1 · ₩13.0m", "+6",
       ...LEAGUES,
     ]);

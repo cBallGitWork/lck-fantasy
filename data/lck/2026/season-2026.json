@@ -1,0 +1,264 @@
+{
+  "note": "The LCK's 2026 as the sim plays it, made from data/lck/2026's sim-plan.json and Oracle's Elixir's rows by convex/world/simSeason.ts: change the plan, not this file.",
+  "madeUp": false,
+  "competition": {
+    "name": "LCK",
+    "region": "Korea",
+    "timeZone": "Asia/Seoul",
+    "currency": "₩"
+  },
+  "year": 2026,
+  "splits": [
+    {
+      "number": 1,
+      "name": "Split 1"
+    },
+    {
+      "number": 2,
+      "name": "Split 2"
+    }
+  ],
+  "settings": {
+    "squad": {
+      "starterSlots": {
+        "top": 1,
+        "jungle": 1,
+        "mid": 1,
+        "bot": 1,
+        "support": 1,
+        "flex": 1,
+        "coach": 1
+      },
+      "benchSize": 2,
+      "minPerRole": {
+        "top": 1,
+        "jungle": 1,
+        "mid": 1,
+        "bot": 1,
+        "support": 1
+      },
+      "teamCap": 2
+    },
+    "budget": 100000000,
+    "autoFillGap": 2000000,
+    "transfers": {
+      "freePerGameweek": 1,
+      "bankCap": 3,
+      "hitPoints": 6,
+      "freeAfterUnlimited": 2
+    },
+    "carryMultiplier": 1.5,
+    "buffs": [
+      {
+        "name": "Bench Boost",
+        "effect": "benchBoost",
+        "perSplit": 1
+      },
+      {
+        "name": "Double Captain",
+        "effect": "doubleCaptain",
+        "multiplier": 2,
+        "perSplit": 1
+      },
+      {
+        "name": "Coach Diff",
+        "effect": "coachMultiplier",
+        "multiplier": 3,
+        "perSplit": 1
+      }
+    ],
+    "teamNameMaxLength": 20,
+    "signUpOpen": true,
+    "overallSplits": true,
+    "live": {
+      "pollSeconds": 5,
+      "downAfterSeconds": 180,
+      "goldLeadAtMinutes": 15,
+      "replaySeconds": 60
+    },
+    "prices": {
+      "seasonWeights": [
+        0.75,
+        0.25
+      ],
+      "minSeries": 10,
+      "lowPercentile": 0.1,
+      "teamWeight": 0.45,
+      "bend": 1.1,
+      "floor": 6000000,
+      "top": 22500000,
+      "coachTop": 16500000,
+      "rounding": 500000,
+      "gap": {
+        "low": 17500000,
+        "high": 21000000
+      },
+      "spacing": 500000,
+      "academy": 5000000,
+      "formSeries": 8,
+      "formGap": 3000000,
+      "step": 200000,
+      "transferShare": 0.05,
+      "lowOwnership": 0.02
+    }
+  },
+  "stages": [
+    {
+      "name": "Rounds 1-2",
+      "split": 1,
+      "teamCap": 2,
+      "budget": 100000000,
+      "unlimitedTransfers": false
+    },
+    {
+      "name": "Road to MSI",
+      "split": 1,
+      "teamCap": 3,
+      "budget": 110000000,
+      "unlimitedTransfers": true
+    },
+    {
+      "name": "Legend and Rise",
+      "split": 2,
+      "teamCap": 2,
+      "budget": 100000000,
+      "unlimitedTransfers": false
+    },
+    {
+      "name": "Playoffs",
+      "split": 2,
+      "teamCap": 3,
+      "budget": 110000000,
+      "unlimitedTransfers": true
+    }
+  ],
+  "gameweeks": [
+    {
+      "number": 1,
+      "split": 1,
+      "deadline": "2026-04-01T07:56:43.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 2,
+      "split": 1,
+      "deadline": "2026-04-08T07:51:29.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 3,
+      "split": 1,
+      "deadline": "2026-04-15T07:49:27.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 4,
+      "split": 1,
+      "deadline": "2026-04-22T07:49:37.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 5,
+      "split": 1,
+      "deadline": "2026-04-29T07:50:12.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 6,
+      "split": 1,
+      "deadline": "2026-05-06T07:51:15.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 7,
+      "split": 1,
+      "deadline": "2026-05-13T07:51:21.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 8,
+      "split": 1,
+      "deadline": "2026-05-20T07:50:29.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 9,
+      "split": 1,
+      "deadline": "2026-05-27T07:51:37.000Z",
+      "state": "toCome",
+      "stage": "Rounds 1-2"
+    },
+    {
+      "number": 10,
+      "split": 1,
+      "deadline": "2026-06-06T07:57:31.000Z",
+      "state": "toCome",
+      "stage": "Road to MSI"
+    },
+    {
+      "number": 11,
+      "split": 1,
+      "deadline": "2026-06-12T08:10:00.000Z",
+      "state": "toCome",
+      "stage": "Road to MSI"
+    },
+    {
+      "number": 12,
+      "split": 2,
+      "deadline": "2026-07-29T07:50:41.000Z",
+      "state": "toCome",
+      "stage": "Legend and Rise"
+    },
+    {
+      "number": 13,
+      "split": 2,
+      "deadline": "2026-08-05T07:49:53.000Z",
+      "state": "toCome",
+      "stage": "Legend and Rise"
+    },
+    {
+      "number": 14,
+      "split": 2,
+      "deadline": "2026-08-12T07:52:18.000Z",
+      "state": "toCome",
+      "stage": "Legend and Rise"
+    },
+    {
+      "number": 15,
+      "split": 2,
+      "deadline": "2026-08-19T07:50:49.000Z",
+      "state": "toCome",
+      "stage": "Legend and Rise"
+    },
+    {
+      "number": 16,
+      "split": 2,
+      "deadline": "2026-08-26T07:53:21.000Z",
+      "state": "toCome",
+      "stage": "Playoffs"
+    },
+    {
+      "number": 17,
+      "split": 2,
+      "deadline": "2026-09-01T07:56:13.000Z",
+      "state": "toCome",
+      "stage": "Playoffs"
+    },
+    {
+      "number": 18,
+      "split": 2,
+      "deadline": "2026-09-12T05:06:16.000Z",
+      "state": "toCome",
+      "stage": "Playoffs"
+    }
+  ],
+  "prices": []
+}

@@ -11,7 +11,6 @@ export interface SeriesWhen {
   day: string;
   date: string;
   local: string;
-  kst: string;
 }
 
 /** A team in the scorebug: code, name and record as of when the page is opened. */

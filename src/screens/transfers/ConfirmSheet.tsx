@@ -26,7 +26,7 @@ export function ConfirmSheet({
   freeHad: number;
   bankFrom: number;
   bankTo: number;
-  deadline: { local: string; kst: string };
+  deadline: { local: string };
   onBack: () => void;
   onConfirm: () => void;
 }) {
@@ -70,7 +70,7 @@ export function ConfirmSheet({
         <MainAction onClick={onConfirm}>{WORDS.confirm}</MainAction>
       </div>
       <p className="transfers__sheet-deadline quiet">
-        <Deadline local={deadline.local} kst={deadline.kst} />
+        <Deadline local={deadline.local} />
       </p>
     </Modal>
   );

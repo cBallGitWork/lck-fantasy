@@ -12,7 +12,6 @@ export interface Manager {
 
 export interface When {
   local: string;
-  kst: string;
 }
 
 /** A player's points in a series; `captain` when he took the multiplier, with his points before it. */

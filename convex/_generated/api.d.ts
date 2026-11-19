@@ -21,13 +21,14 @@ import type * as admin_sim from "../admin/sim.js";
 import type * as admin_testManagerRoll from "../admin/testManagerRoll.js";
 import type * as admin_testManagerStore from "../admin/testManagerStore.js";
 import type * as admin_testManagers from "../admin/testManagers.js";
+import type * as feeds_fixtures_leaguepedia from "../feeds/fixtures/leaguepedia.js";
 import type * as feeds_fixtures_oe from "../feeds/fixtures/oe.js";
-import type * as feeds_fixtures_v5_shape from "../feeds/fixtures/v5-shape.js";
 import type * as feeds_leaguepedia from "../feeds/leaguepedia.js";
 import type * as feeds_live from "../feeds/live.js";
 import type * as feeds_liveFeed from "../feeds/liveFeed.js";
 import type * as feeds_load from "../feeds/load.js";
 import type * as feeds_oraclesElixir from "../feeds/oraclesElixir.js";
+import type * as feeds_replay from "../feeds/replay.js";
 import type * as following_cheers from "../following/cheers.js";
 import type * as following_feed from "../following/feed.js";
 import type * as following_fit from "../following/fit.js";
@@ -58,6 +59,8 @@ import type * as stats_gameStats from "../stats/gameStats.js";
 import type * as stats_live from "../stats/live.js";
 import type * as world_season from "../world/season.js";
 import type * as world_series from "../world/series.js";
+import type * as world_seasonSettings from "../world/seasonSettings.js";
+import type * as world_simSeason from "../world/simSeason.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -76,13 +79,14 @@ declare const fullApi: ApiFromModules<{
   "admin/testManagerRoll": typeof admin_testManagerRoll;
   "admin/testManagerStore": typeof admin_testManagerStore;
   "admin/testManagers": typeof admin_testManagers;
+  "feeds/fixtures/leaguepedia": typeof feeds_fixtures_leaguepedia;
   "feeds/fixtures/oe": typeof feeds_fixtures_oe;
-  "feeds/fixtures/v5-shape": typeof feeds_fixtures_v5_shape;
   "feeds/leaguepedia": typeof feeds_leaguepedia;
   "feeds/live": typeof feeds_live;
   "feeds/liveFeed": typeof feeds_liveFeed;
   "feeds/load": typeof feeds_load;
   "feeds/oraclesElixir": typeof feeds_oraclesElixir;
+  "feeds/replay": typeof feeds_replay;
   "following/cheers": typeof following_cheers;
   "following/feed": typeof following_feed;
   "following/fit": typeof following_fit;
@@ -113,6 +117,8 @@ declare const fullApi: ApiFromModules<{
   "stats/live": typeof stats_live;
   "world/season": typeof world_season;
   "world/series": typeof world_series;
+  "world/seasonSettings": typeof world_seasonSettings;
+  "world/simSeason": typeof world_simSeason;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

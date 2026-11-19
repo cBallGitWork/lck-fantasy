@@ -151,7 +151,8 @@ function text(row: OeRow, column: string): string {
   return value;
 }
 
-function num(row: OeRow, column: string): number {
+/** A column's number; throws on a blank or one that isn't, rather than read it as 0. */
+export function num(row: OeRow, column: string): number {
   const value = Number(text(row, column));
   if (!Number.isFinite(value)) throw new Error(`${column} is not a number in game ${row.gameid}.`);
   return value;

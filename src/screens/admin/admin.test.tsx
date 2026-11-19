@@ -6,8 +6,11 @@ import type { SeasonReport } from "../../../convex/admin/seasonReport";
 import type { SimState } from "../../../convex/admin/sim";
 import { WORDS, type AdminTab } from "./words";
 
-/** A day in January 2027, at `hour` in KST (UTC+9). */
+/** A day in January 2027, at `hour` in KST (UTC+9), the league's zone the sim runs on. */
 const kst = (day: number, hour: number) => Date.UTC(2027, 0, day, hour - 9);
+
+/** The admin's own zone: London, UTC+0 in January. */
+const ZONE = "Europe/London";
 
 const page = (sim: Read<SimState>, alerts: Read<Alert[]> = [], tab?: AdminTab, report: Read<SeasonReport> = undefined) => (
   <AdminPage
@@ -15,6 +18,7 @@ const page = (sim: Read<SimState>, alerts: Read<Alert[]> = [], tab?: AdminTab, r
     alerts={alerts}
     report={report}
     tab={tab}
+    zone={ZONE}
     onPress={() => Promise.reject(new Error("unpressed"))}
     onClose={() => Promise.reject(new Error("unclosed"))}
   />
@@ -25,11 +29,12 @@ const alert = (fields: Partial<Alert>): Alert => ({
 });
 
 describe("the admin section (#398)", () => {
-  test("the Sim tab shows the sim's date and both keys", () => {
+  test("the Sim tab shows the sim's date in the admin's own time, and both keys", () => {
     const state = { sim: true, now: kst(16, 0), gamesLeft: true } as const;
     const out = html(page(state));
     expect(out).toContain('data-screen="admin"');
-    expect(text(page(state))).toContain("Sim date: Sat 16 Jan 00:00 KST");
+    expect(text(page(state))).toContain("Sim date: Fri 15 Jan 15:00");
+    expect(out).not.toContain("KST");
     expect(out.match(/<button type="button" class="admin__press key-off">/g)).toHaveLength(2);
   });
 
@@ -45,9 +50,10 @@ describe("the admin section (#398)", () => {
     expect(text(page(new Error("Server down")))).toContain("Server down");
   });
 
-  test("Alerts lists each alert with its moment, kind and names, or says there are none", () => {
+  test("Alerts lists each alert with its moment in the admin's own time, kind and names, or says there are none", () => {
     const out = text(page({ sim: false }, [alert({})], "Alerts"));
-    expect(out).toContain("Fri 15 Jan 18:00 KST");
+    expect(out).toContain("Fri 15 Jan 09:00");
+    expect(out).not.toContain("KST");
     expect(out).toContain(WORDS.kind.feedDown);
     expect(out).toContain("T1 v Gen.G game 1: the live feed is down.");
     expect(out).toContain("game-1");
@@ -91,14 +97,15 @@ describe("the admin section (#398)", () => {
 
 describe("a press's line", () => {
   test("names the day played, its series and any deadline passed", () => {
-    expect(playedLine({ to: kst(16, 0), series: 2, deadlines: [1] })).toBe("Fri 15 Jan: 2 series played, GW1 deadline passed");
-    expect(playedLine({ to: kst(17, 0), series: 1, deadlines: [] })).toBe("Sat 16 Jan: 1 series played");
-    expect(playedLine({ to: kst(18, 0), series: 9, deadlines: [2, 3] })).toBe("Sun 17 Jan: 9 series played, GW2, GW3 deadlines passed");
-    expect(playedLine({ to: null, series: 0, deadlines: [] })).toBe(WORDS.noGamesLeft);
+    expect(playedLine({ to: kst(16, 0), series: 2, deadlines: [1] }, ZONE)).toBe("Fri 15 Jan: 2 series played, GW1 deadline passed");
+    expect(playedLine({ to: kst(17, 0), series: 1, deadlines: [] }, ZONE)).toBe("Sat 16 Jan: 1 series played");
+    expect(playedLine({ to: kst(18, 0), series: 9, deadlines: [2, 3] }, ZONE)).toBe("Sun 17 Jan: 9 series played, GW2, GW3 deadlines passed");
+    expect(playedLine({ to: null, series: 0, deadlines: [] }, ZONE)).toBe(WORDS.noGamesLeft);
   });
 
-  test("a moment is written in the region's zone", () => {
-    expect(simMoment(kst(15, 17))).toBe("Fri 15 Jan 17:00 KST");
-    expect(simMoment(kst(15, 17), false)).toBe("Fri 15 Jan");
+  test("a moment is written in the admin's own zone, with no label", () => {
+    expect(simMoment(kst(15, 17), ZONE)).toBe("Fri 15 Jan 08:00");
+    expect(simMoment(kst(15, 17), "Asia/Seoul")).toBe("Fri 15 Jan 17:00");
+    expect(simMoment(kst(15, 17), ZONE, false)).toBe("Fri 15 Jan");
   });
 });

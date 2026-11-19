@@ -34,7 +34,7 @@ export function playerGame(stats: Partial<PlayerGameStats> & Pick<PlayerGameStat
 }
 
 // LCK Cup, 15 Jan 2025, game LOLTMNT03_183532: HANJIN BRION beat DRX in 29:02 (1742 s). Solo
-// kills and steals are 0, as `v5Game()` gives them.
+// kills and steals are 0, as its Leaguepedia page gives them.
 export const OE_2025_BRION_DRX = {
   morgan: playerGame({ role: "top", kills: 5, deaths: 0, assists: 6, goldDiffAt15: 700 }),
   clozer: playerGame({ role: "mid", kills: 4, deaths: 0, assists: 7, goldDiffAt15: 1247, biggestMultikill: 2 }),

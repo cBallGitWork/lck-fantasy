@@ -2,9 +2,9 @@
 // the next read booked at the competition's pace, and an admin alert when the feed stays quiet too
 // long. A down feed's reading stays as it was, so points shown stay at the last reading until final.
 import { v } from "convex/values";
-import type { Doc } from "../_generated/dataModel";
+import type { Doc, Id } from "../_generated/dataModel";
 import { internal } from "../_generated/api";
-import { internalMutation, type MutationCtx } from "../_generated/server";
+import { internalMutation, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { raiseAlert } from "../admin/alerts";
 import { now } from "../admin/clock";
 import { findSeason } from "../world/season";
@@ -20,14 +20,19 @@ export const watchLiveGame = internalMutation({
   handler: async (ctx, { competition, year, esportsGameId }) => {
     const found = await findSeason(ctx, competition, year);
     if (found === null) throw new Error(`No ${competition} ${year} season is stored.`);
-    const row = await liveRow(ctx, esportsGameId);
-    if (row?.state === "polling") return;
-    const fields = { season: found.season._id, state: "polling" as const, since: await now(ctx), lastError: undefined };
-    if (row === null) await ctx.db.insert("liveFrames", { esportsGameId, readAt: null, reading: null, ...fields });
-    else await ctx.db.patch(row._id, fields);
-    await ctx.scheduler.runAfter(0, internal.outbound.liveFeed.readLiveGame, { esportsGameId });
+    await startWatching(ctx, found.season._id, esportsGameId);
   },
 });
+
+/** A game's feed read from `afterMs` on: the sim staggers a day's replays this way. */
+export async function startWatching(ctx: MutationCtx, season: Id<"seasons">, esportsGameId: string, afterMs = 0) {
+  const row = await liveRow(ctx, esportsGameId);
+  if (row?.state === "polling") return;
+  const fields = { season, state: "polling" as const, since: await now(ctx), lastError: undefined };
+  if (row === null) await ctx.db.insert("liveFrames", { esportsGameId, readAt: null, reading: null, ...fields });
+  else await ctx.db.patch(row._id, fields);
+  await ctx.scheduler.runAfter(afterMs, internal.outbound.liveFeed.readLiveGame, { esportsGameId });
+}
 
 /** One read of the feed: its window, or what went wrong. A new frame updates the reading; a game
  *  quiet for the season's `downAfterSeconds` is down, and an admin is told. */
@@ -72,7 +77,7 @@ export const storeLiveRead = internalMutation({
   },
 });
 
-function liveRow(ctx: MutationCtx, esportsGameId: string) {
+export function liveRow(ctx: QueryCtx, esportsGameId: string) {
   return ctx.db.query("liveFrames").withIndex("by_esportsGameId", (q) => q.eq("esportsGameId", esportsGameId)).unique();
 }
 

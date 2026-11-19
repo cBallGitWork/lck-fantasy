@@ -1,0 +1,45 @@
+{
+  "note": "The simulated season's plan (spec/10, The road to launch; spec/15, The replay): the LCK's 2026 laid out as 2027's, its stages and their settings. The Cup is left out. convex/world/simSeason.ts reads it with oe-2026-lck.csv into season-2026.json; a stage's source is the file's split and playoffs columns.",
+  "league": "LCK",
+  "year": 2026,
+  "splits": [
+    { "number": 1, "name": "Split 1" },
+    { "number": 2, "name": "Split 2" }
+  ],
+  "deadlineMinutesBefore": 15,
+  "live": { "pollSeconds": 5, "replaySeconds": 60 },
+  "stages": [
+    {
+      "name": "Rounds 1-2",
+      "split": 1,
+      "source": { "split": "Rounds 1-2", "playoffs": false },
+      "teamCap": 2,
+      "budget": 100000000,
+      "unlimitedTransfers": false
+    },
+    {
+      "name": "Road to MSI",
+      "split": 1,
+      "source": { "split": "Rounds 1-2", "playoffs": true },
+      "teamCap": 3,
+      "budget": 110000000,
+      "unlimitedTransfers": true
+    },
+    {
+      "name": "Legend and Rise",
+      "split": 2,
+      "source": { "split": "Rounds 3-4", "playoffs": false },
+      "teamCap": 2,
+      "budget": 100000000,
+      "unlimitedTransfers": false
+    },
+    {
+      "name": "Playoffs",
+      "split": 2,
+      "source": { "split": "Rounds 3-4", "playoffs": true },
+      "teamCap": 3,
+      "budget": 110000000,
+      "unlimitedTransfers": true
+    }
+  ]
+}

@@ -3,24 +3,24 @@ import { v } from "convex/values";
 import { ALERT_KINDS } from "./admin/alertKinds";
 import { TEST_MANAGER_STYLES } from "./admin/testManagers";
 import { liveReading } from "./feeds/liveFeed";
-import { seasonSettings } from "./seasonSettings";
 import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
-import { literals } from "./validators";
+import { literals, seasonSettings, split, stage } from "./world/seasonSettings";
 
 // Tables arrive with the features that need them (docs/data-model.md holds the model).
 
 /** A source's row as it sent it: column name to text (ARCHITECTURE.md, Data). */
 export const rawRow = v.record(v.string(), v.string());
 
+export { literals };
+
 const playerRole = literals(PLAYER_ROLES);
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */
 export const gameweekState = literals(["toCome", "live", "final"]);
 
-/** A competition: its name, region and time zone, the short name its times are written with (`KST`),
- *  and the sign its money is written with (`₩`). */
-export const competitionFields = { name: v.string(), region: v.string(), timeZone: v.string(), timeZoneLabel: v.string(), currency: v.string() };
-export const split = v.object({ number: v.number(), name: v.string() });
+/** A competition: its name, region, time zone (never shown: every time on screen is the manager's own,
+ *  Craig, 19 Nov 2026) and the sign its money is written with (`₩`). */
+export const competitionFields = { name: v.string(), region: v.string(), timeZone: v.string(), currency: v.string() };
 
 /** A price's pick, by team code: a player by role and handle, or the team's coach, which is the team
  *  and has no handle (spec/01). */
@@ -53,6 +53,8 @@ export default defineSchema({
     year: v.number(),
     splits: v.array(split),
     settings: seasonSettings,
+    /** Unset for a season with no stages yet, such as 2027's until its dates are out. */
+    stages: v.optional(v.array(stage)),
     /** Made-up values, held until the real ones are known (spec/10). */
     madeUp: v.boolean(),
   }).index("by_competition", ["competition", "year"]),
@@ -63,6 +65,8 @@ export default defineSchema({
     /** In ms since the epoch, UTC. */
     deadline: v.number(),
     state: gameweekState,
+    /** Its stage's name, one of its season's `stages`; unset in a season with none. */
+    stage: v.optional(v.string()),
   }).index("by_season", ["season", "number"]),
   /** A pick's price in won from a gameweek on, until its next row (docs/data-model.md, `prices`). */
   prices: defineTable({ season: v.id("seasons"), fromGameweek: v.number(), ...pricedPick, won: v.number() }).index("by_season", [
@@ -236,7 +240,8 @@ export default defineSchema({
     at: v.number(),
     /** The end of the match day it was raised on, in the competition's zone: one email per day. */
     matchDayEnd: v.number(),
-    /** alertKinds.ts's `NewAlert`; required, as no live game has raised one yet. Unset `closedAt` is open. */
+    /** alertKinds.ts's `NewAlert`; required, as no deployment holds an alert row: none is created yet
+     *  (ARCHITECTURE.md) and staging is wiped each run (SPEC.md, Glossary). Unset `closedAt` is open. */
     kind: literals(ALERT_KINDS),
     message: v.string(),
     names: v.array(v.string()),

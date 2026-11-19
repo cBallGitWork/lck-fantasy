@@ -48,14 +48,14 @@ const PART_LINE: Record<MismatchPart, string> = {
   buffShare: "buff's share",
 };
 
-/** A mismatch as an admin alert: `Faker fan, GW3: week total 47 in the game, 46 in the backtest.` */
+/** A mismatch as an admin alert: `Faker fan, Week 3: week total 47 in the game, 46 in the backtest.` */
 export function mismatchAlert(m: Mismatch): NewAlert {
   const what = m.pick === undefined ? PART_LINE[m.part] : `${m.pick} game ${m.game}'s ${PART_LINE[m.part]}`;
   const value = (n: number | null) => (n === null ? "missing" : String(n));
   return {
     kind: "pointsMismatch",
-    message: `${m.manager}, GW${m.gameweek}: ${what} ${value(m.app)} in the game, ${value(m.backtest)} in the backtest.`,
-    names: [m.manager, `GW${m.gameweek}`, ...(m.pick === undefined ? [] : [m.pick])],
+    message: `${m.manager}, Week ${m.gameweek}: ${what} ${value(m.app)} in the game, ${value(m.backtest)} in the backtest.`,
+    names: [m.manager, `Week ${m.gameweek}`, ...(m.pick === undefined ? [] : [m.pick])],
   };
 }
 

@@ -48,7 +48,7 @@ const SHARED: Omit<HomeShared, "countdown"> = {
   team: MANAGER.team,
   hangul: MANAGER.hangul,
   overall: { tier: MY_OVERALL.tier, hangul: MY_OVERALL.hangul, rank: MY_OVERALL.rank, move: MY_OVERALL.move },
-  deadline: { week: 4, competition: COMPETITION, local: WEEK4_DEADLINE.local, kst: WEEK4_DEADLINE.kst },
+  deadline: { week: 4, competition: COMPETITION, local: WEEK4_DEADLINE.local },
   freeTransfers: WEEK4_FREE_TRANSFERS,
   following: [
     { kind: "series", ...followed("minji") },
@@ -133,7 +133,7 @@ export const HOME_IDLE: HomeIdleData = {
   countdown: countdown(IDLE_AT, WEEK4_DEADLINE.at),
   lineupWeek: 4,
   lineup,
-  next: { home: next.home, away: next.away, day: next.day, local: next.local, kst: next.kst, startsIn: { days: startsIn.days, hours: startsIn.hours } },
+  next: { home: next.home, away: next.away, day: next.day, local: next.local, startsIn: { days: startsIn.days, hours: startsIn.hours } },
   week: { label: "Week 3", final: true, points: MY_WEEK3.finalTotal, ...WEEK3_FINAL },
   stars: lastWeek.stars,
   flops: lastWeek.flops,

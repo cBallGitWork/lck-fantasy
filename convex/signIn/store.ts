@@ -9,7 +9,7 @@ import { now } from "../admin/clock";
 import type { TestManagerStyle } from "../admin/testManagers";
 import { findSeason, pricedPickOf, pricesFor } from "../world/season";
 import { joinAutoLeagues } from "../leagues/store";
-import { literals } from "../validators";
+import { literals } from "../schema";
 import { requirePrice, type Prices } from "../squads/budget";
 import { allPicks, PLAYER_ROLES, STARTER_SLOTS, type Squad } from "../squads/squad";
 import { admit, type InviteRefusal } from "./invites";

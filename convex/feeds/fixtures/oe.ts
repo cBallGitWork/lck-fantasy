@@ -13,9 +13,12 @@ export const BRION = "oe:team:b77b3f6068e20a2b3edc0ecd3dc70d4";
 export const DRX = "oe:team:101f8589e58c724c1dcd5a9c1555277";
 export const OE_GAME_1 = OE_FIXTURE_GAMES[0]!;
 
-/** A player's row in game 1, by handle. */
-export function gameOnePlayer(name: string) {
-  const found = OE_GAME_1.players.find((p) => p.playerName === name);
-  if (found === undefined) throw new Error(`No ${name} in the fixture's game 1.`);
+/** A player's row in one of the fixture's games, by handle. */
+export function playerIn(game: (typeof OE_FIXTURE_GAMES)[number], name: string) {
+  const found = game.players.find((p) => p.playerName === name);
+  if (found === undefined) throw new Error(`No ${name} in the fixture's game ${game.gameId}.`);
   return found;
 }
+
+/** A player's row in game 1, by handle. */
+export const gameOnePlayer = (name: string) => playerIn(OE_GAME_1, name);

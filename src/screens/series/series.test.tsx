@@ -42,7 +42,6 @@ describe("final, 2–0 (1440.png)", () => {
       "Final",
       "Bo3 · Split 1 Week 3 · Sat 16 Jan",
       "10:30",
-      "19:30 KST",
       "T1",
       "G1 W · 31:42 · VOD ↗",
       "G2 W · 27:10 · VOD ↗",
@@ -95,7 +94,7 @@ describe("final, 2–1 (1440-21.png)", () => {
   const out = html(view);
 
   test("names the teams in the scorebug and the three games", () => {
-    expectInOrder(text(view), ["GEN", "Gen.G · 5–1", "2–1", "4–2 · Hanwha Life", "HLE", "Final", "08:00", "17:00 KST", "GEN", "G1 W · 29:05", "G2 L · 34:48", "G3 W · 26:31", "HLE", "G1 L", "G2 W", "G3 L"]);
+    expectInOrder(text(view), ["GEN", "Gen.G · 5–1", "2–1", "4–2 · Hanwha Life", "HLE", "Final", "08:00", "GEN", "G1 W · 29:05", "G2 L · 34:48", "G3 W · 26:31", "HLE", "G1 L", "G2 W", "G3 L"]);
   });
 
   test("greys and unboxes a dropped game", () => {
@@ -122,7 +121,7 @@ describe("live (1440-live.png)", () => {
   const out = html(view);
 
   test("shows the score so far, Live and Not final, and Watch ›", () => {
-    expectInOrder(text(view), ["T1", "4–1", "1–0", "3–2 · Dplus KIA", "DK", "Live", "Not final", "Solo kills and steals score at final", "Bo3 · Split 1 Week 3 · Sat 16 Jan", "10:30", "19:30 KST", "Watch ›", "G1 W · 31:42 · VOD ↗", "G2 14:20", "Series", "DK", "G1 L", "G2", "Series"]);
+    expectInOrder(text(view), ["T1", "4–1", "1–0", "3–2 · Dplus KIA", "DK", "Live", "Not final", "Solo kills and steals score at final", "Bo3 · Split 1 Week 3 · Sat 16 Jan", "10:30Watch ›", "G1 W · 31:42 · VOD ↗", "G2 14:20", "Series", "DK", "G1 L", "G2", "Series"]);
     expect(out).toContain('href="/live"');
     expect(out.match(/tag--live/g)).toHaveLength(1);
     expect(text(view).match(/14:20/g)).toHaveLength(1);
@@ -143,7 +142,7 @@ describe("before it starts (1440-next.png)", () => {
   const out = html(view);
 
   test("shows v, the format tag, the day and time, Watch ›, then both rosters", () => {
-    expectInOrder(text(view), ["HLE", "Hanwha Life · 4–2", "v", "3–3 · Dplus KIA", "DK", "Bo3", "Split 1 Week 4 · Wed 20 Jan", "08:00", "17:00 KST", "Watch ›", "HLE", "Zeus", "DK"]);
+    expectInOrder(text(view), ["HLE", "Hanwha Life · 4–2", "v", "3–3 · Dplus KIA", "DK", "Bo3", "Split 1 Week 4 · Wed 20 Jan", "08:00Watch ›", "HLE", "Zeus", "DK"]);
     expect(text(view).match(/Hanwha Life/g)).toHaveLength(1);
   });
 

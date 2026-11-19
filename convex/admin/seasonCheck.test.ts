@@ -130,11 +130,11 @@ describe("a seeded mismatch is caught", () => {
   test("each mismatch is a points mismatch alert naming the manager, the gameweek and the pick", () => {
     expect(mismatchAlert({ manager: "Faker fan", gameweek: 3, part: "gamePoints", pick: "player:zeus", game: 2, app: 5, backtest: 6 })).toEqual({
       kind: "pointsMismatch",
-      message: "Faker fan, GW3: player:zeus game 2's game points 5 in the game, 6 in the backtest.",
-      names: ["Faker fan", "GW3", "player:zeus"],
+      message: "Faker fan, Week 3: player:zeus game 2's game points 5 in the game, 6 in the backtest.",
+      names: ["Faker fan", "Week 3", "player:zeus"],
     });
     expect(mismatchAlert({ manager: "Faker fan", gameweek: 3, part: "total", app: 47, backtest: 46 }).message).toBe(
-      "Faker fan, GW3: week total 47 in the game, 46 in the backtest.",
+      "Faker fan, Week 3: week total 47 in the game, 46 in the backtest.",
     );
   });
 });

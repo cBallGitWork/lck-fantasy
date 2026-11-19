@@ -2,9 +2,7 @@
 // The ▲ and ▼ are CSS, so each move also names itself in words for a screen reader (`down 1`).
 import { cx } from "../util/cx";
 import { count, NONE, oneDecimal } from "../text/figures";
-
-/** A move in words, as a screen reader says it: `up 0.5`, `down 1`. */
-export const moveWords = (up: boolean, figure: string) => `${up ? "up" : "down"} ${figure}`;
+import { moveWords } from "../words";
 
 /** A price's move in m: ▲ or ▼ and the amount to one decimal; nothing when it held. */
 export function PriceMove({ money, className }: { money: number; className?: string }) {

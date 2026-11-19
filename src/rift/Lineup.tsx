@@ -3,9 +3,10 @@ import { Crest, cx, MeDot, PlayerPhoto, selectable, Tag } from "../parts";
 import "./Lineup.css";
 import { RoleIcon } from "./RoleIcon";
 import type { RoleKey, SlotKey } from "./roles";
-import { COACH_HANGUL, LINEUP_ORDER, ROLE_NAME, slotIcon } from "./roles";
+import { LINEUP_ORDER, slotIcon } from "./roles";
 import { MarkBadge, type Mark } from "./MarkBadge";
 import { SlotName } from "./SlotName";
+import { COACH_HANGUL, flexRole, ROLE_NAME } from "./words";
 
 export interface LineupCardProps {
   slot: SlotKey;
@@ -30,7 +31,7 @@ export interface LineupCardProps {
 }
 
 function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
-  const small = slot === "flex" && plays ? `plays ${ROLE_NAME[plays]}` : slot === "coach" ? COACH_HANGUL : undefined;
+  const small = slot === "flex" && plays ? flexRole(plays) : slot === "coach" ? COACH_HANGUL : undefined;
   return (
     <div className="pcard__role">
       <RoleIcon role={slotIcon(slot, plays)} />

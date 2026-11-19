@@ -7,11 +7,9 @@ import { ProfileHistory } from "./ProfileHistory";
 import { ProfilePoints } from "./ProfilePoints";
 import { ProfileSide } from "./ProfileSide";
 import { ProfileTransfers } from "./ProfileTransfers";
+import { FOLLOW_LABEL, TABS, WORDS } from "./words";
 
-const PROFILE_TABS = ["Points", "History", "Transfers"] as const;
-export type ProfileTab = (typeof PROFILE_TABS)[number];
-
-const FOLLOW_LABEL: Record<Exclude<FollowState, "self">, string> = { following: "Following ✓", follow: "Follow", requested: "Requested" };
+export type ProfileTab = (typeof TABS)[number];
 
 /** Following unfollows; Follow sends a request; Requested cancels it, with no confirm (spec/14). */
 export function nextFollow(state: FollowState): FollowState {
@@ -60,7 +58,7 @@ export function Profile({
   return (
     <PageFrame screen="profile" account={account}>
       <Banner manager={data.manager} follow={follow} onFollow={pressFollow} />
-      <Tabs id={tabsId} tabs={PROFILE_TABS} chosen={tab} onChoose={setTab} label="Profile" />
+      <Tabs id={tabsId} tabs={TABS} chosen={tab} onChoose={setTab} label={WORDS.profile} />
       <Columns className="profile__grid">
         <TabPanel id={tabsId} className="profile__main">
           {tab === "Points" && <ProfilePoints week={week} hasPrev={hasWeek(weekNo - 1)} hasNext={hasWeek(weekNo + 1)} onWeek={setWeekNo} />}

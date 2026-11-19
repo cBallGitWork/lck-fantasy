@@ -1,7 +1,7 @@
 import { cx } from "../parts";
 import "./RoleIcon.css";
 import type { IconKey } from "./roles";
-import { ROLE_NAME } from "./roles";
+import { ROLE_NAME } from "./words";
 
 // Position icons drawn after LoL's own: Top and Bot are opposite corners, Mid the diagonal,
 // Jungle a claw, Support a crest (points.html). Three tones: a, b and c, set in RoleIcon.css.

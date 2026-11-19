@@ -18,6 +18,7 @@ on:
 
 permissions:
   pull-requests: write
+  issues: write  # the one comment that says a pull request waits for Craig
 
 jobs:
   approve:
@@ -34,6 +35,7 @@ jobs:
           BY_OWNER: ${{ github.event.pull_request.user.login == github.repository_owner }}
           GUARDS: '^(\.(claude|github)/|scripts/|package\.json$|CLAUDE\.md$)'  # the pipeline's own guards
           BOT: github-actions[bot]  # the login this job's reviews carry
+          WAITS: Waits for Craig  # the opening of the one comment that says so
         run: |
           if [ "$BY_OWNER" != true ]; then
             # a file moved out of a guard folder counts too, so its old name is read as well
@@ -49,6 +51,18 @@ jobs:
                 gh api -X PUT "repos/$GITHUB_REPOSITORY/pulls/$PR/reviews/$id/dismissals" \
                   -f event=DISMISS -f message="Approval withdrawn: this pull request now touches the pipeline's guards and waits for Craig."
               done
+              # says so on the pull request once, with the one command that merges it: Craig couldn't find
+              # GitHub's approve and bypass controls, and #419 sat green and unmerged (19 Nov 2026)
+              said=$(gh api --paginate "repos/$GITHUB_REPOSITORY/issues/$PR/comments" \
+                --jq ".[] | select(.user.login == \"$BOT\" and (.body | startswith(\"$WAITS\"))) | .id")
+              if [ -z "$said" ]; then
+                gh pr comment "$PR" --repo "$GITHUB_REPOSITORY" --body "$WAITS: it touches the pipeline's guards, so the bot can't approve it.
+          $(echo "$guarded" | sed 's/^/- `/; s/$/`/')
+
+          Once its checks are green, Craig merges it with one command, which a session hands him to run:
+
+              gh pr merge $PR --squash --admin --delete-branch"
+              fi
               exit 0
             fi
           fi

@@ -1,5 +1,6 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { TEST_MANAGER_STYLES } from "./admin/testManagers";
 import { liveReading } from "./feeds/liveFeed";
 import { BUFF_EFFECTS } from "./squads/buffs";
 import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
@@ -194,6 +195,12 @@ export default defineSchema({
     country: v.string(),
     /** When the manager ticked the Terms and Privacy, and which version (spec/09). */
     agreed: v.object({ at: v.number(), version: v.string() }),
+    /** The name a table shows beside the team name (spec/08): a test manager's is made up; a real
+     *  manager's is unset until Convex Auth brings the account's. */
+    name: v.optional(v.string()),
+    /** A test manager's style (spec/10, The road to launch); unset for a real manager. Nothing a
+     *  manager reads says test manager (#400). */
+    testStyle: v.optional(literals(TEST_MANAGER_STYLES)),
   }).index("by_account", ["account"]),
   /** A personal invite to the closed tests, one person each (spec/10, The road to launch). */
   invites: defineTable({

@@ -1,15 +1,15 @@
 {
-  "note": "Each LCK team's kit colours, by team code; its shirt is data/lck/shirts/<code>.svg (approved, Craig, 16 Nov 2026). primary is the shirt's body, secondary its pattern, accent its collar and cuffs; a stripe or colour fill uses them. Sources: data/README.md.",
+  "note": "Each LCK team's kit colours, by team code; its shirt is data/lck/shirts/<code>.svg (approved, Craig, 16 Nov 2026). primary is the shirt's body, secondary its pattern, accent its collar and cuffs; a stripe or colour fill uses them. oeId is the team's id in Oracle's Elixir (data/lck/2026), which the stored team row keeps, so a code finds its row. Sources: data/README.md.",
   "teams": [
-    { "code": "T1", "name": "T1", "primary": "#E2012D", "secondary": "#111111", "accent": "#FFFFFF" },
-    { "code": "GEN", "name": "Gen.G", "primary": "#111111", "secondary": "#AA8A00", "accent": "#D2B984" },
-    { "code": "HLE", "name": "Hanwha Life", "primary": "#F3741B", "secondary": "#111111", "accent": "#BCBEC1" },
-    { "code": "DK", "name": "Dplus KIA", "primary": "#F5F5F5", "secondary": "#111111", "accent": "#111111" },
-    { "code": "KT", "name": "KT Rolster", "primary": "#EC1B23", "secondary": "#111111", "accent": "#FFFFFF" },
-    { "code": "DNS", "name": "DN SOOPers", "primary": "#1F4FD8", "secondary": "#0B1E4F", "accent": "#FFFFFF" },
-    { "code": "NS", "name": "Nongshim RedForce", "primary": "#ED1C24", "secondary": "#111111", "accent": "#CF8F3A" },
-    { "code": "KRX", "name": "Kiwoom DRX", "primary": "#1E2C5D", "secondary": "#E4007F", "accent": "#E4007F" },
-    { "code": "BRO", "name": "HANJIN BRION", "primary": "#00563A", "secondary": "#F37021", "accent": "#F37021" },
-    { "code": "BFX", "name": "BNK FEARX", "primary": "#FFC20E", "secondary": "#111111", "accent": "#111111" }
+    { "code": "T1", "name": "T1", "oeId": "oe:team:ce499dea30cfce118f4fe85da0227e8", "primary": "#E2012D", "secondary": "#111111", "accent": "#FFFFFF" },
+    { "code": "GEN", "name": "Gen.G", "oeId": "oe:team:50f58982d91a36557ec8aec52ab014f", "primary": "#111111", "secondary": "#AA8A00", "accent": "#D2B984" },
+    { "code": "HLE", "name": "Hanwha Life", "oeId": "oe:team:3a1d18f46bcb3716ebcfcf4ef068934", "primary": "#F3741B", "secondary": "#111111", "accent": "#BCBEC1" },
+    { "code": "DK", "name": "Dplus KIA", "oeId": "oe:team:ef69efa6acebe94107f0cf1ba716806", "primary": "#F5F5F5", "secondary": "#111111", "accent": "#111111" },
+    { "code": "KT", "name": "KT Rolster", "oeId": "oe:team:d723992568441c6bafa2658129eade7", "primary": "#EC1B23", "secondary": "#111111", "accent": "#FFFFFF" },
+    { "code": "DNS", "name": "DN SOOPers", "oeId": "oe:team:b3c72a20aa56f5d28022ac04a7dc294", "primary": "#1F4FD8", "secondary": "#0B1E4F", "accent": "#FFFFFF" },
+    { "code": "NS", "name": "Nongshim RedForce", "oeId": "oe:team:5cd2cd09ec94296f605dd13a2924d6c", "primary": "#ED1C24", "secondary": "#111111", "accent": "#CF8F3A" },
+    { "code": "KRX", "name": "Kiwoom DRX", "oeId": "oe:team:1d0389df0c5eea93b04122ba167c010", "primary": "#1E2C5D", "secondary": "#E4007F", "accent": "#E4007F" },
+    { "code": "BRO", "name": "HANJIN BRION", "oeId": "oe:team:b77b3f6068e20a2b3edc0ecd3dc70d4", "primary": "#00563A", "secondary": "#F37021", "accent": "#F37021" },
+    { "code": "BFX", "name": "BNK FEARX", "oeId": "oe:team:5c2e7e9ea8dfcba0150d9a5619baecf", "primary": "#FFC20E", "secondary": "#111111", "accent": "#111111" }
   ]
 }

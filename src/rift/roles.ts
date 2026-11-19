@@ -1,4 +1,5 @@
-// The roles and lineup slots, named once (spec/01; plate.md, Card view).
+// The roles and lineup slots, named once (spec/01; plate.md, Card view). Their names are words.ts's.
+import { coachLabel, ROLE_NAME } from "./words";
 
 export type RoleKey = "top" | "jng" | "mid" | "bot" | "sup";
 export type SlotKey = RoleKey | "flex" | "coach";
@@ -12,19 +13,6 @@ export type SquadSlot = SlotKey | BenchSlot;
 export const isBench = (slot: SquadSlot | undefined): slot is BenchSlot => slot === "bench1" || slot === "bench2";
 /** What a role icon can show. */
 export type IconKey = SlotKey;
-
-export const ROLE_NAME: Record<SlotKey, string> = {
-  top: "Top",
-  jng: "Jungle",
-  mid: "Mid",
-  bot: "Bot",
-  sup: "Support",
-  flex: "Flex",
-  coach: "Coach",
-};
-
-/** The Coach's hangul, as the LCK names him. */
-export const COACH_HANGUL = "감독";
 
 /** The five player roles, in lineup order. */
 export const ROLE_KEYS: readonly RoleKey[] = ["top", "jng", "mid", "bot", "sup"];
@@ -51,6 +39,6 @@ export function slotIcon(slot: SlotKey, plays?: RoleKey): IconKey {
 /** The label over a Flex's or Coach's shirt on the Rift, marking his place: `Flex`, `Coach 감독` (Craig, 16 Nov 2026). */
 export function slotLabel(slot: SlotKey): string | undefined {
   if (slot === "flex") return ROLE_NAME.flex;
-  if (slot === "coach") return `${ROLE_NAME.coach} ${COACH_HANGUL}`;
+  if (slot === "coach") return coachLabel;
   return undefined;
 }

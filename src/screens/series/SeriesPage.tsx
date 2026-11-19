@@ -4,12 +4,13 @@ import { PATHS } from "../../paths";
 import "./series.css";
 import { gameWon, RosterList, TeamGrid } from "./TeamGrid";
 import type { NextSeries, PlayedSeries, SeriesView, SeriesWhen, Side } from "./types";
+import { weekLine, WORDS } from "./words";
 
 function Frame({ account, children }: { account: string | null; children: ReactNode }) {
   return (
-    <PageFrame screen="series" active="lckHub" account={account}>
+    <PageFrame screen="series" active="hub" account={account}>
       <div className="series__crumb">
-        <GoLink go={{ to: PATHS.lckHub }}>‹ LCK</GoLink>
+        <GoLink go={{ to: PATHS.hub }}>{WORDS.backToHub}</GoLink>
       </div>
       {children}
     </PageFrame>
@@ -25,7 +26,7 @@ function Scorebug({ home, away, middle, loser }: { home: Side; away: Side; middl
         <b className="series__bug-code">{home.code}</b>
         <small className="quiet num">{named(home) ? `${home.name} · ${home.record}` : home.record}</small>
       </div>
-      <div className={cx("series__bug-score num", middle === "v" && "series__bug-score--v")}>{middle}</div>
+      <div className={cx("series__bug-score num", middle === WORDS.versus && "series__bug-score--v")}>{middle}</div>
       <div className={cx("series__bug-team series__bug-team--away", loser === "away" && "series__bug-team--lost")}>
         <small className="quiet num">{named(away) ? `${away.record} · ${away.name}` : away.record}</small>
         <b className="series__bug-code">{away.code}</b>
@@ -34,7 +35,7 @@ function Scorebug({ home, away, middle, loser }: { home: Side; away: Side; middl
   );
 }
 
-const whenLine = (w: SeriesWhen) => `${w.competition} · Week ${w.week} · ${w.day} ${w.date}`;
+const whenLine = (w: SeriesWhen) => `${weekLine(w.competition, w.week)} · ${w.day} ${w.date}`;
 
 /** The line under the scorebug: its tags and words, the time, then Watch › while live or before. */
 function Meta({ when, watch, children }: { when: SeriesWhen; watch: boolean; children: ReactNode }) {
@@ -42,7 +43,7 @@ function Meta({ when, watch, children }: { when: SeriesWhen; watch: boolean; chi
     <div className="series__meta">
       {children}
       <Time local={when.local} kst={when.kst} />
-      {watch && <LinkGo go={{ to: PATHS.live }}>Watch</LinkGo>}
+      {watch && <LinkGo go={{ to: PATHS.live }}>{WORDS.watch}</LinkGo>}
     </div>
   );
 }
@@ -62,7 +63,7 @@ function Played({ series, live, account }: { series: PlayedSeries; live: boolean
               <LiveTag />
               <NotFinalTag />
             </span>
-            <span>Solo kills, steals at final</span>
+            <span>{WORDS.liveNote}</span>
           </>
         ) : (
           <FinalTag final />
@@ -94,7 +95,7 @@ export function SeriesNext({ series, account }: { series: NextSeries; account: s
   const { home, away, when } = series;
   return (
     <Frame account={account}>
-      <Scorebug home={home} away={away} middle="v" />
+      <Scorebug home={home} away={away} middle={WORDS.versus} />
       <Meta when={when} watch>
         <Tag>{when.format}</Tag>
         <span>{whenLine(when)}</span>

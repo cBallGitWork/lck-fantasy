@@ -72,7 +72,7 @@ const routeTree = rootRoute.addChildren([
   screen(PATHS.priceChanges, PriceChangesScreen),
   screen(PATHS.priceChangesWeek, PriceChangesScreen),
   screen(PATHS.settings, SettingsScreen),
-  screen(PATHS.lckHub, LckHubScreen),
+  screen(PATHS.hub, LckHubScreen),
   screen(PATHS.playerCard, PlayerCardScreen),
   screen(PATHS.coachCard, CoachCardScreen),
   screen(PATHS.profile, ProfileScreen),

@@ -35,7 +35,7 @@
   width: var(--m-dot);
   height: var(--m-dot);
   border-radius: 50%;
-  background: var(--teal);
+  background: var(--signal);
   margin-right: var(--s-1);
 }
 .top-bar__space {

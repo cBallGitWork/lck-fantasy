@@ -3,11 +3,12 @@ import { ConvexError } from "convex/values";
 import { describe, expect, test } from "vitest";
 import { WON_PER_M } from "../../src/parts/text/money";
 import { internal } from "../_generated/api";
-import { HOUR_MS } from "../lck/fixtures";
-import { LCK_2027, type SeasonFile } from "../lck/season";
+import { HOUR_MS } from "../world/fixtures";
+import { LCK_2027, type SeasonFile } from "../world/season";
 import schema from "../schema";
 import type { Pick, Squad } from "../squads/squad";
 import { modules } from "../test.setup";
+import { INVITE_CAP } from "./invites";
 import type { SaveRefusal } from "./store";
 
 const store = internal.signIn.store;
@@ -44,9 +45,9 @@ const SQUAD: Squad = {
 
 async function world(data = season()) {
   const t = convexTest(schema, modules);
-  await t.mutation(internal.lck.season.loadSeason, { data });
+  await t.mutation(internal.world.season.loadSeason, { data });
   const t1 = await t.run((ctx) => ctx.db.insert("teams", { name: "T1", oeId: "oe-t1" }));
-  const save = (fields: Partial<{ squad: Squad; teamName: string; favouriteTeam: string; country: string; account: string }> = {}) =>
+  const save = (fields: Partial<{ squad: Squad; teamName: string; favouriteTeam: string; country: string; account: string; invite: string; competition: string }> = {}) =>
     t.mutation(store.saveNewTeam, {
       ...LCK,
       account: ACCOUNT,
@@ -147,5 +148,65 @@ describe("logging in (spec/09, Signing in again)", () => {
     expect(managers).toMatchObject([{ account: ACCOUNT, country: "GB", agreed: { version: "2026-11-18" } }]);
     expect(entries).toMatchObject([{ manager: managers[0]!._id }]);
     expect(await t.query(store.hasTeam, { ...LCK, account: ACCOUNT })).toBe(true);
+  });
+});
+
+describe("a closed test signs up only those Craig invites (spec/10, The road to launch, step 2)", () => {
+  const invites = internal.signIn.invites;
+  /** The season, run as a closed test, under `competition`'s name. */
+  const closed = (competition = LCK.competition): SeasonFile => {
+    const data = season();
+    return { ...data, competition: { ...data.competition, name: competition }, settings: { ...data.settings, signUpOpen: false } };
+  };
+
+  test("an unused invite's link signs up, any case, and the invite shows as used", async () => {
+    const { t, save } = await world(closed());
+    const code = await t.mutation(invites.makeInvite, { for: "Sam from Discord" });
+    expect(await t.query(invites.invites, {})).toEqual([{ for: "Sam from Discord", code, usedAt: null }]);
+    await save({ invite: code.toLowerCase() });
+    expect(await t.query(store.hasTeam, { ...LCK, account: ACCOUNT })).toBe(true);
+    expect((await t.query(invites.invites, {}))[0]!.usedAt).toEqual(expect.any(Number));
+  });
+
+  test("with no invite, or a code that isn't one, sign-up is closed and nothing is stored", async () => {
+    const { t, save } = await world(closed());
+    expect(await refusal(save())).toEqual({ rule: "closed" });
+    expect(await refusal(save({ invite: "NOPE-NOPE" }))).toEqual({ rule: "noInvite", code: "NOPE-NOPE" });
+    expect(await stored(t)).toEqual({ managers: [], entries: [], picks: [] });
+  });
+
+  test("an open season signs up anyone and ignores an invite code", async () => {
+    const { t, save } = await world();
+    await save({ invite: "NOPE-NOPE" });
+    expect(await t.query(store.hasTeam, { ...LCK, account: ACCOUNT })).toBe(true);
+  });
+
+  test("an invite someone else used turns a second person away", async () => {
+    const { t, save } = await world(closed());
+    const code = await t.mutation(invites.makeInvite, { for: "Sam" });
+    await save({ invite: code });
+    expect(await refusal(save({ invite: code, account: "discord|jo" }))).toEqual({ rule: "inviteUsed" });
+  });
+
+  test("one invite lets its person into both regions' tests", async () => {
+    const { t, save } = await world(closed());
+    await t.mutation(internal.world.season.loadSeason, { data: closed("LEC") });
+    const code = await t.mutation(invites.makeInvite, { for: "Sam" });
+    await save({ invite: code });
+    await save({ competition: "LEC" });
+    expect(await t.query(store.hasTeam, { competition: "LEC", year: 2027, account: ACCOUNT })).toBe(true);
+  });
+
+  test("a refused Save leaves the invite unused", async () => {
+    const { t, save } = await world(closed());
+    const code = await t.mutation(invites.makeInvite, { for: "Sam" });
+    await refusal(save({ invite: code, teamName: " " }));
+    expect((await t.query(invites.invites, {}))[0]!.usedAt).toBeNull();
+  });
+
+  test(`Craig makes up to the cap's ${INVITE_CAP} invites, then no more`, async () => {
+    const { t } = await world(closed());
+    for (let i = 0; i < INVITE_CAP; i++) await t.mutation(invites.makeInvite, { for: `Tester ${i}` });
+    await expect(t.mutation(invites.makeInvite, { for: "One too many" })).rejects.toThrow(`All ${INVITE_CAP} invites are made`);
   });
 });

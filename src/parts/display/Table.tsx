@@ -3,6 +3,7 @@ import type { Go } from "../../paths";
 import { measureVar, type MeasureKey } from "../../theme/tokens";
 import { cx } from "../util/cx";
 import { GoLink } from "../controls/GoLink";
+import { openRow, WORDS } from "../words";
 import "./Table.css";
 
 export interface Column<R> {
@@ -82,7 +83,7 @@ export function Table<R>({
               {c.head}
             </th>
           ))}
-          {open && <th scope="col" aria-label="Open" />}
+          {open && <th scope="col" aria-label={WORDS.open} />}
         </tr>
       </thead>
       <tbody>
@@ -135,7 +136,7 @@ function Sub({ sub, span }: { sub?: SubRow; span: number }) {
 }
 
 function OpenRow<R>({ open, row }: { open: RowOpen<R>; row: R }) {
-  const label = `Open ${open.name(row)}`;
+  const label = openRow(open.name(row));
   return "go" in open ? (
     <GoLink go={open.go(row)} label={label}>
       ›

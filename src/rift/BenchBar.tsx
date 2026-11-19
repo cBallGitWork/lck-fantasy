@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 import "./BenchBar.css";
 import type { PersonRole } from "./roles";
-import { ROLE_NAME } from "./roles";
 import { Tile } from "./Tile";
+import { ROLE_NAME, WORDS } from "./words";
 
 /** The bench, under the Rift or the cards: `Bench`, then each bench player's tile. */
 export function BenchBar({ children }: { children: ReactNode }) {
   return (
     <div className="bench-bar">
-      <h3 className="bench-bar__title">Bench</h3>
+      <h3 className="bench-bar__title">{WORDS.bench}</h3>
       {children}
     </div>
   );

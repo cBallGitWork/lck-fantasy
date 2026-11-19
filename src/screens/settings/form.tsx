@@ -3,6 +3,7 @@ import { TEAMS, type TeamCode } from "../../fixtures/week3";
 import { GoLink } from "../../parts";
 import { PATHS } from "../../paths";
 import { capName, counter } from "./settings";
+import { WORDS } from "./words";
 
 // Settings' form pieces.
 
@@ -36,10 +37,10 @@ export function LegalNames() {
   return (
     <>
       <GoLink go={{ to: PATHS.privacy }} className="settings__go">
-        Privacy ›
+        {WORDS.privacy}
       </GoLink>
       <GoLink go={{ to: PATHS.terms }} className="settings__go">
-        Terms ›
+        {WORDS.terms}
       </GoLink>
     </>
   );

@@ -20,7 +20,7 @@ async function world() {
     await ctx.db.insert("teams", { name: "T1", oeId: "oe-t1" }),
     await ctx.db.insert("teams", { name: "Gen.G", oeId: "oe-gen" }),
   ]);
-  await t.mutation(internal.lck.season.loadSeason, {});
+  await t.mutation(internal.world.season.loadSeason, {});
   return { t, t1, gen };
 }
 

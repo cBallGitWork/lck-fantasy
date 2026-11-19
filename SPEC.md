@@ -16,11 +16,13 @@ and supporter leagues. It is not a draft game. The theme is Korean.
 Players are worldwide and the game is in English first. Deadlines are stored in UTC and shown
 in each user's local time. There are no cash prizes.
 
-The LCK goes first because its schedule is more regular than the LEC's three splits. The LCK
-Cup is dropped: Split 1 is the beta (Craig, 16 Nov 2026). The main game splits into Split 1 and
+The road to launch (Craig, 18 Nov 2026): a simulated season on the LCK's 2026 data, then two
+closed tests from mid-January, the LEC's Winter split and the LCK Cup, with test managers and
+invited accounts, then a public launch in spring, the LEC's Spring split and the LCK's Split 1
+together ([spec/10](spec/10-season-and-gameweeks.md#the-road-to-launch)). The main game splits into Split 1 and
 Split 2, and buffs reset at the split, the way FPL's chips reset at GW19.
 
-Live points "would be great" (Craig, 11 Nov 2026), and the beta has them ([spec/11](spec/11-live-points.md)).
+Live points "would be great" (Craig, 11 Nov 2026), and the beta has them, from the January tests' first day ([spec/11](spec/11-live-points.md)).
 
 **The base assumption:** keep the rules as close to FPL's as possible. Where a rule is in doubt,
 use FPL's rule, or at least its logic (Craig, 11 Nov 2026).
@@ -40,11 +42,13 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | 6 | [Buffs](spec/06-buffs.md) | Buffs are data: a name, an effect from the code's list, a count per split, the stages that allow it. One a gameweek. The buffs are Bench Boost, Double Captain (a second Captain for a week, both ×2) and Coach Diff (the coach ×3 for a week): one each per split, in every stage, lost if unplayed. No Remake or Limitless. | partly built: rules, and buffs on Pick Team on made-up data; no storage yet |
 | 8 | [Leagues](spec/08-leagues.md) | Every manager joins Overall, their country's league and their team's supporter league; the team is required at sign-up. Leagues rank on total points, with a season table and one per split. In Split 2, Overall splits into Legend (Split 1's top half) and Rise, points carried. Overall shows a LoL tier, Iron to Challenger, from percentile cut-offs. Private leagues by code or link, from any gameweek. | partly built: rules with Overall tiers, and the Leagues screen with its forms on made-up data; leagues stored (the three every manager joins, private leagues by code), not yet wired to the screen |
 | 9 | [Onboarding](spec/09-onboarding.md) | Copies UCL Fantasy: a new visitor lands on the pick-a-team page, with Auto-fill, and the squad is kept in the browser. Sign-up comes on Save: Google or Discord, then team name, favourite team, country. Late joiners as in FPL. | partly built: rules, the guest's squad kept in the browser, the front door with its sign-up sheets on made-up data, and Save team stored (entry, picks, the three leagues); no sign-in yet, so the screen saves nothing |
-| 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | Split 1 is the beta, the LCK Cup dropped; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series, knockouts included. In knockouts the team cap rises from 2 to 3, the budget is raised, transfers are unlimited and every series counts. | partly built: the 2027 season's settings and Split 1's gameweeks and deadlines stored from data/lck, made up; no stage rules yet |
+| 10 | [Season and gameweeks](spec/10-season-and-gameweeks.md) | A simulated 2026 season, closed January tests on the LEC's Winter split and the LCK Cup, then the public launch in spring with the LCK's Split 1; Road to MSI and the LCK playoffs are the real test. Each stage's rules are settings, set when the 2027 fixtures are out. A gameweek is one LCK week, its deadline 15 minutes before its first series, knockouts included. In knockouts the team cap rises from 2 to 3, the budget is raised, transfers are unlimited and every series counts. | partly built: the 2027 season's settings and Split 1's gameweeks and deadlines stored from data/lck, made up; the server's one clock, and the sim's Next day and Play to end with no buttons yet; no stage rules yet |
 | 11 | [Live points](spec/11-live-points.md) | The beta has live points from Riot's unofficial feed, shown as provisional. A series turns final 3 hours after it ends, from Oracle's Elixir and Leaguepedia. Ranks move when a series is final; prices only at the deadline. | partly built: settled-stats rules, a series' final state, an admin's pasted Leaguepedia key and stored, re-runnable loads of series, games, lineups and stats; the live feed read into provisional stats; no fetching yet |
 | 12 | [Pages](spec/12-pages.md) | Home (a status page), Pick Team, Transfers, Points, Leagues, Stats, an LCK hub for the LCK's fixtures, standings and rosters, a series page, player and coach pop-ups, public manager profiles, Perfect game (the week's best team), Price changes (the new prices each gameweek), Live (a stream picker: official broadcasts and co-streamers beside live points), Help and Settings. | partly built: star and flop rules, and every page but Help built to its picture on made-up data; no backend wired yet |
 | 13 | [Korean touches](spec/13-korean-touches.md) | Made-up Korean sponsors from LCK memes, each explaining its meme on tap; cheers, jeers and sponsor cheers, each an LED truck from a made-up truck-hire sponsor ([spec/14](spec/14-following.md)); a birthday cake on a player's week; a hangul banner for your team; fun team shirts and crests, and where each shows. No points. | not built |
 | 14 | [Following, cheers and jeers](spec/14-following.md) | Follow other managers by request, one-way, in the beta. A feed of their series points, big Captains and transfers. Cheer or jeer anyone you follow once a gameweek, from a database of preset lines; a sponsor cheer to each private league's weekly top. | partly built: follows, the feed and cheers and jeers as rules, and the Following page on made-up data; no storage yet |
+| 15 | [Beta testing](spec/15-beta-testing.md) | A busy game simulated on staging, once the site is basically complete: the LCK's 2026 replayed from a snapshot by Next day and Play to end, as spec/10's road to launch sets out, 1,000 test managers through the real rules, full leagues, feed trouble thrown in, and Craig playing along. The replayed season is kept as a test; a deadline-rush load test runs once before launch. | not built; waits for the site |
+| 16 | [Regions](spec/16-regions.md) | One game per region, the LCK and the LEC, on one account: a team per region, with its own leagues and ranks. The LEC from Spring 2027, in euros, on the LCK's pages with its own culture; every series in a week counts. Each region at its own address; one profile shows both. | not built |
 
 ## Later
 
@@ -68,6 +72,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A line chart of the manager's Overall rank by week, on the profile above History (Craig, 17
   Nov 2026). FPL's Gameweek History has a table only, as Flol's profile does now.
 - A difficulty rating for each series (Craig, 13 Nov 2026).
+- The LEC's buffs and stage values, once Craig has reviewed the 2027 Spring schedule and its
+  roadtrips (Craig, 18 Nov 2026) ([spec/16](spec/16-regions.md)).
 
 ## Out of scope
 
@@ -90,6 +96,9 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - Renaming Killer or the other buffs: a hover explains them (Craig, 16 Nov 2026). Carry became
   Captain, and Dual Carry Double Captain (Craig, 17 Nov 2026).
 - Keys, legends or explainer lines for a word ([spec/12](spec/12-pages.md#words)).
+- The LEC's first split (Versus) in 2027: its series are single games (Craig, 18 Nov 2026).
+- A sign-up per region; private leagues across regions; Legend and Rise in the LEC; the Korean
+  theme in the LEC; players' flags in the LCK (Craig, 18 Nov 2026) ([spec/16](spec/16-regions.md)).
 
 ## Glossary
 
@@ -100,6 +109,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | game | One game within a series (Craig, 18 Nov 2026: game and series only). | map, set |
 | stage | A part of a competition with its own settings: groups, Road to MSI, play-in, playoffs. | phase |
 | round | One round of a knockout bracket. | |
+| test manager | A computer-run manager, in the simulated season and the January tests; players never see the word (Craig, 18 Nov 2026). | bot (the bot laner) |
+| staging | The Convex deployment of its own that test runs use, wiped each run (Craig, 18 Nov 2026). | test site |
 | Captain | The player whose points are multiplied this gameweek, as in FPL. There is no vice-captain. | Carry |
 | table | A league's ranking: one for the season and one per split. | leaderboard |
 | Perfect game | The gameweek's best team under the squad rules: a Captain and 7 starters. | team of the week |
@@ -115,3 +126,4 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | buff | A one-off a manager plays in a gameweek, such as Bench Boost: FPL's chip (Craig, 14 Nov 2026). | chip, boost |
 | Card view | The starters as the LCK broadcast's lineup, on Pick Team, Points and Perfect game (Craig, 16 Nov 2026). | List view |
 | List view | Transfers' squad as FPL's list: rows grouped by role, with prices and fixtures (Craig, 16 Nov 2026). | Card view |
+| region | One of Flol's games, by its LoL league: the LCK or the LEC. Each has its own squads, prices and leagues (Craig, 18 Nov 2026). | game, competition, mode |

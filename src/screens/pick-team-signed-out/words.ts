@@ -30,7 +30,7 @@ export const WORDS = {
   versus: "v",
   /** The news once a pick goes in: `Zeus added`. */
   added: "added",
-  /** Why Save team is off once all nine are in: `₩0.3m over`. */
+  /** Why Save team is off once all nine are in: `0.3m over`, the league's money sign in front. */
   over: "over",
   /** No place he fits. */
   noRoom: "Squad's full. Remove a player first",

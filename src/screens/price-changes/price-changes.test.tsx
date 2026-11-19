@@ -6,7 +6,7 @@ import { PATHS, SCREEN_NAME } from "../../paths";
 import { expectInOrder, html, htmlAt, text } from "../../testing/render";
 import { stepWeek, weekOf } from ".";
 import { WEEK3_PRICES, WEEK4_PRICES, type PriceMove } from "./fixtures";
-import { biggestFirst, cardOf, NO_MOVES, PriceChangesPage } from "./PriceChangesPage";
+import { biggestFirst, cardOf, PriceChangesPage } from "./PriceChangesPage";
 import { WORDS } from "./words";
 
 const WEEK3 = { to: PATHS.priceChangesWeek, params: { week: "3" } } as const;
@@ -16,7 +16,7 @@ describe("Week 4 prices", () => {
   const out = text(<PriceChangesPage week={WEEK4_PRICES} prev={WEEK3} />);
 
   test("shows the head, then when the prices were set, then Rises before Falls", () => {
-    expectInOrder(out, ["Price changes", "가격 변동", "‹", "Week 4 prices", "›", "Set Wed 13 Jan 07:45 16:45 KST", "Rises", "Falls"]);
+    expectInOrder(out, ["Price changes", "가격 변동", "‹", "Week 4 prices", "›", "Changed Wed 13 Jan 07:45 16:45 KST", "Rises", "Falls"]);
   });
 
   test("lists each move: name, team and role, was, now, owned", () => {
@@ -86,7 +86,7 @@ describe("controls", () => {
   test("‹ and › link to a week's address only where there is one; the other is a disabled key", () => {
     const latest = html(<PriceChangesPage week={WEEK4_PRICES} prev={WEEK3} />);
     expect(latest).toMatch(/<a[^>]*href="\/price-changes\/3"[^>]*>‹<\/a>/);
-    expect(latest).toContain('<button type="button" class="week-arrow key-off" aria-label="Week after" disabled="">');
+    expect(latest).toContain('<button type="button" class="week-arrow key-off" aria-label="Next week" disabled="">');
   });
 
   test("stepping goes to the week's address and stops at the first and the latest week", () => {
@@ -98,7 +98,7 @@ describe("controls", () => {
 
   test("How prices move › shows only once it has somewhere to go", () => {
     expect(text(<PriceChangesPage week={WEEK4_PRICES} />)).not.toContain("How prices move");
-    expect(text(<PriceChangesPage week={WEEK4_PRICES} howPricesMove={{ to: "/stats" }} />)).toContain("Set Wed 13 Jan 07:45 16:45 KSTHow prices move ›");
+    expect(text(<PriceChangesPage week={WEEK4_PRICES} howPricesMove={{ to: "/stats" }} />)).toContain("Changed Wed 13 Jan 07:45 16:45 KSTHow prices move ›");
   });
 });
 
@@ -124,7 +124,7 @@ describe("each week has its own address (spec/12)", () => {
 describe("before the first move", () => {
   test("both lists read No moves yet", () => {
     const out = text(<PriceChangesPage week={WEEK3_PRICES} next={WEEK4} />);
-    expect(out).toContain(`Week 3 prices›Rises${NO_MOVES}Falls${NO_MOVES}`);
-    expect(out).not.toContain("Set ");
+    expect(out).toContain(`Week 3 prices›${WORDS.rises}${WORDS.noMoves}${WORDS.falls}${WORDS.noMoves}`);
+    expect(out).not.toContain("Changed ");
   });
 });

@@ -2,6 +2,7 @@
 // without a browser. The backend feeds `FollowingData` later (#89, #90); the page takes it as props.
 import type { BuffName, TeamCode } from "../../fixtures/week3";
 import { type CheerKind, type Score, signed } from "../../parts";
+import { captainSum, ptsSoFar, transferCount, weekHead, WORDS } from "./words";
 
 export interface Manager {
   id: string;
@@ -106,7 +107,7 @@ export const SWAPS_SHOWN = 3;
 
 /** `Bench Boost, 5 transfers, −18`, `2 transfers, −6`, `no transfers`. */
 export function movesSummary(item: DeadlineItem): string {
-  const transfers = item.transfers === 0 ? "no transfers" : `${item.transfers} transfer${item.transfers === 1 ? "" : "s"}`;
+  const transfers = item.transfers === 0 ? WORDS.noTransfers : transferCount(item.transfers);
   return [item.buff, transfers, item.hit ? signed(-item.hit) : undefined].filter(Boolean).join(", ");
 }
 
@@ -115,7 +116,7 @@ export function playersLine(players: SeriesPlayer[], multiplier: number): string
   return players
     .map((p) => {
       if (!p.captain) return `${p.name} ${p.points}`;
-      const note = p.captain.before === undefined ? "Captain" : `${p.captain.before} × ${multiplier}`;
+      const note = p.captain.before === undefined ? WORDS.captain : captainSum(p.captain.before, multiplier);
       return `${p.name} ${p.points} (${note})`;
     })
     .join(" · ");
@@ -130,8 +131,8 @@ export function receiverLine(data: FollowingData, manager: Manager): string {
     .find((w) => w.week === data.week)
     ?.items.find((i): i is DeadlineItem => i.kind === "deadline" && i.manager.id === manager.id);
   const points = data.receivers[manager.id]?.pointsSoFar;
-  const soFar = [points !== undefined && `${points} pts so far`, moves && movesSummary(moves)].filter(Boolean).join(", ");
-  return [manager.team, `Week ${data.week}`, soFar].join(" · ");
+  const soFar = [points !== undefined && ptsSoFar(points), moves && movesSummary(moves)].filter(Boolean).join(", ");
+  return [manager.team, weekHead(data.week), soFar].join(" · ");
 }
 
 // The page's controls, each a step from one FollowingData to the next.

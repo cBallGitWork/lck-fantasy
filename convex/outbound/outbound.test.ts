@@ -1,6 +1,7 @@
 import { convexTest } from "convex-test";
 import { afterEach, expect, test, vi } from "vitest";
 import { internal } from "../_generated/api";
+import { ALERT_SUBJECT } from "../admin/alerts";
 import { LIVE_WINDOWS } from "../feeds/fixtures/live";
 import schema from "../schema";
 import { modules } from "../test.setup";
@@ -11,7 +12,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-const EMAIL = { subject: "Flol admin alert", text: "Live game 1: the feed is down." };
+const EMAIL = { subject: ALERT_SUBJECT, text: "Live game 1: the feed is down." };
 
 test("an admin email goes to Resend with the deployment's key and addresses", async () => {
   vi.stubEnv(EMAIL_SETTINGS.key, "re_test");

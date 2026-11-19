@@ -10,7 +10,7 @@ import { now } from "../admin/clock";
 import { findSeason } from "../world/season";
 import { parseLiveWindow, readWindow } from "./liveFeed";
 
-const SECOND_MS = 1000;
+const MS_PER_SECOND = 1000;
 const MINUTE_SECONDS = 60;
 
 /** Starts reading a live game's feed, by the feed's game id: an admin pastes one in. A game already
@@ -56,7 +56,7 @@ export const storeLiveRead = internalMutation({
       return;
     }
     const quietSince = Math.max(row.since, row.readAt ?? 0);
-    if (at - quietSince < live.downAfterSeconds * SECOND_MS) {
+    if (at - quietSince < live.downAfterSeconds * MS_PER_SECOND) {
       await ctx.db.patch(row._id, { lastError: problem });
       await readAgain(ctx, esportsGameId, live.pollSeconds);
       return;
@@ -85,5 +85,5 @@ async function liveSettings(ctx: MutationCtx, row: Doc<"liveFrames">) {
 }
 
 function readAgain(ctx: MutationCtx, esportsGameId: string, pollSeconds: number) {
-  return ctx.scheduler.runAfter(pollSeconds * SECOND_MS, internal.outbound.liveFeed.readLiveGame, { esportsGameId });
+  return ctx.scheduler.runAfter(pollSeconds * MS_PER_SECOND, internal.outbound.liveFeed.readLiveGame, { esportsGameId });
 }

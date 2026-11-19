@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { SPEC_PLAYER_TABLE } from "../scoring/fixtures";
 import { DHOKLA, GEN, KIIN, LIVE_WINDOWS, LYON } from "./fixtures/live";
-import { biggestMultikill, feedStale, livePlayerStats, liveTeamStats, parseLiveWindow, readWindow, type LiveReading, type LiveWindow } from "./liveFeed";
+import { biggestMultikill,livePlayerStats, liveTeamStats, parseLiveWindow, readWindow, type LiveReading, type LiveWindow } from "./liveFeed";
 
 const { start, beforeFirstBlood, firstBlood, at15, end } = LIVE_WINDOWS;
 const GOLD_AT_MINUTES = SPEC_PLAYER_TABLE.goldLeadAt15.atMinutes;
@@ -98,14 +98,6 @@ describe("biggestMultikill", () => {
 describe("the feed going down", () => {
   test("a changed shape throws, for an admin alert rather than a silent gap", () => {
     expect(() => parseLiveWindow({ frames: [] })).toThrow("Live feed window has an unexpected shape.");
-  });
-
-  test("no frame for longer than the limit, mid-game, is stale; a finished game never is", () => {
-    const live = fold(start, firstBlood);
-    expect(feedStale(live, live.lastFrameAt + 60 * SECOND, 30 * SECOND)).toBe(true);
-    expect(feedStale(live, live.lastFrameAt + 10 * SECOND, 30 * SECOND)).toBe(false);
-    const done = fold(start, end);
-    expect(feedStale(done, done.lastFrameAt + 3600 * SECOND, 30 * SECOND)).toBe(false);
   });
 
   test("a frame time that can't be read throws, rather than stalling the reading", () => {

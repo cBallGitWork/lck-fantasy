@@ -13,10 +13,13 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as admin_alerts from "../admin/alerts.js";
 import type * as admin_clock from "../admin/clock.js";
 import type * as feeds_fixtures_oe from "../feeds/fixtures/oe.js";
 import type * as feeds_fixtures_v5_shape from "../feeds/fixtures/v5-shape.js";
 import type * as feeds_leaguepedia from "../feeds/leaguepedia.js";
+import type * as feeds_live from "../feeds/live.js";
+import type * as feeds_liveFeed from "../feeds/liveFeed.js";
 import type * as feeds_load from "../feeds/load.js";
 import type * as feeds_oraclesElixir from "../feeds/oraclesElixir.js";
 import type * as following_cheers from "../following/cheers.js";
@@ -28,6 +31,8 @@ import type * as gameweeks_starAndFlop from "../gameweeks/starAndFlop.js";
 import type * as leagues_membership from "../leagues/membership.js";
 import type * as leagues_store from "../leagues/store.js";
 import type * as leagues_tables from "../leagues/tables.js";
+import type * as outbound_email from "../outbound/email.js";
+import type * as outbound_liveFeed from "../outbound/liveFeed.js";
 import type * as scoring_fixtures from "../scoring/fixtures.js";
 import type * as scoring_game from "../scoring/game.js";
 import type * as scoring_series from "../scoring/series.js";
@@ -44,6 +49,7 @@ import type * as squads_splitBreak from "../squads/splitBreak.js";
 import type * as squads_squad from "../squads/squad.js";
 import type * as squads_transfers from "../squads/transfers.js";
 import type * as stats_gameStats from "../stats/gameStats.js";
+import type * as stats_live from "../stats/live.js";
 import type * as world_season from "../world/season.js";
 import type * as world_series from "../world/series.js";
 
@@ -56,10 +62,13 @@ import type * as world_series from "../world/series.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  "admin/alerts": typeof admin_alerts;
   "admin/clock": typeof admin_clock;
   "feeds/fixtures/oe": typeof feeds_fixtures_oe;
   "feeds/fixtures/v5-shape": typeof feeds_fixtures_v5_shape;
   "feeds/leaguepedia": typeof feeds_leaguepedia;
+  "feeds/live": typeof feeds_live;
+  "feeds/liveFeed": typeof feeds_liveFeed;
   "feeds/load": typeof feeds_load;
   "feeds/oraclesElixir": typeof feeds_oraclesElixir;
   "following/cheers": typeof following_cheers;
@@ -71,6 +80,8 @@ declare const fullApi: ApiFromModules<{
   "leagues/membership": typeof leagues_membership;
   "leagues/store": typeof leagues_store;
   "leagues/tables": typeof leagues_tables;
+  "outbound/email": typeof outbound_email;
+  "outbound/liveFeed": typeof outbound_liveFeed;
   "scoring/fixtures": typeof scoring_fixtures;
   "scoring/game": typeof scoring_game;
   "scoring/series": typeof scoring_series;
@@ -87,6 +98,7 @@ declare const fullApi: ApiFromModules<{
   "squads/squad": typeof squads_squad;
   "squads/transfers": typeof squads_transfers;
   "stats/gameStats": typeof stats_gameStats;
+  "stats/live": typeof stats_live;
   "world/season": typeof world_season;
   "world/series": typeof world_series;
 }>;

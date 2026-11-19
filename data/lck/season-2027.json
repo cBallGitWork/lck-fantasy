@@ -21,7 +21,8 @@
       { "name": "Coach Diff", "effect": "coachMultiplier", "multiplier": 3, "perSplit": 1 }
     ],
     "teamNameMaxLength": 20,
-    "signUpOpen": true
+    "signUpOpen": true,
+    "live": { "pollSeconds": 60, "downAfterSeconds": 180, "goldLeadAtMinutes": 15 }
   },
   "gameweeks": [
     { "number": 1, "split": 1, "deadline": "2026-12-30T07:45:00Z", "state": "final" },

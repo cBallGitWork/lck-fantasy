@@ -1,5 +1,6 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { TEST_MANAGER_STYLES } from "./admin/testManagers";
 import { liveReading } from "./feeds/liveFeed";
 import { BUFF_EFFECTS } from "./squads/buffs";
 import { PLAYER_ROLES, STARTER_SLOTS } from "./squads/squad";
@@ -48,6 +49,27 @@ export const seasonSettings = v.object({
    *  `goldLeadAt15.atMinutes`, held here until the scoring table is stored). Required, unlike
    *  `signUpOpen`: no deployment has stored a season yet, and loading data/lck rewrites settings. */
   live: v.object({ pollSeconds: v.number(), downAfterSeconds: v.number(), goldLeadAtMinutes: v.number() }),
+  /** convex/squads/prices.ts's PriceSettings: the formula and the weekly moves (spec/02). Required,
+   *  as `live` is. */
+  prices: v.object({
+    seasonWeights: v.array(v.number()),
+    minSeries: v.number(),
+    lowPercentile: v.number(),
+    teamWeight: v.number(),
+    bend: v.number(),
+    floor: v.number(),
+    top: v.number(),
+    coachTop: v.number(),
+    rounding: v.number(),
+    gap: v.object({ low: v.number(), high: v.number() }),
+    spacing: v.number(),
+    academy: v.number(),
+    formSeries: v.number(),
+    formGap: v.number(),
+    step: v.number(),
+    transferShare: v.number(),
+    lowOwnership: v.number(),
+  }),
 });
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */
@@ -194,6 +216,12 @@ export default defineSchema({
     country: v.string(),
     /** When the manager ticked the Terms and Privacy, and which version (spec/09). */
     agreed: v.object({ at: v.number(), version: v.string() }),
+    /** The name a table shows beside the team name (spec/08): a test manager's is made up; a real
+     *  manager's is unset until Convex Auth brings the account's. */
+    name: v.optional(v.string()),
+    /** A test manager's style (spec/10, The road to launch); unset for a real manager. Nothing a
+     *  manager reads says test manager (#400). */
+    testStyle: v.optional(literals(TEST_MANAGER_STYLES)),
   }).index("by_account", ["account"]),
   /** A personal invite to the closed tests, one person each (spec/10, The road to launch). */
   invites: defineTable({

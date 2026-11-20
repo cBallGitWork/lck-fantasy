@@ -1,6 +1,6 @@
 import { useId, useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
-import { Columns, OutlinedKey, PageFrame, SponsorNote, TabPanel, Tabs, useDevState } from "../../parts";
+import { Columns, OutlinedKey, PageFrame, SponsorNote, TabPanel, Tabs, TierMark, useDevState } from "../../parts";
 import { PROFILE, type FollowState, type ProfileData, type ProfileManager } from "./fixtures";
 import "./profile.css";
 import { ProfileHistory } from "./ProfileHistory";
@@ -62,7 +62,7 @@ export function Profile({
       <Columns className="profile__grid">
         <TabPanel id={tabsId} className="profile__main">
           {tab === "Points" && <ProfilePoints week={week} hasPrev={hasWeek(weekNo - 1)} hasNext={hasWeek(weekNo + 1)} onWeek={setWeekNo} />}
-          {tab === "History" && <ProfileHistory rows={data.history} buffsLeft={data.buffsLeft} onOpenWeek={openWeek} />}
+          {tab === "History" && <ProfileHistory rows={data.history} buffsLeft={data.buffsLeft} pastSeasons={data.pastSeasons} onOpenWeek={openWeek} />}
           {tab === "Transfers" && <ProfileTransfers weeks={data.transfers} />}
         </TabPanel>
         <aside className="profile__side">
@@ -74,7 +74,7 @@ export function Profile({
   );
 }
 
-/** The hangul banner (spec/13): the team name in hangul, in English, the manager, and the follow key. */
+/** The hangul banner (spec/13): the team name in hangul, in English, the manager, her Overall tier (spec/08), and the follow key. */
 function Banner({ manager, follow, onFollow }: { manager: ProfileManager; follow: FollowState; onFollow: () => void }) {
   return (
     <header className="profile__banner">
@@ -85,6 +85,7 @@ function Banner({ manager, follow, onFollow }: { manager: ProfileManager; follow
         <b>{manager.team}</b>
         {manager.name}
       </p>
+      <TierMark standing={manager.overall} className="profile__tier" />
       {follow !== "self" && (
         <span className="profile__follow">
           <OutlinedKey onClick={onFollow}>{FOLLOW_LABEL[follow]}</OutlinedKey>

@@ -1,5 +1,5 @@
-import { money, NONE, RankMove, signed, Table, type Column } from "../../parts";
-import type { HistoryRow } from "./fixtures";
+import { money, NONE, ordinal, RankMove, SectionHead, signed, Table, TierTag, type Column } from "../../parts";
+import type { HistoryRow, PastSeason } from "./fixtures";
 import { countOrNone } from "./format";
 import { dot, weekNo, WORDS } from "./words";
 
@@ -17,8 +17,25 @@ const COLUMNS: Column<HistoryRow>[] = [
   { key: "buff", head: WORDS.buff, cell: (r) => r.buff ?? NONE },
 ];
 
-/** History: each week's points, total, ranks, transfers, their cost, bank, value and buff; then the buffs left. */
-export function ProfileHistory({ rows, buffsLeft, onOpenWeek }: { rows: HistoryRow[]; buffsLeft: string[]; onOpenWeek: (week: number) => void }) {
+/** Past seasons, as FPL's: each ended season's final tier and rank on Overall (spec/08). */
+const SEASON_COLUMNS: Column<PastSeason>[] = [
+  { key: "season", head: WORDS.season, cell: (r) => r.season },
+  { key: "tier", head: WORDS.tier, cell: (r) => <TierTag tier={r.tier} /> },
+  { key: "rank", head: WORDS.rank, figure: true, cell: (r) => ordinal(r.rank) },
+];
+
+/** History: each week's points, total, ranks, transfers, their cost, bank, value and buff; then the buffs left; then past seasons, once one has ended. */
+export function ProfileHistory({
+  rows,
+  buffsLeft,
+  pastSeasons,
+  onOpenWeek,
+}: {
+  rows: HistoryRow[];
+  buffsLeft: string[];
+  pastSeasons: PastSeason[];
+  onOpenWeek: (week: number) => void;
+}) {
   return (
     <section className="profile__history">
       <Table
@@ -31,6 +48,12 @@ export function ProfileHistory({ rows, buffsLeft, onOpenWeek }: { rows: HistoryR
       <p className="profile__left">
         {WORDS.buffsLeft} <b>{buffsLeft.length > 0 ? buffsLeft.join(dot) : NONE}</b>
       </p>
+      {pastSeasons.length > 0 && (
+        <>
+          <SectionHead className="profile__past">{WORDS.pastSeasons}</SectionHead>
+          <Table columns={SEASON_COLUMNS} rows={pastSeasons} rowKey={(r) => r.season} label={WORDS.pastSeasons} />
+        </>
+      )}
     </section>
   );
 }

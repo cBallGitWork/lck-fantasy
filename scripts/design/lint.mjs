@@ -8,7 +8,8 @@
 //   node scripts/design/lint.mjs [--config <design.json>] <file or folder>...
 //
 // Prints `file: problem` per finding, or `file: clean`. Exit 0 clean (or only flags), 1 a `fail`
-// finding, 2 usage: no pages given, a path or the config unreadable, a level badly set.
+// finding, 2 usage: no pages given, a path or the config unreadable, a level badly set or set for a
+// rule the lint doesn't hold.
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -81,11 +82,31 @@ export function readConfig(path) {
   return config;
 }
 
+/** A misspelt name this many edits or fewer from a rule's is offered as the rule it meant. */
+const NEAR_EDITS = 3;
+
+/** How many single-letter edits turn one name into the other. */
+function editsBetween(a, b) {
+  let row = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const next = [i];
+    for (let j = 1; j <= b.length; j++) next[j] = Math.min(row[j] + 1, next[j - 1] + 1, row[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    row = next;
+  }
+  return row[b.length];
+}
+
+/** The rules a name the lint doesn't hold could have meant: the near ones, or every rule when none is near. */
+function rulesMeant(id) {
+  const near = Object.keys(RULES).filter((rule) => editsBetween(id, rule) <= NEAR_EDITS);
+  return near.length ? near : Object.keys(RULES);
+}
+
 /** Each rule's level: its default, or the config's; lowering one needs a reason (`"off: waits on P3"`). */
 export function levelsOf(config) {
   const levels = Object.fromEntries(Object.entries(RULES).map(([id, rule]) => [id, rule.level]));
   for (const [id, setting] of Object.entries(config.levels ?? {})) {
-    if (!(id in RULES)) continue; // a rule this script doesn't hold yet
+    if (!(id in RULES)) throw new Error(`levels.${id} names no rule the lint holds: did you mean ${rulesMeant(id).join(", ")}?`);
     const match = /^(off|flag|fail)(?::\s*(\S.*))?$/.exec(String(setting));
     if (!match) throw new Error(`levels.${id} is "${setting}": write off, flag or fail, then a colon and the reason`);
     const [, level, reason] = match;

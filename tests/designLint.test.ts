@@ -73,7 +73,9 @@ describe("levels", () => {
   });
   test("lowering a rule needs a reason", () => expect(() => levelsOf({ levels: { radius: "off" } })).toThrow(/no reason/));
   test("a level must be off, flag or fail", () => expect(() => levelsOf({ levels: { radius: "warn: why" } })).toThrow(/off, flag or fail/));
-  test("a rule the script doesn't hold yet is left alone", () => expect(levelsOf({ levels: { "tag-count": "off: later" } }).radius).toBe("fail"));
+  test("a misspelt rule name fails, naming the rule it could have meant", () =>
+    expect(() => levelsOf({ levels: { "midle-dot": "off: later" } })).toThrow('levels.midle-dot names no rule the lint holds: did you mean middle-dot?'));
+  test("a name near no rule lists them all", () => expect(() => levelsOf({ levels: { "tag-count": "off: later" } })).toThrow(Object.keys(RULES).join(", ")));
 });
 
 describe("the command", () => {

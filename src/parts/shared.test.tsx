@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { expect, test } from "vitest";
 import { html } from "../testing/render";
-import { captainHint, Columns, Hint, HINTS, Led, SectionHead, SeriesStrip, TierShield, WeekArrow } from ".";
+import { captainHint, Columns, Hint, HINTS, Led, SectionHead, SeriesStrip, tierHangul, TierMark, tierName, TierShield, TierTag, WeekArrow } from ".";
 
 test("a week arrow is a key: it links, steps, or sits off as a disabled key", () => {
   expect(html(<WeekArrow label="Previous week" go={{ to: "/points" }}>‹</WeekArrow>)).toMatch(/<a[^>]*class="week-arrow"[^>]*aria-label="Previous week"[^>]*>‹<\/a>/);
@@ -52,6 +52,26 @@ test("the tier shield draws its own outlined body and band, sized by the page's 
   expect(out).toContain('class="tier-shield__body"');
   expect(out).toContain('<path class="tier-shield__band" d="M5 15 H35"></path>');
   expect(out).not.toContain("<text");
+});
+
+test("a tier's short name and hangul: divisions I to IV, none for Master to Challenger, Unranked with no hangul (spec/08)", () => {
+  expect(tierName({ tier: "emerald", division: 1 })).toBe("Emerald I");
+  expect(tierHangul({ tier: "emerald", division: 1 })).toBe("에메랄드 1");
+  expect(tierName({ tier: "iron", division: 4 })).toBe("Iron IV");
+  expect(tierName({ tier: "grandmaster", division: null })).toBe("Grandmaster");
+  expect(tierHangul({ tier: "challenger", division: null })).toBe("챌린저");
+  expect(tierName({ tier: "unranked" })).toBe("Unranked");
+  expect(tierHangul({ tier: "unranked" })).toBeNull();
+});
+
+test("the tier mark: shield, tier and hangul, the rank and move beneath; Unranked outlined, with no rank", () => {
+  const ranked = html(<TierMark standing={{ tier: { tier: "diamond", division: 4 }, rank: 31_349, move: -12 }} />);
+  expect(ranked).toContain('<svg class="tier-shield tier-mark__shield"');
+  expect(ranked).toMatch(/Diamond IV.*다이아몬드 4.*31,349.*aria-label="down 12"/);
+  const unranked = html(<TierMark standing={{ tier: { tier: "unranked" }, rank: null, move: null }} />);
+  expect(unranked).toContain('<svg class="tier-shield tier-shield--unranked tier-mark__shield"');
+  expect(unranked).not.toContain("tier-mark__rank");
+  expect(html(<TierTag tier={{ tier: "master", division: null }} />)).toMatch(/^<span class="tier-tag"><svg class="tier-shield tier-tag__shield".*<\/svg>Master<\/span>$/);
 });
 
 test("the LED panel is one part, its line as given; big for the picker's preview", () => {

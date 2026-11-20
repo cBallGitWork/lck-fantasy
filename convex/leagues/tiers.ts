@@ -86,6 +86,19 @@ export function tierGaps(
   };
 }
 
+/** Points' one line: the points to promote, or to avoid demotion. */
+export type TierLine = TierGap & { to: "promote" | "demote" };
+
+/** spec/08, Points: always the points to promote; the room before demotion only at Challenger, with
+ *  no tier above. Null where neither shows: the top tier a small field can reach. */
+export function tierLine(table: readonly TableRow[], entryId: string, cutoffs: readonly TierCutoff[]): TierLine | null {
+  const { promote, demote } = tierGaps(table, entryId, cutoffs);
+  if (promote !== null) return { to: "promote", ...promote };
+  const own = table.find((row) => row.entryId === entryId);
+  const atChallenger = own !== undefined && overallTier(own.rank, table.length, cutoffs).tier === "challenger";
+  return atChallenger && demote !== null ? { to: "demote", ...demote } : null;
+}
+
 /** What the season keeps of each manager when it ends: their final rank and tier on the whole
  *  Overall season table (spec/08; the profile's History tab lists them per season). */
 export function finalTiers(

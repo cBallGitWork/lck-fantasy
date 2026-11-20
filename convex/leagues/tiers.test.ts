@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { SPEC_TIER_CUTOFFS as CUTOFFS } from "./fixtures";
 import { leagueTable, legendAndRise, type LeagueMember, type TableRow } from "./tables";
-import { finalTiers, overallTier, tierGaps } from "./tiers";
+import { finalTiers, overallTier, tierGaps, tierLine } from "./tiers";
 
 /** A table of `managers` with no ties, 2 points between each rank. */
 function table(managers: number): TableRow[] {
@@ -87,6 +87,21 @@ describe("tierGaps", () => {
 
   test("in a field too small for Grandmaster, Master is the top", () => {
     expect(tierGaps(table(1_000), "e1", CUTOFFS).promote).toBeNull();
+  });
+});
+
+describe("tierLine", () => {
+  test("always the points to promote, never the room before demotion below Challenger (Craig, 18 Nov 2026)", () => {
+    expect(tierLine(table(10_000), "e160", CUTOFFS)).toEqual({ to: "promote", points: 20, tier: { tier: "diamond", division: 1 } });
+  });
+
+  test("at Challenger, with nothing above, the room before demotion", () => {
+    // 1st of 10,000 is Challenger to 2nd; 3rd is Grandmaster, 4 points under.
+    expect(tierLine(table(10_000), "e1", CUTOFFS)).toEqual({ to: "demote", points: 4, tier: { tier: "grandmaster", division: null } });
+  });
+
+  test("at the top of a field too small for Challenger, no line", () => {
+    expect(tierLine(table(1_000), "e1", CUTOFFS)).toBeNull();
   });
 });
 

@@ -21,6 +21,8 @@ export const WORDS = {
   seriesLoss: "Series loss",
   versus: "v",
   to: "to",
+  /** At Challenger, before the tier below: `≈4 pts clear of Grandmaster`. */
+  clearOf: "clear of",
 } as const;
 
 /** Your week's lines. */
@@ -35,7 +37,7 @@ export const versus = (opponent: string) => `${WORDS.versus} ${opponent}`;
 /** `25 · owned by 46%`, `15 · not yours · owned by 41%`: a Your week pick's points and who owns him. */
 export const ownedBy = (points: number, pct: string, mine: boolean) => (mine ? `${points} · owned by ${pct}` : `${points} · not yours · owned by ${pct}`);
 
-/** `≈6 pts`: the points to your next Overall tier; `to` and the tier follow. */
+/** `≈6 pts`: the points to your next Overall tier, or your room over the tier below; `to` or `clear of` and the tier follow. */
 export const toTier = (points: number) => `≈${points} pts`;
 
 /** `Captains averaged 19`: the average Captain's points, on the Captain's sheet. */

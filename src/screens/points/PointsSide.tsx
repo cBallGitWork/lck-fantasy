@@ -1,4 +1,4 @@
-import { Hint, HINTS, LinkGo, MeDot, pct, RankMove, SideSection } from "../../parts";
+import { Hint, HINTS, LinkGo, MeDot, pct, RankMove, SideSection, tierName } from "../../parts";
 import { PATHS } from "../../paths";
 import type { PointsData, WeekPick } from "./types";
 import { dot, ownedBy, PICK_WORDS, toTier, WORDS } from "./words";
@@ -21,8 +21,8 @@ export function YourWeek({ picks }: { picks: WeekPick[] }) {
   );
 }
 
-/** Each league's rank and its move, the points to your next Overall tier, All leagues. */
-export function Leagues({ leagues, nextTier }: Pick<PointsData, "leagues" | "nextTier">) {
+/** Each league's rank and its move, the points to your next Overall tier (at Challenger, your room over Grandmaster), All leagues. */
+export function Leagues({ leagues, tierLine }: Pick<PointsData, "leagues" | "tierLine">) {
   return (
     <SideSection title={WORDS.leagues}>
       <div className="points__ranks">
@@ -33,7 +33,7 @@ export function Leagues({ leagues, nextTier }: Pick<PointsData, "leagues" | "nex
               {l.tier && (
                 <>
                   {dot}
-                  <Hint line={HINTS.tier}>{l.tier}</Hint>
+                  <Hint line={HINTS.tier}>{tierName(l.tier)}</Hint>
                 </>
               )}
             </span>
@@ -42,9 +42,11 @@ export function Leagues({ leagues, nextTier }: Pick<PointsData, "leagues" | "nex
           </div>
         ))}
       </div>
-      <p className="points__tier quiet">
-        <b>{toTier(nextTier.points)}</b> {WORDS.to} <Hint line={HINTS.tier}>{nextTier.tier}</Hint>
-      </p>
+      {tierLine && (
+        <p className="points__tier quiet">
+          <b>{toTier(tierLine.points)}</b> {tierLine.to === "promote" ? WORDS.to : WORDS.clearOf} <Hint line={HINTS.tier}>{tierName(tierLine.tier)}</Hint>
+        </p>
+      )}
       <LinkGo go={{ to: PATHS.leagues }}>{WORDS.allLeagues}</LinkGo>
     </SideSection>
   );

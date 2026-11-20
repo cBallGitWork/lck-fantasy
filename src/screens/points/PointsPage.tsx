@@ -38,7 +38,7 @@ export function PointsPage({
 
   const side = (
     <>
-      <Leagues leagues={data.leagues} nextTier={data.nextTier} />
+      <Leagues leagues={data.leagues} tierLine={data.tierLine} />
       <SideSection title={WORDS.seriesTitle}>
         <SeriesList series={data.series} />
       </SideSection>

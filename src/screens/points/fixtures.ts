@@ -169,10 +169,10 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     bench: squad.filter((p) => p.slot === "bench").map((p) => playerOf(list, p, games)),
     yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, mine: false }],
     leagues: [
-      { name: "Overall", tier: MY_OVERALL.tier,rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
+      { name: "Overall", tier: MY_OVERALL.tier, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
       ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),
     ],
-    nextTier: { points: 6, tier: "Diamond IV" },
+    tierLine: { to: "promote", points: 6, tier: { tier: "diamond", division: 4 } },
     series: list,
   };
 }

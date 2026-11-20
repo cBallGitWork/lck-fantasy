@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
-import { Columns, count, Hint, HINTS, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, RankMove, SectionHead, SponsorNote, TierShield, Time } from "../../parts";
+import { Columns, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SectionHead, SponsorNote, TierMark, Time, type Standing } from "../../parts";
 import { Following, Leagues, type Cheering } from "./band";
 import "./home.css";
-import type { Countdown, HomeShared, OverallTier } from "./types";
+import type { Countdown, HomeShared } from "./types";
 
 /** What Home's keys do; the route wires them. */
 export interface HomeActions extends Cheering {
@@ -11,24 +11,12 @@ export interface HomeActions extends Cheering {
 }
 
 /** The team name and hangul; beside it, Overall as a tier, its rank and move, the sponsor's badge. */
-function HomeHead({ team, hangul, overall }: { team: string; hangul: string; overall: OverallTier }) {
+function HomeHead({ team, hangul, overall }: { team: string; hangul: string; overall: Standing }) {
   return (
     <div className="home__head">
       <PageHead title={team} hangul={hangul} />
       <div className="home__tier">
-        <TierShield className="home__shield" />
-        <div>
-          <div className="home__tier-name">
-            <Hint line={HINTS.tier}>{overall.tier}</Hint>
-            <span className="home__tier-hangul quiet" lang="ko">
-              {overall.hangul}
-            </span>
-          </div>
-          <div className="home__tier-rank">
-            <b className="num">{count(overall.rank)}</b>
-            <RankMove move={overall.move} />
-          </div>
-        </div>
+        <TierMark standing={overall} />
         <span className="home__badge">
           <Placeholder word="Badge" fill />
         </span>

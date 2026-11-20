@@ -62,6 +62,7 @@ export { Table, type Column } from "./display/Table";
 export { SheetKeys } from "./controls/SheetKeys";
 export { TabPanel, Tabs } from "./controls/Tabs";
 export { FinalTag, LiveTag, NotFinalTag, Tag } from "./display/Tag";
+export { TierMark, TierTag, type Standing } from "./display/TierMark";
 export { TierShield } from "./display/TierShield";
 export { Toast } from "./controls/Toast";
 export { Time } from "./display/Time";
@@ -77,11 +78,16 @@ export {
   CHEERS_RECEIVED,
   type CheerKind,
   CLOSE,
+  DIVISION_NUMERAL,
   HINTS,
   LOG_IN,
   PHOTO_CREDIT,
   RIOT_NOTICE,
   SAVED_NEWS,
+  TIER_WORDS,
+  tierHangul,
+  tierName,
   TRUCK_HIRE,
+  UNRANKED,
   YOUR_TIME,
 } from "./words";

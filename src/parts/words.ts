@@ -1,6 +1,7 @@
 // The shared parts' words, named once. Every word a player reads in a part lives here; a figure's
 // format (`2–1`, `Bo3`, `G2`) stays in text/figures.ts.
 
+import type { Tier, TierName } from "../../convex/leagues/tiers";
 import { PRODUCT } from "../paths";
 
 export const WORDS = {
@@ -88,3 +89,37 @@ export const CHEERS_RECEIVED = "Cheers and jeers";
 
 /** The only place a screen says Truck (plate.md, One name per thing): the credit's words. */
 export const TRUCK_HIRE = "Truck hire by";
+
+/** Each Overall tier's name and hangul, as the LoL client says them (spec/08, Overall tiers). */
+export const TIER_WORDS: Record<TierName, { name: string; hangul: string }> = {
+  iron: { name: "Iron", hangul: "아이언" },
+  bronze: { name: "Bronze", hangul: "브론즈" },
+  silver: { name: "Silver", hangul: "실버" },
+  gold: { name: "Gold", hangul: "골드" },
+  platinum: { name: "Platinum", hangul: "플래티넘" },
+  emerald: { name: "Emerald", hangul: "에메랄드" },
+  diamond: { name: "Diamond", hangul: "다이아몬드" },
+  master: { name: "Master", hangul: "마스터" },
+  grandmaster: { name: "Grandmaster", hangul: "그랜드마스터" },
+  challenger: { name: "Challenger", hangul: "챌린저" },
+};
+
+/** Everyone's tier until gameweek 1 is final (spec/08). */
+export const UNRANKED = "Unranked";
+
+/** A division's numeral: I the best. */
+export const DIVISION_NUMERAL = ["I", "II", "III", "IV"] as const;
+
+/** A tier's short name: `Emerald I`, `Master`, `Unranked`. */
+export function tierName(tier: Tier): string {
+  if (tier.tier === "unranked") return UNRANKED;
+  const { name } = TIER_WORDS[tier.tier];
+  return tier.division === null ? name : `${name} ${DIVISION_NUMERAL[tier.division - 1]}`;
+}
+
+/** A tier's hangul, its division a figure as the Korean client has it: `에메랄드 1`; none for Unranked. */
+export function tierHangul(tier: Tier): string | null {
+  if (tier.tier === "unranked") return null;
+  const { hangul } = TIER_WORDS[tier.tier];
+  return tier.division === null ? hangul : `${hangul} ${tier.division}`;
+}

@@ -14,22 +14,6 @@
   padding-left: var(--s-5);
   border-left: var(--m-rule) solid var(--line);
 }
-.home__shield {
-  width: calc(var(--s-6) + var(--s-2));
-}
-.home__tier-name {
-  font-size: var(--size-head);
-  font-weight: var(--w-bold);
-  line-height: var(--lh-snug);
-}
-.home__tier-hangul {
-  margin-left: var(--s-2);
-  font-weight: var(--w-regular);
-}
-.home__tier-rank b {
-  margin-right: var(--s-2);
-  font-size: var(--size-lead);
-}
 .home__badge {
   display: flex;
   align-self: flex-start;

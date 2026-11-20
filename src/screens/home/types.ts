@@ -1,17 +1,8 @@
 // What Home shows, as the backend will feed it (issue #80's one query). Fixtures fill it until then.
 
 import type { Stream } from "../../fixtures/streams";
-import type { CheerKind, Score } from "../../parts";
+import type { CheerKind, Score, Standing } from "../../parts";
 import type { IconKey, Mark, RoleKey, SlotKey } from "../../rift";
-
-/** Overall as a LoL tier with divisions (spec/08): the tier with its division, its hangul, the rank and move. */
-export interface OverallTier {
-  tier: string;
-  hangul: string;
-  rank: number;
-  /** Places moved: up positive, down negative. */
-  move: number;
-}
 
 export interface Countdown {
   days: number;
@@ -63,7 +54,8 @@ export interface WeekPoints {
 export interface HomeShared {
   team: string;
   hangul: string;
-  overall: OverallTier;
+  /** Overall as a LoL tier (spec/08): the tier, its rank and move. */
+  overall: Standing;
   deadline: HomeDeadline;
   countdown: Countdown;
   freeTransfers: number;

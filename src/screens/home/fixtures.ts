@@ -47,7 +47,7 @@ function followed(who: keyof typeof FOLLOWED_WEEK3) {
 const SHARED: Omit<HomeShared, "countdown"> = {
   team: MANAGER.team,
   hangul: MANAGER.hangul,
-  overall: { tier: MY_OVERALL.tier, hangul: MY_OVERALL.hangul, rank: MY_OVERALL.rank, move: MY_OVERALL.move },
+  overall: { tier: MY_OVERALL.tier, rank: MY_OVERALL.rank, move: MY_OVERALL.move },
   deadline: { week: 4, competition: COMPETITION, local: WEEK4_DEADLINE.local },
   freeTransfers: WEEK4_FREE_TRANSFERS,
   following: [

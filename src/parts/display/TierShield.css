@@ -13,3 +13,10 @@
   stroke-width: var(--m-rule);
   opacity: var(--opacity-tier-band);
 }
+/* Unranked: the outline alone (spec/08). */
+.tier-shield--unranked .tier-shield__body {
+  fill: none;
+}
+.tier-shield--unranked .tier-shield__band {
+  display: none;
+}

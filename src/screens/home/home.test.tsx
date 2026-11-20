@@ -139,10 +139,18 @@ describe("idle", () => {
     expect(markup.match(/class="home__plate-role[ "]/g)).toHaveLength(HOME_IDLE.lineup.length);
   });
 
-  test("draws the jeer on the shared LED panel and Overall on the shared, outlined tier shield", () => {
+  test("draws the jeer on the shared LED panel and Overall on the shared tier mark", () => {
     const markup = html(<Home data={HOME_IDLE} />);
     expect(markup).toContain('<div class="led">Sell your bot laner</div>');
-    expect(markup).toContain('<svg class="tier-shield home__shield"');
+    expect(markup).toContain('<svg class="tier-shield tier-mark__shield"');
+  });
+
+  test("before Week 1 is final: the outlined shield and Unranked, no rank line (spec/08)", () => {
+    const unranked = { ...HOME_IDLE, overall: { tier: { tier: "unranked" as const }, rank: null, move: null } };
+    const markup = html(<Home data={unranked} />);
+    expect(markup).toContain('<svg class="tier-shield tier-shield--unranked tier-mark__shield"');
+    expect(markup).not.toContain("tier-mark__rank");
+    expectInOrder(text(<Home data={unranked} />), ["Baron Steal FC", "바론 스틸 FC", "Unranked", "Badge"]);
   });
 });
 

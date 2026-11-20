@@ -31,6 +31,11 @@ export const WORDS = {
   /** History: the table's name, for a reader. */
   history: "History",
   buffsLeft: "Buffs left:",
+  /** History: each ended season's final tier and rank on Overall (spec/08). */
+  pastSeasons: "Past seasons",
+  season: "Season",
+  tier: "Tier",
+  rank: "Rank",
   out: "Out",
   in: "In",
   ptsGained: "Pts gained",

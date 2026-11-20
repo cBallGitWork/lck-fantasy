@@ -2,7 +2,6 @@
 // the rules in rules.ts; every number comes from facts.ts or the competition's data, so a tuned
 // value changes the text with it.
 import type { PlayerRole } from "../../../convex/squads/squad";
-import type { TierName } from "../../../convex/leagues/tiers";
 import { BUFF_DOES, CAPTAIN_MULTIPLIER, TEAM_CAP, type BuffName } from "../../fixtures/competition";
 import { NONE } from "../../parts";
 import { ROLE_NAME, type RoleKey } from "../../rift";
@@ -132,10 +131,5 @@ export const BUFF_LIKE: Record<BuffName, string> = {
 
 /** Each buff's one line, as its Pick Team card says it. */
 export const buffDoes = (buff: BuffName) => BUFF_DOES[buff];
-
-export const tierName = (tier: TierName) => tier.charAt(0).toUpperCase() + tier.slice(1);
-
-/** A division's numeral: I the best. */
-export const DIVISION_NUMERAL = ["I", "II", "III", "IV"] as const;
 
 export const weekName = (week: number) => `Week ${week}`;

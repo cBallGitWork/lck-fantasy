@@ -1,5 +1,5 @@
 import { BUFFS } from "../../fixtures/competition";
-import { cx, LinkGo, NONE, signed, Time } from "../../parts";
+import { cx, DIVISION_NUMERAL, LinkGo, NONE, signed, TIER_WORDS, Time } from "../../parts";
 import { helpGo, PATHS, type Go } from "../../paths";
 import { MarkBadge } from "../../rift";
 import { coachRows, deadlineIn, playerRows, tierRows, type CoachRow, type HelpData } from "./facts";
@@ -12,13 +12,11 @@ import {
   COACH_HEADS,
   coachLine,
   DEADLINE_HEADS,
-  DIVISION_NUMERAL,
   LINKS,
   NOTES,
   PLAYER_HEADS,
   playerLine,
   TIER_HEAD,
-  tierName,
   weekName,
   type Block,
 } from "./words";
@@ -116,7 +114,7 @@ function TiersTable({ data }: { data: HelpData }) {
       <tbody>
         {tierRows(data.tiers).map((row) => (
           <tr key={row.tier}>
-            <td>{tierName(row.tier)}</td>
+            <td>{TIER_WORDS[row.tier].name}</td>
             {DIVISION_NUMERAL.map((n, i) => {
               const top = row.tops[i];
               return (

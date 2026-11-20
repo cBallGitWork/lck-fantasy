@@ -9,8 +9,10 @@ const page = (tab: ProfileTab, data: ProfileData = PROFILE, week?: number) => (
   <Profile data={data} account={MANAGER.team} initialTab={tab} initialWeek={week} />
 );
 
-const BANNER = ["쵸비는 바로 거기 있었다", "Chovy Was Right There", "Minji Park", "Following ✓", "Points", "History", "Transfers"];
-const LEAGUES = ["Leagues", "Overall", "Emerald I", "21,804", "3,112", "South Korea", "2,310", "402", "GEN supporters", "1,977", "288", "Pub League", "3", "1"];
+// Her tier by her name, from the tier function: 21,804th of the shared Overall's 712,480 is the top
+// 3.06%, Diamond III (2.4% to 3.3%).
+const BANNER = ["쵸비는 바로 거기 있었다", "Chovy Was Right There", "Minji Park", "Diamond III", "다이아몬드 3", "21,804", "3,112", "Following ✓", "Points", "History", "Transfers"];
+const LEAGUES = ["Leagues", "Overall", "21,804", "3,112", "South Korea", "2,310", "402", "GEN supporters", "1,977", "288", "Pub League", "3", "1"];
 
 describe("Points", () => {
   const out = text(page("Points"));
@@ -69,10 +71,8 @@ describe("Points", () => {
     for (const id of ["overall", "south-korea", "gen-supporters", "pub-league"]) expect(markup).toContain(`href="/leagues/${id}"`);
   });
 
-  test("draws each cheer and jeer on the shared LED panel and Overall on the shared, outlined tier shield", () => {
-    const markup = html(page("Points"));
-    expect(markup).toContain('<div class="led">The template was right there, mate.</div>');
-    expect(markup).toContain('<svg class="tier-shield profile__tier"');
+  test("draws each cheer and jeer on the shared LED panel", () => {
+    expect(html(page("Points"))).toContain('<div class="led">The template was right there, mate.</div>');
   });
 
   test("an earlier week shows its points, its team loading until the backend feeds it, and no cheers or jeers", () => {
@@ -101,6 +101,27 @@ describe("History", () => {
     const markup = html(page("History"));
     expect(markup).toContain('aria-label="Open Week 1"');
     expect(markup).not.toContain("Cheers and jeers");
+  });
+
+  test("Past seasons, under the weeks, one row a season: Season, Tier, Rank; hidden until a season has ended (spec/08)", () => {
+    expect(text(page("History"))).not.toContain("Past seasons");
+    const ended: ProfileData = { ...PROFILE, pastSeasons: [{ season: "LCK 2027", tier: { tier: "diamond", division: 2 }, rank: 2_104 }] };
+    expectInOrder(text(page("History", ended)), ["Buffs left: Double Captain · Coach Diff", "Past seasons", "Season", "Tier", "Rank", "LCK 2027", "Diamond II", "2,104th", "Leagues"]);
+    expect(html(page("History", ended))).toContain('<span class="tier-tag"><svg class="tier-shield tier-tag__shield"');
+  });
+});
+
+describe("her tier", () => {
+  test("shows by her team name in the banner, once: not again in the Leagues column (spec/08)", () => {
+    const markup = html(page("Points"));
+    expect(markup.match(/<svg class="tier-shield/g)).toHaveLength(1);
+    expect(markup).toContain('<div class="tier-mark profile__tier">');
+  });
+
+  test("Unranked: the outlined shield and its word, no rank line", () => {
+    const unranked: ProfileData = { ...PROFILE, manager: { ...PROFILE.manager, overall: { tier: { tier: "unranked" }, rank: null, move: null } } };
+    expectInOrder(text(page("Points", unranked)), ["Minji Park", "Unranked", "Following ✓"]);
+    expect(html(page("Points", unranked))).not.toContain("tier-mark__rank");
   });
 });
 
@@ -164,7 +185,12 @@ test("History's Cost is the points a week's transfers took, — for none", () =>
 });
 
 test("a held rank, in Leagues or History, is RankMove's grey —", () => {
-  const held: ProfileData = { ...PROFILE, leagues: PROFILE.leagues.map((l) => ({ ...l, move: 0 })), history: PROFILE.history.map((r) => ({ ...r, move: 0 })) };
+  const held: ProfileData = {
+    ...PROFILE,
+    manager: { ...PROFILE.manager, overall: { ...PROFILE.manager.overall, move: 0 } },
+    leagues: PROFILE.leagues.map((l) => ({ ...l, move: 0 })),
+    history: PROFILE.history.map((r) => ({ ...r, move: 0 })),
+  };
   expect(html(page("Points", held))).toContain('<span class="rank-held">—</span>');
   const history = html(page("History", held));
   expect(history).toContain('<span class="rank-held">—</span>');

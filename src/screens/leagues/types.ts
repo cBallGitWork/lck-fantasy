@@ -1,5 +1,7 @@
 // What the Leagues page is fed: the backend's shapes (convex/leagues/tables.ts), as props.
 
+import type { Tier } from "../../../convex/leagues/tiers";
+
 /** A table's tab: the whole season or a split, as the competition names them. */
 export type TableTab = string;
 
@@ -48,6 +50,8 @@ export interface StandingRow {
   split?: number;
   mine: boolean;
   chase: ChaseTag | null;
+  /** On Overall: the manager's tier for the season, shown on its season table (spec/08). */
+  tier?: Tier;
 }
 
 /** One table: runs of consecutive rows, a gap (`⋯`) between runs, and how many pages it holds. */

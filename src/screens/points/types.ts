@@ -1,6 +1,7 @@
 import type { Score, SeriesRow, SeriesState, WeekNav } from "../../parts";
 import type { Mark, PersonRole, RoleKey, SlotKey } from "../../rift";
 import type { Kda, LineWord } from "../../fixtures/week3";
+import type { Tier, TierLine } from "../../../convex/leagues/tiers";
 
 /** One game a player played: its champion, won or lost (neither while live), its points, and whether it counts. */
 export interface PointsGame {
@@ -69,7 +70,7 @@ export interface WeekPick {
 export interface LeagueRank {
   name: string;
   /** Overall's tier after its name (`Overall · Emerald I`). */
-  tier?: string;
+  tier?: Tier;
   rank: string;
   /** Places moved: up when positive. */
   move: number;
@@ -91,8 +92,8 @@ export interface PointsData {
   bench: PointsPlayer[];
   yourWeek: WeekPick[];
   leagues: LeagueRank[];
-  /** The points to your Overall tier's next step. */
-  nextTier: { points: number; tier: string };
+  /** The points to your Overall tier's next step; at Challenger, your room over the tier below (spec/08). None while Unranked. */
+  tierLine: TierLine | null;
   series: readonly SeriesRow[];
 }
 

@@ -69,8 +69,9 @@ const measure = {
   colFigure: 72,
   colPrice: 80,
   colRole: 112,
-  /** A league table's rank, Captain, and points (the week's, the split's, Total) columns. */
+  /** A league table's rank, Overall's Tier (the shield and `Grandmaster`), Captain, and points (the week's, the split's, Total) columns. */
   colRank: 64,
+  colTier: 152,
   colCaptain: 152,
   colScore: 120,
   /** Profile Points' slot, player and Pts columns. */

@@ -105,6 +105,13 @@ test("the links go where the README says: Highest, Watch, Full stats, All league
   expect(out).toContain('href="/leagues"');
 });
 
+test("the tier line: the promote line; at Challenger, the room over Grandmaster; none while Unranked (spec/08)", () => {
+  const atChallenger = { ...POINTS_FIXTURE, tierLine: { to: "demote" as const, points: 4, tier: { tier: "grandmaster" as const, division: null } } };
+  expect(text(<PointsPage data={atChallenger} />)).toContain("≈4 pts clear of Grandmaster");
+  const unranked = { ...POINTS_FIXTURE, tierLine: null };
+  expect(html(<PointsPage data={unranked} />)).not.toContain("points__tier");
+});
+
 test("the sheet stays closed until a player is tapped", () => {
   const out = text(<PointsPage data={POINTS_FIXTURE} />);
   expect(out).not.toContain("Full stats");

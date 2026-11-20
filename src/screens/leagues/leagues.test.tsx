@@ -103,6 +103,18 @@ describe("Overall in Split 1 (overall.html's layout)", () => {
   test("Season and Split 1 are one table until Split 2 starts", () => {
     expect(league.tables.Season).toBe(league.tables["Split 1"]);
   });
+
+  test("a split's table has no Tier column (spec/08: one tier for the season)", () => {
+    expect(out).not.toContain("Tier");
+    expect(out).not.toContain("Challenger");
+  });
+
+  test("the season's table has a Tier column: the small shield and the short name, from the tier function (spec/08)", () => {
+    const season = { ...tableProps(league), tab: COMPETITION.seasonTab };
+    const markup = html(<OverallTable league={league} group={league.openGroup} onGroup={noop} {...season} />);
+    expectInOrder(plain(markup), ["Rank", "Team · Manager", "Tier", "Captain", "Unkillable FC", "Challenger", "Faker", "Rookie Mistake", "Emerald I", MANAGER.team, "Emerald I"]);
+    expect(markup).toContain('<span class="tier-tag"><svg class="tier-shield tier-tag__shield"');
+  });
 });
 
 describe("Overall in Split 2, Legend (overall.html)", () => {
@@ -122,7 +134,7 @@ describe("the page", () => {
   test("/leagues opens Pub League, then the list on the right, the sponsor note last", async () => {
     const out = await htmlAt("/leagues");
     expect(out).toContain('data-screen="leagues"');
-    expectInOrder(plain(out), ["Leagues", "리그", "Pub League", "PUB-7K2Q", "General", "Overall", "48,211", "6,904", "of 212,480", "United Kingdom", "T1 supporters", "Private", "Pub League", "2nd", "12 managers", "Flol Discord", "14th", "86 managers", "Create a league", "Join a league", "All sponsors are made up."]);
+    expectInOrder(plain(out), ["Leagues", "리그", "Pub League", "PUB-7K2Q", "General", "Overall", "48,211", "6,904", "of 712,480", "United Kingdom", "T1 supporters", "Private", "Pub League", "2nd", "12 managers", "Flol Discord", "14th", "86 managers", "Create a league", "Join a league", "All sponsors are made up."]);
     expect(out).toMatch(/leagues__list-row--on[^>]*>.*?Pub League/);
   });
 

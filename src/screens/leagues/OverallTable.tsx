@@ -6,7 +6,8 @@ import { seasonSplit, WORDS } from "./words";
 
 /**
  * Overall: the season, and the split on a split's tab; its groups on the grouped tab; the
- * tabs with the sponsor at their right; the table, then the pager with Find me.
+ * tabs with the sponsor at their right; the table, then the pager with Find me. Only the season's
+ * table has a Tier column: one tier for the season, none for a split (spec/08).
  */
 export function OverallTable({
   league,
@@ -29,7 +30,7 @@ export function OverallTable({
         </span>
       </div>
       <TabPanel id={tabsId}>
-        <TableBody league={league} {...table} />
+        <TableBody league={league} tiered={table.tab === competition.seasonTab} {...table} />
       </TabPanel>
     </section>
   );

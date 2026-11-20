@@ -1,0 +1,32 @@
+/* Overall's tier: the shield, the tier and its hangul, the rank and move beneath (Home's picture). */
+.tier-mark {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.tier-mark__shield {
+  width: calc(var(--s-6) + var(--s-2));
+}
+.tier-mark__name {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.tier-mark__hangul {
+  margin-left: var(--s-2);
+  font-weight: var(--w-regular);
+}
+.tier-mark__rank b {
+  margin-right: var(--s-2);
+  font-size: var(--size-lead);
+}
+
+/* A table's tier: the small shield and the short name. */
+.tier-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.tier-tag__shield {
+  width: var(--m-mark);
+}

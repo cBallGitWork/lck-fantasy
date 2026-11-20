@@ -24,6 +24,11 @@
   color: var(--text);
   font-size: var(--size-lead);
 }
+/* Her tier by her team name, ruled off as on Home. */
+.profile__tier {
+  padding-left: var(--s-5);
+  border-left: var(--m-rule) solid var(--line);
+}
 .profile__follow {
   margin-left: auto;
 }
@@ -80,6 +85,9 @@
   color: var(--text);
   font-weight: var(--w-semi);
 }
+.profile__past {
+  margin-top: var(--s-5);
+}
 
 /* The side column: leagues, then cheers and jeers. */
 .profile__leagues {
@@ -95,17 +103,6 @@
 }
 .profile__league:hover {
   background: var(--fill);
-}
-.profile__league-name {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-}
-.profile__league-name b {
-  font-weight: var(--w-semi);
-}
-.profile__tier {
-  width: var(--m-mark);
 }
 .profile__cheer {
   margin-bottom: var(--s-2);

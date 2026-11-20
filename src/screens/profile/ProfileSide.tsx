@@ -1,9 +1,9 @@
-import { CHEER_WORD, CHEERS_RECEIVED, count, GoLink, Led, RankMove, SideSection, TierShield, TruckHire } from "../../parts";
+import { CHEER_WORD, CHEERS_RECEIVED, count, GoLink, Led, RankMove, SideSection, TruckHire } from "../../parts";
 import { leagueGo } from "../../paths";
 import type { LeagueRow, Parked } from "./fixtures";
 import { cheersWeek, fromWord, WORDS } from "./words";
 
-/** The side column: her leagues, her tier beside Overall, and on Points the cheers and jeers parked on her that week. */
+/** The side column: her leagues (her tier is by her name in the banner, not here: spec/08), and on Points the cheers and jeers parked on her that week. */
 export function ProfileSide({ leagues, cheers }: { leagues: LeagueRow[]; cheers?: { week: number; list: Parked[] } }) {
   return (
     <>
@@ -12,17 +12,7 @@ export function ProfileSide({ leagues, cheers }: { leagues: LeagueRow[]; cheers?
           {leagues.map((league) => (
             <li key={league.id}>
               <GoLink className="profile__league" go={leagueGo(league.id)}>
-                <span className="profile__league-name">
-                  {league.name}
-                  {league.tier && (
-                    <>
-                      <TierShield className="profile__tier" />
-                      <b>
-                        {league.tier.name} {league.tier.division}
-                      </b>
-                    </>
-                  )}
-                </span>
+                <span>{league.name}</span>
                 <span>
                   <b className="num">{count(league.rank)}</b> <RankMove move={league.move} />
                 </span>

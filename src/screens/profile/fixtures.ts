@@ -5,7 +5,9 @@
 import { MANAGERS, MINJI_EARLIER_WEEKS, MINJI_WEEK3 } from "../../fixtures/managers";
 import { playedFromSide, seriesById } from "../../fixtures/series";
 import { HIT_POINTS, playerId, WEEK3_FINAL, WEEK3_SERIES_FINAL, type BuffName, type TeamCode } from "../../fixtures/week3";
-import { score, type CheerKind } from "../../parts";
+import { overallTierOf } from "../../fixtures/myLeagues";
+import { score, type CheerKind, type Standing } from "../../parts";
+import type { Tier } from "../../../convex/leagues/tiers";
 import type { Mark, RoleKey, SlotKey, SquadSlot } from "../../rift";
 
 /** Whether you follow the manager; `self` is your own profile, which has no key. */
@@ -18,6 +20,8 @@ export interface ProfileManager {
   /** The team name in hangul, on the banner (spec/13). */
   hangul: string;
   follow: FollowState;
+  /** Overall as a LoL tier, by the team name (spec/08): the tier, its rank and move. */
+  overall: Standing;
 }
 
 export interface ProfilePlayer {
@@ -100,8 +104,13 @@ export interface LeagueRow {
   rank: number;
   /** Places moved: up is positive. */
   move: number;
-  /** Overall's tier (spec/08): its name and division. */
-  tier?: { name: string; division: string };
+}
+
+/** A season that has ended: its final tier and rank on Overall (spec/08, History's Past seasons). */
+export interface PastSeason {
+  season: string;
+  tier: Tier;
+  rank: number;
 }
 
 export interface ProfileData {
@@ -111,6 +120,8 @@ export interface ProfileData {
   weeks: PointsWeek[];
   history: HistoryRow[];
   buffsLeft: BuffName[];
+  /** Each ended season, latest first; none until a season has ended. */
+  pastSeasons: PastSeason[];
   transfers: TransferWeek[];
   leagues: LeagueRow[];
 }
@@ -142,8 +153,18 @@ const WEEK3_TEAM: ProfilePick[] = [
 
 const [W1, W2] = MINJI_EARLIER_WEEKS;
 
+/** Her Overall rank at Week 3 and its move. */
+const OVERALL = { rank: 21_804, move: 3_112 };
+
 export const PROFILE: ProfileData = {
-  manager: { id: MANAGERS.minji.id, name: MANAGERS.minji.name, team: MANAGERS.minji.team, hangul: "쵸비는 바로 거기 있었다", follow: "following" },
+  manager: {
+    id: MANAGERS.minji.id,
+    name: MANAGERS.minji.name,
+    team: MANAGERS.minji.team,
+    hangul: "쵸비는 바로 거기 있었다",
+    follow: "following",
+    overall: { ...OVERALL, tier: overallTierOf(OVERALL.rank) },
+  },
   currentWeek: 3,
   weeks: [
     { week: 1, points: W1, final: true, cheers: [] },
@@ -162,11 +183,12 @@ export const PROFILE: ProfileData = {
     },
   ],
   history: [
-    { week: 3, ...MINJI_WEEK3, overall: 21_804, move: 3_112, transfers: 5, cost: 3 * HIT_POINTS, bankM: 0.5, valueM: 100.9, buff: "Bench Boost" },
+    { week: 3, ...MINJI_WEEK3, overall: OVERALL.rank, move: OVERALL.move, transfers: 5, cost: 3 * HIT_POINTS, bankM: 0.5, valueM: 100.9, buff: "Bench Boost" },
     { week: 2, points: W2, total: W1 + W2, weekRank: 4_211, overall: 24_916, move: 9_870, transfers: 1, bankM: 1.0, valueM: 100.6 },
     { week: 1, points: W1, total: W1, weekRank: 34_786, overall: 34_786, bankM: 2.5, valueM: 100.0 },
   ],
   buffsLeft: ["Double Captain", "Coach Diff"],
+  pastSeasons: [],
   transfers: [
     {
       week: 3,
@@ -188,7 +210,7 @@ export const PROFILE: ProfileData = {
     },
   ],
   leagues: [
-    { id: "overall", name: "Overall", rank: 21_804, move: 3_112, tier: { name: "Emerald", division: "I" } },
+    { id: "overall", name: "Overall", ...OVERALL },
     { id: "south-korea", name: "South Korea", rank: 2_310, move: 402 },
     { id: "gen-supporters", name: "GEN supporters", rank: 1_977, move: 288 },
     { id: "pub-league", name: "Pub League", rank: 3, move: -1 },

@@ -35,6 +35,8 @@ export const WORDS = {
   findMe: "Find me",
   rank: "Rank",
   teamManager: "Team · Manager",
+  /** Overall's season table: each manager's tier (spec/08). */
+  tier: "Tier",
   captain: "Captain",
   total: "Total",
   name: "Name",

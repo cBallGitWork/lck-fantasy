@@ -5,7 +5,7 @@
 // these once it is wired (#38).
 
 import { MANAGERS, MINJI_WEEK3, type MadeUpManager } from "../../fixtures/managers";
-import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL, type MyLeague } from "../../fixtures/myLeagues";
+import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL, overallTierOf, type MyLeague } from "../../fixtures/myLeagues";
 import { seriesById } from "../../fixtures/series";
 import { MANAGER, MY_WEEK3, POINTS_WEEK, SEASON, WEEK3_DEADLINE, WEEK4_SERIES } from "../../fixtures/week3";
 import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, Standings, StandingRow } from "./types";
@@ -128,11 +128,14 @@ const FLOL_DISCORD: LeagueView = {
   },
 };
 
+/** Overall's rows, each with its manager's tier from the tier function (spec/08). */
+const tiered = (lines: Line[]): StandingRow[] => rows(lines).map((row) => ({ ...row, tier: overallTierOf(row.rank) }));
+
 /** Overall at Week 3: the season and Split 1 are one table until Split 2 starts. */
 const OVERALL_STANDINGS: Standings = {
   pages: 1063,
   runs: [
-    rows([
+    tiered([
       [1, null, "Unkillable FC", "Ha-eun Seo", "Faker", 112, 352],
       [2, 3, "Bang Bang Bot", "Marco Ruiz", "Ruler", 121, 349],
       [3, -1, "Faker's Fan Club", "Yuna Choi", "Faker", 88, 347],
@@ -141,7 +144,7 @@ const OVERALL_STANDINGS: Standings = {
       [6, null, "Faker Ate My Homework", "Ollie Dunn", "Faker", 97, 340],
       [7, -2, "Viper's Nest", "Mina Lee", "Viper", 80, 338],
     ]),
-    rows([
+    tiered([
       [MY_OVERALL.rank - 2, 6880, "Rookie Mistake", "Jon Park", "Bdd", 97, MY_SEASON_TOTAL + 1],
       [MY_OVERALL.rank - 1, 6901, "Smolder Shoulders", "Aisha Bello", "Aiming", 98, MY_SEASON_TOTAL],
       me("overall", MY_SEASON_TOTAL),

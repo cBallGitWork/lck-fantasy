@@ -39,12 +39,19 @@ export function LeagueHead({ name, sub, children }: { name: ReactNode; sub?: str
   );
 }
 
-/** The table, and its pager where it holds more than one page. */
-export function TableBody({ league, table, page, onPage, onFindMe }: { league: LeagueView } & Omit<TableProps, "competition" | "tab" | "onTab">) {
+/** The table, and its pager where it holds more than one page. `tiered`: Overall's season table, with its Tier column. */
+export function TableBody({
+  league,
+  table,
+  page,
+  onPage,
+  onFindMe,
+  tiered = false,
+}: { league: LeagueView; tiered?: boolean } & Omit<TableProps, "competition" | "tab" | "onTab">) {
   if (!table) return <Empty title={WORDS.noTable} />;
   return (
     <>
-      <Standings table={table} week={league.week} captainShown={league.captainShown} />
+      <Standings table={table} week={league.week} captainShown={league.captainShown} tiered={tiered} />
       {table.pages > 1 && <Pager pages={table.pages} page={page} onPage={onPage} onFindMe={onFindMe} />}
     </>
   );

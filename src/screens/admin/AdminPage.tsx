@@ -82,8 +82,9 @@ function Sim({ state, onPress, zone }: { state: Read<SimState>; onPress: (press:
       setPressing(false);
     }
   };
-  // Greyed out while a press plays, and once no game is left.
-  const off = pressing || !state.gamesLeft;
+  // Greyed out while a press plays, until the day's replays are final, and once no game is left.
+  const replaying = state.replaying > 0;
+  const off = pressing || replaying || !state.gamesLeft;
   return (
     <section className="admin__sim">
       <p>
@@ -96,7 +97,8 @@ function Sim({ state, onPress, zone }: { state: Read<SimState>; onPress: (press:
           </button>
         ))}
         {pressing && <span className="quiet">{WORDS.pressing}</span>}
-        {!pressing && !state.gamesLeft && <span className="quiet">{WORDS.noGamesLeft}</span>}
+        {!pressing && replaying && <span className="quiet">{WORDS.replaying(state.replaying)}</span>}
+        {!pressing && !replaying && !state.gamesLeft && <span className="quiet">{WORDS.noGamesLeft}</span>}
       </div>
       {result instanceof Error ? <Failed error={result} /> : result && <p role="status">{playedLine(result, zone)}</p>}
     </section>

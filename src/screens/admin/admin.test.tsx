@@ -30,7 +30,7 @@ const alert = (fields: Partial<Alert>): Alert => ({
 
 describe("the admin section (#398)", () => {
   test("the Sim tab shows the sim's date in the admin's own time, and both keys", () => {
-    const state = { sim: true, now: kst(16, 0), gamesLeft: true } as const;
+    const state = { sim: true, now: kst(16, 0), gamesLeft: true, replaying: 0 } as const;
     const out = html(page(state));
     expect(out).toContain('data-screen="admin"');
     expect(text(page(state))).toContain("Sim date: Fri 15 Jan 15:00");
@@ -39,9 +39,16 @@ describe("the admin section (#398)", () => {
   });
 
   test("the keys are greyed out once no game is left", () => {
-    const out = html(page({ sim: true, now: kst(16, 0), gamesLeft: false }));
+    const out = html(page({ sim: true, now: kst(16, 0), gamesLeft: false, replaying: 0 }));
     expect(out.match(/disabled=""/g)).toHaveLength(2);
     expect(out).toContain(WORDS.noGamesLeft);
+  });
+
+  test("the keys are greyed out until the day's replays are final, saying how many are left", () => {
+    const out = html(page({ sim: true, now: kst(16, 0), gamesLeft: true, replaying: 2 }));
+    expect(out.match(/disabled=""/g)).toHaveLength(2);
+    expect(out).toContain(WORDS.replaying(2));
+    expect(WORDS.replaying(1)).toBe("1 game replaying");
   });
 
   test("the real site, a sim whose clock isn't started, and a failed read say so", () => {

@@ -152,7 +152,9 @@ export default defineSchema({
     lastError: v.optional(v.string()),
     /** Null until the first window is read: no live points yet. */
     reading: v.union(liveReading, v.null()),
-  }).index("by_esportsGameId", ["esportsGameId"]),
+  })
+    .index("by_esportsGameId", ["esportsGameId"])
+    .index("by_state", ["state"]),
 
   // The game (convex/signIn makes a manager, its entry and its picks on sign-up).
   managers: defineTable({

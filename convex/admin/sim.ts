@@ -1,14 +1,16 @@
 // The admin's Sim page (#398): the sim's date, and its Next day and Play to end, each saying what it
 // played: the series and any deadline passed. Next day replays the day's games through the live
-// path (convex/feeds/replay.ts); Play to end skips the replay (Craig, 19 Nov 2026).
+// path (convex/feeds/replay.ts); Play to end skips the replay (Craig, 19 Nov 2026). Both wait until
+// the day's replays are final (spec/15, The clock).
 import { v } from "convex/values";
 import { mutation, query, type QueryCtx } from "../_generated/server";
 import { replayDay } from "../feeds/replay";
 import { adminPassword, requireAdmin } from "./access";
 import { isSim, nextGame, playNextDay, playRest, simClock, type ClockMove } from "./clock";
 
-/** The Sim page: not the sim, a sim whose clock isn't started, or its moment and whether a game is left. */
-export type SimState = { sim: false } | { sim: true; now: null } | { sim: true; now: number; gamesLeft: boolean };
+/** The Sim page: not the sim, a sim whose clock isn't started, or its moment, whether a game is left
+ *  and how many games are still replaying. */
+export type SimState = { sim: false } | { sim: true; now: null } | { sim: true; now: number; gamesLeft: boolean; replaying: number };
 
 /** What a press played: the clock's new moment (null when no game was left), the series it played and
  *  the gameweeks whose deadlines it passed. */
@@ -21,7 +23,7 @@ export const simState = query({
     if (!isSim()) return { sim: false };
     const clock = await simClock(ctx);
     if (clock === null) return { sim: true, now: null };
-    return { sim: true, now: clock.now, gamesLeft: (await nextGame(ctx, clock.now)) !== null };
+    return { sim: true, now: clock.now, gamesLeft: (await nextGame(ctx, clock.now)) !== null, replaying: (await replaying(ctx)).length };
   },
 });
 
@@ -31,6 +33,7 @@ export const nextDay = mutation({
   args: pressArgs,
   handler: async (ctx, { password, competition }): Promise<Played> => {
     requireAdmin(password);
+    await refuseWhileReplaying(ctx);
     const move = await playNextDay(ctx, competition);
     if (move.to !== null) await replayDay(ctx, competition, move.from, move.to);
     return played(ctx, competition, move);
@@ -41,9 +44,20 @@ export const playToEnd = mutation({
   args: pressArgs,
   handler: async (ctx, { password, competition }): Promise<Played> => {
     requireAdmin(password);
+    await refuseWhileReplaying(ctx);
     return played(ctx, competition, await playRest(ctx, competition));
   },
 });
+
+/** The games still being read. On the sim every live game is a replay; one whose feed went down has
+ *  stopped and raised its alert, so it holds nothing up. */
+const replaying = (ctx: QueryCtx) => ctx.db.query("liveFrames").withIndex("by_state", (q) => q.eq("state", "polling")).collect();
+
+/** Both presses wait until the day's replays are final (spec/15, The clock). */
+async function refuseWhileReplaying(ctx: QueryCtx) {
+  const games = (await replaying(ctx)).length;
+  if (games > 0) throw new Error(`Still replaying ${games} of the day's games: press again once they're final.`);
+}
 
 /** What a move played: each series counted once, by its game 1, and the competition's deadlines it passed. */
 async function played(ctx: QueryCtx, name: string, { from, to }: ClockMove): Promise<Played> {

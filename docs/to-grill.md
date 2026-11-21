@@ -10,6 +10,12 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
   team's memes, fanbase, mascots and lore, and the second draws from that alone (Craig, 17 Nov
   2026).
 
+## The sim, left over (21 Nov 2026)
+
+- Whether a replay whose feed went down holds the Sim page's Next day and Play to end (spec/15,
+  The clock): built as no, so one bad game can't lock the sim; spec/15 says only "until the day's
+  replays are final" (#451).
+
 ## Open from the foundations work (11 Nov 2026)
 
 - How Unranked looks before gameweek 1 is final (spec/08): proposed, an outlined shield and

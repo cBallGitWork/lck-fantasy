@@ -22,6 +22,8 @@ export const WORDS = {
   playToEnd: "Play to end",
   pressing: "Playing…",
   noGamesLeft: "No games left",
+  /** `2 games replaying`: the keys wait until they're final. */
+  replaying: (games: number) => `${games} game${games === 1 ? "" : "s"} replaying`,
   /** `Thu 15 Jan: 2 series played, GW1 deadline passed`. */
   played: (day: string, series: number, deadlines: number[]) => {
     const passed = deadlines.length === 0 ? "" : `, ${deadlines.map((n) => `GW${n}`).join(", ")} deadline${deadlines.length === 1 ? "" : "s"} passed`;

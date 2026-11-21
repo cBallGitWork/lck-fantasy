@@ -64,6 +64,14 @@ async function setUp({ startClock = true } = {}) {
 
 const press = { password: PASSWORD, competition: "LCK" };
 
+/** Every replay still being read turns final, as its last window would make it. */
+async function finishReplays(t: Awaited<ReturnType<typeof setUp>>) {
+  await t.run(async (ctx) => {
+    const rows = await ctx.db.query("liveFrames").withIndex("by_state", (q) => q.eq("state", "polling")).collect();
+    for (const row of rows) await ctx.db.patch(row._id, { state: "finished" });
+  });
+}
+
 async function refusal(call: Promise<unknown>): Promise<AdminRefusal> {
   const error = await call.catch((e: unknown) => e);
   expect(error).toBeInstanceOf(ConvexError);
@@ -73,14 +81,16 @@ async function refusal(call: Promise<unknown>): Promise<AdminRefusal> {
 describe("the admin's Sim page (#398)", () => {
   test("shows the sim's moment, and whether a game is left", async () => {
     const t = await setUp();
-    expect(await t.query(sim.simState, { password: PASSWORD })).toEqual({ sim: true, now: kst(0, 12), gamesLeft: true });
+    expect(await t.query(sim.simState, { password: PASSWORD })).toEqual({ sim: true, now: kst(0, 12), gamesLeft: true, replaying: 0 });
   });
 
   test("Next day says the day it played to, its series and the deadline it passed", async () => {
     const t = await setUp();
     expect(await t.mutation(sim.nextDay, press)).toEqual({ to: kst(2, 0), series: 2, deadlines: [1] });
+    await finishReplays(t);
     expect(await t.mutation(sim.nextDay, press)).toEqual({ to: kst(4, 0), series: 1, deadlines: [2] });
-    expect(await t.query(sim.simState, { password: PASSWORD })).toEqual({ sim: true, now: kst(4, 0), gamesLeft: false });
+    await finishReplays(t);
+    expect(await t.query(sim.simState, { password: PASSWORD })).toEqual({ sim: true, now: kst(4, 0), gamesLeft: false, replaying: 0 });
     expect(await t.mutation(sim.nextDay, press)).toEqual({ to: null, series: 0, deadlines: [] });
   });
 
@@ -92,6 +102,24 @@ describe("the admin's Sim page (#398)", () => {
     const reads = await t.run((ctx) => ctx.db.system.query("_scheduled_functions").collect());
     const at = reads.filter((job) => job.name.includes("readLiveGame")).map((job) => job.scheduledTime - reads[0]!.scheduledTime);
     expect(at.map((ms) => Math.round(ms / 1000))).toEqual([0, 60, 120]);
+  });
+
+  test("both presses wait until the day's replays are final, and a replay whose feed went down holds nothing up", async () => {
+    const t = await setUp();
+    await t.mutation(sim.nextDay, press);
+    expect(await t.query(sim.simState, { password: PASSWORD })).toMatchObject({ now: kst(2, 0), replaying: 3 });
+    await expect(t.mutation(sim.nextDay, press)).rejects.toThrow("Still replaying 3 of the day's games");
+    await expect(t.mutation(sim.playToEnd, press)).rejects.toThrow("Still replaying 3");
+    await t.run(async (ctx) => {
+      const [first, second] = await ctx.db.query("liveFrames").collect();
+      await ctx.db.patch(first!._id, { state: "finished" });
+      await ctx.db.patch(second!._id, { state: "down" });
+    });
+    expect(await t.query(sim.simState, { password: PASSWORD })).toMatchObject({ replaying: 1 });
+    await expect(t.mutation(sim.nextDay, press)).rejects.toThrow("Still replaying 1 of the day's games");
+    await finishReplays(t);
+    expect(await t.query(sim.simState, { password: PASSWORD })).toMatchObject({ now: kst(2, 0), replaying: 0 });
+    expect(await t.mutation(sim.nextDay, press)).toEqual({ to: kst(4, 0), series: 1, deadlines: [2] });
   });
 
   test("Play to end plays every day left at once, with no replays", async () => {

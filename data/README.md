@@ -4,6 +4,7 @@ Seed data held per region, competition and season: teams, kit colours, stages. D
 
 - `invites.json`: how many personal invites to the closed tests Craig can make, across every region (spec/10, The road to launch). `convex/signIn/invites.ts` reads it.
 - `testManagers.json`: the test managers (spec/10, The road to launch): how many play each competition in the sim and in January, their favourite-team and country weights, the made-up names they show in tables, and how they play. `convex/admin/testManagerStore.ts` reads it.
+- `lck/2026/`: the LCK's 2026 from Oracle's Elixir, the sim's plan and the season they make (its own README). `convex/world/simSeason.ts` reads it.
 - `lck/crests/<code>.svg`: each LCK team's crest, by team code (docs/design/approved/crests/). `src/parts/display/Crest.tsx` draws them.
 - `lck/photos/<year>/split-<n>/<handle>.<jpg|png|webp>`: each player's LCK media-day portrait for the split, saved from the LCK's Flickr and served by Flol, never hotlinked (spec/13). None yet: the 2027 media days aren't shot, so cards show the crest. `src/fixtures/photos.ts` reads them.
 - `lck/season-2027.json`: the 2027 season's settings, Split 1's gameweeks and every pick's price in won, made up until the 2027 fixtures are out (spec/10). `convex/world/season.ts` loads it; `src/region.ts` reads the region's name and the season's year from it; the screens' fixtures read their prices and Week 4's deadline from it.

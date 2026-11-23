@@ -63,7 +63,7 @@ Each folder has a README saying what goes in it.
 | `convex/leagues/` | Global, supporter and private leagues, and their tables. |
 | `convex/following/` | Follow requests, blocks, the feed of followed managers, and cheers and jeers. |
 | `convex/signIn/` | Google and Discord sign-in, and turning a squad picked signed out into an entry. |
-| `convex/admin/` | Admin tools: corrections, moving a series, re-running a job. |
+| `convex/admin/` | Admin tools: the server's one clock, the sim's Next day and Play to end, alerts, test managers, the sim's check and end-of-season report; corrections, moving a series, re-running a job. |
 | `convex/outbound/` | Every call that leaves the server: email, the stats sources, the model API. |
 | `src/` | Every screen's path (`paths.ts`), the region the app shows, its name, hub address and season label read from its data (`region.ts`), and the folders below. |
 | `src/app/` | The app's entry (`main.tsx`), its routes (`router.tsx`) and the dev states page. |

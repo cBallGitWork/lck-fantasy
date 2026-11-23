@@ -2,6 +2,7 @@
 // browser's points move as each reading lands.
 import { v } from "convex/values";
 import { query } from "../_generated/server";
+import { liveRow } from "../feeds/live";
 import { livePlayerStats, liveTeamStats } from "../feeds/liveFeed";
 
 /** Each player's and team's live lines, by the feed's game id. Null before the first reading: no
@@ -9,7 +10,7 @@ import { livePlayerStats, liveTeamStats } from "../feeds/liveFeed";
 export const liveGame = query({
   args: { esportsGameId: v.string() },
   handler: async (ctx, { esportsGameId }) => {
-    const row = await ctx.db.query("liveFrames").withIndex("by_esportsGameId", (q) => q.eq("esportsGameId", esportsGameId)).unique();
+    const row = await liveRow(ctx, esportsGameId);
     const reading = row?.reading ?? null;
     if (row === null || reading === null) return null;
     return {

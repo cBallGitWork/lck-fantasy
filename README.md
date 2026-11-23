@@ -16,6 +16,6 @@ The app is being built. The plan: a simulated season on 2026's data, closed test
 
 ```bash
 npm install
-npm run verify   # doc checks, hook checks, lint, typecheck and tests
+npm run verify   # doc checks, the kit check, the design lint, hook checks, lint, typecheck and tests
 npm run dev      # the app; /dev/states opens every approved state. Without VITE_CONVEX_URL (`npx convex dev` writes it) it warns and runs without Convex
 ```

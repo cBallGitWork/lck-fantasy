@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
 import { PATHS, pickTeamSwapping } from "../../paths";
-import { html, htmlAt, text } from "../../testing/render";
+import { expectInOrder, html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICK_TEAM_DATA, PICK_TEAM_STATES, SAVED_TEAM, type PickPlayer } from "./fixtures";
 import { changeCount, pickNews, pickReducer, swapIds, type PickAction, type PickState } from "./model";
@@ -14,16 +14,6 @@ const roleOf = (id: string) => (PICK_TEAM_DATA.players[id] as PickPlayer).role;
 const reduce = pickReducer(roleOf);
 const run = (state: PickState, ...actions: PickAction[]) => actions.reduce(reduce, state);
 const view = (state: PickState) => <PickTeamView data={PICK_TEAM_DATA} state={state} dispatch={() => {}} />;
-
-/** Fails unless every piece is in the text, each after the one before. */
-function expectInOrder(out: string, pieces: string[]) {
-  let at = 0;
-  for (const piece of pieces) {
-    const found = out.indexOf(piece, at);
-    expect(found, `"${piece}" after position ${at}`).toBeGreaterThanOrEqual(0);
-    at = found + piece.length;
-  }
-}
 
 /** The buffs, in one row above the Rift. */
 const BUFFS = [

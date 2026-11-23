@@ -3,6 +3,7 @@
 // match day, passing its deadline when it comes, and Play to end runs the rest without stopping.
 import { v } from "convex/values";
 import { internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "../_generated/server";
+import { competitionByName } from "../world/season";
 
 /** The deployment setting that makes a Convex project the sim: `true` there, unset on the real site. */
 export const SIM_SETTING = "FLOL_SIM";
@@ -120,7 +121,7 @@ async function startedSimClock(ctx: QueryCtx) {
 }
 
 async function zoneOf(ctx: QueryCtx, name: string): Promise<string> {
-  const competition = await ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", name)).unique();
+  const competition = await competitionByName(ctx, name);
   if (competition === null) throw new Error(`No ${name} competition is stored.`);
   return competition.timeZone;
 }

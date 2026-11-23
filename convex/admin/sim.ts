@@ -5,6 +5,7 @@
 import { v } from "convex/values";
 import { mutation, query, type QueryCtx } from "../_generated/server";
 import { replayDay } from "../feeds/replay";
+import { competitionByName } from "../world/season";
 import { adminPassword, requireAdmin } from "./access";
 import { isSim, nextGame, playNextDay, playRest, simClock, type ClockMove } from "./clock";
 
@@ -70,7 +71,7 @@ async function played(ctx: QueryCtx, name: string, { from, to }: ClockMove): Pro
 }
 
 async function deadlinesPassed(ctx: QueryCtx, name: string, from: number, to: number): Promise<number[]> {
-  const competition = await ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", name)).unique();
+  const competition = await competitionByName(ctx, name);
   if (competition === null) return [];
   const seasons = await ctx.db.query("seasons").withIndex("by_competition", (q) => q.eq("competition", competition._id)).collect();
   const passed: number[] = [];

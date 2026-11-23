@@ -9,7 +9,7 @@ import { internalMutation, type QueryCtx } from "../_generated/server";
 import { seeded } from "../../src/parts/util/seeded";
 import { entryOf, signUpMarket, storeNewTeam, type SignUpMarket } from "../signIn/store";
 import { pickKey, type Pick } from "../squads/squad";
-import { findSeason, pickOfPrice } from "../world/season";
+import { pickOfPrice, requireSeason } from "../world/season";
 import { now } from "./clock";
 import { competitionsOf, rollFavouriteTeam, rollTestManager, testManagerCount, type TestManagerGroup } from "./testManagerRoll";
 import { testManagerFirstSquad, type FirstSquadWeek, type TestManagerHabits } from "./testManagers";
@@ -84,9 +84,7 @@ interface SeasonForTestManagers {
 }
 
 async function seasonForTestManagers(ctx: QueryCtx, competition: string, year: number, at: number): Promise<SeasonForTestManagers> {
-  const found = await findSeason(ctx, competition, year);
-  if (found === null) throw new Error(`No ${competition} ${year} season is stored.`);
-  const { season } = found;
+  const { season } = await requireSeason(ctx, competition, year);
   const market = await signUpMarket(ctx, season._id, at);
   if (market === null) throw new Error(`Every ${competition} ${year} deadline has passed: test managers can't sign up.`);
   const rows = await ctx.db.query("prices").withIndex("by_season", (q) => q.eq("season", season._id)).collect();

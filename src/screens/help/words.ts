@@ -46,7 +46,6 @@ export const orList = (names: readonly string[]) => (names.length > 1 ? `${names
 
 export const MENU_TITLE = "Help menu";
 export const RULES_MENU_TITLE = "Rules";
-export const CAPTAIN_MARK = "C";
 export const LINKS = { fullScoring: "Full scoring table", priceChanges: "Price changes" } as const;
 
 /** Scoring's notes, which read the series rules. */

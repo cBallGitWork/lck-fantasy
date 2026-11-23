@@ -11,8 +11,6 @@ import { literals, seasonSettings, split, stage } from "./world/seasonSettings";
 /** A source's row as it sent it: column name to text (ARCHITECTURE.md, Data). */
 export const rawRow = v.record(v.string(), v.string());
 
-export { literals };
-
 const playerRole = literals(PLAYER_ROLES);
 
 /** A gameweek's state (docs/data-model.md, Gameweeks). */

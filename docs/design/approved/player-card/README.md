@@ -26,7 +26,7 @@ The full player card. It opens from **Full card ›** on a page's short card, or
 - **Series strip**: the last 3 series with his points (a `Live` tag while live), then the next 3, the first in black.
 - **Tabs**:
   - This week: each series with its points in its header, each game with champion, result, K/D/A and points. A game that doesn't count has its points struck through. The week's total shows with the Carry ×1.5.
-  - Fixtures: the next series, each week's number once, your time and KST.
+  - Fixtures: the next series, each week's number once, your local time.
   - History: each series with games, K/D/A and points. Each week's price and total show once, on the week's first row. Then past LCK seasons scored by Flol.
   - Champions: each champion, sorted by games, with W–L and average points.
 - **Season panel**, on every tab: each scoring line's total, per game and points.

@@ -1,0 +1,384 @@
+// The trial's one made-up dataset: Pick Team, Split 1 Week 4, Tuesday evening before the deadline. Taken from the built screen's fixtures (src/screens/pick-team/fixtures.ts), so one fact has one value everywhere.
+window.TRIAL = {
+ "about": "The trial's one made-up dataset: Pick Team, Split 1 Week 4, Tuesday evening before the deadline. Taken from the built screen's fixtures (src/screens/pick-team/fixtures.ts), so one fact has one value everywhere.",
+ "account": "Baron Steal FC",
+ "week": "Split 1 Week 4",
+ "title": "Pick Team",
+ "hangul": "팀 선택",
+ "nav": [
+  "Home",
+  "Pick Team",
+  "Transfers",
+  "Points",
+  "Leagues",
+  "Stats",
+  "LCK",
+  "Live"
+ ],
+ "slots": {
+  "top": "zeus",
+  "jng": "canyon",
+  "mid": "faker",
+  "bot": "ruler",
+  "sup": "delight",
+  "flex": "siwoo",
+  "coach": "kkoma",
+  "bench1": "bdd",
+  "bench2": "cuzz"
+ },
+ "captain": "faker",
+ "players": {
+  "zeus": {
+   "name": "Zeus",
+   "team": "HLE",
+   "role": "top",
+   "priceM": 14,
+   "form": 16,
+   "ownedPct": 31,
+   "season": 48,
+   "last3": [
+    12,
+    7,
+    7
+   ],
+   "formRank": {
+    "place": 3,
+    "of": "10 tops"
+   },
+   "ownedRank": {
+    "place": 4
+   },
+   "seasonRank": {
+    "place": 7
+   },
+   "opponents": [
+    "DK",
+    "NS"
+   ]
+  },
+  "canyon": {
+   "name": "Canyon",
+   "team": "GEN",
+   "role": "jng",
+   "priceM": 15.5,
+   "form": 16.7,
+   "ownedPct": 29,
+   "season": 50,
+   "last3": [
+    15,
+    7,
+    7
+   ],
+   "formRank": {
+    "place": 2,
+    "of": "10 junglers"
+   },
+   "ownedRank": {
+    "place": 5
+   },
+   "seasonRank": {
+    "place": 6
+   },
+   "opponents": [
+    "BRO",
+    "T1"
+   ]
+  },
+  "faker": {
+   "name": "Faker",
+   "team": "T1",
+   "role": "mid",
+   "priceM": 18.5,
+   "form": 19.3,
+   "ownedPct": 46,
+   "season": 58,
+   "last3": [
+    10,
+    12,
+    10
+   ],
+   "priceMove": 0.5,
+   "formRank": {
+    "place": 1,
+    "of": "10 mids"
+   },
+   "ownedRank": {
+    "place": 1
+   },
+   "seasonRank": {
+    "place": 2
+   },
+   "opponents": [
+    "KT",
+    "GEN"
+   ]
+  },
+  "ruler": {
+   "name": "Ruler",
+   "team": "GEN",
+   "role": "bot",
+   "priceM": 16,
+   "form": 18.7,
+   "ownedPct": 38,
+   "season": 56,
+   "last3": [
+    14,
+    7,
+    7
+   ],
+   "formRank": {
+    "place": 1,
+    "of": "10 bots"
+   },
+   "ownedRank": {
+    "place": 3
+   },
+   "seasonRank": {
+    "place": 3
+   },
+   "opponents": [
+    "BRO",
+    "T1"
+   ]
+  },
+  "delight": {
+   "name": "Delight",
+   "team": "HLE",
+   "role": "sup",
+   "priceM": 10,
+   "form": 12.7,
+   "ownedPct": 19,
+   "season": 38,
+   "last3": [
+    8,
+    5,
+    4
+   ],
+   "formRank": {
+    "place": 4,
+    "of": "10 supports"
+   },
+   "ownedRank": {
+    "place": 8
+   },
+   "seasonRank": {
+    "place": 12
+   },
+   "opponents": [
+    "DK",
+    "NS"
+   ]
+  },
+  "siwoo": {
+   "name": "Siwoo",
+   "team": "DK",
+   "role": "top",
+   "priceM": 11.5,
+   "form": 11.7,
+   "ownedPct": 12,
+   "season": 35,
+   "last3": [
+    6,
+    5,
+    4
+   ],
+   "formRank": {
+    "place": 7,
+    "of": "10 tops"
+   },
+   "ownedRank": {
+    "place": 9
+   },
+   "seasonRank": {
+    "place": 8
+   },
+   "news": {
+    "flag": "Not starting",
+    "note": "Wed"
+   },
+   "opponents": [
+    "HLE",
+    "KT"
+   ]
+  },
+  "kkoma": {
+   "name": "kkOma",
+   "team": "T1",
+   "role": "coach",
+   "priceM": 7,
+   "form": 9,
+   "ownedPct": 24,
+   "season": 27,
+   "last3": [
+    4,
+    8,
+    8
+   ],
+   "formRank": {
+    "place": 1,
+    "of": "10 coaches"
+   },
+   "ownedRank": {
+    "place": 1
+   },
+   "seasonRank": {
+    "place": 1
+   },
+   "opponents": [
+    "KT",
+    "GEN"
+   ]
+  },
+  "bdd": {
+   "name": "Bdd",
+   "team": "KT",
+   "role": "mid",
+   "priceM": 5,
+   "form": 5.3,
+   "ownedPct": 5,
+   "season": 16,
+   "last3": [
+    4,
+    6,
+    6
+   ],
+   "formRank": {
+    "place": 8,
+    "of": "10 mids"
+   },
+   "ownedRank": {
+    "place": 10
+   },
+   "seasonRank": {
+    "place": 9
+   },
+   "opponents": [
+    "T1",
+    "DK"
+   ]
+  },
+  "cuzz": {
+   "name": "Cuzz",
+   "team": "KT",
+   "role": "jng",
+   "priceM": 4,
+   "form": 7.7,
+   "ownedPct": 7,
+   "season": 23,
+   "last3": [
+    9,
+    1,
+    8
+   ],
+   "formRank": {
+    "place": 6,
+    "of": "10 junglers"
+   },
+   "ownedRank": {
+    "place": 9
+   },
+   "seasonRank": {
+    "place": 8
+   },
+   "opponents": [
+    "T1",
+    "DK"
+   ]
+  }
+ },
+ "series": [
+  {
+   "day": "Wed",
+   "local": "8:00am",
+   "kst": "17:00",
+   "home": "HLE",
+   "away": "DK"
+  },
+  {
+   "day": "Wed",
+   "local": "10:30am",
+   "kst": "19:30",
+   "home": "T1",
+   "away": "KT"
+  },
+  {
+   "day": "Thu",
+   "local": "8:00am",
+   "kst": "17:00",
+   "home": "GEN",
+   "away": "BRO"
+  },
+  {
+   "day": "Thu",
+   "local": "10:30am",
+   "kst": "19:30",
+   "home": "NS",
+   "away": "DNS"
+  },
+  {
+   "day": "Fri",
+   "local": "8:00am",
+   "kst": "17:00",
+   "home": "KRX",
+   "away": "BFX"
+  },
+  {
+   "day": "Fri",
+   "local": "10:30am",
+   "kst": "19:30",
+   "home": "DK",
+   "away": "KT"
+  },
+  {
+   "day": "Sat",
+   "local": "8:00am",
+   "kst": "17:00",
+   "home": "T1",
+   "away": "GEN"
+  },
+  {
+   "day": "Sat",
+   "local": "10:30am",
+   "kst": "19:30",
+   "home": "HLE",
+   "away": "NS"
+  },
+  {
+   "day": "Sun",
+   "local": "8:00am",
+   "kst": "17:00",
+   "home": "BRO",
+   "away": "BFX"
+  },
+  {
+   "day": "Sun",
+   "local": "10:30am",
+   "kst": "19:30",
+   "home": "KRX",
+   "away": "DNS"
+  }
+ ],
+ "deadline": {
+  "local": "Wed 7:45am",
+  "kst": "16:45",
+  "countdown": "9h 45m"
+ },
+ "buffs": [
+  {
+   "name": "Bench Boost",
+   "does": "Your bench scores this week too",
+   "played": null
+  },
+  {
+   "name": "Double Captain",
+   "does": "A second Captain; both score ×2",
+   "played": null
+  },
+  {
+   "name": "Coach Diff",
+   "does": "Your coach scores ×3 this week",
+   "played": null
+  }
+ ],
+ "selected": "faker"
+};

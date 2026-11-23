@@ -23,7 +23,7 @@ The Series page: one series, its games and each player's lines in each game (spe
 
 - **Type**: 28 team codes in the scorebug, 20 the series score and each player's series total, 14 body and per-game points, 12 labels. The nav is shared.
 - **Scorebug**: team code and record, the score between. The loser's code drops to plain weight once the series is final; while it is live, neither does. A record is as of when the page is opened, so it is the record before the series while the series is live.
-- **The line under it**: a Final tag, or Live and a dashed Not final tag with "Solo kills, steals at final". Then the format, competition, week, day and time (yours, then KST in grey), and Watch › while live or before the start.
+- **The line under it**: a Final tag, or Live and a dashed Not final tag with "Solo kills, steals at final". Then the format, competition, week, day and time (your local time), and Watch › while live or before the start.
 - **Two grids**, one per team, side by side:
   - one row per player in role order, then the coach under a rule;
   - the name with its Hangul beside it, and a round dot after your own players;

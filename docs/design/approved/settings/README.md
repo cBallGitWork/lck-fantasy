@@ -30,7 +30,7 @@ The manager's team, display, emails and account, in four tabs (spec/12, Settings
 - **Tabs**: Team | Display | Emails | Account. A tab with unsaved changes carries a dot (Team •).
 - **Team name, Hangul banner**: text, 20 characters each, with a counter. The banner is optional; its preview redraws as you type.
 - **Favourite team, Country**: plain text with the tag `Locked` once the first deadline has passed; before then, dropdowns.
-- **Time zone**: Browser (the zone it reports) or one picked from a list; the next deadline shows in it and in KST.
+- **Time zone**: Browser (the zone it reports) or one picked from a list; the next deadline shows in it.
 - **Theme**: Device | Light | Dark.
 - **Deadline reminder, Weekly recap**: On | Off each, both Off for a new manager. The address they go to is shown.
 - **Save bar**: the changes on every tab, Reset and Save. Absent when nothing has changed, and on Account.

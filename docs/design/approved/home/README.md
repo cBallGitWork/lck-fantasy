@@ -21,7 +21,7 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 ## Layout
 
 - **Top:** the team name and its hangul; beside it, Overall as a LoL tier: a shield, the tier and its hangul, the overall rank and move beneath, the sponsor's badge. Its states, not drawn: Unranked, a division tier, Master or Grandmaster, Challenger (its rank and move).
-- **Deadline, under the top:** a full-width bar, above the fold: Week 4 deadline, the countdown, your time and KST; on the side column's line, **Pick Team** (the one filled key), **Transfers** and free transfers.
+- **Deadline, under the top:** a full-width bar, above the fold: Week 4 deadline, the countdown, your local time; on the side column's line, **Pick Team** (the one filled key), **Transfers** and free transfers.
 - **Left, live:** the stream, muted, 16:9 at 704 wide, the series and **Live ›** over it; the stream picker beside it (spec/12's list).
 - **Left, idle:** Week 4 lineup: the seven starters (five roles, Flex, Coach) with C and V; the next series on stream and when.
 - **Right, live:** your week (not final) with Average and Highest; your players in this series with live points; who is still to play; **Points ›**.

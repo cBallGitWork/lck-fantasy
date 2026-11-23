@@ -19,7 +19,7 @@ The feed of managers you follow, your requests, trucks, follows and followers. R
 
 ## Layout
 
-- **Left, the feed:** one timeline, newest first, under a header per gameweek (a Not final tag on the live one). Each row: the manager and team; a series with its points and players in role order, a Big Carry tagged on its series row; or a deadline with the buff, transfers, −6s and each swap's score so far. Times show your time and KST.
+- **Left, the feed:** one timeline, newest first, under a header per gameweek (a Not final tag on the live one). Each row: the manager and team; a series with its points and players in role order, a Big Carry tagged on its series row; or a deadline with the buff, transfers, −6s and each swap's score so far. Times show your local time.
 - **Right:** Requests (Accept, Decline); Trucks this week, each with its sender, a sponsor truck with its sponsor; Following with "3 of 50"; Followers.
 
 ## Controls

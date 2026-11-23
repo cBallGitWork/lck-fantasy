@@ -314,7 +314,7 @@ team's players and prices, replaces Champions.
 ## Buffs
 
 Buffs confirm as in FPL's Bench Boost: each can be cancelled until the deadline
-([spec/06](06-buffs.md)).
+([spec/06](06-buffs.md)). Each has a Play key, which turns to Cancel while it is on this week (Craig, 19 Nov 2026).
 
 ## Words
 

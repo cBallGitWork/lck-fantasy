@@ -98,7 +98,7 @@ aside h2, .done h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; disp
 
 /* confirmed this week */
 .done h3 { margin-bottom: 0; }
-.cf { display: grid; grid-template-columns: 72px 1fr 48px 56px; gap: 8px; align-items: center; padding: 8px 0; border-top: 1px solid var(--fill); }
+.cf { display: grid; grid-template-columns: 80px 1fr 48px 56px; gap: 8px; align-items: center; padding: 8px 0; border-top: 1px solid var(--fill); }
 .cf .t { color: var(--mid); font-size: 12px; } .cf .c { font-family: "IBM Plex Mono", monospace; text-align: right; }
 .cf .u { justify-self: end; border: 1px solid var(--ink); padding: 0 8px; font-weight: 700; font-size: 12px; }
 .cf.old { color: var(--mid); } .cf.old b { font-weight: 400; }
@@ -127,7 +127,7 @@ aside h2, .done h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; disp
 
 <nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a class="on">Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
 <div class="page"><main>
-<div class="ph1"><div><h1>Transfers<i>이적</i></h1><div class="dl">LCK Cup Week 4 · Deadline <b>Wed 07:45</b>&nbsp; <span>16:45 KST</span><b class="cd">9h 45m</b></div></div></div>
+<div class="ph1"><div><h1>Transfers<i>이적</i></h1><div class="dl">LCK Cup Week 4 · Deadline <b>Wed 7:45am</b>&nbsp; <b class="cd">9h 45m</b></div></div></div>
 <div class="tstats">
   <div><b>0</b><span>Free transfers</span></div><div><b>−6</b><span>Pending hit</span></div><div><b>1.5억</b><span>Bank</span></div>
   <div class="bz"><span class="buff2">Remake</span><span class="buff2">Limitless</span></div>
@@ -166,11 +166,11 @@ aside h2, .done h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; disp
 <script>// Made-up LCK Cup Week 4 for the Pick Team wireframes. Every number is an example.
 // Monday 20:00 KST (11:00 London). Deadline Wed 16:45 KST = 07:45 London (15 min before the first series, spec/10).
 const W4 = [
-  ["Wed","08:00","17:00","HLE","DK"],["Wed","10:30","19:30","T1","KT"],
-  ["Thu","08:00","17:00","GEN","BRO"],["Thu","10:30","19:30","NS","DNS"],
-  ["Fri","08:00","17:00","KRX","BFX"],["Fri","10:30","19:30","DK","KT"],
-  ["Sat","08:00","17:00","T1","GEN"],["Sat","10:30","19:30","HLE","NS"],
-  ["Sun","08:00","17:00","BRO","BFX"],["Sun","10:30","19:30","KRX","DNS"],
+  ["Wed","8:00am","5:00pm","HLE","DK"],["Wed","10:30am","7:30pm","T1","KT"],
+  ["Thu","8:00am","5:00pm","GEN","BRO"],["Thu","10:30am","7:30pm","NS","DNS"],
+  ["Fri","8:00am","5:00pm","KRX","BFX"],["Fri","10:30am","7:30pm","DK","KT"],
+  ["Sat","8:00am","5:00pm","T1","GEN"],["Sat","10:30am","7:30pm","HLE","NS"],
+  ["Sun","8:00am","5:00pm","BRO","BFX"],["Sun","10:30am","7:30pm","KRX","DNS"],
 ];
 const nextOf = (team) => W4.filter((s) => s[3] === team || s[4] === team).map((s) => `v ${s[3] === team ? s[4] : s[3]} ${s[0]}`);
 const PSQ = [
@@ -212,8 +212,8 @@ const ARW = { Chovy: "▲", Kingen: "▲", DuDu: "▼", Aiming: "▼", Hype: "�
 const arw = (n) => ARW[n] ? `<span class="ar ${ARW[n] === "▼" ? "fall" : "rise"}">${ARW[n]}</span>` : "";
 document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[6] > 0) - (b[6] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td class="nmc"><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="arw">${arw(r[1])}</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2])[0]}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
 const MINE = new Set();
-void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} <span style="color:var(--mid)">${s[2]} KST</span></span></div>`).join("");
+void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} </span></div>`).join("");
 </script><div class="veil"></div><div class="sheet2"><h3>Confirm your transfers</h3>
 <table><tr><td class="k">Out</td><td><b>Siwoo</b> DK · Flex · 7.5억</td></tr><tr><td class="k">In</td><td><b>Kingen</b> NS · Flex, plays Top · 6.5억</td></tr>
 <tr><td class="k">Cost</td><td>−6 · no free transfers left</td></tr><tr><td class="k">Bank</td><td>0.5억 → <b>1.5억</b></td></tr></table>
-<div class="sb"><span>Back</span><button class="save">Confirm</button></div><p>Deadline <b style="color:var(--ink);font-weight:400">Wed 07:45</b>&nbsp; 16:45 KST</p></div></body></html>
+<div class="sb"><span>Back</span><button class="save">Confirm</button></div><p>Deadline <b style="color:var(--ink);font-weight:400">Wed 7:45am</b></p></div></body></html>

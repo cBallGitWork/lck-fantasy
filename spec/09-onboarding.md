@@ -29,7 +29,7 @@ Copies UCL Fantasy: the first page is one where you can just pick a team, with n
   ([spec/08](08-leagues.md)).
 - Country is filled in from where the visitor is; the favourite team has no default. Both can
   change until the manager's first gameweek starts, then are fixed (Craig, 15 Nov 2026). The
-  sheet says when: "Both lock when your first gameweek starts: Wed 07:45."
+  sheet says when: "Both lock when your first gameweek starts: Wed 7:45am."
 - One tick: "I'm 16 or over and accept the Terms and Privacy", unticked. Save team stays off
   until it is ticked, a team picked and a team name typed (spaces alone count as empty; Craig,
   17 Nov 2026), and the account is made on Save team, not at the Google

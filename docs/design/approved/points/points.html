@@ -114,7 +114,6 @@ aside .pl header .x { margin-left: auto; color: var(--mid); align-self: flex-sta
 .wk div { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--fill); align-items: center; }
 .wk .d { color: var(--mid); font-size: 12px; }
 .wk .t { text-align: right; }
-.wk .t .kst { color: var(--mid); font-size: 12px; }
 .ad { height: 112px; }
 .adline { font-size: 12px; color: var(--mid); margin-top: 8px; }
 </style></head>
@@ -182,24 +181,24 @@ aside .pl header .x { margin-left: auto; color: var(--mid); align-self: flex-sta
   
   <section><h2>Leagues</h2><div class="rk" id="ranks"></div>
     <div class="note2"><b>≈6 pts</b> to Diamond IV</div><div class="more"><a class="go">All leagues ›</a></div></section>
-  <section><h2>This week's series <span>your time · KST</span></h2><div class="wk" id="week"></div></section>
+  <section><h2>This week's series </h2><div class="wk" id="week"></div></section>
   <div class="ad ph">Sponsor</div><div class="adline">All sponsors are made up.</div>
 </aside>
 </div>
 <script>// Made-up LCK Cup week for the Points wireframes. Every number is an example.
 // Saturday 21:10 KST (12:10 London): T1 v DK is live (game 2), GEN v HLE ended 19:20 (provisional), Wed–Fri final.
-// Times show in the manager's zone (London, UTC+0 in January), KST second.
+// Times show in the manager's zone (London, UTC+0 in January), local time only.
 const SERIES = {
-  w1: { day: "Wed", time: "17:00", a: "T1", b: "HLE", sa: 2, sb: 1, state: "final" },
-  w2: { day: "Wed", time: "19:30", a: "GEN", b: "KT", sa: 2, sb: 0, state: "final" },
-  t1: { day: "Thu", time: "17:00", a: "DK", b: "NS", sa: 2, sb: 0, state: "final" },
-  t2: { day: "Thu", time: "19:30", a: "BRO", b: "DNS", sa: 1, sb: 2, state: "final" },
-  f1: { day: "Fri", time: "17:00", a: "KT", b: "BFX", sa: 2, sb: 1, state: "final" },
-  f2: { day: "Fri", time: "19:30", a: "NS", b: "KRX", sa: 0, sb: 2, state: "final" },
-  s1: { day: "Sat", time: "17:00", a: "GEN", b: "HLE", sa: 2, sb: 1, state: "prov", finalAt: "~13:20" },
-  s2: { day: "Sat", time: "19:30", a: "T1", b: "DK", sa: 1, sb: 0, state: "live", liveGame: 2, clock: "14:20" },
-  u1: { day: "Sun", time: "17:00", a: "KRX", b: "BRO", state: "next" },
-  u2: { day: "Sun", time: "19:30", a: "BFX", b: "DNS", state: "next" },
+  w1: { day: "Wed", time: "5:00pm", a: "T1", b: "HLE", sa: 2, sb: 1, state: "final" },
+  w2: { day: "Wed", time: "7:30pm", a: "GEN", b: "KT", sa: 2, sb: 0, state: "final" },
+  t1: { day: "Thu", time: "5:00pm", a: "DK", b: "NS", sa: 2, sb: 0, state: "final" },
+  t2: { day: "Thu", time: "7:30pm", a: "BRO", b: "DNS", sa: 1, sb: 2, state: "final" },
+  f1: { day: "Fri", time: "5:00pm", a: "KT", b: "BFX", sa: 2, sb: 1, state: "final" },
+  f2: { day: "Fri", time: "7:30pm", a: "NS", b: "KRX", sa: 0, sb: 2, state: "final" },
+  s1: { day: "Sat", time: "5:00pm", a: "GEN", b: "HLE", sa: 2, sb: 1, state: "prov", finalAt: "~1:20pm" },
+  s2: { day: "Sat", time: "7:30pm", a: "T1", b: "DK", sa: 1, sb: 0, state: "live", liveGame: 2, clock: "14:20" },
+  u1: { day: "Sun", time: "5:00pm", a: "KRX", b: "BRO", state: "next" },
+  u2: { day: "Sun", time: "7:30pm", a: "BFX", b: "DNS", state: "next" },
 };
 const ROLE = {
   top: ["Top", "탑"], jng: ["Jungle", "정글"], mid: ["Mid", "미드"], bot: ["Bot", "원딜"],
@@ -273,8 +272,8 @@ function result(p, sid) {
   return `${me > them ? "W" : "L"} ${me}–${them}`;
 }
 
-const LOCAL = { "17:00": "08:00", "19:30": "10:30" };
-const when = (t) => `${LOCAL[t]} <span class="kst">${t} KST</span>`;
+const LOCAL = { "5:00pm": "8:00am", "7:30pm": "10:30am" };
+const when = (t) => `${LOCAL[t]} `;
 // The coach's lines, game by game, for kkOma (spec/05: The coach).
 const COACH = {
   head: ["G1 v HLE · W", "G2 · L", "G3 · W", "G1 v DK · W", "G2 · live"],

@@ -134,10 +134,9 @@ const WEEK = `<h4><span style="color:var(--ink);font-size:12px">Wed · v HLE &nb
   <tr class="tot"><td class="l" colspan="2">Week 3</td><td class="n g2">17 × 1.5 Carry</td><td class="p">25</td></tr></table>`;
 
 // Fixtures: his team's next series, Bo3 or Bo5 (spec/12).
-const FX = [[4, "Wed", "10:30", "KT"], [4, "Sat", "08:00", "GEN"], [5, "Thu", "08:00", "BRO"], [5, "Sun", "10:30", "KRX"], [6, "Wed", "08:00", "DK"], [6, "Sat", "10:30", "HLE"]];
-const KST = { "08:00": "17:00", "10:30": "19:30" };
-const FIXT = `<table><tr><th class="l">Week</th><th class="l">Series</th><th>Your time</th><th>KST</th></tr>
-  ${FX.map(([w, d, t, o], i) => `<tr${i > 0 && FX[i - 1][0] !== w ? ' class="wk1"' : ""}><td class="l g2">${i > 0 && FX[i - 1][0] === w ? "" : w}</td><td class="l">${d} · <b>T1 v ${o}</b> · Bo3</td><td class="n">${t}</td><td class="n g2">${KST[t]}</td></tr>`).join("")}</table>`;
+const FX = [[4, "Wed", "10:30am", "KT"], [4, "Sat", "8:00am", "GEN"], [5, "Thu", "8:00am", "BRO"], [5, "Sun", "10:30am", "KRX"], [6, "Wed", "8:00am", "DK"], [6, "Sat", "10:30am", "HLE"]];
+const FIXT = `<table><tr><th class="l">Week</th><th class="l">Series</th><th></th></tr>
+  ${FX.map(([w, d, t, o], i) => `<tr${i > 0 && FX[i - 1][0] !== w ? ' class="wk1"' : ""}><td class="l g2">${i > 0 && FX[i - 1][0] === w ? "" : w}</td><td class="l">${d} · <b>T1 v ${o}</b> · Bo3</td><td class="n">${t}</td></tr>`).join("")}</table>`;
 
 // Sat v DK as series/1440.png: Orianna 5/1/9 for 4, Sylas 7/0/6 for 6. Season stays 58 (Pick Team, Stats, Compare).
 // History: each week's points and price, then past LCK seasons scored by Flol (Craig, 14 Nov 2026).

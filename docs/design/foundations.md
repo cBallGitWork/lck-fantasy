@@ -80,3 +80,8 @@ Craig's reactions to pictures, in his words, dated, each with its picture. Read 
 
 | Date | Picture | Craig said |
 |---|---|---|
+| 19 Nov 2026 | `proposals/2026-11-19-trial/`, all five pictures, the first map (a band for the river, quarter circles for bases) | "and also the rift too, it doesnt look like the summoners rift" |
+| 19 Nov 2026 | the same five pictures | "conduct reseach on the fantasy sites like fp, fucl, bundelisgn la liga etc and how their sites look, thats your benchmark" (notes in `references/pick-team/`) |
+| 19 Nov 2026 | the same five, redrawn with a flat green map of lanes, river, walls, towers and bases (`proposals/2026-11-19-trial/map.js`) | "the rift is sacred and is consitent with themes"; "find pictures of the rift, that suggestion is daiablcal"; "check other similar sites too" |
+| 19 Nov 2026 | six pictures, A to F, after two full panels (`proposals/2026-11-19-trial/panel-findings.md`) | "f": the pick is F, Arena (`proposals/2026-11-19-trial/4-arena.html`) |
+| 19 Nov 2026 | Arena (`proposals/2026-11-19-trial/4-arena.html`), the buff icons | "icons good gold": the buff icons stay gold |

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pick Team: generic</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="base.css">
+<style>
+/* The ringer: the same screen and data drawn the generic way on purpose (panel-rules.md, rule 3). */
+:root {
+  --bg: #F5F6FA; --paper: #FFFFFF; --line: #E5E7EB; --fill: #EEF0F6; --soft: #C7CAD3;
+  --text: #111827; --mid: #6B7280; --rise: #16A34A; --signal: #22C55E;
+  --gold: #6366F1; --on-gold: #FFFFFF; --wordmark: #6366F1;
+  --sans: "Inter", sans-serif; --head: "Inter", sans-serif; --fig: "Inter", sans-serif; --ko: "Inter", sans-serif;
+  --row: 44px; --rift: 940px; --tile-w: 140px; --tile-w-phone: 78px; --tile-card-h: 124px;
+  --tile-card: rgba(255, 255, 255, 0.5); --plate: #FFFFFF; --on-plate: #111827; --band: #4338CA; --on-band: #EEF2FF;
+  --shirt: #FFFFFF; --shirt-line: #312E81; --shirt-text: #312E81; --tile-label: #EEF2FF;
+  --c-bg: linear-gradient(135deg, #F59E0B, #EF4444); --c-text: #FFFFFF; --flag-bg: #F59E0B; --flag-text: #FFFFFF; --select: #A5B4FC;
+}
+.top { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); box-shadow: 0 1px 12px rgba(17, 24, 39, 0.06); border: 0; }
+.nav a.is-here { border: 0; background: #EEF2FF; color: #4F46E5; border-radius: 999px; padding: 0 14px; height: 32px; align-self: center; }
+.title__ko { color: var(--mid); font-weight: 400; font-size: 16px; }
+.head__week { background: #EEF2FF; color: #4F46E5; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 600; }
+.buffs { gap: 16px; }
+.buff { background: var(--paper); border-radius: 16px; padding: 12px 16px; box-shadow: 0 4px 24px rgba(17, 24, 39, 0.08); }
+.buff__name::before { content: "✨ "; }
+.buff__left { text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; font-size: 11px; }
+.key { border-radius: 999px; border: 0; background: linear-gradient(135deg, #6366F1, #8B5CF6); color: #fff; padding: 0 16px; }
+.object { background: var(--paper); border-radius: 20px; padding: 16px; box-shadow: 0 8px 32px rgba(17, 24, 39, 0.08); }
+.views { border-radius: 999px; padding: 4px; }
+.views button { border-radius: 999px; }
+.views .is-here { outline: 0; box-shadow: 0 1px 4px rgba(17, 24, 39, 0.12); }
+.rift { border-radius: 16px; overflow: hidden; }
+.tile__card { border-radius: 12px 12px 0 0; }
+.tile__band { border-radius: 0 0 12px 12px; }
+.tile__c { background: var(--c-bg); }
+.tile__flag { border-radius: 50%; }
+.bench { border: 0; border-radius: 16px; background: var(--fill); }
+.bar { border: 0; border-radius: 16px; box-shadow: 0 -4px 24px rgba(17, 24, 39, 0.08); }
+.deadline__count { border: 0; background: #FEF3C7; color: #B45309; border-radius: 999px; }
+.save { border-radius: 12px; }
+.key-off { background: linear-gradient(135deg, #6366F1, #8B5CF6); color: #fff; opacity: 0.5; }
+.card { border: 0; border-radius: 20px; box-shadow: 0 8px 32px rgba(17, 24, 39, 0.08); overflow: hidden; }
+.card__rows { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 16px 16px; }
+.card__rows > div { flex-direction: column-reverse; align-items: flex-start; justify-content: flex-end; border: 0; background: var(--bg); border-radius: 12px; padding: 12px; }
+.card__rows dt { text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; font-weight: 600; }
+.card__rows dd { font-size: 20px; }
+.card__keys { border: 0; }
+.card__keys .key.is-on { border-radius: 12px; }
+.series { background: var(--paper); border-radius: 20px; padding: 16px; box-shadow: 0 8px 32px rgba(17, 24, 39, 0.08); }
+.side__title { border: 0; }
+.series td { border-color: var(--line); }
+.placeholder { border-radius: 16px; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="data.js"></script>
+<script src="map.js"></script>
+<script src="render.js"></script>
+</body>
+</html>

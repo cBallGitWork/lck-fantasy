@@ -20,7 +20,7 @@ nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
 
 .page { padding: 24px 32px 48px; }
 .head { display: flex; align-items: baseline; gap: 12px; }
-.head .dl { display: flex; gap: 8px; align-items: baseline; } .head .dl .k { color: var(--mid); margin-right: 8px; }
+.head .dl { display: flex; gap: 8px; align-items: baseline; }
 .head h1 { font-size: 28px; font-weight: 700; letter-spacing: -.5px; } .head h1 i { font-style: normal; font-size: 16px; font-weight: 400; color: var(--mid); margin-left: 8px; letter-spacing: 0; }
 .tabs { display: flex; gap: 24px; margin: 16px 0 0; border-bottom: 1px solid var(--line); }
 .tabs span { padding: 12px 0; font-weight: 600; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; } .tabs span.on { color: var(--ink); border-bottom-color: var(--ink); }
@@ -79,7 +79,7 @@ table.rt tr.co td { border-top: 1px solid var(--line); }
 </defs></svg>
 <nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a>Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a class="on">LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
 <div class="page">
-  <div class="head"><h1>LCK Cup 2027<i>LCK 컵</i></h1><span style="flex:1"></span><span class="dl">Deadline <b class="mono">Wed 07:45</b> <span class="k">16:45 KST</span> <b class="mono">9h 45m</b></span></div>
+  <div class="head"><h1>LCK Cup 2027<i>LCK 컵</i></h1><span style="flex:1"></span><span class="dl">Deadline <b class="mono">Wed 7:45am</b>  <b class="mono">9h 45m</b></span></div>
   <div class="tabs" id="tabs"></div>
   <div class="stages" id="stages"><span class="on">Groups</span><span>Play-In</span><span>Playoffs</span></div>
   <div class="wrap"><div><section id="fx"></section><section id="res"></section><div class="groups" id="groups"></div><div id="teams"></div></div>
@@ -94,15 +94,15 @@ const REC = { T1: [5, 1, 7], DK: [3, 3, 1], KRX: [3, 3, -1], NS: [2, 4, -3], BRO
   GEN: [5, 1, 6], HLE: [4, 2, 3], DNS: [3, 3, 0], KT: [3, 3, -1], BFX: [1, 5, -5] };
 const rec = (t) => `${REC[t][0]}–${REC[t][1]}`;
 
-// Fixtures: one gameweek, by day; your time and KST (spec/12: the LCK hub holds the fixtures).
-const W4 = [["Wed", "20 Jan", [["08:00", "17:00", "HLE", "DK"], ["10:30", "19:30", "T1", "KT"]]],
-  ["Thu", "21 Jan", [["08:00", "17:00", "GEN", "BRO"], ["10:30", "19:30", "NS", "DNS"]]],
-  ["Fri", "22 Jan", [["08:00", "17:00", "KRX", "BFX"], ["10:30", "19:30", "DK", "KT"]]],
-  ["Sat", "23 Jan", [["08:00", "17:00", "T1", "GEN"], ["10:30", "19:30", "HLE", "NS"]]],
-  ["Sun", "24 Jan", [["08:00", "17:00", "BRO", "BFX"], ["10:30", "19:30", "KRX", "DNS"]]]];
-$("fx").innerHTML = `<h2><span class="gw"><span>‹</span>Week 4<span>›</span></span><small>20–24 Jan · Bo3</small></h2><div class="cols"><span>Yours</span><span>KST</span></div>`
-  + W4.map(([d, dt, ss]) => `<div class="day"><b>${d}<small>${dt}</small></b><div>${ss.map(([t, k, a, b]) =>
-    `<div class="sr"><span class="t">${t}</span><span class="k">${k}</span><span class="a"><small>${rec(a)}</small><b>${a}</b></span><span class="v">v</span><span class="b"><b>${b}</b><small>${rec(b)}</small></span><span class="f">›</span><span></span></div>`).join("")}</div></div>`).join("");
+// Fixtures: one gameweek, by day; local time only (spec/12: the LCK hub holds the fixtures).
+const W4 = [["Wed", "20 Jan", [["8:00am", "5:00pm", "HLE", "DK"], ["10:30am", "7:30pm", "T1", "KT"]]],
+  ["Thu", "21 Jan", [["8:00am", "5:00pm", "GEN", "BRO"], ["10:30am", "7:30pm", "NS", "DNS"]]],
+  ["Fri", "22 Jan", [["8:00am", "5:00pm", "KRX", "BFX"], ["10:30am", "7:30pm", "DK", "KT"]]],
+  ["Sat", "23 Jan", [["8:00am", "5:00pm", "T1", "GEN"], ["10:30am", "7:30pm", "HLE", "NS"]]],
+  ["Sun", "24 Jan", [["8:00am", "5:00pm", "BRO", "BFX"], ["10:30am", "7:30pm", "KRX", "DNS"]]]];
+$("fx").innerHTML = `<h2><span class="gw"><span>‹</span>Week 4<span>›</span></span><small>20–24 Jan · Bo3</small></h2>`
+  + W4.map(([d, dt, ss]) => `<div class="day"><b>${d}<small>${dt}</small></b><div>${ss.map(([t, , a, b]) =>
+    `<div class="sr"><span class="t">${t}</span><span class="k"></span><span class="a"><small>${rec(a)}</small><b>${a}</b></span><span class="v">v</span><span class="b"><b>${b}</b><small>${rec(b)}</small></span><span class="f">›</span><span></span></div>`).join("")}</div></div>`).join("");
 
 // Results: one gameweek's series with their scores; Week 3, as the Points picture (Sun's two made up).
 const W3 = [["Wed", "13 Jan", [["T1", 2, 1, "HLE"], ["GEN", 2, 0, "KT"]]], ["Thu", "14 Jan", [["DK", 2, 0, "NS"], ["BRO", 1, 2, "DNS"]]],

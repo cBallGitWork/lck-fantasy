@@ -1,62 +1,49 @@
 # Pick Team
 
-Where a manager sets his starters, bench order, Carry and Vice-carry, and plays Bench Boost or Dual Carry. Reached from **Pick Team** in the top bar. Drawn at 1440 in the same frame as Points and Transfers: the squad on the left, the bench bar under it, the player card and widgets on the right.
+Where a manager sets his starters, bench order and Captain, and plays a buff, before the week's deadline. Reached from **Pick Team** in the top bar.
 
-**Approved:** Craig, 14 Nov 2026. A first picture was approved on 13 Nov ("We could do both", naming Rift view and Card view; PR #48, never merged). On 14 Nov it was redrawn in the frame of Points and Transfers with less explaining text; Craig put Save in a bar under the pitch, kept the tall photos in Card view, kept all 10 series and kept role icons alone, then said "Yes, save". Names, teams and numbers are a made-up LCK Cup Week 4 at the same moment as the Transfers picture, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn. The source is [docs/design/proposals/2026-11-14-pick-team/](../../proposals/2026-11-14-pick-team/) (`pick.html`, `brief.md`).
+**Approved:** Craig, 19 Nov 2026, as the pick of the look trial ([foundations.md](../../foundations.md), The trial fills them). Six pictures were drawn blind, lettered A to F; two full panels put F, Arena, first and the ringer last; Craig picked "f", then asked "so build this?". The trial, every round's findings and his calls are in [proposals/2026-11-19-trial/](../../proposals/2026-11-19-trial/panel-findings.md). Names, teams and numbers are a made-up Split 1 Week 4.
+
+Arena is the first picture in the new look: the LCK's navy as the ground, IBM Plex for Latin, Hangul and figures, gold where you act. It binds this screen's layout, content and order now. The look's colours and type go into [plate.md](../../plate.md) and the token layers next (foundations.md, step 5); until then plate.md's colour and type sections still describe the old look.
 
 | File | Shows |
 |---|---|
-| `1440.png`, `pick.html` | Rift view, Faker tapped, no changes |
-| `1440-cards.png`, `pick.html?v=cards` | Card view: the seven starters in one row as the broadcast lineup (Top, Jungle, Mid, Bot, Support, Flex, Coach), the bench bar under it |
-| `1440-swap.png`, `pick.html?v=swap` | Rift view mid-swap: Siwoo (not starting Wed) going out, the bench players who fit outlined in the bench bar (both, as the Flex takes any role), Bench Boost on and unsaved |
+| `1440.png`, `arena.html` | Rift view at 1440, the whole page: Faker tapped, no changes, no buff played |
+| `390.png`, `arena.html` | The same on a phone, the whole page |
+| `1440-cards.png`, `pick.html?v=cards` | Card view, as approved 14 Nov 2026 in the old look: seven starters in one row, the bench under it. Its layout still binds; not yet redrawn in Arena's look |
+| `1440-swap.png`, `pick.html?v=swap` | Rift view mid-swap, as approved 14 Nov 2026 in the old look. The states still bind; the layout is Arena's |
+
+`arena.html` draws from `data.js` through `render.js`, `base.css` and `map.js` beside it, and the kits and crests in `data/lck/`. Shoot it with `proposals/2026-11-19-trial/shoot.mjs`.
 
 ## Borrowed
 
-- **FPL's Pick Team**: the squad with the bench beneath, a tap on a player for his card and its buttons, Save under the pitch.
-- **The LCK broadcast's lineup cards** for Card view.
-- **DraftKings' LoL roster map**: Flex and Coach in your base.
+- **FPL's Pick Team**: the squad on the pitch, the deadline over it, a tap on a player for his card, chips with a Play key, Save by the bench.
+- **Summoner's Rift itself**: the map is drawn from the game's own minimap ([references/rift/](../../references/rift/README.md)), the same in every look and league (Craig, 19 Nov 2026).
+- **The benchmark**: how eight fantasy games draw their team page ([research](../../../research/fantasy-team-pages-look.md)).
 
 ## Controls
 
-- **Rift view | Card view**: Rift on the first visit, then remembered (spec/12).
-- **A player**: opens his card on the right: crest, team, price and last move, form, owned and season with ranks, last 3 series, and Make Carry (or ✓ Carry), Make Vice-carry, Full card ›. The coach's card has no Carry buttons (spec/01, spec/04). Those he can swap with are outlined and the rest dimmed; tap one and they swap (FPL's one-tap swap), tap him again to let go.
-- **Bench bar**: one row under the pitch (and under the lineup in Card view): `Bench`, then each bench player as a compact tile (order, role icon, name, team, the two fixtures). No swap key: tap one bench player, then the other, to swap bench 1 and 2, as FPL (Craig, 16 Nov 2026). Redrawn 15 Nov 2026 from the grey band of two shirts.
-- **Card view**: one row of seven equal cards, Top, Jungle, Mid, Bot, Support, Flex ("plays Top"), Coach, each with role and icon, photo (the coach a crest), name, team, the two fixtures, form and price; C and V on the photo.
-- **Buffs**: three boxes of one size and style in one row above the Rift (four in the picture: Remake, Limitless and Dual Carry were reworked 17 Nov 2026, spec/06), each its name, one line from spec/06 (Bench Boost: Your bench players score this week too; Double Captain: A second Captain, both ×2; Coach Diff: Your coach scores ×3), and `1 left`. Each shows Play, then Cancel until the deadline; once one is chosen the others grey (one a week, spec/06).
-- **Bar under the pitch**: how many changes, Reset, the deadline and its countdown, Save team. Save is disabled with no changes; swaps, Carry, Vice-carry and buffs take effect only on Save (spec/12). The bar sticks to the bottom of the window while the pitch scrolls behind it, so Save is always in view (Craig, 16 Nov 2026, after the design panel found it below the fold).
-
-## Changed by Craig, 16 Nov 2026
-
-From his look at the built page; these bind over the pictures above.
-
-- Buffs sit in one row at the top of the page, above the Rift, not in the side column.
-- Each buff's line says plainly what it does, from spec/06 (Controls, Buffs).
-- One-tap swap, as FPL: tap a player and those he can swap with light up; tap one and they swap. No Swap with bench key.
-- A role starter swaps with the Flex when the result is valid: the Flex holds any role, each role slot its own (Zeus and a Flex who plays Top).
-- Role icons are bigger, everywhere (`roleBox`, `roleIcon`, `roleIconSmall` in the theme).
-- The Rift keeps its shape at any width and the map is drawn in it, so nothing stretches, everywhere.
-- With Dual Carry played the V is gold, as the C.
-- The card's form history is the last 3 series, not weeks.
-- A team crest in a player's card, never on the Rift's tiles or the bench (Craig, 16 Nov 2026).
-- The Flex's tile carries a `FLEX` label over his shirt.
-- Fixture lines give only the opponents: `v DK, NS`.
-- The card drops its series rows: his tile already shows them, and the side lists the week's series.
-- The bar gives only the count (`1 change`); the buff's own card says it is on and unsaved.
-- Later that day: the Rift is square, 720 a side, centred in the main column, and the map redrawn for it: lanes, river, bases, towers and pits (`measure.rift`).
-- Each starter in his place: top in top lane, jungle in the jungle, mid in mid lane, Bot over Support (Craig, 16 Nov 2026) together in bot lane, Coach and Flex by the blue base.
-- Tiles as FPL's: the shirt on a faint lighter card, C or V at its top right and a news flag `!` at its top left, a white name plate, then a dark band (fixtures, or points and series). No role icon on a tile: his place on the Rift says it; the Flex's and Coach's place is a label over the shirt (`FLEX`, `Coach 감독`), and nothing goes under a Flex's tile: no `Flex · plays Top`, no `Not starting` tag (his flag `!` stays at the shirt's corner, the words in his card). No team crests on the tiles.
-- The bench shows the Rift's own tiles (shirt on its card, name plate, fixtures or points band), each under its order and role, `1. Mid`, as FPL's bench and its `1. DEF`; swapping works as before.
+- **Title line**: Pick Team, its hangul, the week, then the deadline in the manager's own time, am/pm, and the countdown. No KST anywhere (Craig, 19 Nov 2026).
+- **Rift view | Card view**: on the title's line; Rift on the first visit, then remembered (spec/12).
+- **The Rift**: square, as big as the first screen allows, at the main column's left. Top level with Flex, Jungle and Mid in their places, Coach under Top, Bot beside Support under Flex. A tile is its role strip, the team's kit, team code and name, then the week's opponents. The Captain's gold C sits past the tile's corner. A yellow warning triangle marks a player with news.
+- **A player**: a tap opens his card. Those he can swap with are outlined and the rest dimmed; tap one and they swap, tap him again to let go (FPL's one-tap swap).
+- **Buffs**: in the column beside the Rift, each its gold icon, name, state (`Available`, `On this week`, `Unavailable`, `Played Week n`) and a key: `Play` when available, `Cancel` when on, none otherwise. What it does is its hover. Never a count.
+- **Bench**: under the buffs, on the Rift's dark green; the Rift's own tiles, each under its order and role (`1. Mid`).
+- **Save**: under the bench: how many changes, Reset, Save team. Save is off with no changes. The three boxes together run the Rift's height.
+- **The card**: on the right: crest, name, team, role, price and last move (a rise in red, a fall in blue); form, owned and season, each with its rank among his role, the group said once (`Among 10 mids`); last 3 series; `✓ Captain` as a state on the Captain, `Make Captain` on anyone else; `Full card ›`.
+- **This week's series**: under the card, by day, in the manager's own time.
+- **On a phone**: buffs are one row of three tiles over the Rift; the whole Rift shows on the first screen; the bench sits below it; the changes, Reset and Save stay stuck to the foot; the tapped player's card sits in the page under the bench.
 
 ## Placeholders
 
 | What | Issue |
 |---|---|
 | Squad shape, flex, coach, bench | #13 |
-| Prices in 억 | #22 |
+| Prices | #22 |
 | Price moves | #23 |
-| Carry and Vice-carry | #19 |
+| Captain | #19 |
 | Buffs | #25 |
 | Auto-subs and bench order | #14 |
 | Series, form, ownership | #36 |
-| Player photos and team crests (Card view) | no issue; the rights are unsettled |
+| Local time in am/pm in the app | #445 |
 | Sponsor slots | spec/13 |

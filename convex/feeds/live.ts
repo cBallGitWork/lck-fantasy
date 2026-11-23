@@ -7,8 +7,8 @@ import { internal } from "../_generated/api";
 import { internalMutation, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { raiseAlert } from "../admin/alerts";
 import { now } from "../admin/clock";
-import { findSeason } from "../world/season";
-import { parseLiveWindow, readWindow } from "./liveFeed";
+import { requireSeason } from "../world/season";
+import { errorText, parseLiveWindow, readWindow } from "./liveFeed";
 
 const MS_PER_SECOND = 1000;
 const MINUTE_SECONDS = 60;
@@ -18,9 +18,8 @@ const MINUTE_SECONDS = 60;
 export const watchLiveGame = internalMutation({
   args: { competition: v.string(), year: v.number(), esportsGameId: v.string() },
   handler: async (ctx, { competition, year, esportsGameId }) => {
-    const found = await findSeason(ctx, competition, year);
-    if (found === null) throw new Error(`No ${competition} ${year} season is stored.`);
-    await startWatching(ctx, found.season._id, esportsGameId);
+    const { season } = await requireSeason(ctx, competition, year);
+    await startWatching(ctx, season._id, esportsGameId);
   },
 });
 
@@ -48,7 +47,7 @@ export const storeLiveRead = internalMutation({
       try {
         reading = readWindow(row.reading, parseLiveWindow(window), live.goldLeadAtMinutes);
       } catch (e) {
-        problem = e instanceof Error ? e.message : String(e);
+        problem = errorText(e);
       }
     }
     const at = await now(ctx);

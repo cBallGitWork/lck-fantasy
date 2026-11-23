@@ -4,6 +4,10 @@
 import type { PlayerGameStats, TeamGameStats } from "../scoring/game";
 import { v, type Infer } from "convex/values";
 import { PLAYER_ROLES, type PlayerRole } from "../squads/squad";
+import { literals } from "../world/seasonSettings";
+
+/** What went wrong reading the feed, as text for its row and the admin's alert. */
+export const errorText = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
 export interface FeedParticipant {
   participantId: number;
@@ -63,7 +67,7 @@ const livePlayer = v.object({
   name: v.string(),
   champion: v.string(),
   teamId: v.string(),
-  role: v.union(...PLAYER_ROLES.map((role) => v.literal(role))),
+  role: literals(PLAYER_ROLES),
   kills: v.number(),
   deaths: v.number(),
   assists: v.number(),

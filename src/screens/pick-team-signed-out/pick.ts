@@ -5,6 +5,7 @@ import { autoFill, randomChooser } from "../../../convex/signIn/autoFill";
 import { budgetProblems, type Prices } from "../../../convex/squads/budget";
 import { allPicks, pickKey, picksPerTeam, type Pick, type PlayerRole, type Role, type Squad, type SquadSettings, type StarterSlot } from "../../../convex/squads/squad";
 import { formatWon } from "../../parts";
+import { sum } from "../../parts/util/sum";
 import { BENCH_SLOTS, type PersonRole, type RoleKey, type SquadSlot } from "../../rift";
 import { WORDS, teamFull, toPick } from "./words";
 
@@ -50,7 +51,7 @@ export function holders(squad: Squad, players: readonly GuestPlayer[]): Partial<
 }
 
 /** How many places the squad has: the starters' slots and the bench. */
-const size = (settings: SquadSettings) => Object.values(settings.starterSlots).reduce((a, b) => a + b, 0) + settings.benchSize;
+const size = (settings: SquadSettings) => sum(Object.values(settings.starterSlots)) + settings.benchSize;
 
 /** How many places are still empty. */
 export const leftToPick = (squad: Squad, settings: SquadSettings) => size(settings) - allPicks(squad).length;

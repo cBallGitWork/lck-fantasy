@@ -7,9 +7,9 @@ import type { Doc, Id } from "../_generated/dataModel";
 import { internalMutation, internalQuery, type MutationCtx, type QueryCtx } from "../_generated/server";
 import { now } from "../admin/clock";
 import type { TestManagerStyle } from "../admin/testManagers";
-import { findSeason, pricedPickOf, pricesFor } from "../world/season";
+import { pricedPickOf, pricesFor, requireSeason } from "../world/season";
 import { joinAutoLeagues } from "../leagues/store";
-import { literals } from "../schema";
+import { literals } from "../world/seasonSettings";
 import { requirePrice, type Prices } from "../squads/budget";
 import { allPicks, PLAYER_ROLES, STARTER_SLOTS, type Squad } from "../squads/squad";
 import { admit, type InviteRefusal } from "./invites";
@@ -43,9 +43,7 @@ export const saveNewTeam = internalMutation({
   },
   handler: async (ctx, args) => {
     const at = await now(ctx);
-    const found = await findSeason(ctx, args.competition, args.year);
-    if (found === null) throw new Error(`No ${args.competition} ${args.year} season is stored.`);
-    const { season } = found;
+    const { season } = await requireSeason(ctx, args.competition, args.year);
     if ((await entryOf(ctx, args.account, season._id)) !== null) throw refuse({ rule: "hasTeam" });
     if (season.settings.signUpOpen === false) {
       const turnedAway = await admit(ctx, args.account, args.invite, at);
@@ -138,9 +136,8 @@ export async function storeNewTeam(ctx: MutationCtx, season: Doc<"seasons">, { f
 export const hasTeam = internalQuery({
   args: { account: v.string(), ...season },
   handler: async (ctx, args) => {
-    const found = await findSeason(ctx, args.competition, args.year);
-    if (found === null) throw new Error(`No ${args.competition} ${args.year} season is stored.`);
-    return (await entryOf(ctx, args.account, found.season._id)) !== null;
+    const { season } = await requireSeason(ctx, args.competition, args.year);
+    return (await entryOf(ctx, args.account, season._id)) !== null;
   },
 });
 

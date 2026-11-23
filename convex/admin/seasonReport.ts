@@ -3,6 +3,7 @@
 // the stored season on the admin section's Report tab.
 import { v } from "convex/values";
 import { query } from "../_generated/server";
+import { competitionByName } from "../world/season";
 import { adminPassword, requireAdmin } from "./access";
 import type { AlertKind } from "./alertKinds";
 import { mismatchCount, openAlertCounts } from "./alerts";
@@ -22,7 +23,7 @@ export const seasonReport = query({
   handler: async (ctx, { password, competition: name }): Promise<SeasonReport> => {
     requireAdmin(password);
     const alerts = { openAlerts: await openAlertCounts(ctx), mismatches: await mismatchCount(ctx) };
-    const competition = await ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", name)).unique();
+    const competition = await competitionByName(ctx, name);
     const season = competition === null
       ? null
       : await ctx.db.query("seasons").withIndex("by_competition", (q) => q.eq("competition", competition._id)).order("desc").first();

@@ -3,22 +3,12 @@ import { describe, expect, test } from "vitest";
 import { VIEW_KEYS } from "../../parts";
 import { PATHS, transfersSelling } from "../../paths";
 import { BUFFS } from "../../fixtures/competition";
-import { expectDeadlinePart, html, htmlAt, text } from "../../testing/render";
+import { expectDeadlinePart, expectInOrder, html, htmlAt, text } from "../../testing/render";
 import { blockedStorage, chosenView, keptStorage, stubStorage } from "../../testing/storage";
 import { PICTURE_PLAN, TRANSFERS_PICTURE } from "./fixtures";
 import { lineupIds } from "./lineup";
 import { confirmTransfers, EMPTY_PLAN } from "./plan";
 import { TransfersPage } from "./TransfersPage";
-
-/** Fails unless each piece is found after the one before it. */
-function expectInOrder(out: string, pieces: string[]) {
-  let from = 0;
-  for (const piece of pieces) {
-    const at = out.indexOf(piece, from);
-    expect(at, `"${piece}" after position ${from}`).toBeGreaterThanOrEqual(0);
-    from = at + piece.length;
-  }
-}
 
 describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)", () => {
   const out = text(<TransfersPage {...TRANSFERS_PICTURE} />);

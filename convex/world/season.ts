@@ -72,7 +72,7 @@ export const seasonOf = internalQuery({
 
 /** A competition's season by name and year; null before it is loaded. */
 export async function findSeason(ctx: QueryCtx, name: string, year: number): Promise<{ competition: Doc<"competitions">; season: Doc<"seasons"> } | null> {
-  const competition = await ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", name)).unique();
+  const competition = await competitionByName(ctx, name);
   if (competition === null) return null;
   const season = await ctx.db
     .query("seasons")
@@ -81,8 +81,20 @@ export async function findSeason(ctx: QueryCtx, name: string, year: number): Pro
   return season === null ? null : { competition, season };
 }
 
+/** A competition's season by name and year; throws when it isn't stored. */
+export async function requireSeason(ctx: QueryCtx, name: string, year: number) {
+  const found = await findSeason(ctx, name, year);
+  if (found === null) throw new Error(`No ${name} ${year} season is stored.`);
+  return found;
+}
+
+/** A competition by name; null before it is loaded. */
+export function competitionByName(ctx: QueryCtx, name: string) {
+  return ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", name)).unique();
+}
+
 async function upsertCompetition(ctx: MutationCtx, competition: SeasonFile["competition"]): Promise<Id<"competitions">> {
-  const existing = await ctx.db.query("competitions").withIndex("by_name", (q) => q.eq("name", competition.name)).unique();
+  const existing = await competitionByName(ctx, competition.name);
   if (existing === null) return ctx.db.insert("competitions", competition);
   await ctx.db.patch(existing._id, competition);
   return existing._id;

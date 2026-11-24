@@ -54,6 +54,7 @@ What shows a fact: tags, tables, lists, crests, states.
 - `ProviderMark.tsx`: the sign-in provider's mark, `G` or `D` (Settings, the sign-up sheet).
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `TeamBar.tsx`: a small bar of a team's own kit colour before its code, wherever a list names a team; the first kit colour that shows on the ground (`data/lck/teams.json`).
+- `Kit.tsx`: a team's kit beside its code at a measure, from `data/lck/shirts/<code>.svg`: either side of a fixture's time.
 - `PlayerPhoto.tsx`: a player's media-day portrait credited `Photo: LCK` (`PHOTO_CREDIT`), or his team's crest without one (spec/13).
 - `TierShield.tsx`: Overall's tier shield, filled and outlined, no text on it (spec/08); the page sizes it through its class name.
 - `TierMark.tsx`: a manager's tier, its shield and name, one way on Home, Points, the profile and the Overall table (spec/08).

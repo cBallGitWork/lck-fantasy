@@ -6,6 +6,7 @@ import {
   BuffCard,
   Crest,
   TeamBar,
+  Kit,
   Deadline,
   Empty,
   ErrorState,
@@ -274,6 +275,13 @@ test("a team's bar is its kit's first colour that shows on the ground, unseen by
   expect(html(<TeamBar team="GEN" />)).toContain("background:#AA8A00");
   expect(html(<TeamBar team="KRX" />)).toContain("background:#E4007F");
   expect(html(<TeamBar team="XYZ" />)).toBe("");
+});
+
+test("a kit is its team's drawn shirt at a measure, unseen by a screen reader; nothing for a team with no kit", () => {
+  const kit = html(<Kit team="T1" size="roleIcon" />);
+  expect(kit).toMatch(/<img class="kit" src="[^"]*T1[^"]*\.svg" alt=""/);
+  expect(kit).toContain("width:var(--m-role-icon);height:var(--m-role-icon)");
+  expect(html(<Kit team="XYZ" size="roleIcon" />)).toBe("");
 });
 
 test("the series list shows scores with their state, and times for the next", () => {

@@ -1,5 +1,5 @@
 import type { TeamCode } from "../../fixtures/week3";
-import { TeamBar, GoLink, NONE } from "../../parts";
+import { GoLink, Kit, NONE } from "../../parts";
 import { seriesGo } from "../../paths";
 import type { HubWeek } from "./types";
 import { ByDay, WeekTitle } from "./Week";
@@ -33,11 +33,11 @@ export function Fixtures({
             <span className="lck-hub__home">
               {record(s.home)}
               <b className="lck-hub__code num">{s.home}</b>
-              <TeamBar team={s.home} />
+              <Kit team={s.home} size="roleIcon" />
             </span>
             <span className="lck-hub__time num">{s.local}</span>
             <span className="lck-hub__away">
-              <TeamBar team={s.away} />
+              <Kit team={s.away} size="roleIcon" />
               <b className="lck-hub__code num">{s.away}</b>
               {record(s.away)}
             </span>

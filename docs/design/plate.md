@@ -138,7 +138,8 @@ Each part is drawn one way on every screen.
   and a radio button. C is gold (`--ink`), its letter `--on-ink`. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
 - **A team's colour** is a 4px bar before its code wherever a list names a team (Craig, 24 Nov 2026:
   the look needed a little colour; `approved/team-colour/`): the kit's first colour that shows on
-  the navy. Never a tinted row, a wash or a coloured code. Off the lists, team colour lives in a kit.
+  the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
+  in the bar's place. Never a tinted row, a wash or a coloured code.
 - **Your players** are marked by that dot, on every screen.
 - **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
   ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with

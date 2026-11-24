@@ -9,16 +9,17 @@ export const STEP = share.tile * PLAN + space[2];
 
 /**
  * Each role's first tile, and which way the rest go, on the square Rift: top rightward along top lane,
- * jungle and mid in rows centred in the jungle and on mid lane, Bot over Support leftward along bot lane,
- * the coach alone by the blue base. `centre` rows are centred on the point; the others start there.
+ * jungle and mid in rows centred in the jungle and on mid lane, Bot then Support leftward along bot lane,
+ * the coach alone by the blue base. `centre` rows are centred on the point; the others start there. The
+ * rows sit a whole tile apart, its price chip and band included, at the size the Rift's tiles take (`share`).
  */
 const SPOTS: Record<PersonRole, { at: RiftPoint; dir: readonly [number, number]; centre?: boolean }> = {
-  top: { at: [92, 76], dir: [1, 0] },
-  jng: { at: [196, 220], dir: [1, 0], centre: true },
-  mid: { at: [392, 364], dir: [1, 0], centre: true },
-  bot: { at: [628, 508], dir: [-1, 0] },
-  sup: { at: [628, 652], dir: [-1, 0] },
-  coach: { at: [92, 640], dir: [1, 0] },
+  top: { at: [84, 84], dir: [1, 0] },
+  jng: { at: [196, 250], dir: [1, 0], centre: true },
+  mid: { at: [428, 400], dir: [1, 0], centre: true },
+  bot: { at: [636, 560], dir: [-1, 0] },
+  sup: { at: [404, 560], dir: [-1, 0] },
+  coach: { at: [84, 640], dir: [1, 0] },
 };
 
 /** Where the `i`th of a role's `n` tiles stands. */

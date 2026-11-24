@@ -185,6 +185,14 @@
   width: var(--m-shirt-tile-phone);
   height: var(--m-shirt-tile-phone);
 }
+.rift--phone .tile__slot,
+.rift--phone .tile__name,
+.rift--phone .tile__line {
+  line-height: var(--lh-tight);
+}
+.rift--phone .tile__slot {
+  padding: var(--s-1) 0;
+}
 .rift--phone .tile__mark {
   top: var(--s-3);
   right: calc(var(--s-2) * -1);

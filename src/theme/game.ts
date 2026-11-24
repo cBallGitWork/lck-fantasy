@@ -7,6 +7,9 @@ export const game = {
     rise: "#FF6B78",
     /** A price fall, blue as Korea writes a fall, lightened to read on a dark ground. */
     fall: "#6EA2FF",
+    /** A rank's move in a league: up green, down red, as FPL's arrows (Craig, 24 Nov 2026). */
+    up: "#4CD98A",
+    down: "#FF6B78",
     /** Summoner's Rift, the game's own and the same in every league (Craig, 19 Nov 2026: "the rift is
      *  sacred"): the approved picture's map (docs/design/approved/pick-team/map.js, its calm painting).
      *  The jungle's walls, the ground you walk, the lanes and the river and its pits. */

@@ -2,6 +2,7 @@ import type { Go } from "../../paths";
 import { score, type Score } from "../text/figures";
 import { GoLink } from "../controls/GoLink";
 import "./SeriesList.css";
+import { TeamBar } from "./TeamBar";
 import { LiveTag, NotFinalTag } from "./Tag";
 import { Time } from "./Time";
 
@@ -45,7 +46,9 @@ export function SeriesList({ series, go }: { series: readonly SeriesRow[]; go?: 
       {series.map((s) => {
         const teams = (
           <>
-            <b>{s.home}</b> v <b>{s.away}</b>
+            <TeamBar team={s.home} />
+            <b>{s.home}</b> v <TeamBar team={s.away} />
+            <b>{s.away}</b>
           </>
         );
         return (

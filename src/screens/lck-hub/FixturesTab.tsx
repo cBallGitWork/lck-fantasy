@@ -1,13 +1,12 @@
 import type { TeamCode } from "../../fixtures/week3";
-import { GoLink, NONE } from "../../parts";
+import { GoLink, Kit, NONE } from "../../parts";
 import { seriesGo } from "../../paths";
 import type { HubWeek } from "./types";
 import { ByDay, WeekTitle } from "./Week";
-import { WORDS } from "./words";
 
 /**
- * Fixtures: one week by day. Each series: your time, each team's record beside its code,
- * blue side left, then `›`; the whole row opens the Series page.
+ * Fixtures: one week by day. Each series, centred as FPL's and UCL Fantasy's (Craig, 24 Nov 2026): each team's
+ * record and code either side of your time, blue side left, then `›`; the whole row opens the Series page.
  */
 export function Fixtures({
   week,
@@ -31,13 +30,14 @@ export function Fixtures({
         series={week.series}
         row={(s) => (
           <GoLink key={s.id} className="lck-hub__series" go={seriesGo(s.id)}>
-            <span className="num">{s.local}</span>
             <span className="lck-hub__home">
               {record(s.home)}
               <b className="lck-hub__code num">{s.home}</b>
+              <Kit team={s.home} size="roleIcon" />
             </span>
-            <span className="lck-hub__versus">{WORDS.versus}</span>
-            <span>
+            <span className="lck-hub__time num">{s.local}</span>
+            <span className="lck-hub__away">
+              <Kit team={s.away} size="roleIcon" />
               <b className="lck-hub__code num">{s.away}</b>
               {record(s.away)}
             </span>

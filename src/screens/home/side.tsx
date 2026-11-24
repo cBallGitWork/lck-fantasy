@@ -1,4 +1,4 @@
-import { GoLink, pct } from "../../parts";
+import { TeamBar, GoLink, pct } from "../../parts";
 import { PATHS } from "../../paths";
 import { MarkBadge, RoleIcon } from "../../rift";
 import type { SidePlayer, WeekPoints } from "./types";
@@ -32,7 +32,10 @@ export function PlayerList({ players, label }: { players: SidePlayer[]; label: s
             {p.mark && (
               <MarkBadge mark={p.mark} className="home__mark" />
             )}{" "}
-            <span className="home__player-team">{p.team}</span>
+            <span className="home__player-team">
+              <TeamBar team={p.team} />
+              {p.team}
+            </span>
           </span>
           <span className="home__player-stat">{p.stat}</span>
           <span className="home__player-points">

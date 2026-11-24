@@ -1,5 +1,4 @@
 // The roles and lineup slots, named once (spec/01; plate.md, Card view). Their names are words.ts's.
-import { coachLabel, ROLE_NAME } from "./words";
 
 export type RoleKey = "top" | "jng" | "mid" | "bot" | "sup";
 export type SlotKey = RoleKey | "flex" | "coach";
@@ -34,11 +33,4 @@ export function flexPlays(slot: SquadSlot, role: PersonRole): RoleKey | undefine
 /** The icon a starter shows: his slot's, save the Flex, who shows the role he plays. */
 export function slotIcon(slot: SlotKey, plays?: RoleKey): IconKey {
   return slot === "flex" && plays ? plays : slot;
-}
-
-/** The label over a Flex's or Coach's shirt on the Rift, marking his place: `Flex`, `Coach 감독` (Craig, 16 Nov 2026). */
-export function slotLabel(slot: SlotKey): string | undefined {
-  if (slot === "flex") return ROLE_NAME.flex;
-  if (slot === "coach") return coachLabel;
-  return undefined;
 }

@@ -30,9 +30,6 @@ export const VIEWS = ["Rift view", "Card view"] as const;
 /** Under a Flex on his lineup card: `plays Mid`. */
 export const flexRole = (role: RoleKey) => `plays ${ROLE_NAME[role]}`;
 
-/** The label over a Coach's shirt on the Rift: `Coach 감독`. */
-export const coachLabel = `${ROLE_NAME.coach} ${COACH_HANGUL}`;
-
 export const MARK_NAME: Record<Mark, string> = { C: "Captain" };
 
 /** What the live region says when a mark moves: `Faker is your Captain`. */

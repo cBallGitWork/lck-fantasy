@@ -1,9 +1,12 @@
 // @vitest-environment node
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { expect, test } from "vitest";
 import { PICK_TEAM_SQUAD } from "../fixtures/week3";
 import { CAPTAIN_MULTIPLIER } from "../fixtures/competition";
 import { hovers, html, text } from "../testing/render";
-import { measure } from "../theme/tokens";
+import { game } from "../theme/game";
+import { PLAN } from "./riftPlan";
 import {
   BENCH_SLOTS,
   BenchBar,
@@ -31,14 +34,27 @@ import {
   type SlotKey,
 } from ".";
 
-test("the map draws the river, three lanes, two bases and ten towers", () => {
+test("the map is the minimap's plan: lanes, the river's two halves and pits, two stone courts, the lanes' towers, six inhibitors, two nexus", () => {
   const out = html(<RiftMap />);
-  expect(out.match(/rift-map__lane/g)).toHaveLength(3);
-  expect(out.match(/rift-map__base/g)).toHaveLength(2);
-  expect(out.match(/<rect /g)).toHaveLength(11);
-  // Drawn square, in the Rift's own shape, and never stretched to its box.
+  expect(out.match(/<path d="M184 60 H660/g)).toHaveLength(1);
+  expect(out.match(/url\(#[^)]*river-\d\)/g)).toHaveLength(2);
+  expect(out.match(/rift-map__pit/g)).toHaveLength(2);
+  // Each court: five rings and its well's two discs.
+  expect(out.match(/rift-map__stone--/g)).toHaveLength(14);
+  // Each lane's three towers on each side; the pair by each nexus is left out.
+  expect(out.match(/rift-map__tower/g)).toHaveLength(18);
+  expect(out.match(/rift-map__inhib/g)).toHaveLength(6);
+  expect(out.match(/rift-map__nexus/g)).toHaveLength(2);
+  // Drawn square, in the plan's own shape, and never stretched to its box.
   expect(out).toContain('viewBox="0 0 720 720"');
   expect(out).not.toContain("preserveAspectRatio");
+});
+
+test("the map draws in the game's colours alone, the same for every league", () => {
+  const css = readFileSync(join(import.meta.dirname, "RiftMap.css"), "utf8");
+  const used = [...css.matchAll(/var\(--([\w-]+)\)/g)].map((m) => m[1]);
+  const gameTokens = new Set(Object.keys(game.color).map((key) => key.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`)));
+  expect(used.filter((name) => !name?.startsWith("opacity-") && !gameTokens.has(name ?? ""))).toEqual([]);
 });
 
 test("only a Flex plays a role: a mid there plays mid; elsewhere, and a coach, play none", () => {
@@ -54,14 +70,15 @@ test("each role has its icon, named for screen readers", () => {
   }
 });
 
-test("a Points tile shows team, C, name, your dot, points (the Captain's result only), line, and stands at its slot", () => {
+test("a Points tile shows its kit, team, C, name, your dot, points (the Captain's result only), line, and stands at its slot", () => {
   const out = html(
     <Rift>
       <Tile slot="mid" name="Faker" team="T1" at={RIFT_SLOTS.mid} mark="C" me points={25} line="v HLE 12 · v DK 5" selected />
     </Rift>,
   );
   expect(out).toContain("rift-map");
-  expect(out).toContain('class="shirt__code">T1');
+  expect(out).toMatch(/class="shirt shirt--kit" src="[^"]*T1\.svg"/);
+  expect(out).toContain('<span class="tile__team">T1 </span>Faker');
   expect(out).toContain('aria-label="Captain">C');
   expect(out).toContain('aria-label="Your player"');
   expect(out).toContain('class="tile__points num">25</div>');
@@ -91,7 +108,7 @@ test("C's hover is the competition's multiplier, and the Flex's label says Any r
   const out = html(
     <>
       <Tile slot="mid" name="Faker" team="T1" mark="C" />
-      <Tile slot="flex" name="Zeus" team="T1" />
+      <Tile slot="flex" name="Zeus" team="T1" at={RIFT_SLOTS.flex} />
     </>,
   );
   expect(hovers(out)).toEqual([
@@ -113,9 +130,18 @@ test("a tile or a lineup card that can be chosen is a key the keyboard reaches",
   expect(card).toContain('tabindex="0"');
 });
 
-test("a Flex tile is labelled Flex over his shirt, not the role he plays; a Coach tile its hangul", () => {
-  expect(text(<Tile slot="flex" name="Siwoo" team="DK" at={RIFT_SLOTS.flex} line="v HLE · v KT" />)).toBe("FlexDKSiwoov HLE · v KT");
-  expect(text(<Tile slot="coach" name="kkOma" team="T1" at={RIFT_SLOTS.coach} />)).toContain("Coach 감독");
+test("a tile on the Rift is its role strip, team code and name, then its band: a Flex says Flex, not the role he plays", () => {
+  expect(text(<Tile slot="flex" name="Siwoo" team="DK" at={RIFT_SLOTS.flex} line="v HLE · v KT" />)).toBe("FlexDK Siwoov HLE · v KT");
+  expect(text(<Tile slot="coach" name="kkOma" team="T1" at={RIFT_SLOTS.coach} />)).toBe("CoachT1 kkOma");
+  expect(text(<Tile slot="mid" name="Faker" team="T1" at={RIFT_SLOTS.mid} />)).toBe("MidT1 Faker");
+  // A bench tile stands under its order and role, so it has no strip.
+  expect(text(<Tile slot="mid" name="Bdd" team="KT" />)).toBe("KT Bdd");
+});
+
+test("a player with news carries the yellow warning triangle, named by his news", () => {
+  const out = html(<Tile slot="bot" name="Gumayusi" team="T1" at={RIFT_SLOTS.bot} flag="Not starting" />);
+  expect(out).toMatch(/class="tile__flag" role="img" aria-label="Not starting"[^>]*><svg class="tile__flag-icon"/);
+  expect(out).toContain("tile__flag-sign");
 });
 
 test("the five roles lead the lineup, and the squad is the seven and the bench", () => {
@@ -128,9 +154,14 @@ test("the two views, the Rift first", () => {
   expect(VIEWS).toEqual(["Rift view", "Card view"]);
 });
 
-test("the slots place all seven starters, inside the square Rift", () => {
+test("the slots place all seven starters, inside the square Rift, on a desk and on a phone", () => {
   expect(Object.keys(RIFT_SLOTS).sort()).toEqual([...LINEUP_ORDER].sort());
-  for (const [x, y] of Object.values(RIFT_SLOTS)) expect([x, y].every((v) => v > 0 && v < measure.rift)).toBe(true);
+  for (const { desk, phone } of Object.values(RIFT_SLOTS)) expect([...desk, ...phone].every((v) => v > 0 && v < PLAN)).toBe(true);
+  // Top level with Flex, Coach under Top, Bot beside Support under Flex (Craig, 19 Nov 2026).
+  expect(RIFT_SLOTS.top.desk[1]).toBe(RIFT_SLOTS.flex.desk[1]);
+  expect(RIFT_SLOTS.coach.desk[0]).toBe(RIFT_SLOTS.top.desk[0]);
+  expect(RIFT_SLOTS.sup.desk[0]).toBe(RIFT_SLOTS.flex.desk[0]);
+  expect(RIFT_SLOTS.bot.desk[1]).toBe(RIFT_SLOTS.sup.desk[1]);
 });
 
 test("a lineup card shows his split's photo credited Photo: LCK, or his team's crest without one (spec/13)", () => {
@@ -210,7 +241,7 @@ test("the bench bar holds the Rift's tiles, each under its order and role, with 
       <BenchTile order={2} role="jng" name="Cuzz" team="KT" line="v DK · v T1" />
     </BenchBar>,
   );
-  expect(out).toBe("Bench1. MidKTBdd—Didn't play2. JungleKTCuzzv DK · v T1");
+  expect(out).toBe("Bench1. MidKT Bdd—Didn't play2. JungleKT Cuzzv DK · v T1");
   // The bench shows the Rift's own tiles, as FPL's bench under the pitch (Craig, 16 Nov 2026).
   const chosen = html(<BenchTile order={1} role="mid" name="Bdd" team="KT" selected onSelect={() => {}} />);
   expect(chosen).toContain("tile tile--bench tile--selected");

@@ -21,11 +21,6 @@ type LeagueColour =
   | "band"
   | "signal"
   | "dim"
-  | "mapGround"
-  | "mapRiver"
-  | "mapLane"
-  | "mapBase"
-  | "mapTower"
   | "tileCard"
   | "tilePlate"
   | "onTilePlate";
@@ -41,8 +36,8 @@ export type League = {
 };
 
 /** The LCK: Arena, the look trial's pick (Craig, 19 Nov 2026; docs/design/approved/pick-team/): the
- *  LCK's navy as the ground, cool white text, gold where you act, a teal second accent. The banner,
- *  the stage, the map and the tile keep their earlier values until their own pictures are redrawn. */
+ *  LCK's navy as the ground, cool white text, gold where you act, a teal second accent. The banner
+ *  and the stage keep their earlier values until their own pictures are redrawn; the map is the game's. */
 const lck: League = {
   color: {
     /** The page. */
@@ -79,14 +74,9 @@ const lck: League = {
     signal: "#2BC4B5",
     /** The page behind a modal. */
     dim: "rgba(10, 18, 38, 0.72)",
-    /** The Rift map's ground, river, lanes, bases and towers. */
-    mapGround: "#0B1A2C",
-    mapRiver: "#0D2B3E",
-    mapLane: "#1A2C42",
-    mapBase: "#22374F",
-    mapTower: "#5B5A56",
-    /** A Rift tile's card: the faint, lighter ground behind his shirt, as FPL's (Craig, 16 Nov 2026). */
-    tileCard: "rgba(240, 230, 210, 0.12)",
+    /** A Rift tile's card behind his kit: solid, never see-through, so the map's marks stop at it
+     *  (docs/design/approved/pick-team/). */
+    tileCard: "#8A918D",
     /** A Rift tile's white name plate, and the dark words on it, as FPL's (Craig, 16 Nov 2026). */
     tilePlate: "#FFFFFF",
     onTilePlate: "#010A13",

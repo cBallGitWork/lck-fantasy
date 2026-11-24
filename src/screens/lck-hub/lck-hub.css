@@ -33,16 +33,16 @@
 }
 .lck-hub__series {
   display: grid;
-  grid-template-columns:
-    calc(var(--s-7) + var(--s-4)) calc(var(--s-7) * 2 + var(--s-4)) var(--s-6)
-    calc(var(--s-7) * 2) var(--m-target) 1fr;
+  /* Centred: a team each side of the time; the left padding matches the `›` column, so the time sits mid-row. */
+  grid-template-columns: 1fr calc(var(--s-7) + var(--s-6)) 1fr var(--m-target);
   align-items: center;
   height: var(--s-7);
-  padding: 0 var(--s-4);
+  padding: 0 var(--s-4) 0 calc(var(--s-4) + var(--m-target));
   background: var(--paper);
   border-bottom: var(--m-rule) solid var(--fill);
 }
 .lck-hub__series--result {
+  padding: 0 var(--s-4);
   grid-template-columns: calc(var(--s-7) * 2 + var(--s-6) + var(--s-3)) calc(var(--s-7) + var(--s-6)) calc(var(--s-7) + var(--s-4)) var(--m-target) 1fr;
 }
 .lck-hub__series:last-child {
@@ -75,9 +75,9 @@
 .lck-hub__record {
   margin: 0 var(--s-2);
 }
-.lck-hub__versus {
+.lck-hub__time {
   text-align: center;
-  color: var(--mid);
+  font-size: var(--size-lead);
 }
 .lck-hub__score {
   text-align: center;

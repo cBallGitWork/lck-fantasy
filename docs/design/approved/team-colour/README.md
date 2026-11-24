@@ -6,7 +6,7 @@ A small bar of a team's own colour before its code, wherever a list names a team
 
 | File | Shows |
 |---|---|
-| `1440-fixtures.png` | The LCK's fixtures, shot from the built app: a bar before each team's code |
+| `1440-fixtures.png` | The LCK's fixtures, shot from the built app: the rows centred as FPL's and UCL Fantasy's, each team's code and bar either side of the time (Craig, 24 Nov 2026: "Yes, centre them") |
 | `1440-stats.png` | Stats: a bar before each player's team |
 
 ## Rules

@@ -77,6 +77,7 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 | `--banner-rule` | #785A28 | the banner's rule under that hangul |
 | `--rise` | #FF6B78 | a price rise, Korean red lightened for navy |
 | `--fall` | #6EA2FF | a price fall, Korean blue lightened for navy |
+| `--up`, `--down` | #4CD98A, #FF6B78 | a rank's move in a league: up green, down red, with its ▲ or ▼ (Craig, 24 Nov 2026) |
 | `--over` | #FF6B78 | the bank below zero, over the budget, with its − (Craig, 16 Nov 2026) |
 | `--signal` | #2BC4B5 | the second accent, teal, sparingly: the live dot, the focus ring |
 | `--stage` | #000508 | Live's dark stage |
@@ -88,11 +89,11 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 - Gold is the one accent, and on these alone: the one main action on a screen, the only filled key; the Captain's
   C; his `✓ Captain` state, edged and never filled; a buff's icon (Craig, 19 Nov 2026); the Flol
   wordmark; all `--ink`. The banner's hangul is its own gold (`--banner`). Section rules, tabs,
-  selected borders, links, tags, a page title's hangul and a rank's move (▲/▼) are `--text` or grey
+  selected borders, links, tags and a page title's hangul are `--text` or grey
   (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
 - Overall's tier shield is a `--text` fill, one colour for every tier (Craig, 16 Nov 2026).
-- Colour is spent on meaning only, never to decorate: red and blue are prices and the bank only; a rank's move
-  stays `--text` (Craig, 16 Nov 2026).
+- Colour is spent on meaning only, never to decorate: red and blue are prices and the bank; a rank's move
+  in a league is green up and red down, as FPL's arrows (Craig, 24 Nov 2026; was `--text`).
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
 
 ## Parts

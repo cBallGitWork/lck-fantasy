@@ -109,6 +109,8 @@ const PAIRS = [
   ["ink", "band"],
   ["ink", "paper"],
   ["onInk", "ink"],
+  ["up", "paper"],
+  ["down", "paper"],
   ["rise", "paper"],
   ["fall", "paper"],
   ["over", "bg"],

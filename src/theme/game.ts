@@ -7,6 +7,9 @@ export const game = {
     rise: "#FF6B78",
     /** A price fall, blue as Korea writes a fall, lightened to read on a dark ground. */
     fall: "#6EA2FF",
+    /** A rank's move in a league: up green, down red, as FPL's arrows (Craig, 24 Nov 2026). */
+    up: "#4CD98A",
+    down: "#FF6B78",
   },
 } as const;
 

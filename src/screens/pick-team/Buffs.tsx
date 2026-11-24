@@ -1,29 +1,36 @@
-import { BuffCard } from "../../parts";
+import { BuffCard, cx, Panel, type BuffState } from "../../parts";
+import type { PickBuffInfo } from "./fixtures";
 import type { ViewProps } from "./format";
-import { cancelBuff, left as leftOf, WORDS } from "./words";
+import { WORDS } from "./words";
 
 /**
- * The three buffs (spec/06): each plays here, then cancels until the deadline. One a week, so once one is chosen the rest grey. In one
- * row at the top of the page, above the Rift, as FPL's chips (Craig, 16 Nov 2026).
+ * The three buffs (spec/06): each plays here, then cancels until the deadline. One a week, so while one
+ * is on the rest are unavailable; one played in an earlier week says which. A panel beside the Rift on a
+ * desk, and a row of three tiles over it on a phone (approved/pick-team/); in one row over the cards in
+ * Card view, as its 14 Nov 2026 picture.
  */
-export function Buffs({ data, state, dispatch }: ViewProps) {
-  const played = state.draft.buff;
+export function Buffs({ data, state, dispatch, row }: ViewProps & { row?: boolean }) {
+  const on = state.draft.buff;
+  const stateOf = (b: PickBuffInfo): BuffState => {
+    if (b.here === on) return { kind: "on" };
+    if (b.playedWeek !== undefined) return { kind: "played", week: b.playedWeek };
+    return on ? { kind: "unavailable" } : { kind: "available" };
+  };
   return (
-    <section className="pick-team__buffs" aria-label={WORDS.buffs}>
-      {data.buffs.map((b) => {
-        const common = { name: b.name, does: b.does };
-        if (b.here === played) {
-          const cancel = (
-            <button type="button" aria-label={cancelBuff(b.name)} onClick={() => dispatch({ type: "cancelBuff" })}>
-              {WORDS.cancel}
-            </button>
-          );
-          return <BuffCard key={b.name} {...common} left={played === state.saved.buff ? WORDS.on : WORDS.onUnsaved} state="on" action={cancel} />;
-        }
-        const left = leftOf(b.left);
-        if (played || b.left === 0) return <BuffCard key={b.name} {...common} left={left} state="off" />;
-        return <BuffCard key={b.name} {...common} left={left} onPlay={() => dispatch({ type: "playBuff", buff: b.here })} />;
-      })}
-    </section>
+    <Panel title={WORDS.buffs} className="pick-team__buffs">
+      <div className={cx("pick-team__buff-list", row && "pick-team__buff-list--row")}>
+        {data.buffs.map((b) => (
+          <BuffCard
+            key={b.name}
+            effect={b.here}
+            name={b.name}
+            does={b.does}
+            state={stateOf(b)}
+            onPlay={() => dispatch({ type: "playBuff", buff: b.here })}
+            onCancel={() => dispatch({ type: "cancelBuff" })}
+          />
+        ))}
+      </div>
+    </Panel>
   );
 }

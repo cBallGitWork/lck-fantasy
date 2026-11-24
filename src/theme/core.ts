@@ -34,6 +34,11 @@ const measure = {
   row: 40,
   /** The smallest target on the desk. */
   target: 24,
+  /** The smallest target on a phone (plate.md, Accessibility). */
+  targetPhone: 44,
+  /** A phone: a window this wide or narrower (approved/pick-team/arena.html). A media query can't read a
+   *  token, so each writes it out; theme.test.ts checks every one is this. */
+  phone: 600,
   topBar: 56,
   side: 360,
   modalCard: 1056,
@@ -77,8 +82,6 @@ const measure = {
   newsFlag: 16,
   /** The round of a tile's card, FPL's one rounded shape (Craig, 16 Nov 2026). */
   tileRadius: 6,
-  /** `Bench`, before the bench tiles. */
-  benchTitleW: 56,
   /** A tag's line. */
   tagLine: 16,
   /** Stats' sticking column: rank, role and name. */
@@ -116,19 +119,25 @@ const measure = {
   rowSheet: 32,
   sponsorH: 112,
   sponsorTopW: 120,
+  /** A buff's gold icon (approved/pick-team/, Craig, 19 Nov 2026). */
+  buffIcon: 36,
+  /** The crest on a tapped player's card: as tall as his name and the line under it (approved/pick-team/). */
+  crestCard: 64,
+  /** Pick Team's column beside the Rift: the buffs, the bench, then Save (approved/pick-team/). */
+  pickColumn: 336,
 } as const;
 
 /** Opacities: the band across a tier shield; an empty slot's shirt outline (front door picture). A
  *  dimmed tile is darkened, never see-through: its brightness and its colour, kept (approved/pick-team/).
- *  The towers, inhibitors and nexus on the Rift, quieter than the tiles. */
-const opacity = { tierBand: 0.45, emptyShirt: 0.25, dim: 0.6, dimColour: 0.3, mapMarks: 0.7 } as const;
+ *  The towers, inhibitors and nexus on the Rift, quieter than the tiles. The coin behind Double Captain's icon. */
+const opacity = { tierBand: 0.45, emptyShirt: 0.25, dim: 0.6, dimColour: 0.3, mapMarks: 0.7, buffIconBack: 0.55 } as const;
 
 /** A Rift tile's sizes as shares of the Rift's side, so tiles size with it (approved/pick-team/): the
  *  tile, its card, its kit. */
 const share = { tile: 0.15, tileCard: 0.13, shirt: 0.1 } as const;
 
-/** SVG strokes, in the drawing's own units: the plain shirt's edge. */
-const stroke = { shirt: 1.6 } as const;
+/** SVG strokes, in the drawing's own units: the plain shirt's edge, and a buff icon's line, its coin's edge and the C cut in it. */
+const stroke = { shirt: 1.6, icon: 1.2, coin: 1.5, cut: 2 } as const;
 
 /** Frame shapes: a stream's picture, the same on Home and Live; the Rift, square at any width. */
 const ratio = { stream: "16 / 9", rift: "1 / 1" } as const;

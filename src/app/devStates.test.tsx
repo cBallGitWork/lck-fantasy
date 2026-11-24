@@ -10,7 +10,7 @@ const KEY: Record<string, string> = {
   "home/idle": "Week 4 lineup",
   "pick-team/pick": "Rift view",
   "pick-team/cards": 'class="lineup"',
-  "pick-team/swap": "On · unsaved",
+  "pick-team/swap": "On this week",
   "front-door/front": "9 to pick",
   "front-door/part": "5 to pick",
   "transfers/transfers": "Review and confirm",

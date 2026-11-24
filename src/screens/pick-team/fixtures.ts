@@ -7,12 +7,6 @@ import { BUFF_DOES, COMPETITION, finalPickOf, MANAGER, PICK_TEAM_SQUAD, playerId
 import type { Mark, PersonRole, SquadSlot } from "../../rift";
 import type { PickBuff, PickState, PickTeam } from "./model";
 
-/** A place in a ranking and what it is out of: `1st of 10 mids`. */
-export interface Ranked {
-  place: number;
-  of?: string;
-}
-
 /** A squad member with what his card shows (spec/12, The player card). */
 export interface PickPlayer {
   id: string;
@@ -22,23 +16,26 @@ export interface PickPlayer {
   priceM: number;
   /** His last price move in m; absent before it first moves. */
   priceMove?: number;
+  /** The group his form, owned and season rank among, said once over the ranks: `10 mids`. */
+  among: string;
   form: number;
-  formRank: Ranked;
+  formRank: number;
   ownedPct: number;
-  ownedRank: Ranked;
+  ownedRank: number;
   season: number;
-  seasonRank: Ranked;
+  seasonRank: number;
   /** His points in each of his last three series, oldest first. */
   last3: readonly number[];
   /** The admin's flag and its note: `Not starting` `Wed`. */
   news?: { flag: string; note: string };
 }
 
-/** A buff's box: name, one line (spec/06), how many are left, and the buff it plays. */
+/** A buff's box: name, one line (spec/06), the week it was played in, if it was, and the buff it plays. */
 export interface PickBuffInfo {
   name: BuffName;
   does: string;
-  left: number;
+  /** The week it was played this split; one of each a split (spec/06). */
+  playedWeek?: number;
   here: PickBuff;
 }
 
@@ -72,20 +69,15 @@ function last3Of(name: string): number[] {
 
 /** Each player's card figures, by name; owned % and season points are Stats'. */
 const CARDS: Record<string, Omit<PickPlayer, "id" | "name" | "team" | "role" | "priceM" | "form" | "ownedPct" | "season" | "last3">> = {
-  Zeus: { formRank: { place: 3, of: "10 tops" }, ownedRank: { place: 4 }, seasonRank: { place: 7 } },
-  Canyon: { formRank: { place: 2, of: "10 junglers" }, ownedRank: { place: 5 }, seasonRank: { place: 6 } },
-  Faker: { priceMove: 0.5, formRank: { place: 1, of: "10 mids" }, ownedRank: { place: 1 }, seasonRank: { place: 2 } },
-  Ruler: { formRank: { place: 1, of: "10 bots" }, ownedRank: { place: 3 }, seasonRank: { place: 3 } },
-  Delight: { formRank: { place: 4, of: "10 supports" }, ownedRank: { place: 8 }, seasonRank: { place: 12 } },
-  Siwoo: {
-    formRank: { place: 7, of: "10 tops" },
-    ownedRank: { place: 9 },
-    seasonRank: { place: 8 },
-    news: { flag: "Not starting", note: "Wed" },
-  },
-  kkOma: { formRank: { place: 1, of: "10 coaches" }, ownedRank: { place: 1 }, seasonRank: { place: 1 } },
-  Bdd: { formRank: { place: 8, of: "10 mids" }, ownedRank: { place: 10 }, seasonRank: { place: 9 } },
-  Cuzz: { formRank: { place: 6, of: "10 junglers" }, ownedRank: { place: 9 }, seasonRank: { place: 8 } },
+  Zeus: { among: "10 tops", formRank: 3, ownedRank: 4, seasonRank: 7 },
+  Canyon: { among: "10 junglers", formRank: 2, ownedRank: 5, seasonRank: 6 },
+  Faker: { priceMove: 0.5, among: "10 mids", formRank: 1, ownedRank: 1, seasonRank: 2 },
+  Ruler: { among: "10 bots", formRank: 1, ownedRank: 3, seasonRank: 3 },
+  Delight: { among: "10 supports", formRank: 4, ownedRank: 8, seasonRank: 12 },
+  Siwoo: { among: "10 tops", formRank: 7, ownedRank: 9, seasonRank: 8, news: { flag: "Not starting", note: "Wed" } },
+  kkOma: { among: "10 coaches", formRank: 1, ownedRank: 1, seasonRank: 1 },
+  Bdd: { among: "10 mids", formRank: 8, ownedRank: 10, seasonRank: 9 },
+  Cuzz: { among: "10 junglers", formRank: 6, ownedRank: 9, seasonRank: 8 },
 };
 
 const player = (p: PickTeamPick): PickPlayer => {
@@ -102,9 +94,9 @@ export const PICK_TEAM_DATA: PickTeamData = {
   series: WEEK4_SERIES,
   deadline: WEEK4_DEADLINE,
   buffs: [
-    { name: "Bench Boost", does: BUFF_DOES["Bench Boost"], left: 1, here: "benchBoost" },
-    { name: "Double Captain", does: BUFF_DOES["Double Captain"], left: 1, here: "doubleCaptain" },
-    { name: "Coach Diff", does: BUFF_DOES["Coach Diff"], left: 1, here: "coachMultiplier" },
+    { name: "Bench Boost", does: BUFF_DOES["Bench Boost"], here: "benchBoost" },
+    { name: "Double Captain", does: BUFF_DOES["Double Captain"], here: "doubleCaptain" },
+    { name: "Coach Diff", does: BUFF_DOES["Coach Diff"], here: "coachMultiplier" },
   ],
 };
 

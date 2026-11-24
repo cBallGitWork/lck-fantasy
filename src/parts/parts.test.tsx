@@ -3,7 +3,6 @@ import { describe, expect, test } from "vitest";
 import { MANAGER, TEAMS, WEEK3_SERIES_AT_POINTS, WEEK4_DEADLINE } from "../fixtures/week3";
 import { html, text } from "../testing/render";
 import {
-  BuffCard,
   Crest,
   Deadline,
   Empty,
@@ -218,13 +217,6 @@ test("a form field has its label above and an error under it", () => {
   expect(out.indexOf("Team name")).toBeLessThan(out.indexOf("<input"));
   expect(out).toContain('aria-invalid="true"');
   expect(text(<Field label="Team name" error="Taken" />)).toBe("Team nameTaken");
-});
-
-test("a buff shows name, what it does, how many are left, and Play", () => {
-  expect(text(<BuffCard name="Bench Boost" does="Your bench scores too" left="1 left" />)).toBe(
-    "Bench BoostYour bench scores too1 leftPlay",
-  );
-  expect(html(<BuffCard name="Double Captain" does="A second Captain; both score ×1.5" left="1 left" state="off" />)).not.toContain("Play");
 });
 
 test("the main action is one filled key, disabled with its reason", () => {

@@ -1,16 +1,16 @@
 import type { ReactNode } from "react";
+import { cx, Panel } from "../parts";
 import "./BenchBar.css";
 import type { PersonRole } from "./roles";
 import { Tile } from "./Tile";
 import { ROLE_NAME, WORDS } from "./words";
 
-/** The bench, under the Rift or the cards: `Bench`, then each bench player's tile. */
-export function BenchBar({ children }: { children: ReactNode }) {
+/** The bench, beside or under the Rift or the cards: a panel on the Rift's own ground, `Bench`, then each bench player's tile. */
+export function BenchBar({ className, children }: { className?: string; children: ReactNode }) {
   return (
-    <div className="bench-bar">
-      <h3 className="bench-bar__title">{WORDS.bench}</h3>
-      {children}
-    </div>
+    <Panel title={WORDS.bench} className={cx("bench-bar", className)}>
+      <div className="bench-bar__tiles">{children}</div>
+    </Panel>
   );
 }
 

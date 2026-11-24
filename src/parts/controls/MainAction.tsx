@@ -10,15 +10,18 @@ export function MainAction({
   children,
   onClick,
   disabledReason,
+  wide,
 }: {
   children: ReactNode;
   onClick?: () => void;
-  /** Set when the action can't be taken, as the reason. */
+  /** Set when the action can't be taken, as the reason; empty where the page says it already. */
   disabledReason?: string;
+  /** As wide as its box (Pick Team's Save panel). */
+  wide?: boolean;
 }) {
   const off = disabledReason !== undefined;
   return (
-    <span className="main-action">
+    <span className={cx("main-action", wide && "main-action--wide")}>
       {off &&<span className="main-action__reason">{disabledReason}</span>}
       <button type="button" className={cx("main-action__key", off && "key-off")} disabled={off} onClick={onClick}>
         {children}

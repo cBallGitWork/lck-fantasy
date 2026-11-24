@@ -27,6 +27,7 @@ export function PageHead({
   title,
   hangul,
   link,
+  line,
   week,
   sub,
   figure,
@@ -38,6 +39,8 @@ export function PageHead({
   hangul?: string;
   /** A link on the title's line (`Price changes ›`). */
   link?: { label: string; go: Go };
+  /** What else stands on the title's line, after it (Pick Team's week, deadline and views). */
+  line?: ReactNode;
   week?: WeekNav;
   /** A plain line under the title, where there are no week arrows (`Split 1 Week 4`). */
   sub?: ReactNode;
@@ -61,6 +64,7 @@ export function PageHead({
           )}
         </h1>
         {link && <LinkGo go={link.go}>{link.label}</LinkGo>}
+        {line}
       </div>
       {week && (
         <WeekStep prev={week.prev} next={week.next} className="page-head__week">

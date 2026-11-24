@@ -4,7 +4,7 @@
 export const game = {
   color: {
     /** A price rise, red as Korea writes a rise, lightened to read on a dark ground. */
-    rise: "#FF5C6C",
+    rise: "#FF6B78",
     /** A price fall, blue as Korea writes a fall, lightened to read on a dark ground. */
     fall: "#6EA2FF",
   },

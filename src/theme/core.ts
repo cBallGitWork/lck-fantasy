@@ -1,4 +1,4 @@
-// Flol's core layer: the sizes, weights, gaps and widths every league draws with (docs/design/plate.md).
+// Flol's core layer: the sizes, weights, tracking, gaps and widths every league draws with (docs/design/plate.md).
 // No colour and no font: those are the game's and the league's.
 
 /** Type sizes in px. Nothing under 12. */
@@ -19,6 +19,9 @@ const weight = { regular: 400, semi: 600, bold: 700 } as const;
 
 /** Line heights, as multiples of the type size. */
 const lineHeight = { tight: 1, snug: 1.2, mid: 1.3, body: 1.4 } as const;
+
+/** Letter spacing, in em: a 28 or 20 head sits a touch tighter. */
+const tracking = { head: "-0.01em" } as const;
 
 /** The one spacing scale, in px. No other gap, padding or margin. */
 const space = { 1: 4, 2: 8, 3: 12, 4: 16, 5: 24, 6: 32, 7: 48 } as const;
@@ -108,4 +111,4 @@ const stroke = { shirt: 1.6, dash: 3 } as const;
 /** Frame shapes: a stream's picture, the same on Home and Live; the Rift, square at any width. */
 const ratio = { stream: "16 / 9", rift: `${measure.rift} / ${measure.rift}` } as const;
 
-export const core = { size, weight, lineHeight, space, measure, opacity, stroke, ratio } as const;
+export const core = { size, weight, lineHeight, tracking, space, measure, opacity, stroke, ratio } as const;

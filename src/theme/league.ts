@@ -18,6 +18,7 @@ type LeagueColour =
   | "bannerRule"
   | "stage"
   | "stageText"
+  | "band"
   | "signal"
   | "dim"
   | "mapGround"
@@ -32,37 +33,38 @@ type LeagueColour =
 export type League = {
   color: Record<LeagueColour, string>;
   font: {
-    /** Words, the league's own script included. */
+    /** Words: the Latin face first, then the league's own script. */
     sans: string;
     /** Figures, so they line up. */
     mono: string;
   };
 };
 
-/** The LCK: a basic LoL and LCK theme until the reskin (Craig, 15 Nov 2026): Hextech navy ground,
- *  gold accent, cream text, a blue-teal second accent. */
+/** The LCK: Arena, the look trial's pick (Craig, 19 Nov 2026; docs/design/approved/pick-team/): the
+ *  LCK's navy as the ground, cool white text, gold where you act, a teal second accent. The banner,
+ *  the stage, the map and the tile keep their earlier values until their own pictures are redrawn. */
 const lck: League = {
   color: {
     /** The page. */
-    bg: "#010A13",
+    bg: "#0A1226",
     /** Panels and tables. */
-    paper: "#0A1428",
+    paper: "#111B36",
     /** Table rules. */
-    line: "#1E2D40",
+    line: "#22305A",
     /** A selected row, a toggle's ground. */
-    fill: "#14233A",
-    /** Rules, the selected thing, the one filled button: Hextech gold. */
-    ink: "#C89B3C",
+    fill: "#18244A",
+    /** Gold, where you act: the one filled key, the Captain's C, a buff's icon, the wordmark. */
+    ink: "#E0B04A",
     /** Text on a filled `ink` ground. */
-    onInk: "#010A13",
+    onInk: "#0A1226",
     /** Words and figures. */
-    text: "#F0E6D2",
-    /** Secondary text: 6.5:1 on `paper`, 5.8:1 on `fill`. */
-    mid: "#A09B8C",
+    text: "#EEF1F8",
+    /** Secondary text: 7.0:1 on `paper`, 6.2:1 on `fill`. */
+    mid: "#9AA6C8",
     /** Never text: dashed outlines and placeholders only. */
-    soft: "#5B5A56",
+    soft: "#4A5884",
     /** A figure past its limit: the bank below zero while over the budget. */
-    over: "#FF5C6C",
+    over: "#FF6B78",
     /** The hangul on your team's banner, and only there. */
     banner: "#F0D58C",
     /** The banner's rule under its hangul. */
@@ -70,11 +72,13 @@ const lck: League = {
     /** Live's dark stage. */
     stage: "#000508",
     /** Grey text on the stage. */
-    stageText: "#A09B8C",
+    stageText: "#9AA6C8",
+    /** The darkest ground: the top bar. */
+    band: "#050A18",
     /** The second accent, used sparingly: the live dot, the focus ring. */
-    signal: "#0AC8B9",
+    signal: "#2BC4B5",
     /** The page behind a modal. */
-    dim: "rgba(1, 10, 19, 0.72)",
+    dim: "rgba(10, 18, 38, 0.72)",
     /** The Rift map's ground, river, lanes, bases and towers. */
     mapGround: "#0B1A2C",
     mapRiver: "#0D2B3E",
@@ -88,7 +92,7 @@ const lck: League = {
     onTilePlate: "#010A13",
   },
   font: {
-    sans: '"IBM Plex Sans KR", sans-serif',
+    sans: '"IBM Plex Sans", "IBM Plex Sans KR", sans-serif',
     mono: '"IBM Plex Mono", monospace',
   },
 };

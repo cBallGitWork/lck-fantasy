@@ -1,4 +1,4 @@
-/* The Captain's C (MarkBadge.tsx): round and filled, in its hover. Each page places the hover. */
+/* The Captain's C (MarkBadge.tsx): round and filled gold, in its hover. Each page places the hover. */
 .mark-badge-hint {
   display: inline-flex;
   flex: none;
@@ -9,8 +9,8 @@
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--text);
-  color: var(--bg);
+  background: var(--ink);
+  color: var(--on-ink);
   font-weight: var(--w-bold);
   line-height: var(--lh-tight);
 }

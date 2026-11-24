@@ -14,8 +14,8 @@ The page's frame and its sections.
 - `PageFrame.tsx`: the top bar, then the main column and the 360px side column; the foot, Riot's notice (`RIOT_NOTICE`).
 - `Columns.tsx`: the frame's two columns (main, then the 360px side) for a page whose head runs full width above them.
 - `PageHead.tsx`: title and hangul, ‹ week ›, the key figure, its tags, up to three figures, a link.
-- `SectionHead.tsx`: a main-column section's head: 2px `--text` rule, 14px bold title, its note in mid grey.
-- `SideSection.tsx`: a side column section: 2px rule, 14px title, its count or state.
+- `SectionHead.tsx`: a main-column section's head: 2px `--text` rule, 16px bold title, its note in mid grey.
+- `SideSection.tsx`: a side column section: 2px rule, 16px title, its count or state.
 - `SponsorNote.tsx`: `All sponsors are made up.`
 - `Placeholder.tsx`: a dashed box with one word (sponsor, photo).
 

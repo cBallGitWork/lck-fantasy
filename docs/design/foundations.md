@@ -24,7 +24,9 @@ file and the lint only. Check each sibling repo's stack before its move.
 
 ## The look, said once
 
-Approved by Craig as written, 18 Nov 2026. It fills the design file's first section.
+Approved by Craig as written, 18 Nov 2026. It fills the design file's first section, where the pick
+changed it in two places: Arena's ground is the LCK's navy, not neutral, and IBM Plex sets both
+scripts (`plate.md`, The look).
 
 > A broadcast desk for a League league. Square, ruled and dense, on a neutral ground. The league
 > brings the colour: navy and gold for the LCK. It reads as League through roles, the Rift, sides and
@@ -46,6 +48,9 @@ The trial picks the values; its output is the foundations filled in for Flol, no
 5. **The winner becomes files:** its values in the token layers (core and LCK), its statement and
    rules in the design file, the base parts restyled from those tokens. If Craig prefers the control
    or can't tell them apart, the kit's look is dropped and the token split and lint still stand.
+   Done for Arena, 24 Nov 2026: its values are in `src/theme/`, its statement and rules in `plate.md`,
+   and the top bar, section heads, deadline, outlined key and the Captain's C are restyled. The Rift,
+   its tiles, the buffs and the panels follow with Pick Team's build.
 
 ## Order of work
 

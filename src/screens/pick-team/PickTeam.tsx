@@ -1,7 +1,7 @@
 import { useReducer } from "react";
-import { Deadline, MainAction, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, useAnnounce, ViewToggle } from "../../parts";
+import { cx, Deadline, MainAction, PageFrame, PageHead, Panel, Placeholder, SeriesList, SponsorNote, useAnnounce, ViewToggle } from "../../parts";
 import { VIEWS as BOARD_VIEWS } from "../../rift";
-import { CardBoard, RiftBoard } from "./boards";
+import { Bench, CardBoard, RiftBoard } from "./boards";
 import { Buffs } from "./Buffs";
 import type { PickTeamData } from "./fixtures";
 import type { ViewProps } from "./format";
@@ -16,10 +16,16 @@ export const VIEWS = [
   { value: "cards", label: BOARD_VIEWS[1] },
 ] as const;
 
-/** Pick Team, drawn from its state: Rift or Card view, the bench bar, the buffs above it, the bar under the pitch, the side column. */
+/**
+ * Pick Team, drawn from its state (docs/design/approved/pick-team/): the title line with the week, the
+ * deadline and the views; in Rift view the Rift at the left with the buffs, bench and Save in a column
+ * beside it; in Card view, as its 14 Nov 2026 picture, the buffs, the cards, the bench and Save in turn.
+ * The side column holds the tapped player's card and the week's series, both panels.
+ */
 export function PickTeamView({ data, state, dispatch }: ViewProps) {
   const selected = state.selected ? data.players[state.selected] : undefined;
   const props = { data, state, dispatch };
+  const rift = state.view === "rift";
   return (
     <PageFrame
       screen="pick-team"
@@ -28,50 +34,56 @@ export function PickTeamView({ data, state, dispatch }: ViewProps) {
       side={
         <>
           {selected && <PlayerCard state={state} dispatch={dispatch} player={selected} />}
-          <SideSection title={WORDS.seriesTitle}>
+          <Panel title={WORDS.seriesTitle} className="pick-team__series">
             <SeriesList series={data.series} />
-          </SideSection>
+          </Panel>
           <Placeholder word={WORDS.sponsor} height="sponsorH" />
           <SponsorNote />
         </>
       }
     >
-      <PageHead title={WORDS.title} hangul={WORDS.hangul} sub={data.week} />
-      <Buffs {...props} />
-      <ViewToggle label={WORDS.view} options={VIEWS} chosen={state.view} onChoose={(view: PickView) => dispatch({ type: "view", view })} />
-      {state.view === "rift" ? <RiftBoard {...props} /> : <CardBoard {...props} />}
-      <ChangeBar {...props} />
+      <PageHead
+        title={WORDS.title}
+        hangul={WORDS.hangul}
+        line={
+          <>
+            <span className="pick-team__week quiet">{data.week}</span>
+            <span className="pick-team__deadline">
+              <Deadline {...data.deadline} />
+            </span>
+            <span className="pick-team__views">
+              <ViewToggle label={WORDS.view} options={VIEWS} chosen={state.view} onChoose={(view: PickView) => dispatch({ type: "view", view })} />
+            </span>
+          </>
+        }
+      />
+      <div className={cx("pick-team__object", `pick-team__object--${state.view}`)}>
+        <Buffs {...props} row={!rift} />
+        {rift ? <RiftBoard {...props} /> : <CardBoard {...props} />}
+        <Bench {...props} />
+        <SavePanel {...props} />
+      </div>
     </PageFrame>
   );
 }
 
-/** The bar under the pitch: how many changes (a buff's card says it is on), Reset, the deadline, Save team (spec/12: nothing counts until Save). */
-function ChangeBar({ data, state, dispatch }: ViewProps) {
+/** The changes not saved yet (a buff's card says it is on), Reset, then Save team (spec/12: nothing counts until Save). */
+function SavePanel({ state, dispatch }: ViewProps) {
   const changes = changeCount(state.saved, state.draft);
   return (
-    <div className="pick-team__bar">
-      {changes === 0 ? (
-        <span className="pick-team__changes">{WORDS.noChanges}</span>
-      ) : (
-        <>
-          <span className="pick-team__changes">
-            <b>{changesWord(changes)}</b>
-          </span>
-          <button type="button" className="pick-team__reset key-bare hover-line" onClick={() => dispatch({ type: "reset" })}>
-            {WORDS.reset}
-          </button>
-        </>
-      )}
-      <span className="pick-team__deadline">
-        <Deadline {...data.deadline} />
-      </span>
-      <span className="pick-team__save">
-        {/* `No changes` already leads the bar, so the disabled key's own reason stays empty. */}
-        <MainAction disabledReason={changes === 0 ? "" : undefined} onClick={() => dispatch({ type: "save" })}>
-          {WORDS.save}
-        </MainAction>
-      </span>
-    </div>
+    <Panel label={WORDS.saveLabel} className="pick-team__save">
+      <div className="pick-team__changes">
+        {changes === 0 ? <span>{WORDS.noChanges}</span> : <b>{changesWord(changes)}</b>}
+        {/* With nothing to clear Reset stands in --mid, as the picture, and does nothing. */}
+        <button type="button" className={cx("pick-team__reset key-bare hover-line", changes === 0 && "pick-team__reset--idle")} onClick={() => dispatch({ type: "reset" })}>
+          {WORDS.reset}
+        </button>
+      </div>
+      {/* `No changes` already leads the panel, so the disabled key's own reason stays empty. */}
+      <MainAction wide disabledReason={changes === 0 ? "" : undefined} onClick={() => dispatch({ type: "save" })}>
+        {WORDS.save}
+      </MainAction>
+    </Panel>
   );
 }
 

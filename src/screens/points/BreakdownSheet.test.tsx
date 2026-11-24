@@ -37,7 +37,7 @@ test("a coach's lost series ends with Series loss −1, and the live one with no
 });
 
 test("both bench players open their breakdown, the one who didn't play too", () => {
-  const bench = html(<PointsPage data={POINTS_FIXTURE} />).split('class="bench-bar"')[1] ?? "";
+  const bench = html(<PointsPage data={POINTS_FIXTURE} />).split('class="panel bench-bar"')[1] ?? "";
   expect(bench.match(/role="button"/g)).toHaveLength(2);
 });
 

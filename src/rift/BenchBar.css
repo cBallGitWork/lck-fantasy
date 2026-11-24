@@ -1,16 +1,15 @@
+/* The bench: a panel (Panel.css) on the Rift's own ground, so it reads as the squad (approved/pick-team/, Craig, 19 Nov 2026). */
 .bench-bar {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-4);
-  padding: var(--s-3) var(--s-4);
-  background: var(--paper);
-  border: var(--m-rule) solid var(--line);
+  background: var(--map-ground);
 }
-.bench-bar__title {
-  align-self: center;
-  width: var(--m-bench-title-w);
-  font-size: var(--size-body);
-  font-weight: var(--w-semi);
+/* The tiles side by side, each centred in its share of the panel (approved/pick-team/). */
+.bench-bar__tiles {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  justify-items: center;
+  align-items: start;
+  gap: var(--s-4);
 }
 /* A bench place: its order and role over its tile (FPL's `1. DEF`). */
 .bench-slot {

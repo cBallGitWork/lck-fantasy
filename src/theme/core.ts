@@ -34,6 +34,11 @@ const measure = {
   row: 40,
   /** The smallest target on the desk. */
   target: 24,
+  /** The smallest target on a phone (plate.md, Accessibility). */
+  targetPhone: 44,
+  /** A phone: a window this wide or narrower (approved/pick-team/arena.html). A media query can't read a
+   *  token, so each writes it out; theme.test.ts checks every one is this. */
+  phone: 600,
   topBar: 56,
   side: 360,
   modalCard: 1056,
@@ -60,8 +65,6 @@ const measure = {
   tileW: 124,
   /** The round of a tile's card, FPL's one rounded shape (Craig, 16 Nov 2026). */
   tileRadius: 6,
-  /** `Bench`, before the bench tiles. */
-  benchTitleW: 56,
   /** A tag's line. */
   tagLine: 16,
   /** Stats' sticking column: rank, role and name. */
@@ -99,14 +102,22 @@ const measure = {
   rowSheet: 32,
   sponsorH: 112,
   sponsorTopW: 120,
+  /** A buff's gold icon (approved/pick-team/, Craig, 19 Nov 2026). */
+  buffIcon: 36,
+  /** The crest on a tapped player's card: as tall as his name and the line under it (approved/pick-team/). */
+  crestCard: 64,
+  /** Pick Team's column beside the Rift: the buffs, the bench, then Save (approved/pick-team/). */
+  pickColumn: 336,
+  /** What stands above Pick Team's Rift on a desk (the top bar, the page's top, the title line), so the whole Rift fits the window under it. */
+  riftTop: 168,
 } as const;
 
 /** Opacities: the band across a tier shield; a dimmed tile's shirt drawing, never its words; an
- *  empty slot's shirt outline (front door picture). */
-const opacity = { tierBand: 0.45, dim: 0.5, emptyShirt: 0.25 } as const;
+ *  empty slot's shirt outline (front door picture); the coin behind Double Captain's icon. */
+const opacity = { tierBand: 0.45, dim: 0.5, emptyShirt: 0.25, buffIconBack: 0.55 } as const;
 
-/** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
-const stroke = { shirt: 1.6, dash: 3 } as const;
+/** SVG strokes, in the drawing's own units: the shirt's edge, the dashes round a pit, and a buff icon's line, its coin's edge and the C cut in it. */
+const stroke = { shirt: 1.6, dash: 3, icon: 1.2, coin: 1.5, cut: 2 } as const;
 
 /** Frame shapes: a stream's picture, the same on Home and Live; the Rift, square at any width. */
 const ratio = { stream: "16 / 9", rift: `${measure.rift} / ${measure.rift}` } as const;

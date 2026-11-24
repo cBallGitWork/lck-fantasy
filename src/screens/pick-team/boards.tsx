@@ -22,12 +22,12 @@ function swapState({ data, state }: ViewProps): (id: string) => "fit" | "dim" | 
   return (id) => (lit.size === 0 || id === state.selected ? undefined : lit.has(id) ? "fit" : "dim");
 }
 
-/** Rift view: the seven starters on the Rift, the bench bar under it. */
+/** Rift view: the seven starters on the Rift. */
 export function RiftBoard(props: ViewProps) {
   const { data, state, dispatch } = props;
   const swap = swapState(props);
   return (
-    <>
+    <div className="pick-team__rift">
       <Rift>
         {starters(props).map(({ slot, p }) => (
           <Tile
@@ -45,12 +45,11 @@ export function RiftBoard(props: ViewProps) {
           />
         ))}
       </Rift>
-      <Bench {...props} />
-    </>
+    </div>
   );
 }
 
-/** Card view: the seven starters as the LCK broadcast's lineup, the bench bar under it. */
+/** Card view: the seven starters as the LCK broadcast's lineup. */
 export function CardBoard(props: ViewProps) {
   const { data, state, dispatch } = props;
   const swap = swapState(props);
@@ -78,13 +77,12 @@ export function CardBoard(props: ViewProps) {
   return (
     <div className="pick-team__cards">
       <Lineup cards={cards} />
-      <Bench {...props} />
     </div>
   );
 }
 
-/** The bench bar: each bench player; tap one then the other to swap their order. Lit when the tapped player can swap with him. */
-function Bench(props: ViewProps) {
+/** The bench: each bench player; tap one then the other to swap their order. Lit when the tapped player can swap with him. */
+export function Bench(props: ViewProps) {
   const { data, state, dispatch } = props;
   const swap = swapState(props);
   const [first, second] = BENCH_SLOTS.map((slot, i) => {
@@ -104,7 +102,7 @@ function Bench(props: ViewProps) {
     );
   });
   return (
-    <BenchBar>
+    <BenchBar className="pick-team__bench">
       {first}
       {second}
     </BenchBar>

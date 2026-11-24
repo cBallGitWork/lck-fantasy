@@ -9,10 +9,9 @@ export const WORDS = {
   noChanges: "No changes",
   reset: "Reset",
   save: "Save team",
+  /** The Save panel's name for a screen reader: it has no title. */
+  saveLabel: "Your changes",
   buffs: "Buffs",
-  cancel: "Cancel",
-  on: "On",
-  onUnsaved: "On · unsaved",
   form: "Form",
   owned: "Owned",
   season: "Season",
@@ -25,10 +24,7 @@ export const WORDS = {
 /** `1 change`, `2 changes`. */
 export const changes = (n: number) => `${n} ${n === 1 ? "change" : "changes"}`;
 
-/** `2 left`: a buff's plays left this split. */
-export const left = (n: number) => `${n} left`;
-
-/** The Cancel key's name for a reader: `Cancel Bench Boost`. */
-export const cancelBuff = (buff: string) => `${WORDS.cancel} ${buff}`;
+/** Said once over the card's ranks: `Among 10 mids`. */
+export const among = (group: string) => `Among ${group}`;
 
 export const dot = " · ";

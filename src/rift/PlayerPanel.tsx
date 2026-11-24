@@ -1,29 +1,32 @@
 import type { ReactNode } from "react";
-import { CLOSE, cx, gameNo, LinkGo } from "../parts";
+import { CLOSE, Crest, cx, gameNo, LinkGo } from "../parts";
 import type { Go } from "../paths";
 import { Shirt } from "./Shirt";
 import { WORDS } from "./words";
 import "./PlayerPanel.css";
 
 /**
- * A tapped player's panel, at the top of the side column: shirt, name and meta (`T1 · Mid · Captain`),
- * ✕, then the page's own body.
+ * A tapped player's panel, at the top of the side column: his team's crest at 64 (Pick Team, the
+ * approved picture) or a shirt, name and meta (`T1 · Mid · Captain`), ✕, then the page's own body.
  */
 export function PlayerPanel({
   name,
   meta,
+  team,
   onClose,
   children,
 }: {
   name: string;
   meta: ReactNode;
+  /** His team's code, for its crest in place of the shirt. */
+  team?: string;
   onClose?: () => void;
   children: ReactNode;
 }) {
   return (
     <section className="player-panel" aria-label={name}>
       <header className="player-panel__head">
-        <Shirt small />
+        {team ? <Crest team={team} size="crestCard" /> : <Shirt small />}
         <div>
           <b className="player-panel__name">{name}</b>
           <span className="player-panel__meta">{meta}</span>

@@ -1,24 +1,25 @@
-import type { ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { cx, MeDot, selectable } from "../parts";
 import { measure } from "../theme/tokens";
-import { RiftMap } from "./RiftMap";
-import { Shirt } from "./Shirt";
-import type { SlotKey } from "./roles";
-import { slotLabel } from "./roles";
-import { SlotName } from "./SlotName";
-import type { RiftPoint } from "./slots";
 import { MarkBadge, type Mark } from "./MarkBadge";
+import { RiftMap } from "./RiftMap";
+import { PLAN } from "./riftPlan";
+import type { SlotKey } from "./roles";
+import { Shirt } from "./Shirt";
+import { SlotName } from "./SlotName";
+import type { RiftPlace, RiftPoint } from "./slots";
+import { ROLE_NAME } from "./words";
 import "./Tile.css";
 
 interface TileProps {
-  /** His slot; a Flex's tile says Flex, never the role he plays, which his card says (Craig, 16 Nov 2026). */
+  /** His slot: its role strip on the Rift says Top, Flex or Coach, never the role a Flex plays, which his card says (Craig, 16 Nov 2026). */
   slot?: SlotKey;
   name: string;
   team: string;
-  /** Where the tile's centre stands on the Rift; a bench tile stands in its bar. */
-  at?: RiftPoint;
+  /** Where the tile's centre stands on the Rift, the same or a desk's and a phone's; a bench tile stands in its bar. */
+  at?: RiftPoint | RiftPlace;
   mark?: Mark;
-  /** His news flag (`Not starting`): a `!` at the shirt's top left, the word in his card. */
+  /** His news (`Not starting`): a yellow warning triangle on his role strip, the word in his card. */
   flag?: string;
   /** One of your players. */
   me?: boolean;
@@ -41,47 +42,58 @@ interface TileProps {
   onSelect?: () => void;
 }
 
+/** Whether the Rift a tile stands on is a phone's (narrower than `measure.riftPhone`). */
+const PhoneRift = createContext(false);
+
 /** A point on the square Rift as a share of it, so the tiles stay on their lanes at any width. */
-const share = (px: number) => `${(px / measure.rift) * 100}%`;
+const ofRift = (v: number) => `${(v / PLAN) * 100}%`;
+
+/** The yellow warning triangle, as the picture draws it. */
+function NewsFlag({ flag }: { flag: string }) {
+  return (
+    <span className="tile__flag" role="img" aria-label={flag} title={flag}>
+      <svg className="tile__flag-icon" viewBox="0 0 16 16" aria-hidden="true">
+        <path className="tile__flag-sign" d="M8 1.5 15 14.5H1z" strokeWidth="1" strokeLinejoin="round" />
+        <rect className="tile__flag-mark" x="7.25" y="5.5" width="1.5" height="5" />
+        <rect className="tile__flag-mark" x="7.25" y="11.5" width="1.5" height="1.5" />
+      </svg>
+    </span>
+  );
+}
 
 /**
- * One player on the Rift or the bench, as FPL's tile (Craig, 16 Nov 2026): his price chip on Transfers,
- * the Flex's or Coach's label, his shirt on a faint card with C and his flag at its top corners, a
- * white name plate, then a band: his points and series, or his fixtures.
+ * One player on the Rift or the bench, as the approved picture draws him (docs/design/approved/pick-team/):
+ * his price chip on Transfers; on the Rift, his role strip; his team's kit on a solid card with C past its
+ * top right corner and his news on the strip; his team code and name on a white plate; then a band: his
+ * points and series, or his fixtures.
  */
 export function Tile(p: TileProps) {
-  const label = p.slot && slotLabel(p.slot);
+  const phone = useContext(PhoneRift);
+  const point = p.at && ("desk" in p.at ? (phone ? p.at.phone : p.at.desk) : p.at);
   return (
     <div
-      className={cx("tile", !p.at && "tile--bench", p.selected && "tile--selected", p.state && `tile--${p.state}`, p.empty && "tile--empty")}
-      style={p.at && { left: share(p.at[0]), top: share(p.at[1]) }}
+      className={cx("tile", !point && "tile--bench", p.selected && "tile--selected", p.state && `tile--${p.state}`, p.empty && "tile--empty")}
+      style={point && { left: ofRift(point[0]), top: ofRift(point[1]) }}
       {...selectable(p.onSelect, p.selected)}
     >
       {p.price !== undefined && <div className="tile__price num">{p.price}</div>}
-      {p.slot && label && (
-        <div className={cx("tile__slot", p.slot === "flex" && "tile__slot--flex")}>
-          <SlotName slot={p.slot} label={label} />
-        </div>
-      )}
       <div className="tile__card">
+        {point && p.slot && (
+          <div className="tile__slot">
+            <SlotName slot={p.slot} label={ROLE_NAME[p.slot]} />
+          </div>
+        )}
         {(p.sell || p.restore) && (
           <span className="tile__sell" aria-hidden="true">
             {p.restore ? "↺" : "×"}
           </span>
         )}
-        <div className="tile__kit">
-          <Shirt team={p.team} />
-          {p.flag && (
-            <span className="tile__flag" role="img" aria-label={p.flag} title={p.flag}>
-              !
-            </span>
-          )}
-          {p.mark && (
-            <MarkBadge mark={p.mark} className="tile__mark" />
-          )}
-        </div>
+        {p.flag && <NewsFlag flag={p.flag} />}
+        {p.mark && <MarkBadge mark={p.mark} size="tile" className="tile__mark" />}
+        <Shirt team={p.team} kit />
       </div>
       <div className="tile__name" title={p.name}>
+        {p.team && <span className="tile__team">{p.team} </span>}
         {p.name}
         {p.me && <MeDot />}
         {p.birthday && " 🎂"}
@@ -92,12 +104,21 @@ export function Tile(p: TileProps) {
   );
 }
 
-/** The Rift: the square map, centred in the main column, with the starters' tiles stood on it. */
+/** The Rift: the square map, as big as the first screen allows, with the starters' tiles stood on it. */
 export function Rift({ children }: { children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [phone, setPhone] = useState(false);
+  useEffect(() => {
+    const rift = ref.current;
+    if (!rift || typeof ResizeObserver === "undefined") return;
+    const watch = new ResizeObserver(([entry]) => entry && setPhone(entry.contentRect.width < measure.riftPhone));
+    watch.observe(rift);
+    return () => watch.disconnect();
+  }, []);
   return (
-    <div className="rift">
+    <div ref={ref} className={cx("rift", phone && "rift--phone")}>
       <RiftMap />
-      {children}
+      <PhoneRift.Provider value={phone}>{children}</PhoneRift.Provider>
     </div>
   );
 }

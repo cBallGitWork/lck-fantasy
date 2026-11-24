@@ -1,6 +1,6 @@
-/* The bench: a panel (Panel.css) on the Rift's own ground, so it reads as the squad (approved/pick-team/, Craig, 19 Nov 2026). */
+/* The bench: a panel (Panel.css) on the Rift's own dark green (its walls), so it reads as the squad (approved/pick-team/, Craig, 19 Nov 2026). */
 .bench-bar {
-  background: var(--map-ground);
+  background: var(--map-wall);
 }
 /* The tiles side by side, each centred in its share of the panel (approved/pick-team/). */
 .bench-bar__tiles {

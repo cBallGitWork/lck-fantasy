@@ -19,6 +19,14 @@
   height: var(--m-mark);
   font-size: var(--size-small);
 }
+/* On a Rift tile: 40 across (28 on a phone's Rift, Tile.css), its dark ring inside a white one, so it lifts off the kit. */
+.mark-badge--tile {
+  width: var(--m-mark-tile);
+  height: var(--m-mark-tile);
+  font-size: var(--size-head);
+  border: var(--m-rule-heavy) solid var(--on-ink);
+  outline: var(--m-rule-heavy) solid var(--text);
+}
 .mark-badge--card {
   width: var(--m-mark-card);
   height: var(--m-mark-card);

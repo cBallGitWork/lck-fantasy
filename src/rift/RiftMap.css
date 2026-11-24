@@ -1,28 +1,65 @@
+/* Summoner's Rift (RiftMap.tsx), in the game's colours: the same in every league. Outside the
+   playfield the map is bare, so the page shows round it. */
 .rift-map {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
 }
-.rift-map__ground {
-  fill: var(--map-ground);
+.rift-map__wall {
+  fill: var(--map-wall);
 }
-.rift-map__river {
-  fill: var(--map-river);
+.rift-map__grass {
+  fill: var(--map-grass);
 }
 .rift-map__lane {
   fill: none;
   stroke: var(--map-lane);
-  stroke-linejoin: round;
 }
-.rift-map__base {
-  fill: var(--map-base);
+.rift-map__water {
+  stop-color: var(--map-river);
 }
-.rift-map__tower {
-  fill: var(--map-tower);
+.rift-map__water--clear {
+  stop-opacity: 0;
 }
 .rift-map__pit {
-  fill: none;
-  stroke: var(--map-tower);
-  stroke-dasharray: var(--stroke-dash) var(--stroke-dash);
+  fill: var(--map-river);
+}
+.rift-map__stone--rim {
+  fill: var(--map-stone-rim);
+}
+.rift-map__stone--line {
+  fill: var(--map-stone-line);
+}
+.rift-map__stone--court {
+  fill: var(--map-stone-court);
+}
+.rift-map__stone--floor {
+  fill: var(--map-stone-floor);
+}
+.rift-map__marks {
+  opacity: var(--opacity-map-marks);
+}
+.rift-map__tower {
+  stroke: var(--map-mark);
+}
+.rift-map__inhib {
+  fill: var(--map-mark);
+}
+.rift-map__side--blue .rift-map__tower,
+.rift-map__side--blue .rift-map__nexus {
+  fill: var(--map-blue);
+}
+.rift-map__side--red .rift-map__tower,
+.rift-map__side--red .rift-map__nexus {
+  fill: var(--map-red);
+}
+.rift-map__side--blue .rift-map__inhib {
+  stroke: var(--map-blue);
+}
+.rift-map__side--red .rift-map__inhib {
+  stroke: var(--map-red);
+}
+.rift-map__nexus {
+  stroke: var(--map-nexus-ring);
 }

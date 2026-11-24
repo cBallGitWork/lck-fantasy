@@ -181,11 +181,14 @@ test("a search field's edge reads at 3:1 or more on its ground (WCAG 1.4.11)", (
   expect(contrast(colourIn(BASE, 'input[type="search"]', "border"), color.paper)).toBeGreaterThanOrEqual(3);
 });
 
-test("a dimmed tile's team code stays at 4.5:1 or more, and only the shirt's drawing dims (WCAG 1.4.3)", () => {
+test("a dimmed tile is darkened, never faded, so the map can't show through it", () => {
   const tile = code(join(SRC, "rift", "Tile.css"));
-  expect(contrast(colourIn(tile, ".tile--dim .shirt__code", "color"), color.paper)).toBeGreaterThanOrEqual(4.5);
-  expect(tile).toContain(".tile--dim .shirt__svg {\n  opacity: var(--opacity-dim);");
-  expect(tile).not.toMatch(/\.tile--dim \.shirt\s*\{/);
+  expect(tile).toContain(".tile--dim {\n  filter: saturate(var(--opacity-dim-colour)) brightness(var(--opacity-dim));\n}");
+  expect(tile).not.toMatch(/\.tile--dim[^{]*\{[^}]*opacity:/);
+});
+
+test("a tile's card is solid, never see-through", () => {
+  expect(color.tileCard).toMatch(/^#[0-9A-F]{6}$/i);
 });
 
 test("the plate's colour roles all stay as tokens", () => {

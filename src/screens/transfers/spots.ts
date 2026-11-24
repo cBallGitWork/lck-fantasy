@@ -1,11 +1,11 @@
 // Where the nine stand on Transfers' Rift: by role, no bench, as FPL's Transfers pitch stands all fifteen
 // by position (Craig, 16 Nov 2026). A role holding several stands them in a row along its lane.
 
-import type { PersonRole, RiftPoint } from "../../rift";
-import { measure, space } from "../../theme";
+import { PLAN, type PersonRole, type RiftPoint } from "../../rift";
+import { share, space } from "../../theme";
 
-/** From one tile's centre to the next in a role's row: a tile and a gap. */
-export const STEP = measure.tileW + space[2];
+/** From one tile's centre to the next in a role's row, in the map's own square: a tile (its share of the Rift) and a gap. */
+export const STEP = share.tile * PLAN + space[2];
 
 /**
  * Each role's first tile, and which way the rest go, on the square Rift: top rightward along top lane,

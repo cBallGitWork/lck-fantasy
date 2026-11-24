@@ -9,6 +9,11 @@
   width: var(--m-shirt-small-w);
   height: var(--m-shirt-small-h);
 }
+/* The team's kit, as a Rift tile wears it: sat on the card's foot. */
+.shirt--kit {
+  object-fit: contain;
+  object-position: bottom;
+}
 .shirt__svg {
   display: block;
   width: 100%;

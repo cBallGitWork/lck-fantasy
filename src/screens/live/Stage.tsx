@@ -1,4 +1,4 @@
-import { cx, FinalTag, LiveTag, Menu, score as scoreText, Time } from "../../parts";
+import { Crest, cx, FinalTag, LiveTag, Menu, score as scoreText, Time } from "../../parts";
 import { STREAM_DOT, streamLabel } from "../../fixtures/streams";
 import type { FinalBug, LiveBug, NextSeries, Picker } from "./types";
 import { dot, WORDS } from "./words";
@@ -42,9 +42,15 @@ export function StreamPicker({ streams, picked, onPick }: Picker) {
 function Score({ home, away, score }: { home: string; away: string; score: readonly [number, number] }) {
   return (
     <span className="live__bug-score">
-      <span className="live__bug-team">{home}</span>
+      <span className="live__bug-team">
+        <Crest team={home} size="crestRow" beside />
+        {home}
+      </span>
       <span className="live__bug-figure num">{scoreText(score)}</span>
-      <span className="live__bug-team">{away}</span>
+      <span className="live__bug-team">
+        {away}
+        <Crest team={away} size="crestRow" beside />
+      </span>
     </span>
   );
 }

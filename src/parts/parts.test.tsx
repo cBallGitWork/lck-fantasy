@@ -267,6 +267,12 @@ test("every LCK team has its crest; a team without one shows its code in a dashe
   expect(text(<Crest team="XYZ" />)).toBe("XYZ");
 });
 
+test("a crest beside its team's code sits in the line and is skipped by a screen reader, as the code names the team", () => {
+  const beside = html(<Crest team="T1" size="crestSmall" beside />);
+  expect(beside).toContain('class="crest crest--beside"');
+  expect(beside).toContain('alt=""');
+});
+
 test("the series list shows scores with their state, and times for the next", () => {
   const out = text(<SeriesList series={WEEK3_SERIES_AT_POINTS} />);
   expect(out).toContain("SatGEN v HLE2–1 Not final");

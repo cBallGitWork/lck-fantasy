@@ -9,6 +9,7 @@ Flol's crest for each of the ten LCK teams, each leaning into one thing fans kno
 | `1440.png`, `crests.html` | The ten picks at 120, 56, 40 and 24, before the sizing pass: `data/lck/crests/` binds |
 | `round1.png` | Round one: each brief and both designers' crests |
 | `sizing.png` | Before and after the sizing pass (Craig, 16 Nov 2026: no tiles, size them to one weight); GEN's tile came off after it |
+| `lists-fixtures.png`, `lists-live.png`, `lists-stats.png` | The crest beside a team's code on the LCK fixtures, the live score and Stats, shot from the built app. Craig, 24 Nov 2026, on the new look's lack of colour: "Yes, crests", then "yeah carry on" on these |
 | `round2.png` | Round two: each crest leaning into one thing, round one beside it |
 
 ## The picks

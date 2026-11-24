@@ -9,12 +9,15 @@ const CRESTS: Record<string, string> = Object.fromEntries(
   ),
 );
 
-/** A team's crest at a theme measure (docs/design/approved/crests/); a dashed round box with its code where none is drawn yet. */
-export function Crest({ team, size = "crest" }: { team: string; size?: MeasureKey }) {
+/**
+ * A team's crest at a theme measure (docs/design/approved/crests/); a dashed round box with its code where none is drawn yet.
+ * `beside` is a crest next to its team's code in a line of text: it sits in the line, and a screen reader skips it, as the code says the team.
+ */
+export function Crest({ team, size = "crest", beside = false }: { team: string; size?: MeasureKey; beside?: boolean }) {
   const box = { width: measureVar(size), height: measureVar(size) };
   const url = CRESTS[team];
   return url ? (
-    <img className="crest" src={url} alt={`${team} crest`} style={box} />
+    <img className={cx("crest", beside && "crest--beside")} src={url} alt={beside ? "" : `${team} crest`} style={box} />
   ) : (
     <span className={cx("crest", "crest--none quiet")} style={box}>
       {team}

@@ -135,6 +135,11 @@ Each part is drawn one way on every screen.
   redrawn.
 - **Marks:** C is round, and so are the live dot, your-player dot (8px, after the name)
   and a radio button. C is gold (`--ink`), its letter `--on-ink`. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
+- **A team's crest** sits beside its code wherever a list names a team (Craig, 24 Nov 2026: the look
+  needed a little colour): 28px where the row is about two teams (a fixture, the live score), 20px
+  in a series list and beside a player's team (`approved/crests/`). Where the column is tight
+  (Transfers' player list) the crest stands alone. Never on a Rift tile, and never a team-colour
+  bar, tint or wash: team colour lives in a crest or a kit.
 - **Your players** are marked by that dot, on every screen.
 - **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
   ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with

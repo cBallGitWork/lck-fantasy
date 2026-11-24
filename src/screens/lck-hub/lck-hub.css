@@ -51,8 +51,19 @@
 .lck-hub__series:hover {
   background: var(--fill);
 }
+.lck-hub__home,
+.lck-hub__away {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
 .lck-hub__home {
-  text-align: right;
+  justify-content: flex-end;
+}
+.lck-hub__home .lck-hub__record,
+.lck-hub__away .lck-hub__record {
+  margin: 0;
+  white-space: nowrap;
 }
 .lck-hub__code {
   font-size: var(--size-head);

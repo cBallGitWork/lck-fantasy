@@ -35,9 +35,11 @@ describe("Rift view mid-transfer (transfers.html, changed by Craig 16 Nov 2026)"
     expect(out).not.toContain("Siwoo DK");
   });
 
-  test("no price arrows and no crests on the page", () => {
+  test("no price arrows on the page, and no crests on the tiles: only beside a team's code in the list", () => {
     expect(page).not.toMatch(/class="(rise|fall)"/);
-    expect(page).not.toContain("crest");
+    const crests = page.match(/class="crest[^"]*"/g) ?? [];
+    expect(crests.length).toBeGreaterThan(0);
+    expect(crests.filter((crest) => !crest.includes("crest--beside"))).toEqual([]);
   });
 
   test("the changes bar: each transfer, Reset, Review and confirm", () => {

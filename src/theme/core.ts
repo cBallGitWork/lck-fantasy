@@ -91,8 +91,10 @@ const measure = {
   cardHead: 48,
   cardPhoto: 176,
   crest: 96,
-  /** A crest beside a team code: in a player's panel. */
+  /** A crest beside a team code: in a player's panel, a series list. */
   crestSmall: 20,
+  /** A crest beside a team's code where the row is about the two teams: a fixture, the scorebug. */
+  crestRow: 28,
   /** The crest in a breakdown sheet's portrait slot, until photos exist. */
   crestSheet: 56,
   /** A game's row on a breakdown sheet: 32 in a sheet (Claude's call, Craig: "your call"). */

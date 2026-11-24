@@ -1,91 +1,179 @@
-/* Pick Team (docs/design/approved/pick-team/pick.html), every value a token. */
-.pick-team__cards {
-  margin-top: var(--s-3);
+/* Pick Team (docs/design/approved/pick-team/), every value a token. The phone is the theme's `measure.phone`
+   (a media query can't read a token). */
+
+/* The title line: the week, then the deadline after a rule, then the views at the right. */
+.pick-team__week {
+  font-size: var(--size-body);
+}
+.pick-team__deadline {
+  padding-left: var(--s-4);
+  border-left: var(--m-rule) solid var(--line);
+}
+.pick-team__views {
+  margin-left: auto;
+  align-self: center;
 }
 
-/* The bar under the pitch: what changed, Reset, the deadline, Save team. It sticks to the window's
-   foot over the pitch's tiles (z 2) and under a menu (z 4), so Save is always in view; at the page's
-   end it rests in its place under the pitch. */
-.pick-team__bar {
-  position: sticky;
-  bottom: 0;
-  z-index: 3;
-  display: flex;
-  gap: var(--s-5);
-  align-items: center;
-  margin-top: var(--s-4);
-  padding: var(--s-2) var(--s-4);
-  background: var(--paper);
-  border: var(--m-rule) solid var(--text);
+/* Rift view: the Rift at the main column's left, as big as the first screen allows; beside it a column
+   the Rift's height of three panels: the buffs, the bench, then Save (plate.md, The Rift). */
+.pick-team__object {
+  display: grid;
+  gap: var(--s-2) var(--s-4);
 }
+.pick-team__object--rift {
+  grid-template-columns: minmax(0, 1fr) var(--m-pick-column);
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "rift buffs"
+    "rift bench"
+    "rift save";
+}
+.pick-team__object--rift .pick-team__buffs {
+  grid-area: buffs;
+}
+.pick-team__object--rift .pick-team__bench {
+  grid-area: bench;
+}
+.pick-team__object--rift .pick-team__save {
+  grid-area: save;
+}
+.pick-team__rift {
+  grid-area: rift;
+  align-self: start;
+  width: min(100%, calc(100svh - var(--m-rift-top)));
+}
+
+/* Card view, as its 14 Nov 2026 picture: the buffs in one row, the cards, the bench, then Save. */
+.pick-team__object--cards {
+  gap: var(--s-4);
+}
+.pick-team__buff-list--row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--s-4);
+}
+
+/* Save: the changes and Reset on one line, Save team under them, as wide as the panel. */
 .pick-team__changes {
-  color: var(--mid);
-}
-.pick-team__changes b {
-  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-2);
 }
 .pick-team__reset {
   min-height: var(--m-target);
   color: var(--text);
 }
-.pick-team__deadline {
-  flex: 1;
-  text-align: right;
-}
-.pick-team__save span:empty {
-  display: none;
+.pick-team__reset--idle {
+  color: var(--mid);
 }
 
-/* The tapped player's card, under its head. */
+/* The tapped player's card: the group his ranks are among, said once over their column; each row a figure and its rank. */
 .pick-team__news {
   padding: var(--s-2) var(--s-4) 0;
   color: var(--mid);
 }
-.pick-team__rows {
-  padding: var(--s-2) var(--s-4);
-  border-bottom: var(--m-rule) solid var(--line);
+.pick-team__among {
+  padding: var(--s-2) var(--s-4) 0;
+  text-align: right;
 }
 .pick-team__row {
   display: flex;
   justify-content: space-between;
-  padding: var(--s-1) 0;
+  align-items: center;
+  min-height: var(--m-row);
+  padding: 0 var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
 }
 .pick-team__label {
   color: var(--mid);
 }
-.pick-team__keys {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--s-2);
-  padding: var(--s-3) var(--s-4);
+.pick-team__rank {
+  display: inline-block;
+  width: var(--m-col-figure);
+  text-align: right;
 }
-.pick-team__keys > a {
-  justify-content: center;
+.pick-team__last3 {
+  display: flex;
+  gap: var(--s-4);
+}
+.pick-team__keys {
+  display: flex;
+  align-items: center;
+  gap: var(--s-5);
+  padding: var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
 }
 .pick-team__key {
+  flex: 1;
+  min-height: var(--m-row);
   font: inherit;
   font-weight: var(--w-semi);
-  padding: var(--s-2) 0;
   color: var(--text);
   background: none;
   border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }
+/* `✓ Captain` is a state, not a key: gold edge and words on --fill, never filled, so Save stays the one filled key (plate.md, Colour). */
 .pick-team__key--on {
-  background: var(--paper);
+  color: var(--ink);
+  background: var(--fill);
+  border-color: var(--ink);
+  cursor: default;
 }
 
-/* Buffs: four boxes of one size, in one row above the Rift. */
-.pick-team__buffs {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--s-2);
-  margin-bottom: var(--s-4);
+.pick-team__series {
+  margin-bottom: var(--s-5);
 }
 
-/* The team's crest before its code in the card's meta. */
-.pick-team__crest > * {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: var(--s-1);
+/* The phone (approved/pick-team/390.png): the buffs one row of three tiles over the Rift, the whole Rift,
+   the bench under it, then the changes, Reset and Save stuck to the foot; the card follows in the page. */
+@media (max-width: 600px) {
+  .pick-team__deadline {
+    flex-basis: 100%;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .pick-team__views {
+    margin-left: 0;
+  }
+  .pick-team__object--rift {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas:
+      "buffs"
+      "rift"
+      "bench"
+      "save";
+  }
+  .pick-team__rift {
+    width: 100%;
+  }
+  /* The tiles stand alone, the panel's title kept for a screen reader. */
+  .pick-team__buffs {
+    padding: 0;
+    background: none;
+    border: 0;
+  }
+  .pick-team__buffs > :first-child {
+    position: absolute;
+    clip-path: inset(50%);
+  }
+  .pick-team__buff-list,
+  .pick-team__buff-list--row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--s-2);
+  }
+  .pick-team__save {
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+  }
+  .pick-team__changes {
+    margin-bottom: 0;
+  }
 }

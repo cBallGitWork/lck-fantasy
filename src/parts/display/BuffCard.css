@@ -1,49 +1,80 @@
+/* A buff (plate.md, A buff): its icon, its name over its state, and its key at the right. */
 .buff-card {
-  display: flex;
-  flex-direction: column;
-  padding: var(--s-2) var(--s-3);
-  background: var(--paper);
-  border: var(--m-rule) solid var(--text);
+  display: grid;
+  grid-template-columns: var(--m-buff-icon) 1fr auto;
+  column-gap: var(--s-3);
+  align-items: center;
+  padding: var(--s-2) 0;
+  border-top: var(--m-rule) solid var(--line);
+}
+.buff-card__icon {
+  grid-row: span 2;
+  width: var(--m-buff-icon);
+  height: var(--m-buff-icon);
+  color: var(--ink);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--stroke-icon);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.buff-card__icon-back,
+.buff-card__icon-coin {
+  fill: currentColor;
+  stroke: none;
+}
+.buff-card__icon-back {
+  opacity: var(--opacity-buff-icon-back);
+}
+.buff-card__icon-coin {
+  stroke: var(--bg);
+  stroke-width: var(--stroke-coin);
+}
+.buff-card__icon-cut {
+  stroke: var(--bg);
+  stroke-width: var(--stroke-cut);
 }
 .buff-card__name {
-  font-size: inherit;
-  font-weight: var(--w-bold);
-}
-.buff-card__does {
-  margin-top: var(--s-1);
-  line-height: var(--lh-mid);
-}
-.buff-card__foot {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  padding-top: var(--s-2);
-}
-.buff-card__play,
-.buff-card__foot button {
-  font: inherit;
-  font-size: var(--size-small);
+  font-size: var(--size-body);
   font-weight: var(--w-semi);
+}
+.buff-card__state {
+  grid-column: 2;
+  font-size: var(--size-small);
+}
+.buff-card__key {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+  min-width: var(--m-col-figure);
   min-height: var(--m-target);
-  padding: 0 var(--s-2);
+  padding: 0 var(--s-3);
+  font: inherit;
+  font-weight: var(--w-semi);
   color: var(--text);
   background: none;
   border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }
-.buff-card--on {
-  background: var(--text);
-  color: var(--bg);
-}
-.buff-card--on .buff-card__does,
-.buff-card--on .buff-card__foot,
-.buff-card--on .buff-card__foot button {
-  color: var(--bg);
-  border-color: var(--bg);
-}
-.buff-card--off {
-  background: var(--fill);
-  border-color: var(--fill);
-  color: var(--mid);
+
+/* On a phone the buffs are one row of three tiles (approved/pick-team/390.png): icon, name, state, then the key under them. */
+@media (max-width: 600px) {
+  .buff-card {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    row-gap: var(--s-1);
+    padding: var(--s-2);
+    text-align: center;
+    background: var(--paper);
+    border: var(--m-rule) solid var(--line);
+  }
+  .buff-card__icon,
+  .buff-card__state,
+  .buff-card__key {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .buff-card__key {
+    width: 100%;
+    min-height: var(--m-target-phone);
+  }
 }

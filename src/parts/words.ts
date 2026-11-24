@@ -17,8 +17,9 @@ export const WORDS = {
   loading: "Loading",
   /** An error state's way to try again. */
   tryAgain: "Try again ›",
-  /** A buff card's key. */
+  /** A buff card's keys: Play, and Cancel while it is on this week. */
   play: "Play",
+  cancel: "Cancel",
   /** A table's ›'s column, for a screen reader. */
   open: "Open",
   /** The week arrows, for a screen reader. */
@@ -69,6 +70,15 @@ export const moveWords = (up: boolean, figure: string) => `${up ? "up" : "down"}
 
 /** A buff card's Play, for a screen reader: `Play Bench Boost`. */
 export const playBuff = (buff: string) => `${WORDS.play} ${buff}`;
+
+/** A buff card's Cancel, for a screen reader: `Cancel Bench Boost`. */
+export const cancelBuff = (buff: string) => `${WORDS.cancel} ${buff}`;
+
+/** A buff's state under its name (plate.md, A buff); one played earlier says its week. Never a count. */
+export const BUFF_STATE = { available: "Available", on: "On this week", unavailable: "Unavailable" } as const;
+
+/** `Played Week 3`. */
+export const playedWeek = (week: number) => `Played Week ${week}`;
 
 /** A table row's ›, for a screen reader: `Open Faker`. */
 export const openRow = (name: string) => `${WORDS.open} ${name}`;

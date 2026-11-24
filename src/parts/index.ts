@@ -1,6 +1,6 @@
 // The shared parts. They never import src/rift: the Rift builds on the parts, not the other way.
 export { AppFrame, LiveRegion, useAnnounce, useAnnounceChange } from "./frame/AppFrame";
-export { BuffCard } from "./display/BuffCard";
+export { BuffCard, type BuffState } from "./display/BuffCard";
 export { Crest } from "./display/Crest";
 export { Columns } from "./frame/Columns";
 export { cx } from "./util/cx";
@@ -45,6 +45,7 @@ export { rememberedView, rememberView, VIEW_KEYS, type ViewKey } from "./util/re
 export { OutlinedKey } from "./controls/OutlinedKey";
 export { PageFrame } from "./frame/PageFrame";
 export { PageHead, type WeekNav } from "./frame/PageHead";
+export { Panel } from "./frame/Panel";
 export { focusPage, inertOutside, openerOf, returnTo, type InertNode, type Opener } from "./frame/pageFocus";
 export { Placeholder } from "./frame/Placeholder";
 export { PlayerPhoto } from "./display/PlayerPhoto";

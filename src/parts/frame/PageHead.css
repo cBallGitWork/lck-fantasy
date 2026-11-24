@@ -3,6 +3,7 @@
 }
 .page-head__title-line {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: var(--s-4);
 }

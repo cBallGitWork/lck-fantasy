@@ -3,3 +3,10 @@
   grid-template-columns: minmax(0, 1fr) var(--m-side);
   gap: var(--s-6);
 }
+/* The phone (plate.md, The phone; up to 600px, approved/pick-team/): one column, the side column under the main. */
+@media (max-width: 600px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-5);
+  }
+}

@@ -19,7 +19,7 @@ const week3 = (seriesId: string) => scored(WEEK3_SERIES_AT_POINTS, seriesId);
 
 const DEADLINE = { local: `${WEEK3_DEADLINE.day} ${WEEK3_DEADLINE.time}` };
 const WEEK2_GEN_BRO = scored(WEEK2_SERIES, "w2-wed-2");
-const WEEK2_ENDED = { local: "Sun 12:30" } as const;
+const WEEK2_ENDED = { local: "Sun 12:30pm" } as const;
 
 export const FOLLOWING: FollowingData = {
   week: 3,
@@ -43,7 +43,7 @@ export const FOLLOWING: FollowingData = {
             { name: "Canyon", points: 7 },
             { name: "Chovy", points: 8 },
           ],
-          ended: { local: "Sat 10:20" },
+          ended: { local: "Sat 10:20am" },
         },
         {
           kind: "series",
@@ -56,7 +56,7 @@ export const FOLLOWING: FollowingData = {
             { name: "ucal", points: 2, captain: {} },
             { name: "Lehends", points: 3 },
           ],
-          ended: { local: "Fri 13:00" },
+          ended: { local: "Fri 1:00pm" },
         },
         {
           kind: "series",
@@ -69,7 +69,7 @@ export const FOLLOWING: FollowingData = {
             { name: "Faker", points: 18, captain: { before: 12 } },
             { name: "Keria", points: 5 },
           ],
-          ended: { local: "Wed 10:20" },
+          ended: { local: "Wed 10:20am" },
         },
         {
           kind: "deadline",

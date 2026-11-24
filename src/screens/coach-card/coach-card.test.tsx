@@ -59,12 +59,12 @@ describe("This week before his team's first series (spec/12, The coach card)", (
   const out = text(card(FROM_PICK_TEAM, "pickTeam", "This week"));
 
   test("lists the week's series with opponent and time, points as —", () => {
-    expectInOrder(out, ["Roster", "Wed · v KT", "10:30", "—", "Sat · v GEN", "08:00", "—", "Week 4", "—", "Season"]);
+    expectInOrder(out, ["Roster", "Wed · v KT", "10:30am", "—", "Sat · v GEN", "8:00am", "—", "Week 4", "—", "Season"]);
   });
 
   test("shows no games, no score and no series line yet", () => {
     const tab = out.slice(out.indexOf("Roster") + "Roster".length, out.indexOf("Season15 games"));
-    expect(tab).toBe("Wed · v KT 10:30—Sat · v GEN 08:00—Week 4—");
+    expect(tab).toBe("Wed · v KT 10:30am—Sat · v GEN 8:00am—Week 4—");
   });
 
   test("fills in as played: a started series shows its games and series line, the next still —", () => {
@@ -74,7 +74,7 @@ describe("This week before his team's first series (spec/12, The coach card)", (
     const game = { result: "W" as const, lines: ["First tower"], points: 1, counts: true };
     const started = { id: first.id, day: first.day, opponent: first.opponent, state: "live" as const, score: [1, 0] as [number, number], games: [game], points: 1 };
     const live = text(card({ ...FROM_PICK_TEAM, week: { ...week, series: [started, second], total: 1 } }, "pickTeam", "This week"));
-    expectInOrder(live, ["Wed · v KT 1–01", "G1WFirst tower1", "Series · +3 if won, −1 if lost—", "Sat · v GEN 08:00—", "Week 41"]);
+    expectInOrder(live, ["Wed · v KT 1–01", "G1WFirst tower1", "Series · +3 if won, −1 if lost—", "Sat · v GEN 8:00am—", "Week 41"]);
   });
 });
 
@@ -250,9 +250,9 @@ describe("Fixtures (the player card's 1440-fixtures.png)", () => {
     const out = text(card(FROM_PICK_TEAM, "pickTeam", "Fixtures"));
     expectInOrder(out, [
       "WeekSeriesYour time",
-      "5Sun · T1 v KRX · Bo310:30",
-      "6Wed · T1 v DK · Bo308:00",
-      "Sat · T1 v HLE · Bo310:30",
+      "5Sun · T1 v KRX · Bo310:30am",
+      "6Wed · T1 v DK · Bo38:00am",
+      "Sat · T1 v HLE · Bo310:30am",
     ]);
     expect(out).not.toMatch(/KST|19:30|17:00/);
   });

@@ -33,7 +33,7 @@ describe("the admin section (#398)", () => {
     const state = { sim: true, now: kst(16, 0), gamesLeft: true, replaying: 0 } as const;
     const out = html(page(state));
     expect(out).toContain('data-screen="admin"');
-    expect(text(page(state))).toContain("Sim date: Fri 15 Jan 15:00");
+    expect(text(page(state))).toContain("Sim date: Fri 15 Jan 3:00pm");
     expect(out).not.toContain("KST");
     expect(out.match(/<button type="button" class="admin__press key-off">/g)).toHaveLength(2);
   });
@@ -59,7 +59,7 @@ describe("the admin section (#398)", () => {
 
   test("Alerts lists each alert with its moment in the admin's own time, kind and names, or says there are none", () => {
     const out = text(page({ sim: false }, [alert({})], "Alerts"));
-    expect(out).toContain("Fri 15 Jan 09:00");
+    expect(out).toContain("Fri 15 Jan 9:00am");
     expect(out).not.toContain("KST");
     expect(out).toContain(WORDS.kind.feedDown);
     expect(out).toContain("T1 v Gen.G game 1: the live feed is down.");
@@ -111,8 +111,8 @@ describe("a press's line", () => {
   });
 
   test("a moment is written in the admin's own zone, with no label", () => {
-    expect(simMoment(kst(15, 17), ZONE)).toBe("Fri 15 Jan 08:00");
-    expect(simMoment(kst(15, 17), "Asia/Seoul")).toBe("Fri 15 Jan 17:00");
+    expect(simMoment(kst(15, 17), ZONE)).toBe("Fri 15 Jan 8:00am");
+    expect(simMoment(kst(15, 17), "Asia/Seoul")).toBe("Fri 15 Jan 5:00pm");
     expect(simMoment(kst(15, 17), ZONE, false)).toBe("Fri 15 Jan");
   });
 });

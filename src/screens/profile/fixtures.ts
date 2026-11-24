@@ -192,7 +192,7 @@ export const PROFILE: ProfileData = {
   transfers: [
     {
       week: 3,
-      at: { local: "Tue 09:00" },
+      at: { local: "Tue 9:00am" },
       cost: "Bench Boost · 3 hits",
       transfers: [
         { slot: "top", out: { ...player("Doran", "T1"), priceM: 13.0 }, in: { ...player("Kiin", "GEN"), priceM: 13.5 }, gained: 1 },
@@ -204,7 +204,7 @@ export const PROFILE: ProfileData = {
     },
     {
       week: 2,
-      at: { local: "Mon 12:40" },
+      at: { local: "Mon 12:40pm" },
       cost: "1 free",
       transfers: [{ slot: "bot", out: { ...player("Smash", "T1"), priceM: 6.0 }, in: { ...player("Peyz", "T1"), priceM: 13.0 }, gained: 6 }],
     },

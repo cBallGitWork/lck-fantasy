@@ -20,7 +20,7 @@ export const WORDS = {
   blockLine: "They can't follow you again.",
   /** A series row's tag for spec/14's big Captain: a Captain's big score in that series. */
   bigCaptain: "Captain haul",
-  /** Before a series' end time: `Ended Sat 10:20`. */
+  /** Before a series' end time: `Ended Sat 10:20am`. */
   ended: "Ended",
   /** After a deadline row's moves, before each swap's points. */
   soFar: "so far",

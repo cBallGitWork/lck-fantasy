@@ -10,7 +10,7 @@ import type { HubTab, LckHubData } from "./types";
 
 const page = (tab: HubTab, data: LckHubData = LCK_HUB) => <LckHub data={data} account={MANAGER.team} tab={tab} />;
 
-const HEAD = ["Split 1 2027", "스플릿 1", "Deadline", "Wed 07:45", "9h 45m"];
+const HEAD = ["Split 1 2027", "스플릿 1", "Deadline", "Wed 7:45am", "9h 45m"];
 const TABS = ["Fixtures", "Results", "Standings", "Teams"];
 const STAGES = ["Groups", "Play-In", "Playoffs"];
 const NEWS = [
@@ -37,20 +37,20 @@ describe("each state renders from the fixture, in the picture's order", () => {
       ...STAGES,
       "‹Week 4›",
       "20–24 Jan · Bo3Wed20 Jan",
-      "08:004–2HLEvDK3–3›",
-      "10:305–1T1vKT3–3›",
+      "8:00am4–2HLEvDK3–3›",
+      "10:30am5–1T1vKT3–3›",
       "Thu21 Jan",
-      "08:005–1GENvBRO1–5›",
-      "10:302–4NSvDNS3–3›",
+      "8:00am5–1GENvBRO1–5›",
+      "10:30am2–4NSvDNS3–3›",
       "Fri22 Jan",
-      "08:003–3KRXvBFX1–5›",
-      "10:303–3DKvKT3–3›",
+      "8:00am3–3KRXvBFX1–5›",
+      "10:30am3–3DKvKT3–3›",
       "Sat23 Jan",
-      "08:005–1T1vGEN5–1›",
-      "10:304–2HLEvNS2–4›",
+      "8:00am5–1T1vGEN5–1›",
+      "10:30am4–2HLEvNS2–4›",
       "Sun24 Jan",
-      "08:001–5BROvBFX1–5›",
-      "10:303–3KRXvDNS3–3›",
+      "8:00am1–5BROvBFX1–5›",
+      "10:30am3–3KRXvDNS3–3›",
       ...NEWS,
     ]);
   });

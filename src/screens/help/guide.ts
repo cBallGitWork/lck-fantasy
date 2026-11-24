@@ -40,7 +40,7 @@ export const GUIDE: readonly Item[] = [
       {
         facts: [
           ["Days", "Usually Wednesday to Sunday"],
-          ["Series", `Each of the ${TEAM_COUNT} teams plays two, at about 17:00 and 19:30 Korea time. A series is two teams playing best of 3 games, or best of 5 in the playoffs.`],
+          ["Series", `Each of the ${TEAM_COUNT} teams plays two, at about 5:00pm and 7:30pm Korea time. A series is two teams playing best of 3 games, or best of 5 in the playoffs.`],
           ["Deadline", `${DEADLINE_RULE} Save your changes by then. Home shows it in your own time.`],
           ["Points", "Go up live during the games, and are final about 3 hours after each series"],
         ],

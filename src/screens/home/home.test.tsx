@@ -10,7 +10,7 @@ import { HOME_IDLE, HOME_LIVE } from "./fixtures";
 import { Home } from "./index";
 
 const HEAD = ["Baron Steal FC", "바론 스틸 FC", "Emerald I", "에메랄드 1", "48,211", "6,904", "Badge"];
-const deadline = (d: string, h: string, m: string) => ["Week 4 deadline", "Split 1", `${d}d${h}h${m}m`, "Wed 07:45", "Pick Team", "Transfers", "2 free transfers"];
+const deadline = (d: string, h: string, m: string) => ["Week 4 deadline", "Split 1", `${d}d${h}h${m}m`, "Wed 7:45am", "Pick Team", "Transfers", "2 free transfers"];
 const BAND = [
   "Following",
   "Minji · GEN v HLE",
@@ -109,7 +109,7 @@ describe("idle", () => {
       ...HEAD,
       ...deadline("1", "20", "45"),
       "Week 4 lineup",
-      ...["Next on stream", "HLE v DK", "Wed 08:00 · in", "1d 21h"],
+      ...["Next on stream", "HLE v DK", "Wed 8:00am · in", "1d 21h"],
       ...["HLE", "Zeus", "Top", "GEN", "Canyon", "Jungle", "T1", "C", "Faker", "Mid", "GEN", "Ruler", "Bot"],
       ...["HLE", "Delight", "Support", "DK", "Siwoo", "Flex · Top", "T1", "kkOma", "Coach"],
       ...["Week 3", "Final", "109", "Average 79", "Highest 128›"],

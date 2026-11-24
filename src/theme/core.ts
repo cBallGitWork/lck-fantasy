@@ -34,6 +34,11 @@ const measure = {
   row: 40,
   /** The smallest target on the desk. */
   target: 24,
+  /** The smallest target on a phone (plate.md, Accessibility). */
+  targetPhone: 44,
+  /** A phone: a window this wide or narrower (approved/pick-team/arena.html). A media query can't read a
+   *  token, so each writes it out; theme.test.ts checks every one is this. */
+  phone: 600,
   topBar: 56,
   side: 360,
   modalCard: 1056,
@@ -54,14 +59,29 @@ const measure = {
   /** The shirt in a player's panel. */
   shirtSmallW: 40,
   shirtSmallH: 36,
-  /** The Rift is square, 720 a side, centred in the main column (Craig, 16 Nov 2026). Tiles stand at shares of it. */
-  rift: 720,
-  /** A tile on the Rift: its card, name plate and band. */
-  tileW: 124,
+  /** The Rift is square, as big as the first screen allows, at the main column's left (Craig, 19 Nov 2026),
+   *  940 a side at most, as the approved picture (docs/design/approved/pick-team/). Tiles stand at shares
+   *  of it, and its tiles size with it (`share`). */
+  rift: 940,
+  /** The room above the Rift on the first screen: the top bar and the title line; the Rift fits under it. */
+  riftTop: 168,
+  /** A Rift narrower than this is a phone's: its tiles take the phone's sizes and places. */
+  riftPhone: 480,
+  /** A bench tile, off the Rift: the Rift's own tile at the picture's 1440 Rift. */
+  tileW: 96,
+  tileCardH: 84,
+  shirtTile: 64,
+  /** A tile on a phone's Rift, and its card and kit (approved/pick-team/390.png). */
+  tileWPhone: 78,
+  tileCardHPhone: 60,
+  shirtTilePhone: 44,
+  /** The Captain's C past a Rift tile's top right corner: 40 across on a desk, 28 on a phone. */
+  markTile: 40,
+  markTilePhone: 28,
+  /** A player's news: the yellow warning triangle on his tile's role strip. */
+  newsFlag: 16,
   /** The round of a tile's card, FPL's one rounded shape (Craig, 16 Nov 2026). */
   tileRadius: 6,
-  /** `Bench`, before the bench tiles. */
-  benchTitleW: 56,
   /** A tag's line. */
   tagLine: 16,
   /** Stats' sticking column: rank, role and name. */
@@ -99,16 +119,27 @@ const measure = {
   rowSheet: 32,
   sponsorH: 112,
   sponsorTopW: 120,
+  /** A buff's gold icon (approved/pick-team/, Craig, 19 Nov 2026). */
+  buffIcon: 36,
+  /** The crest on a tapped player's card: as tall as his name and the line under it (approved/pick-team/). */
+  crestCard: 64,
+  /** Pick Team's column beside the Rift: the buffs, the bench, then Save (approved/pick-team/). */
+  pickColumn: 336,
 } as const;
 
-/** Opacities: the band across a tier shield; a dimmed tile's shirt drawing, never its words; an
- *  empty slot's shirt outline (front door picture). */
-const opacity = { tierBand: 0.45, dim: 0.5, emptyShirt: 0.25 } as const;
+/** Opacities: the band across a tier shield; an empty slot's shirt outline (front door picture). A
+ *  dimmed tile is darkened, never see-through: its brightness and its colour, kept (approved/pick-team/).
+ *  The towers, inhibitors and nexus on the Rift, quieter than the tiles. The coin behind Double Captain's icon. */
+const opacity = { tierBand: 0.45, emptyShirt: 0.25, dim: 0.6, dimColour: 0.3, mapMarks: 0.7, buffIconBack: 0.55 } as const;
 
-/** SVG strokes, in the drawing's own units: the shirt's edge, and the dashes round a pit. */
-const stroke = { shirt: 1.6, dash: 3 } as const;
+/** A Rift tile's sizes as shares of the Rift's side, so tiles size with it (approved/pick-team/): the
+ *  tile, its card, its kit. */
+const share = { tile: 0.15, tileCard: 0.13, shirt: 0.1 } as const;
+
+/** SVG strokes, in the drawing's own units: the plain shirt's edge, and a buff icon's line, its coin's edge and the C cut in it. */
+const stroke = { shirt: 1.6, icon: 1.2, coin: 1.5, cut: 2 } as const;
 
 /** Frame shapes: a stream's picture, the same on Home and Live; the Rift, square at any width. */
-const ratio = { stream: "16 / 9", rift: `${measure.rift} / ${measure.rift}` } as const;
+const ratio = { stream: "16 / 9", rift: "1 / 1" } as const;
 
-export const core = { size, weight, lineHeight, tracking, space, measure, opacity, stroke, ratio } as const;
+export const core = { size, weight, lineHeight, tracking, space, measure, opacity, share, stroke, ratio } as const;

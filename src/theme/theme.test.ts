@@ -5,7 +5,7 @@ import { describe, expect, test } from "vitest";
 import { game } from "./game";
 import { leagues, type League } from "./league";
 import { contrast } from "./contrast";
-import { color, leagueOf, size, themeCss, themeVars, tokensOf } from "./tokens";
+import { color, leagueOf, measure, size, themeCss, themeVars, tokensOf } from "./tokens";
 
 const SRC = join(import.meta.dirname, "..");
 const THEME = import.meta.dirname + sep;
@@ -58,11 +58,21 @@ test("the colour check catches hex, functions and names, but not an issue number
 // viewBox's own units (`strokeWidth="44"`) is drawing, not a size, and is allowed.
 const SIZE_LITERAL = /\b\d+(?:\.\d+)?px\b|line-height:\s*[\d.]+\s*[;}]|\/\s*[\d.]+\s+var\(--font/;
 
+/** A media query can't read a token, so the phone's width is written in each one, always `measure.phone`. */
+const MEDIA_WIDTH = /@media \(max-width: (\d+)px\)/g;
+
 test("nothing outside src/theme/ holds a size", () => {
-  expect(offenders(SIZE_LITERAL)).toEqual([]);
+  const sized = OUTSIDE_THEME.filter((path) => SIZE_LITERAL.test(code(path).replace(MEDIA_WIDTH, ""))).map((path) => relative(SRC, path));
+  expect(sized).toEqual([]);
   expect("a { width: 64px; }").toMatch(SIZE_LITERAL);
   expect("a { line-height: 1.3; }").toMatch(SIZE_LITERAL);
   expect("a { line-height: var(--lh-mid); }").not.toMatch(SIZE_LITERAL);
+});
+
+test("every media query is the phone's, at the theme's one width", () => {
+  const widths = SOURCES.flatMap((path) => [...code(path).matchAll(MEDIA_WIDTH)].map((m) => Number(m[1])));
+  expect(widths.length).toBeGreaterThan(0);
+  expect(new Set(widths)).toEqual(new Set([measure.phone]));
 });
 
 test("every var(--name) the app uses is a token", () => {
@@ -161,11 +171,14 @@ test("a search field's edge reads at 3:1 or more on its ground (WCAG 1.4.11)", (
   expect(contrast(colourIn(BASE, 'input[type="search"]', "border"), color.paper)).toBeGreaterThanOrEqual(3);
 });
 
-test("a dimmed tile's team code stays at 4.5:1 or more, and only the shirt's drawing dims (WCAG 1.4.3)", () => {
+test("a dimmed tile is darkened, never faded, so the map can't show through it", () => {
   const tile = code(join(SRC, "rift", "Tile.css"));
-  expect(contrast(colourIn(tile, ".tile--dim .shirt__code", "color"), color.paper)).toBeGreaterThanOrEqual(4.5);
-  expect(tile).toContain(".tile--dim .shirt__svg {\n  opacity: var(--opacity-dim);");
-  expect(tile).not.toMatch(/\.tile--dim \.shirt\s*\{/);
+  expect(tile).toContain(".tile--dim {\n  filter: saturate(var(--opacity-dim-colour)) brightness(var(--opacity-dim));\n}");
+  expect(tile).not.toMatch(/\.tile--dim[^{]*\{[^}]*opacity:/);
+});
+
+test("a tile's card is solid, never see-through", () => {
+  expect(color.tileCard).toMatch(/^#[0-9A-F]{6}$/i);
 });
 
 test("the plate's colour roles all stay as tokens", () => {

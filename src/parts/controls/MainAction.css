@@ -6,6 +6,16 @@
 .main-action__reason {
   color: var(--mid);
 }
+.main-action__reason:empty {
+  display: none;
+}
+.main-action--wide {
+  display: flex;
+  flex: 1;
+}
+.main-action--wide .main-action__key {
+  flex: 1;
+}
 .main-action__key {
   font: inherit;
   font-weight: var(--w-bold);

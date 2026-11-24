@@ -24,7 +24,7 @@ type Tokens = ReturnType<typeof tokensOf>;
 
 /** The active league's tokens: the region the app shows. */
 const active: Tokens = tokensOf(leagueOf(REGION.name));
-export const { color, font, size, weight, lineHeight, tracking, space, measure, opacity, stroke, ratio } = active;
+export const { color, font, size, weight, lineHeight, tracking, space, measure, opacity, share, stroke, ratio } = active;
 
 export type MeasureKey = keyof typeof measure;
 
@@ -43,6 +43,7 @@ export function themeVars(tokens: Tokens = active): [string, string][] {
     ...Object.entries(tokens.lineHeight).map(([k, v]): [string, string] => [`--lh-${k}`, String(v)]),
     ...Object.entries(tokens.tracking).map(([k, v]): [string, string] => [`--track-${k}`, v]),
     ...Object.entries(tokens.opacity).map(([k, v]): [string, string] => [`--opacity-${kebab(k)}`, String(v)]),
+    ...Object.entries(tokens.share).map(([k, v]): [string, string] => [`--share-${kebab(k)}`, String(v)]),
     ...Object.entries(tokens.stroke).map(([k, v]): [string, string] => [`--stroke-${k}`, String(v)]),
     ...Object.entries(tokens.ratio).map(([k, v]): [string, string] => [`--ratio-${k}`, v]),
   ];

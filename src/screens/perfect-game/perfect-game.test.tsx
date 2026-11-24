@@ -61,10 +61,10 @@ test("the Rift's tiles show each starter's points (the Captain's result only), s
   expect(text(<PerfectGame game={PERFECT_WEEK3} view="Rift view" selected="mid" />)).not.toContain("×");
   expect(out).toContain('aria-label="Captain">C');
   expect(out.match(/aria-label="Your player"/g)).toHaveLength(4);
-  expect(out).toContain('class="tile__slot tile__slot--flex"><span class="hint"');
+  expect(out).toContain('class="tile__slot"><span class="hint"');
   expect(hovers(out)).toContainEqual(["Flex", "Any role"]);
   expect(out).not.toContain("plays Mid");
-  expect(out).toContain("Coach 감독");
+  expect(text(<PerfectGameRift game={PERFECT_WEEK3} selected="mid" />)).toContain("CoachT1 kkOma");
   expect(out.match(/tile--selected/g)).toHaveLength(1);
 });
 

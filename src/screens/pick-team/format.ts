@@ -1,8 +1,7 @@
 import type { Dispatch } from "react";
-import { placeOf } from "../../parts";
 import { opponent, seriesOf } from "../../fixtures/series";
 import type { Series } from "../../fixtures/week3";
-import type { PickTeamData, Ranked } from "./fixtures";
+import type { PickTeamData } from "./fixtures";
 import type { PickAction, PickState } from "./model";
 import { WORDS } from "./words";
 
@@ -12,9 +11,6 @@ export interface ViewProps {
   state: PickState;
   dispatch: Dispatch<PickAction>;
 }
-
-/** `1st of 10 mids`, or `1st`. */
-export const ranked = (r: Ranked) => placeOf(r.place, r.of);
 
 /** The week's opponents on one line, as FPL's fixtures: `v KT, GEN`. */
 export const fixtureLine = (series: readonly Series[], team: string) => `${WORDS.versus} ${seriesOf(series, team).map((s) => opponent(s, team)).join(", ")}`;

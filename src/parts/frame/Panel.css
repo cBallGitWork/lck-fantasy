@@ -1,0 +1,13 @@
+/* One treatment for every panel (plate.md, Parts, Panel). */
+.panel {
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  border-top: var(--m-rule-heavy) solid var(--text);
+  padding: var(--s-3) var(--s-4);
+}
+.panel__title {
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-body);
+  margin-bottom: var(--s-2);
+}

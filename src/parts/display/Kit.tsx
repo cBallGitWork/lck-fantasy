@@ -8,8 +8,11 @@ const KITS: Record<string, string> = Object.fromEntries(
   ),
 );
 
+/** A team's kit file, or nothing where none is drawn: the one home of the kits, for this part and the Rift's shirt. */
+export const kitUrl = (team: string): string | undefined => KITS[team];
+
 /** A team's kit beside its code, at a theme measure; unseen by a screen reader, as the code names the team. Nothing for a team with no kit. */
 export function Kit({ team, size }: { team: string; size: MeasureKey }) {
-  const url = KITS[team];
+  const url = kitUrl(team);
   return url ? <img className="kit" src={url} alt="" style={{ width: measureVar(size), height: measureVar(size) }} /> : null;
 }

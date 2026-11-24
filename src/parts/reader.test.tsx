@@ -20,7 +20,8 @@ test("Skip to content comes first and jumps to the main column", () => {
 });
 
 test("a buff's name is a heading, and its Play key names the buff", () => {
-  const out = html(<BuffCard name="Bench Boost" does="Your bench scores too" left="1 left" />);
-  expect(out).toContain('<h2 class="buff-card__name">Bench Boost</h2>');
+  const out = html(<BuffCard effect="benchBoost" name="Bench Boost" does="Your bench scores too" state={{ kind: "available" }} />);
+  expect(out).toMatch(/<h3 class="buff-card__name"><span class="hint"[^>]*>Bench Boost/);
   expect(out).toContain('aria-label="Play Bench Boost"');
+  expect(html(<BuffCard effect="benchBoost" name="Bench Boost" does="Your bench scores too" state={{ kind: "on" }} />)).toContain('aria-label="Cancel Bench Boost"');
 });

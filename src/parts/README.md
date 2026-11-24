@@ -13,7 +13,8 @@ The page's frame and its sections.
 - `TopBar.tsx`: the top bar: Flol, the eight items with `active`, the sponsor, the account menu; a visitor's only Stats, LCK and `Log in ›`.
 - `PageFrame.tsx`: the top bar, then the main column and the 360px side column; the foot, Riot's notice (`RIOT_NOTICE`).
 - `Columns.tsx`: the frame's two columns (main, then the 360px side) for a page whose head runs full width above them.
-- `PageHead.tsx`: title and hangul, ‹ week ›, the key figure, its tags, up to three figures, a link.
+- `PageHead.tsx`: title and hangul, ‹ week ›, the key figure, its tags, up to three figures, a link, and what else stands on the title's line.
+- `Panel.tsx`: a panel: `--paper`, a 1px `--line` round it, a 2px `--text` rule on top, its title 16/700, contents 16 in.
 - `SectionHead.tsx`: a main-column section's head: 2px `--text` rule, 16px bold title, its note in mid grey.
 - `SideSection.tsx`: a side column section: 2px rule, 16px title, its count or state.
 - `SponsorNote.tsx`: `All sponsors are made up.`
@@ -50,7 +51,7 @@ What shows a fact: tags, tables, lists, crests, states.
 - `SeriesList.tsx`: the week's series: day, teams, then score and state, or the time.
 - `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px `--text` rule, the next 3 with `Bo3`, the first in `--text` (player card, coach card).
 - `States.tsx`: `Loading` (fill bars), `Empty` (a title, one line), `ErrorState` (a title, one line, `Try again ›`).
-- `BuffCard.tsx`: a buff: name, what it does, how many left, Play.
+- `BuffCard.tsx`: a buff: its gold icon, its name with what it does as its hover, its state, and Play or Cancel. Never a count.
 - `ProviderMark.tsx`: the sign-in provider's mark, `G` or `D` (Settings, the sign-up sheet).
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
 - `PlayerPhoto.tsx`: a player's media-day portrait credited `Photo: LCK` (`PHOTO_CREDIT`), or his team's crest without one (spec/13).

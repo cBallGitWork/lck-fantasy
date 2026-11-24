@@ -4,7 +4,7 @@
   align-items: stretch;
   gap: var(--s-6);
   padding: 0 var(--s-6);
-  background: var(--paper);
+  background: var(--band);
   border-bottom: var(--m-rule) solid var(--line);
 }
 .top-bar a {
@@ -27,7 +27,7 @@
 }
 .top-bar__item--on {
   color: var(--text);
-  font-weight: var(--w-bold);
+  font-weight: var(--w-semi);
   border-bottom-color: var(--text);
 }
 .top-bar__item--live::before {

@@ -1,9 +1,9 @@
 .outlined-key {
   font: inherit;
-  font-weight: var(--w-bold);
+  font-weight: var(--w-semi);
   padding: var(--s-2) var(--s-4);
   color: var(--text);
-  background: var(--paper);
+  background: none;
   border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }

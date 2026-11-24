@@ -1,6 +1,6 @@
 # Plate: the design standard
 
-**Contents:** [Frame](#frame) · [Spacing](#spacing) · [Type](#type) · [Colour](#colour) · [Parts](#parts) ·
+**Contents:** [The look](#the-look) · [Frame](#frame) · [Spacing](#spacing) · [Type](#type) · [Colour](#colour) · [Parts](#parts) ·
 [States](#states) · [Words](#words) · [Korean feel](#korean-feel) · [Never](#never) ·
 [The phone](#the-phone) · [Accessibility](#accessibility)
 
@@ -13,13 +13,25 @@ on hierarchy and spacing. On top of those sit Craig's own calls: FPL's structure
 shortest label, no explainer lines. The values are the ones the approved pictures already use most,
 tightened to a few.
 
+## The look
+
+Arena, the pick of the look trial (Craig, 19 Nov 2026; [approved/pick-team/](approved/pick-team/README.md)).
+The statement is the one Craig approved on 18 Nov 2026 ([foundations.md](foundations.md)), changed in
+the two places the pick changed it: the ground is the league's own colour, and one family sets both
+scripts.
+
+> A broadcast desk for a League league. Square, ruled and dense, on the league's own ground: navy for
+> the LCK, with gold where you act. It reads as League through roles, the Rift, sides and the way
+> stats are written, with none of Riot's artwork. Hangul is set as design, in IBM Plex Sans KR,
+> beside IBM Plex Sans. One object carries each screen.
+
 ## Frame
 
 - Drawn 1440 wide. Top bar, then the page: 32px each side, 24px above, 48px below.
 - Two columns: the main column, and a side column 360px wide, 32px apart. The side column is on
   the right on every page.
-- The right column is a stack of titled sections. Each opens with a 2px `--text` rule, never gold, and a 14px
-  title, its count or state after the title in `--mid` (Craig, 16 Nov 2026). On Points a tapped player opens a sheet, its game rows 32px.
+- The right column is a stack of titled sections. Each opens with a 2px `--text` rule, never gold, and a 16px
+  title, a size above its items (Craig, 19 Nov 2026), its count or state after the title in `--mid` (Craig, 16 Nov 2026). On Points a tapped player opens a sheet, its game rows 32px.
 - The first row of a screen's main table or picture shows above the fold at 1440 × 900.
 
 ## Spacing
@@ -30,47 +42,55 @@ tightened to a few.
 
 ## Type
 
-- Words in IBM Plex Sans KR, Korean included. Figures in IBM Plex Mono, so they line up.
-- Six sizes: 12, 14, 16, 20, 28, and 44 for the page's one key figure. A player's or coach's
-  card names him at 40/700, his hangul at 20, as a broadcast lower third (Craig, 15 Nov 2026). Nothing under 12, except
-  a tag's 11.
+- Words in IBM Plex Sans, hangul in IBM Plex Sans KR: one family for both scripts. Figures in IBM
+  Plex Mono, so they line up.
+- Seven sizes: 12, 14, 16, 20, 28, 40 for a card's name, and 44 for the page's one key figure. A player's or coach's
+  card names him at 40/700, his hangul at 20, as a broadcast lower third (Craig, 15 Nov 2026). Nothing under 12 on a desk;
+  a Rift tile's words are 11 on a phone (`approved/pick-team/`).
+- Each size has one job: 28 the page title, 20 a name (the wordmark, a card), 16 a panel's or
+  section's title, 14 what you read and press, 12 what sits under it (`approved/pick-team/`). A 28
+  or 20 head is tracked −0.01em.
 - Three weights: 400, 600, 700.
 - One page title, 28/700, with its hangul after it in 16/400 `--mid`: `Leagues 리그`. On Points
   and Home the title is your team's name: `Baron Steal FC 바론 스틸 FC`.
 
 ## Colour
 
-The built look is navy with gold, from `src/theme/tokens.ts`; each token below is the CSS property
-`var(--name)` the app draws with, and nothing outside `src/theme/` holds a colour (Craig, 16 Nov 2026).
+The LCK's navy is the ground, with gold where you act. The values are the LCK's, from
+`src/theme/league.ts` and `game.ts`; each token below is the CSS property `var(--name)` the app draws
+with, and nothing outside `src/theme/` holds a colour (Craig, 16 Nov 2026). The banner, the stage, the
+map and the tile keep their earlier values until their own pictures are redrawn.
 
 | Token | Value | Use |
 |---|---|---|
-| `--bg` | #010A13 | the page |
-| `--paper` | #0A1428 | panels and tables |
-| `--line` | #1E2D40 | table rules |
-| `--fill` | #14233A | a selected row, a toggle's ground |
-| `--text` | #F0E6D2 | words and figures; section rules, the selected thing, every emphasis |
-| `--mid` | #A09B8C | secondary text (6.5:1 on `--paper`, 5.8:1 on `--fill`) |
-| `--soft` | #5B5A56 | never text; dashed outlines and placeholders only |
-| `--ink` | #C89B3C | Hextech gold: the one main action's fill, and nothing else |
-| `--on-ink` | #010A13 | the words on that filled `--ink` key |
-| `--gold` | #F0D58C | the hangul on your team's banner, and only there |
-| `--gold-rule` | #785A28 | the banner's rule under that hangul |
-| `--rise` | #FF5C6C | a price rise, Korean red lightened for navy |
+| `--bg` | #0A1226 | the page |
+| `--paper` | #111B36 | panels and tables |
+| `--line` | #22305A | table rules, a panel's edge |
+| `--fill` | #18244A | a selected row, a toggle's ground |
+| `--band` | #050A18 | the darkest ground: the top bar |
+| `--text` | #EEF1F8 | words and figures; section rules, the selected thing, every emphasis |
+| `--mid` | #9AA6C8 | secondary text (7.0:1 on `--paper`, 6.2:1 on `--fill`) |
+| `--soft` | #4A5884 | never text; dashed outlines and placeholders only |
+| `--ink` | #E0B04A | gold, the one accent: the one main action's fill, the Captain's C, a buff's icon, the wordmark |
+| `--on-ink` | #0A1226 | the words on a filled `--ink` ground |
+| `--banner` | #F0D58C | the hangul on your team's banner, and only there |
+| `--banner-rule` | #785A28 | the banner's rule under that hangul |
+| `--rise` | #FF6B78 | a price rise, Korean red lightened for navy |
 | `--fall` | #6EA2FF | a price fall, Korean blue lightened for navy |
-| `--over` | #FF5C6C | the bank below zero, over the budget, with its − (Craig, 16 Nov 2026) |
-| `--teal` | #0AC8B9 | the second accent, sparingly: the live dot, the focus ring |
+| `--over` | #FF6B78 | the bank below zero, over the budget, with its − (Craig, 16 Nov 2026) |
+| `--signal` | #2BC4B5 | the second accent, teal, sparingly: the live dot, the focus ring |
 | `--stage` | #000508 | Live's dark stage |
-| `--stage-text` | #A09B8C | grey text on the stage |
-| `--dim` | rgba(1, 10, 19, 0.72) | the page behind a modal |
+| `--stage-text` | #9AA6C8 | grey text on the stage |
+| `--dim` | rgba(10, 18, 38, 0.72) | the page behind a modal |
 | `--map-ground`, `--map-river`, `--map-lane`, `--map-base`, `--map-tower` | #0B1A2C, #0D2B3E, #1A2C42, #22374F, #5B5A56 | the Rift map's ground, river, lanes, bases and towers |
 | `--tile-card`, `--tile-plate`, `--on-tile-plate` | rgba(240, 230, 210, 0.12), #FFFFFF, #010A13 | a Rift tile's faint card, its white name plate and the words on it (Craig, 16 Nov 2026) |
 
-- Gold is for two things only: the one main action on a screen (`--ink`) and the banner's hangul
-  (`--gold`). Section rules, tabs, selected borders, links, marks, tags and a rank's move (▲/▼) are
-  `--text` or grey (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
-- Two set exceptions: the Flol wordmark stays gold, and Overall's tier shield is a cream `--text`
-  fill, one colour for every tier (Craig, 16 Nov 2026).
+- Gold is the one accent, and on these alone: the one main action on a screen, the only filled key; the Captain's
+  C; his `✓ Captain` state, edged and never filled; a buff's icon (Craig, 19 Nov 2026); the Flol
+  wordmark; all `--ink`. The banner's hangul is its own gold (`--banner`). Section rules, tabs,
+  selected borders, links, tags, a page title's hangul and a rank's move (▲/▼) are `--text` or grey
+  (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
+- Overall's tier shield is a `--text` fill, one colour for every tier (Craig, 16 Nov 2026).
 - Colour is spent on meaning only, never to decorate: red and blue are prices and the bank only; a rank's move
   stays `--text` (Craig, 16 Nov 2026).
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
@@ -86,13 +106,13 @@ Each part is drawn one way on every screen.
 - **View toggle:** butted keys on `--fill`, the chosen one on `--paper`: `Rift view | Card view`.
 - **Tabs** (a page's or a card's sections): words in a row, the chosen one `--text` with a 2px
   `--text` underline (Craig, 16 Nov 2026).
-- **Top bar**, the same on every screen: `Flol`, Home, Pick Team, Transfers, Points, Leagues, Stats,
+- **Top bar**, on `--band`, the same on every screen: `Flol`, Home, Pick Team, Transfers, Points, Leagues, Stats,
   LCK, `● Live` (its dot always shown); at the right `presented by [Sponsor]` and the account menu
   `Baron Steal FC ▾`, or `Log in ›` for a visitor, whose bar shows only Stats and LCK (Craig,
   16 Nov 2026).
 - **A link** ends with `›`, in `--text` (Craig, 16 Nov 2026), and names where it goes: `Full stats ›`. Not underlined, save
   a link inside a sentence. A link leaving Flol ends with `↗`.
-- **Deadline**, one way everywhere: `Deadline Wed 7:45am` and the countdown `9h 45m`.
+- **Deadline**, one way everywhere: `Deadline Wed 7:45am` and the countdown `9h 45m`, a figure in `--mid` with no box round it (Craig, 19 Nov 2026).
 - **Times:** the manager's own only, with no zone, in am/pm: lower case, no space, no leading
   zero (`8:00am`, `10:30pm`) (Craig, 19 Nov 2026). Game clocks (`12:04`) stay as they are. A column
   of times has a head.
@@ -109,8 +129,12 @@ Each part is drawn one way on every screen.
   Support, Flex, Coach), then the bench bar.
 - **Wide table** (Stats): the head and the name column stick; the table scrolls under them.
 - **Long names** end in `…` at their column's width; the full name shows on hover and in the panel.
+- **Panel** (Pick Team's buffs, bench and Save, a tapped player's card, the week's series): on
+  `--paper` with a 1px `--line` round it, a 2px `--text` rule on top, its title 16/700 and its
+  contents 16 in. One treatment for every panel; a screen's side sections become panels as it is
+  redrawn.
 - **Marks:** C is round, and so are the live dot, your-player dot (8px, after the name)
-  and a radio button. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
+  and a radio button. C is gold (`--ink`), its letter `--on-ink`. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
 - **Your players** are marked by that dot, on every screen.
 - **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
   ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with
@@ -136,7 +160,7 @@ Each part is drawn one way on every screen.
 Every screen part is drawn for each state it can be in.
 
 - **Hover:** a row gets `--fill`; a link or key its 1px `--text` underline, 4px below (`.hover-line`), or edge (Craig, 16 Nov 2026).
-- **Focus:** a 2px `--teal` ring, always shown (Craig, 16 Nov 2026).
+- **Focus:** a 2px `--signal` ring, always shown (Craig, 16 Nov 2026).
 - **Disabled:** one look for every key, `.key-off`: text `--mid` on `--fill`, no edge, with the reason beside it (`No changes`).
 - **Loading:** the layout drawn with `--fill` bars where figures go; no spinners.
 - **Empty:** a title and at most one short line (`No moves yet`).
@@ -164,7 +188,7 @@ Everywhere:
   when its label says it. Flol's own rules (Captain ×1.5, the team cap) are named where they apply.
 - An empty state is a title and at most one short line.
 - Absence is `—`, never `0`.
-- Money as `₩18.5m` (spec/02). Times in the viewer's own time, as `Sat 22:00`.
+- Money as `₩18.5m` (spec/02). Times in the viewer's own time, as `Sat 10:00pm`.
 - One name per thing on every screen: Captain, never Carry; Price changes, never Patch update; Cheer and Jeer, never Truck;
   `Week 4`, never Gameweek.
 - No emoji, save the birthday cake (spec/13).
@@ -189,10 +213,11 @@ Everywhere:
 
 ## The phone
 
-Not drawn yet. It gets its own round: one column, the side column below the main, targets 44px.
+Drawn for Pick Team alone (`approved/pick-team/390.png`; its rules are under Parts, The Rift). Every
+other screen gets its own round: one column, the side column below the main, targets 44px.
 
 ## Accessibility
 
 - Text 4.5:1 against its ground, large text and marks 3:1.
 - Every target at least 24px on the desk, 44px on the phone.
-- Focus always shows: a 2px `--teal` ring (Craig, 16 Nov 2026).
+- Focus always shows: a 2px `--signal` ring (Craig, 16 Nov 2026).

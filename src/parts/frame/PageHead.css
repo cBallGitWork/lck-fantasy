@@ -10,6 +10,7 @@
   font-size: var(--size-title);
   font-weight: var(--w-bold);
   line-height: var(--lh-snug);
+  letter-spacing: var(--track-head);
 }
 .page-head__hangul {
   color: var(--mid);

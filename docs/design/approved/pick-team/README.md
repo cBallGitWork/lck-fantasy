@@ -4,7 +4,7 @@ Where a manager sets his starters, bench order and Captain, and plays a buff, be
 
 **Approved:** Craig, 19 Nov 2026, as the pick of the look trial ([foundations.md](../../foundations.md), The trial fills them). Six pictures were drawn blind, lettered A to F; two full panels put F, Arena, first and the ringer last; Craig picked "f", then asked "so build this?". The trial, every round's findings and his calls are in [proposals/2026-11-19-trial/](../../proposals/2026-11-19-trial/panel-findings.md). Names, teams and numbers are a made-up Split 1 Week 4.
 
-Arena is the first picture in the new look: the LCK's navy as the ground, IBM Plex for Latin, Hangul and figures, gold where you act. It binds this screen's layout, content and order now. The look's colours and type go into [plate.md](../../plate.md) and the token layers next (foundations.md, step 5); until then plate.md's colour and type sections still describe the old look.
+Arena is the first picture in the new look: the LCK's navy as the ground, IBM Plex for Latin, Hangul and figures, gold where you act. It binds this screen's layout, content and order now. The look's colours and type are in [plate.md](../../plate.md) and the token layers (`src/theme/`).
 
 | File | Shows |
 |---|---|

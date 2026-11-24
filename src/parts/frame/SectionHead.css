@@ -5,7 +5,7 @@
   padding-top: var(--s-2);
   margin-bottom: var(--s-2);
   border-top: var(--m-rule-heavy) solid var(--text);
-  font-size: var(--size-body);
+  font-size: var(--size-lead);
   font-weight: var(--w-bold);
 }
 .section-head__note {

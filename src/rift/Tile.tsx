@@ -46,7 +46,7 @@ interface TileProps {
 const PhoneRift = createContext(false);
 
 /** A point on the square Rift as a share of it, so the tiles stay on their lanes at any width. */
-const share = (v: number) => `${(v / PLAN) * 100}%`;
+const ofRift = (v: number) => `${(v / PLAN) * 100}%`;
 
 /** The yellow warning triangle, as the picture draws it. */
 function NewsFlag({ flag }: { flag: string }) {
@@ -73,7 +73,7 @@ export function Tile(p: TileProps) {
   return (
     <div
       className={cx("tile", !point && "tile--bench", p.selected && "tile--selected", p.state && `tile--${p.state}`, p.empty && "tile--empty")}
-      style={point && { left: share(point[0]), top: share(point[1]) }}
+      style={point && { left: ofRift(point[0]), top: ofRift(point[1]) }}
       {...selectable(p.onSelect, p.selected)}
     >
       {p.price !== undefined && <div className="tile__price num">{p.price}</div>}

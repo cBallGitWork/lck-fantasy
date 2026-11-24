@@ -2,7 +2,7 @@ import type { Go } from "../../paths";
 import { score, type Score } from "../text/figures";
 import { GoLink } from "../controls/GoLink";
 import "./SeriesList.css";
-import { Crest } from "./Crest";
+import { TeamBar } from "./TeamBar";
 import { LiveTag, NotFinalTag } from "./Tag";
 import { Time } from "./Time";
 
@@ -45,11 +45,11 @@ export function SeriesList({ series, go }: { series: readonly SeriesRow[]; go?: 
     <div className="series-list">
       {series.map((s) => {
         const teams = (
-          <span className="series-list__teams">
-            <Crest team={s.home} size="crestSmall" beside />
-            <b>{s.home}</b> v <b>{s.away}</b>
-            <Crest team={s.away} size="crestSmall" beside />
-          </span>
+          <>
+            <TeamBar team={s.home} />
+            <b>{s.home}</b> v <TeamBar team={s.away} />
+            <b>{s.away}</b>
+          </>
         );
         return (
           <div key={s.id} className="series-list__row">

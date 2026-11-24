@@ -1,4 +1,4 @@
-import { Crest, cx, Empty, formatWon, GoLink, Menu, pct, SideSection } from "../../parts";
+import { TeamBar, cx, Empty, formatWon, GoLink, Menu, pct, SideSection } from "../../parts";
 import { cardGo } from "../../paths";
 import { PERSON_ROLES, ROLE_NAME, RoleIcon } from "../../rift";
 import { ALL, listRows, nextAgainst, outOf, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
@@ -99,8 +99,8 @@ function ListRow({ p, next, onBuy }: { p: ListPlayer; next: string; onBuy: (p: L
       </td>
       <td className="transfers__name" title={p.name}>
         <GoLink go={cardGo(p.id, p.role === "coach")}>
-          <b>{p.name}</b> <Crest team={p.team} size="crestSmall" beside />
-          <span className="unseen">{p.team}</span>
+          <b>{p.name}</b> <TeamBar team={p.team} />
+          {p.team}
         </GoLink>
       </td>
       <td className="transfers__num num">{formatWon(p.priceWon)}</td>

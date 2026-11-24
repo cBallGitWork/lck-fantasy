@@ -10,8 +10,3 @@
 .series-list__result {
   text-align: right;
 }
-.series-list__teams {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-}

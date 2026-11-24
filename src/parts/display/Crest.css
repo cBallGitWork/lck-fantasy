@@ -10,9 +10,3 @@
   border-radius: 50%;
   border: var(--m-rule) dashed var(--soft);
 }
-/* Beside its team's code, in the line. */
-.crest--beside {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: var(--s-1);
-}

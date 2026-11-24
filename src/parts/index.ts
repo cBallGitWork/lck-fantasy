@@ -2,6 +2,7 @@
 export { AppFrame, LiveRegion, useAnnounce, useAnnounceChange } from "./frame/AppFrame";
 export { BuffCard } from "./display/BuffCard";
 export { Crest } from "./display/Crest";
+export { TeamBar } from "./display/TeamBar";
 export { Columns } from "./frame/Columns";
 export { cx } from "./util/cx";
 export { Deadline } from "./display/Deadline";

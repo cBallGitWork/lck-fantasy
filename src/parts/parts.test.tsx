@@ -5,6 +5,7 @@ import { html, text } from "../testing/render";
 import {
   BuffCard,
   Crest,
+  TeamBar,
   Deadline,
   Empty,
   ErrorState,
@@ -267,10 +268,12 @@ test("every LCK team has its crest; a team without one shows its code in a dashe
   expect(text(<Crest team="XYZ" />)).toBe("XYZ");
 });
 
-test("a crest beside its team's code sits in the line and is skipped by a screen reader, as the code names the team", () => {
-  const beside = html(<Crest team="T1" size="crestSmall" beside />);
-  expect(beside).toContain('class="crest crest--beside"');
-  expect(beside).toContain('alt=""');
+test("a team's bar is its kit's first colour that shows on the ground, unseen by a screen reader; no bar for a team with no kit", () => {
+  expect(html(<TeamBar team="T1" />)).toBe('<i class="team-bar" style="background:#E2012D" aria-hidden="true"></i>');
+  // GEN's body is black and KRX's navy: each takes its kit's next colour.
+  expect(html(<TeamBar team="GEN" />)).toContain("background:#AA8A00");
+  expect(html(<TeamBar team="KRX" />)).toContain("background:#E4007F");
+  expect(html(<TeamBar team="XYZ" />)).toBe("");
 });
 
 test("the series list shows scores with their state, and times for the next", () => {

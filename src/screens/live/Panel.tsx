@@ -1,4 +1,4 @@
-import { Crest, gameNo, GoLink, LinkGo, LiveTag, NONE, NotFinalTag, SectionHead } from "../../parts";
+import { TeamBar, gameNo, GoLink, LinkGo, LiveTag, NONE, NotFinalTag, SectionHead } from "../../parts";
 import { cardGo, PATHS, profileGo } from "../../paths";
 import { MarkBadge, RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
@@ -25,7 +25,7 @@ function PlayerRow({ player }: { player: PanelPlayer }) {
         <span className="live__name">
           {player.name}
           <small className="live__team quiet">
-            <Crest team={player.team} size="crestSmall" beside />
+            <TeamBar team={player.team} />
             {player.team}
           </small>
           {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}
@@ -44,7 +44,7 @@ function RestRow({ player }: { player: RestPlayer }) {
         <RoleIcon role={player.role} className="live__rest-icon" />
         {player.name}
         <small className="live__team quiet">
-            <Crest team={player.team} size="crestSmall" beside />
+            <TeamBar team={player.team} />
             {player.team}
           </small>
         {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}

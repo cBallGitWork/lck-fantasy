@@ -1,4 +1,4 @@
-import { Crest, cx, FinalTag, LiveTag, Menu, score as scoreText, Time } from "../../parts";
+import { TeamBar, cx, FinalTag, LiveTag, Menu, score as scoreText, Time } from "../../parts";
 import { STREAM_DOT, streamLabel } from "../../fixtures/streams";
 import type { FinalBug, LiveBug, NextSeries, Picker } from "./types";
 import { dot, WORDS } from "./words";
@@ -43,13 +43,13 @@ function Score({ home, away, score }: { home: string; away: string; score: reado
   return (
     <span className="live__bug-score">
       <span className="live__bug-team">
-        <Crest team={home} size="crestRow" beside />
+        <TeamBar team={home} />
         {home}
       </span>
       <span className="live__bug-figure num">{scoreText(score)}</span>
       <span className="live__bug-team">
+        <TeamBar team={away} />
         {away}
-        <Crest team={away} size="crestRow" beside />
       </span>
     </span>
   );

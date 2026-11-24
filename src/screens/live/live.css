@@ -25,7 +25,6 @@
 .live__bug-team {
   display: flex;
   align-items: center;
-  gap: var(--s-2);
   padding: 0 var(--s-4);
   background: var(--text);
   color: var(--bg);
@@ -70,7 +69,7 @@
   border: var(--m-rule) solid var(--stage-text);
   background: none;
   color: var(--text);
-  font: var(--w-regular) var(--size-body) var(--font-sans);
+  font: var(--w-regular) var(--size-small) var(--font-sans);
   cursor: pointer;
 }
 .live__chip-platform {

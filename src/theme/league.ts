@@ -53,7 +53,7 @@ const lck: League = {
     line: "#22305A",
     /** A selected row, a toggle's ground. */
     fill: "#18244A",
-    /** Gold, where you act: the one filled key, the Captain's C, a buff's icon, the wordmark. */
+    /** Gold, the one accent: the one filled key, the Captain's C, a buff's icon, the wordmark. */
     ink: "#E0B04A",
     /** Text on a filled `ink` ground. */
     onInk: "#0A1226",

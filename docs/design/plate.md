@@ -44,9 +44,9 @@ scripts.
 
 - Words in IBM Plex Sans, hangul in IBM Plex Sans KR: one family for both scripts. Figures in IBM
   Plex Mono, so they line up.
-- Six sizes: 12, 14, 16, 20, 28, and 44 for the page's one key figure. A player's or coach's
-  card names him at 40/700, his hangul at 20, as a broadcast lower third (Craig, 15 Nov 2026). Nothing under 12, except
-  a tag's 11.
+- Seven sizes: 12, 14, 16, 20, 28, 40 for a card's name, and 44 for the page's one key figure. A player's or coach's
+  card names him at 40/700, his hangul at 20, as a broadcast lower third (Craig, 15 Nov 2026). Nothing under 12 on a desk;
+  a Rift tile's words are 11 on a phone (`approved/pick-team/`).
 - Each size has one job: 28 the page title, 20 a name (the wordmark, a card), 16 a panel's or
   section's title, 14 what you read and press, 12 what sits under it (`approved/pick-team/`). A 28
   or 20 head is tracked −0.01em.
@@ -71,7 +71,7 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 | `--text` | #EEF1F8 | words and figures; section rules, the selected thing, every emphasis |
 | `--mid` | #9AA6C8 | secondary text (7.0:1 on `--paper`, 6.2:1 on `--fill`) |
 | `--soft` | #4A5884 | never text; dashed outlines and placeholders only |
-| `--ink` | #E0B04A | gold, where you act: the one main action's fill, the Captain's C, a buff's icon, the wordmark |
+| `--ink` | #E0B04A | gold, the one accent: the one main action's fill, the Captain's C, a buff's icon, the wordmark |
 | `--on-ink` | #0A1226 | the words on a filled `--ink` ground |
 | `--banner` | #F0D58C | the hangul on your team's banner, and only there |
 | `--banner-rule` | #785A28 | the banner's rule under that hangul |
@@ -85,7 +85,7 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 | `--map-ground`, `--map-river`, `--map-lane`, `--map-base`, `--map-tower` | #0B1A2C, #0D2B3E, #1A2C42, #22374F, #5B5A56 | the Rift map's ground, river, lanes, bases and towers |
 | `--tile-card`, `--tile-plate`, `--on-tile-plate` | rgba(240, 230, 210, 0.12), #FFFFFF, #010A13 | a Rift tile's faint card, its white name plate and the words on it (Craig, 16 Nov 2026) |
 
-- Gold is where you act, and on nothing else: the one main action on a screen, the only filled key; the Captain's
+- Gold is the one accent, and on these alone: the one main action on a screen, the only filled key; the Captain's
   C; his `✓ Captain` state, edged and never filled; a buff's icon (Craig, 19 Nov 2026); the Flol
   wordmark; all `--ink`. The banner's hangul is its own gold (`--banner`). Section rules, tabs,
   selected borders, links, tags, a page title's hangul and a rank's move (▲/▼) are `--text` or grey
@@ -213,7 +213,8 @@ Everywhere:
 
 ## The phone
 
-Not drawn yet. It gets its own round: one column, the side column below the main, targets 44px.
+Drawn for Pick Team alone (`approved/pick-team/390.png`; its rules are under Parts, The Rift). Every
+other screen gets its own round: one column, the side column below the main, targets 44px.
 
 ## Accessibility
 

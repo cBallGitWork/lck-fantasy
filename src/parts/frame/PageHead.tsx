@@ -75,10 +75,11 @@ export function PageHead({
           {figures.length > 0 && (
             <span className="page-head__figures">
               {figures.map((f) => {
+                // One span, so the link's flex keeps the space between the word and the figure.
                 const body = (
-                  <>
+                  <span>
                     {f.label} <b className="num">{f.value}</b>
-                  </>
+                  </span>
                 );
                 return f.go ? (
                   <GoLink key={f.label} className="page-head__fig page-head__fig--link" go={f.go}>

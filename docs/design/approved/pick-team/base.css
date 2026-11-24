@@ -1,0 +1,175 @@
+/* The trial's shared frame: where things sit, drawn only from tokens. Each direction sets the tokens
+   in its own page and adds what makes it that direction. Plate spacing: 4 8 12 16 24 32 48. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body { background: var(--bg); color: var(--text); font: 400 14px/1.4 var(--sans); -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+table { border-collapse: collapse; width: 100%; }
+.fig { font-family: var(--fig); font-variant-numeric: tabular-nums; }
+.mid { color: var(--mid); }
+.small { font-size: 12px; }
+.rise { color: var(--rise); }
+[lang="ko"] { font-family: var(--ko); }
+
+/* Top bar */
+.top { display: flex; align-items: center; gap: 24px; height: 56px; padding: 0 32px; background: var(--top-bg, var(--paper)); border-bottom: 1px solid var(--line); }
+.wordmark { font: 700 20px/1 var(--head); color: var(--wordmark); }
+.nav { display: flex; gap: 24px; height: 100%; }
+.nav a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; }
+.nav a.is-here { color: var(--text); font-weight: 600; border-bottom-color: var(--text); }
+.nav__live .dot, .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--signal); margin-right: 8px; }
+.top__gap { flex: 1; }
+.sponsor-top { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
+.placeholder { display: inline-flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+.sponsor-top .placeholder { width: 120px; height: 24px; }
+.account { font-weight: 600; }
+.top__menu { display: none; }
+
+/* Page */
+.page { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 32px; padding: 24px 32px 48px; }
+.main { min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.title { font: 700 28px/1.2 var(--head); letter-spacing: var(--head-track, 0); }
+.title__ko { font-family: var(--ko); }
+.head__week { color: var(--mid); }
+
+/* Buffs */
+.buffs { display: grid; grid-template-columns: repeat(3, 1fr); }
+.head .views { margin-left: auto; align-self: center; }
+/* A buff is one tile, the tile its own key: name and what is left; what it does is its hover (spec/12, Words). */
+.buff { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; min-height: 44px; padding: 8px 12px; text-align: left; cursor: pointer; }
+.buff__name { font: 600 14px/1.3 var(--sans); }
+.buff__icon { display: none; }
+.buff__left { color: var(--mid); font-size: 12px; white-space: nowrap; }
+.key { display: inline-flex; align-items: center; justify-content: center; min-height: 24px; padding: 0 12px; border: 1px solid var(--text); font-weight: 600; font-size: 12px; }
+.key.is-on { background: none; color: var(--text); }
+/* Off, yet still legible: the label in full ink, the key only outlined. */
+.key-off { background: none; color: var(--text); border: 1px solid var(--line-strong, var(--line)); opacity: 0.6; }
+.link { font-weight: 600; }
+
+/* The object: views, Rift, bench */
+.object { display: flex; flex-direction: column; gap: 12px; }
+.views { display: flex; align-self: flex-start; background: var(--fill); }
+.views button { padding: 4px 16px; color: var(--mid); font-size: 12px; font-weight: 600; min-height: 32px; }
+.views .is-here { background: var(--paper); color: var(--text); outline: 1px solid var(--line); }
+/* The whole Rift on the first screen: as wide as the column allows, never taller than the window under the page's head. Tiles size with it. */
+.rift { position: relative; width: min(100%, var(--rift), var(--rift-fit, calc(100svh - var(--rift-top, 268px)))); aspect-ratio: 1 / 1; align-self: center; container-type: inline-size; }
+.rift .tile { width: 15cqw; }
+.rift .tile__card { height: 13cqw; }
+.rift .shirt { width: 10cqw; height: 10cqw; }
+.squad-foot { display: flex; gap: 0; align-items: stretch; background: var(--bench-bg, var(--paper)); }
+.squad-foot .bench, .squad-foot .bar { background: transparent; border: 0; }
+/* The Rift on a ground of its own, the jungle's darkest green, never the page's paper (Craig, 19 Nov 2026). */
+.rift-stage { background: var(--rift-ground, #142219); padding: 16px; display: flex; justify-content: center; }
+.squad-foot .bench__spot + .bench__spot { margin-left: 0; }
+.squad-foot .bench { flex: 1; }
+/* The bench centred in its band, at the Rift tiles' size, so no hole opens beside Save. */
+.squad-foot .bench__spot:first-of-type { margin-left: auto; }
+.squad-foot .bench__spot:last-of-type { margin-right: auto; }
+.squad-foot .bench .tile { width: calc(var(--rift-w, 632px) * 0.15); }
+.squad-foot .bench .tile__card { height: calc(var(--rift-w, 632px) * 0.13); }
+.squad-foot .bench .shirt { width: calc(var(--rift-w, 632px) * 0.10); height: calc(var(--rift-w, 632px) * 0.10); }
+.tile__flag { background: none !important; display: flex; align-items: center; justify-content: center; }
+.flag-icon { display: block; }
+.squad-foot .bar { position: static; width: 340px; display: grid; grid-template-columns: auto 1fr; align-content: center; gap: 8px 12px; padding: 12px 16px; }
+.squad-foot .bar .deadline { grid-column: 1 / -1; }
+.squad-foot .bar .bar__gap { display: none; }
+.squad-foot .bar .save { grid-column: 1 / -1; }
+/* Reset sits beside the state it clears. */
+.squad-foot .bar .bar__reset { justify-self: start; }
+.map { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rift__spot { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); }
+
+/* A tile: shirt on its card, name plate, band */
+.tile { display: flex; flex-direction: column; width: var(--tile-w); text-align: center; }
+.tile__card { position: relative; display: flex; justify-content: center; align-items: flex-end; height: var(--tile-card-h); background: var(--tile-card); border-radius: 6px 6px 0 0; padding-top: 12px; }
+.shirt { width: 96px; height: 96px; display: block; margin-bottom: -4px; }
+.crest { width: 40px; height: 40px; display: block; }
+.tile__label { position: absolute; top: 0; left: 0; right: 0; padding: 5px 0; background: var(--band); font: 700 13px/1 var(--sans); color: var(--on-band); border-radius: 6px 6px 0 0; }
+.tile__c { position: absolute; top: 28px; right: 6px; width: 30px; height: 30px; border-radius: 50%; background: var(--c-bg); color: var(--c-text); border: 2px solid var(--c-text); font: 700 16px/26px var(--sans); }
+.tile__flag { position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; background: var(--flag-bg); color: var(--flag-text); font: 700 12px/20px var(--sans); }
+.tile__plate { display: block; background: var(--plate); color: var(--on-plate); font: 700 13px/24px var(--sans); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px; }
+.tile__team { font-weight: 400; }
+.tile__band { display: block; background: var(--band); color: var(--on-band); font: 400 12px/20px var(--fig); }
+.tile.is-selected { outline: 2px solid var(--select); outline-offset: 2px; }
+.tile.is-option { outline: 2px dashed var(--select); outline-offset: 2px; }
+.tile.is-dim { opacity: 0.7; filter: saturate(0.3) brightness(0.85); }
+
+.bench { display: flex; align-items: center; gap: 24px; padding: 12px 16px; background: var(--bench-bg, var(--paper)); border: 1px solid var(--line); }
+.bench__title { width: 56px; font-weight: 600; }
+.bench__spot { display: flex; flex-direction: column; gap: 4px; align-items: center; }
+.bench__order { font-size: 12px; color: var(--mid); }
+
+/* The bar with Save, stuck to the foot */
+.bar { position: sticky; bottom: 0; display: flex; align-items: center; gap: 16px; min-height: 56px; padding: 8px 16px; background: var(--paper); border: 1px solid var(--line-strong, var(--line)); z-index: 2; }
+.bar__reset { color: var(--mid); }
+.bar__gap { flex: 1; }
+.deadline { display: inline-flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+.deadline__word { color: var(--mid); }
+.deadline__count { border: 1px solid var(--text); padding: 0 8px; font-weight: 600; }
+.save { min-height: 40px; padding: 0 24px; font-weight: 700; font-size: 14px; }
+.save:not(:disabled) { background: var(--gold); color: var(--on-gold); }
+
+/* Side column: the tapped player's card, the week's series */
+.side { display: flex; flex-direction: column; gap: 24px; }
+.card { border-top: 2px solid var(--text); background: var(--paper); }
+.card__head { display: flex; gap: 12px; align-items: center; padding: 16px; }
+.card__who { flex: 1; min-width: 0; }
+.card__name { font: 700 20px/1.2 var(--head); letter-spacing: var(--head-track, 0); }
+.card__meta { color: var(--mid); font-size: 12px; }
+.card__close { align-self: flex-start; color: var(--mid); width: 24px; height: 24px; }
+.card__rows > div { display: flex; justify-content: space-between; align-items: center; min-height: var(--row); padding: 0 16px; border-top: 1px solid var(--line); }
+.card__rows dt { color: var(--mid); }
+/* Each stat's rank in its own column; the group it ranks in said once, over the column (spec/12: 2nd of 10 mids). */
+.card__rows .card__ranks { min-height: 0; padding-top: 8px; border-top: 0; }
+.card__rank { display: inline-block; width: 40px; margin-left: 16px; text-align: right; color: var(--mid); }
+.card__last3 { display: flex; gap: 16px; }
+.card__keys { display: flex; align-items: center; gap: 24px; padding: 16px; border-top: 1px solid var(--line); }
+.card__keys .key { min-height: 40px; flex: 1; font-size: 14px; }
+
+.side__title { display: flex; justify-content: space-between; align-items: baseline; font: 600 14px/1.3 var(--sans); padding: 8px 0; border-top: 2px solid var(--text); }
+.side__title .mid { font-weight: 400; font-size: 12px; }
+.series td { height: var(--row); border-bottom: 1px solid var(--line); white-space: nowrap; }
+.series__day { width: 40px; color: var(--mid); font-size: 12px; }
+.series__local { text-align: right; }
+.sponsor-side { height: 112px; }
+.foot { padding: 24px 32px 48px; max-width: 760px; }
+
+/* The phone: one column, the side below the main, targets 44 */
+@media (max-width: 600px) {
+  .top { padding: 0 16px; gap: 16px; overflow: hidden; }
+  .nav, .sponsor-top { display: none; }
+  .top__menu { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+  .page { grid-template-columns: 1fr; padding: 16px 16px 48px; gap: 24px; }
+  .buff { flex-direction: column; justify-content: center; gap: 2px; padding: 8px; }
+  .buff { padding: 8px 6px; }
+  .buff__name { font-size: 12px; line-height: 1.2; white-space: nowrap; }
+  .buff__left { font-size: 11px; }
+  .head .views { margin-left: 0; }
+  .squad-foot { display: contents; }
+  .squad-foot .bar { position: sticky; width: auto; display: flex; padding: 8px 12px; margin: 0; }
+  .squad-foot .bar .save { flex: 1; }
+  .rift { width: 100%; }
+  .tile, .rift .tile, .squad-foot .bench .tile { width: var(--tile-w-phone); }
+  .tile__card, .rift .tile__card, .squad-foot .bench .tile__card { height: 60px; padding-top: 14px; }
+  .shirt, .rift .shirt, .squad-foot .bench .shirt { width: 44px; height: 44px; }
+  .tile__plate { font-size: 11px; line-height: 18px; }
+  .tile__band { font-size: 10px; line-height: 16px; }
+  .tile__label { font-size: 10px; padding: 3px 0; }
+  .rift__spot { left: var(--px); top: var(--py); }
+  .tile__flag { width: 16px; height: 16px; font-size: 10px; line-height: 16px; top: 2px; }
+  .tile__c { width: 22px; height: 22px; font-size: 12px; line-height: 18px; top: 18px; right: 2px; }
+  .bench { gap: 16px; padding: 12px; }
+  .bench__title { width: auto; }
+  .bar { flex-wrap: wrap; gap: 8px 12px; padding: 8px 12px; }
+  .bar__gap { display: none; }
+  .bar .deadline { order: -1; flex-basis: 100%; }
+  .save { flex: 1; min-height: 44px; }
+  .bar__reset { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; }
+  .bar { margin: 0 -16px; }
+  .card__close { width: 44px; height: 44px; }
+  /* The deadline and Save stay stuck to the foot of the screen; the tapped player's card sits in the page, under the bench (Craig, 19 Nov 2026: a sticky Save bar over a sheet). */
+  .squad-foot .bar { bottom: 0; z-index: 5; background: var(--paper); border: 0; border-top: 1px solid var(--line-strong, var(--line)); }
+  .views button { min-height: 44px; }
+}

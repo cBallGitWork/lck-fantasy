@@ -123,7 +123,6 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 .buff.off { border-color: var(--fill); background: var(--fill); color: var(--mid); } .buff.off b { color: var(--mid); font-weight: 600; }
 .wk div { display: grid; grid-template-columns: 32px 1fr auto; gap: 8px; padding: 8px 0; border-bottom: 1px solid var(--fill); align-items: center; }
 .wk .d { color: var(--mid); font-size: 12px; } .wk .t { text-align: right; font-family: "IBM Plex Mono", monospace; }
-.wk .t .kst { color: var(--mid); font-size: 12px; }
 .ad { height: 112px; } .adline { font-size: 12px; color: var(--mid); margin-top: 8px; }
 </style></head>
 <body>
@@ -150,7 +149,7 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 <aside>
   <section class="card" id="card"></section>
   <section><h2>Buffs</h2><div class="buffs" id="buffs"></div></section>
-  <section><h2>This week's series <span>your time · KST</span></h2><div class="wk" id="week"></div></section>
+  <section><h2>This week's series </h2><div class="wk" id="week"></div></section>
   <div class="ad ph">Sponsor</div><div class="adline">All sponsors are made up.</div>
 </aside>
 </div>
@@ -162,11 +161,11 @@ aside h2 span { font-weight: 400; color: var(--mid); font-size: 12px; }
 // ?v=rift (default) | cards | swap
 const V = new URLSearchParams(location.search).get("v") || "rift";
 const W4 = [
-  ["Wed","08:00","17:00","HLE","DK"],["Wed","10:30","19:30","T1","KT"],
-  ["Thu","08:00","17:00","GEN","BRO"],["Thu","10:30","19:30","NS","DNS"],
-  ["Fri","08:00","17:00","KRX","BFX"],["Fri","10:30","19:30","DK","KT"],
-  ["Sat","08:00","17:00","T1","GEN"],["Sat","10:30","19:30","HLE","NS"],
-  ["Sun","08:00","17:00","BRO","BFX"],["Sun","10:30","19:30","KRX","DNS"],
+  ["Wed","8:00am","5:00pm","HLE","DK"],["Wed","10:30am","7:30pm","T1","KT"],
+  ["Thu","8:00am","5:00pm","GEN","BRO"],["Thu","10:30am","7:30pm","NS","DNS"],
+  ["Fri","8:00am","5:00pm","KRX","BFX"],["Fri","10:30am","7:30pm","DK","KT"],
+  ["Sat","8:00am","5:00pm","T1","GEN"],["Sat","10:30am","7:30pm","HLE","NS"],
+  ["Sun","8:00am","5:00pm","BRO","BFX"],["Sun","10:30am","7:30pm","KRX","DNS"],
 ];
 const SQ = [
   { slot: "top", name: "Zeus", team: "HLE", price: "16.0", form: "14.0" },
@@ -185,7 +184,7 @@ const by = (s) => SQ.find((p) => p.slot === s);
 const games = (t) => W4.filter((s) => s[3] === t || s[4] === t).map((s) => ({ opp: s[3] === t ? s[4] : s[3], day: s[0], time: s[1] }));
 const $ = (id) => document.getElementById(id);
 const SWAP = V === "swap";
-const DL = `<span class="dl2">Deadline <b>Wed 07:45</b>16:45 KST<span class="cd">9h 45m</span></span>`;
+const DL = `<span class="dl2">Deadline <b>Wed 7:45am</b><span class="cd">9h 45m</span></span>`;
 const SEL = SWAP ? "Siwoo" : "Faker";
 const FIT = SWAP ? new Set(["Bdd", "Cuzz"]) : new Set(); // the Flex takes any role (spec/01)
 
@@ -247,7 +246,7 @@ $("board").innerHTML = V === "cards" ? cards() : rift();
 
 // the tapped player's card (spec/12, The player card)
 const LOC = Object.fromEntries(W4.map((s) => [s[0] + s[1], s[2]]));
-const nx = (p) => games(p.team).map((x) => `<div><span>${x.day} ${x.time} <span class="k">${LOC[x.day + x.time]} KST</span></span><span>v ${x.opp} · Bo3</span></div>`).join("");
+const nx = (p) => games(p.team).map((x) => `<div><span>${x.day} ${x.time} </span><span>v ${x.opp} · Bo3</span></div>`).join("");
 const row = (k, v) => `<div><span class="k">${k}</span><span>${v}</span></div>`;
 $("card").innerHTML = SWAP
   ? `<header><svg width="40" height="36"><use href="#shirt"/></svg><div><b>Siwoo</b><span class="s">DK · Flex · plays Top · 7.5억</span></div><span class="x">✕</span></header>
@@ -269,7 +268,7 @@ const tb = (n) => buff(n, SWAP ? "off" : "", "1 left", SWAP ? "" : `<a>Transfers
 $("buffs").innerHTML = bb + dc + tb("Remake") + tb("Limitless");
 
 const MINE = new Set(SQ.map((p) => p.team));
-$("week").innerHTML = W4.map((s) => `<div><span class="d">${s[0]}</span><span><b>${s[3]}</b> v <b>${s[4]}</b></span><span class="t">${s[1]} <span class="kst">${s[2]} KST</span></span></div>`).join("");
+$("week").innerHTML = W4.map((s) => `<div><span class="d">${s[0]}</span><span><b>${s[3]}</b> v <b>${s[4]}</b></span><span class="t">${s[1]} </span></div>`).join("");
 </script>
 <script>if (location.search.includes("visitor")) document.querySelector("nav.top a.me").textContent = "Sign in";</script>
 </body></html>

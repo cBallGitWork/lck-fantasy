@@ -29,7 +29,6 @@ nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
 .bug .lo b { font-weight: 400; }
 .meta { display: flex; gap: 24px; align-items: baseline; color: var(--mid); } .meta b { color: var(--ink); font-weight: 600; }
 .meta .tags { display: flex; gap: 8px; margin-right: -16px; } .meta a { color: var(--ink); font-weight: 600; display: inline-flex; align-items: center; min-height: 24px; }
-.meta .k { color: var(--mid); margin-left: 8px; }
 .two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
 h2 { font-size: 14px; font-weight: 700; border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 8px; display: flex; gap: 8px; align-items: baseline; } h2 small { color: var(--mid); font-weight: 400; font-size: 12px; }
 table { width: 100%; border-collapse: collapse; background: var(--paper); table-layout: fixed; }
@@ -77,7 +76,7 @@ const V = new URLSearchParams(location.search).get("v") || "final";
 const MINE = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"];
 const S = {
   // T1 v DK, Week 3, Sat 16 Jan, T1 2–0 (the hub's Results). Faker G1 Orianna 5/1/9 for 4, Siwoo G1 2, kkOma G1 2 (Points).
-  final: { a: "T1", b: "DK", time: ["10:30", "19:30"],
+  final: { a: "T1", b: "DK", time: ["10:30am", "7:30pm"],
     games: [{ w: "T1", len: "31:42", blue: "T1", pog: "Faker" }, { w: "T1", len: "27:10", blue: "DK", pog: "Faker" }],
     T1: { name: "T1", rec: "5–1", coach: ["kkOma", "김정균", [[1, 1, 0, 0, 0], [1, 1, 1, 0, 0]]],
       p: [["top", "Doran", "최현준", [["K'Sante", 2, 1, 7, 1, 0, 0, 0, 0], ["Rumble", 3, 0, 6, 1, 0, 0, 0, 0]]],
@@ -92,7 +91,7 @@ const S = {
           ["bot", "Aiming", "김하람", [["Ezreal", 3, 3, 2, 0, 0, 0, 0, 0], ["Zeri", 2, 4, 1, 0, 0, 0, 0, 0]]],
           ["sup", "BeryL", "조건희", [["Braum", 0, 5, 5, 0, 0, 0, 0, 0], ["Alistar", 0, 3, 4, 0, 0, 0, 0, 0]]]] } },
   // GEN v HLE, Week 3, Sat 16 Jan, GEN 2–1 (the hub's Results). Zeus 2 5 0, Canyon 2 3 4, Ruler 3 1 4, Delight 1 2 2 (Points).
-  f21: { a: "GEN", b: "HLE", time: ["08:00", "17:00"],
+  f21: { a: "GEN", b: "HLE", time: ["8:00am", "5:00pm"],
     games: [{ w: "GEN", len: "29:05", blue: "GEN", pog: "Chovy" }, { w: "HLE", len: "34:48", blue: "HLE", pog: "Zeus" }, { w: "GEN", len: "26:31", blue: "GEN", pog: "Canyon" }],
     GEN: { name: "Gen.G", rec: "5–1", coach: ["Ryu", "류상욱", [[1, 1, 1, 0, 0], [0, 0, 0, 0, 0], [1, 1, 1, 0, 0]]],
       p: [["top", "Kiin", "김기인", [["Rumble", 3, 1, 5, 1, 0, 0, 0, 0], ["Jax", 0, 4, 2, 0, 0, 0, 0, 0], ["K'Sante", 2, 2, 7, 0, 0, 0, 0, 0]]],
@@ -152,7 +151,7 @@ const NEXT = { HLE: [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "�
   DK: [["Siwoo", "전시우"], ["Lucid", "최용혁"], ["ShowMaker", "허수"], ["Aiming", "김하람"], ["BeryL", "조건희"], ["cvMax", "김대호"]] };
 if (V === "next") {
   $("bug").innerHTML = `<div class="tm"><b>HLE</b><small>Hanwha Life · 4–2</small></div><div class="sc v">v</div><div class="tm b"><small>3–3 · Dplus KIA</small><b>DK</b></div>`;
-  $("meta").innerHTML = `<span class="tag">Bo3</span><span>LCK Cup · Week 4 · Wed 20 Jan</span><span><b>08:00</b><span class="k">17:00 KST</span></span><a>Watch ›</a>`;
+  $("meta").innerHTML = `<span class="tag">Bo3</span><span>LCK Cup · Week 4 · Wed 20 Jan</span><span><b>8:00am</b></span><a>Watch ›</a>`;
   const ICO = ["top", "jng", "mid", "bot", "sup", "coach"];
   $("two").innerHTML = Object.entries(NEXT).map(([c, ps]) => `<section><h2>${c}<small>${c === "HLE" ? "Hanwha Life" : "Dplus KIA"}</small></h2><table>
     ${ps.map(([n, k], i) => `<tr class="${i === 5 ? "co" : ""}"><td class="rl" style="width:112px;height:40px"><svg><use href="#i-${ICO[i]}"/></svg>${i === 5 ? "Coach" : RH[ICO[i]]}</td><td class="pl" style="height:40px"><b>${n}</b><small>${k}</small>${me(n)}</td></tr>`).join("")}</table></section>`).join("");
@@ -160,7 +159,7 @@ if (V === "next") {
   const s = S[V], A = team(s, s.a), B = team(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.filter((g) => g.w === s.b).length, live = s.games.some((g) => g.live);
   const rec = (c) => (s[c].name === c ? s[c].rec : `${s[c].name} · ${s[c].rec}`);
   $("bug").innerHTML = `<div class="tm ${!live && wa < wb ? "lo" : ""}"><b>${s.a}</b><small>${rec(s.a)}</small></div><div class="sc">${wa}–${wb}</div><div class="tm b ${!live && wb < wa ? "lo" : ""}"><small>${s[s.b].rec}${s[s.b].name === s.b ? "" : ` · ${s[s.b].name}`}</small><b>${s.b}</b></div>`;
-  $("meta").innerHTML = `${live ? '<span class="tags"><span class="tag live">Live</span><span class="tag prov">Not final</span></span><span>Solo kills, steals at final</span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b><span class="k">${s.time[1]} KST</span></span>${live ? "<a>Watch ›</a>" : ""}<span class="sp"></span>
+  $("meta").innerHTML = `${live ? '<span class="tags"><span class="tag live">Live</span><span class="tag prov">Not final</span></span><span>Solo kills, steals at final</span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b></span>${live ? "<a>Watch ›</a>" : ""}<span class="sp"></span>
     `;
   $("two").innerHTML = A.html + B.html;
 }

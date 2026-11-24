@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pick Team: Board</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@600;700;800&family=Red+Hat+Text:wght@400;500;600;700&family=Red+Hat+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="base.css">
+<style>
+/* 3. Board: one sheet, no paper blocks, ruled with 2px heads; dark by default (Craig, 19 Nov 2026), a cool
+   ink sheet with pale heads; Red Hat with its own mono for figures; 36px rows. The white Board stays as html.light. */
+:root {
+  --bg: #0F1217; --paper: #0F1217; --line: #2A3039; --line-strong: #E8EAEE; --fill: #1A1F27; --soft: #5D6470;
+  --text: #E8EAEE; --mid: #98A0AC; --rise: #FF6B78; --signal: #2BC4B5;
+  --navy: #9DB3E3; --gold: #D4A23E; --on-gold: #0F1217; --wordmark: #D4A23E;
+  --sans: "Red Hat Text", "Pretendard Variable", sans-serif; --head: "Red Hat Display", "Pretendard Variable", sans-serif;
+  --fig: "Red Hat Mono", monospace; --ko: "Pretendard Variable", sans-serif; --head-track: -0.02em;
+  --row: 36px; --rift: 940px; --tile-w: 140px; --tile-w-phone: 78px; --tile-card-h: 124px;
+  --tile-card: rgba(255, 255, 255, 0.5); --plate: #FFFFFF; --on-plate: #16181B; --band: #081530; --on-band: #E6E9F0;
+  --shirt: #FFFFFF; --shirt-line: #16181B; --shirt-text: #16181B; --tile-label: #E6E9F0;
+  --c-bg: #D4A23E; --c-text: #16181B; --flag-bg: #FFFFFF; --flag-text: #16181B; --select: #FFFFFF;
+}
+:root.light {
+  --bg: #FFFFFF; --paper: #FFFFFF; --line: #D6D6D2; --line-strong: #16181B; --fill: #EFEFEC; --soft: #A3A39E;
+  --text: #16181B; --mid: #5C5F66; --rise: #D2283A; --signal: #0A8F84;
+  --navy: #0F2148; --gold: #C9962B; --on-gold: #16181B; --wordmark: #A87A1C;
+  --sans: "Red Hat Text", "Pretendard Variable", sans-serif; --head: "Red Hat Display", "Pretendard Variable", sans-serif;
+  --fig: "Red Hat Mono", monospace; --ko: "Pretendard Variable", sans-serif; --head-track: -0.02em;
+  --row: 36px; --rift: 940px; --tile-w: 140px; --tile-w-phone: 78px; --tile-card-h: 124px;
+  --tile-card: rgba(255, 255, 255, 0.5); --plate: #FFFFFF; --on-plate: #16181B; --band: #081530; --on-band: #E6E9F0;
+  --shirt: #FFFFFF; --shirt-line: #16181B; --shirt-text: #16181B; --tile-label: #E6E9F0;
+  --c-bg: #C9962B; --c-text: #16181B; --flag-bg: #FFFFFF; --flag-text: #16181B; --select: #FFFFFF;
+}
+.top { border-bottom: 2px solid var(--text); }
+.title { display: flex; flex-direction: column-reverse; gap: 0; }
+.title__ko { font: 600 16px/1.2 var(--ko); color: var(--navy); }
+.title__en { font-size: 32px; line-height: 1.1; }
+.head { align-items: center; border-bottom: 2px solid var(--text); padding-bottom: 12px; }
+.main { gap: 0; }
+.buffs { gap: 16px; margin-top: 16px; }
+.buff { border: 1px solid var(--line); border-top: 2px solid var(--text); background: var(--paper); padding: 8px 12px; }
+.object { margin-top: 16px; gap: 0; }
+.bench { border: 1px solid var(--line); border-top: 2px solid var(--text); background: var(--fill); }
+/* The bench band, ruled like a head and filled, so it reads as one band with Save. */
+.squad-foot { --bench-bg: var(--fill); border-top: 2px solid var(--text); }
+.bar { border: 0; border-bottom: 2px solid var(--text); margin-top: 0; }
+.card { border-top: 2px solid var(--text); }
+.card__head { padding: 12px 0; }
+.card__rows > div, .card__keys { padding-left: 0; padding-right: 0; }
+.card__name { font-size: 24px; }
+.side__title { font: 700 16px/1.3 var(--head); }
+@media (max-width: 600px) {
+  .buffs { gap: 8px; }
+  .card__rows > div, .card__keys { padding-left: 16px; padding-right: 16px; }
+  .object { margin: 0 -16px; }
+  .rift-stage { padding: 8px; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="data.js"></script>
+<script src="map.js"></script>
+<script src="render.js"></script>
+</body>
+</html>

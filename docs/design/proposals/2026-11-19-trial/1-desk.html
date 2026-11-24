@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pick Team: Desk</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="base.css">
+<style>
+/* 1. Desk: a warm charcoal ground (dark by default, Craig, 19 Nov 2026), ruled strips, Archivo set wide for heads, 32px rows.
+   The light Desk stays as html.light. */
+:root {
+  --bg: #1B1B19; --paper: #242421; --line: #3A3934; --line-strong: #6E6C64; --fill: #2E2E2A; --soft: #6E6C64;
+  --text: #ECEBE6; --mid: #A3A199; --rise: #FF6B78; --signal: #2BC4B5;
+  --navy: #9DB3E3; --gold: #D4A23E; --on-gold: #16181B; --wordmark: #D4A23E;
+  --sans: "Archivo", "Pretendard Variable", sans-serif; --head: "Archivo", "Pretendard Variable", sans-serif;
+  --fig: "Archivo", sans-serif; --ko: "Pretendard Variable", sans-serif; --head-track: -0.01em;
+  --row: 32px; --rift: 940px; --tile-w: 140px; --tile-w-phone: 78px; --tile-card-h: 124px;
+  --tile-card: rgba(255, 255, 255, 0.5); --plate: #FFFFFF; --on-plate: #16181B; --band: #081530; --on-band: #E6E9F0;
+  --shirt: #F8F7F3; --shirt-line: #16181B; --shirt-text: #16181B; --tile-label: #E6E9F0;
+  --c-bg: #D4A23E; --c-text: #16181B; --flag-bg: #F8F7F3; --flag-text: #16181B; --select: #FFFFFF; --bench-band: #0F2148;
+}
+:root.light {
+  --bg: #ECEBE6; --paper: #F8F7F3; --line: #C9C7BF; --fill: #E0DED7; --soft: #9C9A92;
+  --text: #16181B; --mid: #5C5F66; --rise: #D2283A; --signal: #0A8F84;
+  --navy: #0F2148; --gold: #C9962B; --on-gold: #16181B; --wordmark: #A87A1C;
+  --sans: "Archivo", "Pretendard Variable", sans-serif; --head: "Archivo", "Pretendard Variable", sans-serif;
+  --fig: "Archivo", sans-serif; --ko: "Pretendard Variable", sans-serif; --head-track: -0.01em;
+  --row: 32px; --rift: 940px; --tile-w: 140px; --tile-w-phone: 78px; --tile-card-h: 124px;
+  --tile-card: rgba(255, 255, 255, 0.5); --plate: #FFFFFF; --on-plate: #16181B; --band: #081530; --on-band: #E6E9F0;
+  --shirt: #F8F7F3; --shirt-line: #16181B; --shirt-text: #16181B; --tile-label: #E6E9F0;
+  --c-bg: #C9962B; --c-text: #16181B; --flag-bg: #F8F7F3; --flag-text: #16181B; --select: #FFFFFF; --bench-band: #0F2148;
+}
+.title, .card__name, .wordmark { font-stretch: 112%; }
+.title { display: flex; align-items: baseline; gap: 16px; }
+.title__ko { font-weight: 700; color: var(--navy); padding-left: 16px; border-left: 1px solid var(--line); letter-spacing: -0.02em; }
+.buffs { border-top: 2px solid var(--text); border-bottom: 1px solid var(--line); background: var(--paper); }
+.buff { padding: 8px 16px; }
+.buff + .buff { border-left: 1px solid var(--line); }
+.object { gap: 0; }
+.rift { margin-bottom: 4px; }
+.bench { border: 0; border-top: 2px solid var(--text); --select: var(--text); }
+.bench .tile__card { background: var(--fill); }
+.bench .tile__band { background: var(--bench-band); }
+.bench .tile__label { color: var(--text); }
+.bar { border: 0; border-top: 2px solid var(--text); border-bottom: 1px solid var(--line); }
+.card { border-top: 2px solid var(--text); }
+.card__name { font-size: 24px; }
+.series td { height: var(--row); }
+.side__title { border-top-color: var(--text); }
+@media (max-width: 600px) {
+  .title { gap: 12px; }
+  .title__ko { padding-left: 12px; }
+  .object { margin: 0 -16px; }
+  .rift-stage { padding: 8px; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="data.js"></script>
+<script src="map.js"></script>
+<script src="render.js"></script>
+</body>
+</html>

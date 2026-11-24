@@ -100,8 +100,8 @@ Each part is drawn one way on every screen.
 - **Table:** name far left (after its slot, where a table lists a team) with team after it, figures right-aligned, 40px rows, 12px heads
   in `--mid`. No action column: what you can do to a row goes in its panel on the right. Two exceptions,
   each a page's one job: Transfers' `+`, and a row's `›` where the row opens something.
-- **The Rift**: square, 720 a side, centred in the main column (Craig, 16 Nov 2026). Each tile as FPL's: the
-  shirt on a faint card with a rounded top, the one rounded shape; C and a news flag at its top corners; `FLEX` or `Coach 감독` over a Flex's or Coach's shirt, nothing under it; a white
+- **The Rift**: square, as big as the first screen allows, at the main column's left, with the buffs, bench and Save in a column beside it the Rift's height (Craig, 19 Nov 2026; was 720 and centred). On a phone the whole Rift shows on the first screen and the bench sits below it, under the sticky Save bar (Craig, 19 Nov 2026). Each tile as FPL's: the
+  shirt on a faint card with a rounded top, the one rounded shape; C and a news flag at its top corners; `Flex` or `Coach` over a Flex's or Coach's shirt, nothing under it; a white
   name plate; a dark band of fixtures, or points and series; on Transfers the price in a dark chip over it.
 - **The bench**, under the Rift or the cards: one bar, `Bench` then the Rift's own tile per bench
   player under its order and role (`1. Mid`), as FPL's bench under the pitch (Craig, 16 Nov 2026).
@@ -124,7 +124,7 @@ Each part is drawn one way on every screen.
   inside. A card is 1056 wide; a sheet 544.
 - **Form:** label above its field, 14px; the field 40px tall, 1px `--line`, `--text` when focused;
   an error is one line in `--text` under the field with a 1px `--text` edge on the field (Craig, 16 Nov 2026).
-- **A buff** shows its name, one line on what it does (spec/06), how many are left, and Play.
+- **A buff**: its gold icon, its name, its state under it (`Available`, `On this week`, `Unavailable` or `Played Week 3`), and an outlined key: `Play` when available, `Cancel` when on this week, none otherwise, as FPL's chips. What it does is its hover (spec/06). Never a count left (Craig, 19 Nov 2026).
 - **One main action** per screen, filled `--ink` gold with `--on-ink` words, `Save team` (Craig, 16 Nov 2026). Everything else is a link or
   an outlined key.
 - **Placeholders** (sponsor, photo) are dashed `--soft` boxes with one word.
@@ -173,7 +173,7 @@ Everywhere:
 
 ## Korean feel
 
-- Hangul beside each page title, and on the names Flol takes from the LCK (`Coach 감독`).
+- Hangul beside each page title, and on the names Flol takes from the LCK.
 - Rises red, falls blue, as Korean markets show them.
 - The LCK's own words for its things: series, POG, Bo3, Week 3.
 

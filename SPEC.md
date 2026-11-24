@@ -123,7 +123,8 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 | jeer | The same, to mock their week. | truck, protest truck |
 | hover | One short line that explains a word: on hover on desktop, on tap on the phone. | tooltip, key, legend |
 | Price changes | The page of a gameweek's new prices (Craig, 16 Nov 2026). | Patch update |
-| buff | A one-off a manager plays in a gameweek, such as Bench Boost: FPL's chip (Craig, 14 Nov 2026). | chip, boost |
+| buff | A one-off a manager plays in a gameweek, such as Bench Boost: FPL's chip (Craig, 14 Nov 2026). Bench Boost keeps its name; "boost" is barred only as a word for buff (Craig, 19 Nov 2026). | chip, boost |
 | Card view | The starters as the LCK broadcast's lineup, on Pick Team, Points and Perfect game (Craig, 16 Nov 2026). | List view |
+| Rift view | The starters on Summoner's Rift, each at his place: Pick Team's first view, beside Card view (Craig, 19 Nov 2026). | Pitch view, map view |
 | List view | Transfers' squad as FPL's list: rows grouped by role, with prices and fixtures (Craig, 16 Nov 2026). | Card view |
 | region | One of Flol's games, by its LoL league: the LCK or the LEC. Each has its own squads, prices and leagues (Craig, 18 Nov 2026). | game, competition, mode |

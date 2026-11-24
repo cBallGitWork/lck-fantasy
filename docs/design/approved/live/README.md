@@ -27,7 +27,7 @@ The Live page: a stream beside the manager's live points (spec/12, Live). It is 
   - your week, with a Not final tag, Average and Highest;
   - your players in the live series, each with his role icon, his week points (the Carry ×1.5 included) and this series' games beneath, the live game tagged Live;
   - then the rest of your week, and **Points ›**.
-- **Nothing live**: the stage shows the next series, its time (yours and KST) and a countdown. The scorebug shows the last series as final, and every chip is greyed.
+- **Nothing live**: the stage shows the next series, its time (your local time) and a countdown. The scorebug shows the last series as final, and every chip is greyed.
 - **Feed down**: a black bar at the top of the panel, "Live points down · Final points follow". The live series' games show dashes, and the total leaves them out.
 
 ## Controls

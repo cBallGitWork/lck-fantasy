@@ -25,7 +25,7 @@ The new prices for a gameweek, set once the deadline before it passes (spec/12, 
 
 ## Layout
 
-- **Head**: Price changes, ‹ Week 4 prices ›, when they were set (your time, then KST), and **How prices move ›**.
+- **Head**: Price changes, ‹ Week 4 prices ›, when they were set (your local time), and **How prices move ›**.
 - **Rises** (left) and **Falls** (right), each half the width: player, team and role; Was; ▲ or ▼ in its own column; Now; Owned. Coaches are listed by the same rule. A dot after the name marks your own players.
 - Before the first move, the lists read "No moves yet".
 

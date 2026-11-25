@@ -11,10 +11,21 @@
   const W = 720;
   const RIOT = 'Flol was created under Riot Games\' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.';
 
-  const selected = T.selected;
+  // Which picture: arena.html is Rift view with Faker tapped; ?v=cards is Card view; ?s=swap is mid-swap, the Flex
+  // tapped, Bench Boost played and not yet saved (approved/pick-team/README.md).
+  const Q = new URLSearchParams(location.search);
+  const CARDS = Q.get("v") === "cards";
+  const SWAP = Q.get("s") === "swap";
+  if (SWAP) T.buffs[0].on = true;
+  const changes = SWAP ? 1 : 0;
+  const selected = SWAP ? "siwoo" : T.selected;
   const sel = T.players[selected];
-  // Faker tapped: only Bdd, the bench Mid, can swap with him (the Flex holds a Top).
-  const options = new Set(Object.entries(T.slots).filter(([, id]) => id !== selected && T.players[id].role === sel.role).map(([, id]) => id));
+  const slotOf = (id) => Object.keys(T.slots).find((k) => T.slots[k] === id);
+  const isBench = (slot) => slot.startsWith("bench");
+  // Two trade places when each fits the other's slot (spec/01): a role slot takes its role, the Flex and the bench
+  // anyone but the coach. Faker tapped: only Bdd, the bench Mid. Siwoo, a Top in the Flex: Zeus and both of the bench.
+  const fits = (id, slot) => (slot === "coach" ? T.players[id].role === "coach" : slot === "flex" || isBench(slot) ? T.players[id].role !== "coach" : T.players[id].role === slot);
+  const options = new Set(Object.values(T.slots).filter((id) => id !== selected && !(isBench(slotOf(id)) && isBench(slotOf(selected))) && fits(id, slotOf(selected)) && fits(selected, slotOf(id))));
 
   // The repo's own kits and crests (data/lck/), the same files the built app draws.
   const KIT = "../../../../data/lck/";
@@ -33,6 +44,21 @@
     </button>`;
   };
 
+  // Card view: the seven as a broadcast lineup, one card each. The role strip and the C are the Rift tile's own; the portrait slot holds the team's crest until photos exist (spec/13).
+  const lineupCard = (slot, label) => {
+    const id = T.slots[slot];
+    const p = T.players[id];
+    const state = id === selected ? " is-selected" : options.has(id) ? " is-option" : selected ? " is-dim" : "";
+    return `<button class="lcard${state}" type="button">
+      <span class="lcard__role">${label || (slot === "flex" ? "Flex" : ROLE[slot])}</span>
+      <span class="lcard__photo">${crest(p.team)}${id === T.captain ? `<span class="tile__c" title="Scores ×1.5 this week">C</span>` : ""}${p.news ? `<span class="tag" title="${p.news.note}">${p.news.flag}</span>` : ""}</span>
+      <span class="lcard__name">${p.name}</span>
+      <span class="lcard__team">${p.team}${slot === "flex" ? ` · ${ROLE[p.role]}` : ""}</span>
+      <span class="lcard__row">v ${p.opponents.join(", ")}</span>
+      <span class="lcard__row lcard__figs"><span>Form <b class="fig">${p.form.toFixed(1)}</b></span><b class="fig">₩${p.priceM}m</b></span>
+    </button>`;
+  };
+
   // The map is one drawing, shared by every picture (map.js).
   const map = window.RIFT_MAP("calm");
 
@@ -40,11 +66,15 @@
   const rift = `<div class="rift">${map}${starters
     .map((slot) => `<div class="rift__spot" style="--x:${(SLOT[slot][0] / W) * 100}%;--y:${(SLOT[slot][1] / W) * 100}%;--px:${(SLOT_PHONE[slot][0] / W) * 100}%;--py:${(SLOT_PHONE[slot][1] / W) * 100}%">${tile(T.slots[slot], slot)}</div>`)
     .join("")}</div>`;
+  const lineup = `<div class="lineup">${starters.map((slot) => lineupCard(slot)).join("")}</div>`;
 
   const bench = `<div class="bench"><span class="bench__title">Bench</span>${["bench1", "bench2"]
     .map((slot, i) => {
       const id = T.slots[slot];
-      return `<div class="bench__spot"><span class="bench__order">${i + 1}. ${ROLE[T.players[id].role]}</span>${tile(id, slot)}</div>`;
+      const order = `${i + 1}. ${ROLE[T.players[id].role]}`;
+      // Card view's bench is the starters' own card, its strip the bench order (Craig, 25 Nov 2026).
+      if (CARDS) return lineupCard(slot, order);
+      return `<div class="bench__spot"><span class="bench__order">${order}</span>${tile(id, slot)}</div>`;
     })
     .join("")}</div>`;
 
@@ -64,11 +94,12 @@
 
   const d = T.deadline;
   const deadline = `<span class="deadline"><span class="deadline__word">Deadline</span> <b class="fig">${d.local}</b> <span class="deadline__count fig">${d.countdown}</span></span>`;
-  const bar = `<div class="bar"><span class="bar__changes">No changes</span><span class="bar__reset">Reset</span><span class="bar__gap"></span>${deadline}<button class="save key-off" type="button" disabled>Save team</button></div>`;
+  const bar = `<div class="bar"><span class="bar__changes">${changes ? `<b>${changes} change${changes > 1 ? "s" : ""}</b>` : "No changes"}</span>${changes ? `<button class="bar__reset link" type="button">Reset</button>` : `<span class="bar__reset">Reset</span>`}<span class="bar__gap"></span>${deadline}<button class="save${changes ? "" : " key-off"}" type="button"${changes ? "" : " disabled"}>Save team</button></div>`;
 
   const ord = (n) => n + (n === 1 ? "st" : n === 2 ? "nd" : n === 3 ? "rd" : "th");
   const card = `<section class="card" aria-label="${sel.name}">
-    <div class="card__head">${crest(sel.team)}<div class="card__who"><h2 class="card__name">${sel.name}</h2><span class="card__meta">${sel.team} · ${ROLE[sel.role]} · <span class="fig">₩${sel.priceM}m</span> <span class="rise fig">▲₩${sel.priceMove}m</span></span></div><button class="card__close" type="button" aria-label="Close">✕</button></div>
+    <div class="card__head">${crest(sel.team)}<div class="card__who"><h2 class="card__name">${sel.name}</h2><span class="card__meta">${sel.team} · ${ROLE[sel.role]} · <span class="fig">₩${sel.priceM}m</span> ${sel.priceMove ? `<span class="rise fig">▲₩${sel.priceMove}m</span>` : ""}</span></div><button class="card__close" type="button" aria-label="Close">✕</button></div>
+    ${sel.news ? `<p class="card__news"><span class="tag">${sel.news.flag}</span> ${sel.news.note}</p>` : ""}
     <dl class="card__rows">
       <div class="card__ranks"><dt></dt><dd class="small mid">Among ${sel.formRank.of}</dd></div>
       <div><dt>Form</dt><dd><b class="fig">${sel.form}</b><span class="card__rank fig">${ord(sel.formRank.place)}</span></dd></div>
@@ -76,7 +107,7 @@
       <div><dt>Season</dt><dd><b class="fig">${sel.season}</b><span class="card__rank fig">${ord(sel.seasonRank.place)}</span></dd></div>
       <div><dt>Last 3 series</dt><dd class="fig card__last3">${sel.last3.map((n) => `<b>${n}</b>`).join("")}</dd></div>
     </dl>
-    <div class="card__keys"><button class="key is-on" type="button">✓ Captain</button><a class="link" href="#">Full card ›</a></div>
+    <div class="card__keys">${selected === T.captain ? `<button class="key is-on" type="button">✓ Captain</button>` : isBench(slotOf(selected)) || sel.role === "coach" ? "" : `<button class="key" type="button">Make Captain</button>`}<a class="link" href="#">Full card ›</a></div>
   </section>`;
 
   const series = `<section class="series" aria-label="This week's series"><h2 class="side__title">This week's series</h2><table>${T.series
@@ -94,10 +125,10 @@
   <header class="top"><b class="wordmark">Flol</b><nav class="nav">${nav}</nav><span class="top__gap"></span><span class="sponsor-top">presented by <span class="placeholder">Sponsor</span></span><button class="top__menu" type="button">Menu ▾</button><span class="account">${T.account} ▾</span></header>
   <div class="page">
     <main class="main">
-      <div class="head"><h1 class="title"><span class="title__en">${T.title}</span> <span class="title__ko" lang="ko">${T.hangul}</span></h1><span class="head__week">${T.week}</span><div class="views" role="tablist"><button class="is-here" type="button">Rift view</button><button type="button">Card view</button></div></div>
+      <div class="head"><h1 class="title"><span class="title__en">${T.title}</span> <span class="title__ko" lang="ko">${T.hangul}</span></h1><span class="head__week">${T.week}</span><div class="views" role="tablist"><button${CARDS ? "" : ' class="is-here"'} type="button">Rift view</button><button${CARDS ? ' class="is-here"' : ""} type="button">Card view</button></div></div>
       ${buffs}
-      <div class="object">
-        <div class="rift-stage">${rift}</div>
+      <div class="object${CARDS ? " object--cards" : ""}">
+        ${CARDS ? lineup : `<div class="rift-stage">${rift}</div>`}
         <div class="squad-foot">${bench}${bar}</div>
       </div>
     </main>
@@ -107,5 +138,5 @@
 
   // The bench's tiles take the Rift tiles' size, which follows the Rift's width (base.css).
   const riftEl = document.querySelector(".rift");
-  new ResizeObserver(() => document.documentElement.style.setProperty("--rift-w", `${riftEl.getBoundingClientRect().width}px`)).observe(riftEl);
+  if (riftEl) new ResizeObserver(() => document.documentElement.style.setProperty("--rift-w", `${riftEl.getBoundingClientRect().width}px`)).observe(riftEl);
 })();

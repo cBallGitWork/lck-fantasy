@@ -113,9 +113,9 @@ describe("Fixtures, with a news line", () => {
       ...PICK_TEAM_STRIP,
       ...TABS,
       "Week", "Series", "Your time",
-      "5", "Sun · T1 v KRX · Bo3", "10:30",
-      "6", "Wed · T1 v DK · Bo3", "08:00",
-      "Sat · T1 v HLE · Bo3", "10:30",
+      "5", "Sun · T1 v KRX · Bo3", "10:30am",
+      "6", "Wed · T1 v DK · Bo3", "8:00am",
+      "Sat · T1 v HLE · Bo3", "10:30am",
       ...PICK_TEAM_SEASON,
     ]);
   });
@@ -183,12 +183,12 @@ describe("This week before any of his games", () => {
   const out = text(screen);
 
   test("lists the week's series with opponent and time, points as —", () => {
-    expectInOrder(out, [...TABS, "Wed · v KT", "10:30", "—", "Sat · v GEN", "08:00", "—", "Week 4", "—", "Season"]);
+    expectInOrder(out, [...TABS, "Wed · v KT", "10:30am", "—", "Sat · v GEN", "8:00am", "—", "Week 4", "—", "Season"]);
   });
 
   test("shows no games, no score and no Captain line yet", () => {
     const tab = out.slice(out.indexOf("Champions"), out.indexOf("Season 15 games"));
-    expect(tab).toBe("ChampionsWed · v KT 10:30—Sat · v GEN 08:00—Week 4—");
+    expect(tab).toBe("ChampionsWed · v KT 10:30am—Sat · v GEN 8:00am—Week 4—");
   });
 
   test("fills in game by game: a started series shows its games, the next still —", () => {
@@ -198,7 +198,7 @@ describe("This week before any of his games", () => {
     const started = { ...first, state: "live" as const, score: [1, 0] as [number, number], games: [game] };
     const week = { week: 4, series: [started, second], total: 6 };
     const live = text(<PlayerCardPage card={{ ...CARD_FROM_PICK_TEAM, thisWeek: week }} initialTab="This week" />);
-    expectInOrder(live, ["Wed · v KT", "1–0", "6", "G1", "Azir", "5/1/7", "6", "Sat · v GEN", "08:00", "—", "Week 4", "6"]);
+    expectInOrder(live, ["Wed · v KT", "1–0", "6", "G1", "Azir", "5/1/7", "6", "Sat · v GEN", "8:00am", "—", "Week 4", "6"]);
   });
 });
 

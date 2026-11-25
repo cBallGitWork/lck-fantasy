@@ -6,7 +6,7 @@ import type { CoachLine, CoachTable, PlayerLine, PlayerTable } from "../../../co
 import type { SeriesRules } from "../../../convex/scoring/series";
 import type { TierCutoff, TierName } from "../../../convex/leagues/tiers";
 import { PLAYER_ROLES, type PlayerRole } from "../../../convex/squads/squad";
-import { formatWon, sum, timeIn } from "../../parts";
+import { formatWon, momentIn, sum } from "../../parts";
 
 const settings = season.settings;
 
@@ -105,10 +105,7 @@ export function tierRows(cutoffs: readonly TierCutoff[]): TierRow[] {
   return rows;
 }
 
-/** A deadline as the Time part shows it, the date in front: `Wed 30 Dec 07:45`. */
+/** A deadline as the Time part shows it, the date in front: `Wed 30 Dec 7:45am`. */
 export function deadlineIn(instant: string, zone: string): { local: string } {
-  const { local } = timeIn(instant, zone);
-  const date = new Intl.DateTimeFormat("en-GB", { timeZone: zone, day: "numeric", month: "short" }).format(new Date(instant));
-  const [day = "", time = ""] = local.split(" ");
-  return { local: `${day} ${date} ${time}` };
+  return { local: momentIn(instant, zone, { date: true }) };
 }

@@ -22,17 +22,17 @@ describe("the page (1440.png)", () => {
       "팔로잉",
       "Week 3",
       "Not final",
-      "Deadline Wed 07:45Minji Park",
+      "Deadline Wed 7:45amMinji Park",
       "Chovy Was Right There",
       "20",
       "GEN 2–1 HLE",
       "Kiin 5 · Canyon 7 · Chovy 8",
-      "Ended Sat 10:20",
+      "Ended Sat 10:20am",
       "Cheer / Jeer ›",
       "Jae Kim",
       "NS 0–2 KRX",
       "Rich 4 · ucal 2 (Captain) · Lehends 3",
-      "Ended Fri 13:00",
+      "Ended Fri 1:00pm",
       "Cheer / Jeer ›",
       "Dan Okafor",
       "T1 2–1 HLE",
@@ -61,12 +61,12 @@ describe("the page (1440.png)", () => {
       "Ruler 21 (14 × 1.5)",
       "Minji Park",
       "Chovy 21",
-      "Ended Sun 12:30",
+      "Ended Sun 12:30pm",
     ]);
   });
 
   test("a week's deadline is the Deadline part, as on Pick Team", () => {
-    expectDeadlinePart(html(view()), "Wed 07:45");
+    expectDeadlinePart(html(view()), "Wed 7:45am");
   });
 
   test("shows requests, cheers and jeers, following and followers on the right, then the sponsor note", () => {

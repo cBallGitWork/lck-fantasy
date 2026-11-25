@@ -62,14 +62,14 @@ describe("Settings, each tab as its picture draws it", () => {
 
   test("Display: the browser's zone, the deadline in it alone, and the theme", () => {
     const out = settingsOn("Display");
-    expectInOrder(out, [">Team •<", 'aria-selected="true"', ">Display<", "Time zone", "Browser · Europe/London", "Deadline", "Wed 07:45", "Theme"]);
+    expectInOrder(out, [">Team •<", 'aria-selected="true"', ">Display<", "Time zone", "Browser · Europe/London", "Deadline", "Wed 7:45am", "Theme"]);
     expect(out).not.toContain("KST");
     expectInOrder(text(<Settings firstTab="Display" {...PICTURE} />), ["DeviceLightDark", ...SAVE_BAR, ...FOOT]);
     expect(out).toMatch(/aria-pressed="true">Device</);
   });
 
   test("Display's deadline is the Deadline part, as on Pick Team", () => {
-    expectDeadlinePart(settingsOn("Display"), "Wed 07:45");
+    expectDeadlinePart(settingsOn("Display"), "Wed 7:45am");
   });
 
   test("Emails: both off by default (spec/12), the reminder's lead time, and the address they go to", () => {
@@ -150,8 +150,8 @@ describe("the rules", () => {
   });
 
   test("the deadline shows in the chosen zone, and only there", () => {
-    expect(timeIn(DEADLINE_AT, "Europe/London")).toEqual({ local: "Wed 07:45" });
-    expect(timeIn(DEADLINE_AT, "America/New_York")).toEqual({ local: "Wed 02:45" });
-    expect(timeIn(DEADLINE_AT, "Asia/Seoul")).toEqual({ local: "Wed 16:45" });
+    expect(timeIn(DEADLINE_AT, "Europe/London")).toEqual({ local: "Wed 7:45am" });
+    expect(timeIn(DEADLINE_AT, "America/New_York")).toEqual({ local: "Wed 2:45am" });
+    expect(timeIn(DEADLINE_AT, "Asia/Seoul")).toEqual({ local: "Wed 4:45pm" });
   });
 });

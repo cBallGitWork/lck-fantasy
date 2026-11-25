@@ -4,7 +4,7 @@ import type { ListedAlert } from "../../../convex/admin/alerts";
 import type { RoleSpread } from "../../../convex/admin/priceSpread";
 import type { SeasonReport } from "../../../convex/admin/seasonReport";
 import type { Played, SimState } from "../../../convex/admin/sim";
-import { Empty, ErrorState, Field, formatWon, Loading, NONE, PageFrame, PageHead, TabPanel, Tabs } from "../../parts";
+import { Empty, ErrorState, Field, formatWon, Loading, momentIn, NONE, PageFrame, PageHead, TabPanel, Tabs } from "../../parts";
 import { SCREEN_NAME } from "../../paths";
 import { TABS, WORDS, type AdminTab } from "./words";
 import "./admin.css";
@@ -15,20 +15,9 @@ export type Read<T> = T | undefined | Error;
 export type Alert = ListedAlert;
 export type Press = "nextDay" | "playToEnd";
 
-/** A moment as the Sim page shows it, in the admin's own zone with no label: `Thu 15 Jan 00:00`, or the day alone. */
+/** A moment as the Sim page shows it, in the admin's own zone with no label: `Thu 15 Jan 12:00am`, or the day alone. */
 export function simMoment(at: number, zone: string, withTime = true): string {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: zone,
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: withTime ? "2-digit" : undefined,
-    minute: withTime ? "2-digit" : undefined,
-    hourCycle: "h23",
-  }).formatToParts(at);
-  const part = (type: Intl.DateTimeFormatPartTypes) => parts.find((p) => p.type === type)?.value ?? "";
-  const day = `${part("weekday")} ${part("day")} ${part("month")}`;
-  return withTime ? `${day} ${part("hour")}:${part("minute")}` : day;
+  return momentIn(at, zone, { date: true, time: withTime });
 }
 
 /** What a press played, as one line: the clock stops at the midnight after the day it played. */

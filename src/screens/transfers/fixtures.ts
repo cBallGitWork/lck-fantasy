@@ -90,10 +90,10 @@ export const PLAYERS: ListPlayer[] = [
 
 /** The week's confirms, newest first. */
 export const CONFIRMS: Confirm[] = [
-  { id: "c2", local: "Tue 21:10", moves: [{ out: "Kiin", in: "Zeus" }], hit: HIT_POINTS },
+  { id: "c2", local: "Tue 9:10pm", moves: [{ out: "Kiin", in: "Zeus" }], hit: HIT_POINTS },
   {
     id: "c1",
-    local: "Mon 18:02",
+    local: "Mon 6:02pm",
     moves: [
       { out: "Peyz", in: "Ruler" },
       { out: "Lehends", in: "Delight" },

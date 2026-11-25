@@ -16,8 +16,11 @@ export type Series = SeriesRow & {
 };
 
 /** A day's two series times, in London. */
-export const EARLY = { local: "08:00" } as const;
-export const LATE = { local: "10:30" } as const;
+export const EARLY = { local: "8:00am" } as const;
+export const LATE = { local: "10:30am" } as const;
+
+/** Each series time as a UTC clock, which London keeps in January to March. */
+const UTC_CLOCK: Record<string, string> = { [EARLY.local]: "08:00", [LATE.local]: "10:30" };
 
 /** Week 1, final, as Points' earlier weeks and T1's season show it. */
 export const WEEK1_SERIES: Series[] = [
@@ -90,7 +93,7 @@ export const WEEK4_SERIES: Series[] = [
 ];
 
 /** Week 3's deadline, 15 minutes before its first series. */
-export const WEEK3_DEADLINE = { day: "Wed", date: "13 Jan", time: "07:45" } as const;
+export const WEEK3_DEADLINE = { day: "Wed", date: "13 Jan", time: "7:45am" } as const;
 
 /** The pictures' moments as instants: Points' (Saturday 21:10 KST) and Pick Team's (Week 4, Tuesday 22:00 London). */
 export const POINTS_AT = "2027-01-16T12:10:00Z";
@@ -122,7 +125,9 @@ export function startOf(s: Series): string {
   const [day, month] = s.date.split(" ");
   const mm = month && MONTHS[month];
   if (!day || !mm) throw new Error(`Series ${s.id} has no date this season`);
-  return `2027-${mm}-${day.padStart(2, "0")}T${s.local}:00Z`;
+  const clock = UTC_CLOCK[s.local];
+  if (!clock) throw new Error(`Series ${s.id} starts at ${s.local}, not a day's series time`);
+  return `2027-${mm}-${day.padStart(2, "0")}T${clock}:00Z`;
 }
 
 /** Week 4's deadline as data/lck/season-2027.json holds it. */
@@ -136,7 +141,7 @@ function deadlineOf(gameweek: number): string {
 
 /** Week 4's deadline, 15 minutes before its first series (pick.html), counted down from Pick Team's moment. */
 export const WEEK4_DEADLINE = {
-  local: "Wed 07:45",
+  local: "Wed 7:45am",
   countdown: countdownText(countdown(PICK_TEAM_AT, WEEK4_DEADLINE_AT)),
   at: WEEK4_DEADLINE_AT,
 } as const;

@@ -18,6 +18,12 @@ What Craig hasn't settled yet. Nothing here is the product until a `/grill` move
 
 ## Open from the foundations work (11 Nov 2026)
 
+- A fixture difficulty view, as FPL's: each team's next weeks, marked easy to hard (five reviewers,
+  24 Nov 2026, as colour that carries a fact). Unspecced: what rates a fixture, where it shows, and
+  whether the plate allows a tinted cell.
+- The Following tab, and a cheer's or jeer's panel drawn as the side of an LED truck (Craig,
+  24 Nov 2026: "maybe make the truck actually look like the side of the truck"). A `/design` round.
+
 - How Unranked looks before gameweek 1 is final (spec/08): proposed, an outlined shield and
   `Unranked` with no rank line; Home's picture doesn't draw it.
 - The team's name on its shirt, so a 28px shirt says whose it is, such as the code on the hem or

@@ -1,19 +1,12 @@
-import { cx } from "../parts";
+import { cx, kitUrl } from "../parts";
 import "./Shirt.css";
-
-/** Each team's kit, held as data per competition (`data/lck/shirts/<code>.svg`), keyed by team code. */
-const KITS: Record<string, string> = Object.fromEntries(
-  Object.entries(import.meta.glob<string>("../../data/lck/shirts/*.svg", { eager: true, query: "?url", import: "default" })).map(
-    ([path, url]) => [path.match(/([^/]+)\.svg$/)?.[1] ?? path, url],
-  ),
-);
 
 /**
  * A shirt. `kit`: the team's own kit, as a Rift tile wears it, its code on the tile's plate, or the plain
  * shirt where no kit is drawn for the team. Without `kit`, the plain shirt with the team's code on its chest.
  */
 export function Shirt({ team, small, kit }: { team?: string; small?: boolean; kit?: boolean }) {
-  const url = kit && team ? KITS[team] : undefined;
+  const url = kit && team ? kitUrl(team) : undefined;
   if (url) return <img className="shirt shirt--kit" src={url} alt="" />;
   return (
     <span className={cx("shirt", small && "shirt--small")}>

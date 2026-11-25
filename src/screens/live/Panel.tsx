@@ -1,4 +1,4 @@
-import { gameNo, GoLink, LinkGo, LiveTag, NONE, NotFinalTag, SectionHead } from "../../parts";
+import { TeamBar, gameNo, GoLink, LinkGo, LiveTag, NONE, NotFinalTag, SectionHead } from "../../parts";
 import { cardGo, PATHS, profileGo } from "../../paths";
 import { MarkBadge, RoleIcon } from "../../rift";
 import type { Panel, PanelPlayer, RestPlayer } from "./types";
@@ -24,7 +24,10 @@ function PlayerRow({ player }: { player: PanelPlayer }) {
       <span>
         <span className="live__name">
           {player.name}
-          <small className="live__team quiet">{player.team}</small>
+          <small className="live__team quiet">
+            <TeamBar team={player.team} />
+            {player.team}
+          </small>
           {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}
         </span>
         <GameLine player={player} />
@@ -40,7 +43,10 @@ function RestRow({ player }: { player: RestPlayer }) {
       <span className="live__rest-name">
         <RoleIcon role={player.role} className="live__rest-icon" />
         {player.name}
-        <small className="live__team quiet">{player.team}</small>
+        <small className="live__team quiet">
+            <TeamBar team={player.team} />
+            {player.team}
+          </small>
         {player.mark && <MarkBadge mark={player.mark} className="live__mark" />}
       </span>
       <span className="live__points num">{player.points}</span>

@@ -69,7 +69,7 @@
   border: var(--m-rule) solid var(--stage-text);
   background: none;
   color: var(--text);
-  font: var(--w-regular) var(--size-body) var(--font-sans);
+  font: var(--w-regular) var(--size-small) var(--font-sans);
   cursor: pointer;
 }
 .live__chip-platform {

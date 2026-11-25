@@ -58,6 +58,7 @@
   height: var(--s-6);
   padding: 0 var(--s-3);
   font: inherit;
+  font-size: var(--size-small);
   text-align: left;
   color: var(--mid);
   background: var(--paper);

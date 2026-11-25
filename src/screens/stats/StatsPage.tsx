@@ -1,6 +1,6 @@
 import { useId, type ChangeEvent, type ReactNode } from "react";
 import { TEAMS, type TeamCode } from "../../fixtures/week3";
-import { cx, Empty, money, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, TabPanel, Tabs, ViewToggle, type Column } from "../../parts";
+import { TeamBar, cx, Empty, money, GoLink, MeDot, oneDecimal, PageFrame, PageHead, pct, perGame, PriceMove, score, Table, TabPanel, Tabs, ViewToggle, type Column } from "../../parts";
 import { cardGo, PATHS } from "../../paths";
 import { ROLE_KEYS, ROLE_NAME, RoleIcon, type RoleKey } from "../../rift";
 import {
@@ -214,7 +214,10 @@ function Lead({ row }: { row: Ranked }) {
       <GoLink go={cardGo(row.id, row.role === "coach")} className="stats__name hover-line">
         {row.name}
       </GoLink>
-      <small className="stats__team quiet num">{row.team}</small>
+      <small className="stats__team quiet num">
+        <TeamBar team={row.team} />
+        {row.team}
+      </small>
       {row.mine && <MeDot />}
     </span>
   );

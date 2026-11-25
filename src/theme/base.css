@@ -34,7 +34,7 @@ a {
   content: "▼";
   font-size: var(--size-small);
 }
-/* A rank's move stays --text, never gold: red and blue are for prices only. ▲ or ▼, a space, then the places; a held rank's — in mid grey. */
+/* A rank's move: up green, down red, as FPL's arrows (Craig, 24 Nov 2026), never colour alone: ▲ or ▼, a space, then the places; a held rank's — in mid grey. */
 .rank-up,
 .rank-down,
 .rank-held {
@@ -44,6 +44,12 @@ a {
 }
 .rank-held {
   color: var(--mid);
+}
+.rank-up {
+  color: var(--up);
+}
+.rank-down {
+  color: var(--down);
 }
 .rank-up::before {
   content: "▲ ";

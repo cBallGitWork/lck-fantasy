@@ -254,7 +254,7 @@ describe("Fixtures (the player card's 1440-fixtures.png)", () => {
       "6Wed · T1 v DK · Bo38:00am",
       "Sat · T1 v HLE · Bo310:30am",
     ]);
-    expect(out).not.toMatch(/KST|19:30|17:00/);
+    expect(out).not.toMatch(/KST|7:30pm|5:00pm/);
   });
 });
 

@@ -8,7 +8,6 @@ export const WORDS = {
   hub: `${REGION.name} hub`,
   /** The stage toggle's name, for a reader. */
   stage: "Stage",
-  versus: "v",
   news: "News",
   /** A headline's picture until the news feed brings its own (#116). */
   photo: "Photo",

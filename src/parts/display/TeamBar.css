@@ -1,0 +1,8 @@
+.team-bar {
+  display: inline-block;
+  flex: none;
+  width: var(--s-1);
+  height: 1em;
+  margin-right: var(--s-1);
+  vertical-align: -0.125em;
+}

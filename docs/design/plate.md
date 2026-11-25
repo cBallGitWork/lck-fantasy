@@ -77,6 +77,7 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 | `--banner-rule` | #785A28 | the banner's rule under that hangul |
 | `--rise` | #FF6B78 | a price rise, Korean red lightened for navy |
 | `--fall` | #6EA2FF | a price fall, Korean blue lightened for navy |
+| `--up`, `--down` | #4CD98A, #FF6B78 | a rank's move in a league: up green, down red, with its ▲ or ▼ (Craig, 24 Nov 2026) |
 | `--over` | #FF6B78 | the bank below zero, over the budget, with its − (Craig, 16 Nov 2026) |
 | `--signal` | #2BC4B5 | the second accent, teal, sparingly: the live dot, the focus ring |
 | `--stage` | #000508 | Live's dark stage |
@@ -88,11 +89,11 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 - Gold is the one accent, and on these alone: the one main action on a screen, the only filled key; the Captain's
   C; his `✓ Captain` state, edged and never filled; a buff's icon (Craig, 19 Nov 2026); the Flol
   wordmark; all `--ink`. The banner's hangul is its own gold (`--banner`). Section rules, tabs,
-  selected borders, links, tags, a page title's hangul and a rank's move (▲/▼) are `--text` or grey
+  selected borders, links, tags and a page title's hangul are `--text` or grey
   (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
 - Overall's tier shield is a `--text` fill, one colour for every tier (Craig, 16 Nov 2026).
-- Colour is spent on meaning only, never to decorate: red and blue are prices and the bank only; a rank's move
-  stays `--text` (Craig, 16 Nov 2026).
+- Colour is spent on meaning only, never to decorate: red and blue are prices and the bank; a rank's move
+  in a league is green up and red down, as FPL's arrows (Craig, 24 Nov 2026; was `--text`).
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
 
 ## Parts
@@ -135,6 +136,10 @@ Each part is drawn one way on every screen.
   redrawn.
 - **Marks:** C is round, and so are the live dot, your-player dot (8px, after the name)
   and a radio button. C is gold (`--ink`), its letter `--on-ink`. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
+- **A team's colour** is a 4px bar before its code wherever a list names a team (Craig, 24 Nov 2026:
+  the look needed a little colour; `approved/team-colour/`): the kit's first colour that shows on
+  the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
+  in the bar's place. Never a tinted row, a wash or a coloured code.
 - **Your players** are marked by that dot, on every screen.
 - **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
   ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with

@@ -1,18 +1,27 @@
-import { Deadline, formatWon, MainAction, Modal } from "../../parts";
+import { Deadline, formatWon, MainAction, Modal, TeamBar } from "../../parts";
 import { costLabel } from "./Confirmed";
 import type { ListPlayer, SquadPlayer } from "./plan";
-import { usedOf, WORDS } from "./words";
+import { WORDS } from "./words";
 import "./ConfirmSheet.css";
 
+/** A side of a move: name, team bar and code, price. */
+function Side({ p }: { p: ListPlayer }) {
+  return (
+    <>
+      <b>{p.name}</b> <span className="quiet"><TeamBar team={p.team} wide />{p.team}</span> <span className="num">{formatWon(p.priceWon)}</span>
+    </>
+  );
+}
+
 /**
- * The confirm sheet (confirm.html, changed by Craig 16 Nov 2026): one row per transfer, out → in with
- * each price, then the cost, the bank and the free transfers used; Back or Confirm, with the deadline.
+ * The confirm sheet (transfers.html?s=confirm, approved/transfers/1440-confirm.png): in a heavy frame,
+ * one row a transfer, out → in with each price; then Free transfers used, Cost and Bank; the deadline,
+ * Back and Confirm.
  */
 export function ConfirmSheet({
   transfers,
   hit,
   freeUsed,
-  freeHad,
   bankFrom,
   bankTo,
   deadline,
@@ -22,8 +31,6 @@ export function ConfirmSheet({
   transfers: { out: SquadPlayer; in: ListPlayer }[];
   hit: number;
   freeUsed: number;
-  /** Free transfers before these. */
-  freeHad: number;
   bankFrom: number;
   bankTo: number;
   deadline: { local: string };
@@ -32,46 +39,53 @@ export function ConfirmSheet({
 }) {
   return (
     <Modal kind="sheet" title={WORDS.sheetTitle} onClose={onBack} strong>
-      <ol className="transfers__sheet-moves">
-        {transfers.map((t) => (
-          <li key={t.out.slot}>
-            <span className="transfers__sheet-out">
-              {t.out.name} <small>{t.out.team}</small> <span className="num">{formatWon(t.out.priceWon)}</span>
-            </span>
-            <span aria-label={WORDS.for}>→</span>
-            <b>
-              {t.in.name} <small>{t.in.team}</small> <span className="num">{formatWon(t.in.priceWon)}</span>
-            </b>
-          </li>
-        ))}
-      </ol>
-      <table className="transfers__sheet">
+      <table className="transfers__sheet-moves">
+        <thead>
+          <tr>
+            <th>{WORDS.out}</th>
+            <th aria-label={WORDS.for} />
+            <th>{WORDS.in}</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr>
-            <th scope="row">{WORDS.cost}</th>
-            <td className="num">{costLabel(hit)}</td>
-          </tr>
-          <tr>
-            <th scope="row">{WORDS.bank}</th>
-            <td className="num">
-              {formatWon(bankFrom)} → <b>{formatWon(bankTo)}</b>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">{WORDS.freeUsed}</th>
-            <td className="num">{usedOf(freeUsed, freeHad)}</td>
-          </tr>
+          {transfers.map((t) => (
+            <tr key={t.out.slot}>
+              <td>
+                <Side p={t.out} />
+              </td>
+              <td className="transfers__sheet-arrow quiet">→</td>
+              <td>
+                <Side p={t.in} />
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <dl className="transfers__figs">
+        <div>
+          <dt>{WORDS.freeUsed}</dt>
+          <dd className="num">{freeUsed}</dd>
+        </div>
+        <div>
+          <dt>{WORDS.cost}</dt>
+          <dd className="num">{costLabel(hit)}</dd>
+        </div>
+        <div>
+          <dt>{WORDS.bank}</dt>
+          <dd className="num">
+            {formatWon(bankFrom)} → {formatWon(bankTo)}
+          </dd>
+        </div>
+      </dl>
       <div className="transfers__sheet-keys">
+        <span className="transfers__sheet-deadline">
+          <Deadline local={deadline.local} />
+        </span>
         <button type="button" className="transfers__back" onClick={onBack}>
           {WORDS.back}
         </button>
         <MainAction onClick={onConfirm}>{WORDS.confirm}</MainAction>
       </div>
-      <p className="transfers__sheet-deadline quiet">
-        <Deadline local={deadline.local} />
-      </p>
     </Modal>
   );
 }

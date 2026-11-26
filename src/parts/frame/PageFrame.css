@@ -2,10 +2,25 @@
 .page-frame {
   padding: var(--s-5) var(--s-6) var(--s-7);
 }
-/* The phone (up to 600px, approved/pick-team/): 16 each side. */
+/* Transfers' frame: the 424 side column for its player list, and the main column stuck while the list scrolls. */
+.page-frame--wide-side {
+  grid-template-columns: minmax(0, 1fr) var(--m-transfers-side);
+}
+.page-frame--wide-side > .page-frame__main {
+  position: sticky;
+  top: var(--s-4);
+  align-self: start;
+}
+/* The phone (up to 600px, approved/pick-team/): 16 each side; one column, nothing stuck. */
 @media (max-width: 600px) {
   .page-frame {
     padding: var(--s-4) var(--s-4) var(--s-7);
+  }
+  .page-frame--wide-side {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .page-frame--wide-side > .page-frame__main {
+    position: static;
   }
 }
 /* The foot: Riot's notice, small, under a rule. */

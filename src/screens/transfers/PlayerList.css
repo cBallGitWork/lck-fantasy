@@ -1,0 +1,76 @@
+/* Transfers' player list (approved/transfers/, What binds 8 to 10). Every value is a token. */
+
+.transfers__players {
+  padding-bottom: 0;
+}
+/* What the last + did, where it was pressed. */
+.transfers__note {
+  margin-bottom: var(--s-2);
+  padding: var(--s-1) var(--s-2);
+  background: var(--fill);
+  border-left: var(--m-rule-heavy) solid var(--text);
+}
+.transfers__note:empty {
+  display: none;
+}
+/* Tabs: plain words, the chosen one underlined. */
+.transfers__tabs {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: var(--m-rule) solid var(--line);
+}
+.transfers__tab {
+  margin-bottom: calc(var(--m-rule) * -1);
+  padding: var(--s-1) 0;
+  font: inherit;
+  font-size: var(--size-small);
+  color: var(--mid);
+  background: none;
+  border: 0;
+  border-bottom: var(--m-rule-heavy) solid transparent;
+  cursor: pointer;
+}
+.transfers__tab--on {
+  color: var(--text);
+  font-weight: var(--w-semi);
+  border-bottom-color: var(--text);
+}
+.transfers__tools {
+  display: flex;
+  gap: var(--s-1);
+  padding: var(--s-3) 0;
+  font-size: var(--size-small);
+}
+.transfers__search {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+  color: var(--text);
+}
+.transfers__tool {
+  padding: var(--s-1) var(--s-2);
+  border: var(--m-rule) solid var(--line);
+  white-space: nowrap;
+}
+
+/* The list's columns: fixed widths with even gaps; Next 16 clear of Owned. */
+.transfers__list {
+  table-layout: fixed;
+}
+.transfers__list th:nth-child(2) {
+  width: calc(var(--s-7) + var(--s-4));
+}
+.transfers__list th:nth-child(3),
+.transfers__list th:nth-child(6) {
+  width: calc(var(--s-6) + var(--s-2));
+}
+.transfers__list th:nth-child(4) {
+  width: var(--s-7);
+}
+.transfers__list th:nth-child(5) {
+  width: calc(var(--s-7) * 2);
+}
+.transfers__list th:nth-child(5),
+.transfers__list td:nth-child(5) {
+  padding-left: var(--s-4);
+}

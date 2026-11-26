@@ -4,23 +4,31 @@
 
 import { opponent, seriesOf } from "../../fixtures/series";
 import {
+  BEST_OF,
   COMPETITION,
   finalPickOf,
   formOf,
   HIT_POINTS,
   MANAGER,
+  OFF_PAGE_PLAYERS,
   PICK_TEAM_SQUAD,
   playerId,
   rawWeekOf,
   statsOf,
   STATS_PLAYERS,
   TEAM_CAP,
+  WEEK1_SERIES,
+  WEEK2_SERIES,
+  WEEK3_SERIES_FINAL,
   WEEK4_DEADLINE,
   WEEK4_FREE_TRANSFERS,
   WEEK4_SERIES,
+  type StatsPlayer,
   type TeamCode,
 } from "../../fixtures/week3";
 import { mToWon, sum } from "../../parts";
+import { SEASON_PLAYERS } from "../stats/fixtures";
+import type { CardFacts } from "./card";
 import type { Confirm, Fixture, ListPlayer, Plan, SquadPlayer, TransferRules } from "./plan";
 import type { TransfersPageProps } from "./TransfersPage";
 
@@ -76,6 +84,8 @@ export const PLAYERS: ListPlayer[] = [
   listed("Aiming"),
   listed("ShowMaker"),
   listed("Lucid"),
+  listed("Oner"),
+  listed("Lehends"),
   listed("Kingen"),
   listed("PerfecT"),
   listed("DuDu"),
@@ -110,6 +120,65 @@ export const RULES: TransferRules = { freeTransfers: freeLeft, hitPoints: HIT_PO
 /** Siwoo sold, Kingen in. */
 export const PICTURE_PLAN: Plan = { sold: { flex: PLAYERS.find((p) => p.name === "Kingen") ?? null }, replacing: null };
 
+/** Every made-up player and coach, so a card's ranks are among his whole role. */
+const EVERYONE = [...STATS_PLAYERS, ...OFF_PAGE_PLAYERS];
+
+/** Where a figure ranks among his role: 1st for the most. */
+function rankAmong(name: string, figure: (p: StatsPlayer) => number): number {
+  const me = statsOf(name);
+  return 1 + EVERYONE.filter((p) => p.role === me.role && figure(p) > figure(me)).length;
+}
+
+/** Weeks 1 to 3, final: the series a card's last 3 come from. */
+const PLAYED = [...WEEK1_SERIES, ...WEEK2_SERIES, ...WEEK3_SERIES_FINAL];
+
+/** Week 5's first series for each team, made up, so every card has its next 3. */
+const WEEK5_FIRST: { teams: [TeamCode, TeamCode]; day: string }[] = [
+  { teams: ["T1", "DK"], day: "Wed" },
+  { teams: ["NS", "KRX"], day: "Wed" },
+  { teams: ["KT", "BRO"], day: "Thu" },
+  { teams: ["HLE", "GEN"], day: "Thu" },
+  { teams: ["DNS", "BFX"], day: "Fri" },
+];
+
+/** His season points spread over his team's series so far, the odd ones to the latest; made up. */
+function last3Of(name: string, team: string): CardFacts["last3"] {
+  const series = seriesOf(PLAYED, team);
+  const { points } = statsOf(name);
+  const each = Math.floor(points / series.length);
+  const extra = points % series.length;
+  return series.map((s, i) => ({ points: each + (i >= series.length - extra ? 1 : 0), opponent: opponent(s, team) })).slice(-3);
+}
+
+/** His next 3: the week's series, then Week 5's first. */
+function next3Of(team: string): CardFacts["next3"] {
+  const week4 = seriesOf(WEEK4_SERIES, team).map((s) => ({ opponent: opponent(s, team), day: s.day }));
+  const week5 = WEEK5_FIRST.filter((s) => s.teams.includes(team as TeamCode)).map((s) => ({ opponent: s.teams.find((t) => t !== team) ?? team, day: s.day }));
+  return [...week4, ...week5].slice(0, 3).map((s) => ({ ...s, bestOf: BEST_OF }));
+}
+
+/** A person's card figures: Stats' season lines for a player, his ranks among his role, his series. */
+function cardOf(p: ListPlayer): CardFacts {
+  const row = p.role === "coach" ? undefined : SEASON_PLAYERS.find((s) => s.name === p.name);
+  const line = (key: string) => row?.lines[key] ?? 0;
+  return {
+    among: EVERYONE.filter((o) => o.role === p.role).length,
+    pointsRank: rankAmong(p.name, (o) => o.points),
+    ownedRank: rankAmong(p.name, (o) => o.ownedPct),
+    season: row && {
+      games: row.games,
+      kills: line("kills"),
+      deaths: line("deaths"),
+      assists: line("assists"),
+      goldLead: line("gd15"),
+      soloKills: line("soloKills"),
+      firstBlood: line("firstBlood"),
+    },
+    last3: last3Of(p.name, p.team),
+    next3: next3Of(p.team),
+  };
+}
+
 /** Everything the picture shows, as the page's props. */
 export const TRANSFERS_PICTURE: TransfersPageProps = {
   account: MANAGER.team,
@@ -124,4 +193,5 @@ export const TRANSFERS_PICTURE: TransfersPageProps = {
   fixtures: FIXTURES,
   teams: TEAMS_PLAYING,
   initialPlan: PICTURE_PLAN,
+  cards: Object.fromEntries([...SQUAD, ...PLAYERS].map((p) => [p.id, cardOf(p)])),
 };

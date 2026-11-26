@@ -1,0 +1,117 @@
+/* The tapped player's card under Transfers' Rift (approved/transfers/, What binds 6). Every value is a
+   token. The phone is the theme's `measure.phone` (a media query can't read a token). */
+
+.transfers__card {
+  display: grid;
+  grid-template-columns: var(--m-transfers-card-who) minmax(0, 1fr) var(--m-transfers-card-series);
+  margin-top: var(--s-5);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+  border-top: var(--m-rule-heavy) solid var(--head-band);
+}
+.transfers__card > * + * {
+  border-left: var(--m-rule) solid var(--line);
+}
+.transfers__card-who {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.transfers__card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+}
+.transfers__card-name {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+}
+.transfers__card-keys {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding: 0 var(--s-4) var(--s-4);
+}
+/* `× Sell` red, `+ Buy` green (plate.md, One main action). */
+.transfers__card-sell,
+.transfers__card-buy {
+  flex: 1;
+  min-height: var(--m-row);
+  font: inherit;
+  font-weight: var(--w-bold);
+  color: var(--bg);
+  border: 0;
+  cursor: pointer;
+}
+.transfers__card-sell {
+  background: var(--rise);
+}
+.transfers__card-buy {
+  background: var(--add);
+}
+.transfers__card-mid,
+.transfers__card-series {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--s-1);
+  padding: var(--s-3) var(--s-4);
+}
+.transfers__card-label {
+  font-size: var(--size-small);
+}
+.transfers__card-stats {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  gap: var(--s-2);
+}
+.transfers__card-stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(var(--m-row) + var(--s-4));
+  padding: 0 var(--s-1);
+  background: var(--fill);
+  white-space: nowrap;
+}
+.transfers__card-stat dt,
+.transfers__card-stat dd span,
+.transfers__card-cells span {
+  font-size: var(--size-small);
+}
+.transfers__card-stat dd {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-1);
+  font-size: var(--size-lead);
+}
+.transfers__card-cells {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+  margin: 0 0 var(--s-2);
+  padding: 0;
+  list-style: none;
+}
+.transfers__card-cells li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: var(--m-row);
+  padding: 0 var(--s-1);
+  background: var(--fill);
+  white-space: nowrap;
+}
+
+/* The phone has no picture yet: the card's parts stacked. */
+@media (max-width: 600px) {
+  .transfers__card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .transfers__card > * + * {
+    border-left: 0;
+    border-top: var(--m-rule) solid var(--line);
+  }
+}

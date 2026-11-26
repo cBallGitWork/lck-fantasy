@@ -1,183 +1,213 @@
-/* Transfers (docs/design/approved/transfers/). Every value is a token. */
+/* Transfers (docs/design/approved/transfers/): the page, its panels and its tables. Every value is a
+   token. The phone is the theme's `measure.phone` (a media query can't read a token). */
 
-/* The head's figures, as FPL's: free transfers, cost, bank; the bank red below zero. */
-.transfers__figures {
-  display: flex;
-  gap: var(--s-2);
-  margin-top: var(--s-3);
+/* The title line: the week, then the deadline after a rule, then the views at the right. */
+.transfers__week {
+  font-size: var(--size-body);
 }
-.transfers__figure {
+.transfers__deadline {
+  padding-left: var(--s-4);
+  border-left: var(--m-rule) solid var(--line);
+}
+.transfers__views {
+  margin-left: auto;
+  align-self: center;
+}
+
+/* The Rift (or List view's table) at the left, Your transfers and Confirmed in a column beside it. */
+.transfers__object {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-pick-column);
+  gap: var(--s-4);
+}
+.transfers__column {
   display: flex;
   flex-direction: column;
-  min-width: calc(var(--s-7) * 3);
-  padding: var(--s-2) var(--s-4);
-  background: var(--paper);
-  border: var(--m-rule) solid var(--line);
-  border-top: var(--m-rule-heavy) solid var(--text);
-}
-.transfers__figure b {
-  font-size: var(--size-head);
-  font-weight: var(--w-bold);
-  color: var(--text);
-  white-space: nowrap;
-}
-.transfers__figure--over b {
-  color: var(--over);
-}
-
-.transfers__controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--s-3);
-}
-
-/* The changes so far, Reset, and Review and confirm. */
-.transfers__changes {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--s-4);
-  margin-top: var(--s-4);
-  padding: var(--s-2) var(--s-4);
-  background: var(--paper);
-  border: var(--m-rule) solid var(--text);
-}
-.transfers__out {
-  color: var(--mid);
-}
-.transfers__actions {
-  display: flex;
-  align-items: center;
-  gap: var(--s-4);
-  white-space: nowrap;
-}
-.transfers__reset,
-.transfers__back,
-.transfers__undo,
-.transfers__chip,
-.transfers__add {
-  font: inherit;
-  color: var(--text);
-  background: none;
-  border: 0;
-  cursor: pointer;
-}
-.transfers__reset,
-.transfers__back {
-  min-height: var(--m-target);
-}
-
-/* The list's filters: role chips, then search, sort and team. */
-.transfers__roles,
-.transfers__tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-1);
-  margin-bottom: var(--s-2);
-  font-size: var(--size-small);
-}
-.transfers__chip,
-.transfers__search,
-.transfers__tool {
-  padding: var(--s-1) var(--s-2);
-  background: var(--paper);
-  font-size: var(--size-small);
-}
-.transfers__tool {
-  border: var(--m-rule) solid var(--line);
-}
-.transfers__chip--on {
-  background: var(--text);
-  color: var(--bg);
-  border-color: var(--text);
-}
-.transfers__search {
-  flex: 1;
-  min-width: 0;
-  font: inherit;
-  color: var(--text);
-}
-.transfers__search::placeholder,
-.transfers__tool {
-  color: var(--mid);
-  white-space: nowrap;
-}
-
-/* The player list. */
-.transfers__list {
-  background: var(--paper);
-}
-.transfers__list th {
-  padding: var(--s-1);
-}
-.transfers__list td {
-  height: var(--m-row);
-  padding: var(--s-1);
-  border-bottom: var(--m-rule) solid var(--fill);
-}
-.transfers__list .transfers__num {
-  text-align: right;
-  white-space: nowrap;
-}
-.transfers__list svg {
-  width: var(--size-small);
-  height: var(--size-small);
-}
-.transfers__name {
-  max-width: calc(var(--s-7) * 2 + var(--s-4));
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.transfers__name b {
-  font-weight: var(--w-bold);
-}
-.transfers__next {
-  font-size: var(--size-small);
-  line-height: var(--lh-mid);
-  white-space: nowrap;
-}
-.transfers__add {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--m-target);
-  height: var(--m-target);
-  border: var(--m-rule) solid var(--text);
-  font-weight: var(--w-bold);
-}
-.transfers__row--picked td {
-  background: var(--fill);
-}
-
-/* This week's confirms. */
-.transfers__confirm {
-  display: grid;
-  grid-template-columns: calc(var(--s-7) + var(--s-5)) 1fr var(--s-7) calc(var(--s-7) + var(--s-2));
   gap: var(--s-2);
+}
+
+/* The panels' figures: a label at the left, its figure at the right. */
+.transfers__figs > div {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: var(--s-2) 0;
-  border-top: var(--m-rule) solid var(--fill);
+  min-height: var(--m-row);
+  border-top: var(--m-rule) solid var(--line);
+}
+.transfers__figs dt {
+  color: var(--mid);
+}
+.transfers__figs dd {
+  font-weight: var(--w-semi);
+}
+/* Green on the bank, red on a cost and a bank below zero (What binds 15). */
+.transfers__chip-green,
+.transfers__chip-red {
+  padding: var(--m-rule-heavy) var(--s-2);
+  color: var(--bg);
+}
+.transfers__chip-green {
+  background: var(--add);
+}
+.transfers__chip-red {
+  background: var(--rise);
+}
+
+/* Your transfers: the figures, the draft, why the key is off, then Reset and Review and confirm. */
+.transfers__yours {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.transfers__draft {
+  flex: 1;
+  margin: 0;
+  padding: var(--s-1) 0 0;
+  list-style: none;
+  border-top: var(--m-rule) solid var(--line);
+}
+.transfers__draft li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: var(--m-row);
+}
+.transfers__block {
+  font-size: var(--size-small);
+  text-align: right;
+}
+.transfers__keys {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding-top: var(--s-2);
+}
+.transfers__reset {
+  min-height: var(--m-target);
+  font-weight: var(--w-semi);
+}
+
+/* Confirmed: each confirm, when and its cost under it; Undo on the newest. */
+.transfers__confirm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: calc(var(--m-row) + var(--s-4));
+  border-top: var(--m-rule) solid var(--line);
+}
+.transfers__confirm > div {
+  display: flex;
+  flex-direction: column;
 }
 .transfers__when {
   font-size: var(--size-small);
 }
-.transfers__cost {
+.transfers__undo {
+  min-height: var(--s-6);
+  padding: 0 var(--s-3);
+  font: inherit;
+  font-weight: var(--w-semi);
+  color: var(--text);
+  background: none;
+  border: var(--m-rule) solid var(--text);
+  cursor: pointer;
+}
+
+/* The tables, the list's and List view's: full width in their panel, 40px rows, figures right. */
+.transfers__table {
+  width: calc(100% + 2 * var(--s-4));
+  margin: 0 calc(var(--s-4) * -1);
+}
+.transfers__table th,
+.transfers__table td {
+  height: var(--m-row);
+  padding: 0 var(--s-1);
+  border-top: var(--m-rule) solid var(--line);
+  white-space: nowrap;
+  text-align: left;
+}
+.transfers__table th:first-child,
+.transfers__table td:first-child {
+  padding-left: var(--s-4);
+}
+.transfers__table th:last-child,
+.transfers__table td:last-child {
+  padding-right: var(--s-4);
+}
+.transfers__table .transfers__num,
+.transfers__table .transfers__act {
   text-align: right;
 }
-.transfers__confirm > :last-child {
-  justify-self: end;
-}
-.transfers__undo {
-  padding: 0 var(--s-2);
-  border: var(--m-rule) solid var(--text);
+.transfers__role th {
+  height: var(--s-6);
   font-size: var(--size-small);
-  font-weight: var(--w-bold);
-}
-.transfers__confirm--old {
-  color: var(--mid);
-}
-.transfers__confirm--old b {
   font-weight: var(--w-regular);
+  color: var(--mid);
+  background: var(--fill);
+}
+.transfers__role th:first-child {
+  font-size: var(--size-body);
+  font-weight: var(--w-bold);
+  color: var(--text);
+}
+.transfers__who {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.transfers__team {
+  display: inline-flex;
+  align-items: center;
+}
+.transfers__row--shown td {
+  background: var(--fill);
+}
+.transfers__row--shown td:first-child {
+  box-shadow: inset var(--m-rule-heavy) 0 0 var(--text);
+}
+.transfers__row--new td:first-child {
+  box-shadow: inset var(--m-rule-heavy) 0 0 var(--add);
+}
+/* `+` filled green, `×` red, `↺` edged (What binds 15). */
+.transfers__add,
+.transfers__sell,
+.transfers__back-key {
+  width: var(--m-target);
+  height: var(--m-target);
+  padding: 0;
+  font: inherit;
+  font-weight: var(--w-semi);
+  color: var(--bg);
+  border: 0;
+  cursor: pointer;
+}
+.transfers__add {
+  background: var(--add);
+}
+.transfers__sell {
+  background: var(--rise);
+}
+.transfers__back-key {
+  color: var(--text);
+  background: none;
+  border: var(--m-rule) solid var(--text);
+}
+
+/* The phone has no picture yet: one column, nothing stuck. */
+@media (max-width: 600px) {
+  .transfers__object {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .transfers__deadline {
+    flex-basis: 100%;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .transfers__views {
+    margin-left: 0;
+  }
+  .transfers__rift {
+    width: 100%;
+  }
 }

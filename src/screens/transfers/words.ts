@@ -34,7 +34,6 @@ export const WORDS = {
   owned: "Owned",
   next: "Next",
   buy: "Buy",
-  shirt: "Jersey",
   form: "Form",
   total: "Total",
   sell: "Sell",

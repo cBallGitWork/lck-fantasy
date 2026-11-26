@@ -15,7 +15,7 @@ export function Panel({
   className,
   children,
 }: {
-  title?: ReactNode;
+  title?: string;
   label?: string;
   band?: boolean;
   className?: string;

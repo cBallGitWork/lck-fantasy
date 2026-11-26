@@ -1,0 +1,76 @@
+/* Transfers' Rift view (approved/transfers/, What binds 1 to 3). Every value is a token. */
+
+.transfers__rift {
+  width: min(100%, calc(100svh - var(--m-rift-top)));
+}
+
+/* A role's group on the Rift: its name, said once, over its tiles side by side. */
+.transfers__group {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-1);
+  transform: translate(-50%, -50%);
+}
+.transfers__group-role {
+  padding: 0 var(--s-2);
+  background: var(--band);
+  color: var(--text);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-body);
+}
+.transfers__group-tiles {
+  display: flex;
+  gap: var(--s-1);
+}
+/* The strip over the shirt: `×` at its left on red, then the price (What binds 2, 15). */
+.transfers__x {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--s-5);
+  padding: 0;
+  font: inherit;
+  font-weight: var(--w-bold);
+  color: var(--bg);
+  background: var(--rise);
+  border: 0;
+  cursor: pointer;
+}
+/* Bought and not yet confirmed: the green outline. */
+.transfers__tile--new {
+  outline: var(--m-rule-heavy) solid var(--add);
+  outline-offset: var(--m-rule-heavy);
+}
+
+/* A sold player's slot: dashed, `+` in the card, `↺ Siwoo` on the plate. */
+.transfers__empty {
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--share-tile) * 100cqw);
+}
+.transfers__empty-plus,
+.transfers__empty-back {
+  font: inherit;
+  color: var(--text);
+  border: var(--m-rule) dashed var(--text);
+  cursor: pointer;
+}
+.transfers__empty-plus {
+  height: calc(var(--share-tile-card) * 100cqw);
+  background: var(--dim);
+  border-bottom: 0;
+  font-size: var(--size-title);
+}
+.transfers__empty-back {
+  padding: var(--s-2) 0;
+  background: var(--band);
+  border-top: 0;
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-body);
+}

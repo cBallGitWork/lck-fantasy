@@ -12,18 +12,20 @@ import {
   emptySlots,
   freeLeft,
   freeUsed,
+  hitOf,
   listRows,
-  nextAgainst,
   pendingHit,
   remove,
   restore,
   reviewBlock,
   roleFilterFor,
+  slotHolding,
   transfersMade,
+  weekAgainst,
   type ListFilters,
   type Plan,
 } from "./plan";
-import { spotOf, STEP } from "./spots";
+import { groupAt } from "./spots";
 import { formatWon, WON_PER_M } from "../../parts";
 import type { SquadSlot } from "../../rift";
 
@@ -92,7 +94,7 @@ describe("several transfers in one go", () => {
   });
 
   test("with no open slot he fits, the + says to sell a player first (spec/12, Before anyone is sold)", () => {
-    expect(add(SQUAD, EMPTY_PLAN, named("DuDu"), RULES)).toEqual({ plan: EMPTY_PLAN, toast: "Squad's full. Sell a player first" });
+    expect(add(SQUAD, EMPTY_PLAN, named("DuDu"), RULES)).toEqual({ plan: EMPTY_PLAN, toast: "Sell a player first" });
     expect(add(SQUAD, removed("top"), named("Ryu"), RULES).toast).toBe("One coach only. Sell your coach first");
   });
 
@@ -102,9 +104,10 @@ describe("several transfers in one go", () => {
     expect(reviewBlock(SQUAD, plan, RULES)).toBe("Over budget");
   });
 
-  test("Review and confirm is off with no changes or a slot still empty", () => {
+  test("Review and confirm is off with no changes or players still to buy (approved/transfers/, What binds 4)", () => {
     expect(reviewBlock(SQUAD, EMPTY_PLAN, RULES)).toBe("No changes");
-    expect(reviewBlock(SQUAD, removed("top", "flex"), RULES)).toBe("Fill every slot");
+    expect(reviewBlock(SQUAD, removed("top"), RULES)).toBe("1 player to buy");
+    expect(reviewBlock(SQUAD, removed("top", "flex"), RULES)).toBe("2 players to buy");
     expect(reviewBlock(SQUAD, PICTURE_PLAN, RULES)).toBeUndefined();
   });
 });
@@ -139,7 +142,7 @@ describe("the head's figures", () => {
 
 describe("the list", () => {
   test("everyone not in the squad, by points, none greyed", () => {
-    expect(names(PICTURE_PLAN).slice(0, 6)).toEqual(["Chovy", "Keria", "ShowMaker", "Aiming", "Clozer", "PerfecT"]);
+    expect(names(PICTURE_PLAN).slice(0, 6)).toEqual(["Chovy", "Keria", "Oner", "ShowMaker", "Aiming", "Clozer"]);
     expect(names(PICTURE_PLAN)).not.toContain("Kingen");
     expect(names(EMPTY_PLAN)).toContain("Kingen");
   });
@@ -150,23 +153,24 @@ describe("the list", () => {
     expect(names(EMPTY_PLAN, { role: "coach" }).sort()).toEqual([...coaches].sort());
   });
 
-  test("a removed slot opens on the role of who stood there; the Flex and bench on all; the Coach on coaches", () => {
-    expect(roleFilterFor(SQUAD, "top")).toBe("top");
-    expect(roleFilterFor(SQUAD, "flex")).toBe("all");
-    expect(roleFilterFor(SQUAD, "bench1")).toBe("all");
-    expect(roleFilterFor(SQUAD, "coach")).toBe("coach");
+  test("the list opens on the sold player's role, whatever slot he stood in, and on All roles before any sale (What binds 9)", () => {
+    expect(roleFilterFor(SQUAD, removed("top"))).toBe("top");
+    expect(roleFilterFor(SQUAD, removed("flex"))).toBe("top");
+    expect(roleFilterFor(SQUAD, removed("bench1"))).toBe("mid");
+    expect(roleFilterFor(SQUAD, removed("coach"))).toBe("coach");
+    expect(roleFilterFor(SQUAD, EMPTY_PLAN)).toBe("all");
   });
 
   test("a role chip, the search, the team filter and the sort each narrow or reorder it", () => {
-    expect(names(PICTURE_PLAN, { role: "sup" })).toEqual(["Keria", "Pollu"]);
+    expect(names(PICTURE_PLAN, { role: "sup" })).toEqual(["Keria", "Lehends", "Pollu"]);
     expect(names(PICTURE_PLAN, { search: "cl" })).toEqual(["Clozer", "Clear"]);
     expect(names(PICTURE_PLAN, { team: "BRO" })).toEqual(["Clozer", "Pollu"]);
-    expect(names(PICTURE_PLAN, { sort: "price" }).slice(0, 2)).toEqual(["Chovy", "Aiming"]);
+    expect(names(PICTURE_PLAN, { sort: "price" }).slice(0, 2)).toEqual(["Chovy", "Oner"]);
   });
 
-  test("Next is the next opponent alone, no day", () => {
-    expect(nextAgainst(TRANSFERS_PICTURE.fixtures, "HLE")).toBe("v DK");
-    expect(nextAgainst(TRANSFERS_PICTURE.fixtures, "XXX")).toBe("");
+  test("Next is both of the week's opponents in the order played, no day (Craig, 26 Nov 2026)", () => {
+    expect(weekAgainst(TRANSFERS_PICTURE.fixtures, "HLE")).toBe("v DK, NS");
+    expect(weekAgainst(TRANSFERS_PICTURE.fixtures, "XXX")).toBe("");
   });
 });
 
@@ -187,10 +191,21 @@ describe("the nine by role", () => {
     expect(top.holders.find((h) => h.slot === "top")).toMatchObject({ empty: true, player: { name: "Zeus" } });
   });
 
-  test("a role's several tiles stand a tile apart; a single one at its spot", () => {
-    const [a, b] = [spotOf("mid", 0, 2), spotOf("mid", 1, 2)];
-    expect(b[0] - a[0]).toBe(STEP);
-    expect(spotOf("mid", 0, 1)).toEqual([(a[0] + b[0]) / 2, a[1]]);
+  test("a role's group stands at its place; a second Bot moves the bots' group left, clear of the Support", () => {
+    expect(groupAt("mid", 2)).toEqual(groupAt("mid", 1));
+    const [one, two] = [groupAt("bot", 1), groupAt("bot", 2)];
+    expect(two[0]).toBeLessThan(one[0]);
+    expect(two[1]).toBe(one[1]);
+  });
+
+  test("a player stands in a slot while he is one of the nine; a sold one in none", () => {
+    expect(slotHolding(SQUAD, PICTURE_PLAN, named("Kingen").id)).toBe("flex");
+    expect(slotHolding(SQUAD, PICTURE_PLAN, SQUAD.find((p) => p.name === "Siwoo")!.id)).toBeUndefined();
+  });
+
+  test("each transfer made now is free while free ones are left, then costs the hit", () => {
+    const rules = { ...RULES, freeTransfers: 1 };
+    expect([hitOf(rules, 0), hitOf(rules, 1)]).toEqual([0, HIT_POINTS]);
   });
 });
 

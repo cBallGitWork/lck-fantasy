@@ -1,6 +1,9 @@
 // The game's layer: the marks every League of Legends league shares, whatever its colours.
 // A league's map may not hold these keys.
 
+/** FPL's green: a rank moving up, and what a transfer adds. */
+const GREEN = "#4CD98A";
+
 export const game = {
   color: {
     /** A price rise, red as Korea writes a rise, lightened to read on a dark ground. */
@@ -8,8 +11,11 @@ export const game = {
     /** A price fall, blue as Korea writes a fall, lightened to read on a dark ground. */
     fall: "#6EA2FF",
     /** A rank's move in a league: up green, down red, as FPL's arrows (Craig, 24 Nov 2026). */
-    up: "#4CD98A",
+    up: GREEN,
     down: "#FF6B78",
+    /** What a transfer adds (Craig, 26 Nov 2026; plate.md, Colour): the bank chip, `+` to buy, the
+     *  bought player's outline. */
+    add: GREEN,
     /** Summoner's Rift, the game's own and the same in every league (Craig, 19 Nov 2026: "the rift is
      *  sacred"): the approved picture's map (docs/design/approved/pick-team/map.js, its calm painting).
      *  The jungle's walls, the ground you walk, the lanes and the river and its pits. */

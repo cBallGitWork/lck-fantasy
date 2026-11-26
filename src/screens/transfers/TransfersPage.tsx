@@ -1,6 +1,7 @@
-import { useCallback, useState } from "react";
-import { cx, Deadline, formatWon, MainAction, NONE, PageFrame, PageHead, signed, Toast, ViewToggle } from "../../parts";
-import { Rift, RIFT_VIEW, ROLE_NAME, Tile, type SquadSlot } from "../../rift";
+import { useState } from "react";
+import { Deadline, PageFrame, PageHead, Placeholder, SponsorNote, useAnnounce, ViewToggle } from "../../parts";
+import { RIFT_VIEW, type SquadSlot } from "../../rift";
+import type { CardFacts } from "./card";
 import { ConfirmSheet } from "./ConfirmSheet";
 import { Confirmed } from "./Confirmed";
 import { byRole, lineupIds, type SlotHolder } from "./lineup";
@@ -11,13 +12,16 @@ import {
   EMPTY_PLAN,
   freeLeft,
   freeUsed,
+  hitOf,
+  inSlot,
   moves,
-  nextAgainst,
+  outOf,
   pendingHit,
   remove,
   restore,
   reviewBlock,
   roleFilterFor,
+  slotHolding,
   transfersMade,
   type Confirm,
   type Fixture,
@@ -29,10 +33,12 @@ import {
   type TransferRules,
 } from "./plan";
 import { PlayerList } from "./PlayerList";
-import { spotOf } from "./spots";
+import { RiftSquad } from "./RiftSquad";
 import { SquadList } from "./SquadList";
+import { TransferCard } from "./TransferCard";
 import "./transfers.css";
 import { WORDS } from "./words";
+import { YourTransfers } from "./YourTransfers";
 
 /** Transfers' two views: the nine on the Rift, or listed by role (Craig, 16 Nov 2026). */
 export const TRANSFER_VIEWS = [RIFT_VIEW, WORDS.listView] as const;
@@ -56,6 +62,8 @@ export interface TransfersPageProps {
   fixtures: Record<string, Fixture[]>;
   /** The teams the Team filter offers. */
   teams: string[];
+  /** Each person's card figures, by id. */
+  cards: Record<string, CardFacts>;
   initialPlan?: Plan;
   /** The manager's last choice; Rift view on his first visit (spec/12). */
   view?: View;
@@ -67,38 +75,74 @@ export interface TransfersPageProps {
   onUndo?: (confirmId: string) => void;
 }
 
+/** Whose card shows before any tap: the latest bought, else the player just sold, else no one. */
+function firstShown(squad: SquadPlayer[], plan: Plan): string | null {
+  const bought = moves(squad, plan).filter((m) => m.in !== null);
+  return bought.at(-1)?.in?.id ?? (plan.replacing ? outOf(squad, plan.replacing).id : null);
+}
 
-/** Transfers (transfers.html, changed by Craig 16 Nov 2026): the nine by role, the changes, the list and the week's confirms. */
+/**
+ * Transfers (docs/design/approved/transfers/): the title line with the week, the deadline and the views;
+ * the Rift with all nine by role (or List view's table) and beside it Your transfers and Confirmed; the
+ * tapped player's card under both; the player list in the side column. The main column stays on screen
+ * while the list scrolls.
+ */
 export function TransfersPage(props: TransfersPageProps) {
   const { squad, rules, fixtures } = props;
+  const announce = useAnnounce();
   const [plan, setPlan] = useState<Plan>(props.initialPlan ?? EMPTY_PLAN);
   const [view, setView] = useState<View>(props.view ?? RIFT_VIEW);
   const [reviewing, setReviewing] = useState(props.reviewing ?? false);
-  const [toast, setToast] = useState<{ message: string; n: number } | null>(null);
-  const [filters, setFilters] = useState<ListFilters>({
-    role: plan.replacing ? roleFilterFor(squad, plan.replacing) : ALL,
-    search: "",
-    team: ALL,
-    sort: "points",
-  });
-  const endToast = useCallback(() => setToast(null), []);
+  const [note, setNote] = useState<string | null>(null);
+  const [shown, setShown] = useState<string | null>(() => firstShown(squad, plan));
+  const [filters, setFilters] = useState<ListFilters>({ role: roleFilterFor(squad, plan), search: "", team: ALL, sort: "points" });
 
   const made = transfersMade(squad, plan);
   const hit = pendingHit(rules, made);
   const bank = bankNow(squad, plan, rules.bank);
-  const done = moves(squad, plan).filter((m): m is { out: SquadPlayer; in: ListPlayer } => m.in !== null);
+  const all = moves(squad, plan);
+  const done = all.filter((m): m is { out: SquadPlayer; in: ListPlayer } => m.in !== null);
   const groups = byRole(squad, plan);
+  const card = shown ? [...squad, ...props.players].find((p) => p.id === shown) : undefined;
+  const bought = new Set(done.map((m) => m.in.id));
+  const isNew = (holder: SlotHolder) => !holder.empty && bought.has(holder.player.id);
+  const show = (holder: SlotHolder) => setShown(holder.player.id);
 
-  const say = (message: string) => setToast({ message, n: (toast?.n ?? 0) + 1 });
-  const take = (step: Step) => {
-    if (step.plan !== plan && step.plan.replacing && step.plan.replacing !== plan.replacing) {
-      setFilters({ ...filters, role: roleFilterFor(squad, step.plan.replacing) });
-    }
+  /** A step taken: the plan after it; the list moves to a newly sold player's role; his card shows. */
+  const take = (step: Step, who: string) => {
+    if (step.plan === plan) return;
+    if (step.plan.replacing && step.plan.replacing !== plan.replacing) setFilters({ ...filters, role: roleFilterFor(squad, step.plan) });
     setPlan(step.plan);
-    say(step.toast);
+    setShown(who);
   };
-  /** Tapping one of the nine: an empty slot gets its player back; anyone else is taken out. */
-  const tap = (holder: SlotHolder) => take(holder.empty ? restore(squad, plan, holder.slot) : remove(squad, plan, holder.slot));
+  const sell = (slot: SquadSlot) => {
+    const step = remove(squad, plan, slot);
+    take(step, (inSlot(squad, plan, slot) ?? outOf(squad, slot)).id);
+    announce(step.toast);
+  };
+  const putBack = (slot: SquadSlot) => {
+    const step = restore(squad, plan, slot);
+    take(step, outOf(squad, slot).id);
+    announce(step.toast);
+  };
+  /** A `+`: what it did is said at the list's top, where it was pressed (Craig, 26 Nov 2026). */
+  const buy = (p: ListPlayer) => {
+    const step = add(squad, plan, p, rules);
+    take(step, p.id);
+    setNote(step.toast);
+  };
+  /** An empty slot's `+`: the list fills it, on its sold player's role. */
+  const fill = (slot: SquadSlot) => {
+    const next = { ...plan, replacing: slot };
+    setPlan(next);
+    setFilters({ ...filters, role: roleFilterFor(squad, next) });
+  };
+  /** The card's one key: `× Sell` for one of the nine, `+ Buy` for anyone else. */
+  const cardKey = (p: ListPlayer) => {
+    const slot = slotHolding(squad, plan, p.id);
+    if (slot) sell(slot);
+    else buy(p);
+  };
   const reset = () => setPlan(EMPTY_PLAN);
   const chooseView = (next: View) => {
     setView(next);
@@ -107,105 +151,71 @@ export function TransfersPage(props: TransfersPageProps) {
 
   const side = (
     <>
-      <PlayerList {...props} plan={plan} filters={filters} onFilters={setFilters} onBuy={(p) => take(add(squad, plan, p, rules))} />
-      <Confirmed
-        week={props.week}
-        confirms={props.confirms}
-        onUndo={(id) => {
-          reset();
-          props.onUndo?.(id);
-        }}
-      />
+      <PlayerList {...props} plan={plan} filters={filters} note={note} shown={shown} onFilters={setFilters} onShow={(p) => setShown(p.id)} onBuy={buy} />
+      <Placeholder word={WORDS.sponsor} height="sponsorH" />
+      <SponsorNote />
     </>
   );
 
   return (
-    <PageFrame screen="transfers" active="transfers" account={props.account} side={side}>
+    <PageFrame screen="transfers" active="transfers" account={props.account} side={side} wideSide>
       <PageHead
         title={WORDS.title}
         hangul={WORDS.hangul}
-        sub={
+        line={
           <>
-            {props.competition} {props.week} · <Deadline {...props.deadline} />
+            <span className="transfers__week quiet">
+              {props.competition} {props.week}
+            </span>
+            <span className="transfers__deadline">
+              <Deadline {...props.deadline} />
+            </span>
+            <span className="transfers__views">
+              <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={chooseView} label={WORDS.view} />
+            </span>
           </>
         }
-      >
-        <div className="transfers__figures">
-          <span className="transfers__figure quiet">
-            {WORDS.freeTransfers} <b className="num">{freeLeft(rules, made)}</b>
-          </span>
-          <span className="transfers__figure quiet">
-            {WORDS.cost} <b className="num">{signed(-hit)}</b>
-          </span>
-          <span className={cx("transfers__figure quiet", bank < 0 && "transfers__figure--over")}>
-            {WORDS.bank} <b className="num">{formatWon(bank)}</b>
-          </span>
+      />
+      <div className="transfers__object">
+        {view === RIFT_VIEW ? (
+          <RiftSquad groups={groups} fixtures={fixtures} shown={shown} isNew={isNew} onShow={show} onSell={sell} onFill={fill} onBack={putBack} />
+        ) : (
+          <SquadList
+            groups={groups}
+            fixtures={fixtures}
+            lastWeek={props.lastWeek}
+            shown={shown}
+            isNew={isNew}
+            onShow={show}
+            onTap={(holder) => (holder.empty ? putBack(holder.slot) : sell(holder.slot))}
+          />
+        )}
+        <div className="transfers__column">
+          <YourTransfers
+            free={freeLeft(rules, made)}
+            hit={hit}
+            bank={bank}
+            draft={all.map((m, i) => ({ ...m, hit: hitOf(rules, i) }))}
+            block={reviewBlock(squad, plan, rules)}
+            onReset={reset}
+            onReview={() => setReviewing(true)}
+          />
+          <Confirmed
+            week={props.week}
+            confirms={props.confirms}
+            onUndo={(id) => {
+              reset();
+              props.onUndo?.(id);
+            }}
+          />
         </div>
-      </PageHead>
-      <div className="transfers__controls">
-        <ViewToggle options={TRANSFER_VIEWS} chosen={view} onChoose={chooseView} label={WORDS.view} />
       </div>
-      {view === RIFT_VIEW ? (
-        <Rift>
-          {groups.flatMap(({ role, holders }) =>
-            holders.map((holder, i) => {
-              const at = spotOf(role, i, holders.length);
-              const selected = plan.replacing === holder.slot;
-              const onSelect = () => tap(holder);
-              // A sold player's slot: dashed and empty with his role and `+`, as the front door's; ↺ puts him back (Craig, 18 Nov 2026).
-              if (holder.empty)
-                return <Tile key={holder.slot} slot={role} name={ROLE_NAME[role]} team="" at={at} empty restore line="+" selected={selected} onSelect={onSelect} />;
-              return (
-                <Tile
-                  key={holder.slot}
-                  slot={role}
-                  name={holder.player.name}
-                  team={holder.player.team}
-                  at={at}
-                  mark={holder.mark}
-                  price={formatWon(holder.player.priceWon)}
-                  sell
-                  line={nextAgainst(fixtures, holder.player.team) || NONE}
-                  selected={selected}
-                  onSelect={onSelect}
-                />
-              );
-            }),
-          )}
-        </Rift>
-      ) : (
-        <SquadList groups={groups} fixtures={fixtures} lastWeek={props.lastWeek} replacing={plan.replacing} onTap={tap} />
-      )}
-      <div className="transfers__changes">
-        <span>
-          {done.map((m, i) => (
-            <span key={m.out.slot}>
-              {i > 0 && ", "}
-              <s className="transfers__out">
-                {m.out.name} {formatWon(m.out.priceWon)}
-              </s>
-              {" → "}
-              <b>
-                {m.in.name} {formatWon(m.in.priceWon)}
-              </b>
-            </span>
-          ))}
-        </span>
-        <span className="transfers__actions">
-          <button type="button" className="transfers__reset" onClick={reset}>
-            {WORDS.reset}
-          </button>
-          <MainAction disabledReason={reviewBlock(squad, plan, rules)} onClick={() => setReviewing(true)}>
-            {WORDS.review}
-          </MainAction>
-        </span>
-      </div>
+      {card && <TransferCard player={card} facts={props.cards[card.id]} mine={slotHolding(squad, plan, card.id) !== undefined} onKey={() => cardKey(card)} />}
       {reviewing && (
         <ConfirmSheet
           transfers={done}
           hit={hit}
           freeUsed={freeUsed(rules, made)}
-          freeHad={rules.freeTransfers}
           bankFrom={rules.bank}
           bankTo={bank}
           deadline={props.deadline}
@@ -217,11 +227,10 @@ export function TransfersPage(props: TransfersPageProps) {
             );
             setReviewing(false);
             reset();
-            say(WORDS.confirmed);
+            announce(WORDS.confirmed);
           }}
         />
       )}
-      {toast && <Toast message={toast.message} n={toast.n} onDone={endToast} />}
     </PageFrame>
   );
 }

@@ -1,13 +1,19 @@
-import { TeamBar, cx, Empty, formatWon, GoLink, Menu, pct, SideSection } from "../../parts";
-import { cardGo } from "../../paths";
-import { PERSON_ROLES, ROLE_NAME, RoleIcon } from "../../rift";
-import { ALL, listRows, nextAgainst, outOf, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
+import { Fragment } from "react";
+import { cx, Empty, formatWon, Menu, Panel, pct, TeamBar } from "../../parts";
+import { PERSON_ROLES, ROLE_NAME } from "../../rift";
+import { ALL, listRows, outOf, weekAgainst, type Fixture, type ListFilters, type ListPlayer, type Plan, type RoleFilter, type SortKey, type SquadPlayer } from "./plan";
 import { keyFor, replacing, SORT_WORDS, sortLabel, teamLabel, WORDS } from "./words";
+import "./PlayerList.css";
 
 /** All roles, the five roles, then Coach, so coaches can be browsed without selling yours first (Craig, 18 Nov 2026). */
-const ROLE_CHIPS: { value: RoleFilter; label: string }[] = [{ value: ALL, label: WORDS.allRoles }, ...PERSON_ROLES.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
+const ROLE_TABS: { value: RoleFilter; label: string }[] = [{ value: ALL, label: WORDS.allRoles }, ...PERSON_ROLES.map((role) => ({ value: role, label: ROLE_NAME[role] }))];
 
-/** The list: who can be bought, with role chips, search, sort and team; none greyed (Craig, 16 Nov 2026). */
+/**
+ * The player list, a panel in the side column (approved/transfers/, What binds 8 to 10): what the last
+ * `+` did at its top; role tabs; Find a player, Sort and Team; then rows grouped by role, each name, team
+ * bar and code, Price, Pts, Owned, both of the week's opponents and `+`. None greyed, your own left out,
+ * no price arrows. A row shows his card under the Rift.
+ */
 export function PlayerList({
   squad,
   players,
@@ -15,7 +21,10 @@ export function PlayerList({
   teams,
   plan,
   filters,
+  note,
+  shown,
   onFilters,
+  onShow,
   onBuy,
 }: {
   squad: SquadPlayer[];
@@ -24,23 +33,32 @@ export function PlayerList({
   teams: string[];
   plan: Plan;
   filters: ListFilters;
+  /** What the last `+` did: `Kingen added`, or why a buy was refused. */
+  note: string | null;
+  /** Whose card shows. */
+  shown: string | null;
   onFilters: (filters: ListFilters) => void;
+  onShow: (player: ListPlayer) => void;
   onBuy: (player: ListPlayer) => void;
 }) {
   const rows = listRows(squad, plan, players, filters);
   const out = plan.replacing ? outOf(squad, plan.replacing) : undefined;
+  const groups = PERSON_ROLES.map((role) => ({ role, rows: rows.filter((p) => p.role === role) })).filter((g) => g.rows.length > 0);
   return (
-    <SideSection title={out ? replacing(out.name) : WORDS.players}>
-      <div className="transfers__roles">
-        {ROLE_CHIPS.map((chip) => (
+    <Panel title={out ? replacing(out.name) : WORDS.players} band className="transfers__players">
+      <p className="transfers__note" role="status">
+        {note}
+      </p>
+      <div className="transfers__tabs">
+        {ROLE_TABS.map((tab) => (
           <button
-            key={chip.value}
+            key={tab.value}
             type="button"
-            className={cx("transfers__chip", filters.role === chip.value && "transfers__chip--on")}
-            aria-pressed={filters.role === chip.value}
-            onClick={() => onFilters({ ...filters, role: chip.value })}
+            className={cx("transfers__tab", filters.role === tab.value && "transfers__tab--on")}
+            aria-pressed={filters.role === tab.value}
+            onClick={() => onFilters({ ...filters, role: tab.value })}
           >
-            {chip.label}
+            {tab.label}
           </button>
         ))}
       </div>
@@ -64,54 +82,56 @@ export function PlayerList({
           items={[ALL, ...teams].map((team) => ({ label: team === ALL ? WORDS.all : team, onChoose: () => onFilters({ ...filters, team }) }))}
         />
       </div>
-      {rows.length === 0 ? (
+      {groups.length === 0 ? (
         <Empty title={WORDS.noPlayers} />
       ) : (
-        <table className="transfers__list">
-          <thead>
-            <tr>
-              <th aria-label={WORDS.role} />
-              <th>{WORDS.player}</th>
-              <th className="transfers__num">{WORDS.price}</th>
-              <th className="transfers__num">{WORDS.pts}</th>
-              <th className="transfers__num">{WORDS.owned}</th>
-              <th>{WORDS.next}</th>
-              <th aria-label={WORDS.buy} />
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((p) => (
-              <ListRow key={p.id} p={p} next={nextAgainst(fixtures, p.team)} onBuy={onBuy} />
-            ))}
-          </tbody>
+        <table className="transfers__list transfers__table">
+          {groups.map(({ role, rows }, i) => (
+            <Fragment key={role}>
+              <thead>
+                <tr className="transfers__role">
+                  <th scope="colgroup">{ROLE_NAME[role]}</th>
+                  {i === 0 ? (
+                    <>
+                      <th className="transfers__num">{WORDS.price}</th>
+                      <th className="transfers__num">{WORDS.pts}</th>
+                      <th className="transfers__num">{WORDS.owned}</th>
+                      <th>{WORDS.next}</th>
+                      <th aria-label={WORDS.buy} />
+                    </>
+                  ) : (
+                    <th colSpan={5} />
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((p) => (
+                  <tr key={p.id} className={cx(shown === p.id && "transfers__row--shown")}>
+                    <td className="transfers__who">
+                      <button type="button" className="key-bare" aria-pressed={shown === p.id} onClick={() => onShow(p)}>
+                        <b>{p.name}</b>
+                      </button>
+                      <span className="transfers__team quiet">
+                        <TeamBar team={p.team} wide />
+                        {p.team}
+                      </span>
+                    </td>
+                    <td className="transfers__num num">{formatWon(p.priceWon)}</td>
+                    <td className="transfers__num num">{p.points}</td>
+                    <td className="transfers__num num">{pct(p.ownedPct)}</td>
+                    <td>{weekAgainst(fixtures, p.team)}</td>
+                    <td className="transfers__act">
+                      <button type="button" className="transfers__add" aria-label={keyFor(WORDS.buy, p.name)} onClick={() => onBuy(p)}>
+                        +
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Fragment>
+          ))}
         </table>
       )}
-    </SideSection>
-  );
-}
-
-/** One row: role, name and team, price, points, owned, next opponent, `+`. A buy that can't be made is refused when tried. */
-function ListRow({ p, next, onBuy }: { p: ListPlayer; next: string; onBuy: (p: ListPlayer) => void }) {
-  return (
-    <tr>
-      <td>
-        <RoleIcon role={p.role} />
-      </td>
-      <td className="transfers__name" title={p.name}>
-        <GoLink go={cardGo(p.id, p.role === "coach")}>
-          <b>{p.name}</b> <TeamBar team={p.team} />
-          {p.team}
-        </GoLink>
-      </td>
-      <td className="transfers__num num">{formatWon(p.priceWon)}</td>
-      <td className="transfers__num num">{p.points}</td>
-      <td className="transfers__num num">{pct(p.ownedPct)}</td>
-      <td className="transfers__next">{next}</td>
-      <td>
-        <button type="button" className="transfers__add" aria-label={keyFor(WORDS.buy, p.name)} onClick={() => onBuy(p)}>
-          +
-        </button>
-      </td>
-    </tr>
+    </Panel>
   );
 }

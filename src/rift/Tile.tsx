@@ -26,7 +26,13 @@ interface TileProps {
   birthday?: boolean;
   /** His price in a dark chip over the card (Transfers). */
   price?: ReactNode;
-  /** A `×` at the card's top left: tapping the tile sells him (Transfers). */
+  /** A dark strip across the card's top, over the shirt: Transfers' `×` to sell and the price (approved/transfers/). */
+  strip?: ReactNode;
+  /** The page's own mark on the tile: Transfers' bought player. */
+  className?: string;
+  /** Stands in a row of its role's group on the Rift, at the Rift's tile size (Transfers). */
+  grouped?: boolean;
+  /** A `×` at the card's top left: tapping the tile sells him (front door). */
   sell?: boolean;
   /** A `↺` in the same corner: tapping the tile puts a sold player back (Transfers). */
   restore?: boolean;
@@ -72,12 +78,13 @@ export function Tile(p: TileProps) {
   const point = p.at && ("desk" in p.at ? (phone ? p.at.phone : p.at.desk) : p.at);
   return (
     <div
-      className={cx("tile", !point && "tile--bench", p.selected && "tile--selected", p.state && `tile--${p.state}`, p.empty && "tile--empty")}
+      className={cx("tile", p.className, p.grouped ? "tile--grouped" : !point && "tile--bench", p.selected && "tile--selected", p.state && `tile--${p.state}`, p.empty && "tile--empty")}
       style={point && { left: ofRift(point[0]), top: ofRift(point[1]) }}
       {...selectable(p.onSelect, p.selected)}
     >
       {p.price !== undefined && <div className="tile__price num">{p.price}</div>}
       <div className="tile__card">
+        {p.strip !== undefined && <div className="tile__strip">{p.strip}</div>}
         {point && p.slot && (
           <div className="tile__slot">
             <SlotName slot={p.slot} label={ROLE_NAME[p.slot]} />

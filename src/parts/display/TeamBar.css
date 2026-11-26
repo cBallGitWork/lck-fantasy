@@ -6,3 +6,6 @@
   margin-right: var(--s-1);
   vertical-align: -0.125em;
 }
+.team-bar--wide {
+  width: var(--m-team-bar-wide);
+}

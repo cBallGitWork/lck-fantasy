@@ -127,6 +127,9 @@ const PAIRS = [
   ["banner", "stage"],
   ["stageText", "stage"],
   ["onTilePlate", "tilePlate"],
+  ["text", "headBand"],
+  ["bg", "add"],
+  ["bg", "rise"],
 ] as const;
 
 describe.each(Object.keys(leagues))("in the %s's colours", (name) => {

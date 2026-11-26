@@ -200,18 +200,25 @@ Grilled 14 Nov 2026.
 - Make Captain shows only on a starter, never on the bench or the coach, as FPL
   ([spec/04](04-captain.md)). Any starter can be made Captain, one not starting this week
   included, as FPL; his card says Not starting (Craig, 17 Nov 2026).
-- On Transfers no row is greyed: a buy Flol refuses says why at the foot of the page. Over the
+- On Transfers no row is greyed: a buy Flol refuses says why at the top of the player list, where + was pressed (Craig, 26 Nov 2026). Over the
   budget is allowed while choosing; the bank turns red and Review and confirm is off, as FPL. So
   a full team is the only refusal a buy shows for money or cap (Craig, 16 and 18 Nov 2026).
+- On Transfers at desktop width the tapped player's card sits under the Rift, not over the page:
+  his season points and owned with their rank, the scoring lines' season figures (kills, deaths
+  and assists per game, gold lead at 15, solo kills, first blood) and no Form, his last 3 series
+  each with its opponent, his next 3, and the one key to sell or buy him. Before any tap it shows
+  the player just sold (Craig, 26 Nov 2026).
 - A sold player's slot is a dashed empty slot with his role and `+`, as the front door's, and ↺
   puts him back (Craig, 17 Nov 2026; kept over a faded tile, 18 Nov 2026).
 - Before anyone is sold, the list shows every player under All roles, and a + says to sell a
-  player first, as FPL (Craig, 18 Nov 2026).
+  player first, as FPL (Craig, 18 Nov 2026). Once a player is sold the list opens on his role, and
+  your own players are left out of it (Craig, 26 Nov 2026, approving the picture).
 - The list's role chips are All roles, the five roles, then Coach, so coaches can be browsed
   without selling yours first (Craig, 18 Nov 2026).
 - Each player in a list shows ▲ or ▼ for his last price move (prices move weekly at the
   deadline, [spec/02](02-prices-and-budget.md)); his card shows the amount. Example: Faker
-  ▲ ₩0.5m. Before a player's price first moves, nothing shows.
+  ▲ ₩0.5m. Before a player's price first moves, nothing shows. Transfers' lists show no arrows
+  (Craig, 16 and 26 Nov 2026).
 - Transfers lists each of the gameweek's confirms at the top, each with one Undo
   ([spec/03](03-transfers.md#undoing-a-transfer)).
 

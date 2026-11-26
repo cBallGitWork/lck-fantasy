@@ -79,6 +79,8 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 | `--fall` | #6EA2FF | a price fall, Korean blue lightened for navy |
 | `--up`, `--down` | #4CD98A, #FF6B78 | a rank's move in a league: up green, down red, with its ▲ or ▼ (Craig, 24 Nov 2026) |
 | `--over` | #FF6B78 | the bank below zero, over the budget, with its − (Craig, 16 Nov 2026) |
+| `--head-band` | #1D46A8 | a panel title's band, a brighter LCK blue (Craig, 26 Nov 2026) |
+| `--add` | #4CD98A | what a transfer adds: the bank chip, `+` to buy, the bought player's outline (Craig, 26 Nov 2026) |
 | `--signal` | #2BC4B5 | the second accent, teal, sparingly: the live dot, the focus ring |
 | `--stage` | #000508 | Live's dark stage |
 | `--stage-text` | #9AA6C8 | grey text on the stage |
@@ -93,7 +95,10 @@ map and the tile keep their earlier values until their own pictures are redrawn.
   (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
 - Overall's tier shield is a `--text` fill, one colour for every tier (Craig, 16 Nov 2026).
 - Colour is spent on meaning only, never to decorate: red and blue are prices and the bank; a rank's move
-  in a league is green up and red down, as FPL's arrows (Craig, 24 Nov 2026; was `--text`).
+  in a league is green up and red down, as FPL's arrows (Craig, 24 Nov 2026; was `--text`). On
+  Transfers, what a transfer changes is coloured (Craig, 26 Nov 2026, after it looked plain beside
+  FPL and UCL Fantasy; `approved/transfers/`): green (`--add`) fills the bank chip and `+` and edges
+  the bought player; red (`--rise`) fills the cost chip, the bank chip below zero and `×`.
 - Never colour alone: a rise also has ▲, a fall ▼, live a dot and the word.
 
 ## Parts
@@ -134,10 +139,11 @@ Each part is drawn one way on every screen.
 - **Panel** (Pick Team's buffs, bench and Save, a tapped player's card, the week's series): on
   `--paper` with a 1px `--line` round it, a 2px `--text` rule on top, its title 16/700 and its
   contents 16 in. One treatment for every panel; a screen's side sections become panels as it is
-  redrawn.
+  redrawn. From Transfers on, a panel's title sits on a `--head-band` band in place of the 2px rule
+  (Craig, 26 Nov 2026); Pick Team's panels follow when it is next redrawn.
 - **Marks:** C is round, and so are the live dot, your-player dot (8px, after the name)
   and a radio button. C is gold (`--ink`), its letter `--on-ink`. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
-- **A team's colour** is a 4px bar before its code wherever a list names a team (Craig, 24 Nov 2026:
+- **A team's colour** is a 4px bar before its code, 6px in Transfers' lists (Craig, 26 Nov 2026), wherever a list names a team (Craig, 24 Nov 2026:
   the look needed a little colour; `approved/team-colour/`): the kit's first colour that shows on
   the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
   in the bar's place. Never a tinted row, a wash or a coloured code.
@@ -156,7 +162,7 @@ Each part is drawn one way on every screen.
   an error is one line in `--text` under the field with a 1px `--text` edge on the field (Craig, 16 Nov 2026).
 - **A buff**: its gold icon, its name, its state under it (`Available`, `On this week`, `Unavailable` or `Played Week 3`), and an outlined key: `Play` when available, `Cancel` when on this week, none otherwise, as FPL's chips. What it does is its hover (spec/06). Never a count left (Craig, 19 Nov 2026).
 - **One main action** per screen, filled `--ink` gold with `--on-ink` words, `Save team` (Craig, 16 Nov 2026). Everything else is a link or
-  an outlined key.
+  an outlined key, save Transfers' small `+` and `×` and its card's `+ Buy` and `× Sell`, filled green and red (Craig, 26 Nov 2026).
 - **Placeholders** (sponsor, photo) are dashed `--soft` boxes with one word.
 - **A page that shows a sponsor** ends with `All sponsors are made up.`, 12px `--mid`
   (spec/13).

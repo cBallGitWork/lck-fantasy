@@ -10,6 +10,7 @@ import { PLAN } from "./riftPlan";
 import {
   BENCH_SLOTS,
   BenchBar,
+  benchPlace,
   BenchTile,
   flexPlays,
   isBench,
@@ -191,8 +192,11 @@ test("Card view shows the seven in broadcast order, with photo, crest, C, and fo
   const out = text(<Lineup cards={cards} />);
   const order = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"].map((n) => out.indexOf(n));
   expect(order).toEqual([...order].sort((a, b) => a - b));
-  expect(out).toContain("Flexplays Top");
-  expect(out).toContain("Coach감독");
+  // The strip says the slot alone; a Flex's role follows his team (approved/pick-team/1440-cards.png).
+  expect(out).toContain("FlexNot startingSiwooDK · Top");
+  expect(out).toContain("CoachkkOmaT1");
+  // A bench card's strip is its order and role (Craig, 25 Nov 2026).
+  expect(text(<LineupCard slot="mid" strip={benchPlace(1, "mid")} name="Bdd" team="KT" />)).toContain("1. MidBddKT");
   expect(html(<Lineup cards={cards} />)).toContain('alt="T1 crest"');
   expect(html(<Lineup cards={cards} />)).toContain('alt="Faker"');
   expect(html(<Lineup cards={cards} />)).toContain('alt="GEN crest"');

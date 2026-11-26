@@ -24,4 +24,4 @@ export { RIFT_SLOTS, type RiftPlace, type RiftPoint } from "./slots";
 export { MarkBadge, type Mark } from "./MarkBadge";
 export { Rift, Tile } from "./Tile";
 export { RIFT_VIEW, type BoardView } from "./views";
-export { MARK_NAME, markKey, markNews, ROLE_NAME, VIEWS } from "./words";
+export { benchPlace, MARK_NAME, markKey, markNews, ROLE_NAME, VIEWS } from "./words";

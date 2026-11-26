@@ -1,4 +1,4 @@
-import { BuffCard, cx, Panel, type BuffState } from "../../parts";
+import { BuffCard, Panel, type BuffState } from "../../parts";
 import type { PickBuffInfo } from "./fixtures";
 import type { ViewProps } from "./format";
 import { WORDS } from "./words";
@@ -6,10 +6,10 @@ import { WORDS } from "./words";
 /**
  * The three buffs (spec/06): each plays here, then cancels until the deadline. One a week, so while one
  * is on the rest are unavailable; one played in an earlier week says which. A panel beside the Rift on a
- * desk, and a row of three tiles over it on a phone (approved/pick-team/); in one row over the cards in
- * Card view, as its 14 Nov 2026 picture.
+ * desk, and a row of three tiles over it on a phone (approved/pick-team/); beside the bench under the
+ * cards in Card view (1440-cards.png).
  */
-export function Buffs({ data, state, dispatch, row }: ViewProps & { row?: boolean }) {
+export function Buffs({ data, state, dispatch }: ViewProps) {
   const on = state.draft.buff;
   const stateOf = (b: PickBuffInfo): BuffState => {
     if (b.here === on) return { kind: "on" };
@@ -18,7 +18,7 @@ export function Buffs({ data, state, dispatch, row }: ViewProps & { row?: boolea
   };
   return (
     <Panel title={WORDS.buffs} className="pick-team__buffs">
-      <div className={cx("pick-team__buff-list", row && "pick-team__buff-list--row")}>
+      <div className="pick-team__buff-list">
         {data.buffs.map((b) => (
           <BuffCard
             key={b.name}

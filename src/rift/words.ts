@@ -1,7 +1,7 @@
 // The Rift's words, named once. Every word a player reads in the Rift view and Card view lives here.
 
 import type { Mark } from "./MarkBadge";
-import type { RoleKey, SlotKey } from "./roles";
+import type { PersonRole, RoleKey, SlotKey } from "./roles";
 
 export const WORDS = {
   /** The bench bar's head. */
@@ -21,14 +21,14 @@ export const ROLE_NAME: Record<SlotKey, string> = {
   coach: "Coach",
 };
 
-/** The Coach's hangul, as the LCK names him. */
-export const COACH_HANGUL = "감독";
-
 /** The two ways a squad is drawn: the Rift view first. */
 export const VIEWS = ["Rift view", "Card view"] as const;
 
-/** Under a Flex on his lineup card: `plays Mid`. */
-export const flexRole = (role: RoleKey) => `plays ${ROLE_NAME[role]}`;
+/** A Flex's team on his lineup card, the role he plays after it: `DK · Top`. */
+export const teamPlays = (team: string, role: RoleKey) => `${team} · ${ROLE_NAME[role]}`;
+
+/** A bench place, over its tile or on its card's strip, as FPL's `1. DEF`: `1. Mid`, or `1.` for an empty one. */
+export const benchPlace = (order: number, role?: PersonRole) => (role ? `${order}. ${ROLE_NAME[role]}` : `${order}.`);
 
 export const MARK_NAME: Record<Mark, string> = { C: "Captain" };
 

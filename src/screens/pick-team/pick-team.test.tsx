@@ -101,32 +101,35 @@ test("Rift view, Faker tapped, no changes: the picture's content in its order", 
   expect(markup).toContain('href="/player/faker"');
 });
 
-test("Card view: the buffs, the seven starters as the broadcast lineup, the bench, then Save", () => {
+test("Card view (1440-cards.png): the seven starters, then the bench as the same cards with the buffs beside it, then Save", () => {
   const out = text(view(PICK_TEAM_STATES.cards));
   expectInOrder(out, [
     "Rift view",
     "Card view",
-    ...BUFFS,
     "TopZeusHLEv DK, NSForm 16.0₩14.0m",
     "JungleCanyonGENv BRO, T1Form 16.7₩15.5m",
     "MidCFakerT1v KT, GENForm 19.3₩18.5m",
     "BotRulerGENv BRO, T1Form 18.7₩16.0m",
     "SupportDelightHLEv DK, NSForm 12.7₩10.0m",
-    "Flexplays TopNot startingSiwooDKv HLE, KTForm 11.7₩11.5m",
-    "Coach감독",
-    "kkOmaT1v KT, GENForm 9.0₩7.0m",
+    // A Flex's role after his team; `Not starting` at his portrait's foot.
+    "FlexNot startingSiwooDK · Topv HLE, KTForm 11.7₩11.5m",
+    "CoachkkOmaT1v KT, GENForm 9.0₩7.0m",
+    // The bench's strip is its order and role (Craig, 25 Nov 2026: "Same cards").
     "Bench",
-    "Bdd",
-    "Cuzz",
+    "1. MidBddKTv T1, DKForm 5.3",
+    "2. JungleCuzzKTv T1, DKForm 7.7",
+    ...BUFFS,
     "No changes",
+    "Reset",
     "Save team",
     ...FAKER_CARD,
     ...SIDE_TAIL,
   ]);
   const markup = html(view(PICK_TEAM_STATES.cards));
-  expect(markup.match(/class="pcard[ "]/g)).toHaveLength(7);
-  expect(markup).toContain("pcard--selected");
+  expect(markup.match(/class="pcard[ "]/g)).toHaveLength(9);
+  expect(markup).toContain("bench-bar--cards");
   expect(markup).not.toContain("rift-map");
+  expect(markup).not.toContain("tile__card");
 });
 
 test("Save sticks to the foot only on a phone, over the Rift's tiles and under a menu; on a desk nothing hides under it", () => {

@@ -74,8 +74,9 @@ test("Card view: the seven as the broadcast lineup, each with his series and poi
   expectInOrder(out, ["Zeus", "HLE", "v T1 7", "v GEN 7", "14"]);
   expectInOrder(out, ["Faker", "T1", "v HLE 12", "v DK 10", "33"]);
   expect(out).not.toContain("×");
-  expectInOrder(out, ["Flex", "plays Mid", "BuLLDoG", "DNS", "v BRO 9", "v BFX 12", "21"]);
-  expectInOrder(out, ["Coach", "감독", "kkOma", "T1", "v HLE 8", "v DK 8", "16"]);
+  // The card is one part (plate.md, Card view): a Flex's role after his team.
+  expectInOrder(out, ["Flex", "BuLLDoG", "DNS · Mid", "v BRO 9", "v BFX 12", "21"]);
+  expectInOrder(out, ["Coach", "kkOma", "T1", "v HLE 8", "v DK 8", "16"]);
   expect(out).not.toContain("Full stats");
   const cards = html(<PerfectGameCards game={PERFECT_WEEK3} />);
   expect(cards.match(/class="pcard( |")/g)).toHaveLength(7);

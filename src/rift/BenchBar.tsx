@@ -3,12 +3,16 @@ import { cx, Panel } from "../parts";
 import "./BenchBar.css";
 import type { PersonRole } from "./roles";
 import { Tile } from "./Tile";
-import { ROLE_NAME, WORDS } from "./words";
+import { benchPlace, WORDS } from "./words";
 
-/** The bench, beside or under the Rift or the cards: a panel on the Rift's own ground, `Bench`, then each bench player's tile. */
-export function BenchBar({ className, children }: { className?: string; children: ReactNode }) {
+/**
+ * The bench, beside or under the Rift: a panel on the Rift's own ground, `Bench`, then each bench
+ * player's tile. Under the cards (`cards`), a plain panel of their lineup cards, each a starter's width
+ * (plate.md, Card view).
+ */
+export function BenchBar({ className, cards, children }: { className?: string; cards?: boolean; children: ReactNode }) {
   return (
-    <Panel title={WORDS.bench} className={cx("bench-bar", className)}>
+    <Panel title={WORDS.bench} className={cx("bench-bar", cards && "bench-bar--cards", className)}>
       <div className="bench-bar__tiles">{children}</div>
     </Panel>
   );
@@ -54,7 +58,7 @@ export function BenchTile({
   return (
     <div className="bench-slot">
       <span className="bench-slot__role quiet">
-        {order}.{role && ` ${ROLE_NAME[role]}`}
+        {benchPlace(order, role)}
       </span>
       <Tile
         {...tile}

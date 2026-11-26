@@ -20,6 +20,28 @@ test("a swap can start from the bench: tap Bdd, then Faker lit, and they trade p
   expect(changeCount(s.saved, s.draft)).toBe(1);
 });
 
+test("mid-swap in Card view (1440-cards.png): the tapped card solid, those he can swap with dashed, the rest dimmed", () => {
+  const cards = (state: PickState) => html(view(state)).match(/class="pcard(?: [^"]*)?"/g) ?? [];
+  // Faker tapped: Bdd, the bench Mid, the one he can swap with (spec/01).
+  const faker = cards(PICK_TEAM_STATES.cards);
+  expect(faker.filter((c) => c.includes("pcard--selected"))).toHaveLength(1);
+  expect(faker[7]).toContain("pcard--fit");
+  expect(faker.filter((c) => c.includes("pcard--dim"))).toHaveLength(7);
+  // A bench player tapped lights the other: the two swap order (spec/01).
+  const bench = cards({ ...PICK_TEAM_STATES.cards, selected: "cuzz" });
+  expect(bench[7]).toContain("pcard--fit");
+  expect(bench[8]).toContain("pcard--selected");
+});
+
+test("mid-swap in Rift view (1440-swap.png): Siwoo, the Flex, tapped; Zeus and both bench players lit; Bench Boost unsaved counts", () => {
+  const out = html(view(PICK_TEAM_STATES.swap));
+  expect(out.match(/tile--fit/g)).toHaveLength(3);
+  expect(out.match(/tile--selected/g)).toHaveLength(1);
+  expect(out.match(/tile--dim/g)).toHaveLength(5);
+  expectInOrder(text(view(PICK_TEAM_STATES.swap)), ["1 change", "Reset", "Save team"]);
+  expect(out).not.toMatch(/main-action__key[^"]*"[^>]*disabled/);
+});
+
 test("Make Captain shows only on a starter: a bench player's card has none; one not starting this week can be Captain, his card saying so", () => {
   const bench = text(view({ ...NONE_TAPPED, selected: "bdd" }));
   expect(bench).toContain("Full card ›");

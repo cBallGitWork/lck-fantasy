@@ -47,12 +47,10 @@ const measure = {
   dot: 8,
   /** The C on a Rift tile. */
   mark: 20,
-  /** The C on a lineup card. */
-  markCard: 28,
   /** The C on a player's breakdown sheet (Craig, 16 Nov 2026: "make C bigger"). */
   markSheet: 32,
   roleIcon: 28,
-  /** The role icon on a lineup card's head. */
+  /** The role icon beside a name in a list (Live). */
   roleIconSmall: 20,
   shirtW: 56,
   shirtH: 50,
@@ -109,7 +107,12 @@ const measure = {
   /** A menu's list: the Admin menu. */
   menuW: 220,
   cardHead: 48,
-  cardPhoto: 176,
+  /** A lineup card (approved/pick-team/1440-cards.png): its role strip, its portrait and the crest in it
+   *  until photos exist, and its two ruled rows. */
+  cardStrip: 24,
+  cardPhoto: 132,
+  crestPortrait: 88,
+  cardRow: 32,
   crest: 96,
   /** A crest beside a team code: in a player's panel. */
   crestSmall: 20,
@@ -125,6 +128,8 @@ const measure = {
   crestCard: 64,
   /** Pick Team's column beside the Rift: the buffs, the bench, then Save (approved/pick-team/). */
   pickColumn: 336,
+  /** Save team at the right of Card view's one bar (approved/pick-team/1440-cards.png). */
+  pickSave: 304,
 } as const;
 
 /** Opacities: the band across a tier shield; an empty slot's shirt outline (front door picture). A

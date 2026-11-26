@@ -1,6 +1,6 @@
 import { photoOf } from "../../fixtures/photos";
 import { money, oneDecimal } from "../../parts";
-import { BENCH_SLOTS, BenchBar, BenchTile, flexPlays, Lineup, LINEUP_ORDER, RIFT_SLOTS, Rift, Tile, type LineupCardProps } from "../../rift";
+import { BENCH_SLOTS, BenchBar, benchPlace, BenchTile, flexPlays, Lineup, LineupCard, LINEUP_ORDER, RIFT_SLOTS, Rift, Tile, type LineupCardProps } from "../../rift";
 import type { PickPlayer } from "./fixtures";
 import { fixtureLine, markOf, type ViewProps } from "./format";
 import { swapIds } from "./model";
@@ -49,13 +49,10 @@ export function RiftBoard(props: ViewProps) {
   );
 }
 
-/** Card view: the seven starters as the LCK broadcast's lineup. */
-export function CardBoard(props: ViewProps) {
+/** A player's lineup card, as Card view draws him (approved/pick-team/1440-cards.png). */
+function cardOf(props: ViewProps, swap: ReturnType<typeof swapState>, p: PickPlayer): Omit<LineupCardProps, "slot"> {
   const { data, state, dispatch } = props;
-  const swap = swapState(props);
-  const cards: LineupCardProps[] = starters(props).map(({ slot, p }) => ({
-    slot,
-    plays: flexPlays(slot, p.role),
+  return {
     name: p.name,
     team: p.team,
     photo: photoOf(p.name),
@@ -73,7 +70,13 @@ export function CardBoard(props: ViewProps) {
     selected: p.id === state.selected,
     state: swap(p.id),
     onSelect: () => dispatch({ type: "select", id: p.id }),
-  }));
+  };
+}
+
+/** Card view: the seven starters as the LCK broadcast's lineup. */
+export function CardBoard(props: ViewProps) {
+  const swap = swapState(props);
+  const cards: LineupCardProps[] = starters(props).map(({ slot, p }) => ({ ...cardOf(props, swap, p), slot, plays: flexPlays(slot, p.role) }));
   return (
     <div className="pick-team__cards">
       <Lineup cards={cards} />
@@ -81,30 +84,35 @@ export function CardBoard(props: ViewProps) {
   );
 }
 
-/** The bench: each bench player; tap one then the other to swap their order. Lit when the tapped player can swap with him. */
+/**
+ * The bench: each bench player; tap one then the other to swap their order. Lit when the tapped player
+ * can swap with him. In Rift view the Rift's own tiles on its green; in Card view the starters' own card,
+ * its strip the bench order and role, in a panel (Craig, 25 Nov 2026: "Same cards").
+ */
 export function Bench(props: ViewProps) {
   const { data, state, dispatch } = props;
   const swap = swapState(props);
-  const [first, second] = BENCH_SLOTS.map((slot, i) => {
-    const p = data.players[state.draft.slots[slot]] as PickPlayer;
-    return (
-      <BenchTile
-        key={slot}
-        order={i + 1}
-        role={p.role}
-        name={p.name}
-        team={p.team}
-        line={fixtureLine(data.series, p.team)}
-        state={swap(p.id)}
-        selected={p.id === state.selected}
-        onSelect={() => dispatch({ type: "select", id: p.id })}
-      />
-    );
-  });
+  const cards = state.view === "cards";
   return (
-    <BenchBar className="pick-team__bench">
-      {first}
-      {second}
+    <BenchBar className="pick-team__bench" cards={cards}>
+      {BENCH_SLOTS.map((slot, i) => {
+        const p = data.players[state.draft.slots[slot]] as PickPlayer;
+        return cards ? (
+          <LineupCard key={slot} {...cardOf(props, swap, p)} slot={p.role} strip={benchPlace(i + 1, p.role)} />
+        ) : (
+          <BenchTile
+            key={slot}
+            order={i + 1}
+            role={p.role}
+            name={p.name}
+            team={p.team}
+            line={fixtureLine(data.series, p.team)}
+            state={swap(p.id)}
+            selected={p.id === state.selected}
+            onSelect={() => dispatch({ type: "select", id: p.id })}
+          />
+        );
+      })}
     </BenchBar>
   );
 }

@@ -43,14 +43,45 @@
   width: min(100%, calc(100svh - var(--m-rift-top)));
 }
 
-/* Card view, as its 14 Nov 2026 picture: the buffs in one row, the cards, the bench, then Save. */
+/* Card view (approved/pick-team/1440-cards.png): the seven cards in a row; under them the bench panel, its
+   two cards each a starter's width, with Buffs beside it, level at top and foot; then Save as one bar. */
 .pick-team__object--cards {
+  grid-template-columns: calc((100% - 6 * var(--s-2)) / 7 * 2 + var(--s-2) + 2 * var(--s-4) + 2 * var(--m-rule)) minmax(0, 1fr);
+  grid-template-areas:
+    "cards cards"
+    "bench buffs"
+    "save save";
   gap: var(--s-4);
 }
-.pick-team__buff-list--row {
+.pick-team__cards {
+  grid-area: cards;
+}
+.pick-team__object--cards .pick-team__bench {
+  grid-area: bench;
+}
+/* The buffs share the bench's height, a row each. */
+.pick-team__object--cards .pick-team__buffs {
+  grid-area: buffs;
+  display: flex;
+  flex-direction: column;
+}
+.pick-team__object--cards .pick-team__buff-list {
+  flex: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: var(--s-4);
+  grid-auto-rows: 1fr;
+}
+.pick-team__object--cards .pick-team__save {
+  grid-area: save;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+.pick-team__object--cards .pick-team__changes {
+  margin-bottom: 0;
+}
+.pick-team__object--cards .pick-team__save-key {
+  width: var(--m-pick-save);
 }
 
 /* Save: the changes and Reset on one line, Save team under them, as wide as the panel. */
@@ -66,6 +97,9 @@
 }
 .pick-team__reset--idle {
   color: var(--mid);
+}
+.pick-team__save-key {
+  display: flex;
 }
 
 /* The tapped player's card: the group his ranks are among, said once over their column; each row a figure and its rank. */
@@ -159,8 +193,15 @@
     position: absolute;
     clip-path: inset(50%);
   }
-  .pick-team__buff-list,
-  .pick-team__buff-list--row {
+  .pick-team__object--cards {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "cards"
+      "bench"
+      "buffs"
+      "save";
+  }
+  .pick-team__buff-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--s-2);
@@ -175,5 +216,10 @@
   }
   .pick-team__changes {
     margin-bottom: 0;
+  }
+  .pick-team__save-key,
+  .pick-team__object--cards .pick-team__save-key {
+    flex: 1;
+    width: auto;
   }
 }

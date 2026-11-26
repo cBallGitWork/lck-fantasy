@@ -19,7 +19,8 @@ export const VIEWS = [
 /**
  * Pick Team, drawn from its state (docs/design/approved/pick-team/): the title line with the week, the
  * deadline and the views; in Rift view the Rift at the left with the buffs, bench and Save in a column
- * beside it; in Card view, as its 14 Nov 2026 picture, the buffs, the cards, the bench and Save in turn.
+ * beside it; in Card view (1440-cards.png) the seven cards in a row, the bench's two cards with the buffs
+ * beside them under it, then Save as one bar.
  * The side column holds the tapped player's card and the week's series, both panels.
  */
 export function PickTeamView({ data, state, dispatch }: ViewProps) {
@@ -58,9 +59,19 @@ export function PickTeamView({ data, state, dispatch }: ViewProps) {
         }
       />
       <div className={cx("pick-team__object", `pick-team__object--${state.view}`)}>
-        <Buffs {...props} row={!rift} />
-        {rift ? <RiftBoard {...props} /> : <CardBoard {...props} />}
-        <Bench {...props} />
+        {rift ? (
+          <>
+            <Buffs {...props} />
+            <RiftBoard {...props} />
+            <Bench {...props} />
+          </>
+        ) : (
+          <>
+            <CardBoard {...props} />
+            <Bench {...props} />
+            <Buffs {...props} />
+          </>
+        )}
         <SavePanel {...props} />
       </div>
     </PageFrame>
@@ -80,9 +91,11 @@ function SavePanel({ state, dispatch }: ViewProps) {
         </button>
       </div>
       {/* `No changes` already leads the panel, so the disabled key's own reason stays empty. */}
-      <MainAction wide disabledReason={changes === 0 ? "" : undefined} onClick={() => dispatch({ type: "save" })}>
-        {WORDS.save}
-      </MainAction>
+      <div className="pick-team__save-key">
+        <MainAction wide disabledReason={changes === 0 ? "" : undefined} onClick={() => dispatch({ type: "save" })}>
+          {WORDS.save}
+        </MainAction>
+      </div>
     </Panel>
   );
 }

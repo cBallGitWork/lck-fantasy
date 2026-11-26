@@ -1,8 +1,9 @@
+/* Card view (approved/pick-team/1440-cards.png): each card a panel with the Rift tile's dark role strip,
+   the portrait on --fill, then name, team, and two ruled rows. */
 .lineup {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: var(--s-2);
-  margin-bottom: var(--s-2);
 }
 .pcard {
   position: relative;
@@ -10,93 +11,89 @@
   flex-direction: column;
   min-width: 0;
   background: var(--paper);
-  border: var(--m-rule) solid var(--text);
+  border: var(--m-rule) solid var(--line);
 }
 .pcard[role="button"] {
   cursor: pointer;
 }
-.pcard--selected {
-  outline: var(--m-rule-heavy) solid var(--text);
-}
+/* Mid-swap, as a Rift tile: the tapped card a solid outline, those it can swap with a dashed one, the rest dimmed. */
+.pcard--selected,
 .pcard--fit {
-  outline: var(--m-rule-heavy) dashed var(--text);
+  z-index: 1;
+  outline: var(--m-rule-heavy) solid var(--text);
   outline-offset: var(--m-rule-heavy);
 }
+.pcard--fit {
+  outline-style: dashed;
+}
 .pcard--dim {
-  border-color: var(--line);
-  color: var(--mid);
+  filter: saturate(var(--opacity-dim-colour)) brightness(var(--opacity-dim));
 }
 .pcard__role {
-  height: var(--m-card-head);
-  display: flex;
-  gap: var(--s-1);
-  align-items: center;
-  padding: var(--s-1) var(--s-2);
-  border-bottom: var(--m-rule) solid var(--line);
+  background: var(--band);
+  color: var(--text);
   font-size: var(--size-small);
-  line-height: var(--lh-mid);
-}
-.pcard__role .role-icon {
-  width: var(--m-role-icon-small);
-  height: var(--m-role-icon-small);
-}
-.pcard__role small {
-  display: block;
-  color: var(--mid);
-  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  line-height: var(--m-card-strip);
+  text-align: center;
 }
 .pcard__photo {
   position: relative;
   display: flex;
-  height: var(--m-card-photo);
-  margin: var(--s-2);
-}
-.pcard__photo--crest {
   align-items: center;
   justify-content: center;
-}
-.pcard__news {
-  position: absolute;
-  left: var(--s-1);
-  bottom: var(--s-1);
-}
-.pcard__news .tag {
-  background: var(--paper);
+  height: var(--m-card-photo);
+  background: var(--fill);
 }
 .pcard__mark {
   position: absolute;
-  right: var(--s-1);
-  top: var(--s-1);
+  right: var(--s-2);
+  top: var(--s-2);
+}
+/* May not start: the plate's tag at the portrait's foot. */
+.pcard__news {
+  position: absolute;
+  left: var(--s-2);
+  bottom: var(--s-2);
+}
+.pcard__news .tag {
+  background: var(--band);
 }
 .pcard__name {
+  padding: var(--s-2) var(--s-3) 0;
   font-size: var(--size-head);
   font-weight: var(--w-bold);
-  padding: 0 var(--s-2);
+  letter-spacing: var(--track-head);
   line-height: var(--lh-snug);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .pcard__team {
-  padding: 0 var(--s-2) var(--s-2);
+  padding: 0 var(--s-3) var(--s-2);
+  font-size: var(--size-small);
+}
+.pcard__next,
+.pcard__foot {
+  padding: 0 var(--s-3);
+  border-top: var(--m-rule) solid var(--line);
+  color: var(--mid);
+  font-size: var(--size-small);
+  line-height: var(--m-card-row);
+  white-space: nowrap;
 }
 .pcard__next {
   margin-top: auto;
-  border-top: var(--m-rule) solid var(--line);
-  padding: var(--s-2);
-  font-size: var(--size-small);
-  font-family: var(--font-mono);
-  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .pcard__foot {
-  border-top: var(--m-rule) solid var(--line);
   display: flex;
   justify-content: space-between;
-  padding: var(--s-1) var(--s-2);
-  font-family: var(--font-mono);
-  white-space: nowrap;
+  gap: var(--s-1);
 }
 .pcard__foot b {
+  font-family: var(--font-mono);
   color: var(--text);
-  font-weight: var(--w-regular);
+  font-weight: var(--w-semi);
 }

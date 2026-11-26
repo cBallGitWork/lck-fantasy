@@ -1,16 +1,17 @@
 import type { ReactNode } from "react";
 import { Crest, cx, MeDot, PlayerPhoto, selectable, Tag } from "../parts";
 import "./Lineup.css";
-import { RoleIcon } from "./RoleIcon";
 import type { RoleKey, SlotKey } from "./roles";
-import { LINEUP_ORDER, slotIcon } from "./roles";
+import { LINEUP_ORDER } from "./roles";
 import { MarkBadge, type Mark } from "./MarkBadge";
 import { SlotName } from "./SlotName";
-import { COACH_HANGUL, flexRole, ROLE_NAME } from "./words";
+import { ROLE_NAME, teamPlays } from "./words";
 
 export interface LineupCardProps {
   slot: SlotKey;
-  /** The role a Flex plays. */
+  /** The strip's words in place of the slot's: a bench card's order and role, `1. Mid`. */
+  strip?: string;
+  /** The role a Flex plays, said after his team: `DK · Top`. */
   plays?: RoleKey;
   name: string;
   team: string;
@@ -18,7 +19,7 @@ export interface LineupCardProps {
   photo?: string;
   mark?: Mark;
   me?: boolean;
-  /** A tag on the photo, such as `Not starting`. */
+  /** A tag at the portrait's foot, such as `Not starting`. */
   news?: string;
   /** The line above the footer: the week's fixtures or series points. */
   next?: ReactNode;
@@ -30,50 +31,32 @@ export interface LineupCardProps {
   onSelect?: () => void;
 }
 
-function RoleHead({ slot, plays }: { slot: SlotKey; plays?: RoleKey }) {
-  const small = slot === "flex" && plays ? flexRole(plays) : slot === "coach" ? COACH_HANGUL : undefined;
-  return (
-    <div className="pcard__role">
-      <RoleIcon role={slotIcon(slot, plays)} />
-      <span>
-        <SlotName slot={slot} label={ROLE_NAME[slot]} />
-        {small && <small>{small}</small>}
-      </span>
-    </div>
-  );
-}
-
-/** One starter's card in Card view (not the Player card screen): role head, photo (a crest for the Coach, or until his photo is saved), name, team, next, footer. */
+/**
+ * One card in Card view (not the Player card screen), as approved/pick-team/1440-cards.png: the role
+ * strip, the portrait (a crest for the Coach, or until his photo is saved) with the C in its corner and
+ * a news tag at its foot, name, team (a Flex's role after it), next, footer.
+ */
 export function LineupCard(p: LineupCardProps) {
-  const mark = p.mark && (
-    <MarkBadge mark={p.mark} size="card" className="pcard__mark" />
-  );
+  const mark = p.mark && <MarkBadge mark={p.mark} size="card" className="pcard__mark" />;
   return (
     <div className={cx("pcard", p.selected && "pcard--selected", p.state && `pcard--${p.state}`)} {...selectable(p.onSelect, p.selected)}>
-      <RoleHead slot={p.slot} plays={p.plays} />
-      {p.slot === "coach" ? (
-        <div className="pcard__photo pcard__photo--crest">
-          <Crest team={p.team} />
-          {mark}
-        </div>
-      ) : (
-        <div className="pcard__photo">
-          <PlayerPhoto photo={p.photo} name={p.name} team={p.team} />
-          {mark}
-          {p.news && (
-            <span className="pcard__news">
-              <Tag>{p.news}</Tag>
-            </span>
-          )}
-        </div>
-      )}
+      <div className="pcard__role">{p.strip ?? <SlotName slot={p.slot} label={ROLE_NAME[p.slot]} />}</div>
+      <div className="pcard__photo">
+        {p.slot === "coach" ? <Crest team={p.team} size="crestPortrait" /> : <PlayerPhoto photo={p.photo} name={p.name} team={p.team} crest="crestPortrait" />}
+        {mark}
+        {p.news && (
+          <span className="pcard__news">
+            <Tag>{p.news}</Tag>
+          </span>
+        )}
+      </div>
       <div className="pcard__name" title={p.name}>
         {p.name}
         {p.me && <MeDot />}
       </div>
-      <div className="pcard__team quiet">{p.team}</div>
+      <div className="pcard__team quiet">{p.plays ? teamPlays(p.team, p.plays) : p.team}</div>
       {p.next !== undefined && <div className="pcard__next">{p.next}</div>}
-      {p.footer !== undefined && <div className="pcard__foot quiet">{p.footer}</div>}
+      {p.footer !== undefined && <div className="pcard__foot">{p.footer}</div>}
     </div>
   );
 }

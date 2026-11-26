@@ -11,12 +11,21 @@
   align-items: start;
   gap: var(--s-4);
 }
-/* A bench place: its order and role over its tile (FPL's `1. DEF`). */
+/* Under the cards: the page's own panel, its two lineup cards side by side at their full height. */
+.bench-bar--cards {
+  background: var(--paper);
+}
+.bench-bar--cards .bench-bar__tiles {
+  justify-items: stretch;
+  gap: var(--s-2);
+}
+/* A bench place: its order and role over its tile (FPL's `1. DEF`), clear of the tile's swap outline
+   (approved/pick-team/1440-swap.png). */
 .bench-slot {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--s-1);
+  gap: var(--s-2);
 }
 .bench-slot__role {
   font-weight: var(--w-semi);

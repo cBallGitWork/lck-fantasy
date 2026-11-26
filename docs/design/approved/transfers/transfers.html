@@ -1,221 +1,144 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><title>Transfers</title>
-<style>@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600;700&display=swap");
-:root { --ink: #1d1d1d; --mid: #6b6b6b; --soft: #9a9a9a; --line: #cfcfcf; --fill: #ececec; --bg: #f7f7f5; --paper: #fff; --rise: #c8102e; --fall: #1f4fa8; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { width: 1440px; background: var(--bg); color: var(--ink); font: 14px/1.4 "IBM Plex Sans KR", sans-serif; }
-.num, .mono { font-family: "IBM Plex Mono", monospace; font-variant-numeric: tabular-nums; }
-a { color: var(--ink); text-decoration: none; }
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transfers</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../pick-team/base.css">
+<link rel="stylesheet" href="../pick-team/look.css">
+<style>
+/* Transfers in Pick Team's look: the Rift at the main column's left, a column of panels beside it the Rift's height,
+   the player list in the side column. Only what is Transfers' own is here; the rest is ../pick-team/look.css. */
+.team { display: inline-flex; align-items: center; gap: 4px; color: var(--mid); font-weight: 400; }
+.team__bar { display: inline-block; width: 4px; height: 0.75em; }
+.num { text-align: right; }
 
-/* Top bar: the same on every screen. */
-nav.top { height: 56px; display: flex; align-items: stretch; gap: 32px; padding: 0 32px; background: var(--paper); border-bottom: 1px solid var(--line); }
-nav.top b.word { display: flex; align-items: center; font-size: 20px; font-weight: 700; letter-spacing: -0.5px; margin-right: 16px; }
-nav.top a { display: flex; align-items: center; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
-nav.top a.on { color: var(--ink); font-weight: 700; border-bottom-color: var(--ink); }
-nav.top a.live::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; margin-right: 4px; }
-nav.top .sp { flex: 1; }
-nav.top .presented { display: flex; align-items: center; gap: 8px; color: var(--mid); font-size: 12px; }
-nav.top a.me { color: var(--ink); font-weight: 600; margin-left: -8px; }
-.ph { display: flex; align-items: center; justify-content: center; border: 1px dashed var(--soft); color: var(--mid); font-size: 12px; }
+/* The nine on the Rift by role: a role's players side by side under its name, said once. */
+.group { display: flex; flex-direction: column; align-items: center; gap: 0.6cqw; }
+.group__role { background: var(--band); color: var(--on-band); font: 700 12px/20px var(--sans); padding: 0 8px; }
+.group__tiles { display: flex; gap: 1cqw; }
+/* The strip over the shirt: × to sell at its left, the price in its middle. */
+.ttile__top { display: flex; align-items: center; justify-content: center; padding: 0 0 0 24px; line-height: 24px; font-weight: 600; }
+.ttile__x { position: absolute; left: 0; top: 0; width: 24px; height: 24px; color: var(--on-band); font: 400 16px/24px var(--sans); }
+/* Bought and not yet confirmed: the selected outline. */
+.tile.is-new { outline: 2px solid var(--select); outline-offset: 2px; }
+/* A sold player's slot. */
+.tile--empty .tile__card { width: 100%; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: 0; background: rgba(5, 10, 24, 0.7); border: 1px dashed var(--text); border-bottom: 0; color: var(--text); }
+.empty__plus { font: 400 28px/32px var(--sans); }
+.tile--empty .tile__plate { width: 100%; background: var(--band); color: var(--on-band); border: 1px dashed var(--text); border-top: 0; font-weight: 600; line-height: 42px; }
 
-/* Parts */
-.tag { display: inline-block; border: 1px solid var(--ink); padding: 0 4px; font: 400 11px/16px "IBM Plex Sans KR", sans-serif; }
-.tag.prov { border-style: dashed; }
-.tag.live { background: var(--ink); color: var(--paper); }
-.up::before { content: "▲ "; font-size: 12px; }
-.down::before { content: "▼ "; font-size: 12px; }
-.cake::after { content: " 🎂"; }
-.tog { display: inline-flex; font-size: 14px; }
-.tog span { padding: 4px 24px; border: 1px solid var(--line); background: var(--fill); color: var(--mid); }
-.tog span + span { margin-left: -1px; }
-.tog span.on { background: var(--paper); color: var(--ink); font-weight: 600; }
+/* The column's panels: the page's one panel (look.css gives the box); titles 16/700, contents 16 in. */
+.tpanel { padding: 12px 16px; }
+.tpanel__title { font: 700 16px/24px var(--head); padding-bottom: 8px; }
+.tpanel--yours { flex: 1; display: flex; flex-direction: column; }
+.figs > div { display: flex; justify-content: space-between; align-items: center; min-height: var(--row); border-top: 1px solid var(--line); }
+.figs dt { color: var(--mid); }
+.figs dd { font-weight: 600; }
+.draft { flex: 1; border-top: 1px solid var(--line); padding-top: 4px; }
+.draft__row { display: flex; justify-content: space-between; align-items: center; min-height: var(--row); }
+.draft__row s { color: var(--mid); }
+.off { text-align: right; }
+.tpanel__keys { display: flex; align-items: center; gap: 16px; padding-top: 8px; }
+.tpanel__keys .save { flex: 1; }
+.conf { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; border-top: 1px solid var(--line); }
+.conf > div { display: flex; flex-direction: column; }
+.conf .key { min-height: 32px; }
+/* What the last + did, in the list's panel where it was pressed. */
+.note { margin-bottom: 8px; padding: 4px 8px; background: var(--fill); border-left: 2px solid var(--text); }
 
-.rise { color: var(--rise); } .fall { color: var(--fall); }
+/* The player list, a panel in the side column. */
+.plist { background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--text); padding-bottom: 0; }
+/* Tabs: plain words, the chosen one underlined (plate.md, Tabs). */
+.chips { display: flex; justify-content: space-between; border-bottom: 1px solid var(--line); }
+.chip { font-size: 12px; line-height: 28px; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.chip.is-here { color: var(--text); font-weight: 600; border-bottom-color: var(--text); }
+.plist__find { display: flex; gap: 4px; padding: 12px 0; }
+.field { display: inline-flex; align-items: center; min-height: 32px; padding: 0 8px; border: 1px solid var(--line); color: var(--mid); font-size: 12px; white-space: nowrap; }
+.plist__find .field:first-child { flex: 1; }
+.field--pick { color: var(--text); }
+.plist table, .slist table { margin: 0 -16px; width: calc(100% + 32px); }
+.plist td, .plist th, .slist td, .slist th { height: var(--row); padding: 0 4px; border-top: 1px solid var(--line); white-space: nowrap; text-align: left; }
+.plist .num, .slist .num { text-align: right; }
+.plist td:first-child, .plist th:first-child, .slist td:first-child, .slist th:first-child { padding-left: 16px; }
+.plist td:last-child, .plist th:last-child, .slist td:last-child, .slist th:last-child { padding-right: 16px; }
+.plist__role th, .slist__role th { font: 400 12px/1 var(--sans); color: var(--mid); background: var(--fill); height: 32px; }
+.plist__role th:first-child, .slist__role th:first-child { font: 700 14px/1 var(--sans); color: var(--text); }
+.plist__who { display: flex; align-items: center; gap: 8px; }
+/* The list's columns: fixed widths with even gaps, figures right-aligned under right-aligned heads, words left (plate.md, Table). */
+.page { grid-template-columns: minmax(0, 1fr) 424px; }
+.plist table { table-layout: fixed; }
+.plist th:nth-child(2), .plist td:nth-child(2) { width: 68px; }
+.plist th:nth-child(3), .plist td:nth-child(3) { width: 40px; }
+.plist th:nth-child(4), .plist td:nth-child(4) { width: 50px; }
+.plist th:nth-child(5), .plist td:nth-child(5) { width: 92px; padding-left: 16px; }
+.plist th:nth-child(6), .plist td:nth-child(6) { width: 40px; }
+.plist__role th[colspan] { width: auto; }
+.act { width: 28px; text-align: right; }
+.rowkey { width: 24px; height: 24px; border: 1px solid var(--text); font: 600 14px/22px var(--sans); }
 
-/* Frame */
-.page { display: grid; grid-template-columns: 1fr 360px; gap: 32px; padding: 24px 32px 48px; }
-aside > section, aside > .done { border-top: 2px solid var(--ink); padding-top: 8px; margin-bottom: 24px; }
-aside h2, .done h3 { font-size: 14px; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+/* List view: the squad as a table in the Rift's place. */
+.slist { flex: 1 1 auto; min-width: 0; background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--text); padding: 0 16px; align-self: flex-start; }
+.slist__who { display: flex; align-items: center; gap: 8px; }
+.slist__shirt { width: 28px; height: 28px; }
+.slist tr.is-new td:first-child { box-shadow: inset 2px 0 0 var(--select); }
+.object--list .squad-foot { margin-block: 0; }
 
-/* header */
-.ph1 { margin-bottom: 16px; }
-.ph1 h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
-.ph1 h1 i { font-style: normal; color: var(--mid); font-size: 16px; font-weight: 400; margin-left: 8px; letter-spacing: 0; }
-.ph1 .dl { margin-top: 4px; } .ph1 .dl span { color: var(--mid); } .ph1 .dl b:not(.cd) { font-weight: 400; }
-.ph1 .dl b.cd { margin-left: 12px; border: 1px solid var(--ink); padding: 0 8px; font-family: "IBM Plex Mono", monospace; }
-.tstats { display: flex; gap: 24px; align-items: center; border: 1px solid var(--line); background: var(--paper); padding: 8px 16px; margin-bottom: 16px; font-size: 16px; color: var(--mid); }
-.tstats > div { display: flex; gap: 8px; align-items: baseline; }
-.tstats > div > span { order: -1; }
-.tstats > div > b { font-family: "IBM Plex Mono", monospace; color: var(--ink); white-space: nowrap; }
-.bz { margin-left: auto; display: flex; gap: 8px; }
-.buff2 { border: 1px solid var(--ink); padding: 4px 12px; font-size: 14px; font-weight: 600; color: var(--ink); }
-.save { background: var(--ink); color: var(--paper); border: 0; padding: 8px 24px; font: inherit; font-weight: 700; }
-.ctl { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.ctl .show { border: 1px solid var(--ink); padding: 4px 12px; background: var(--paper); }
+/* The tapped player's card, docked under the Rift: who he is and his one key, his stats with their rank, his series.
+   The Rift, its panels and the card stay in view as the long list scrolls. */
+.pcard { display: grid; grid-template-columns: 216px minmax(0, 1fr) 256px; background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--head-band, var(--text)); }
+.pcard > * + * { border-left: 1px solid var(--line); }
+.pcard__who { display: flex; flex-direction: column; justify-content: space-between; }
+.pcard__keys { display: flex; align-items: center; gap: 16px; padding: 0 16px 16px; }
+.pcard__keys .key { flex: 1; min-height: 40px; font-weight: 700; color: var(--bg); border: 0; }
+.pcard__sell { background: var(--rise); }
+.pcard__buy { background: var(--add, var(--text)); }
+.pcard__mid { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 12px 16px; }
+.pcard__stats { display: grid; grid-template-columns: repeat(4, auto); gap: 8px; }
+.pcard__stats > div { display: flex; flex-direction: column; justify-content: center; min-height: 56px; padding: 0 6px; background: var(--fill); white-space: nowrap; }
+.pcard__stats dd { display: flex; align-items: baseline; gap: 6px; font-size: 16px; }
+.pcard__series { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 12px 16px; }
+.pcard__cells { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-bottom: 8px; }
+.pcard__cells > * { display: flex; flex-direction: column; justify-content: center; min-height: 40px; padding: 0 6px; background: var(--fill); white-space: nowrap; }
+.plist tr.is-tapped td { background: var(--fill); }
+.plist tr.is-tapped td:first-child { box-shadow: inset 2px 0 0 var(--select); }
+@media (min-width: 601px) { .main { position: sticky; top: 16px; align-self: start; } }
 
-/* rift */
-.rift { position: relative; width: 100%; height: 560px; }
-.rift svg.map { position: absolute; inset: 0; width: 100%; height: 560px; }
-.tile { position: absolute; z-index: 2; width: 132px; transform: translate(-50%, -50%); text-align: center; }
-.tile .kit { position: relative; width: 56px; height: 50px; margin: 0 auto; }
-.tile .kit svg.shirt { width: 56px; height: 50px; }
-.tile .kit .code { position: absolute; left: 0; right: 0; top: 16px; font-size: 12px; font-weight: 700; }
-.tile .ri { position: absolute; left: -24px; top: 0; width: 28px; height: 28px; background: var(--paper); border: 1px solid var(--ink); display: flex; align-items: center; justify-content: center; }
-.tile .ri svg { width: 20px; height: 20px; }
-.tile .mk { position: absolute; right: -16px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--ink); color: var(--paper); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
-.tile .mk.v { background: var(--paper); color: var(--ink); border: 1px solid var(--ink); }
-.tile .nm { background: var(--paper); border: 1px solid var(--ink); font-weight: 700; font-size: 14px; padding: 0 4px; }
-.tile .pr { background: var(--ink); color: var(--paper); font-family: "IBM Plex Mono", monospace; font-size: 12px; padding: 4px 0; }
-.tile .tag { margin-top: 4px; background: var(--paper); }
-.tile.sel .nm, .tile.sel .pr { outline: 2px solid var(--ink); outline-offset: 1px; }
-/* bench bar: one row under the pitch */
-.benchb { height: 72px; display: flex; align-items: center; gap: 16px; padding: 0 16px; background: var(--paper); border: 1px solid var(--line); }
-.benchb h3 { font-size: 14px; font-weight: 600; width: 56px; }
-.bt2 { width: 280px; height: 48px; display: grid; grid-template-columns: 12px 20px 1fr; gap: 0 8px; align-items: center; padding: 0 12px; border: 1px solid var(--line); }
-.bt2 .n { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--mid); }
-.bt2 svg { width: 20px; height: 20px; }
-.bt2 .who { line-height: 1.3; white-space: nowrap; overflow: hidden; } .bt2 .who b { font-size: 14px; } .bt2 .who span, .bt2 .who small { font-size: 12px; color: var(--mid); }
-.bt2 .who small { display: block; font-family: "IBM Plex Mono", monospace; }
-.confirm { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; border: 1px solid var(--ink); background: var(--paper); padding: 8px 16px; }
-.confirm .out { text-decoration: line-through; color: var(--mid); }
-.reset { margin-right: 16px; display: inline-flex; align-items: center; min-height: 24px; }
+/* The confirm sheet: a heavy frame so it stands off the page. */
+.scrim { position: fixed; inset: 0; background: rgba(5, 10, 24, 0.7); }
+.sheet { position: fixed; left: 50%; top: 160px; transform: translateX(-50%); width: 560px; background: var(--paper); border: 2px solid var(--text); padding: 16px 24px 24px; }
+.sheet__close { position: absolute; top: 16px; right: 16px; }
+.sheet__title { font: 700 20px/32px var(--head); padding-bottom: 8px; }
+.sheet__moves th { text-align: left; font: 400 12px/24px var(--sans); color: var(--mid); }
+.sheet__moves td { height: 48px; border-top: 1px solid var(--line); }
+.sheet__moves td > * { margin-right: 8px; }
+.sheet__arrow { width: 40px; color: var(--mid); }
+.sheet__keys { display: flex; align-items: center; gap: 16px; padding-top: 16px; }
+.sheet__keys .deadline { flex: 1; }
+.sheet__keys .key { min-height: 40px; font-size: 14px; }
 
-/* player list */
-.flt, .flt2 { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; font-size: 12px; }
-.flt span { border: 1px solid var(--line); padding: 4px 8px; background: var(--paper); } .flt span.on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.flt2 span { border: 1px solid var(--line); padding: 4px 8px; background: var(--paper); color: var(--mid); white-space: nowrap; } .flt2 .srch { flex: 1; }
-.plist { width: 100%; border-collapse: collapse; background: var(--paper); }
-.plist th { text-align: left; font-weight: 400; color: var(--mid); font-size: 12px; padding: 4px; border-bottom: 1px solid var(--line); }
-.plist th.n { text-align: right; }
-.plist td { height: 40px; padding: 4px; border-bottom: 1px solid var(--fill); } .plist td.n { font-family: "IBM Plex Mono", monospace; text-align: right; white-space: nowrap; }
-.plist td svg { width: 12px; height: 12px; } .plist td small { color: var(--mid); display: block; font-size: 12px; }
-.plist td.nmc { white-space: nowrap; max-width: 112px; overflow: hidden; text-overflow: ellipsis; }
-.plist td.nx { font-size: 12px; line-height: 1.3; white-space: nowrap; }
-.plist tr.no td, .plist tr.no td small { color: var(--mid); } .plist tr.no td b { font-weight: 400; }
-.plist .add { border: 1px solid var(--ink); width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
-.plist tr.no .add { border-color: var(--fill); background: var(--fill); color: var(--mid); } .plist tr.pick td { background: var(--fill); } .plist tr.pick .add { background: var(--ink); color: var(--paper); }
-.ar { font-size: 12px; } .plist td.arw { width: 16px; padding: 4px 4px 4px 0; }
-
-/* confirmed this week */
-.done h3 { margin-bottom: 0; }
-.cf { display: grid; grid-template-columns: 80px 1fr 48px 56px; gap: 8px; align-items: center; padding: 8px 0; border-top: 1px solid var(--fill); }
-.cf .t { font-size: 12px; } .cf .t small { display: block; color: var(--mid); font-size: 12px; } .cf .c { font-family: "IBM Plex Mono", monospace; text-align: right; } .cf .c.fr { font-family: inherit; }
-.done h3 span { font-weight: 400; color: var(--mid); font-size: 12px; }
-.cf .u { justify-self: end; border: 1px solid var(--ink); padding: 0 8px; font-weight: 700; font-size: 12px; }
-.cf.old { color: var(--mid); } .cf.old b { font-weight: 400; }
-
-/* confirm sheet (confirm.html only) */
-.veil { position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 10; }
-.sheet2 { position: absolute; left: 448px; top: 220px; width: 544px; background: var(--paper); border: 1px solid var(--ink); z-index: 11; padding: 24px; }
-.sheet2 h3 { font-size: 20px; margin-bottom: 12px; } .sheet2 table { width: 100%; border-collapse: collapse; }
-.sheet2 td { height: 40px; border-bottom: 1px solid var(--fill); } .sheet2 td.k { color: var(--mid); width: 80px; }
-.sheet2 .sb { display: flex; justify-content: flex-end; gap: 16px; align-items: center; margin-top: 16px; } .sheet2 .sb span { display: inline-flex; align-items: center; min-height: 24px; }
-.sheet2 p { font-size: 12px; color: var(--mid); margin-top: 8px; text-align: right; }
-</style></head><body>
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <!-- Position icons drawn after LoL's own: Top and Bot are opposite corners, Mid the diagonal, Jungle a claw, Support a crest. -->
-    <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M15 6v9H6l3-3h3V9z" fill="#c4c4c4"/></symbol>
-    <symbol id="i-bot" viewBox="0 0 16 16"><path d="M15 15H1l3-3h8V4l3-3z" fill="#1d1d1d"/><rect x="6" y="6" width="4" height="4" fill="#9a9a9a"/><path d="M1 10V1h9L7 4H4v3z" fill="#c4c4c4"/></symbol>
-    <symbol id="i-mid" viewBox="0 0 16 16"><path d="M11 1h4v4L5 15H1v-4z" fill="#1d1d1d"/><path d="M1 1h6L4 4H4v3L1 10zM15 15H9l3-3v-3l3-3z" fill="#c4c4c4"/></symbol>
-    <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#1d1d1d"/></symbol>
-    <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#1d1d1d"/></symbol>
-    <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#1d1d1d" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
-    <symbol id="i-flex" viewBox="0 0 16 16"><path d="M8 1l2 5h5l-4 3 2 6-5-4-5 4 2-6-4-3h5z" fill="none" stroke="#1d1d1d" stroke-width="1.4"/></symbol>
-    <symbol id="shirt" viewBox="0 0 56 50"><path d="M18 2 L8 6 L1 16 L9 22 L12 19 L12 48 L44 48 L44 19 L47 22 L55 16 L48 6 L38 2 Q28 9 18 2 Z" fill="#fff" stroke="#1d1d1d" stroke-width="1.6"/><path d="M18 2 Q28 9 38 2" fill="none" stroke="#1d1d1d" stroke-width="1.6"/></symbol>
-  </defs>
-</svg>
-
-<nav class="top"><b class="word">Flol</b><a>Home</a><a>Pick Team</a><a class="on">Transfers</a><a>Points</a><a>Leagues</a><a>Stats</a><a>LCK</a><a class="live">Live</a><span class="sp"></span><span class="presented">presented by <span class="ph" style="width:120px;height:24px">Sponsor</span></span><a class="me">Baron Steal FC ▾</a></nav>
-<div class="page"><main>
-<div class="ph1"><div><h1>Transfers<i>이적</i></h1><div class="dl">LCK Cup Week 4 · Deadline <b>Wed 7:45am</b>&nbsp; <b class="cd">9h 45m</b></div></div></div>
-<div class="tstats">
-  <div><b>0</b><span>Free transfers</span></div><div><b>−6</b><span>Pending hit</span></div><div><b>1.5억</b><span>Bank</span></div>
-  <div class="bz"><span class="buff2">Remake</span><span class="buff2">Limitless</span></div>
-</div>
-<div class="ctl"><span class="tog"><span class="on">Rift view</span><span>Card view</span></span><span class="show">Show: Fixtures ▾</span></div>
-<div class="rift" id="rift"><svg class="map" viewBox="0 0 680 680" preserveAspectRatio="none">
-        <rect x="0" y="0" width="680" height="680" fill="#ededeb"/>
-        <!-- river: top-left to bottom-right -->
-        <path d="M0 40 L40 0 L680 640 L640 680 Z" fill="#dcdcd8"/>
-        <!-- lanes -->
-        <path d="M60 640 L60 60 L640 60" fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round"/>
-        <path d="M40 620 L620 620 L620 40" fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round"/>
-        <path d="M60 620 L620 60" fill="none" stroke="#fff" stroke-width="40"/>
-        <!-- bases -->
-        <path d="M0 520 A160 160 0 0 1 160 680 L0 680 Z" fill="#c9c9c9"/>
-        <path d="M520 0 A160 160 0 0 0 680 160 L680 0 Z" fill="#c9c9c9"/>
-        <!-- towers -->
-        <g fill="#9a9a9a"><rect x="54" y="400" width="12" height="12"/><rect x="54" y="220" width="12" height="12"/><rect x="250" y="54" width="12" height="12"/><rect x="430" y="54" width="12" height="12"/>
-        <rect x="270" y="614" width="12" height="12"/><rect x="450" y="614" width="12" height="12"/><rect x="614" y="440" width="12" height="12"/><rect x="614" y="260" width="12" height="12"/>
-        <rect x="250" y="424" width="12" height="12"/><rect x="420" y="254" width="12" height="12"/></g>
-        <!-- pits -->
-        <circle cx="200" cy="200" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/><circle cx="480" cy="480" r="16" fill="none" stroke="#9a9a9a" stroke-dasharray="3 3"/>
-      </svg></div>
-<div class="benchb" id="bench"><h3>Bench</h3></div>
-
-<div class="confirm"><div><b>1 transfer</b> · −6 · <span class="out">Siwoo 7.5억</span> → <b>Kingen 6.5억</b> · bank 0.5억 → 1.5억</div><span><span class="reset">Reset</span><button class="save">Review and confirm ›</button></span></div>
-</main>
-<aside>
-<section class="pl2"><h2>Replacing Siwoo</h2>
-<div class="flt"><span class="on">All roles</span><span>Top</span><span>Jungle</span><span>Mid</span><span>Bot</span><span>Support</span></div>
-<div class="flt2"><span class="srch">Search a player</span><span>Sort: Points ▾</span><span>Team: All ▾</span></div>
-<table class="plist"><thead><tr><th></th><th>Player</th><th class="n">Price</th><th></th><th class="n">Pts</th><th class="n">Owned</th><th>Next</th><th></th></tr></thead><tbody id="pl"></tbody></table>
-</section>
-<div class="done"><h3>Confirmed · Week 4 </h3>
-<div class="cf"><span class="t">Tue 9:10pm</span><span><b>Kiin → Zeus</b></span><span class="c">−6</span><span class="u">Undo</span></div>
-<div class="cf old"><span class="t">Mon 6:02pm</span><span><b>Peyz → Ruler, Lehends → Delight</b></span><span class="c fr">Free</span><span></span></div>
-</div>
-</aside>
-</div>
-<script>// Made-up LCK Cup Week 4 for the Pick Team wireframes. Every number is an example.
-// Monday 20:00 KST (11:00 London). Deadline Wed 16:45 KST = 07:45 London (15 min before the first series, spec/10).
-const W4 = [
-  ["Wed","8:00am","5:00pm","HLE","DK"],["Wed","10:30am","7:30pm","T1","KT"],
-  ["Thu","8:00am","5:00pm","GEN","BRO"],["Thu","10:30am","7:30pm","NS","DNS"],
-  ["Fri","8:00am","5:00pm","KRX","BFX"],["Fri","10:30am","7:30pm","DK","KT"],
-  ["Sat","8:00am","5:00pm","T1","GEN"],["Sat","10:30am","7:30pm","HLE","NS"],
-  ["Sun","8:00am","5:00pm","BRO","BFX"],["Sun","10:30am","7:30pm","KRX","DNS"],
-];
-const nextOf = (team) => W4.filter((s) => s[3] === team || s[4] === team).map((s) => `v ${s[3] === team ? s[4] : s[3]} ${s[0]}`);
-const PSQ = [
-  { slot: "top", name: "Zeus", team: "HLE", price: "16.0" },
-  { slot: "jng", name: "Canyon", team: "GEN", price: "15.5" },
-  { slot: "mid", name: "Faker", team: "T1", price: "18.5", mark: "C" },
-  { slot: "bot", name: "Ruler", team: "GEN", price: "17.0", mark: "V" },
-  { slot: "sup", name: "Delight", team: "HLE", price: "9.0" },
-  { slot: "flex", role: "top", name: "Siwoo", team: "DK", price: "7.5", news: "Benched for Wednesday's series" },
-  { slot: "coach", name: "kkOma", team: "T1", price: "7.0" },
-  { slot: "b1", role: "mid", name: "Bdd", team: "KT", price: "5.0" },
-  { slot: "b2", role: "jng", name: "Cuzz", team: "KT", price: "4.0" },
-];
-const ICON = { top: "i-top", jng: "i-jng", mid: "i-mid", bot: "i-bot", sup: "i-sup", coach: "i-coach", flex: "i-flex" };
-const SLOTNAME = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support", flex: "Flex", coach: "Coach", b1: "Bench 1", b2: "Bench 2" };
-const iconOf = (p) => ICON[p.role || p.slot];
-
-const IN = { name: "Kingen", team: "NS", slot: "flex", role: "top" };
-const POS = { top: [104, 70], jng: [280, 262], mid: [500, 260], coach: [92, 468], flex: [238, 468], sup: [650, 486], bot: [846, 486] };
-function tile(p) {
-  const mk = p.mark ? `<span class="mk ${p.mark === "V" ? "v" : ""}">${p.mark}</span>` : "";
-  const nw = "";
-  const nx = p.slot === "coach" ? nextOf(p.team).join(" · ") : nextOf(p.team).join(" · ");
-  const sl = p.slot === "flex" ? `<div class="tag">Flex · plays ${SLOTNAME[p.role]}</div>` : p.slot === "coach" ? `<div class="tag">Coach 감독</div>` : p.news ? `<div class="tag">Not starting</div>` : "";
-  return `<div class="tile ${p.name === "Kingen" ? "sel" : ""}"><div class="kit"><svg class="shirt"><use href="#shirt"/></svg><span class="code">${p.team}</span><span class="ri"><svg><use href="#${iconOf(p)}"/></svg></span>${mk}${nw}</div>
-  <div class="nm ${p.cake ? "cake" : ""}">${p.name}</div><div class="pr">${nextOf(p.team).map((x) => "v " + x.split(" ")[1]).join(" · ")}</div>${sl}</div>`;
-}
-PSQ.map((p) => p.name === "Siwoo" ? Object.assign({}, p, IN, { news: null, price: "6.5" }) : p).filter((p) => POS[p.slot]).forEach((p) => { const w = document.createElement("div"); w.innerHTML = tile(p); const t = w.firstElementChild; t.style.left = POS[p.slot][0] + "px"; t.style.top = POS[p.slot][1] + "px"; document.getElementById("rift").appendChild(t); });
-document.getElementById("bench").insertAdjacentHTML("beforeend", PSQ.filter((p) => /^b\d/.test(p.slot)).map((p, i) => `<div class="bt2"><span class="n">${i + 1}</span><svg><use href="#${iconOf(p)}"/></svg>
-  <span class="who"><b>${p.name}</b> <span>${p.team}</span><small>${nextOf(p.team).map((x) => "v " + x.split(" ")[1]).join(" · ")}</small></span></div>`).join(""));
-const PL = [
- ["mid","Chovy","GEN","17.5","61","41%",1],["sup","Keria","T1","12.0","52","47%",1],["bot","Aiming","DK","11.5","46","14%",2],
- ["mid","ShowMaker","DK","10.5","44","18%",2],["jng","Lucid","DK","9.0","41","11%",2],
- ["top","Kingen","NS","6.5","38","9%",0],["top","PerfecT","KT","7.0","36","4%",1],["top","DuDu","DNS","6.0","33","6%",0],
- ["bot","Hype","KRX","5.5","31","4%",0],["top","Clear","BFX","5.5","29","3%",0],["mid","Clozer","BRO","5.0","27","5%",0],
- ["sup","Pollu","BRO","4.5","26","2%",0]];
-const WHY = ["", "Team full", "Over budget"];
-const ARW = { Chovy: "▲", Kingen: "▲", DuDu: "▼", Aiming: "▼", Hype: "▲", Clear: "▼", Lucid: "▲" };
-const arw = (n) => ARW[n] ? `<span class="ar ${ARW[n] === "▼" ? "fall" : "rise"}">${ARW[n]}</span>` : "";
-document.getElementById("pl").innerHTML = [...PL].sort((a, b) => (a[6] > 0) - (b[6] > 0)).map((r) => `<tr class="${r[6] ? "no" : r[1] === "Kingen" ? "pick" : ""}"><td><svg><use href="#${ICON[r[0]]}"/></svg></td><td class="nmc"><b>${r[1]}</b> ${r[2]}${r[6] ? `<small>${WHY[r[6]]}</small>` : ""}</td><td class="n">${r[3]}억</td><td class="arw">${arw(r[1])}</td><td class="n">${r[4]}</td><td class="n">${r[5]}</td><td class="nx">${nextOf(r[2])[0]}</td><td><span class="add">${r[1] === "Kingen" ? "✓" : "+"}</span></td></tr>`).join("");
-const MINE = new Set();
-void 0; // = W4.map((s) => `<div class="${MINE.has(s[3]) || MINE.has(s[4]) ? "mine" : ""}"><span class="d">${s[0]}</span><span><b class="${MINE.has(s[3]) ? "y" : ""}">${s[3]}</b> v <b class="${MINE.has(s[4]) ? "y" : ""}">${s[4]}</b></span><span class="t">${s[1]} </span></div>`).join("");
-</script></body></html>
+/* The colour round's one recipe (Craig, 26 Nov 2026; plate.md, Colour): a brighter blue band on panel titles, green and
+   red on what a transfer changes (the bank and cost chips, × to sell, + to buy, the bought player's outline), a 6px team
+   bar in the lists. Gold stays the one main key's; role names stay plain; no kit strip on the tiles; no teal. */
+.c-u { --head-band: #1D46A8; --add: #4CD98A; }
+.c-u .tpanel { border-top: 0; }
+.c-u .tpanel__title { margin: -12px -16px 8px; padding: 12px 16px 8px; background: var(--head-band); }
+.c-u .slist { border-top: 2px solid var(--head-band); }
+.c-u .bank, .c-u .cost.is-hit { padding: 2px 8px; color: var(--bg); }
+.c-u .bank.is-ok { background: var(--add); }
+.c-u .bank.is-over, .c-u .cost.is-hit { background: var(--rise); }
+.c-u .ttile__x { background: var(--rise); color: var(--bg); font-weight: 700; }
+.c-u .rowkey--sell { background: var(--rise); border-color: var(--rise); color: var(--bg); }
+.c-u .rowkey:not(.rowkey--sell) { background: var(--add); border-color: var(--add); color: var(--bg); }
+.c-u .tile.is-new { outline-color: var(--add); }
+.c-u .slist tr.is-new td:first-child { box-shadow: inset 2px 0 0 var(--add); }
+.c-u .team__bar { width: 6px; height: 0.9em; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="../pick-team/data.js"></script>
+<script src="../pick-team/map.js"></script>
+<script src="render.js"></script>
+</body>
+</html>

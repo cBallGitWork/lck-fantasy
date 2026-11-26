@@ -1,0 +1,148 @@
+/* The look's tokens and Pick Team's layout, shared by every mock-up drawn in this look (arena.html, ../transfers/transfers.html). */
+/* 4. Arena: the LCK's navy as the ground itself, one family for both scripts (IBM Plex Sans and Plex Sans KR),
+   gold only where you act. The Rift sits on the page with no stage round it, and the bench, deadline and Save
+   stand in the column beside it, so the screen has no empty green and no wide bench band. Buffs carry icons. */
+:root {
+  --bg: #0A1226; --paper: #111B36; --line: #22305A; --line-strong: var(--mid); --fill: #18244A; --soft: #4A5884;
+  --text: #EEF1F8; --mid: #9AA6C8; --rise: #FF6B78; --signal: #2BC4B5;
+  --gold: #E0B04A; --on-gold: var(--bg); --wordmark: #E0B04A;
+  --sans: "IBM Plex Sans", "IBM Plex Sans KR", sans-serif; --head: "IBM Plex Sans", "IBM Plex Sans KR", sans-serif;
+  /* Figures in Plex Mono, so they line up (plate.md, Type); the tiles' bands keep the sans, Mono would overflow them. */
+  --fig: "IBM Plex Mono", monospace; --ko: "IBM Plex Sans KR", sans-serif; --head-track: -0.01em;
+  --row: 40px; --rift: 940px; --tile-w: 140px; --tile-w-phone: 78px; --tile-card-h: 124px;
+  --tile-card: rgba(255, 255, 255, 0.5); --plate: #FFFFFF; --on-plate: var(--bg); --band: #050A18; --on-band: #EEF1F8;
+  --shirt: #FFFFFF; --shirt-line: var(--bg); --shirt-text: var(--bg); --tile-label: #EEF1F8;
+  --c-bg: #E0B04A; --c-text: var(--bg); --flag-bg: #FFFFFF; --flag-text: var(--bg); --select: #FFFFFF;
+  --rift-top: 168px;
+}
+/* The refactor (UX and Visual, 19 Nov 2026): plate.md's sizes 12 14 16 20 28, weights 400 600 700, steps 4 8 12 16 24,
+   one panel treatment (--paper, 1px --line, a 2px --text rule on top), 40px rows. */
+.top { background: var(--band); border-bottom: 1px solid var(--line); }
+.head { align-items: baseline; }
+.title { display: flex; align-items: baseline; gap: 8px; font: 700 28px/32px var(--head); }
+.title__ko { font: 400 16px/24px var(--ko); color: var(--gold); }
+.head__week { color: var(--mid); font-weight: 400; }
+.head .deadline { padding-left: 16px; border-left: 1px solid var(--line); }
+.tile__band { font-family: var(--sans); }
+/* Buffs: an icon, the name, the state under it. Icons 36 (Craig), their line drawn thin enough to match the page's 1.5px. */
+.buffs { gap: 8px; }
+.buff { display: grid; grid-template-columns: 36px 1fr; column-gap: 12px; align-items: center; background: var(--paper); border: 1px solid var(--line); padding: 8px 12px; }
+.buff__icon { display: block; grid-row: span 2; color: var(--gold); width: 36px; height: 36px; stroke-width: 1.2; }
+.buff__name { font: 600 14px/20px var(--sans); }
+.buff__left { font-size: 12px; line-height: 16px; }
+/* The object: the Rift on the page, the buffs, bench and Save in a column beside it. */
+.object { flex-direction: row; align-items: stretch; gap: 16px; }
+.rift-stage { background: none; padding: 0; flex: 1 1 auto; min-width: 0; justify-content: flex-start; }
+.squad-foot { flex-direction: column; width: 336px; flex: none; gap: 8px; background: none; }
+/* The panel runs exactly as tall as the Rift's playfield, which sits 34.5 of 720 in from the map's top and foot (map.js FIELD). */
+@media (min-width: 601px) { .squad-foot { margin-block: calc(var(--rift-w, 600px) * 34.5 / 720); } }
+/* Three boxes, each the page's one panel: buffs, the bench, then the deadline and Save. Titles 16, a size above their items (Craig). */
+.squad-foot > *, .squad-foot .bar { background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--text); }
+.squad-foot .buffs::before, .squad-foot .bench__title { font: 700 16px/24px var(--head); }
+.squad-foot .buffs { grid-template-columns: 1fr; gap: 0; padding: 12px 16px 0; }
+.squad-foot .buffs::before { content: "Buffs"; padding-bottom: 8px; }
+.squad-foot .buffs .buff { border: 0; border-top: 1px solid var(--line); background: none; padding: 8px 0; }
+/* The bench as a dugout: on the Rift's own dark green, so it reads as the squad (Craig, 19 Nov 2026). */
+.squad-foot .bench { flex: 1; display: grid !important; grid-template-columns: 1fr 1fr; grid-template-rows: auto 1fr; justify-items: center; align-items: center; gap: 8px 16px; padding: 12px 16px; background: var(--rift-ground, #142219); border-color: #24382A; border-top-color: var(--text); }
+.squad-foot .bench__title { grid-column: 1 / -1; justify-self: start; width: auto; }
+.squad-foot .bench__spot:first-of-type, .squad-foot .bench__spot:last-of-type { margin: 0; }
+.squad-foot .bench__order { color: #B9C6BC; }
+.squad-foot .bar { width: auto; padding: 8px 16px 12px; gap: 8px 12px; }
+.squad-foot .bar .deadline { white-space: normal; flex-wrap: wrap; row-gap: 4px; }
+.bar__reset, .card__keys .link { display: inline-flex; align-items: center; min-height: 24px; }
+/* One off state: --mid on --fill, no edge (plate.md, States). */
+.key-off { color: var(--mid); background: var(--fill); border: 0; opacity: 1; }
+:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+/* The right column: every left and right edge 16 in, as the card's rows; rules full width, 2px --text. */
+.card { border-top: 2px solid var(--text); }
+.card__name { font: 700 20px/24px var(--head); }
+.card__keys { gap: 16px; }
+.side__title { border-top: 2px solid var(--text); padding: 8px 16px; font: 600 14px/20px var(--sans); }
+.series td:first-child { padding-left: 16px; width: 56px; }
+.series td:last-child { padding-right: 16px; }
+.series td { vertical-align: baseline; line-height: var(--row); }
+.series__teams b { font-weight: 600; }
+/* Clean-up (Craig, 19 Nov 2026: font sizes all over the place, random boxes). Five sizes on a desk, 12 14 16 20 28, each one job:
+   28 the page title, 20 a name (wordmark, card), 16 a panel's title, 14 what you read and press, 12 what sits under it. */
+.title__ko { color: var(--mid); }
+.tile__label, .tile__plate { font-size: 12px; line-height: 20px; }
+.tile__label { padding: 2px 0; }
+.views button, .key { font-size: 14px; }
+/* Every panel title alike: Buffs, Bench, the series. */
+.side__title { font: 700 16px/24px var(--head); padding: 12px 16px 8px; }
+/* No box round the countdown: a figure, like the time before it. */
+.deadline__count { border: 0; padding: 0; color: var(--mid); font-weight: 400; }
+/* Final panel (19 Nov 2026). The Captain's own key is a state, not a key: the chosen look (--text on --fill, no edge),
+   as the view toggle's chosen side. */
+.card__keys .key.is-on { border-color: var(--gold); color: var(--gold); background: var(--fill); cursor: default; }
+/* Gold, as the C on his tile (Craig, 19 Nov 2026); an edge, not filled, so Save stays the page's one filled key. */
+/* Tiles sit on the map, not in it: the card is solid (the 50% white over the Rift's green, mixed once), so the map's
+   markers stop showing through the tiles' corners. The map itself is untouched. */
+:root { --tile-card: #8A918D; }
+/* Dimmed tiles keep Craig's 70% but as darkness, not see-through (0.85 × 0.7 ≈ 0.6), so the map can't show through them. */
+.tile.is-dim { opacity: 1; filter: saturate(0.3) brightness(0.6); }
+/* The Captain's C stands out more (Craig, 19 Nov 2026): bigger, and a white ring outside its dark one, so it lifts off the shirt. */
+.tile__c { width: 40px; height: 40px; font: 700 20px/36px var(--sans); top: 20px; right: -16px; z-index: 1; box-shadow: 0 0 0 2px var(--text); }
+/* The card's crest bigger (Craig, 19 Nov 2026): 64, as tall as the name and its line under it together. */
+.card__head .crest { width: 64px; height: 64px; }
+.card__head { gap: 16px; }
+/* The buff's Play key, an outlined key at the row's right (on a phone, under its state). */
+.buff { grid-template-columns: 36px 1fr auto; cursor: default; }
+.buff__play { grid-column: 3; grid-row: 1 / span 2; align-self: center; min-height: 32px; min-width: 72px; }
+/* The series as the same panel as the card above it. */
+.series { background: var(--paper); border: 1px solid var(--line); border-top: 0; }
+/* The news line on a tapped player's card: the plate's tag, then when. */
+.card__news { padding: 0 16px 12px; color: var(--mid); }
+.tag { display: inline-block; border: 1px solid var(--text); color: var(--text); font-size: 12px; line-height: 16px; padding: 0 4px; }
+.bar__changes b { font-weight: 600; }
+/* Card view: the seven in one row as a broadcast lineup, then the bench and the buffs side by side, then Save as one bar
+   (the layout approved 14 Nov 2026, in this look). Each card is the page's panel with the Rift tile's role strip. */
+.object--cards { flex-direction: column; gap: 16px; }
+.lineup { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.lcard { position: relative; display: flex; flex-direction: column; text-align: left; background: var(--paper); border: 1px solid var(--line); }
+.lcard__role { position: relative; background: var(--band); color: var(--on-band); font: 700 12px/24px var(--sans); text-align: center; }
+.lcard__role .tile__flag { top: 2px; left: 4px; }
+.lcard__photo { position: relative; display: flex; align-items: center; justify-content: center; height: 132px; background: var(--fill); }
+.lcard__photo .crest { width: 88px; height: 88px; }
+.lcard__photo .tile__c { top: 8px; right: 8px; }
+.lcard__name { padding: 8px 12px 0; font: 700 20px/24px var(--head); letter-spacing: var(--head-track); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lcard__team { padding: 0 12px 8px; font-size: 12px; line-height: 16px; color: var(--mid); }
+.lcard__row { padding: 0 12px; border-top: 1px solid var(--line); font-size: 12px; line-height: 32px; color: var(--mid); white-space: nowrap; }
+.lcard__figs { display: flex; justify-content: space-between; }
+.lcard__figs b { color: var(--text); font-weight: 600; }
+.lcard.is-selected { outline: 2px solid var(--select); outline-offset: 2px; z-index: 1; }
+.lcard.is-option { outline: 2px dashed var(--select); outline-offset: 2px; z-index: 1; }
+/* Dimmed as a Rift tile is. */
+.lcard.is-dim { filter: saturate(0.3) brightness(0.6); }
+/* May not start: the plate's tag at the portrait's foot, as approved 14 Nov 2026. */
+.lcard__photo .tag { position: absolute; left: 8px; bottom: 8px; background: var(--band); }
+.lcard .tile__c { text-align: center; }
+/* A buff with no key keeps its state under its name. */
+@media (min-width: 601px) { .buff__left { grid-column: 2; } }
+@media (min-width: 601px) {
+  /* The bench is a panel as Buffs is, the same top and foot; it is wide enough that its two cards keep a starter's width. */
+  .object--cards .squad-foot { display: grid; grid-template-columns: calc((100% - 48px) / 7 * 2 + 42px) 1fr; width: auto; margin-block: 0; gap: 16px; }
+  .object--cards .squad-foot .bench { grid-column: 1; grid-row: 1; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; justify-items: stretch; align-items: start; gap: 8px; padding: 12px 16px 16px; background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--text); }
+  .object--cards .squad-foot .buffs { grid-column: 2; grid-row: 1; padding-bottom: 4px; }
+  .object--cards .squad-foot .bar { grid-column: 1 / -1; display: flex; align-items: center; padding: 8px 16px; gap: 16px; }
+  .object--cards .squad-foot .bar .bar__gap { display: block; }
+  .object--cards .squad-foot .bar .save { min-width: 304px; }
+}
+@media (max-width: 600px) {
+  .object { flex-direction: column; align-items: stretch; margin: 0 -16px; gap: 0; }
+  .rift-stage { justify-content: center; }
+  .squad-foot { width: auto; border: 0; gap: 0; }
+  .squad-foot > *, .squad-foot .bar { border-width: 2px 0 0; }
+  .bench { grid-template-columns: auto 1fr 1fr; align-items: end; }
+  .bench__title { grid-column: auto; align-self: center; }
+  .buff { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 8px; row-gap: 4px; }
+  .buff__icon { grid-row: auto; width: 32px; height: 32px; }
+  .buff__play { grid-column: auto; grid-row: auto; min-height: 44px; width: 100%; margin-top: 4px; }
+  .buff__left { font-size: 12px; }
+  .head .deadline { padding-left: 0; border-left: 0; flex-basis: 100%; }
+  .account { display: inline-flex; align-items: center; min-height: 44px; }
+  /* Tile type on a phone: one size, 11, the plate's floor for a tag. */
+  .tile__label, .tile__plate, .tile__band { font-size: 11px; }
+  .tile__label { padding: 4px 0; line-height: 1; }
+  .tile__c { width: 28px; height: 28px; font-size: 14px; line-height: 24px; top: 14px; right: -10px; }
+}

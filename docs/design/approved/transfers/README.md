@@ -1,47 +1,53 @@
 # Transfers
 
-Where a manager sells and buys players. Reached from **Transfers** in the top bar. Drawn at 1440 in the same frame as Points and Pick Team: the squad on the left, the bench bar under it (one row: order, role icon, name, team, the two fixtures; redrawn 15 Nov 2026), the player list on the right.
+Where a manager sells and buys players. Reached from **Transfers** in the top bar. Drawn at 1440 in Pick Team's look ([plate.md](../../plate.md); the shared styles are `../pick-team/look.css`): the Rift at the main column's left, a column of panels beside it, the tapped player's card under both, the player list in the side column.
 
-**Approved:** Craig, 13 Nov 2026. He asked for players who are too dear to be greyed but still listed ("we need to see those players"), then said "Yes save". Later that day he cut Form, asked for both of the week's series under each player and in Next, a toggle for what shows under a player, no explainer sentences, and the transfer buffs at the top as FPL's, the others on Pick Team. On 14 Nov he asked for fresh eyes on the whole page and less obvious explaining text; the redraw adds Undo, price arrows and −6 hits, and he said "yes save". Names, teams and numbers are a made-up LCK Cup Week 4, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn.
-
-## Changed by Craig, 16 Nov 2026
-
-He looked at the built page and asked for these; they overrule the pictures where they differ.
-
-1. No price ▲/▼ arrows on this page.
-2. Rift view has no bench: all nine stand on the Rift by role, the coach in his own spot, several of one role side by side in their lane, as FPL's Transfers pitch stands all fifteen.
-3. Each Rift tile shows the player's price under his name, as FPL's Transfers pitch; the Show ▾ menu is gone.
-4. No team crests on the tiles.
-5. Card view is replaced by **List view** (Rift view | List view): the nine grouped by role, each row shirt, name, team, last week's points, price, form, total, Next (the next opponent alone, "v DK") and × to sell (↺ puts him back).
-6. Several transfers in one go, as FPL: remove and add several, then one confirm. Each add or refusal says so in a short message at the foot of the page (`Kingen added`, `Team full: 2 from GEN`, `No Bot left`); no row is greyed. Over the budget is allowed while choosing: the bank goes red below zero and Review and confirm is off, as FPL.
-7. The confirm sheet stands out (a heavy ink frame) and has one row per transfer, out → in with each price, then cost, bank and free transfers used.
-8. The head shows free transfers, cost and bank, as FPL's.
-9. Any role for any role: the squad keeps at least one of each role; past that any player can be sold for any player. A buy that would leave a role empty is refused with why. On confirm the squad is arranged by role, a starter keeping his place.
-10. Next in the player list drops the day: "v DK", not "Wed v DK".
-11. Later that day, Rift view: the Rift is square, 720 a side, centred in the main column, the map redrawn for it. The nine stand by role in rows along their lanes: tops along top lane, jungle and mid in rows in the jungle and on mid lane, Bot over Support (Craig, 16 Nov 2026) along bot lane, the coach by the blue base; two or three of a role stand side by side in their row.
-12. Tiles as FPL's Transfers pitch: the price in a dark chip over the shirt (overrules 3), `×` to sell at the card's top left, the shirt on a faint card, a white name plate, then the next opponent (`v DK`) in a dark band. No role icon and no crest.
+**Approved:** Craig, 26 Nov 2026: "Yes, save it". The redraw of the 13 to 16 Nov pictures in the new look. He said it lacked colour beside FPL and UCL Fantasy, and picked the colour round's merged recipe ("Yes, use it"); asked for even, aligned columns in the list and both of the week's opponents in Next; had the review panel rule on the open layout calls; picked the player's card for the gap under the Rift over the week's series; then asked for the opponent on each of the last 3 series and the scoring stats in Form's place. Names, teams and numbers are a made-up Split 1 Week 4, not roster data. This binds layout, content and order; plate.md how it is drawn.
 
 | File | Shows |
 |---|---|
-| `1440.png`, `transfers.html` | Rift view mid-transfer, Tuesday night: Siwoo sold, Kingen in the Flex at −6; the week's two confirms under the list, the latest with Undo |
-| `1440-confirm.png`, `confirm.html` | The confirm sheet: out, in, cost, bank |
+| `1440.png`, `transfers.html` | Rift view mid-transfer: Siwoo sold, Kingen bought at −6, his card under the Rift; the week's two confirms, the latest with Undo |
+| `1440-sold.png`, `transfers.html?s=sold` | Siwoo just sold: his slot empty, the list on Tops, PerfecT tapped and his card with `+ Buy`, a refused buy said at the list's top |
+| `1440-confirm.png`, `transfers.html?s=confirm` | The confirm sheet: out, in, cost, bank |
+| `1440-list.png`, `transfers.html?v=list` | List view: the nine as a table in the Rift's place |
+
+Also drawn, not shot: `?s=none` (before any sale) and `?s=over` (Viper bought over the budget). `render.js` draws every state from Pick Team's made-up week (`../pick-team/data.js`).
+
+## What binds
+
+1. **Rift view** (Craig, 16 Nov 2026): no bench; all nine stand on the Rift by role under the role's name, said once, two or three of a role side by side, the coach by the blue base.
+2. **A tile**, as FPL's Transfers pitch: a dark strip over the shirt with `×` to sell at its left and the price; the shirt; a white name plate with the team; then both of the week's opponents (`v DK, NS`; Craig, 26 Nov 2026, overruling the next opponent alone). No role icon, no crest, no kit-colour strip (the panel, 26 Nov 2026).
+3. **A sold player's slot** is dashed, with `+` and `↺ Siwoo` to put him back (spec/12).
+4. **Your transfers**, a panel beside the Rift: Free transfers, Cost and Bank, the draft's rows (out → in with each price and its −6), Reset, and Review and confirm ›, the page's one gold key (Craig, 26 Nov 2026, overruling the figures in the head). Why the key is off is said beside it: `No changes`, `1 player to buy`, `Over budget`.
+5. **Confirmed · Week 4**, a panel under it: each confirm this week, newest first, with when and what it cost (`−6` or `No cost`). Only the latest has Undo (spec/03).
+6. **The player's card**, under the Rift and its panels (Craig, 26 Nov 2026, over the week's series the panel tried): crest, name, team, role and price; `× Sell` for a player of yours or `+ Buy` for one tapped in the list, and Full card ›; season Points and Owned with their rank among the role; the scoring lines' season figures (Gold lead at 15, Solo kills, First blood, Kills, Deaths and Assists per game) and no Form; the last 3 series, each with its points and opponent; the next 3, each with its day and length. Before any tap it shows the player just sold. The tapped row or tile is marked. In List view it sits under the table.
+7. **The Rift, its panels and the card stay on screen** while the list scrolls (the panel, all four, 26 Nov 2026): real data is ten or more players a role.
+8. **The player list**, a panel in the side column, 424 wide: what the last `+` did at its top, where it was pressed (Craig, 26 Nov 2026, overruling the foot of the page: `Kingen added`, `Max 2 from GEN`, `Sell a player first`); role tabs (All roles, the five roles, Coach); Find a player, Sort and Team; then rows grouped by role: name, team bar and code, Price, Pts, Owned, Next, `+`. Fixed column widths with even gaps; figures right-aligned under right-aligned heads, words left (Craig, 26 Nov 2026). Its title is `Players`, or `Replacing Siwoo` once he is sold.
+9. **The list opens on the sold player's role** once someone is sold, and on All roles before (the panel, all four, 26 Nov 2026). No row is greyed; your own players are left out.
+10. **No price ▲/▼ arrows** on this page (Craig, 16 and 26 Nov 2026).
+11. **List view** (Rift view | List view; Craig, 16 Nov 2026): the nine grouped by role, each row shirt, name, team, last week's points, price, form, total, Next and `×` to sell.
+12. **Several transfers in one go**, as FPL: sell and buy several, then one confirm. Over the budget is allowed while choosing: the bank chip turns red with its − and Review and confirm is off.
+13. **The confirm sheet** stands off the page in a heavy frame: one row a transfer, out → in with each price, then Free transfers used, Cost and Bank, the deadline, Back and Confirm.
+14. **Any role for any role** (spec/03): the squad keeps at least one of each role; a buy that would leave a role empty is refused with why.
+15. **Colour** (Craig, 26 Nov 2026; plate.md, Colour): panel titles on the brighter blue band; green on the bank chip, `+` and the bought player's outline; red on the cost and over-budget chips and `×`; a 6px team bar in the lists.
 
 ## Borrowed
 
-- **FPL's Transfers**: the squad beside a player list with role, search, sort and team filters, then a confirm step. A player sells at his full current price (spec/02).
-- **FPL's refusals**: every row can be bought; a buy Flol refuses says why in a short message, and over the budget turns the bank red (Craig, 16 Nov 2026).
+- **FPL's Transfers**: the squad beside a player list with role, search, sort and team filters; `×` and the price on each shirt; every row buyable and a refusal said in a short message; then a confirm step.
+- **UCL Fantasy**: more colour on what a transfer changes.
 - Research on other games: [docs/research/transfers-page-references.md](../../../research/transfers-page-references.md).
 
 ## Controls
 
-- **Rift view | List view** (Craig, 16 Nov 2026): all nine on the Rift with each one's price, or grouped by role in a list.
-- **A player on the squad**: sells him; the list filters to his role, or any role while the squad keeps one of each (spec/03). Any of the nine, coach included, can be sold.
-- **A row's +**: buys that player; a refused buy says why.
-- **Top strip**: free transfers left, the pending hit (−6 each), the bank.
-- **Confirmed · Week 4**: each confirm this week, newest first, with what it used (free or −6). Only the latest has **Undo**, until the deadline (spec/03). Undo also clears any unconfirmed changes.
-- **Bottom bar**: the transfers so far, Reset, and Review and confirm.
-- **Confirm sheet**: what changes, the cost and the bank. Back or Confirm, with the deadline.
-- **No buff keys**: Remake and Limitless, at the top beside the bank in the picture, were dropped (17 Nov 2026, spec/06). Every buff is played on Pick Team.
+- **Rift view | List view**: the nine on the Rift, or as a table.
+- **A tile's ×, a row's ×, the card's × Sell**: sells him; his slot empties and the list opens on his role.
+- **↺ on an empty slot**: puts him back.
+- **A row in the list**: shows his card under the Rift. **Its +, the card's + Buy**: buys him; a refused buy says why at the list's top.
+- **Full card ›**: opens the whole player card (spec/12).
+- **Reset**: clears the unconfirmed changes. **Review and confirm ›**: opens the confirm sheet.
+- **Undo**: undoes the latest confirm, until the deadline (spec/03); it also clears unconfirmed changes.
+- **Role tabs, Find a player, Sort, Team**: narrow and order the list.
+- **Back, Confirm**: on the sheet.
 
 ## Placeholders
 
@@ -49,13 +55,11 @@ He looked at the built page and asked for these; they overrule the pictures wher
 |---|---|
 | Free transfers, bank, hits | #20 |
 | Confirms and Undo | #96 |
-| Price moves | #23 |
-| Prices in 억 and the budget | #22 |
-| Squad shape, flex, coach, team cap | #13 |
-| Remake and Limitless | #25 |
-| Ownership, next series | #36 |
+| Prices and the budget | #22 |
+| Squad shape, coach, team cap | #13 |
+| Ownership, next series, the card's season lines | #36 |
 | Sponsor slot | spec/13 |
 
-## Cut on 14 Nov
+## For the build
 
-"Play" on the buffs; the map's lane, Baron and Dragon labels; 벤치 beside Bench; "Pick a replacement for" (now "Replacing Siwoo"). Kept as new to an FPL manager: "Flex · plays Top", "Coach 감독", why a buy is refused.
+Two of the picture's words differ from the built screen's and replace them (the Broadcast voice, 26 Nov 2026): `1 player to buy` for `Fill every slot`, and `Sell a player first` for `Squad's full. Sell a player first`.

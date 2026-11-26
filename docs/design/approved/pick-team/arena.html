@@ -99,6 +99,43 @@
 .buff__play { grid-column: 3; grid-row: 1 / span 2; align-self: center; min-height: 32px; min-width: 72px; }
 /* The series as the same panel as the card above it. */
 .series { background: var(--paper); border: 1px solid var(--line); border-top: 0; }
+/* The news line on a tapped player's card: the plate's tag, then when. */
+.card__news { padding: 0 16px 12px; color: var(--mid); }
+.tag { display: inline-block; border: 1px solid var(--text); color: var(--text); font-size: 12px; line-height: 16px; padding: 0 4px; }
+.bar__changes b { font-weight: 600; }
+/* Card view: the seven in one row as a broadcast lineup, then the bench and the buffs side by side, then Save as one bar
+   (the layout approved 14 Nov 2026, in this look). Each card is the page's panel with the Rift tile's role strip. */
+.object--cards { flex-direction: column; gap: 16px; }
+.lineup { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.lcard { position: relative; display: flex; flex-direction: column; text-align: left; background: var(--paper); border: 1px solid var(--line); }
+.lcard__role { position: relative; background: var(--band); color: var(--on-band); font: 700 12px/24px var(--sans); text-align: center; }
+.lcard__role .tile__flag { top: 2px; left: 4px; }
+.lcard__photo { position: relative; display: flex; align-items: center; justify-content: center; height: 132px; background: var(--fill); }
+.lcard__photo .crest { width: 88px; height: 88px; }
+.lcard__photo .tile__c { top: 8px; right: 8px; }
+.lcard__name { padding: 8px 12px 0; font: 700 20px/24px var(--head); letter-spacing: var(--head-track); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lcard__team { padding: 0 12px 8px; font-size: 12px; line-height: 16px; color: var(--mid); }
+.lcard__row { padding: 0 12px; border-top: 1px solid var(--line); font-size: 12px; line-height: 32px; color: var(--mid); white-space: nowrap; }
+.lcard__figs { display: flex; justify-content: space-between; }
+.lcard__figs b { color: var(--text); font-weight: 600; }
+.lcard.is-selected { outline: 2px solid var(--select); outline-offset: 2px; z-index: 1; }
+.lcard.is-option { outline: 2px dashed var(--select); outline-offset: 2px; z-index: 1; }
+/* Dimmed as a Rift tile is. */
+.lcard.is-dim { filter: saturate(0.3) brightness(0.6); }
+/* May not start: the plate's tag at the portrait's foot, as approved 14 Nov 2026. */
+.lcard__photo .tag { position: absolute; left: 8px; bottom: 8px; background: var(--band); }
+.lcard .tile__c { text-align: center; }
+/* A buff with no key keeps its state under its name. */
+@media (min-width: 601px) { .buff__left { grid-column: 2; } }
+@media (min-width: 601px) {
+  /* The bench is a panel as Buffs is, the same top and foot; it is wide enough that its two cards keep a starter's width. */
+  .object--cards .squad-foot { display: grid; grid-template-columns: calc((100% - 48px) / 7 * 2 + 42px) 1fr; width: auto; margin-block: 0; gap: 16px; }
+  .object--cards .squad-foot .bench { grid-column: 1; grid-row: 1; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; justify-items: stretch; align-items: start; gap: 8px; padding: 12px 16px 16px; background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--text); }
+  .object--cards .squad-foot .buffs { grid-column: 2; grid-row: 1; padding-bottom: 4px; }
+  .object--cards .squad-foot .bar { grid-column: 1 / -1; display: flex; align-items: center; padding: 8px 16px; gap: 16px; }
+  .object--cards .squad-foot .bar .bar__gap { display: block; }
+  .object--cards .squad-foot .bar .save { min-width: 304px; }
+}
 @media (max-width: 600px) {
   .object { flex-direction: column; align-items: stretch; margin: 0 -16px; gap: 0; }
   .rift-stage { justify-content: center; }

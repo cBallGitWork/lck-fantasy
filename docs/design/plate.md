@@ -124,10 +124,11 @@ Each part is drawn one way on every screen.
 - **The Rift**: square, as big as the first screen allows, at the main column's left, with the buffs, bench and Save in a column beside it the Rift's height (Craig, 19 Nov 2026; was 720 and centred). On a phone the whole Rift shows on the first screen and the bench sits below it, under the sticky Save bar (Craig, 19 Nov 2026). Each tile as FPL's: the
   shirt on a faint card with a rounded top, the one rounded shape; C and a news flag at its top corners; `Flex` or `Coach` over a Flex's or Coach's shirt, nothing under it; a white
   name plate; a dark band of fixtures, or points and series; on Transfers the price in a dark chip over it.
-- **The bench**, under the Rift or the cards: one bar, `Bench` then the Rift's own tile per bench
+- **The bench**, in Rift view: one bar, `Bench` then the Rift's own tile per bench
   player under its order and role (`1. Mid`), as FPL's bench under the pitch (Craig, 16 Nov 2026).
 - **Card view**: the 7 starters in one row, as the LCK broadcast's lineup (Top, Jungle, Mid, Bot,
-  Support, Flex, Coach), then the bench bar.
+  Support, Flex, Coach). Its bench is the starters' own card, not the Rift's tile: two cards in a
+  `Bench` panel level with Buffs, each strip its order and role (`1. Mid`) (Craig, 25 Nov 2026).
 - **Wide table** (Stats): the head and the name column stick; the table scrolls under them.
 - **Long names** end in `…` at their column's width; the full name shows on hover and in the panel.
 - **Panel** (Pick Team's buffs, bench and Save, a tapped player's card, the week's series): on

@@ -160,7 +160,11 @@ function next3Of(team: string): CardFacts["next3"] {
 /** A person's card figures: Stats' season lines for a player, his ranks among his role, his series. */
 function cardOf(p: ListPlayer): CardFacts {
   const row = p.role === "coach" ? undefined : SEASON_PLAYERS.find((s) => s.name === p.name);
-  const line = (key: string) => row?.lines[key] ?? 0;
+  const line = (key: string) => {
+    const value = row?.lines[key];
+    if (value === undefined) throw new Error(`No ${key} line for ${p.name}`);
+    return value;
+  };
   return {
     among: EVERYONE.filter((o) => o.role === p.role).length,
     pointsRank: rankAmong(p.name, (o) => o.points),

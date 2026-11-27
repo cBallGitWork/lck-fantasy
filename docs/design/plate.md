@@ -153,7 +153,7 @@ Each part is drawn one way on every screen.
   the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
   in the bar's place. Never a tinted row, a wash or a coloured code.
 - **Your players** are marked by that dot, on every screen.
-- **A fact's mark** (Home's Star, Flop and All managers; Craig, 27 Nov 2026, "keep them", after the pages read dull): a 20px mark before the fact's word, its colour the one that fact already has elsewhere: Star a gold star, Flop a red falling line, Most captained the Captain's C, Most bought a green plus in a ring and Most sold a red minus in a ring, as Transfers' Buy and Sell. One mark a fact, the same on every page.
+- **A fact's mark** (Home's Star, Flop and All managers, Points' Star, Flop and Killer; Craig, 27 Nov 2026, "keep them", after the pages read dull): a 20px mark before the fact's word, its colour the one that fact already has elsewhere: Star a gold star, Flop a red falling line, Killer crossed swords in `--text`, having no colour of its own (Craig, 27 Nov 2026), Most captained the Captain's C, Most bought a green plus in a ring and Most sold a red minus in a ring, as Transfers' Buy and Sell. One mark a fact, the same on every page.
 - **A player named in a row** reads as his tile's plate: his team's bar and code, then his name, `T1 Faker`; never a bare name (Craig, 27 Nov 2026; `approved/home/`).
 - **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
   ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with

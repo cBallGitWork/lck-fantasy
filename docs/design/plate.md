@@ -81,6 +81,7 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 | `--over` | #FF6B78 | the bank below zero, over the budget, with its − (Craig, 16 Nov 2026) |
 | `--head-band` | #1D46A8 | a panel title's band, a brighter LCK blue (Craig, 26 Nov 2026) |
 | `--add` | #4CD98A | what a transfer adds: the bank chip, `+` to buy, the bought player's outline (Craig, 26 Nov 2026) |
+| `--tier-iron`, `--tier-bronze`, `--tier-silver`, `--tier-gold`, `--tier-platinum`, `--tier-emerald`, `--tier-diamond`, `--tier-master`, `--tier-grandmaster`, `--tier-challenger` | #948D86, #B0733F, #A9B6C6, #F0D58C, #3FB0A6, #2FBF74, #6F94FF, #B46AE6, #F0606B, #5CCFF2 | a tier's shield and its share bar; Gold is pale to stay clear of `--ink` (Craig, 27 Nov 2026) |
 | `--signal` | #2BC4B5 | the second accent, teal, sparingly: the live dot, the focus ring |
 | `--stage` | #000508 | Live's dark stage |
 | `--stage-text` | #9AA6C8 | grey text on the stage |
@@ -90,10 +91,11 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 
 - Gold is the one accent, and on these alone: the one main action on a screen, the only filled key; the Captain's
   C; his `✓ Captain` state, edged and never filled; a buff's icon (Craig, 19 Nov 2026); the Flol
-  wordmark; Star's star (Craig, 27 Nov 2026); all `--ink`. The banner's hangul is its own gold (`--banner`). Section rules, tabs,
+  wordmark; Star's star (Craig, 27 Nov 2026); a league table's rank 1 (Craig, 27 Nov 2026); all `--ink`. The banner's hangul is its own gold (`--banner`). Section rules, tabs,
   selected borders, links, tags and a page title's hangul are `--text` or grey
   (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
-- Overall's tier shield is a `--text` fill, one colour for every tier (Craig, 16 Nov 2026).
+- Overall's tier shield is filled in its tier's colour (`--tier-*`), wherever a shield is drawn (Craig, 27 Nov 2026, over 16 Nov's one `--text` shield; `approved/leagues/`). The tier's name always sits beside it. On Leagues' tier panel a Captain's share is a bar out of 100% in that colour; a buff's share has no bar.
+- A league table's ranks 1 to 3 are filled squares, gold, silver and bronze (`--ink`, `--tier-silver`, `--tier-bronze`), the figure in `--bg` (Craig, 27 Nov 2026).
 - Colour is spent on meaning only, never to decorate: red and blue are prices and the bank; a rank's move
   in a league is green up and red down, as FPL's arrows (Craig, 24 Nov 2026; was `--text`). On
   Transfers, what a transfer changes is coloured (Craig, 26 Nov 2026, after it looked plain beside
@@ -153,6 +155,8 @@ Each part is drawn one way on every screen.
   the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
   in the bar's place. Never a tinted row, a wash or a coloured code.
 - **Your players** are marked by that dot, on every screen.
+- **Your own row** in a league table or the tier panel is filled (`--fill`) with a 4px `--text` left edge, and no dot (Craig, 27 Nov 2026).
+- **A league's mark** (Leagues' side list; Craig, 27 Nov 2026): 20px before its name. Overall its tier shield, a country its flag, a team its crest, a private league a group in `--text`.
 - **A fact's mark** (Home's Star, Flop and All managers, Points' Star, Flop and Killer; Craig, 27 Nov 2026, "keep them", after the pages read dull): a 20px mark before the fact's word, its colour the one that fact already has elsewhere: Star a gold star, Flop a red falling line, Killer crossed swords in `--text`, having no colour of its own (Craig, 27 Nov 2026), Most captained the Captain's C, Most bought a green plus in a ring and Most sold a red minus in a ring, as Transfers' Buy and Sell. One mark a fact, the same on every page.
 - **A scoring line's mark** (Series; Craig, 27 Nov 2026, after the page read as text and squares): a mark, drawn for Flol with none of Riot's artwork, for each scoring line a player or coach earned in a game, on a 32px filled square over the line's word, centred, on Series' Events tab (Craig, 27 Nov 2026; was 28px before the word, heading a team's table); never alone under a player's K/D/A, where it meant nothing (Craig, 27 Nov 2026). A coach's game cell carries his lines' marks bare, at 20px, Events naming them. Each line's mark has its own colour (Craig, 27 Nov 2026, the page still short of colour): red for blood and deaths, gold for gold and the crown, orange drakes, purple Baron, teal Elder, blue tower, yellow steal, green for the clean lines. Kills, deaths and assists are a single sword, a skull and a hand, crossed swords being Killer's. On Series each K/D/A figure sits behind its own mark, kills in `--text`, deaths red, assists green, never as `3/2/9` (Craig, 27 Nov 2026: he could not tell which was which). Player of the Game is a crown in `--ink`, the star being Star's. One mark a line, the same on every page; the set is `approved/series/`, Marks.
 - **A player named in a row** reads as his tile's plate: his team's bar and code, then his name, `T1 Faker`; never a bare name (Craig, 27 Nov 2026; `approved/home/`).

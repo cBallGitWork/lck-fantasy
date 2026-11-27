@@ -90,8 +90,9 @@ Overall shows each manager's place as a LoL ranked tier, Iron to Challenger (Cra
     cut-off now, shown with ≈ as others still score. Example: `≈6 pts to Diamond IV · ≈5 pts clear
     of Emerald II`. Challenger has nothing above and Iron IV nothing below. Home doesn't show them.
   - The manager's profile, by the team name in its banner, as on Home: the shield, tier, rank and
-    its move. It shows there only, not again in the Leagues column (Craig, 18 Nov 2026, over the
-    approved picture, which puts it beside Overall).
+    its move.
+  - The Leagues page's list of leagues, beside Overall: the shield and the short name. Example:
+    `Overall · Emerald I` (Craig, 27 Nov 2026, over 18 Nov's profile only).
   - The Leagues page's Overall table: a Tier column, the small shield and the short name, such as
     `Emerald I` (Craig, 18 Nov 2026).
   - Help: a Ranks section with the cut-off table ([spec/09](09-onboarding.md)).

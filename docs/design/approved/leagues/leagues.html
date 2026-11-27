@@ -52,11 +52,25 @@
 .tiers td { height: var(--row); padding: 0 12px; border-top: 1px solid var(--line); white-space: nowrap; }
 .tiers th { font: 400 12px/32px var(--sans); color: var(--mid); text-align: left; padding: 0 12px; }
 .tiers td:first-child, .tiers th:first-child { padding-left: 16px; width: 160px; }
-.tiers .share { width: 48px; text-align: right; padding-left: 0; padding-right: 56px; box-sizing: content-box; }
+.tiers .share { padding-right: 32px; }
+.tiers .share b { display: inline-block; width: 40px; text-align: right; font-weight: inherit; }
+.sbar { display: inline-block; width: 120px; height: 8px; margin-left: 12px; background: var(--line); }
+.sbar i { display: block; height: 100%; }
 .tiers .name { width: 152px; }
 .bicon { color: var(--gold); margin-right: 8px; vertical-align: -4px; }
 .tiers td.share { font-family: var(--fig); }
 .tiers tr.is-me td { background: var(--fill); font-weight: 600; }
+.tiers tr.is-me td:first-child, .st tr.is-me td:first-child { box-shadow: inset 4px 0 0 var(--text); }
+/* The podium: ranks 1 to 3 filled gold, silver, bronze. Your own row: a white left edge. */
+.pod { display: inline-block; width: 24px; margin-left: -7px; font: 700 14px/24px var(--fig); text-align: center; color: var(--bg); }
+.pod--1 { background: var(--gold); }
+.pod--2 { background: #A9B6C6; }
+.pod--3 { background: #B0733F; }
+.lmark { margin-right: 8px; vertical-align: -4px; }
+img.lmark { width: 20px; height: 20px; vertical-align: -5px; }
+.lmark--box { display: inline-flex; width: 20px; height: 20px; align-items: center; justify-content: center; vertical-align: -5px; }
+.lmark--box .shield { margin: 0; }
+.lst__row small { padding-left: 28px; }
 .tiers td:last-child, .tiers th:last-child { padding-right: 16px; }
 /* The side column: your leagues, the open one marked. */
 .lst { display: block; }

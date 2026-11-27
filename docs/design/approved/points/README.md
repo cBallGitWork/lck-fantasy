@@ -10,7 +10,7 @@ Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in Pick Tea
 | `1440-coach.png`, `points.html?p=kkoma` | The coach tapped: his lines, and each series' `Series win +3` row |
 | `1440-bench.png`, `points.html?p=bdd` | A bench player with no games tapped |
 
-`render.js` draws every state; players and places are Pick Team's (`../pick-team/data.js`). Card view is not redrawn yet and keeps its 14 Nov layout.
+`render.js` draws every state; players and places are Pick Team's (`../pick-team/data.js`). Card view has no picture in this look yet: the built one keeps its layout until it is redrawn.
 
 ## What binds
 

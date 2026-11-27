@@ -30,13 +30,14 @@ export const WORDS = {
   seriesWin: "Series win",
   seriesLoss: "Series loss",
   versus: "v",
-  to: "to",
-  /** At Challenger, before the tier below: `≈4 pts clear of Grandmaster`. */
-  clearOf: "clear of",
+  /** Under Overall, after the bold `≈6`, before the tier above: `≈6 pts to Diamond IV`. */
+  ptsTo: "pts to",
+  /** Under Overall, before the tier below: `≈5 pts clear of Emerald II`. */
+  ptsClearOf: "pts clear of",
 } as const;
 
-/** Your week's lines. */
-export const PICK_WORDS = { Star: "Star", Flop: "Flop", Killer: "Killer" } as const satisfies Record<WeekPick["label"], string>;
+/** Your week's groups, each word on its group's first row. */
+export const PICK_WORDS = { Star: "Stars", Flop: "Flop", Killer: "Killers" } as const satisfies Record<WeekPick["label"], string>;
 
 /** `T1 v DK, game 2`: the live game, in the Total panel. */
 export const liveGame = (home: string, away: string, game: number) => `${home} ${WORDS.versus} ${away}, game ${game}`;
@@ -47,8 +48,8 @@ export const versus = (opponent: string) => `${WORDS.versus} ${opponent}`;
 /** `, v GEN`: after a tile's total, the series he still has to play. */
 export const stillToPlay = (opponent: string) => `, ${versus(opponent)}`;
 
-/** `≈6 pts`: the points to your next Overall tier, or your room over the tier below; `to` or `clear of` and the tier follow. */
-export const toTier = (points: number) => `≈${points} pts`;
+/** `≈6`: a tier gap's points, ≈ as others still score; `pts to` or `pts clear of` and the tier follow. */
+export const approx = (points: number) => `≈${points}`;
 
 /** `17 ×1.5 · Captains averaged 19`: the Captain's working and the average Captain, once, on his card. */
 export const captainNote = (before: number, by: number, who: string, average: number) => `${before} ×${by}${dot}${who}s averaged ${average}`;

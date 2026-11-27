@@ -3,7 +3,9 @@
 // It stands in for the backend until a later issue wires real data (series and games #36,
 // live points #34, final points and ranks #33).
 
-import { CAPTAIN_MULTIPLIER } from "../../fixtures/competition";
+import type { Ownership } from "../../../convex/gameweeks/starAndFlop";
+import { pickFlop, pickKillers, pickStars } from "../../../convex/gameweeks/yourWeek";
+import { CAPTAIN_MULTIPLIER, YOUR_WEEK_PICKS } from "../../fixtures/competition";
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { playedFromSide, seriesById } from "../../fixtures/series";
 import {
@@ -81,16 +83,42 @@ function playerOf(list: readonly Series[], pick: PointsPick, games: Record<strin
   };
 }
 
-/** Owned % of the players a week's Star or Flop can be. */
-const OWNED_PCT: Record<string, number> = { Faker: 46, Siwoo: 6, Delight: 18 };
+/** Effective ownership % of the seven starters, the same each week. */
+const OWNED_PCT: Record<string, number> = { Zeus: 30, Canyon: 38, Faker: 46, Ruler: 35, Delight: 12, Siwoo: 6, kkOma: 18 };
 
-function mine(label: WeekPick["label"], p: PointsStarter): WeekPick {
-  const ownedPct = OWNED_PCT[p.name];
-  if (ownedPct === undefined || p.points === undefined) throw new Error(`No ${label} figures for ${p.name}`);
-  return { label, name: p.name, team: p.team, points: p.points, ownedPct, mine: true };
+/** A player you don't own, as a week's Killers are picked from. */
+interface Other {
+  name: string;
+  points: number;
+  ownedPct: number;
 }
 
-/** What a week adds to its series and squad: its head's figures, the average Captain and the Killer. */
+/** Your week (spec/12, Points, Your own week): the backend's own picks, run on the week's figures. */
+function yourWeekOf(played: readonly PointsStarter[], others: readonly Other[]): WeekPick[] {
+  const teamOf = (name: string) => played.find((p) => p.name === name)?.team ?? statsOf(name).team;
+  const row = (name: string, points: number, ownedPct: number): Ownership => ({ key: name, points, effectiveOwnership: ownedPct / 100 });
+  const mine = played.map((p) => {
+    const ownedPct = OWNED_PCT[p.name];
+    if (ownedPct === undefined || p.points === undefined) throw new Error(`No Your week figures for ${p.name}`);
+    return row(p.name, p.points, ownedPct);
+  });
+  const line = (label: WeekPick["label"]) => (one: Ownership): WeekPick => ({
+    label,
+    name: one.key,
+    team: teamOf(one.key),
+    points: one.points,
+    ownedPct: Math.round(one.effectiveOwnership * 100),
+  });
+  const flop = pickFlop(mine);
+  if (!flop) throw new Error("A week with no starter who played");
+  return [
+    ...pickStars(mine, YOUR_WEEK_PICKS).map(line("Star")),
+    line("Flop")(flop),
+    ...pickKillers(others.map((o) => row(o.name, o.points, o.ownedPct)), YOUR_WEEK_PICKS).map(line("Killer")),
+  ];
+}
+
+/** What a week adds to its series and squad: its head's figures, the average Captain and the players you don't own. */
 interface WeekFacts {
   week: number;
   series: readonly Series[];
@@ -98,7 +126,8 @@ interface WeekFacts {
   average: number;
   highest: number;
   averageCaptain: number;
-  killer: { name: string; points: number; ownedPct: number };
+  /** The players you don't own who scored: the Killers' field. */
+  others: Other[];
   /** Each game's champion, K/D/A and lines, where the week has them. */
   games?: Record<string, GameDetail[][]>;
 }
@@ -112,7 +141,12 @@ const WEEKS: WeekFacts[] = [
     average: 61,
     highest: 118,
     averageCaptain: 20,
-    killer: { name: "Chovy", points: 22, ownedPct: 41 },
+    others: [
+      { name: "Chovy", points: 22, ownedPct: 41 },
+      { name: "Peyz", points: 14, ownedPct: 28 },
+      { name: "Kiin", points: 11, ownedPct: 33 },
+      { name: "Zeka", points: 9, ownedPct: 22 },
+    ],
   },
   {
     week: 2,
@@ -121,7 +155,12 @@ const WEEKS: WeekFacts[] = [
     average: 70,
     highest: 124,
     averageCaptain: 23,
-    killer: { name: "Peyz", points: 19, ownedPct: 28 },
+    others: [
+      { name: "Peyz", points: 19, ownedPct: 28 },
+      { name: "Zeka", points: 16, ownedPct: 22 },
+      { name: "Chovy", points: 12, ownedPct: 41 },
+      { name: "Kiin", points: 8, ownedPct: 33 },
+    ],
   },
   {
     week: POINTS_WEEK.week,
@@ -130,7 +169,13 @@ const WEEKS: WeekFacts[] = [
     average: POINTS_WEEK.average,
     highest: POINTS_WEEK.highest,
     averageCaptain: 19,
-    killer: { name: "Chovy", points: 15, ownedPct: 41 },
+    // Peyz, 20 at 5%, is no Killer: Chovy, Zeka and Kiin each hurt more (spec/12).
+    others: [
+      { name: "Chovy", points: 15, ownedPct: 41 },
+      { name: "Zeka", points: 14, ownedPct: 22 },
+      { name: "Kiin", points: 12, ownedPct: 33 },
+      { name: "Peyz", points: 20, ownedPct: 5 },
+    ],
     games: WEEK3_GAMES,
   },
 ];
@@ -153,11 +198,6 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     const captain = { before: player.points, by: CAPTAIN_MULTIPLIER, average: facts.averageCaptain };
     return [{ ...player, slot: pick.slot, plays, points: captained(player.points), captain }];
   });
-  const played = starters.filter((p) => p.points !== undefined);
-  const byPoints = [...played].sort((a, b) => (b.points ?? 0) - (a.points ?? 0));
-  const star = byPoints[0];
-  const flop = byPoints[byPoints.length - 1];
-  if (!star || !flop) throw new Error(`Week ${facts.week} has no starter who played`);
   const live = list.find((s) => s.state === "live");
   return {
     team: MANAGER.team,
@@ -170,12 +210,12 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     live: live?.liveGame ? { home: live.home, away: live.away, game: live.liveGame } : undefined,
     starters,
     bench: squad.filter((p) => p.slot === "bench").map((p) => playerOf(list, p, games)),
-    yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, team: statsOf(facts.killer.name).team, mine: false }],
+    yourWeek: yourWeekOf(starters.filter((p) => p.points !== undefined), facts.others),
     leagues: [
       { name: "Overall", tier: MY_OVERALL.tier, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
       ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),
     ],
-    tierLine: { to: "promote", points: 6, tier: { tier: "diamond", division: 4 } },
+    tierGaps: { promote: { points: 6, tier: { tier: "diamond", division: 4 } }, demote: { points: 5, tier: { tier: "emerald", division: 2 } } },
     series: list,
   };
 }

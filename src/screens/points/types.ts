@@ -1,7 +1,7 @@
 import type { Score, SeriesRow, SeriesState, WeekNav } from "../../parts";
 import type { Mark, PersonRole, RoleKey, SlotKey } from "../../rift";
 import type { Kda, LineWord } from "../../fixtures/week3";
-import type { Tier, TierLine } from "../../../convex/leagues/tiers";
+import type { Tier, TierGaps } from "../../../convex/leagues/tiers";
 
 /** One game a player played: its champion, won or lost (neither while live), its points, and whether it counts. */
 export interface PointsGame {
@@ -57,15 +57,14 @@ export interface PointsStarter extends PointsPlayer {
   captain?: { before: number; by: number; average: number };
 }
 
-/** A line of Your week: Star, Flop or Killer. */
+/** A line of Your week: one of the Stars, the Flop or one of the Killers; each group listed by points. */
 export interface WeekPick {
   label: "Star" | "Flop" | "Killer";
   name: string;
   team: string;
   points: number;
+  /** Effective ownership. */
   ownedPct: number;
-  /** One of your players. */
-  mine: boolean;
 }
 
 export interface LeagueRank {
@@ -93,8 +92,8 @@ export interface PointsData {
   bench: PointsPlayer[];
   yourWeek: WeekPick[];
   leagues: LeagueRank[];
-  /** The points to your Overall tier's next step; at Challenger, your room over the tier below (spec/08). None while Unranked. */
-  tierLine: TierLine | null;
+  /** The points to your next Overall tier and your room over the tier below (spec/08); none above Challenger, none below Iron IV, neither while Unranked. */
+  tierGaps: TierGaps;
   series: readonly SeriesRow[];
 }
 

@@ -41,11 +41,11 @@ test("the picture's state holds its head, Rift, Total, bench, the Captain's week
     "Full stats ›",
     "Leagues",
     "Overall · Emerald I48,2116,904",
+    "≈6 pts to Diamond IV≈5 pts clear of Emerald II",
     "United Kingdom1,402233",
     "T1 supporters3,118510",
     "Pub League2nd1",
     "Flol Discord14th2",
-    "≈6 pts to Diamond IV",
     "All leagues ›",
     "This week's seriesWedT1 v HLE2–1",
     "SatGEN v HLE2–1 Not final",
@@ -53,9 +53,9 @@ test("the picture's state holds its head, Rift, Total, bench, the Captain's week
     "SunKRX v BRO8:00am",
     "BFX v DNS10:30am",
     "Your weekPtsOwned",
-    "StarT1 Faker2546%",
+    "StarsT1 Faker2546%HLE Zeus1430%GEN Ruler1435%",
     "FlopDK Siwoo86%",
-    "KillerGEN Chovy1541%",
+    "KillersGEN Chovy1541%HLE Zeka1422%GEN Kiin1233%",
     "Sponsor",
     "All sponsors are made up.",
   ]);
@@ -77,10 +77,12 @@ test("the picture's state boxes the counted games, greys the dropped one, docks 
   expect(out.match(/rank-down/g)).toHaveLength(1);
 });
 
-test("Your week's Star, Flop and Killer each carry their mark before the word, and the player his team's bar", () => {
-  const panel = html(<PointsPage data={POINTS_FIXTURE} />).split("points__picks")[1]!;
+test("Your week: each group's word and mark on its first row only, no rule inside a group, every player his team's bar, no dot", () => {
+  const panel = html(<PointsPage data={POINTS_FIXTURE} />).split("points__picks")[1]!.split("</table>")[0]!;
   expect(panel.match(/fact-mark--(\w+)/g)).toEqual(["fact-mark--star", "fact-mark--flop", "fact-mark--killer"]);
-  expect(panel.match(/class="team-bar"/g)).toHaveLength(3);
+  expect(panel.match(/class="team-bar"/g)).toHaveLength(7);
+  expect(panel.match(/points__pick--more/g)).toHaveLength(4);
+  expect(panel).not.toContain("me-dot");
 });
 
 test("the Captain's ×1.5 shows once, on his card; no tile shows it, and nothing shows an auto-sub line", () => {
@@ -127,11 +129,15 @@ test("the links go where the README says: Highest, Watch, Full stats, All league
   expect(out).toContain('href="/leagues"');
 });
 
-test("the tier line: the promote line; at Challenger, the room over Grandmaster; none while Unranked (spec/08)", () => {
-  const atChallenger = { ...POINTS_FIXTURE, tierLine: { to: "demote" as const, points: 4, tier: { tier: "grandmaster" as const, division: null } } };
-  expect(text(<PointsPage data={atChallenger} />)).toContain("≈4 pts clear of Grandmaster");
-  const unranked = { ...POINTS_FIXTURE, tierLine: null };
-  expect(html(<PointsPage data={unranked} />)).not.toContain("points__tier");
+test("both tier gaps under Overall, the number alone bold; nothing above Challenger, nothing below Iron IV, neither while Unranked (spec/08)", () => {
+  const { promote, demote } = POINTS_FIXTURE.tierGaps;
+  expect(html(<PointsPage data={POINTS_FIXTURE} />)).toContain('<b class="points__fig num">≈6</b> pts to');
+  const atChallenger = { ...POINTS_FIXTURE, tierGaps: { promote: null, demote } };
+  expect(text(<PointsPage data={atChallenger} />)).toContain("Emerald I48,2116,904≈5 pts clear of Emerald IIUnited Kingdom");
+  const atIron = { ...POINTS_FIXTURE, tierGaps: { promote, demote: null } };
+  expect(text(<PointsPage data={atIron} />)).toContain("Emerald I48,2116,904≈6 pts to Diamond IVUnited Kingdom");
+  const unranked = { ...POINTS_FIXTURE, tierGaps: { promote: null, demote: null } };
+  expect(html(<PointsPage data={unranked} />)).not.toContain("points__gaps");
 });
 
 test("the Rift, its panels and the card stay on screen while the side column scrolls", () => {
@@ -210,15 +216,32 @@ test("a final week says Final once, as Total's tag (Craig, 16 Nov 2026): no Not 
   }
 });
 
-test("Weeks 1 and 2 add up: each total its starters', the Captain's ×1.5 rounded down, Star the top and Flop the lowest", () => {
+test("Weeks 1 and 2 add up: each total its starters', the Captain's ×1.5 rounded down; three Stars, the Flop and three Killers, each three by points", () => {
   const w1 = week(1);
   expect(w1.starters.map((p) => p.points)).toEqual([15, 14, 27, 16, 9, 6, 9]);
   expect(w1.total).toBe(96);
-  expect(w1.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual(["Star Faker 27", "Flop Siwoo 6", "Killer Chovy 22"]);
+  expect(w1.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual([
+    "Star Faker 27",
+    "Star Ruler 16",
+    "Star Zeus 15",
+    "Flop Siwoo 6",
+    "Killer Chovy 22",
+    "Killer Peyz 14",
+    "Killer Kiin 11",
+  ]);
   const w2 = week(2);
   expect(w2.starters.map((p) => p.points)).toEqual([15, 15, 30, 15, 9, 13, 15]);
   expect(w2.total).toBe(112);
-  expect(w2.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual(["Star Faker 30", "Flop Delight 9", "Killer Peyz 19"]);
+  // Chovy's sum (4.9) beats Zeka's (3.5), but Zeka's 16 is listed first (spec/12).
+  expect(w2.yourWeek.map((p) => `${p.label} ${p.name} ${p.points}`)).toEqual([
+    "Star Faker 30",
+    "Star kkOma 15",
+    "Star Siwoo 13",
+    "Flop Delight 9",
+    "Killer Peyz 19",
+    "Killer Zeka 16",
+    "Killer Chovy 12",
+  ]);
   // A final week: Weeks 1 and 2 have no lines, so the rows show W or L and points.
   const out = text(<PointsPage data={w2} open="kkOma" />);
   expectInOrder(out, ["CoachT1 kkOma", "15GameScoredPts", "v DNS ›W 2–07", "G1W2", "G2W2", "Series win+3", "v BFX ›W 2–18", "G1W2", "G2L0", "G3W3", "Series win+3"]);

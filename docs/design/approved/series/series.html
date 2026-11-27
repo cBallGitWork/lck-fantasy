@@ -82,11 +82,10 @@ td.drop .gm .kda i { color: inherit; }
 .gm .p .ic--pog { color: var(--gold); }
 tr.is-me td { background: var(--fill); }
 tr.is-me td:first-child { box-shadow: inset 4px 0 0 var(--text); }
-/* The games, as FPL and UCL fantasy set a finished match's events under its score: a card a game, a row an event,
-   each team's names on its own side of the event's mark. */
+/* The games: a line a game under the scorebug. */
 .games { display: grid; gap: 32px; margin-top: 24px; }
 .game { background: var(--paper); border: 1px solid var(--line); }
-.game__head { font: 400 14px/24px var(--sans); white-space: nowrap; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; border-bottom: 4px solid var(--text); }
+.game__head { font: 400 14px/24px var(--sans); white-space: nowrap; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; border-left: 8px solid var(--text); }
 .game__head > b { font: 700 20px/24px var(--head); }
 .game__head .pogw b { font-weight: 600; }
 .game__head .crest { width: 28px; height: 28px; }
@@ -95,20 +94,8 @@ tr.is-me td:first-child { box-shadow: inset 4px 0 0 var(--text); }
 .game__head .pogw { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .game__head .pogw .ic { color: var(--gold); width: 20px; height: 20px; }
 .game__head .yours { margin-left: 2px; }
-.ev { display: grid; grid-template-columns: 1fr 156px 1fr; gap: 0 12px; align-items: center; min-height: 44px; padding: 0 16px; border-top: 1px solid var(--line); }
-.ev:first-of-type { border-top: 0; }
-.ev.is-me { background: var(--fill); }
-.ev__what { display: flex; align-items: center; gap: 10px; color: var(--text); font-size: 14px; }
 .sq { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; flex: none; background: var(--text); }
-.sq .ic { color: var(--bg); }
-.ev__what .ic { width: 20px; height: 20px; }
-.ev b { font-size: 16px; }
-.ev__what .ic--pog { color: var(--gold); }
-.ev__a { text-align: right; }
-.ev__a, .ev__b { display: flex; flex-wrap: wrap; gap: 0 16px; align-items: center; padding: 6px 0; }
-.ev__a { justify-content: flex-end; }
-.ev b { font-weight: 600; }
-.ev .yours { margin-left: 6px; }
+.sq .ic { color: var(--bg); width: 20px; height: 20px; }
 .ev--none { color: var(--mid); justify-content: center; display: flex; }
 .gm .p { flex: none; font: 600 14px/20px var(--fig); min-width: 28px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .gm .p .box { min-width: 28px; font: 700 16px/26px var(--fig); text-align: center; background: var(--text); color: var(--bg); }
@@ -120,8 +107,13 @@ td.drop .gm .p { font-weight: 400; }
 td.tot { text-align: right; padding-right: 16px; font: 700 28px/32px var(--fig); border-left: 1px solid var(--line); }
 td.tot small { display: block; font: 400 12px/16px var(--fig); color: var(--mid); }
 tr.co td { border-top-color: var(--soft); }
-.gm .co-l { display: flex; gap: 6px; }
-.gm .co-l .ic { width: 20px; height: 20px; }
+/* A team's events head its table: a row a scoring line, its mark on a square of its colour, then who earned it. */
+.grid tr.evr td { height: 44px; padding-top: 6px; padding-bottom: 6px; }
+.evr__what { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.evr__who { display: flex; flex-wrap: wrap; gap: 0 12px; align-items: center; }
+.evr__who b { font-weight: 600; }
+.evr__who .yours { margin-left: 6px; }
+.grid tr.evr + tr:not(.evr) td { border-top: 2px solid var(--soft); }
 .none { color: var(--mid); }
 .cap { position: static; display: inline-block; width: 20px; height: 20px; margin-left: 8px; border: 0; box-shadow: none; font: 700 12px/20px var(--sans); text-align: center; vertical-align: 1px; }
 .chip { display: inline-block; min-width: 24px; height: 24px; padding: 0 6px; font: 600 12px/22px var(--fig); text-align: center; border: 1px solid transparent; }
@@ -241,14 +233,19 @@ const ic = (id, title = "", cls = "") => `<svg class="ic ic--${id} ${cls}"${titl
 const pog = (s, i, n) => (s.games[i].pog === n ? ic("pog", "Player of the Game", "ic--pog") : "");
 const cell = (s, i, n, label, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}</span><span class="p">${pog(s, i, n)}${counted ? `<span class="box${p < 0 ? " neg" : ""}">${fmt(p)}</span>` : fmt(p)}</span></div></td>`;
 const L = ["First tower", "Most drakes", "Most barons", "Most elders", "Quick win"], LI = ["tower", "drake", "baron", "elder", "quick"];
-// A game's events, as FPL's and UCL fantasy's finished match: a row an event that happened, each team's names on its side.
-function game(s, i) {
-  const g = s.games[i], side = (code) => { const t = s[code], at = (f) => t.p.filter((p) => p[3][i] && f(p[3][i]) > 0).map((p) => `<span><b>${p[1]}</b>${f(p[3][i]) > 1 ? ` ×${f(p[3][i])}` : ""}${me(p[1])}</span>`).join("");
-    const own = `<span><i class="team__bar" style="background:${BAR[code]}"></i><b>${code}</b></span>`, c = t.coach[2][i];
-    return [at((x) => x[6]), at((x) => x[5]), at((x) => x[8]), at((x) => (x[7] === 1 ? 1 : 0)), at((x) => (x[7] === 2 ? 1 : 0)), at((x) => x[4]), at((x) => (x[2] === 0 && !x[9] ? 1 : 0)), ...c.map((x) => (x ? own : ""))]; };
-  const A = side(s.a), B = side(s.b), W = [["fb", "First blood"], ["solo", "Solo kills"], ["steal", "Steals"], ["multi", "Quadras"], ["multi", "Pentas"], ["gold", "Gold lead at 15"], ["none", "Deathless"], ...L.map((l, j) => [LI[j], l])];
-  const rows = W.map(([id, word, cls], j) => (A[j] || B[j] ? `<div class="ev${(A[j] + B[j]).includes("yours") ? " is-me" : ""}"><span class="ev__a">${A[j]}</span><span class="ev__what"><span class="sq" style="background:var(--m-${id}, var(--text))">${ic(id, "", cls)}</span>${word}</span><span class="ev__b">${B[j]}</span></div>` : "")).join("");
-  return `<section class="game"><h2 class="game__head"${g.w ? ` style="border-bottom-color:${BAR[g.w]}"` : ""}><b>Game ${i + 1}</b>${g.live ? `<span class="tag tag--live">Live</span><span class="len" style="margin-left:auto"><b>${g.live}</b></span>` : `${crest(g.w)}<span class="won">${g.w} won</span><span class="pogw">${ic("pog", "Player of the Game")}<b>${g.pog}</b>${me(g.pog)}</span><span class="len">${g.len}</span><a class="link" href="#">VOD ↗</a>`}</h2>${rows || '<div class="ev ev--none">—</div>'}</section>`;
+// A game's result, one line a game under the scorebug: who won, its Player of the Game, its length and its VOD.
+const game = (s, i) => { const g = s.games[i]; return `<section class="game"><h2 class="game__head"${g.w ? ` style="border-left-color:${BAR[g.w]}"` : ""}><b>Game ${i + 1}</b>${g.live ? `<span class="tag tag--live">Live</span><span class="len" style="margin-left:auto"><b>${g.live}</b></span>` : `${crest(g.w)}<span class="won">${g.w} won</span><span class="pogw">${ic("pog", "Player of the Game")}<b>${g.pog}</b>${me(g.pog)}</span><span class="len">${g.len}</span><a class="link" href="#">VOD ↗</a>`}</h2></section>`; };
+// A team's events over the series, a row a scoring line that somebody earned: who earned it, or the games for a coach line.
+const EV = [["fb", "First blood", (x) => x[6]], ["solo", "Solo kills", (x) => x[5]], ["steal", "Steals", (x) => x[8]], ["multi", "Quadras", (x) => (x[7] === 1 ? 1 : 0)], ["multi", "Pentas", (x) => (x[7] === 2 ? 1 : 0)], ["gold", "Gold lead at 15", (x) => x[4]], ["none", "Deathless", (x) => (x[2] === 0 && !x[9] ? 1 : 0)]];
+function events(s, t) {
+  const n = s.games.length, sq = (id) => `<span class="sq" style="background:var(--m-${id}, var(--text))">${ic(id)}</span>`;
+  // Over the series, as FPL: a name once, its count after it when over one, Faker (2). A coach line names its games.
+  const count = (p, f) => sum(p[3].map((g) => (g ? f(g) : 0)));
+  const who = (u) => [...EV.map(([, , f]) => u.p.filter((p) => count(p, f) > 0).map((p) => `<span><b>${p[1]}</b>${count(p, f) > 1 ? ` (${count(p, f)})` : ""}${me(p[1])}</span>`).join("")),
+    ...L.map((_, j) => s.games.map((_, i) => (u.coach[2][i][j] ? `<span>Game ${i + 1}</span>` : "")).join(""))];
+  // Both tables carry the same rows, a line either team earned, so their players line up.
+  const mine = who(t), a = who(s[s.a]), b = who(s[s.b]), W = [...EV, ...L.map((l, j) => [LI[j], l])];
+  return W.map(([id, word], k) => (a[k] || b[k] ? `<tr class="evr"><td colspan="2"><span class="evr__what">${sq(id)}${word}</span></td><td colspan="${n}">${mine[k] ? `<span class="evr__who">${mine[k]}</span>` : '<span class="none">—</span>'}</td><td class="tot"></td></tr>` : "")).join("");
 }
 function team(s, code) {
   const t = s[code], won = s.games.map((g) => g.w === code), n = s.games.length, over = s.games.every((g) => g.w);
@@ -259,9 +256,9 @@ function team(s, code) {
       ${gs.map((g, i) => (g ? cell(s, i, nm, `<span class="ch">${g[0]}</span><span class="kda">${g[1]}/<i>${g[2]}</i>/${g[3]}</span>`, ps[i], c.includes(i)) : '<td><span class="none">—</span></td>')).join("")}<td class="tot">${mine(nm, sum(c.map((i) => ps[i])))}</td></tr>`; }).join("");
   const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = !over ? 0 : won.filter(Boolean).length === 2 ? 3 : -1;
   const coach = `<tr class="co${MINE.includes(cn) ? " is-me" : ""}"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b>${me(cn)}</td>
-    ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? ic(LI[j], L[j]) : "")).join("") || "—"}</span>`, cp[i], c.includes(i))).join("")}
+    ${cg.map((g, i) => cell(s, i, cn, "", cp[i], c.includes(i))).join("")}
     <td class="tot">${mine(cn, sum(c.map((i) => cp[i])) + sw)}<small>${sw > 0 ? "W +3" : sw < 0 ? "L −1" : "&nbsp;"}</small></td></tr>`;
-  return { html: `<section class="grid"><h2 class="grid__head" style="--team:${BAR[code]}">${crest(code)}<b><i class="team__bar" style="background:${BAR[code]}"></i>${code}</b>${t.name === code ? "" : `<span>${t.name}</span>`}</h2><table>${head}${rows}${coach}</table></section>` };
+  return { html: `<section class="grid"><h2 class="grid__head" style="--team:${BAR[code]}">${crest(code)}<b><i class="team__bar" style="background:${BAR[code]}"></i>${code}</b>${t.name === code ? "" : `<span>${t.name}</span>`}</h2><table>${head}${events(s, t)}${rows}${coach}</table></section>` };
 }
 // Before it starts: Week 4's HLE v DK, Wednesday 20 Jan, opened at the hub's moment.
 const NEXT = { HLE: [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "김건우"], ["Gumayusi", "이민형"], ["Delight", "유환중"], ["Homme", "윤성영"]],

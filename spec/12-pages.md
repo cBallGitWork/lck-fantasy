@@ -81,9 +81,10 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - Each game shows its winner, length, a POG badge on its Player of the Game and a VOD link to
     lolesports. No series POG, picks, bans or sides: "i dont think we need draft info overload"
     (Craig, 16 Nov 2026).
-  - Each game shows its events under the score, as FPL does a finished match's: its Player of the
-    Game, first blood, solo kills, steals, quadras and pentas, gold leads at 15, deathless games
-    and the coach lines, each with who got it (Craig, 27 Nov 2026).
+  - Each team's table is headed by its events over the series, as FPL lists a finished match's:
+    first blood, solo kills, steals, quadras and pentas, gold leads at 15, deathless games and
+    the coach lines, each with who got it and a count when over one, `Faker (2)`. The page is cut
+    by team throughout, not by game (Craig, 27 Nov 2026).
   - The scorebug shows each team's record as of now. The coach row shows the coach lines that
     scored and the series +3 or −1. Your own players carry a mark (Craig, 16 Nov 2026).
   - One line sets your points from the series beside the average manager's: `You 31 · Average 24`.

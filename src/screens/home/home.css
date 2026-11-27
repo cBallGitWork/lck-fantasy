@@ -131,12 +131,6 @@
 .home__cards--nine {
   grid-template-columns: repeat(9, minmax(0, 1fr));
 }
-.home__cards .pcard {
-  background: var(--bg);
-}
-.home__cards--nine .pcard__name {
-  font-size: var(--size-lead);
-}
 .home__bench {
   display: flex;
   align-items: center;
@@ -176,7 +170,6 @@
   height: var(--m-row);
   border-top: var(--m-rule) solid var(--line);
   white-space: nowrap;
-  text-align: left;
 }
 .home__rows td:first-child,
 .home__rows th:first-child {
@@ -186,8 +179,12 @@
 .home__rows th:last-child {
   padding-right: var(--s-4);
 }
-.home__rows .num {
+.home__fig {
   text-align: right;
+}
+/* Grey words at the body's size, as the pictures draw a role, a series or a fact's word. */
+.home__mid {
+  color: var(--mid);
 }
 .home__panel > .home__rows:first-of-type thead tr:first-child th,
 .home__panel > .home__rows:first-of-type tbody:first-child tr:first-child th {

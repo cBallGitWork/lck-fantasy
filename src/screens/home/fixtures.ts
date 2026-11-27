@@ -77,9 +77,6 @@ function buffOf(name: BuffName): PlayedBuff {
 
 const BENCH_BOOST: BuffName = "Bench Boost";
 
-/** The week's series as the panel lists them. */
-const seriesRows = (list: readonly Series[]) => list.map(({ id, day, local, home, away, score, state }) => (score ? { id, day, local, home, away, score, state } : { id, day, local, home, away, state }));
-
 /** A followed manager's Week 3 series, as the Following panel lists it. */
 function followed(who: keyof typeof FOLLOWED_WEEK3) {
   const { seriesId, points } = FOLLOWED_WEEK3[who];
@@ -169,7 +166,7 @@ export const HOME_LIVE: HomeLiveData = {
   ...SHARED,
   state: "live",
   deadline: deadline(POINTS_AT),
-  series: { week: 3, rows: seriesRows(WEEK3_SERIES_AT_POINTS) },
+  series: { week: 3, rows: WEEK3_SERIES_AT_POINTS },
   following: following(false),
   managers: [
     { week: 3, soFar: false, facts: [fact("captained", "Chovy", 38)] },
@@ -192,7 +189,7 @@ export const HOME_IDLE: HomeIdleData = {
   ...SHARED,
   state: "idle",
   deadline: deadline(IDLE_AT),
-  series: { week: 4, rows: seriesRows(WEEK4_SERIES) },
+  series: { week: 4, rows: WEEK4_SERIES },
   following: following(true),
   managers: [{ week: 4, soFar: true, facts: [fact("captained", "Faker", 34), fact("bought", "Kiin", 41_208), fact("sold", "Zeka", 31_412)] }],
   week: { week: 3, final: true, points: MY_WEEK3.finalTotal, ...WEEK3_FINAL, starFlop: starFlopOf(3, WEEK3_FIELD) },

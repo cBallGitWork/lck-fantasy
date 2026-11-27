@@ -17,7 +17,7 @@ export function Who({ who }: { who: Named }) {
 /** A fact's word with its 20px mark before it (plate.md, Parts, A fact's mark): Most captained's is the Captain's C. */
 export function FactLabel({ kind }: { kind: FactKind }) {
   return (
-    <span className="home__fact quiet">
+    <span className="home__fact home__mid">
       {kind === "captained" ? <MarkBadge mark="C" fact /> : <FactMark kind={kind} />}
       {FACT_WORD[kind]}
     </span>

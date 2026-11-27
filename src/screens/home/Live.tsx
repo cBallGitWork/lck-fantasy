@@ -40,7 +40,7 @@ export function StreamPanel({ data, onPickStream }: { data: HomeLiveData; onPick
           <LinkGo go={{ to: PATHS.live }}>{WORDS.live}</LinkGo>
         </span>
       </div>
-      <div className="home__screen quiet">
+      <div className="home__screen home__mid">
         {playing && streamName(playing)}
         <span className="home__muted">{WORDS.muted}</span>
       </div>
@@ -71,7 +71,7 @@ export function StreamPanel({ data, onPickStream }: { data: HomeLiveData; onPick
             <thead>
               <tr className="home__sub">
                 <th>{WORDS.yourPlayers}</th>
-                <th className="num">{WORDS.pts}</th>
+                <th className="home__fig num">{WORDS.pts}</th>
               </tr>
             </thead>
             <tbody>
@@ -83,7 +83,7 @@ export function StreamPanel({ data, onPickStream }: { data: HomeLiveData; onPick
                       {p.mark && <MarkBadge mark={p.mark} />}
                     </span>
                   </td>
-                  <td className="num">
+                  <td className="home__fig num">
                     <b>{p.points}</b>
                   </td>
                 </tr>

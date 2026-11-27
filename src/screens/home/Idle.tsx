@@ -49,10 +49,10 @@ export function LineupPanel({ data, buff }: { data: HomeIdleData; buff?: PlayedB
       </div>
       {!boost && (
         <p className="home__bench">
-          <span className="quiet">{WORDS.bench}</span>
+          <span className="home__mid">{WORDS.bench}</span>
           {data.bench.map((p, i) => (
             <span key={p.name}>
-              <span className="quiet">{benchPlace(i + 1, p.role)}</span> <Who who={p} />
+              <span className="home__mid">{benchPlace(i + 1, p.role)}</span> <Who who={p} />
             </span>
           ))}
         </p>

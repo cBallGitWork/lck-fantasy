@@ -18,15 +18,15 @@ export function FeedRow({ item, sent, onCheer }: { item: FeedItem } & Cheering) 
     <tr>
       <td>
         <b>{item.manager}</b>
-        <span className="quiet">
+        <span className="home__mid">
           {dot}
           {item.series}
         </span>
       </td>
-      <td className="num">
+      <td className="home__fig num">
         <b>{item.points}</b>
       </td>
-      <td className="num">
+      <td className="home__fig num">
         {already ? (
           <span className="home__sent quiet">{sentWord(CHEER_WORD[already])}</span>
         ) : (
@@ -56,7 +56,7 @@ export function Following({ following, ...cheering }: { following: HomeFollowing
                 </>
               )}
             </th>
-            <th className="num">{WORDS.pts}</th>
+            <th className="home__fig num">{WORDS.pts}</th>
             <th />
           </tr>
         </thead>
@@ -102,7 +102,7 @@ export function AllManagers({ weeks }: { weeks: ManagersWeek[] }) {
                 <td>
                   <Who who={f} />
                 </td>
-                <td className="num">{f.kind === "captained" ? pct(f.value) : count(f.value)}</td>
+                <td className="home__fig num">{f.kind === "captained" ? pct(f.value) : count(f.value)}</td>
               </tr>
             ))}
           </tbody>

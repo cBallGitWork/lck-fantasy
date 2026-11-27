@@ -4,7 +4,7 @@ import { NewsFlag, ROLE_NAME } from "../../rift";
 import type { HomeDeadline, HomeLeague, HomeWeek, WeekPick } from "./types";
 import "./side.css";
 import { FactLabel, Who } from "./who";
-import { deadlineTitle, weekName, WORDS } from "./words";
+import { COUNTDOWN_UNIT, deadlineTitle, weekName, WORDS } from "./words";
 
 /** What the Deadline panel's keys do; the route wires them. */
 export interface DeadlineKeys {
@@ -14,21 +14,15 @@ export interface DeadlineKeys {
 
 /** The countdown, Home's one key figure: its numbers large, its units small and grey; days only while there are any. */
 function CountdownFigure({ countdown }: { countdown: HomeDeadline["countdown"] }) {
-  const parts: [number, string][] = [
-    [countdown.days, "d"],
-    [countdown.hours, "h"],
-    [countdown.minutes, "m"],
-  ];
+  const units = (["days", "hours", "minutes"] as const).filter((unit, i) => i > 0 || countdown[unit] > 0);
   return (
     <p className="home__count num">
-      {parts
-        .filter(([n], i) => i > 0 || n > 0)
-        .map(([n, unit]) => (
-          <span key={unit}>
-            {n}
-            <small>{unit}</small>
-          </span>
-        ))}
+      {units.map((unit) => (
+        <span key={unit}>
+          {countdown[unit]}
+          <small>{COUNTDOWN_UNIT[unit]}</small>
+        </span>
+      ))}
     </p>
   );
 }
@@ -42,7 +36,7 @@ export function DeadlinePanel({ deadline, onPickTeam, onTransfers }: { deadline:
   return (
     <Panel title={deadlineTitle(deadline.week)} band className="home__panel">
       <CountdownFigure countdown={deadline.countdown} />
-      <p className="home__when quiet">
+      <p className="home__when home__mid">
         <Time local={deadline.local} />
       </p>
       <div className="home__keys">
@@ -68,10 +62,10 @@ export function DeadlinePanel({ deadline, onPickTeam, onTransfers }: { deadline:
         <GoLink key={d.name} go={{ to: PATHS.pickTeam }} className="home__doubt hover-line">
           <NewsFlag flag={d.flag} className="home__flag" />
           <Who who={d} />
-          <span className="quiet">{ROLE_NAME[d.role]}</span>
+          <span className="home__mid">{ROLE_NAME[d.role]}</span>
           <span className="home__doubt-end">
             <Tag>{d.flag}</Tag>
-            <span className="quiet">{d.note}</span>›
+            <span className="home__mid">{d.note}</span>›
           </span>
         </GoLink>
       ))}
@@ -102,10 +96,10 @@ function PickRow({ kind, pick }: { kind: "star" | "flop"; pick: WeekPick }) {
       <td>
         <Who who={pick} />
       </td>
-      <td className="num">
+      <td className="home__fig num">
         <b>{pick.points}</b>
       </td>
-      <td className="home__owned num quiet">{pct(pick.eoPct)}</td>
+      <td className="home__fig home__owned num quiet">{pct(pick.eoPct)}</td>
     </tr>
   );
 }
@@ -142,8 +136,8 @@ export function WeekPanel({ week }: { week: HomeWeek }) {
         <thead>
           <tr className="home__sub">
             <th colSpan={2}>{weekName(starFlop.week)}</th>
-            <th className="num">{WORDS.pts}</th>
-            <th className="num">{WORDS.owned}</th>
+            <th className="home__fig num">{WORDS.pts}</th>
+            <th className="home__fig num">{WORDS.owned}</th>
           </tr>
         </thead>
         <tbody>
@@ -168,10 +162,10 @@ export function Leagues({ leagues }: { leagues: HomeLeague[] }) {
           {leagues.map((l) => (
             <tr key={l.id}>
               <td>{l.name}</td>
-              <td className="num">
+              <td className="home__fig num">
                 <b>{l.kind === "private" ? ordinal(l.rank) : count(l.rank)}</b>
               </td>
-              <td className="home__move num">
+              <td className="home__fig home__move num">
                 <RankMove move={l.move} />
               </td>
             </tr>

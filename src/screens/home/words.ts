@@ -30,8 +30,6 @@ export const WORDS = {
   sponsor: "Sponsor",
   /** The sponsor's badge by Overall's tier, its slot until its name is approved. */
   badge: "Badge",
-  /** A starter's warning row, for a screen reader: it opens Pick Team. */
-  openPickTeam: "Open Pick Team",
   /** A stream's picker, for a screen reader. */
   stream: "Stream",
 } as const;
@@ -44,6 +42,9 @@ export const FACT_WORD: Record<FactKind, string> = {
   bought: "Most bought",
   sold: "Most sold",
 };
+
+/** The countdown's units, small after each figure: `3d 22h 45m`. */
+export const COUNTDOWN_UNIT = { days: "d", hours: "h", minutes: "m" } as const;
 
 export const dot = " · ";
 

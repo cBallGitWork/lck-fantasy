@@ -24,6 +24,11 @@
   width: var(--m-tile-w);
   transform: none;
 }
+/* A tile in its role's group (Transfers): in the group's row, at the Rift's tile size. */
+.tile--grouped {
+  position: relative;
+  transform: none;
+}
 .tile[role="button"] {
   cursor: pointer;
 }
@@ -35,6 +40,23 @@
   color: var(--text);
   font-size: var(--size-small);
   font-weight: var(--w-semi);
+}
+/* Transfers' strip across the card's top, over the shirt (approved/transfers/): its `×` at the left, then the price. */
+.tile__strip {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: var(--s-5);
+  background: var(--band);
+  color: var(--text);
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+  line-height: var(--lh-body);
 }
 /* The card is solid, never see-through, so the map's marks stop at it; its rounded top is the one rounded shape. */
 .tile__card {

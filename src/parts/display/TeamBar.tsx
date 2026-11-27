@@ -11,8 +11,11 @@ const BAR: Record<string, string> = Object.fromEntries(
   teams.teams.map((team) => [team.code, [team.primary, team.secondary, team.accent].find((kit) => contrast(kit, color.paper) >= SEEN) ?? color.text]),
 );
 
-/** A small bar of a team's own colour before its code, wherever a list names a team; unseen by a screen reader, as the code names the team. */
-export function TeamBar({ team }: { team: string }) {
+/**
+ * A small bar of a team's own colour before its code, wherever a list names a team; unseen by a screen
+ * reader, as the code names the team. `wide` is Transfers' 6px (plate.md, A team's colour).
+ */
+export function TeamBar({ team, wide }: { team: string; wide?: boolean }) {
   const colour = BAR[team];
-  return colour ? <i className="team-bar" style={{ background: colour }} aria-hidden="true" /> : null;
+  return colour ? <i className={wide ? "team-bar team-bar--wide" : "team-bar"} style={{ background: colour }} aria-hidden="true" /> : null;
 }

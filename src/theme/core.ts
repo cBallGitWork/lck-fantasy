@@ -130,6 +130,13 @@ const measure = {
   pickColumn: 336,
   /** Save team at the right of Card view's one bar (approved/pick-team/1440-cards.png). */
   pickSave: 304,
+  /** Transfers' side column, the player list (approved/transfers/, What binds 8). */
+  transfersSide: 424,
+  /** The tapped player's card under Transfers' Rift: who he is and his key, then his series (approved/transfers/). */
+  transfersCardWho: 216,
+  transfersCardSeries: 256,
+  /** A team's bar in Transfers' lists (plate.md, A team's colour). */
+  teamBarWide: 6,
 } as const;
 
 /** Opacities: the band across a tier shield; an empty slot's shirt outline (front door picture). A

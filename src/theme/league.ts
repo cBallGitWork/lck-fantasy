@@ -19,6 +19,7 @@ type LeagueColour =
   | "stage"
   | "stageText"
   | "band"
+  | "headBand"
   | "signal"
   | "dim"
   | "tileCard"
@@ -70,6 +71,8 @@ const lck: League = {
     stageText: "#9AA6C8",
     /** The darkest ground: the top bar. */
     band: "#050A18",
+    /** A panel title's band, a brighter LCK blue (Craig, 26 Nov 2026; plate.md, Panel): Transfers on. */
+    headBand: "#1D46A8",
     /** The second accent, used sparingly: the live dot, the focus ring. */
     signal: "#2BC4B5",
     /** The page behind a modal. */

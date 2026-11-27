@@ -1,30 +1,28 @@
 // Where the nine stand on Transfers' Rift: by role, no bench, as FPL's Transfers pitch stands all fifteen
-// by position (Craig, 16 Nov 2026). A role holding several stands them in a row along its lane.
+// by position (Craig, 16 Nov 2026). A role's players stand side by side under its name, said once
+// (approved/transfers/, What binds 1).
 
-import { PLAN, type PersonRole, type RiftPoint } from "../../rift";
-import { share, space } from "../../theme";
-
-/** From one tile's centre to the next in a role's row, in the map's own square: a tile (its share of the Rift) and a gap. */
-export const STEP = share.tile * PLAN + space[2];
+import type { PersonRole, RiftPoint } from "../../rift";
 
 /**
- * Each role's first tile, and which way the rest go, on the square Rift: top rightward along top lane,
- * jungle and mid in rows centred in the jungle and on mid lane, Bot then Support leftward along bot lane,
- * the coach alone by the blue base. `centre` rows are centred on the point; the others start there. The
- * rows sit a whole tile apart, its price chip and band included, at the size the Rift's tiles take (`share`).
+ * Each role's group, its centre on the square Rift (the map's own 720, `PLAN`), as the picture
+ * (approved/transfers/render.js): top along top lane, jungle in the blue jungle, mid on mid lane, Bot
+ * and Support along bot lane, the coach by the blue base.
  */
-const SPOTS: Record<PersonRole, { at: RiftPoint; dir: readonly [number, number]; centre?: boolean }> = {
-  top: { at: [84, 84], dir: [1, 0] },
-  jng: { at: [196, 250], dir: [1, 0], centre: true },
-  mid: { at: [428, 400], dir: [1, 0], centre: true },
-  bot: { at: [636, 560], dir: [-1, 0] },
-  sup: { at: [404, 560], dir: [-1, 0] },
-  coach: { at: [84, 640], dir: [1, 0] },
+const GROUP_AT: Record<PersonRole, RiftPoint> = {
+  top: [190, 132],
+  jng: [172, 338],
+  mid: [432, 392],
+  bot: [470, 588],
+  sup: [592, 588],
+  coach: [132, 588],
 };
 
-/** Where the `i`th of a role's `n` tiles stands. */
-export function spotOf(role: PersonRole, i: number, n: number): RiftPoint {
-  const { at, dir, centre } = SPOTS[role];
-  const k = (centre ? i - (n - 1) / 2 : i) * STEP;
-  return [at[0] + dir[0] * k, at[1] + dir[1] * k];
+/** How far left each extra Bot moves the group, so a second Bot stands clear of the Support. */
+const BOT_STEP = 60;
+
+/** Where a role's group of `n` stands. */
+export function groupAt(role: PersonRole, n: number): RiftPoint {
+  const [x, y] = GROUP_AT[role];
+  return [role === "bot" ? x - BOT_STEP * (n - 1) : x, y];
 }

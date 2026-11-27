@@ -2,8 +2,8 @@
 // Pure, so the page's every control is tested without a browser. The rules themselves are built
 // in convex/squads/; this is only what the page shows while the manager is still choosing.
 
-import { BENCH_SLOTS, isBench, LINEUP_ORDER, ROLE_KEYS, ROLE_NAME, type Mark, type PersonRole, type SquadSlot } from "../../rift";
-import { added, removed, restored, roleEmpty, teamFull, WORDS } from "./words";
+import { BENCH_SLOTS, LINEUP_ORDER, ROLE_KEYS, ROLE_NAME, type Mark, type PersonRole, type SquadSlot } from "../../rift";
+import { added, against, removed, restored, roleEmpty, teamFull, toBuy, WORDS } from "./words";
 
 /** A player or coach as Transfers shows him: price in won, the last week's points, form, season total. */
 export interface ListPlayer {
@@ -160,9 +160,12 @@ export function bankNow(squad: SquadPlayer[], plan: Plan, bank: number): number 
   return moves(squad, plan).reduce((sum, m) => sum + m.out.priceWon - (m.in?.priceWon ?? 0), bank);
 }
 
-/** Why Review and confirm is off: a slot still empty, nothing to confirm, or over the budget. */
+/** The points the `i`th transfer made now costs: none while free ones are left, then the hit. */
+export const hitOf = (rules: TransferRules, i: number) => (i < rules.freeTransfers ? 0 : rules.hitPoints);
+
+/** Why Review and confirm is off: players still to buy, nothing to confirm, or over the budget. */
 export function reviewBlock(squad: SquadPlayer[], plan: Plan, rules: TransferRules): string | undefined {
-  if (emptySlots(plan) > 0) return WORDS.slotEmpty;
+  if (emptySlots(plan) > 0) return toBuy(emptySlots(plan));
   if (transfersMade(squad, plan) === 0) return WORDS.noChanges;
   if (bankNow(squad, plan, rules.bank) < 0) return WORDS.overBudget;
   return undefined;
@@ -186,10 +189,8 @@ const SORT_VALUE: Record<SortKey, (p: ListPlayer) => number> = {
   owned: (p) => p.ownedPct,
 };
 
-/** The role chip a slot opens the list on: his role, or All roles where any fits. */
-export function roleFilterFor(squad: SquadPlayer[], slot: SquadSlot): RoleFilter {
-  return slot === "coach" ? "coach" : slot === "flex" || isBench(slot) ? ALL : outOf(squad, slot).role;
-}
+/** The role tab the list opens on: the sold player's role once someone is sold, All roles before (approved/transfers/, What binds 9). */
+export const roleFilterFor = (squad: SquadPlayer[], plan: Plan): RoleFilter => (plan.replacing ? outOf(squad, plan.replacing).role : ALL);
 
 /**
  * The list: everyone not standing in the squad who matches the filters, best first by the sort. None is
@@ -213,11 +214,11 @@ export interface Fixture {
   day: string;
 }
 
-/** `v DK`: a team's next opponent alone, or nothing. */
-export const nextAgainst = (fixtures: Record<string, Fixture[]>, team: string) => {
-  const next = fixtures[team]?.[0];
-  return next ? `${WORDS.versus} ${next.opponent}` : "";
-};
+/** `v DK, NS`: both of a team's opponents this week, in the order played (Craig, 26 Nov 2026), or nothing. */
+export const weekAgainst = (fixtures: Record<string, Fixture[]>, team: string) => against((fixtures[team] ?? []).map((f) => f.opponent));
+
+/** The slot a player stands in now, if he is one of the nine. */
+export const slotHolding = (squad: SquadPlayer[], plan: Plan, id: string) => SQUAD_SLOTS.find((slot) => inSlot(squad, plan, slot)?.id === id);
 
 /** One confirm this week: when, who went out and came in, and its hit (0 is free). */
 export interface Confirm {

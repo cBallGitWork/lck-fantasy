@@ -1,35 +1,12 @@
-/* Transfers' List view (Craig, 16 Nov 2026). Every value is a token. */
+/* Transfers' List view (approved/transfers/1440-list.png): the nine as a table in the Rift's place, a
+   panel edged with the head band. Every value is a token; the table's rows are transfers.css's. */
 
-/* List view: the nine by role. */
-.transfers__squad {
+.transfers__squad-panel {
+  align-self: start;
+  padding: 0 var(--s-4);
   background: var(--paper);
-}
-.transfers__squad th,
-.transfers__squad td {
-  padding: var(--s-1) var(--s-2);
-  text-align: left;
-}
-.transfers__squad td {
-  height: var(--m-row);
-  border-bottom: var(--m-rule) solid var(--fill);
-}
-.transfers__squad .transfers__num {
-  width: var(--m-col-figure);
-  text-align: right;
-  white-space: nowrap;
-}
-.transfers__squad td:first-child {
-  width: var(--m-shirt-small-w);
-}
-.transfers__squad .transfers__next {
-  width: var(--m-col-price);
-}
-.transfers__group th {
-  padding-top: var(--s-3);
-  font-size: var(--size-small);
-  font-weight: var(--w-bold);
-  color: var(--text);
-  border-bottom: var(--m-rule) solid var(--text);
+  border: var(--m-rule) solid var(--line);
+  border-top: var(--m-rule-heavy) solid var(--head-band);
 }
 .transfers__row--sold td {
   color: var(--mid);

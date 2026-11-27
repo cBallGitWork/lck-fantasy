@@ -51,9 +51,10 @@
 /* Captains and buffs by tier (spec/08, The Leagues page): a row a tier, yours filled. */
 .tiers td { height: var(--row); padding: 0 12px; border-top: 1px solid var(--line); white-space: nowrap; }
 .tiers th { font: 400 12px/32px var(--sans); color: var(--mid); text-align: left; padding: 0 12px; }
-.tiers td:first-child, .tiers th:first-child { padding-left: 16px; width: 200px; }
-.tiers .share { width: 56px; text-align: right; padding-left: 0; padding-right: 48px; box-sizing: content-box; }
-.tiers .name { width: 168px; }
+.tiers td:first-child, .tiers th:first-child { padding-left: 16px; width: 160px; }
+.tiers .share { width: 48px; text-align: right; padding-left: 0; padding-right: 56px; box-sizing: content-box; }
+.tiers .name { width: 152px; }
+.bicon { color: var(--gold); margin-right: 8px; vertical-align: -4px; }
 .tiers td.share { font-family: var(--fig); }
 .tiers tr.is-me td { background: var(--fill); font-weight: 600; }
 .tiers td:last-child, .tiers th:last-child { padding-right: 16px; }
@@ -78,7 +79,6 @@
 .sheet__in--code { font-family: var(--fig); letter-spacing: 1px; }
 .sheet__row { display: flex; gap: 16px; justify-content: flex-end; align-items: center; margin-top: 24px; }
 .sheet__row .key { min-height: 40px; padding: 0 24px; }
-.sheet__back { text-decoration: underline; text-underline-offset: 3px; }
 .sheet__done { display: flex; align-items: center; gap: 8px; padding: 16px; margin-top: 16px; border: 1px solid var(--line); }
 .sheet__done b { flex: 1; font: 600 20px/24px var(--fig); letter-spacing: 1px; }
 .sheet__count { margin-top: 16px; }

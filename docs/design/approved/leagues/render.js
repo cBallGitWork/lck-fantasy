@@ -19,7 +19,7 @@
 
   // [rank, move, team, manager, Captain, week, total, split 2, tier, chase]
   const ROWS = overall
-    ? [["1", 0, "Unkillable FC", "Ha-eun Seo", "Faker", 112, "1,642", 402, "Challenger"], ["2", 3, "Bang Bang Bot", "Marco Ruiz", "Ruler", 121, "1,631", 415, "Challenger"], ["3", -1, "Faker's Fan Club", "Yuna Choi", "Faker", 88, "1,628", 377, "Challenger"], ["4", -1, "Showmaker's Shadow", "Ben Price", "ShowMaker", 94, "1,619", 390, "Challenger"], ["5", 2, "GenG Got Game", "Kenji Sato", "Chovy", 109, "1,611", 398, "Challenger"], ["6", 0, "Faker Ate My Homework", "Ollie Dunn", "Faker", 97, "1,604", 371, "Challenger"], ["7", -2, "Viper's Nest", "Mina Lee", "Zeka", 80, "1,598", 366, "Challenger"], null,
+    ? [["1", 0, "Unkillable FC", "Ha-eun Seo", "Chovy", 112, "1,642", 402, "Challenger"], ["2", 3, "Bang Bang Bot", "Marco Ruiz", "Ruler", 121, "1,631", 415, "Challenger"], ["3", -1, "Faker's Fan Club", "Yuna Choi", "Faker", 88, "1,628", 377, "Challenger"], ["4", -1, "Showmaker's Shadow", "Ben Price", "ShowMaker", 94, "1,619", 390, "Challenger"], ["5", 2, "GenG Got Game", "Kenji Sato", "Chovy", 109, "1,611", 398, "Challenger"], ["6", 0, "Faker Ate My Homework", "Ollie Dunn", "Chovy", 97, "1,604", 371, "Challenger"], ["7", -2, "Viper's Nest", "Mina Lee", "Chovy", 80, "1,598", 366, "Challenger"], null,
        ["48,209", 6880, "Rookie Mistake", "Jon Park", "Bdd", 97, "1,199", 301, "Emerald I"], ["48,210", 6901, "Smolder Shoulders", "Aisha Bello", "Aiming", 98, "1,198", 298, "Emerald I"], ["48,211", 6904, "Baron Steal FC", "Craig", "Faker", 98, "1,198", 298, "Emerald I"], ["48,212", -40, "Doran's Ring Bearer", "Tim Fox", "Doran", 52, "1,198", 298, "Emerald I"], ["48,213", 2114, "Kiin Bean", "Tom Reid", "Chovy", 61, "1,197", 260, "Emerald I"]]
     : joined
       ? [["1", 2, "Canyon Diff", "Hye-jin Lim", "Canyon", 104, "1,402"], ["2", -1, "Smash Mouth Kiin", "Leo Grant", "Kiin", 88, "1,377"], ["3", 0, "Ward Hoarders", "Ama Owusu", "Keria", 91, "1,360"], ["4", 1, "Lehends Never Die", "Rui Tan", "Faker", 79, "1,341"], ["5", -2, "T1 Til I Die", "Nadia Khan", "Faker", 70, "1,330"], null,
@@ -40,10 +40,17 @@
         ${table}</section>`;
 
   // Captains and buffs by tier (spec/08; Craig, 27 Nov 2026): the gameweek in the Week column, once its deadline has passed.
+  // The buffs' icons, as Pick Team draws them (../pick-team/render.js, BUFF_ICON), at a row's size.
+  const svg = (body) => `<svg class="bicon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+  const BUFF_ICON = {
+    "Bench Boost": svg('<path d="M3 16h18M4 13h16M5 16v4M19 16v4M12 10V3M8.5 6.5 12 3l3.5 3.5"/>'),
+    "Double Captain": svg('<circle cx="15.5" cy="10" r="6.5" fill="currentColor" opacity=".55" stroke="none"/><circle cx="9.5" cy="14" r="7" fill="currentColor" style="stroke:var(--paper)" stroke-width="1.5"/><path d="M12 11.6a3.2 3.2 0 1 0 0 4.8" style="stroke:var(--paper)" stroke-width="2"/>'),
+    "Coach Diff": svg('<path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="13" width="4" height="6" rx="1"/><rect x="17" y="13" width="4" height="6" rx="1"/><path d="M19 19c0 2-3 2.5-6 2.5"/>'),
+  };
   const TIERS = [["Challenger", "Chovy", 61, "Double Captain", 9], ["Grandmaster", "Chovy", 54, "Double Captain", 7], ["Master", "Faker", 47, "Bench Boost", 6], ["Diamond", "Faker", 44, "Bench Boost", 5], ["Emerald", "Faker", 41, "Coach Diff", 4], ["Platinum", "Faker", 39, "Bench Boost", 4], ["Gold", "Faker", 43, "Bench Boost", 3], ["Silver", "Faker", 48, "Coach Diff", 3], ["Bronze", "Faker", 52, "Bench Boost", 2], ["Iron", "Faker", 58, null, null]];
   const tiers = overall && !before ? `<section class="tpanel" aria-label="Captains and buffs by tier"><h2 class="tpanel__title">Captains and buffs<span>Week 14</span></h2>
-    <table class="tiers"><tr><th>Tier</th><th>Top Captain</th><th class="share"></th><th>Top buff</th><th class="share"></th><th></th></tr>
-    ${TIERS.map(([t, c, cs, b, bs]) => `<tr${t === "Emerald" ? ' class="is-me"' : ""}><td>${SHIELD}${t}</td><td class="name">${who(c)}</td><td class="share">${cs}%</td><td class="name">${b ?? '<span class="mid">–</span>'}</td><td class="share">${bs === null ? "" : `${bs}%`}</td><td></td></tr>`).join("")}</table></section>` : "";
+    <table class="tiers"><tr><th>Tier</th><th>Top Captain</th><th class="share">Share</th><th>Top buff</th><th class="share">Share</th><th></th></tr>
+    ${TIERS.map(([t, c, cs, b, bs]) => `<tr${t === "Emerald" ? ' class="is-me"' : ""}><td>${SHIELD}${t}</td><td class="name">${who(c)}</td><td class="share">${cs}%</td><td class="name">${b ? BUFF_ICON[b] + b : '<span class="mid">–</span>'}</td><td class="share">${bs === null ? "" : `${bs}%`}</td><td></td></tr>`).join("")}</table></section>` : "";
 
   const LIST = [["General"], ["Overall · Emerald I", "48,211", 6904, "of 212,480"], ["United Kingdom", "1,402", 233, "of 9,377"], ["T1 supporters", "3,118", 510, "of 41,902"], ["Private"], ["Pub League", "2nd", 1, "12 managers"], ["Flol Discord", "14th", -2, "86 managers"]];
   const list = `<section class="tpanel" aria-label="Your leagues"><h2 class="tpanel__title">Your leagues</h2><div class="lst">
@@ -51,10 +58,10 @@
     <div class="lst__acts"><button class="key key--gold" type="button">Create a league</button><button class="key" type="button">Join a league</button></div></div></section>`;
 
   const x = '<a class="sheet__x" href="#">✕</a>';
-  const back = '<a class="sheet__back" href="#">Back</a>';
+  const back = '<button class="key" type="button">Back</button>';
   const count = '<p class="sheet__count small mid">Private leagues: 2 of 25</p>';
   const SHEET = {
-    create: `<h2>Create a league</h2><label>Name</label><div class="sheet__in">Office Rift<span class="mid small">11 / 30</span></div><label>Scoring starts</label><div class="sheet__in">Week 14 · Wed 10 Feb<span>▾</span></div><div class="sheet__row">${back}<button class="key key--gold" type="button">Create</button></div>${count}`,
+    create: `<h2>Create a league</h2><label>Name</label><div class="sheet__in">Office Rift<span class="mid small">11 / 30</span></div><label>Scoring starts</label><div class="sheet__in">Week 14 · Wed 4 Aug<span>▾</span></div><div class="sheet__row">${back}<button class="key key--gold" type="button">Create</button></div>${count}`,
     created: `<h2>Office Rift</h2><p class="mid">Scoring from Week 14</p><div class="sheet__done"><b>OFF-9R3D</b><button class="key" type="button">Copy code</button><button class="key" type="button">Copy link</button></div><div class="sheet__row"><button class="key key--gold" type="button">Open league</button></div>`,
     join: `<h2>Join a league</h2><label>Code or link</label><div class="sheet__in sheet__in--code">GANK-4TQ1</div><div class="sheet__row">${back}<button class="key key--gold" type="button">Join</button></div>${count}`,
     delete: `<h2>Delete Pub League?</h2><p>12 managers · scoring from Week 1</p><div class="sheet__row">${back}<button class="key" type="button">Delete league</button></div>`,

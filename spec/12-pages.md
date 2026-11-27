@@ -167,8 +167,27 @@ Craig's yes in the Home design round, grilled 14 Nov 2026. Its layout is the app
 
 - **A series live:** the stream, muted, with the Live page's picker and the manager's remembered
   pick. **Live ›** opens the Live page.
-- **Nothing live:** the manager's 7 starters for the week as a broadcast lineup, with C;
-  the next series on stream and when; **Pick Team ›**.
+- **Nothing live:** the manager's 7 starters for the week as a broadcast lineup, with C, and the
+  bench in its order in a row under them (Craig, 27 Nov 2026). The next series is the first row of
+  the week's series panel, and Pick Team is the deadline panel's key, so neither is said twice
+  (Craig, 27 Nov 2026).
+- **A series live, your players:** the manager's players in the live series, with their points so
+  far, under the picker (Craig, 27 Nov 2026). Only that series' players, not all seven.
+- **The deadline panel**, the side column's first: the countdown, Pick Team and Transfers, free
+  transfers, then (Craig, 27 Nov 2026, after FPL's Status and UCL Fantasy's Overview):
+  - a warning for each starter who may not play, opening Pick Team. Starters only, never the bench.
+    Example: `Siwoo · Not starting Wed`.
+  - the next three deadlines. Example: `Week 5 · Wed 14 Apr 7:45am`.
+  - the buff played for the coming week, when there is one. Example: `Buff · Bench Boost`.
+- **A played buff** shows on Home and is played only on Pick Team (Craig, 27 Nov 2026). In the week
+  it is on, its name is a tag by the week's total. Before the deadline the lineup shows what it
+  changes: Bench Boost all nine as cards with no bench row, Double Captain both Captains' C, Coach
+  Diff `×3` on the coach's card.
+- **The week's series** with each one's result, live state or time, as Points' panel
+  (Craig, 27 Nov 2026).
+- **All managers** (Craig, 27 Nov 2026): the week's most captained as a share of managers, and the
+  most bought and most sold for the coming week as counts. Example: `Most captained Chovy 38%`,
+  `Most bought Kiin 36,750`.
 - **Star and flop** of the last gameweek, the same pair for every manager, each shown with its
   points and effective ownership.
   - Effective ownership: the share of managers starting a player, a Captain counting 1.5. Example:

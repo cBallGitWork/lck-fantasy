@@ -118,7 +118,7 @@ Each part is drawn one way on every screen.
   16 Nov 2026).
 - **A link** ends with `›`, in `--text` (Craig, 16 Nov 2026), and names where it goes: `Full stats ›`. Not underlined, save
   a link inside a sentence. A link leaving Flol ends with `↗`.
-- **Deadline**, one way everywhere: `Deadline Wed 7:45am` and the countdown `9h 45m`, a figure in `--mid` with no box round it (Craig, 19 Nov 2026).
+- **Deadline**, one way everywhere: `Deadline Wed 7:45am` and the countdown `9h 45m`, a figure in `--mid` with no box round it (Craig, 19 Nov 2026). On Home alone the countdown is the page's one key figure, 44 in `--text` with its units 20 in `--mid`, the time under it in `--mid` (Craig, 27 Nov 2026: it needs to pop; `approved/home/`).
 - **Times:** the manager's own only, with no zone, in am/pm: lower case, no space, no leading
   zero (`8:00am`, `10:30pm`) (Craig, 19 Nov 2026). Game clocks (`12:04`) stay as they are. A column
   of times has a head.
@@ -153,6 +153,7 @@ Each part is drawn one way on every screen.
   the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
   in the bar's place. Never a tinted row, a wash or a coloured code.
 - **Your players** are marked by that dot, on every screen.
+- **A player named in a row** reads as his tile's plate: his team's bar and code, then his name, `T1 Faker`; never a bare name (Craig, 27 Nov 2026; `approved/home/`).
 - **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
   ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with
   24px below. A group of them opens with a 20/700 heading over a 2px `--text` rule.

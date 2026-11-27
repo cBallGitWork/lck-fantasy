@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;600;700&family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="../pick-team/base.css">
+<link rel="stylesheet" href="../pick-team/look.css">
+<style>
+/* Home in Pick Team's look: the stream (a series live) or the week's lineup (nothing live) as the page's one object, three
+   panels under it (the week's series, Following, all managers); the deadline, your week and leagues in the side column.
+   Only what is Home's own is here; the rest is ../pick-team/look.css. Panels are Points' (../points/points.html). */
+:root { --head-band: #1D46A8; --up: #4CD98A; --down: #FF6B78; --stage: #000508; }
+.num { text-align: right; }
+.live { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; }
+.dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--signal); }
+.tag--dash { border-style: dashed; }
+.tag--live { background: var(--text); color: var(--bg); font-weight: 600; }
+.team__bar { display: inline-block; width: 4px; height: 12px; margin-right: 6px; vertical-align: -1px; }
+.up { color: var(--up); }
+.down { color: var(--down); }
+.yours { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--text); margin-left: 6px; }
+
+/* The head: the team's name, then Overall as a tier (spec/08): the shield, the tier and its hangul, the rank and its move. */
+.tier { display: flex; align-items: center; gap: 12px; padding-left: 16px; border-left: 1px solid var(--line); align-self: center; }
+.tier__shield { width: 28px; height: 32px; flex: none; }
+.tier__name { font: 700 16px/20px var(--head); }
+.tier__name span { font: 400 12px/20px var(--ko); color: var(--mid); margin-left: 4px; }
+.tier__rank { font-size: 12px; line-height: 16px; }
+.tier__rank b { font-weight: 600; margin-right: 8px; }
+.tier__next { color: var(--mid); margin-left: 8px; }
+.tier .placeholder { width: 56px; height: 24px; }
+
+/* Panels: a title on the blue band (plate.md, Parts, Panel), contents 16 in. */
+.tpanel { background: var(--paper); border: 1px solid var(--line); padding: 0 16px; }
+.tpanel__title { display: flex; align-items: center; gap: 8px; font: 700 16px/24px var(--head); margin: 0 -16px; padding: 12px 16px 8px; background: var(--head-band); }
+.tpanel__title .link, .tpanel__title .tpanel__note { margin-left: auto; font: 600 14px/24px var(--sans); }
+.tpanel__title .tpanel__note { font-weight: 400; }
+.tpanel table { margin: 0 -16px; width: calc(100% + 32px); }
+.tpanel td { height: var(--row); border-top: 1px solid var(--line); white-space: nowrap; }
+.tpanel tr:first-child td { border-top: 0; }
+.tpanel td:first-child { padding-left: 16px; }
+.tpanel td:last-child { padding-right: 16px; }
+.tpanel tr.sub td { height: 28px; background: var(--fill); font-size: 12px; color: var(--mid); }
+.tpanel__foot { display: flex; justify-content: space-between; align-items: center; min-height: var(--row); margin: 0 -16px; padding: 0 16px; border-top: 1px solid var(--line); }
+.tpanel__foot--end { justify-content: flex-end; }
+
+/* The object, a series live: the stream, muted, with the Live page's picker beside it. */
+.stream { display: grid; grid-template-columns: minmax(0, 1fr) 296px; background: var(--paper); border: 1px solid var(--line); }
+.stream__title { grid-column: 1 / -1; display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 4px 16px; background: var(--head-band); }
+.stream__title b { font: 700 20px/24px var(--head); letter-spacing: var(--head-track); }
+.stream__title .link { margin-left: auto; }
+.stream__screen { position: relative; aspect-ratio: 16 / 9; background: var(--stage); display: flex; align-items: center; justify-content: center; color: var(--mid); }
+.stream__muted { position: absolute; left: 16px; bottom: 12px; font-size: 12px; }
+.picker { border-left: 1px solid var(--line); display: flex; flex-direction: column; }
+.picker__head { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px 8px; font: 700 16px/24px var(--head); }
+.picker .picker__head button { display: inline; min-height: 24px; padding: 0; border: 0; font: 400 14px/24px var(--sans); }
+.picker__sub, .picker__who { display: flex; justify-content: space-between; align-items: center; padding: 0 16px; border-top: 1px solid var(--line); }
+.picker__sub { min-height: 28px; background: var(--fill); font-size: 12px; color: var(--mid); }
+.picker__who { min-height: 32px; }
+.picker__who > span { display: flex; align-items: center; gap: 6px; }
+.picker__who b { font-weight: 600; }
+.who__team { font-weight: 400; }
+.all td:first-child { width: 112px; }
+.picker button { display: flex; justify-content: space-between; align-items: center; min-height: var(--row); padding: 0 16px; border-top: 1px solid var(--line); text-align: left; }
+.picker button span { color: var(--mid); font-size: 12px; }
+.picker .is-on { background: var(--fill); font-weight: 600; box-shadow: inset 2px 0 0 var(--text); }
+.picker .picker__more { color: var(--mid); }
+
+/* The object, nothing live: the week's seven starters as a broadcast lineup (Card view's cards). */
+.lineup-panel { background: var(--paper); border: 1px solid var(--line); }
+.lineup-panel .stream__title { grid-column: auto; }
+.lineup-panel .lineup { padding: 16px; }
+.lineup-panel .lcard { background: var(--bg); cursor: default; }
+.lineup-panel .lcard__team { padding-bottom: 8px; }
+.lineup--9 { grid-template-columns: repeat(9, minmax(0, 1fr)); }
+.lineup--9 .lcard__name { font-size: 16px; padding: 8px 8px 0; }
+.lineup--9 .lcard__team, .lineup--9 .lcard__row { padding-left: 8px; padding-right: 8px; }
+.lineup--9 .lcard__photo { height: 104px; }
+.lineup--9 .lcard__photo .crest { width: 64px; height: 64px; }
+.lineup-panel .stream__title .tag { margin-left: 4px; }
+.lineup__next { display: flex; align-items: center; gap: 12px; min-height: var(--row); padding: 0 16px; border-top: 1px solid var(--line); }
+.lineup__next { gap: 24px; }
+.lineup__next b { font-weight: 600; }
+.lineup__stream { display: flex; align-items: center; gap: 12px; margin-left: auto; }
+
+/* Under the object: three panels in a row. */
+.under { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: start; }
+.ws td:first-child { width: 48px; }
+.ws b { font-weight: 600; }
+.ws__v { margin: 0 4px; }
+.fol td:nth-child(2) { width: 40px; }
+.fol td:last-child { width: 120px; }
+.fol b { font-weight: 600; }
+.fol__what { color: var(--mid); }
+/* A cheer's or jeer's LED panel is a picture: dotted, in capitals, the same on every screen (plate.md, Never 2). */
+.led { display: block; margin: 12px 0 4px; padding: 8px 12px; background: #000 radial-gradient(circle, #2A2A2A 1px, transparent 1.2px) 0 0 / 4px 4px; color: #FFD34D; font: 600 14px/20px var(--fig); letter-spacing: 0.08em; text-transform: uppercase; }
+.led__by { padding-bottom: 12px; font-size: 12px; color: var(--mid); }
+.all td:first-child { color: var(--mid); width: 128px; }
+.all b { font-weight: 600; }
+.all .own { width: 64px; color: var(--mid); font-size: 12px; }
+.all .pts { width: 40px; }
+.tpanel dl + .all tr:first-child td { border-top: 1px solid var(--line); }
+
+/* The side column. The deadline: the countdown as Home's key figure, the two keys, a starter who may not play, then the next deadlines. */
+/* The countdown is Home's one key figure: 44, its units small and grey so the numbers carry it (Craig, 27 Nov 2026: it needs to pop more). */
+.dl__count { display: flex; flex-direction: column; gap: 4px; padding: 16px 0 12px; }
+.dl__count b { display: flex; align-items: baseline; gap: 4px; font: 700 44px/48px var(--fig); letter-spacing: -0.02em; }
+.dl__count b i { font: 400 20px/24px var(--sans); font-style: normal; color: var(--mid); margin-right: 12px; letter-spacing: 0; }
+.dl__keys { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-bottom: 12px; }
+.dl__keys .key { min-height: 40px; font-size: 14px; }
+.dl__keys .save { padding: 0; border: 0; }
+.dl__row { display: flex; align-items: center; gap: 8px; min-height: var(--row); margin: 0 -16px; padding: 0 16px; border-top: 1px solid var(--line); }
+.dl__row > :last-child { margin-left: auto; }
+.dl__row b { font-weight: 600; }
+.flag-icon { flex: none; }
+.dl__warn { display: inline-flex; align-items: center; gap: 8px; }
+.dl__buff { display: inline-flex; align-items: center; gap: 8px; }
+.dl__buff svg { color: var(--gold); }
+.tpanel tr.sub .tag { color: var(--mid); border-color: var(--mid); margin-left: 4px; }
+.week__big { display: flex; align-items: center; gap: 12px; padding: 12px 0 8px; }
+.week__big b { font: 700 28px/32px var(--fig); }
+.figs > div { display: flex; justify-content: space-between; align-items: center; min-height: var(--row); margin: 0 -16px; padding: 0 16px; border-top: 1px solid var(--line); }
+.figs dt { color: var(--mid); }
+.figs dd { font-weight: 600; }
+.figs .sub { min-height: 28px; background: var(--fill); font-size: 12px; }
+.figs .sub dd { font-weight: 400; color: var(--mid); }
+.figs .who dt { color: var(--text); display: flex; align-items: center; gap: 6px; }
+.figs .who dt b { font-weight: 600; }
+.mini-c { position: static; display: inline-block; width: 20px; height: 20px; border: 0; box-shadow: none; font: 700 12px/20px var(--sans); text-align: center; }
+.lg td:last-child { width: 88px; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="../pick-team/data.js"></script>
+<script src="render.js"></script>
+</body>
+</html>

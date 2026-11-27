@@ -2,39 +2,54 @@
 
 The signed-in start page, at 1440. A manager reaches it from **Home** in the top bar or the Flol wordmark, and lands on it after sign-in. It has two states: a series live, and nothing live.
 
-**Approved:** Craig, 13 Nov 2026. He said Home looked "too similar to points and transfers" and "should probably have the live stream viewer"; on the redraw, "In think so", then yes to the muted stream, the lineup when nothing is live, and star and flop, then "Yes" to saving. Overall as a LoL tier, redrawn 14 Nov 2026: Craig asked for "the rank with shield" at the top by Baron Steal FC, no total of managers, and no repeat of it in Leagues; then "Yes, C". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn.
-
-**Changed by Craig, 16 Nov 2026:** the page says each thing once. Idle: no `Star and flop` head, the rows say Star and Flop; no Pick Team › on the stage (the deadline bar has it). The deadline bar reads the time without a second `Deadline`; live side rows drop `G2 ·`; the tier shield bears no division, the tier's name says it.
+**Approved:** Craig, 27 Nov 2026, "Yes, save it": Home redrawn in the new look ([plate.md](../../plate.md)), after he looked at FPL's Status, UCL Fantasy's Overview and F1 Fantasy's home and said "All four" to the ideas taken from them. It replaces the picture of 13 Nov 2026. Names, teams and numbers are a made-up Split 1 Week 3 and Week 4, Pick Team's and Points' own ([../pick-team/data.js](../pick-team/data.js)). This binds layout, content and order, and plate.md how it is drawn.
 
 | File | Shows |
 |---|---|
-| `1440.png`, `live.html` | A series live, Points' moment (Saturday, T1 v DK game 2): the stream with its picker, your week beside it |
-| `1440-idle.png`, `idle.html` | Nothing live: your Week 4 lineup on a broadcast stage, last week's points |
+| `1440.png`, `home.html` | A series live: Saturday of Week 3, T1 v DK in game 2 |
+| `1440-idle.png`, `home.html?s=idle` | Nothing live: Tuesday evening before Week 4's deadline |
+| `1440-boost.png`, `home.html?s=idle&b=bb` | Bench Boost played for Week 4, before the deadline |
+| `1440-boost-live.png`, `home.html?b=bb` | Bench Boost on in the live week |
+
+`render.js` draws every state; the styles Home shares are Pick Team's (`../pick-team/base.css`, `look.css`).
 
 ## Borrowed
 
-- **FPL's old Status page**: your points between Average and Highest, Pick Team and Transfers beside the deadline countdown. Research: [docs/research/home-page-references.md](../../../research/home-page-references.md).
-- **An LCK lineup reveal**: the starters stand on angled name plates, from a broadcast shot Craig sent.
-- **LoL ranked**: Iron to Challenger, divisions IV to I; the shield is Flol's own shape, not Riot's emblem art.
-- **lolesports.com**: the series as fans read it, "KRX 1–0 BRO · Game 2 · Bo3". Shot in [docs/design/references/home/](../../references/home/).
+- **FPL's Status page**: the deadline in the narrow column with Pick Team and Transfers by it, the next deadlines under the countdown, your points between Average and Highest, and the game's own facts (most captained, most bought and sold).
+- **UCL Fantasy's Overview**: a warning under the deadline when one of your players may not play, opening your team.
+- **An LCK lineup reveal**: the starters as a row of role-headed cards, as Card view.
+- **LoL ranked**: Overall as a tier, Iron to Challenger; the shield is Flol's own shape.
 
-## Layout
+The reference shots were of Craig's signed-in pages, so they are not in the repo.
 
-- **Top:** the team name and its hangul; beside it, Overall as a LoL tier: a shield, the tier and its hangul, the overall rank and move beneath, the sponsor's badge. Its states, not drawn: Unranked, a division tier, Master or Grandmaster, Challenger (its rank and move).
-- **Deadline, under the top:** a full-width bar, above the fold: Week 4 deadline, the countdown, your local time; on the side column's line, **Pick Team** (the one filled key), **Transfers** and free transfers.
-- **Left, live:** the stream, muted, 16:9 at 704 wide, the series and **Live ›** over it; the stream picker beside it (spec/12's list).
-- **Left, idle:** Week 4 lineup: the seven starters (five roles, Flex, Coach) with C and V; the next series on stream and when.
-- **Right, live:** your week (not final) with Average and Highest; your players in this series with live points; who is still to play; **Points ›**.
-- **Right, idle:** last week (final) with Average and Highest; its star and flop, each row labelled; **Points ›**.
-- **Below:** in the main column, Following (spec/14); in the side column, Leagues (each league's rank and move, Overall left out since the top shows it, **All leagues ›**).
-- **Bottom:** a sponsor banner and "All sponsors are made up." (spec/13).
+## What binds
 
-## Still open
+1. **Head:** the team's name and hangul; beside it Overall as a tier: the shield, the tier and its hangul, the rank and its move under them, the sponsor's badge. No points to the next tier here (spec/08 keeps that on Points).
+2. **The object, a series live:** one panel. Its head on the blue band: the `Live` tag, the score, the game and series length, **Live ›**. Under it the stream, muted, 16:9; beside it a 296px column: `Streams` with `More ▾`, the picker's rows (the chosen one on `--fill` with a `--text` edge), then `Your players`: each of your players in this series with his points so far, in 32px rows. The Captain's figure is the series' own points, before ×1.5, as Points shows a series.
+3. **The object, nothing live:** `Week N lineup` on the blue band; the seven starters as Card view's cards (role strip, crest, C, `Not starting`, name, team, the week's opponents); under them one row, `Bench` and the two bench players in their order.
+4. **Under the object, three panels in a row:** the week's series (Points' panel, titled with its week); Following (the latest feed items, each with its points and `Cheer / Jeer ›`, the latest cheer or jeer as its LED panel, **Following ›**); All managers (Most captained under the week it was set for; Most bought and Most sold under `Week N so far`).
+5. **Side column, in order:** Deadline; the week; Leagues; the sponsor slot.
+6. **Deadline panel:** the countdown as the page's key figure, 44 with its units small and grey (Craig, 27 Nov 2026: "needs to pop more"), the time under it; **Pick Team** (the page's one filled key) and **Transfers**; Free transfers; the played buff, when there is one; a row for each starter who may not play; `Next` and the three deadlines after this one.
+7. **The week's panel:** titled with its week, **Points ›** in its band; the total and its tag (`Not final` or `Final`, and the buff's name when one is on); Average; Highest ›; then Star and Flop with points and effective ownership. With a week live they are the last finished week's, under a band naming it.
+8. **Leagues:** each league's rank and move, Overall left out since the head shows it; **All leagues ›** in the band.
+9. **A played buff:** before the deadline, a row in the Deadline panel with the buff's gold icon as on Pick Team (Craig, 27 Nov 2026), and a tag by the lineup's title; Bench Boost puts the bench in the lineup as two more cards (`1. Mid`, `2. Jungle`) and drops the bench row. In the week it is on, a tag by the week's total. Not drawn: Double Captain (both Captains carry the C) and Coach Diff (`×3` on the coach's card).
 
-- Overall as a tier is specced in [spec/08](../../../../spec/08-leagues.md#overall-tiers) (14 Nov 2026); the top three tiers at beta size are a late call there.
+## Controls
 
-- The stream on Home, the lineup when idle, and star and flop are specced in [spec/12](../../../../spec/12-pages.md#home) (14 Nov 2026). Star and flop now use effective ownership, so the drawn pair is a placeholder.
-- **Following** is specced in [spec/14](../../../../spec/14-following.md) (14 Nov 2026). The drawn card's items are placeholders.
+- **Live ›**: opens Live.
+- **A stream's row**: plays that stream here and remembers the pick; **More ▾** opens the rest of the list.
+- **Pick Team**, **Transfers**: open those pages.
+- **A warning row**: opens Pick Team.
+- **Points ›**, **Highest ›**: open Points for the week, yours and the top team's.
+- **All leagues ›**, **Following ›**: open those pages.
+- **Cheer / Jeer ›**: opens the picker (spec/14).
+
+## Not drawn
+
+- Two or more starters who may not play: one row each, stacked.
+- Double Captain and Coach Diff.
+- The tier's other states: Unranked, a division tier, Master or Grandmaster, Challenger.
+- A phone picture.
 
 ## Placeholders
 
@@ -46,5 +61,6 @@ The signed-in start page, at 1440. A manager reaches it from **Home** in the top
 | Leagues, ranks and moves | #38 |
 | Overall tier, its cut-offs and shield | #108, #109 |
 | Series and player stats | #36 |
-| Streams list and picker | spec/12, no issue yet |
+| Streams list and picker | spec/12, the Live page; no issue yet |
+| Who may not start, the next deadlines and All managers' counts | #473 |
 | Sponsor slots and badge | spec/13, no issue yet |

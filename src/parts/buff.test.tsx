@@ -9,5 +9,5 @@ test("a buff shows its name, what it does as its hover, its state and its key, n
   expect(text(buff({ kind: "on" }))).toBe("Bench BoostOn this weekCancel");
   expect(text(buff({ kind: "unavailable" }))).toBe("Bench BoostUnavailable");
   expect(text(buff({ kind: "played", week: 3 }))).toBe("Bench BoostPlayed Week 3");
-  expect(html(buff({ kind: "available" }))).toMatch(/class="buff-card__icon".*role="tooltip"[^>]*>Your bench scores too</);
+  expect(html(buff({ kind: "available" }))).toMatch(/class="buff-icon buff-card__icon".*role="tooltip"[^>]*>Your bench scores too</);
 });

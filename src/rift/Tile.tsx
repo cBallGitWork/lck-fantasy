@@ -54,10 +54,10 @@ const PhoneRift = createContext(false);
 /** A point on the square Rift as a share of it, so the tiles stay on their lanes at any width. */
 const ofRift = (v: number) => `${(v / PLAN) * 100}%`;
 
-/** The yellow warning triangle, as the picture draws it. */
-function NewsFlag({ flag }: { flag: string }) {
+/** The yellow warning triangle, as the picture draws it: on a tile's role strip, or where a page places it with `className` (Home's warning row). */
+export function NewsFlag({ flag, className = "tile__flag" }: { flag: string; className?: string }) {
   return (
-    <span className="tile__flag" role="img" aria-label={flag} title={flag}>
+    <span className={className} role="img" aria-label={flag} title={flag}>
       <svg className="tile__flag-icon" viewBox="0 0 16 16" aria-hidden="true">
         <path className="tile__flag-sign" d="M8 1.5 15 14.5H1z" strokeWidth="1" strokeLinejoin="round" />
         <rect className="tile__flag-mark" x="7.25" y="5.5" width="1.5" height="5" />

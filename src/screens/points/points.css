@@ -197,11 +197,6 @@
 .points__owned {
   font-size: var(--size-small);
 }
-/* This week's series: SeriesList's ruled rows. */
-.points__series {
-  padding-bottom: var(--s-1);
-}
-
 /* The phone keeps its stacked layout: the column under the Rift. */
 @media (max-width: 600px) {
   .points__object {

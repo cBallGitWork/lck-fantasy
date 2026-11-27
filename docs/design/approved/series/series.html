@@ -18,24 +18,26 @@
 .yours { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--text); margin-left: 8px; }
 .crumb .link { display: inline-flex; align-items: center; min-height: 24px; }
 /* The scorebug, as Live's: each team on a panel, its crest, code and record; the series score between, turned over. */
-.bug { display: grid; grid-template-columns: 1fr auto 1fr; margin: 16px 0 12px; height: 72px; }
-.bug__team { display: flex; align-items: center; gap: 12px; padding: 0 24px; background: var(--paper); border: 1px solid var(--line); }
+.bug { display: grid; grid-template-columns: 1fr auto 1fr; margin: 16px 0 12px; height: 112px; }
+.bug__team { display: flex; align-items: center; gap: 20px; padding: 0 32px; background: var(--paper); border: 1px solid var(--line); }
 .bug__team--b { justify-content: flex-end; }
-.bug__team b { font: 700 28px/32px var(--head); }
-.bug__team small { color: var(--mid); font: 400 12px/16px var(--fig); }
-.bug__team .crest { width: 48px; height: 48px; }
+.bug__team b { font: 700 44px/48px var(--head); }
+.bug__team small { color: var(--mid); font: 400 16px/24px var(--fig); }
+.bug__team .crest { width: 72px; height: 72px; }
 .bug__team.is-lost b { font-weight: 400; }
-.bug__score { display: flex; align-items: center; padding: 0 32px; background: var(--text); color: var(--bg); font: 600 28px/32px var(--fig); }
-.bug__score--v { font-size: 20px; }
+.bug__score { display: flex; align-items: center; padding: 0 48px; background: var(--text); color: var(--bg); font: 600 48px/56px var(--fig); }
+.bug__score--v { font-size: 28px; }
 /* The line under it: the tags, the fixture, and at the right your points from the series beside the average manager's. */
 .meta { display: flex; gap: 24px; align-items: center; min-height: 32px; color: var(--mid); }
 .meta b { color: var(--text); font-weight: 600; }
 .meta__tags { display: flex; gap: 8px; margin-right: -16px; }
 .versus { display: flex; align-items: baseline; gap: 8px; margin-left: auto; }
-.versus b { font: 600 20px/24px var(--fig); }
+.versus b { font: 600 20px/32px var(--fig); }
+.versus .you { color: var(--text); font-weight: 600; }
+.versus .you b { font: 700 32px/32px var(--fig); }
 .versus i { font-style: normal; margin: 0 4px; }
 td.tot small { white-space: nowrap; }
-.two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 16px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 16px; align-items: start; }
 .grid { background: var(--paper); border: 1px solid var(--line); }
 .grid__head { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 4px 16px; background: var(--head-band); font: 700 20px/24px var(--head); }
 .grid__head .crest { width: 32px; height: 32px; }
@@ -47,7 +49,7 @@ td.tot small { white-space: nowrap; }
 .grid th .chip { margin: 0 4px; }
 .th__sub { display: block; line-height: 20px; }
 .grid th { vertical-align: bottom; }
-.grid td { padding: 0 8px; height: 48px; border-top: 1px solid var(--line); vertical-align: middle; }
+.grid td { padding: 0 8px; height: 68px; border-top: 1px solid var(--line); vertical-align: middle; }
 .grid td:first-child, .grid th:first-child { padding-left: 16px; }
 td.rl { color: var(--mid); font-size: 12px; }
 td.rl svg { width: 12px; height: 12px; vertical-align: -1px; margin-right: 8px; }
@@ -55,17 +57,45 @@ td.pl { white-space: nowrap; }
 td.pl b { font-weight: 600; }
 td.pl small { color: var(--mid); font: 400 12px/16px var(--ko); margin-left: 8px; }
 .gm { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.gm > span:first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.gm > span:first-child { white-space: nowrap; min-width: 0; }
 .gm small { display: block; color: var(--mid); font: 400 12px/16px var(--fig); }
+/* A game cell: the champion, K/D/A after its crossed swords, then a mark for each line that scored (spec/05). */
+.ic { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
+.gm .ch { display: block; font-size: 12px; line-height: 16px; color: var(--mid); overflow: hidden; text-overflow: ellipsis; }
+.gm .kda { display: block; font: 600 14px/20px var(--fig); }
+.gm .kda .ic { width: 14px; height: 14px; margin-right: 2px; color: var(--mid); }
+.gm .mk { display: flex; gap: 4px; height: 16px; margin-top: 2px; }
+.gm .p .ic--pog { color: var(--gold); }
+tr.is-me td { background: var(--fill); }
+/* The games, as FPL and UCL fantasy set a finished match's events under its score: a card a game, a row an event,
+   each team's names on its own side of the event's mark. */
+.games { display: grid; gap: 32px; margin-top: 16px; }
+.game { background: var(--paper); border: 1px solid var(--line); }
+.game__head { font: 400 14px/24px var(--sans); display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 16px; border-bottom: 2px solid var(--text); }
+.game__head b { font: 700 20px/24px var(--head); }
+.game__head .crest { width: 28px; height: 28px; }
+.game__head .won { font-weight: 600; }
+.game__head .len { margin-left: auto; font-family: var(--fig); }
+.ev { display: grid; grid-template-columns: 1fr 168px 1fr; align-items: center; min-height: 36px; padding: 0 16px; border-top: 1px solid var(--line); }
+.ev:first-of-type { border-top: 0; }
+.ev__what { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--mid); font-size: 12px; }
+.ev__what .ic { color: var(--text); width: 20px; height: 20px; }
+.ev__what .ic--pog { color: var(--gold); }
+.ev__a { text-align: right; }
+.ev__a, .ev__b { display: flex; flex-wrap: wrap; gap: 0 16px; align-items: center; }
+.ev__a { justify-content: flex-end; }
+.ev b { font-weight: 600; }
+.ev .yours { margin-left: 6px; }
+.ev--none { color: var(--mid); justify-content: center; display: flex; }
 .gm .p { flex: none; font: 600 14px/20px var(--fig); min-width: 28px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .gm .p .box { min-width: 24px; line-height: 22px; text-align: center; border: 1px solid var(--text); }
 td.drop .gm, td.drop .gm small { color: var(--mid); }
 td.drop .gm .p { font-weight: 400; }
-.pog { font: 600 12px/14px var(--sans); border: 1px solid var(--text); padding: 0 4px; }
 td.tot { text-align: right; padding-right: 16px; font: 600 20px/24px var(--fig); border-left: 1px solid var(--line); }
 td.tot small { display: block; font: 400 12px/16px var(--fig); color: var(--mid); }
 tr.co td { border-top-color: var(--soft); }
-.gm > span:first-child .co-l { display: block; white-space: normal; font-size: 12px; line-height: 1.4; }
+.gm .co-l { display: flex; gap: 6px; }
+.gm .co-l .ic { width: 20px; height: 20px; }
 .none { color: var(--mid); }
 .cap { position: static; display: inline-block; width: 20px; height: 20px; margin-left: 8px; border: 0; box-shadow: none; font: 700 12px/20px var(--sans); text-align: center; vertical-align: 1px; }
 .chip { display: inline-block; min-width: 24px; height: 24px; padding: 0 6px; font: 600 12px/22px var(--fig); text-align: center; border: 1px solid transparent; }
@@ -80,12 +110,27 @@ tr.co td { border-top-color: var(--soft); }
   <symbol id="i-jng" viewBox="0 0 16 16"><path d="M3 1c2 4 2 9 5 14C6 10 6 6 3 1zM8 1c1 4 1 8 1 11 1-3 2-7-1-11zM13 1c-1 3-2 6-2 9 2-2 3-6 2-9z" fill="#EEF1F8"/></symbol>
   <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#EEF1F8"/></symbol>
   <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#EEF1F8" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#EEF1F8" stroke-width="1.4"/></symbol>
+  <!-- The scoring lines' marks, drawn for Flol: one mark a line, the same wherever the line shows. -->
+  <symbol id="i-kda" viewBox="0 0 16 16"><path d="M2 2l9.5 9.5M14 2 4.5 11.5M9.5 13l3.5-3.5M6.5 13 3 9.5M12 12l2 2M4 12l-2 2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 16 16"><path d="M8 1.5S3.5 7 3.5 10.2a4.5 4.5 0 0 0 9 0C12.5 7 8 1.5 8 1.5z" fill="currentColor"/></symbol>
+  <symbol id="i-solo" viewBox="0 0 16 16"><path d="M8 .8l2 2.4V10H6V3.2z" fill="currentColor"/><path d="M3.8 10.6h8.4M8 11v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-steal" viewBox="0 0 16 16"><path d="M9.8 1 3 9h4l-1 6 7-8.5H8.8z" fill="currentColor"/></symbol>
+  <symbol id="i-gold" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="2.4" fill="currentColor"/></symbol>
+  <symbol id="i-none" viewBox="0 0 16 16"><path d="M8 1.5l5.5 2V8c0 3.2-2.3 5.4-5.5 6.5C4.8 13.4 2.5 11.2 2.5 8V3.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-multi" viewBox="0 0 16 16"><path d="M8 1l1.8 4.3L14.5 5.7 11 8.8l1 4.7L8 11l-4 2.5 1-4.7L1.5 5.7l4.7-.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pog" viewBox="0 0 16 16"><path d="M2.5 13h11l1.5-8.5-4 3.5L8 2.5 5 8 1 4.5z" fill="currentColor"/></symbol>
+  <symbol id="i-tower" viewBox="0 0 16 16"><path d="M4 1.5h2v2h1.5v-2h1v2H10v-2h2V6l-1.5 1.5V13H13v1.5H3V13h2.5V7.5L4 6z" fill="currentColor"/></symbol>
+  <symbol id="i-drake" viewBox="0 0 16 16"><path d="M8 1c.5 3 4 4.5 4 8.5a4 4 0 0 1-8 0c0-1.8 1-2.8 1.600-4 .4 1 .9 1.600 1.600 1.900C7.600 5.4 7 3.200 8 1z" fill="currentColor"/></symbol>
+  <symbol id="i-baron" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 1.5 5.5 5h5l3-3.5.5 7a6 6 0 0 1-12 0zM8 7.3a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4z" fill="currentColor"/></symbol>
+  <symbol id="i-elder" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 3.5c.3 1.8 2.4 2.7 2.4 5.100a2.4 2.4 0 0 1-4.8 0c0-1.100.6-1.7 1-2.4.2.600.5 1 1 1.100-.2-1.200-.2-2.600.4-3.8z" fill="currentColor"/></symbol>
+  <symbol id="i-quick" viewBox="0 0 16 16"><circle cx="8" cy="9.5" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9.5V6.8M6.3 1.5h3.4M8 1.5v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
 </defs></svg>
 <header class="top"><b class="wordmark">Flol</b><nav class="nav"><a href="#">Home</a><a href="#">Pick Team</a><a href="#">Transfers</a><a href="#">Points</a><a href="#">Leagues</a><a href="#">Stats</a><a href="#" class="is-here">LCK</a><a class="nav__live" href="#"><span class="dot"></span>Live</a></nav><span class="top__gap"></span><span class="sponsor-top">presented by <span class="placeholder">Sponsor</span></span><span class="account">Baron Steal FC ▾</span></header>
 <div class="page">
   <div class="crumb"><a class="link" href="#">‹ LCK</a></div>
   <div class="bug" id="bug"></div>
   <div class="meta" id="meta"></div>
+  <div class="games" id="games"></div>
   <div class="two" id="two"></div>
 </div>
 <footer class="foot small mid">Flol was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.</footer>
@@ -164,19 +209,31 @@ const sum = (xs) => xs.reduce((s, x) => s + x, 0);
 // best 2 games: the indexes that count (the earlier game wins a tie, as on Points)
 const best2 = (xs) => xs.map((x, i) => [x, i]).filter(([x]) => x !== null).sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, 2).map((x) => x[1]);
 const me = (n) => (n === CAPTAIN ? '<span class="tile__c cap">C</span>' : "") + (MINE.includes(n) ? '<i class="yours" title="Yours"></i>' : "");
-const pog = (s, i, n) => (s.games[i].pog === n ? '<span class="pog">POG</span>' : "");
-const cell = (s, i, n, label, sub, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}<small>${sub}</small></span><span class="p">${pog(s, i, n)}${counted ? `<span class="box">${fmt(p)}</span>` : fmt(p)}</span></div></td>`;
-const L = ["1st tower", "Drakes", "Baron", "Elder", "Quick win"];
+const ic = (id, title = "", cls = "") => `<svg class="ic ${cls}"${title ? ` role="img" aria-label="${title}"` : ' aria-hidden="true"'}><use href="#i-${id}"/></svg>`;
+const pog = (s, i, n) => (s.games[i].pog === n ? ic("pog", "Player of the Game", "ic--pog") : "");
+// A player's marks for a game: one for each line that scored beyond kills, deaths and assists.
+const marks = ([, , d, , gold, solo, fb, multi, steal, live]) => [fb && ic("fb", "First blood"), ...Array(solo).fill(ic("solo", "Solo kill")), ...Array(steal).fill(ic("steal", "Steal")), multi && ic("multi", multi > 1 ? "Penta" : "Quadra"), gold && ic("gold", "Gold lead at 15"), d === 0 && !live && ic("none", "Deathless")].filter(Boolean).join("");
+const cell = (s, i, n, label, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}</span><span class="p">${pog(s, i, n)}${counted ? `<span class="box">${fmt(p)}</span>` : fmt(p)}</span></div></td>`;
+const L = ["1st tower", "Drakes", "Baron", "Elder", "Quick win"], LI = ["tower", "drake", "baron", "elder", "quick"];
+// A game's events, as FPL's and UCL fantasy's finished match: a row an event that happened, each team's names on its side.
+function game(s, i) {
+  const g = s.games[i], side = (code) => { const t = s[code], at = (f) => t.p.filter((p) => p[3][i] && f(p[3][i]) > 0).map((p) => `<span><b>${p[1]}</b>${f(p[3][i]) > 1 ? ` ×${f(p[3][i])}` : ""}${me(p[1])}</span>`).join("");
+    const own = `<span><i class="team__bar" style="background:${BAR[code]}"></i><b>${code}</b></span>`, c = t.coach[2][i];
+    return [t.p.some((p) => p[1] === g.pog) ? `<span><b>${g.pog}</b>${me(g.pog)}</span>` : "", at((x) => x[6]), at((x) => x[5]), at((x) => x[8]), at((x) => (x[7] === 1 ? 1 : 0)), at((x) => (x[7] === 2 ? 1 : 0)), ...c.map((x) => (x ? own : ""))]; };
+  const A = side(s.a), B = side(s.b), W = [["pog", "Player of the Game", "ic--pog"], ["fb", "First blood"], ["solo", "Solo kills"], ["steal", "Steals"], ["multi", "Quadra"], ["multi", "Penta"], ...L.map((l, j) => [LI[j], l])];
+  const rows = W.map(([id, word, cls], j) => (A[j] || B[j] ? `<div class="ev"><span class="ev__a">${A[j]}</span><span class="ev__what">${ic(id, "", cls)}${word}</span><span class="ev__b">${B[j]}</span></div>` : "")).join("");
+  return `<section class="game"><h2 class="game__head"><b>Game ${i + 1}</b>${g.live ? `<span class="tag tag--live">Live</span><span class="len"><b>${g.live}</b></span>` : `${crest(g.w)}<span class="won">${g.w} won</span><span class="len">${g.len}</span><a class="link" href="#">VOD ›</a>`}</h2>${rows || '<div class="ev ev--none">—</div>'}</section>`;
+}
 function team(s, code) {
   const t = s[code], won = s.games.map((g) => g.w === code), n = s.games.length, over = s.games.every((g) => g.w);
-  const head = `<colgroup><col style="width:104px"><col style="width:${n > 2 ? 150 : 170}px">${s.games.map(() => "<col>").join("")}<col style="width:72px"></colgroup>
-    <tr><th></th><th></th>${s.games.map((g, i) => `<th>G${i + 1} ${g.live ? `<span class="chip chip--live">Live</span><span class="th__sub"><b class="fig">${g.live}</b></span>` : `<span class="chip chip--${g.w === code ? "w" : "l"}">${g.w === code ? "W" : "L"}</span><span class="th__sub"><span class="fig">${g.len}</span> · <a class="link" href="#">VOD ›</a></span>`}</th>`).join("")}<th class="n">Series</th></tr>`;
+  const head = `<colgroup><col style="width:${n > 2 ? 96 : 104}px"><col style="width:${n > 2 ? 136 : 170}px">${s.games.map(() => "<col>").join("")}<col style="width:72px"></colgroup>
+    <tr><th></th><th></th>${s.games.map((g, i) => `<th>Game ${i + 1} ${g.live ? `<span class="chip chip--live">Live</span>` : `<span class="chip chip--${g.w === code ? "w" : "l"}">${g.w === code ? "W" : "L"}</span>`}</th>`).join("")}<th class="n">Series</th></tr>`;
   const rows = t.p.map(([rl, nm, k, gs, sub]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps);
-    return `<tr><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}${sub ? " · sub" : ""}</td><td class="pl"><b>${nm}</b><small>${k}</small>${me(nm)}</td>
-      ${gs.map((g, i) => (g ? cell(s, i, nm, g[0], `${g[1]}/${g[2]}/${g[3]}`, ps[i], c.includes(i)) : '<td><span class="none">—</span></td>')).join("")}<td class="tot">${mine(nm, sum(c.map((i) => ps[i])))}</td></tr>`; }).join("");
+    return `<tr${MINE.includes(nm) ? ' class="is-me"' : ""}><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}${sub ? " · sub" : ""}</td><td class="pl"><b>${nm}</b><small>${k}</small>${me(nm)}</td>
+      ${gs.map((g, i) => (g ? cell(s, i, nm, `<span class="ch">${g[0]}</span><span class="kda">${ic("kda")}${g[1]}/${g[2]}/${g[3]}</span><span class="mk">${marks(g)}</span>`, ps[i], c.includes(i)) : '<td><span class="none">—</span></td>')).join("")}<td class="tot">${mine(nm, sum(c.map((i) => ps[i])))}</td></tr>`; }).join("");
   const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = !over ? 0 : won.filter(Boolean).length === 2 ? 3 : -1;
-  const coach = `<tr class="co"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b><small>${ck}</small>${me(cn)}</td>
-    ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? L[j] : "")).filter(Boolean).join(" · ") || "—"}</span>`, "", cp[i], c.includes(i))).join("")}
+  const coach = `<tr class="co${MINE.includes(cn) ? " is-me" : ""}"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b><small>${ck}</small>${me(cn)}</td>
+    ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? ic(LI[j], L[j]) : "")).join("") || "—"}</span>`, cp[i], c.includes(i))).join("")}
     <td class="tot">${mine(cn, sum(c.map((i) => cp[i])) + sw)}<small>${sw > 0 ? "W +3" : sw < 0 ? "L −1" : "&nbsp;"}</small></td></tr>`;
   return { html: `<section class="grid"><h2 class="grid__head">${crest(code)}<b><i class="team__bar" style="background:${BAR[code]}"></i>${code}</b>${t.name === code ? "" : `<span>${t.name}</span>`}</h2><table>${head}${rows}${coach}</table></section>` };
 }
@@ -192,7 +249,9 @@ if (V === "next") {
 } else {
   const s = S[V], A = team(s, s.a), B = team(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.filter((g) => g.w === s.b).length, live = s.games.some((g) => g.live);
   $("bug").innerHTML = `<div class="bug__team ${!live && wa < wb ? "is-lost" : ""}">${crest(s.a)}<b>${s.a}</b><small>${s[s.a].rec}</small></div><div class="bug__score">${wa}–${wb}</div><div class="bug__team bug__team--b ${!live && wb < wa ? "is-lost" : ""}"><small>${s[s.b].rec}</small><b>${s.b}</b>${crest(s.b)}</div>`;
-  $("meta").innerHTML = `${live ? '<span class="meta__tags"><span class="tag tag--live">Live</span><span class="tag tag--dash">Not final</span></span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b></span>${live ? '<a class="link" href="#">Watch ›</a>' : ""}<span class="versus">You <b>${YOU}</b><i>·</i>Average <b>${AVERAGE[V]}</b></span>`;
+  $("meta").innerHTML = `${live ? '<span class="meta__tags"><span class="tag tag--live">Live</span><span class="tag tag--dash">Not final</span></span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b></span>${live ? '<a class="link" href="#">Watch ›</a>' : ""}<span class="versus"><span class="you">You <b>${YOU}</b></span><i>·</i>Average <b>${AVERAGE[V]}</b></span>`;
+  $("games").style.gridTemplateColumns = `repeat(${s.games.length}, 1fr)`;
+  $("games").innerHTML = s.games.map((_, i) => game(s, i)).join("");
   $("two").innerHTML = A.html + B.html;
 }
 </script></body></html>

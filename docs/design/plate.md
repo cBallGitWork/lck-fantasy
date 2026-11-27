@@ -90,7 +90,7 @@ map and the tile keep their earlier values until their own pictures are redrawn.
 
 - Gold is the one accent, and on these alone: the one main action on a screen, the only filled key; the Captain's
   C; his `✓ Captain` state, edged and never filled; a buff's icon (Craig, 19 Nov 2026); the Flol
-  wordmark; all `--ink`. The banner's hangul is its own gold (`--banner`). Section rules, tabs,
+  wordmark; Star's star (Craig, 27 Nov 2026); all `--ink`. The banner's hangul is its own gold (`--banner`). Section rules, tabs,
   selected borders, links, tags and a page title's hangul are `--text` or grey
   (`--mid`, `--line`), never gold (Craig, 16 Nov 2026).
 - Overall's tier shield is a `--text` fill, one colour for every tier (Craig, 16 Nov 2026).
@@ -153,6 +153,7 @@ Each part is drawn one way on every screen.
   the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
   in the bar's place. Never a tinted row, a wash or a coloured code.
 - **Your players** are marked by that dot, on every screen.
+- **A fact's mark** (Home's Star, Flop and All managers; Craig, 27 Nov 2026, "keep them", after the pages read dull): a 20px mark before the fact's word, its colour the one that fact already has elsewhere: Star a gold star, Flop a red falling line, Most captained the Captain's C, Most bought a green plus in a ring and Most sold a red minus in a ring, as Transfers' Buy and Sell. One mark a fact, the same on every page.
 - **A player named in a row** reads as his tile's plate: his team's bar and code, then his name, `T1 Faker`; never a bare name (Craig, 27 Nov 2026; `approved/home/`).
 - **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
   ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with

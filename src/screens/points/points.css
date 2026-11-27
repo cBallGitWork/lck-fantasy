@@ -1,63 +1,214 @@
-/* Points (docs/design/approved/points/points.html). Every value is a theme token. */
+/* Points (docs/design/approved/points/points.html). Every value is a theme token. The phone is the
+   theme's `measure.phone` (a media query can't read a token). */
 
-/* The live bar, under the head. */
-.points__live {
+/* The title line: ‹ week › after the title, the views at the right. */
+.points__week {
+  font-size: var(--size-body);
+}
+.points__views {
+  margin-left: auto;
+  align-self: center;
+}
+
+/* The Rift at the left, Total and the bench in a column beside it, the Rift's height. */
+.points__object {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-pick-column);
+  gap: var(--s-4);
+  margin-bottom: var(--s-5);
+}
+.points__column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+.points__bench {
+  flex: 1;
+}
+/* A tile's band: the total, then the series still to come in grey (`7, v GEN`). */
+.points__next {
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+/* Points that don't count (a bench player's, with no Bench Boost or auto-sub): grey. */
+.points__off {
+  color: var(--mid);
+}
+
+/* Total: the week's points and its tag, then Average, Highest and the live game, each a ruled row. */
+.points__total-big {
   display: flex;
   align-items: center;
   gap: var(--s-3);
-  margin-top: var(--s-4);
-  padding: var(--s-2) var(--s-4);
-  border: var(--m-rule) solid var(--text);
-  background: var(--paper);
+  padding: var(--s-1) 0 var(--s-2);
+}
+.points__total-big b {
+  font-size: var(--size-title);
+  line-height: var(--lh-tight);
+}
+.points__figs > div,
+.points__live {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: var(--m-row);
+  border-top: var(--m-rule) solid var(--line);
+}
+.points__figs dt {
+  color: var(--mid);
+}
+.points__figs dd {
+  font-weight: var(--w-semi);
+}
+.points__live b {
+  flex: 1;
 }
 
-/* Card view's footer: the points. */
+/* Card view: the Total panel over the seven, the points on each card's footer. */
 .points__card-points {
   font-size: var(--size-head);
   font-weight: var(--w-semi);
 }
 
-/* Your week: Star, Flop, Killer. */
-.points__pick {
-  display: grid;
-  grid-template-columns: calc(var(--s-7) + var(--s-2)) 1fr auto;
-  gap: var(--s-2);
-  align-items: baseline;
-  padding: var(--s-2) 0;
-  border-bottom: var(--m-rule) solid var(--fill);
+/* The tapped player's week under the Rift: the shared card (RiftCard.css) with Points' ruled table. */
+.points__card-table {
+  width: 100%;
+  border-collapse: collapse;
 }
-.points__pick-label,
-.points__pick-owned {
+.points__card-table th {
+  padding: 0 var(--s-4) 0 0;
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  line-height: var(--lh-body);
   color: var(--mid);
+  text-align: left;
+  white-space: nowrap;
+}
+.points__card-table td {
+  height: var(--m-row-game);
+  padding: 0 var(--s-4) 0 0;
+  border-top: var(--m-rule) solid var(--line);
+  white-space: nowrap;
+}
+.points__card-table th:first-child,
+.points__card-table td:first-child {
+  width: var(--m-card-game-col);
+  padding-left: var(--s-4);
+}
+/* Figures right-aligned: K, D and A, the points, and every side panel's figures. */
+.points__fig,
+.points__card-k,
+.points__owned,
+.points__move {
+  text-align: right;
+}
+.points__card-table th.points__fig {
+  text-align: right;
+}
+.points__card-k {
+  width: var(--m-go-col);
+}
+/* Deaths in grey. */
+.points__card-d {
+  color: var(--mid);
+}
+.points__card-series td {
+  background: var(--fill);
+  font-weight: var(--w-semi);
+}
+.points__card-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.points__card-go {
+  color: var(--text);
+}
+.points__card-lines {
   font-size: var(--size-small);
 }
-.points__pick-owned {
-  text-align: right;
+.points__card-game--dropped .points__card-champion,
+.points__card-game--dropped .points__card-k {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}
+.points__card-foot {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--s-2) var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+  font-weight: var(--w-semi);
 }
 
-/* Leagues: name, rank, its move. */
-.points__ranks {
-  display: grid;
-  gap: var(--s-1);
+/* The side column's panels: ruled 40px rows edge to edge. */
+.points__side {
+  margin-bottom: var(--s-5);
+  padding-bottom: 0;
 }
-.points__rank {
-  display: grid;
-  grid-template-columns: 1fr auto var(--m-col-figure);
-  gap: var(--s-3);
+.points__side table {
+  width: calc(100% + 2 * var(--s-4));
+  margin: 0 calc(var(--s-4) * -1);
+  border-collapse: collapse;
+}
+.points__side td {
+  height: var(--m-row);
+  border-top: var(--m-rule) solid var(--line);
+  white-space: nowrap;
+}
+.points__side tbody tr:first-child td {
+  border-top: 0;
+}
+.points__side th {
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.points__side td:first-child,
+.points__side th:first-child {
+  padding-left: var(--s-4);
+}
+.points__side td:last-child,
+.points__side th:last-child {
+  padding-right: var(--s-4);
+}
+.points__shield {
+  width: var(--s-3);
+  height: var(--s-4);
+  margin-right: var(--s-1);
+  vertical-align: -0.125em;
+}
+.points__move {
+  width: var(--m-col-figure);
+}
+.points__leagues-foot {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-}
-.points__rank-place,
-.points__rank > span:last-child {
-  text-align: right;
-}
-.points__tier {
-  margin-top: var(--s-2);
+  min-height: var(--m-row);
+  margin: 0 calc(var(--s-4) * -1);
+  padding: 0 var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
 }
 .points__tier b {
   color: var(--text);
 }
+.points__owned {
+  font-size: var(--size-small);
+}
+/* This week's series: SeriesList's ruled rows. */
+.points__series {
+  padding-bottom: var(--s-1);
+}
 
-.points__sponsor {
-  height: var(--m-sponsor-h);
-  margin-bottom: var(--s-2);
+/* The phone keeps its stacked layout: the column under the Rift. */
+@media (max-width: 600px) {
+  .points__object {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .points__card-table th:first-child,
+  .points__card-table td:first-child {
+    width: auto;
+  }
 }

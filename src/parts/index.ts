@@ -87,6 +87,7 @@ export {
   PHOTO_CREDIT,
   RIOT_NOTICE,
   SAVED_NEWS,
+  TAG_WORD,
   TIER_WORDS,
   tierHangul,
   tierName,

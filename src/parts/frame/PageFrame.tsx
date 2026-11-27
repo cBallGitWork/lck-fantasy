@@ -24,6 +24,7 @@ export function PageFrame({
   account,
   side,
   wideSide,
+  stickMain,
   children,
 }: {
   /** The screen's folder name (`src/screens/<screen>`), marked on the page for tests. */
@@ -34,6 +35,8 @@ export function PageFrame({
   side?: ReactNode;
   /** Transfers' frame: a 424 side column, and the main column kept on screen while the side scrolls (approved/transfers/). */
   wideSide?: boolean;
+  /** The main column kept on screen while the side scrolls (Points, approved/points/; Transfers, with `wideSide`). */
+  stickMain?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -42,7 +45,10 @@ export function PageFrame({
         {WORDS.skip}
       </a>
       <TopBar active={active} account={account} />
-      <div className={cx("page-frame", side !== undefined && "page-frame--two columns", wideSide && "page-frame--wide-side")} data-screen={screen}>
+      <div
+        className={cx("page-frame", side !== undefined && "page-frame--two columns", wideSide && "page-frame--wide-side", (wideSide || stickMain) && "page-frame--stick")}
+        data-screen={screen}
+      >
         <main id={MAIN_ID} className="page-frame__main" tabIndex={-1}>
           {children}
         </main>

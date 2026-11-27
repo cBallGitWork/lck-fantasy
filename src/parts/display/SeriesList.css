@@ -7,6 +7,17 @@
   align-items: center;
 }
 
+/* In a banded panel: 40px rows, each under a 1px `--line` rule save the first (approved/points/). */
+.series-list--ruled .series-list__row {
+  min-height: var(--m-row);
+  padding: 0;
+  border-bottom: 0;
+  border-top: var(--m-rule) solid var(--line);
+}
+.series-list--ruled .series-list__row:first-child {
+  border-top: 0;
+}
+
 .series-list__result {
   text-align: right;
 }

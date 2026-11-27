@@ -47,8 +47,8 @@ const measure = {
   dot: 8,
   /** The C on a Rift tile. */
   mark: 20,
-  /** The C on a player's breakdown sheet (Craig, 16 Nov 2026: "make C bigger"). */
-  markSheet: 32,
+  /** The C in the head of the player's card under the Rift (approved/points/). */
+  markDock: 24,
   roleIcon: 28,
   /** The role icon beside a name in a list (Live). */
   roleIconSmall: 20,
@@ -116,10 +116,17 @@ const measure = {
   crest: 96,
   /** A crest beside a team code: in a player's panel. */
   crestSmall: 20,
-  /** The crest in a breakdown sheet's portrait slot, until photos exist. */
+  /** The crest in a player card's portrait slot, until photos exist. */
   crestSheet: 56,
-  /** A game's row on a breakdown sheet: 32 in a sheet (Claude's call, Craig: "your call"). */
-  rowSheet: 32,
+  /** A game's row on the player's card under the Rift (approved/points/, What binds 5). */
+  rowGame: 32,
+  /** The player's card under the Rift (plate.md, The player's card): the crest in its head, Points' first
+   *  column (the game, its result and champion), a Transfers series cell and its crest, and its key. */
+  crestDock: 32,
+  cardGameCol: 280,
+  seriesCell: 56,
+  crestCell: 24,
+  cardKey: 120,
   sponsorH: 112,
   sponsorTopW: 120,
   /** A buff's gold icon (approved/pick-team/, Craig, 19 Nov 2026). */
@@ -132,9 +139,6 @@ const measure = {
   pickSave: 304,
   /** Transfers' side column, the player list (approved/transfers/, What binds 8). */
   transfersSide: 424,
-  /** The tapped player's card under Transfers' Rift: who he is and his key, then his series (approved/transfers/). */
-  transfersCardWho: 216,
-  transfersCardSeries: 256,
   /** A team's bar in Transfers' lists (plate.md, A team's colour). */
   teamBarWide: 6,
 } as const;

@@ -1,10 +1,24 @@
 import { photoOf } from "../../fixtures/photos";
 import { NONE } from "../../parts";
 import { Lineup, Rift, RIFT_SLOTS, Tile } from "../../rift";
-import type { PointsSeries, PointsStarter } from "./types";
-import { dot, versus, WORDS } from "./words";
+import type { PointsPlayer, PointsSeries, PointsStarter } from "./types";
+import { dot, stillToPlay, versus, WORDS } from "./words";
 
-/** Each series' points after its opponent, as a starter's line shows them: `v HLE 12 · v DK 5`. Live is the head's bar. */
+/**
+ * A Rift tile's band (approved/points/, What binds 2): the week's total alone; with a series still to
+ * come, the total so far and that opponent (`7, v GEN`). A live series is under way, so it shows the total alone.
+ */
+export function TileTotal({ player }: { player: PointsPlayer }) {
+  const next = player.series.find((s) => s.state === "next");
+  return (
+    <>
+      {player.points ?? NONE}
+      {next && <span className="points__next">{stillToPlay(next.opponent)}</span>}
+    </>
+  );
+}
+
+/** Each series' points after its opponent, as a lineup card shows them: `v HLE 12 · v DK 5`. */
 export function SeriesLine({ series }: { series: PointsSeries[] }) {
   if (series.length === 0) return <>{WORDS.didntPlay}</>;
   return (
@@ -26,7 +40,7 @@ interface TeamProps {
   onOpen: (name: string) => void;
 }
 
-/** Rift view: each starter in his lane, with his points and his series under the shirt. */
+/** Rift view: each starter in his lane, his week's total on his band. */
 export function PointsRift({ starters, open, onOpen }: TeamProps) {
   return (
     <Rift>
@@ -39,8 +53,8 @@ export function PointsRift({ starters, open, onOpen }: TeamProps) {
           at={RIFT_SLOTS[p.slot]}
           mark={p.mark}
           birthday={p.birthday}
-          points={p.points ?? NONE}
-          line={<SeriesLine series={p.series} />}
+          points={<TileTotal player={p} />}
+          line={p.series.length === 0 ? WORDS.didntPlay : undefined}
           selected={p.name === open}
           onSelect={() => onOpen(p.name)}
         />

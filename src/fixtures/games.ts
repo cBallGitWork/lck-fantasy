@@ -33,7 +33,7 @@ const GAME_WINNERS: Record<string, TeamCode[]> = {
 
 /** The scoring lines a game can show on the sheet, as words (spec/05: the player and coach tables). */
 export const LINE = {
-  gold: "Gold",
+  gold: "Gold lead",
   solo: "Solo",
   firstBlood: "First blood",
   deathless: "Deathless",

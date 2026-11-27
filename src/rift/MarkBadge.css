@@ -29,9 +29,9 @@
   border: var(--m-rule-heavy) solid var(--on-ink);
   outline: var(--m-rule-heavy) solid var(--text);
 }
-.mark-badge--sheet {
-  width: var(--m-mark-sheet);
-  height: var(--m-mark-sheet);
-  font-family: var(--font-mono);
-  font-size: var(--size-head);
+/* In the head of the player's card under the Rift (approved/points/). */
+.mark-badge--dock {
+  width: var(--m-mark-dock);
+  height: var(--m-mark-dock);
+  font-size: var(--size-body);
 }

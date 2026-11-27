@@ -1,18 +1,52 @@
 import { useState } from "react";
-import { FinalTag, LinkGo, LiveTag, NONE, PageFrame, PageHead, Placeholder, SeriesList, SideSection, SponsorNote, ViewToggle } from "../../parts";
+import { cx, FinalTag, LinkGo, LiveTag, PageFrame, PageHead, Panel, Placeholder, SponsorNote, ViewToggle, WeekStep } from "../../parts";
 import { PATHS } from "../../paths";
 import { BenchBar, BenchTile } from "../../rift";
-import { BreakdownSheet } from "./BreakdownSheet";
 import "./points.css";
-import { Leagues, YourWeek } from "./PointsSide";
-import { PointsCards, PointsRift } from "./PointsTeam";
+import { PointsCard } from "./PointsCard";
+import { Leagues, WeekSeries, YourWeek } from "./PointsSide";
+import { PointsCards, PointsRift, TileTotal } from "./PointsTeam";
 import { POINTS_VIEWS, type PointsData, type PointsView } from "./types";
 import { liveGame, WORDS } from "./words";
 
+/** The Total panel beside the Rift (approved/points/, What binds 3): the week's points, `Not final` until the week is, Average, Highest ›, the live game with Watch ›. */
+function Total({ data }: { data: PointsData }) {
+  return (
+    <Panel title={WORDS.total} band className="points__total">
+      <p className="points__total-big">
+        <b className="num">{data.total}</b>
+        <FinalTag final={data.final} />
+      </p>
+      <dl className="points__figs">
+        <div>
+          <dt>{WORDS.average}</dt>
+          <dd className="num">{data.average}</dd>
+        </div>
+        <div>
+          <dt>{WORDS.highest}</dt>
+          <dd>
+            <LinkGo go={{ to: PATHS.perfectGame }}>
+              <span className="num">{data.highest}</span>
+            </LinkGo>
+          </dd>
+        </div>
+      </dl>
+      {data.live && (
+        <p className="points__live">
+          <LiveTag />
+          <b>{liveGame(data.live.home, data.live.away, data.live.game)}</b>
+          <LinkGo go={{ to: PATHS.live }}>{WORDS.watch}</LinkGo>
+        </p>
+      )}
+    </Panel>
+  );
+}
+
 /**
- * Points: your week. The head and the live bar; Rift or Card view with the bench under it; on the
- * right leagues, the week's series, your week and the sponsor. A tapped player's breakdown opens
- * as a sheet over the page.
+ * Points (docs/design/approved/points/): the head with ‹ week › and the views; the Rift at the main
+ * column's left with Total and the bench beside it; under both, the tapped player's week, the Captain's
+ * before any tap. The main column stays on screen while the side column (leagues, the week's series,
+ * your week, the sponsor) scrolls.
  */
 export function PointsPage({
   data,
@@ -25,11 +59,11 @@ export function PointsPage({
   view?: PointsView;
   /** Called with each view the manager chooses, so it can be remembered. */
   onView?: (view: PointsView) => void;
-  /** The player whose breakdown is open, by name; none until a tap. */
+  /** The player whose week shows, by name; the Captain's until a tap. */
   open?: string;
 }) {
   const [view, setView] = useState(firstView);
-  const [open, setOpen] = useState(firstOpen);
+  const [open, setOpen] = useState(firstOpen ?? data.starters.find((p) => p.captain)?.name);
   const opened = [...data.starters, ...data.bench].find((p) => p.name === open);
   const chooseView = (next: PointsView) => {
     setView(next);
@@ -39,64 +73,71 @@ export function PointsPage({
   const side = (
     <>
       <Leagues leagues={data.leagues} tierLine={data.tierLine} />
-      <SideSection title={WORDS.seriesTitle}>
-        <SeriesList series={data.series} />
-      </SideSection>
+      <WeekSeries series={data.series} />
       <YourWeek picks={data.yourWeek} />
-      <div className="points__sponsor">
-        <Placeholder word={WORDS.sponsor} fill />
-      </div>
+      <Placeholder word={WORDS.sponsor} height="sponsorH" />
       <SponsorNote />
     </>
   );
 
+  const bench = (
+    <BenchBar band className="points__bench">
+      {data.bench.map((p, i) => {
+        const played = p.series.length > 0;
+        return (
+          <BenchTile
+            key={p.name}
+            order={i + 1}
+            role={p.role}
+            name={p.name}
+            team={p.team}
+            detail={played ? undefined : WORDS.didntPlay}
+            points={
+              <span className={cx(!p.counts && "points__off")}>
+                <TileTotal player={p} />
+              </span>
+            }
+            state={played ? undefined : "out"}
+            selected={p.name === open}
+            onSelect={() => setOpen(p.name)}
+          />
+        );
+      })}
+    </BenchBar>
+  );
+
   return (
-    <PageFrame screen="points" active="points" account={data.team} side={side}>
+    <PageFrame screen="points" active="points" account={data.team} side={side} stickMain>
       <PageHead
         title={data.team}
         hangul={data.hangul}
-        week={data.week}
-        figure={data.total}
-        tags={<FinalTag final={data.final} />}
-        figures={[
-          { label: WORDS.average, value: data.average },
-          { label: WORDS.highest, value: data.highest, go: { to: PATHS.perfectGame } },
-        ]}
-      >
-        {data.live && (
-          <div className="points__live">
-            <LiveTag />
-            <b>{liveGame(data.live.home, data.live.away, data.live.game)}</b>
-            <LinkGo go={{ to: PATHS.live }}>{WORDS.watch}</LinkGo>
-          </div>
-        )}
-      </PageHead>
-      <ViewToggle options={POINTS_VIEWS} chosen={view} onChoose={chooseView} label={WORDS.view} />
+        line={
+          <>
+            <WeekStep prev={data.week.prev} next={data.week.next} className="points__week">
+              <span className="quiet">{data.week.label}</span>
+            </WeekStep>
+            <span className="points__views">
+              <ViewToggle options={POINTS_VIEWS} chosen={view} onChoose={chooseView} label={WORDS.view} />
+            </span>
+          </>
+        }
+      />
       {view === "Rift view" ? (
-        <PointsRift starters={data.starters} open={open} onOpen={setOpen} />
+        <div className="points__object">
+          <PointsRift starters={data.starters} open={open} onOpen={setOpen} />
+          <div className="points__column">
+            <Total data={data} />
+            {bench}
+          </div>
+        </div>
       ) : (
-        <PointsCards starters={data.starters} open={open} onOpen={setOpen} />
+        <>
+          <Total data={data} />
+          <PointsCards starters={data.starters} open={open} onOpen={setOpen} />
+          {bench}
+        </>
       )}
-      <BenchBar>
-        {data.bench.map((p, i) => {
-          const played = p.series.length > 0;
-          return (
-            <BenchTile
-              key={p.name}
-              order={i + 1}
-              role={p.role}
-              name={p.name}
-              team={p.team}
-              detail={played ? undefined : WORDS.didntPlay}
-              points={p.points ?? NONE}
-              state={played ? undefined : "out"}
-              selected={p.name === open}
-              onSelect={() => setOpen(p.name)}
-            />
-          );
-        })}
-      </BenchBar>
-      {opened && <BreakdownSheet player={opened} onClose={() => setOpen(undefined)} />}
+      {opened && <PointsCard player={opened} />}
     </PageFrame>
   );
 }

@@ -1,5 +1,6 @@
 // Transfers' words, named once. Every word a player reads on this screen lives here.
 
+import { ordinal } from "../../parts";
 import type { PersonRole } from "../../rift";
 import type { SortKey } from "./plan";
 
@@ -50,17 +51,15 @@ export const WORDS = {
   /** The tapped player's card under the Rift. */
   sellKey: "× Sell",
   buyKey: "+ Buy",
-  fullCard: "Full card ›",
-  points: "Points",
+  fullCard: "Full card",
   goldLead: "Gold lead at 15",
-  games: "games",
   soloKills: "Solo kills",
   killsPerGame: "Kills per game",
   deathsPerGame: "Deaths per game",
   assistsPerGame: "Assists per game",
   firstBlood: "First blood",
-  last3: "Last 3 series",
-  next3: "Next 3 series",
+  last3: "Last 3",
+  next3: "Next 3",
   sponsor: "Sponsor",
 } as const;
 
@@ -69,8 +68,8 @@ export const SORT_WORDS = { points: "Points", price: "Price", owned: "Owned" } a
 /** A role's players, for the group a card's ranks are among. */
 const ROLE_PLURAL: Record<PersonRole, string> = { top: "tops", jng: "junglers", mid: "mids", bot: "bots", sup: "supports", coach: "coaches" };
 
-/** `Season · among 10 tops`: the group the card's ranks are among, said once. */
-export const seasonAmong = (n: number, role: PersonRole) => `Season · among ${n} ${ROLE_PLURAL[role]}`;
+/** `Season points · 4th of 10 tops`: before the card's season points, their rank among his role. */
+export const seasonRank = (rank: number, n: number, role: PersonRole) => `Season points · ${ordinal(rank)} of ${n} ${ROLE_PLURAL[role]}`;
 
 /** `Kingen added`, `Siwoo removed`, `Siwoo restored`: what a step did. */
 export const added = (name: string) => `${name} added`;
@@ -119,5 +118,3 @@ export const whenCost = (when: string, cost: string) => `${when} · ${cost}`;
 /** `5 of 10`: games with a gold lead at 15, of those played. */
 export const of = (n: number, total: number) => `${n} of ${total}`;
 
-/** `Thu · Bo3`: a coming series' day and length. */
-export const dayLength = (day: string, length: string) => `${day} · ${length}`;

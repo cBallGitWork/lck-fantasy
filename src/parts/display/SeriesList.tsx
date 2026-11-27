@@ -39,10 +39,10 @@ function Result({ s }: { s: SeriesRow }) {
   return <>{games}</>;
 }
 
-/** The week's series, one row each: day, `T1 v DK`, then the score and its state, or the time. */
-export function SeriesList({ series, go }: { series: readonly SeriesRow[]; go?: (s: SeriesRow) => Go }) {
+/** The week's series, one row each: day, `T1 v DK`, then the score and its state, or the time. `ruled`: 40px rows under 1px `--line` rules, edge to edge in a banded panel (Points). */
+export function SeriesList({ series, go, ruled }: { series: readonly SeriesRow[]; go?: (s: SeriesRow) => Go; ruled?: boolean }) {
   return (
-    <div className="series-list">
+    <div className={ruled ? "series-list series-list--ruled" : "series-list"}>
       {series.map((s) => {
         const teams = (
           <>

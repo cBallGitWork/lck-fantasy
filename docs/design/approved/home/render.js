@@ -66,9 +66,19 @@
     <p class="tpanel__foot tpanel__foot--end"><a class="link" href="#">Following ›</a></p>
   </section>`;
 
-  // All managers: the week's most captained, bought and sold.
-  const fact = (word, name, mine, fig) => `<tr><td>${word}</td><td>${who(name)}${mine ? yours : ""}</td><td class="num fig" colspan="2">${fig}</td></tr>`;
-  const pick = (word, name, mine, pts, owned) => `<tr><td>${word}</td><td>${who(name)}${mine ? yours : ""}</td><td class="num pts"><b class="fig">${pts}</b></td><td class="num fig own">${owned}%</td></tr>`;
+  // All managers: the week's most captained, bought and sold. Each fact has its mark before its word (Craig, 27 Nov 2026:
+  // the pages read dull): the Captain's own C, a green plus and a red minus as Transfers' Buy and Sell, a gold star, a red fall.
+  const ico = (body, cls) => `<svg class="ico ico--${cls}" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+  const ICON = {
+    "Most captained": '<span class="tile__c mini-c">C</span>',
+    "Most bought": ico('<circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/>', "add"),
+    "Most sold": ico('<circle cx="12" cy="12" r="9"/><path d="M8 12h8"/>', "sell"),
+    Star: ico('<path d="M12 3l2.700 5.600 6.100.8-4.500 4.300 1.100 6.100L12 16.900 6.600 19.800l1.100-6.100L3.200 9.400l6.100-.8z" fill="currentColor"/>', "star"),
+    Flop: ico('<path d="M3 7l6 6 4-4 8 8M21 11v6h-6"/>', "flop"),
+  };
+  const label = (word) => `<span class="fact">${ICON[word]}${word}</span>`;
+  const fact = (word, name, mine, fig) => `<tr><td>${label(word)}</td><td>${who(name)}${mine ? yours : ""}</td><td class="num fig" colspan="2">${fig}</td></tr>`;
+  const pick = (word, name, mine, pts, owned) => `<tr><td>${label(word)}</td><td>${who(name)}${mine ? yours : ""}</td><td class="num pts"><b class="fig">${pts}</b></td><td class="num fig own">${owned}%</td></tr>`;
   const all = `<section class="tpanel" aria-label="All managers"><h2 class="tpanel__title">All managers</h2>
     <table class="all">${idle ? "" : `<tr class="sub"><td colspan="4">Week 3</td></tr>${fact("Most captained", "Chovy", false, "38%")}`}<tr class="sub"><td colspan="4">Week 4 so far</td></tr>
       ${idle ? fact("Most captained", "Faker", true, "34%") : ""}${fact("Most bought", "Kiin", false, idle ? "41,208" : "36,750")}${fact("Most sold", "Zeka", false, idle ? "31,412" : "28,930")}

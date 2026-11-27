@@ -6,8 +6,10 @@ import { htmlAt, plain, trucksOutsideCredit } from "../testing/render";
 
 /** What each picture shows that marks its state, as the page draws it. */
 const KEY: Record<string, string> = {
-  "home/live": "1/0/2",
+  "home/live": "Your players",
   "home/idle": "Week 4 lineup",
+  "home/boost": "home__buff-icon",
+  "home/boost-live": "Bench Boost",
   "pick-team/pick": "Rift view",
   "pick-team/cards": 'class="lineup"',
   "pick-team/swap": "On this week",

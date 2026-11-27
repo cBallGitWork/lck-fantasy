@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { cx, FinalTag, LinkGo, LiveTag, PageFrame, PageHead, Panel, Placeholder, SponsorNote, ViewToggle, WeekStep } from "../../parts";
+import { cx, FinalTag, LinkGo, LiveTag, PageFrame, PageHead, Panel, Placeholder, SeriesPanel, SponsorNote, ViewToggle, WeekStep } from "../../parts";
 import { PATHS } from "../../paths";
 import { BenchBar, BenchTile } from "../../rift";
 import "./points.css";
 import { PointsCard } from "./PointsCard";
-import { Leagues, WeekSeries, YourWeek } from "./PointsSide";
+import { Leagues, YourWeek } from "./PointsSide";
 import { PointsCards, PointsRift, TileTotal } from "./PointsTeam";
 import { POINTS_VIEWS, type PointsData, type PointsView } from "./types";
 import { liveGame, WORDS } from "./words";
@@ -73,7 +73,8 @@ export function PointsPage({
   const side = (
     <>
       <Leagues leagues={data.leagues} tierLine={data.tierLine} />
-      <WeekSeries series={data.series} />
+      {/* This week's series (What binds 8), the panel Home shares. */}
+      <SeriesPanel title={WORDS.seriesTitle} series={data.series} className="points__side" />
       <YourWeek picks={data.yourWeek} />
       <Placeholder word={WORDS.sponsor} height="sponsorH" />
       <SponsorNote />

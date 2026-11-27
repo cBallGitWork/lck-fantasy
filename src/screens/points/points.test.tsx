@@ -49,9 +49,9 @@ test("the picture's state holds its head, Rift, Total, bench, the Captain's week
     "All leagues ›",
     "This week's seriesWedT1 v HLE2–1",
     "SatGEN v HLE2–1 Not final",
-    "SatT1 v DK1–0 Live",
+    "T1 v DK1–0 Live",
     "SunKRX v BRO8:00am",
-    "SunBFX v DNS10:30am",
+    "BFX v DNS10:30am",
     "Your weekPtsOwned",
     "StarT1 Faker2546%",
     "FlopDK Siwoo86%",
@@ -107,7 +107,7 @@ test("Live shows in Total, on the card's live series and game, and in the week's
   const out = text(PICTURE);
   // The top bar's Live item, then the four.
   expect(out.match(/Live/g)).toHaveLength(5);
-  expectInOrder(out, ["Live", "T1 v DK, game 2", "Satv DK ›Live 1–0", "G2LiveSylas14:20", "SatT1 v DK1–0 Live"]);
+  expectInOrder(out, ["Live", "T1 v DK, game 2", "Satv DK ›Live 1–0", "G2LiveSylas14:20", "T1 v DK1–0 Live"]);
   expect(out).not.toMatch(/game \d live/);
 });
 

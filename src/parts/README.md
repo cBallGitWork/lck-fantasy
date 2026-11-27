@@ -46,7 +46,7 @@ What shows a fact: tags, tables, lists, crests, states.
 - `Deadline.tsx`: `Deadline Wed 7:45am` in your time, and the countdown.
 - `Time.tsx`: your time alone, with no zone (`Sat 10:00pm`); the head over a column of them (`YOUR_TIME`).
 - `MeDot.tsx`: your player's dot.
-- `FactMark.tsx`: a fact's 20px mark before its word: Star's gold star, Flop's red falling line, Killer's crossed swords in `--text` (plate.md, A fact's mark).
+- `FactMark.tsx`: a fact's 20px mark before its word: Star's gold star, Flop's red falling line, Most bought's and Most sold's ringed plus and minus, Killer's crossed swords in `--text` (plate.md, A fact's mark).
 - `RowPlayer.tsx`: a player named in a row: his team's bar and code, then his name (`T1 Faker`).
 - `Hint.tsx`: a word's hover (spec/12, Words): one short line on hover, or on tap on the phone; the words-alone lines (`HINTS`) and C's (`captainHint`).
 - `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a rule above a row starting a group (`ruleAbove`), a row's `›` (`open`); sticky head and name column for the wide table.

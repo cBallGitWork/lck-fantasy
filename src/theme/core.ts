@@ -49,8 +49,6 @@ const measure = {
   mark: 20,
   /** The C in the head of the player's card under the Rift (approved/points/). */
   markDock: 24,
-  /** A fact's mark before its word: Star, Flop, Killer (plate.md, Parts, A fact's mark). */
-  factMark: 20,
   roleIcon: 28,
   /** The role icon beside a name in a list (Live). */
   roleIconSmall: 20,
@@ -143,6 +141,10 @@ const measure = {
   transfersSide: 424,
   /** A team's bar in Transfers' lists (plate.md, A team's colour). */
   teamBarWide: 6,
+  /** Home's stream picker, beside the stream (approved/home/, What binds 2). */
+  streamPicker: 296,
+  /** A panel's grey sub-band over its rows (`Week 3`, `Next`, `Your players`), approved/home/. */
+  rowSub: 28,
 } as const;
 
 /** Opacities: the band across a tier shield; an empty slot's shirt outline (front door picture). A
@@ -154,7 +156,7 @@ const opacity = { tierBand: 0.45, emptyShirt: 0.25, dim: 0.6, dimColour: 0.3, ma
  *  tile, its card, its kit. */
 const share = { tile: 0.15, tileCard: 0.13, shirt: 0.1 } as const;
 
-/** SVG strokes, in the drawing's own units: the plain shirt's edge, and a buff icon's line, its coin's edge and the C cut in it, and a fact's mark. */
+/** SVG strokes, in the drawing's own units: the plain shirt's edge, a buff icon's line, its coin's edge and the C cut in it, and a fact's mark's line (approved/home/). */
 const stroke = { shirt: 1.6, icon: 1.2, coin: 1.5, cut: 2, fact: 2 } as const;
 
 /** Frame shapes: a stream's picture, the same on Home and Live; the Rift, square at any width. */

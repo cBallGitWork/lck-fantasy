@@ -51,6 +51,8 @@ export const DEV_STATES: readonly DevState[] = [
   ...page("home", [
     { state: "live", go: home },
     { state: "idle", go: home, param: true },
+    { state: "boost", go: home, param: true },
+    { state: "boost-live", go: home, param: true },
   ]),
   ...page("pick-team", [
     { state: "pick", go: { to: PATHS.pickTeam } },

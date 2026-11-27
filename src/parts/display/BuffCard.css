@@ -11,28 +11,6 @@
   grid-row: span 2;
   width: var(--m-buff-icon);
   height: var(--m-buff-icon);
-  color: var(--ink);
-  fill: none;
-  stroke: currentColor;
-  stroke-width: var(--stroke-icon);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.buff-card__icon-back,
-.buff-card__icon-coin {
-  fill: currentColor;
-  stroke: none;
-}
-.buff-card__icon-back {
-  opacity: var(--opacity-buff-icon-back);
-}
-.buff-card__icon-coin {
-  stroke: var(--bg);
-  stroke-width: var(--stroke-coin);
-}
-.buff-card__icon-cut {
-  stroke: var(--bg);
-  stroke-width: var(--stroke-cut);
 }
 .buff-card__name {
   font-size: var(--size-body);

@@ -1,0 +1,26 @@
+/* A buff's gold icon (plate.md, A buff). */
+.buff-icon {
+  flex: none;
+  color: var(--ink);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--stroke-icon);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.buff-icon__back,
+.buff-icon__coin {
+  fill: currentColor;
+  stroke: none;
+}
+.buff-icon__back {
+  opacity: var(--opacity-buff-icon-back);
+}
+.buff-icon__coin {
+  stroke: var(--bg);
+  stroke-width: var(--stroke-coin);
+}
+.buff-icon__cut {
+  stroke: var(--bg);
+  stroke-width: var(--stroke-cut);
+}

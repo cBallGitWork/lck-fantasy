@@ -58,9 +58,11 @@ test("a week with no one in it has no star and no flop", () => {
 });
 
 test("Home's star and flop are Week 3's, from the whole field, not the manager's squad", () => {
-  expect(HOME_IDLE.stars).toEqual(starAndFlop(WEEK3_FIELD).stars);
-  expect(HOME_IDLE.flops).toEqual(starAndFlop(WEEK3_FIELD).flops);
-  expect([...HOME_IDLE.stars, ...HOME_IDLE.flops].map((p) => [p.name, p.points, p.eoPct])).toEqual([
+  const { week, stars, flops } = HOME_IDLE.week.starFlop;
+  expect(week).toBe(3);
+  expect(stars.map((p) => p.name)).toEqual(starAndFlop(WEEK3_FIELD).stars.map((p) => p.name));
+  expect(flops.map((p) => p.name)).toEqual(starAndFlop(WEEK3_FIELD).flops.map((p) => p.name));
+  expect([...stars, ...flops].map((p) => [p.name, p.points, p.eoPct])).toEqual([
     ["Pyosik", 21, 7],
     ["Delight", 9, 26],
   ]);

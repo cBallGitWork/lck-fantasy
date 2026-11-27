@@ -1,4 +1,4 @@
-import type { Fact, Score, SeriesRow, SeriesState, WeekNav } from "../../parts";
+import type { Score, SeriesRow, SeriesState, WeekNav } from "../../parts";
 import type { Mark, PersonRole, RoleKey, SlotKey } from "../../rift";
 import type { Kda, LineWord } from "../../fixtures/week3";
 import type { Tier, TierLine } from "../../../convex/leagues/tiers";
@@ -59,7 +59,7 @@ export interface PointsStarter extends PointsPlayer {
 
 /** A line of Your week: Star, Flop or Killer. */
 export interface WeekPick {
-  label: Fact;
+  label: "Star" | "Flop" | "Killer";
   name: string;
   team: string;
   points: number;

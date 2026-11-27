@@ -20,3 +20,13 @@
   padding: var(--s-3) var(--s-4) var(--s-2);
   background: var(--head-band);
 }
+/* A link at the band's right (approved/home/). */
+.panel__title:has(.panel__go) {
+  display: flex;
+  align-items: center;
+}
+.panel__go {
+  margin-left: auto;
+  font-size: var(--size-body);
+  font-weight: var(--w-semi);
+}

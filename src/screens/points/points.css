@@ -173,6 +173,12 @@
 .points__side th:last-child {
   padding-right: var(--s-4);
 }
+/* Your week's fact: its mark, then its word. */
+.points__fact {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
 .points__shield {
   width: var(--s-3);
   height: var(--s-4);
@@ -197,11 +203,6 @@
 .points__owned {
   font-size: var(--size-small);
 }
-/* This week's series: SeriesList's ruled rows. */
-.points__series {
-  padding-bottom: var(--s-1);
-}
-
 /* The phone keeps its stacked layout: the column under the Rift. */
 @media (max-width: 600px) {
   .points__object {

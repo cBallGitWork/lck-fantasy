@@ -1,7 +1,10 @@
-import { FactMark, Hint, HINTS, LinkGo, MeDot, Panel, pct, RankMove, RowPlayer, SeriesList, tierName, TierShield } from "../../parts";
+import { FactMark, Hint, HINTS, LinkGo, MeDot, Panel, pct, RankMove, RowPlayer, tierName, TierShield, type FactKind } from "../../parts";
 import { PATHS } from "../../paths";
 import type { PointsData, WeekPick } from "./types";
 import { dot, PICK_WORDS, toTier, WORDS } from "./words";
+
+/** Your week's line and the shared mark it carries. */
+const WEEK_FACT: Record<WeekPick["label"], FactKind> = { Star: "star", Flop: "flop", Killer: "killer" };
 
 /** Your week, below the series (approved/points/, What binds 9): Star, Flop and Killer, each with its mark, then the player as `T1 Faker`, his points and who owns him; a dot marks yours. */
 export function YourWeek({ picks }: { picks: WeekPick[] }) {
@@ -20,8 +23,10 @@ export function YourWeek({ picks }: { picks: WeekPick[] }) {
           {picks.map((p) => (
             <tr key={p.label}>
               <td className="quiet">
-                <FactMark fact={p.label} />
-                {p.label === "Killer" ? <Hint line={HINTS.killer}>{PICK_WORDS[p.label]}</Hint> : PICK_WORDS[p.label]}
+                <span className="points__fact">
+                  <FactMark kind={WEEK_FACT[p.label]} />
+                  {p.label === "Killer" ? <Hint line={HINTS.killer}>{PICK_WORDS[p.label]}</Hint> : PICK_WORDS[p.label]}
+                </span>
               </td>
               <td>
                 <RowPlayer team={p.team} name={p.name} />
@@ -80,15 +85,6 @@ export function Leagues({ leagues, tierLine }: Pick<PointsData, "leagues" | "tie
         )}
         <LinkGo go={{ to: PATHS.leagues }}>{WORDS.allLeagues}</LinkGo>
       </div>
-    </Panel>
-  );
-}
-
-/** This week's series (What binds 8): each with both teams' bars, its result, `Live` with the score, or its time. */
-export function WeekSeries({ series }: Pick<PointsData, "series">) {
-  return (
-    <Panel title={WORDS.seriesTitle} band className="points__side points__series">
-      <SeriesList series={series} ruled />
     </Panel>
   );
 }

@@ -39,11 +39,16 @@ function Result({ s }: { s: SeriesRow }) {
   return <>{games}</>;
 }
 
-/** The week's series, one row each: day, `T1 v DK`, then the score and its state, or the time. `ruled`: 40px rows under 1px `--line` rules, edge to edge in a banded panel (Points). */
+/**
+ * The week's series, one row each: day, `T1 v DK`, then the score and its state, or the time. `ruled`:
+ * 40px rows under 1px `--line` rules, edge to edge in a banded panel, each day named once, on its first
+ * series (approved/points/, approved/home/).
+ */
 export function SeriesList({ series, go, ruled }: { series: readonly SeriesRow[]; go?: (s: SeriesRow) => Go; ruled?: boolean }) {
   return (
     <div className={ruled ? "series-list series-list--ruled" : "series-list"}>
-      {series.map((s) => {
+      {series.map((s, i) => {
+        const day = ruled && series[i - 1]?.day === s.day ? "" : s.day;
         const teams = (
           <>
             <TeamBar team={s.home} />
@@ -53,7 +58,7 @@ export function SeriesList({ series, go, ruled }: { series: readonly SeriesRow[]
         );
         return (
           <div key={s.id} className="series-list__row">
-            <span className="quiet">{s.day}</span>
+            <span className="quiet">{day}</span>
             <span>{go ? <GoLink go={go(s)}>{teams}</GoLink> : teams}</span>
             <span className="series-list__result num">
               <Result s={s} />

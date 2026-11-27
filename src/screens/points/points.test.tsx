@@ -53,9 +53,9 @@ test("the picture's state holds its head, Rift, Total, bench, the Captain's week
     "SunKRX v BRO8:00am",
     "BFX v DNS10:30am",
     "Your weekPtsOwned",
-    "StarFaker2546%",
-    "FlopSiwoo86%",
-    "KillerChovy1541%",
+    "StarT1 Faker2546%",
+    "FlopDK Siwoo86%",
+    "KillerGEN Chovy1541%",
     "Sponsor",
     "All sponsors are made up.",
   ]);
@@ -75,6 +75,12 @@ test("the picture's state boxes the counted games, greys the dropped one, docks 
   // Rank moves: four up, one down.
   expect(out.match(/rank-up/g)).toHaveLength(4);
   expect(out.match(/rank-down/g)).toHaveLength(1);
+});
+
+test("Your week's Star, Flop and Killer each carry their mark before the word, and the player his team's bar", () => {
+  const panel = html(<PointsPage data={POINTS_FIXTURE} />).split("points__picks")[1]!;
+  expect(panel.match(/fact-mark--(\w+)/g)).toEqual(["fact-mark--star", "fact-mark--flop", "fact-mark--killer"]);
+  expect(panel.match(/class="team-bar"/g)).toHaveLength(3);
 });
 
 test("the Captain's ×1.5 shows once, on his card; no tile shows it, and nothing shows an auto-sub line", () => {

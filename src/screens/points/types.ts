@@ -61,6 +61,7 @@ export interface PointsStarter extends PointsPlayer {
 export interface WeekPick {
   label: "Star" | "Flop" | "Killer";
   name: string;
+  team: string;
   points: number;
   ownedPct: number;
   /** One of your players. */

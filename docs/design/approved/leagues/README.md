@@ -6,7 +6,7 @@ Every league a manager is in, and one league's table. Reached from **Leagues** i
 
 **Changed by Craig, 16 Nov 2026:** the list of leagues moves to the side column on the right, as on every page; the open league's table is the main column.
 
-**Redrawn, 27 Nov 2026**, in Pick Team's look, with the Captain column (was Carry) and Overall's panel of Captains and buffs by tier ([spec/08](../../../../spec/08-leagues.md#the-leagues-page)). Craig's calls that day, after the screen read as text and grey: tier shields in their ranked colours, over 16 Nov's one white shield; ranks 1 to 3 as gold, silver and bronze squares; a Captain's share as a bar in its tier's colour, no bar for a buff; a mark before each league in the list; `Overall · Emerald I` in the list; your own row filled with a white left edge and no dot.
+**Redrawn, 27 Nov 2026**, in Pick Team's look, with the Captain column (was Carry) and Overall's panel of Captains and buffs by tier ([spec/08](../../../../spec/08-leagues.md#the-leagues-page)). Craig's calls that day, after the screen read as text and grey: tier shields in their ranked colours, over 16 Nov's one white shield; ranks 1 to 3 as gold, silver and bronze squares; a Captain's share as a bar in its tier's colour, no bar for a buff; a mark before each league in the list; `Overall · Emerald I` in the list; your own row filled with a white left edge and no dot; no chase tag on Overall; no Week column before the deadline; a red edge on Delete league and Leave in their confirm sheets. Error and empty states (no private leagues, a bad code, a full league) are not drawn yet: their own round.
 
 One source draws every picture: `leagues.html` and `render.js`, the picture chosen by `?v=`.
 
@@ -14,7 +14,7 @@ One source draws every picture: `leagues.html` and `render.js`, the picture chos
 |---|---|---|
 | `1440.png` | none | A private league you made: code, Copy link, Admin, Season and Split tabs, the podium, your row with the chase tag |
 | `1440-overall.png` | `overall` | Overall in Split 2, Legend, after the deadline: top 7, a gap, your neighbourhood, pager with Find me, then Captains and buffs by tier |
-| `1440-overall-before.png` | `before` | The same before the next deadline: no Captain column, no tier panel |
+| `1440-overall-before.png` | `before` | The same before the next deadline: no Captain or Week column, no tier panel |
 | `1440-admin.png` | `admin` | The maker's Admin menu |
 | `1440-create.png` | `create` | Create a league |
 | `1440-created.png` | `created` | The league made: code, Copy code, Copy link, Open league |

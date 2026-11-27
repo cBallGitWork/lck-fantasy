@@ -130,15 +130,18 @@ As FPL's (Craig, 13 Nov 2026):
   with the season and each split as tabs above it. A row opens that manager's team.
 - A Captain column shows each manager's Captain for the gameweek in the Week column, on every tab.
   It shows only once that gameweek's deadline has passed, as FPL hides picks until then (Craig,
-  14 Nov 2026).
+  14 Nov 2026). The Week column shows from then too, not as a column of dashes before it (Craig,
+  27 Nov 2026).
 - Overall's tab has a panel of Captains and buffs by tier (Craig, 27 Nov 2026): a row for each of
-  the ten tiers, Iron to Challenger, not each division, with the tier's most picked Captain and
-  his share and its most played buff and its share. Example: `Challenger · GEN Chovy 61% · Double
-  Captain 9%`. A tier where nobody played a buff shows a dash. A manager counts in the tier they
-  held at that gameweek's deadline. It follows the gameweek in the Week column and shows only
-  once that deadline has passed, as the Captain column.
+  the ten tiers, Iron to Challenger, not each division, with the tier's most picked Captain and his
+  share and its most played buff and its share. Example: `Challenger · GEN Chovy 61% · Double
+  Captain 9%`. Both shares are of every manager in the tier (Craig, 27 Nov 2026). A tier where
+  nobody played a buff shows a dash. A manager counts in the tier they held at that gameweek's
+  deadline. It follows the gameweek in the Week column and shows only once that deadline has passed,
+  as the Captain column.
 - A chase tag on the manager's own row shows the points to the rank above (16 pts to 1st), their
-  lead over 2nd when 1st (+16 clear), and nothing when level (Craig, 14 Nov 2026).
+  lead over 2nd when 1st (+16 clear), and nothing when level (Craig, 14 Nov 2026). Overall's table
+  has none: Points shows the gap to the next tier (Craig, 27 Nov 2026).
 - Leagues in the top bar opens Overall's table, the manager's leagues listed beside it (Craig,
   17 Nov 2026).
 - A table opens on its Season tab, as FPL (Craig, 17 Nov 2026).

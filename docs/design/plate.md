@@ -155,6 +155,7 @@ Each part is drawn one way on every screen.
   the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
   in the bar's place. Never a tinted row, a wash or a coloured code.
 - **Your players** are marked by that dot, on every screen.
+- **A key that ends something** (Delete league, Leave) has a `--down` edge in its confirm sheet, and is a plain key elsewhere (Craig, 27 Nov 2026).
 - **Your own row** in a league table or the tier panel is filled (`--fill`) with a 4px `--text` left edge, and no dot (Craig, 27 Nov 2026).
 - **A league's mark** (Leagues' side list; Craig, 27 Nov 2026): 20px before its name. Overall its tier shield, a country its flag, a team its crest, a private league a group in `--text`.
 - **A fact's mark** (Home's Star, Flop and All managers, Points' Star, Flop and Killer; Craig, 27 Nov 2026, "keep them", after the pages read dull): a 20px mark before the fact's word, its colour the one that fact already has elsewhere: Star a gold star, Flop a red falling line, Killer crossed swords in `--text`, having no colour of its own (Craig, 27 Nov 2026), Most captained the Captain's C, Most bought a green plus in a ring and Most sold a red minus in a ring, as Transfers' Buy and Sell. One mark a fact, the same on every page.

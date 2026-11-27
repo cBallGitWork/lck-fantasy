@@ -8,6 +8,7 @@ export { Columns } from "./frame/Columns";
 export { cx } from "./util/cx";
 export { Deadline } from "./display/Deadline";
 export { DEV_STATE_PARAM, useDevState } from "./util/devState";
+export { FactMark, type Fact } from "./display/FactMark";
 export { Field } from "./controls/Field";
 export { GoLink } from "./controls/GoLink";
 export { Hint } from "./display/Hint";
@@ -43,6 +44,7 @@ export {
 export { money, mToWon, formatWon, WON_PER_M } from "./text/money";
 export { browserZone, momentIn, timeIn } from "./text/time";
 export { PriceMove, RankMove } from "./display/Move";
+export { RowPlayer } from "./display/RowPlayer";
 export { rememberedView, rememberView, VIEW_KEYS, type ViewKey } from "./util/rememberedView";
 export { OutlinedKey } from "./controls/OutlinedKey";
 export { PageFrame } from "./frame/PageFrame";

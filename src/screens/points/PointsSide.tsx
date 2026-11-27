@@ -1,9 +1,9 @@
-import { Hint, HINTS, LinkGo, MeDot, Panel, pct, RankMove, SeriesList, tierName, TierShield } from "../../parts";
+import { FactMark, Hint, HINTS, LinkGo, MeDot, Panel, pct, RankMove, RowPlayer, SeriesList, tierName, TierShield } from "../../parts";
 import { PATHS } from "../../paths";
 import type { PointsData, WeekPick } from "./types";
 import { dot, PICK_WORDS, toTier, WORDS } from "./words";
 
-/** Your week, below the series (approved/points/, What binds 9): Star, Flop and Killer, each with his points and who owns him; a dot marks yours. */
+/** Your week, below the series (approved/points/, What binds 9): Star, Flop and Killer, each with its mark, then the player as `T1 Faker`, his points and who owns him; a dot marks yours. */
 export function YourWeek({ picks }: { picks: WeekPick[] }) {
   return (
     <Panel title={WORDS.yourWeek} band className="points__side">
@@ -19,9 +19,12 @@ export function YourWeek({ picks }: { picks: WeekPick[] }) {
         <tbody>
           {picks.map((p) => (
             <tr key={p.label}>
-              <td className="quiet">{p.label === "Killer" ? <Hint line={HINTS.killer}>{PICK_WORDS[p.label]}</Hint> : PICK_WORDS[p.label]}</td>
+              <td className="quiet">
+                <FactMark fact={p.label} />
+                {p.label === "Killer" ? <Hint line={HINTS.killer}>{PICK_WORDS[p.label]}</Hint> : PICK_WORDS[p.label]}
+              </td>
               <td>
-                <b>{p.name}</b>
+                <RowPlayer team={p.team} name={p.name} />
                 {p.mine && <MeDot />}
               </td>
               <td className="points__fig num">

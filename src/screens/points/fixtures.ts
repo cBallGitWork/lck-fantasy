@@ -31,6 +31,7 @@ import {
 import { count, ordinal, sum, weekSteps } from "../../parts";
 import { PATHS, type Go } from "../../paths";
 import { flexPlays } from "../../rift";
+import { statsOf } from "../../fixtures/players";
 import { hangulOf } from "../../fixtures/rosters";
 import type { PointsData, PointsPlayer, PointsSeries, PointsStarter, WeekPick } from "./types";
 
@@ -86,7 +87,7 @@ const OWNED_PCT: Record<string, number> = { Faker: 46, Siwoo: 6, Delight: 18 };
 function mine(label: WeekPick["label"], p: PointsStarter): WeekPick {
   const ownedPct = OWNED_PCT[p.name];
   if (ownedPct === undefined || p.points === undefined) throw new Error(`No ${label} figures for ${p.name}`);
-  return { label, name: p.name, points: p.points, ownedPct, mine: true };
+  return { label, name: p.name, team: p.team, points: p.points, ownedPct, mine: true };
 }
 
 /** What a week adds to its series and squad: its head's figures, the average Captain and the Killer. */
@@ -169,7 +170,7 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     live: live?.liveGame ? { home: live.home, away: live.away, game: live.liveGame } : undefined,
     starters,
     bench: squad.filter((p) => p.slot === "bench").map((p) => playerOf(list, p, games)),
-    yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, mine: false }],
+    yourWeek: [mine("Star", star), mine("Flop", flop), { label: "Killer", ...facts.killer, team: statsOf(facts.killer.name).team, mine: false }],
     leagues: [
       { name: "Overall", tier: MY_OVERALL.tier, rank: count(MY_OVERALL.rank), move: MY_OVERALL.move },
       ...MY_LEAGUES.map((l) => ({ name: l.name, rank: l.kind === "private" ? ordinal(l.rank) : count(l.rank), move: l.move })),

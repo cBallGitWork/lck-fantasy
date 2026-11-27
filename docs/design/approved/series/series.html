@@ -61,7 +61,7 @@ td.tot small { white-space: nowrap; }
 .grid th .chip { margin: 0 4px; }
 .th__sub { display: block; line-height: 20px; }
 .grid th { vertical-align: bottom; }
-.grid td { padding: 0 8px; height: 76px; border-top: 1px solid var(--line); vertical-align: middle; }
+.grid td { padding: 0 8px; height: 60px; border-top: 1px solid var(--line); vertical-align: middle; }
 .grid td:first-child, .grid th:first-child { padding-left: 16px; }
 td.rl { color: var(--text); font-size: 12px; white-space: nowrap; }
 td.rl svg { width: 28px; height: 28px; vertical-align: -9px; margin-right: 8px; }
@@ -71,16 +71,14 @@ td.pl small { color: var(--mid); font: 400 12px/16px var(--ko); margin-left: 8px
 .gm { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .gm > span:first-child { white-space: nowrap; min-width: 0; }
 .gm small { display: block; color: var(--mid); font: 400 12px/16px var(--fig); }
-/* A game cell: the champion, K/D/A under the column's sword, skull and hand, then a mark for each line that scored (spec/05). */
+/* A game cell: the champion, then K/D/A under the column's sword, skull and hand. */
 .ic { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
 .gm .ch { display: block; font-size: 12px; line-height: 16px; color: var(--text); overflow: hidden; text-overflow: ellipsis; }
-.gm .kda { display: block; font: 600 14px/20px var(--fig); }
+.gm .kda { display: block; font: 600 16px/24px var(--fig); }
 .gm .kda i { font-style: normal; color: var(--m-dth); }
 td.drop .gm .kda i { color: inherit; }
 .th__kda { display: block; line-height: 20px; color: var(--mid); }
 .th__kda .ic { width: 18px; height: 18px; margin: 0 1px; vertical-align: -4px; }
-.gm .mk { display: flex; gap: 6px; height: 20px; margin-top: 2px; }
-.gm .mk .ic { width: 20px; height: 20px; }
 .gm .p .ic--pog { color: var(--gold); }
 tr.is-me td { background: var(--fill); }
 tr.is-me td:first-child { box-shadow: inset 4px 0 0 var(--text); }
@@ -107,7 +105,7 @@ tr.is-me td:first-child { box-shadow: inset 4px 0 0 var(--text); }
 .ev b { font-size: 16px; }
 .ev__what .ic--pog { color: var(--gold); }
 .ev__a { text-align: right; }
-.ev__a, .ev__b { display: flex; flex-wrap: wrap; gap: 0 16px; align-items: center; }
+.ev__a, .ev__b { display: flex; flex-wrap: wrap; gap: 0 16px; align-items: center; padding: 6px 0; }
 .ev__a { justify-content: flex-end; }
 .ev b { font-weight: 600; }
 .ev .yours { margin-left: 6px; }
@@ -115,7 +113,6 @@ tr.is-me td:first-child { box-shadow: inset 4px 0 0 var(--text); }
 .gm .p { flex: none; font: 600 14px/20px var(--fig); min-width: 28px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 .gm .p .box { min-width: 28px; font: 700 16px/26px var(--fig); text-align: center; background: var(--text); color: var(--bg); }
 td.drop .gm, td.drop .gm small, td.drop .gm .ch { color: var(--mid); }
-td.drop .mk { opacity: 0.5; }
 /* A minus is red, on a game and on a series. */
 .neg { color: var(--down); }
 .gm .p .box.neg { background: var(--down); color: var(--bg); }
@@ -242,16 +239,14 @@ const best2 = (xs) => xs.map((x, i) => [x, i]).filter(([x]) => x !== null).sort(
 const me = (n) => (MINE.includes(n) ? '<i class="yours" title="Yours"></i>' : "");
 const ic = (id, title = "", cls = "") => `<svg class="ic ic--${id} ${cls}"${title ? ` role="img" aria-label="${title}"` : ' aria-hidden="true"'}><use href="#i-${id}"/></svg>`;
 const pog = (s, i, n) => (s.games[i].pog === n ? ic("pog", "Player of the Game", "ic--pog") : "");
-// A player's marks for a game: one for each line that scored beyond kills, deaths and assists.
-const marks = ([, , d, , gold, solo, fb, multi, steal, live]) => [fb && ic("fb", "First blood"), ...Array(solo).fill(ic("solo", "Solo kill")), ...Array(steal).fill(ic("steal", "Steal")), multi && ic("multi", multi > 1 ? "Penta" : "Quadra"), gold && ic("gold", "Gold lead at 15 minutes"), d === 0 && !live && ic("none", "Deathless")].filter(Boolean).join("");
 const cell = (s, i, n, label, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}</span><span class="p">${pog(s, i, n)}${counted ? `<span class="box${p < 0 ? " neg" : ""}">${fmt(p)}</span>` : fmt(p)}</span></div></td>`;
 const L = ["First tower", "Most drakes", "Most barons", "Most elders", "Quick win"], LI = ["tower", "drake", "baron", "elder", "quick"];
 // A game's events, as FPL's and UCL fantasy's finished match: a row an event that happened, each team's names on its side.
 function game(s, i) {
   const g = s.games[i], side = (code) => { const t = s[code], at = (f) => t.p.filter((p) => p[3][i] && f(p[3][i]) > 0).map((p) => `<span><b>${p[1]}</b>${f(p[3][i]) > 1 ? ` ×${f(p[3][i])}` : ""}${me(p[1])}</span>`).join("");
     const own = `<span><i class="team__bar" style="background:${BAR[code]}"></i><b>${code}</b></span>`, c = t.coach[2][i];
-    return [at((x) => x[6]), at((x) => x[5]), at((x) => x[8]), at((x) => (x[7] === 1 ? 1 : 0)), at((x) => (x[7] === 2 ? 1 : 0)), ...c.map((x) => (x ? own : ""))]; };
-  const A = side(s.a), B = side(s.b), W = [["fb", "First blood"], ["solo", "Solo kills"], ["steal", "Steals"], ["multi", "Quadras"], ["multi", "Pentas"], ...L.map((l, j) => [LI[j], l])];
+    return [at((x) => x[6]), at((x) => x[5]), at((x) => x[8]), at((x) => (x[7] === 1 ? 1 : 0)), at((x) => (x[7] === 2 ? 1 : 0)), at((x) => x[4]), at((x) => (x[2] === 0 && !x[9] ? 1 : 0)), ...c.map((x) => (x ? own : ""))]; };
+  const A = side(s.a), B = side(s.b), W = [["fb", "First blood"], ["solo", "Solo kills"], ["steal", "Steals"], ["multi", "Quadras"], ["multi", "Pentas"], ["gold", "Gold lead at 15"], ["none", "Deathless"], ...L.map((l, j) => [LI[j], l])];
   const rows = W.map(([id, word, cls], j) => (A[j] || B[j] ? `<div class="ev${(A[j] + B[j]).includes("yours") ? " is-me" : ""}"><span class="ev__a">${A[j]}</span><span class="ev__what"><span class="sq" style="background:var(--m-${id}, var(--text))">${ic(id, "", cls)}</span>${word}</span><span class="ev__b">${B[j]}</span></div>` : "")).join("");
   return `<section class="game"><h2 class="game__head"${g.w ? ` style="border-bottom-color:${BAR[g.w]}"` : ""}><b>Game ${i + 1}</b>${g.live ? `<span class="tag tag--live">Live</span><span class="len" style="margin-left:auto"><b>${g.live}</b></span>` : `${crest(g.w)}<span class="won">${g.w} won</span><span class="pogw">${ic("pog", "Player of the Game")}<b>${g.pog}</b>${me(g.pog)}</span><span class="len">${g.len}</span><a class="link" href="#">VOD ↗</a>`}</h2>${rows || '<div class="ev ev--none">—</div>'}</section>`;
 }
@@ -261,7 +256,7 @@ function team(s, code) {
     <tr><th></th><th></th>${s.games.map((g, i) => `<th>Game ${i + 1} ${g.live ? `<span class="chip chip--live">Live</span>` : `<span class="chip chip--${g.w === code ? "w" : "l"}">${g.w === code ? "W" : "L"}</span>`}<span class="th__kda">${ic("kda", "Kills")}/${ic("dth", "Deaths")}/${ic("ast", "Assists")}</span></th>`).join("")}<th class="n">Series</th></tr>`;
   const rows = t.p.map(([rl, nm, k, gs, sub]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps);
     return `<tr${MINE.includes(nm) ? ' class="is-me"' : ""}><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}${sub ? " · sub" : ""}</td><td class="pl"><b>${nm}</b>${me(nm)}</td>
-      ${gs.map((g, i) => (g ? cell(s, i, nm, `<span class="ch">${g[0]}</span><span class="kda">${g[1]}/<i>${g[2]}</i>/${g[3]}</span><span class="mk">${marks(g)}</span>`, ps[i], c.includes(i)) : '<td><span class="none">—</span></td>')).join("")}<td class="tot">${mine(nm, sum(c.map((i) => ps[i])))}</td></tr>`; }).join("");
+      ${gs.map((g, i) => (g ? cell(s, i, nm, `<span class="ch">${g[0]}</span><span class="kda">${g[1]}/<i>${g[2]}</i>/${g[3]}</span>`, ps[i], c.includes(i)) : '<td><span class="none">—</span></td>')).join("")}<td class="tot">${mine(nm, sum(c.map((i) => ps[i])))}</td></tr>`; }).join("");
   const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = !over ? 0 : won.filter(Boolean).length === 2 ? 3 : -1;
   const coach = `<tr class="co${MINE.includes(cn) ? " is-me" : ""}"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b>${me(cn)}</td>
     ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? ic(LI[j], L[j]) : "")).join("") || "—"}</span>`, cp[i], c.includes(i))).join("")}

@@ -85,9 +85,10 @@ Overall shows each manager's place as a LoL ranked tier, Iron to Challenger (Cra
 - Where it shows:
   - Home: a shield, the tier and the rank beneath, by the team name, with no total of managers
     ([approved picture](../docs/design/approved/home/)).
-  - Points: the tier, and the points to promote. That is the gap to the manager at the cut-off
-    now, shown with ≈ as others still score. Example: ≈6 pts to Diamond IV. The line to avoid
-    demotion shows only at Challenger, with no tier above (Craig, 18 Nov 2026).
+  - Points: the tier, the points to promote and the points clear of demotion, at every tier
+    (Craig, 27 Nov 2026, over 18 Nov's Challenger only). Each is the gap to the manager at that
+    cut-off now, shown with ≈ as others still score. Example: `≈6 pts to Diamond IV · ≈5 clear of
+    Platinum I`. Challenger has nothing above and Iron IV nothing below. Home doesn't show them.
   - The manager's profile, by the team name in its banner, as on Home: the shield, tier, rank and
     its move. It shows there only, not again in the Leagues column (Craig, 18 Nov 2026, over the
     approved picture, which puts it beside Overall).
@@ -129,6 +130,12 @@ As FPL's (Craig, 13 Nov 2026):
 - A Captain column shows each manager's Captain for the gameweek in the Week column, on every tab.
   It shows only once that gameweek's deadline has passed, as FPL hides picks until then (Craig,
   14 Nov 2026).
+- Overall's tab has a panel of Captains and buffs by tier (Craig, 27 Nov 2026): a row for each of
+  the ten tiers, Iron to Challenger, not each division, with the tier's most picked Captain and
+  his share and its most played buff and its share. Example: `Challenger · GEN Chovy 61% · Double
+  Captain 9%`. A tier where nobody played a buff shows a dash. A manager counts in the tier they
+  held at that gameweek's deadline. It follows the gameweek in the Week column and shows only
+  once that deadline has passed, as the Captain column.
 - A chase tag on the manager's own row shows the points to the rank above (16 pts to 1st), their
   lead over 2nd when 1st (+16 clear), and nothing when level (Craig, 14 Nov 2026).
 - Leagues in the top bar opens Overall's table, the manager's leagues listed beside it (Craig,

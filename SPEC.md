@@ -93,6 +93,9 @@ and the detail waits for its `/grill`; `not built` means it is grilled and waits
 - A cup: "Cup is just head to head. We stick to points for now" (Craig, 13 Nov 2026).
 - A prizes page, and a price predictor (Craig, 13 Nov 2026).
 - A watchlist, and projected points on the player card (Craig, 13 Nov 2026).
+- From LiveFPL (Craig, 27 Nov 2026): a cost or gain number on Points' Killers and Stars; a worked
+  difference on the Series page's You and Average line; the tier gaps on Home; the words Threat
+  and Differential, which are Killer and Star.
 - Renaming Killer or the other buffs: a hover explains them (Craig, 16 Nov 2026). Carry became
   Captain, and Dual Carry Double Captain (Craig, 17 Nov 2026).
 - Keys, legends or explainer lines for a word ([spec/12](spec/12-pages.md#words)).

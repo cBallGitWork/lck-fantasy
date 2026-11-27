@@ -17,9 +17,18 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
 - **Points**: the current or last gameweek. Each player opens their series, with each game's
   points. Ranks show how far they moved, overall and in each league.
   - Rift view and Card view, Rift on the first visit, then remembered, as Pick Team.
-  - Your own week (Craig, 14 Nov 2026): your Star, the top starter after the Captain ×1.5; your
-    Flop, the lowest starter who played; and the Killer, the top scorer you don't own, each with
-    ownership. Home keeps the global star and flop.
+  - Your own week (Craig, 14 Nov 2026; Stars and Killers, 27 Nov 2026): three Stars, your Flop and
+    three Killers, each with points and effective ownership ([Home](#home) has its sum). Home
+    keeps the global star and flop.
+    - Stars: your starters, by points × (1 − effective ownership), the Captain's after ×1.5.
+      Example: your Kiin, 15 points at 8%, ranks above your Chovy, 18 at 45%.
+    - Flop: your lowest starter who played.
+    - Killers: the players you don't own, by points × effective ownership. Example: Chovy, 15
+      points at 41%, ranks above a 20-point player at 5%.
+    - The sum only ranks them: no cost or gain number is shown.
+    - The coach is in the running for both. A Star tie goes to the lower effective ownership, a
+      Killer tie to the higher.
+    - They show while series are in play, under the Not final tag, as the rest of Points.
   - The Captain's games show your Captain's points beside the average Captain's.
   - A player's breakdown shows his total alone; only the Captain's has the average Captain's under it,
     as FPL (Craig, 17 Nov 2026).
@@ -32,7 +41,7 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     `Series loss −1` (Craig, 17 Nov 2026).
   - A bench player opens his breakdown too, as FPL: his points in grey when they don't count (no
     Bench Boost, no auto-sub), `Didn't play` when he has no games (Craig, 17 Nov 2026).
-  - Your Overall tier and ≈ points to promote, or to avoid demotion
+  - Your Overall tier, with ≈ points to promote and ≈ points clear of demotion
     ([spec/08](08-leagues.md#overall-tiers)).
   - Its layout is the approved picture (`docs/design/approved/points/`).
 - **Leagues** ([spec/08](08-leagues.md)).
@@ -71,8 +80,12 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     lolesports. No series POG, picks, bans or sides: "i dont think we need draft info overload"
     (Craig, 16 Nov 2026).
   - The scorebug shows each team's record as of now. The coach row shows the coach lines that
-    scored and the series +3 or −1. Your own players carry a mark; there is no total of your
-    players' points (Craig, 16 Nov 2026).
+    scored and the series +3 or −1. Your own players carry a mark (Craig, 16 Nov 2026).
+  - One line sets your points from the series beside the average manager's: `You 31 · Average 24`.
+    No worked difference. Yours count as Points counts them: starters, the Captain ×1.5, the
+    coach. The average is over every manager, 0 for one with nobody in the series. It shows while
+    the series is live, under the Not final tag (Craig, 27 Nov 2026, over 16 Nov's cut of your
+    players' total alone).
   - A coach's cell for a game his team didn't play shows `—`. A link to a series that doesn't
     exist shows `No such series` and `LCK hub ›` (Craig, 17 Nov 2026). The VOD link leaves Flol,
     so it ends with `↗` (plate.md).

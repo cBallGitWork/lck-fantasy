@@ -76,12 +76,12 @@
   const who = (name) => `<i class="team__bar" style="background:${BAR[PICK_TEAM[name]]}"></i><span class="who__team">${PICK_TEAM[name]}</span> <b>${name}</b>`;
   // Three Stars, the Flop, three Killers (spec/12, Points, Your own week): the word and its mark head each group, on its
   // first row only. Stars are your starters by points x (1 - effective ownership), Killers the players you don't own by
-  // points x effective ownership; the sum ranks them and is never shown. Owned is effective ownership.
+  // points x effective ownership; the sum picks each three and is never shown; the three are listed by points (Craig, 27 Nov 2026). Owned is effective ownership.
   // No dot here: Stars and the Flop are always yours and Killers never (Craig, 27 Nov 2026).
   const pick = (word, name, mine, pts, owned, first = true) => `<div class="pick${first ? " pick--first" : ""}"><dt class="fact">${first ? ICON[word === "Stars" ? "Star" : word === "Killers" ? "Killer" : word] + word : ""}</dt><dd>${who(name)}</dd><dd class="pick__figs"><b class="fig">${pts}</b><span class="small mid fig">${owned}%</span></dd></div>`;
   const group = (word, rows, mine) => rows.map(([name, pts, owned], i) => pick(word, name, mine, pts, owned, i === 0)).join("");
   const yourWeek = `<section class="tpanel side-panel side-panel--pad" aria-label="Your week"><h2 class="tpanel__title">Your week</h2>
-    <dl class="picks"><div class="pick pick--head small mid"><dt></dt><dd></dd><dd class="pick__figs"><span>Pts</span><span>Owned</span></dd></div>${group("Stars", [["Faker", 25, 46], ["kkOma", 10, 18], ["Siwoo", 8, 6]], true)}${pick("Flop", "Delight", true, 5, 12)}${group("Killers", [["Chovy", 15, 41], ["Kiin", 12, 33], ["Zeka", 14, 22]], false)}</dl>
+    <dl class="picks"><div class="pick pick--head small mid"><dt></dt><dd></dd><dd class="pick__figs"><span>Pts</span><span>Owned</span></dd></div>${group("Stars", [["Faker", 25, 46], ["kkOma", 10, 18], ["Siwoo", 8, 6]], true)}${pick("Flop", "Delight", true, 5, 12)}${group("Killers", [["Chovy", 15, 41], ["Zeka", 14, 22], ["Kiin", 12, 33]], false)}</dl>
   </section>`;
 
   // Under the Rift: the tapped player's week, a series a column, a game a row; the points boxed when counted.

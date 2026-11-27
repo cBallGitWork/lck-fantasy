@@ -28,7 +28,7 @@ Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in Pick Tea
 6. **The Rift, its panels and the card stay on screen** while the side column scrolls.
 7. **Leagues**, the side column's first panel: each league with your rank and its move, green up and red down; Overall with its tier and shield; `≈6 pts to Diamond IV` and All leagues ›.
 8. **This week's series:** each with both teams' bars, its result, `Live` with the score, or its time.
-9. **Your week**, below the series (Craig, 16 Nov 2026): Star, Flop and Killer, each with points and ownership; a dot marks a player of yours.
+9. **Your week**, below the series (Craig, 16 Nov 2026): Star, Flop and Killer, each with points and ownership; a dot marks a player of yours. Each carries its mark before the word, Killer's crossed swords (plate.md, Parts, A fact's mark), and the player his team's bar and code (Craig, 27 Nov 2026).
 10. Then the sponsor slot.
 
 ## The card round, 27 Nov 2026

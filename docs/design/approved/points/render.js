@@ -64,7 +64,17 @@
     <p class="total__live">${live}<b>T1 v DK, game 2</b><a class="link" href="#">Watch ›</a></p>
   </section>`;
   const bench = `<div class="bench" aria-label="Bench"><span class="bench__title">Bench</span>${["bench1", "bench2"].map((slot, i) => `<div class="bench__spot"><span class="bench__order">${i + 1}. ${ROLE[T.players[T.slots[slot]].role]}</span>${tile(T.slots[slot], slot)}</div>`).join("")}</div>`;
-  const pick = (word, name, mine, pts, owned) => `<div class="pick"><dt>${word}</dt><dd><b>${name}</b>${mine ? '<i class="yours" title="Yours"></i>' : ""}</dd><dd class="pick__figs"><b class="fig">${pts}</b><span class="small mid fig">${owned}%</span></dd></div>`;
+  // Star, Flop and Killer each carry their mark before the word, and the player his team's bar and code, as Home's rows
+  // (plate.md, Parts: A fact's mark; A player named in a row). Star and Flop are Home's marks; Killer is crossed swords.
+  const ico = (body, cls) => `<svg class="ico ico--${cls}" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+  const ICON = {
+    Star: ico('<path d="M12 3l2.700 5.600 6.100.8-4.500 4.300 1.100 6.100L12 16.900 6.600 19.800l1.100-6.100L3.200 9.400l6.100-.8z" fill="currentColor"/>', "star"),
+    Flop: ico('<path d="M3 7l6 6 4-4 8 8M21 11v6h-6"/>', "flop"),
+    Killer: ico('<path d="M14.500 17.500 3 6V3h3l11.500 11.500M13 19l6-6M16 16l4 4M19 21l2-2M14.500 6.500 18 3h3v3l-3.500 3.500M5 14l4 4M7 17l-3 3M3 19l2 2"/>', "killer"),
+  };
+  const PICK_TEAM = { Faker: "T1", Delight: "HLE", Chovy: "GEN" };
+  const who = (name) => `<i class="team__bar" style="background:${BAR[PICK_TEAM[name]]}"></i><span class="who__team">${PICK_TEAM[name]}</span> <b>${name}</b>`;
+  const pick = (word, name, mine, pts, owned) => `<div class="pick"><dt class="fact">${ICON[word]}${word}</dt><dd>${who(name)}${mine ? '<i class="yours" title="Yours"></i>' : ""}</dd><dd class="pick__figs"><b class="fig">${pts}</b><span class="small mid fig">${owned}%</span></dd></div>`;
   const yourWeek = `<section class="tpanel side-panel side-panel--pad" aria-label="Your week"><h2 class="tpanel__title">Your week</h2>
     <dl class="picks"><div class="pick pick--head small mid"><dt></dt><dd></dd><dd class="pick__figs"><span>Pts</span><span>Owned</span></dd></div>${pick("Star", "Faker", true, 25, 46)}${pick("Flop", "Delight", true, 5, 12)}${pick("Killer", "Chovy", false, 15, 41)}</dl>
   </section>`;

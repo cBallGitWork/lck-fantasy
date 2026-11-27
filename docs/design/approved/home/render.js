@@ -14,6 +14,9 @@
   const KIT = "../../../../data/lck/";
   const BAR = { T1: "#E2012D", GEN: "#AA8A00", HLE: "#F3741B", DK: "#F5F5F5", KT: "#EC1B23", DNS: "#1F4FD8", NS: "#ED1C24", KRX: "#E4007F", BRO: "#F37021", BFX: "#FFC20E" };
   const bar = (code) => `<i class="team__bar" style="background:${BAR[code]}"></i>`;
+  // A player named in a row reads as a tile's plate: his team's bar and code, then his name (Craig, 27 Nov 2026).
+  const TEAM = { Chovy: "GEN", Kiin: "GEN", Zeka: "HLE", Oner: "T1", Faker: "T1", Siwoo: "DK", kkOma: "T1" };
+  const who = (name) => `${bar(TEAM[name])}<span class="who__team">${TEAM[name]}</span> <b>${name}</b>`;
   const live = `<span class="live"><span class="dot"></span>Live</span>`;
   const yours = '<i class="yours" title="Yours"></i>';
   const FLAG = '<svg class="flag-icon" viewBox="0 0 16 16" width="18" height="18" aria-hidden="true"><path d="M8 1.5 15 14.5H1z" fill="#F2C230" stroke="#16181B" stroke-width="1" stroke-linejoin="round"/><rect x="7.25" y="5.5" width="1.5" height="5" fill="#16181B"/><rect x="7.25" y="11.5" width="1.5" height="1.5" fill="#16181B"/></svg>';
@@ -26,7 +29,7 @@
     <div class="stream__title"><span class="tag tag--live">Live</span><b>T1 <span class="fig">1–0</span> DK</b><span>Game 2 · Bo3</span><a class="link" href="#">Live ›</a></div>
     <div class="stream__screen">LCK · English · Twitch<span class="stream__muted">Muted</span></div>
     <div class="picker"><span class="picker__head">Streams<button class="picker__more" type="button">More ▾</button></span>${STREAMS.map(([name, on], i) => `<button type="button"${i === 0 ? ' class="is-on"' : ""}>${name}<span>${on}</span></button>`).join("")}
-      <span class="picker__sub"><span>Your players</span><span>Pts</span></span>${[["T1", "Faker", 5, true], ["DK", "Siwoo", 3], ["T1", "kkOma", 2]].map(([team, name, pts, c]) => `<span class="picker__who"><span>${bar(team)}<b>${name}</b>${c ? C : ""}</span><b class="fig">${pts}</b></span>`).join("")}</div>
+      <span class="picker__sub"><span>Your players</span><span>Pts</span></span>${[["Faker", 5, true], ["Siwoo", 3], ["kkOma", 2]].map(([name, pts, c]) => `<span class="picker__who"><span><span>${who(name)}</span>${c ? C : ""}</span><b class="fig">${pts}</b></span>`).join("")}</div>
   </section>`;
 
   // The object, nothing live: the week's seven starters as a broadcast lineup, then the bench in its order as one row (Craig, 27 Nov 2026).
@@ -64,8 +67,8 @@
   </section>`;
 
   // All managers: the week's most captained, bought and sold.
-  const fact = (word, name, mine, fig) => `<tr><td>${word}</td><td><b>${name}</b>${mine ? yours : ""}</td><td class="num fig" colspan="2">${fig}</td></tr>`;
-  const pick = (word, name, mine, pts, owned) => `<tr><td>${word}</td><td><b>${name}</b>${mine ? yours : ""}</td><td class="num pts"><b class="fig">${pts}</b></td><td class="num fig own">${owned}%</td></tr>`;
+  const fact = (word, name, mine, fig) => `<tr><td>${word}</td><td>${who(name)}${mine ? yours : ""}</td><td class="num fig" colspan="2">${fig}</td></tr>`;
+  const pick = (word, name, mine, pts, owned) => `<tr><td>${word}</td><td>${who(name)}${mine ? yours : ""}</td><td class="num pts"><b class="fig">${pts}</b></td><td class="num fig own">${owned}%</td></tr>`;
   const all = `<section class="tpanel" aria-label="All managers"><h2 class="tpanel__title">All managers</h2>
     <table class="all">${idle ? "" : `<tr class="sub"><td colspan="4">Week 3</td></tr>${fact("Most captained", "Chovy", false, "38%")}`}<tr class="sub"><td colspan="4">Week 4 so far</td></tr>
       ${idle ? fact("Most captained", "Faker", true, "34%") : ""}${fact("Most bought", "Kiin", false, idle ? "41,208" : "36,750")}${fact("Most sold", "Zeka", false, idle ? "31,412" : "28,930")}
@@ -79,7 +82,7 @@
     <p class="dl__keys"><a class="key save" href="#">Pick Team</a><a class="key" href="#">Transfers</a></p>
     <p class="dl__row"><span class="mid">Free transfers</span><b class="fig">1</b></p>
     ${boost && idle ? '<p class="dl__row"><span class="mid">Buff</span><span class="dl__buff"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16h18M4 13h16M5 16v4M19 16v4M12 10V3M8.500 6.500 12 3l3.500 3.500"/></svg><b>Bench Boost</b></span></p>' : ""}
-    <a class="dl__row" href="#" title="Pick Team">${FLAG}<b>Siwoo</b><span class="mid">${bar("DK")}DK · Top</span><span class="dl__warn"><span class="tag">Not starting</span><span class="mid">Wed</span><span>›</span></span></a>
+    <a class="dl__row" href="#" title="Pick Team">${FLAG}<span>${who("Siwoo")}</span><span class="mid">Top</span><span class="dl__warn"><span class="tag">Not starting</span><span class="mid">Wed</span><span>›</span></span></a>
     <dl class="figs"><div class="sub"><dt>Next</dt><dd></dd></div>${[["Week 5", "Wed 14 Apr 7:45am"], ["Week 6", "Wed 21 Apr 7:45am"], ["Week 7", "Wed 28 Apr 7:45am"]].map(([w, when]) => `<div><dt>${w}</dt><dd style="font-weight:400">${when}</dd></div>`).join("")}</dl>
   </section>`;
 

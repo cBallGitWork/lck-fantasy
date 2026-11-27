@@ -153,6 +153,7 @@ Each part is drawn one way on every screen.
   the navy. A fixture, a row about two teams, shows each team's kit at 28px either side of its time
   in the bar's place. Never a tinted row, a wash or a coloured code.
 - **Your players** are marked by that dot, on every screen.
+- **A player named in a row** reads as his tile's plate: his team's bar and code, then his name, `T1 Faker`; never a bare name (Craig, 27 Nov 2026; `approved/home/`).
 - **Section that opens and closes** (Help, as FPL's): a 48px row, its title 16/600 at the left and
   ▾ or ▴ in `--mid` at the right, a 1px `--line` under it; open, its text sits under the title with
   24px below. A group of them opens with a 20/700 heading over a 2px `--text` rule.

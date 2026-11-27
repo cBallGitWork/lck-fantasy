@@ -1,101 +1,97 @@
 import { useState } from "react";
-import { bestOf, cx, FinalTag, LinkGo, LiveTag, Menu, score, SideSection } from "../../parts";
+import { bestOf, cx, LinkGo, LiveTag, Menu, score } from "../../parts";
 import { PATHS } from "../../paths";
-import { HomeFrame, type HomeActions } from "./Home";
-import "./Live.css";
-import { PlayerList, WeekTotal } from "./side";
+import { MarkBadge } from "../../rift";
 import { STREAM_DOT, streamLabel, type Stream } from "../../fixtures/streams";
 import { streamToPlay } from "./stream";
-import type { HomeLiveData, LiveSeries } from "./types";
+import type { HomeLiveData } from "./types";
+import { Who } from "./who";
+import { gameOf, WORDS } from "./words";
 
-/** The picker's rows before `More ▾`, as the picture draws them. */
+/** The picker's rows before `More ▾` (spec/12, Live). */
 const PICKER_ROWS = 5;
 
 const streamName = (s: Stream) => `${streamLabel(s)}${STREAM_DOT}${s.platform}`;
 
-/** The stream, muted, 16:9; the series and Live › over it. Until the embed is wired it names the stream. */
-function StreamScreen({ series, stream }: { series: LiveSeries; stream: Stream | undefined }) {
-  return (
-    <div className="home__screen">
-      <div className="home__screen-bar">
-        <LiveTag />
-        <b>
-          {series.home} {score(series.score)} {series.away}
-        </b>
-        <small className="home__screen-small">
-          Game {series.game} · {bestOf(series.bestOf)} · {series.label}
-        </small>
-        <span className="home__screen-space" />
-        <LinkGo go={{ to: PATHS.live }}>Live</LinkGo>
-      </div>
-      <div className="home__screen-video">{stream && streamName(stream)}</div>
-    </div>
-  );
-}
-
-/** The Live page's picker (spec/12): each stream and its platform, the pick in `--text`, one not live greyed out. */
-function StreamPicker({ streams, picked, onPick }: { streams: Stream[]; picked: string; onPick: (id: string) => void }) {
-  const shown = streams.slice(0, PICKER_ROWS);
-  const more = streams.slice(PICKER_ROWS);
-  return (
-    <div className="home__picker" role="group" aria-label="Stream">
-      {shown.map((s) => (
-        <button
-          key={s.id}
-          type="button"
-          className={cx("home__stream", s.id === picked && "home__stream--on", !s.live && "home__stream--off")}
-          aria-pressed={s.id === picked}
-          disabled={!s.live}
-          onClick={() => onPick(s.id)}
-        >
-          {streamLabel(s)}
-          <small className="home__stream-platform quiet">{s.platform}</small>
-        </button>
-      ))}
-      {more.length > 0 && (
-        <Menu
-          className="home__stream home__stream--more"
-          label="More ▾"
-          items={more.map((s) => ({ label: streamName(s), onChoose: () => onPick(s.id) }))}
-        />
-      )}
-    </div>
-  );
-}
-
-/** Home while a series is live: the stream and its picker; your week, your players in this series, who is still to play. */
-export function HomeLive({ data, onPickStream, ...actions }: { data: HomeLiveData; onPickStream?: (id: string) => void } & HomeActions) {
+/**
+ * The object while a series is live (approved/home/, What binds 2): one panel, its head on the blue
+ * band (`Live`, the score, the game and series length, Live ›); under it the stream, muted, 16:9, and
+ * beside it the Live page's picker, then your players in this series with their points so far.
+ */
+export function StreamPanel({ data, onPickStream }: { data: HomeLiveData; onPickStream?: (id: string) => void }) {
   // The remembered pick plays if it is live; else English plays, and the remembered pick is kept.
   const [picked, setPicked] = useState(() => streamToPlay(data.streams, data.pickedStream));
   const pick = (id: string) => {
     setPicked(id);
     onPickStream?.(id);
   };
+  const { live } = data;
+  const playing = data.streams.find((s) => s.id === picked);
+  const more = data.streams.slice(PICKER_ROWS);
   return (
-    <HomeFrame
-      data={data}
-      actions={actions}
-      hero={
-        <div className="home__tv">
-          <StreamScreen series={data.series} stream={data.streams.find((s) => s.id === picked)} />
-          <StreamPicker streams={data.streams} picked={picked} onPick={pick} />
+    <section className="home__object home__stream" aria-label={WORDS.live}>
+      <div className="home__band">
+        <LiveTag />
+        <b className="home__band-title">
+          {live.home} <span className="num">{score(live.score)}</span> {live.away}
+        </b>
+        <span>{gameOf(live.game, bestOf(live.bestOf))}</span>
+        <span className="home__band-go">
+          <LinkGo go={{ to: PATHS.live }}>{WORDS.live}</LinkGo>
+        </span>
+      </div>
+      <div className="home__screen quiet">
+        {playing && streamName(playing)}
+        <span className="home__muted">{WORDS.muted}</span>
+      </div>
+      <div className="home__picker">
+        <div className="home__picker-head">
+          <h2>{WORDS.streams}</h2>
+          {more.length > 0 && (
+            <Menu className="home__picker-more key-bare quiet" label={WORDS.more} items={more.map((s) => ({ label: streamName(s), onChoose: () => pick(s.id) }))} />
+          )}
         </div>
-      }
-      side={
-        <SideSection title={data.week.label} note={<FinalTag final={data.week.final} />}>
-          <WeekTotal week={data.week} />
-          <h3 className="home__sub">In this series</h3>
-          <PlayerList players={data.inSeries} label="In this series" />
-          <h3 className="home__sub">
-            Still to play
-            {data.stillToPlay.length === 0 && <span className="home__sub-note quiet">None</span>}
-          </h3>
-          {data.stillToPlay.length > 0 && <PlayerList players={data.stillToPlay} label="Still to play" />}
-          <div className="home__more">
-            <LinkGo go={{ to: PATHS.points }}>Points</LinkGo>
-          </div>
-        </SideSection>
-      }
-    />
+        <div role="group" aria-label={WORDS.stream}>
+          {data.streams.slice(0, PICKER_ROWS).map((s) => (
+            <button
+              key={s.id}
+              type="button"
+              className={cx("home__pick", s.id === picked && "home__pick--on", !s.live && "home__pick--off")}
+              aria-pressed={s.id === picked}
+              disabled={!s.live}
+              onClick={() => pick(s.id)}
+            >
+              {streamLabel(s)}
+              <small className="quiet">{s.platform}</small>
+            </button>
+          ))}
+        </div>
+        {data.inSeries.length > 0 && (
+          <table className="home__rows home__yours">
+            <thead>
+              <tr className="home__sub">
+                <th>{WORDS.yourPlayers}</th>
+                <th className="num">{WORDS.pts}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.inSeries.map((p) => (
+                <tr key={p.name}>
+                  <td>
+                    <span className="home__yours-who">
+                      <Who who={{ name: p.name, team: p.team }} />
+                      {p.mark && <MarkBadge mark={p.mark} />}
+                    </span>
+                  </td>
+                  <td className="num">
+                    <b>{p.points}</b>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </section>
   );
 }

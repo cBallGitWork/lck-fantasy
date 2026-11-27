@@ -1,49 +1,183 @@
-import { TeamBar, GoLink, pct } from "../../parts";
+import { BuffIcon, count, FinalTag, GoLink, LinkGo, MainAction, OutlinedKey, ordinal, Panel, pct, RankMove, Tag, Time } from "../../parts";
 import { PATHS } from "../../paths";
-import { MarkBadge, RoleIcon } from "../../rift";
-import type { SidePlayer, WeekPoints } from "./types";
+import { NewsFlag, ROLE_NAME } from "../../rift";
+import type { HomeDeadline, HomeLeague, HomeWeek, WeekPick } from "./types";
+import "./side.css";
+import { FactLabel, Who } from "./who";
+import { deadlineTitle, weekName, WORDS } from "./words";
 
-/** Your week, or last week: the total with Average and Highest. */
-export function WeekTotal({ week }: { week: WeekPoints }) {
+/** What the Deadline panel's keys do; the route wires them. */
+export interface DeadlineKeys {
+  onPickTeam?: () => void;
+  onTransfers?: () => void;
+}
+
+/** The countdown, Home's one key figure: its numbers large, its units small and grey; days only while there are any. */
+function CountdownFigure({ countdown }: { countdown: HomeDeadline["countdown"] }) {
+  const parts: [number, string][] = [
+    [countdown.days, "d"],
+    [countdown.hours, "h"],
+    [countdown.minutes, "m"],
+  ];
   return (
-    <div className="home__total">
-      <b className="home__total-figure num">{week.points}</b>
-      <span className="home__fig">
-        Average <b className="num">{week.average}</b>
-      </span>
-      <GoLink className="home__fig home__fig--link" go={{ to: PATHS.perfectGame }}>
-        Highest <b className="num">{week.highest}</b>
-        <i>›</i>
-      </GoLink>
-    </div>
+    <p className="home__count num">
+      {parts
+        .filter(([n], i) => i > 0 || n > 0)
+        .map(([n, unit]) => (
+          <span key={unit}>
+            {n}
+            <small>{unit}</small>
+          </span>
+        ))}
+    </p>
   );
 }
 
-
-/** A side list: role icon, name, C, team; a stat line; points. */
-export function PlayerList({ players, label }: { players: SidePlayer[]; label: string }) {
+/**
+ * The side column's first panel (approved/home/, What binds 6): the countdown and the time under it,
+ * Pick Team (the page's one filled key) and Transfers, free transfers, the played buff, a row for each
+ * starter who may not play (opening Pick Team), then the next three deadlines.
+ */
+export function DeadlinePanel({ deadline, onPickTeam, onTransfers }: { deadline: HomeDeadline } & DeadlineKeys) {
   return (
-    <ul className="home__players" aria-label={label}>
-      {players.map((p) => (
-        <li key={`${p.name}-${p.team}-${p.stat}`} className="home__player">
-          <span className="home__player-who">
-            <RoleIcon role={p.role} className="home__role-icon" />
-            {p.name}
-            {p.mark && (
-              <MarkBadge mark={p.mark} className="home__mark" />
-            )}{" "}
-            <span className="home__player-team">
-              <TeamBar team={p.team} />
-              {p.team}
-            </span>
+    <Panel title={deadlineTitle(deadline.week)} band className="home__panel">
+      <CountdownFigure countdown={deadline.countdown} />
+      <p className="home__when quiet">
+        <Time local={deadline.local} />
+      </p>
+      <div className="home__keys">
+        <MainAction wide onClick={onPickTeam}>{WORDS.pickTeam}</MainAction>
+        <OutlinedKey onClick={onTransfers}>{WORDS.transfers}</OutlinedKey>
+      </div>
+      <dl className="home__figs">
+        <div>
+          <dt>{WORDS.freeTransfers}</dt>
+          <dd className="num">{deadline.freeTransfers}</dd>
+        </div>
+        {deadline.buff && (
+          <div>
+            <dt>{WORDS.buff}</dt>
+            <dd className="home__buff">
+              <BuffIcon effect={deadline.buff.effect} className="home__buff-icon" />
+              {deadline.buff.name}
+            </dd>
+          </div>
+        )}
+      </dl>
+      {deadline.doubts.map((d) => (
+        <GoLink key={d.name} go={{ to: PATHS.pickTeam }} className="home__doubt hover-line">
+          <NewsFlag flag={d.flag} className="home__flag" />
+          <Who who={d} />
+          <span className="quiet">{ROLE_NAME[d.role]}</span>
+          <span className="home__doubt-end">
+            <Tag>{d.flag}</Tag>
+            <span className="quiet">{d.note}</span>›
           </span>
-          <span className="home__player-stat">{p.stat}</span>
-          <span className="home__player-points">
-            <b className="num">{p.points}</b>
-            {p.eoPct !== undefined && <span className="home__player-eo num">{` · ${pct(Math.round(p.eoPct))}`}</span>}
-          </span>
-        </li>
+        </GoLink>
       ))}
-    </ul>
+      <dl className="home__figs">
+        <div className="home__sub">
+          <dt>{WORDS.next}</dt>
+        </div>
+        {deadline.next.map((n) => (
+          <div key={n.week}>
+            <dt>{weekName(n.week)}</dt>
+            <dd className="home__plain">
+              <Time local={n.local} />
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Panel>
+  );
+}
+
+/** A star's or flop's row: his mark and word, who, points, effective ownership. */
+function PickRow({ kind, pick }: { kind: "star" | "flop"; pick: WeekPick }) {
+  return (
+    <tr>
+      <td>
+        <FactLabel kind={kind} />
+      </td>
+      <td>
+        <Who who={pick} />
+      </td>
+      <td className="num">
+        <b>{pick.points}</b>
+      </td>
+      <td className="home__owned num quiet">{pct(pick.eoPct)}</td>
+    </tr>
+  );
+}
+
+/**
+ * The week's panel (What binds 7): titled with its week, Points › in its band; the total with its
+ * tags (the buff on, then `Final` or `Not final`); Average; Highest ›; then the last finished week's
+ * star and flop, each with points and effective ownership, under a band naming that week.
+ */
+export function WeekPanel({ week }: { week: HomeWeek }) {
+  const { starFlop } = week;
+  return (
+    <Panel title={weekName(week.week)} band go={<LinkGo go={{ to: PATHS.points }}>{WORDS.points}</LinkGo>} className="home__panel">
+      <p className="home__total">
+        <b className="num">{week.points}</b>
+        {week.buff && <Tag>{week.buff}</Tag>}
+        <FinalTag final={week.final} />
+      </p>
+      <dl className="home__figs">
+        <div>
+          <dt>{WORDS.average}</dt>
+          <dd className="num">{week.average}</dd>
+        </div>
+        <div>
+          <dt>{WORDS.highest}</dt>
+          <dd>
+            <LinkGo go={{ to: PATHS.perfectGame }}>
+              <span className="num">{week.highest}</span>
+            </LinkGo>
+          </dd>
+        </div>
+      </dl>
+      <table className="home__rows">
+        <thead>
+          <tr className="home__sub">
+            <th colSpan={2}>{weekName(starFlop.week)}</th>
+            <th className="num">{WORDS.pts}</th>
+            <th className="num">{WORDS.owned}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {starFlop.stars.map((p) => (
+            <PickRow key={`star-${p.name}`} kind="star" pick={p} />
+          ))}
+          {starFlop.flops.map((p) => (
+            <PickRow key={`flop-${p.name}`} kind="flop" pick={p} />
+          ))}
+        </tbody>
+      </table>
+    </Panel>
+  );
+}
+
+/** Each league's rank and move (What binds 8); Overall is left out, since the head shows it. */
+export function Leagues({ leagues }: { leagues: HomeLeague[] }) {
+  return (
+    <Panel title={WORDS.leagues} band go={<LinkGo go={{ to: PATHS.leagues }}>{WORDS.allLeagues}</LinkGo>} className="home__panel">
+      <table className="home__rows">
+        <tbody>
+          {leagues.map((l) => (
+            <tr key={l.id}>
+              <td>{l.name}</td>
+              <td className="num">
+                <b>{l.kind === "private" ? ordinal(l.rank) : count(l.rank)}</b>
+              </td>
+              <td className="home__move num">
+                <RankMove move={l.move} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </Panel>
   );
 }

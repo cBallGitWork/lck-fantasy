@@ -1,89 +1,62 @@
-import { FinalTag, LinkGo, SideSection, Time } from "../../parts";
-import { PATHS } from "../../paths";
-import { MarkBadge, ROLE_NAME, Shirt } from "../../rift";
-import { HomeFrame, type HomeActions } from "./Home";
-import "./Idle.css";
-import { PlayerList, WeekTotal } from "./side";
-import type { HomeIdleData, LineupStarter, NextSeries } from "./types";
+import { photoOf } from "../../fixtures/photos";
+import { cx, Tag } from "../../parts";
+import { benchPlace, LineupCard, type LineupCardProps } from "../../rift";
+import type { HomeIdleData, PlayedBuff } from "./types";
+import { Who } from "./who";
+import { lineupTitle, times, versus, WORDS } from "./words";
 
-/** Under a starter's name: his role; a Flex's own role after it (`Flex · Top`). */
-function plateRole(s: LineupStarter): string {
-  return s.slot === "flex" && s.plays ? `${ROLE_NAME.flex} · ${ROLE_NAME[s.plays]}` : ROLE_NAME[s.slot];
-}
-
-/** One starter on the broadcast stage: his shirt, C, and his angled name plate. */
-function Starter({ starter }: { starter: LineupStarter }) {
+/**
+ * The object with nothing live (approved/home/, What binds 3 and 9): `Week N lineup` on the blue band,
+ * the seven starters as Card view's cards, then the bench in its order as one row. With Bench Boost
+ * played the bench stands in the lineup as two more cards and the row goes; the played buff is a tag
+ * by the title.
+ */
+export function LineupPanel({ data, buff }: { data: HomeIdleData; buff?: PlayedBuff }) {
+  const boost = buff?.effect === "benchBoost";
+  const cards: LineupCardProps[] = data.lineup.map((p) => {
+    // The portrait's tag: his news, or the coach's `×3` while Coach Diff is on.
+    const tag = p.news ?? (p.times !== undefined ? times(p.times) : undefined);
+    return {
+      slot: p.slot,
+      name: p.name,
+      team: p.team,
+      photo: photoOf(p.name),
+      ...(p.plays && { plays: p.plays }),
+      ...(p.mark && { mark: p.mark }),
+      ...(tag && { news: tag }),
+      next: versus(p.opponents),
+    };
+  });
+  const benchCards: LineupCardProps[] = data.bench.map((p, i) => ({
+    slot: p.role,
+    strip: benchPlace(i + 1, p.role),
+    name: p.name,
+    team: p.team,
+    photo: photoOf(p.name),
+    next: versus(p.opponents),
+  }));
+  const title = lineupTitle(data.lineupWeek);
   return (
-    <li className="home__starter">
-      <span className="home__starter-shirt">
-        <Shirt team={starter.team} />
-      </span>
-      {starter.mark && (
-        <MarkBadge mark={starter.mark} size="card" className="home__starter-mark" />
-      )}
-      <div className="home__plate">
-        <b className="home__plate-name">{starter.name}</b>
-        <span className="home__plate-role quiet">{plateRole(starter)}</span>
+    <section className="home__object home__lineup" aria-label={title}>
+      <div className="home__band">
+        <h2 className="home__band-title">{title}</h2>
+        {buff && <Tag>{buff.name}</Tag>}
       </div>
-    </li>
-  );
-}
-
-function NextOnStream({ next }: { next: NextSeries }) {
-  return (
-    <div className="home__next">
-      <span className="home__next-label">Next on stream</span>
-      <b className="home__next-teams">
-        {next.home} v {next.away}
-      </b>
-      <span className="home__next-when">
-        <Time local={`${next.day} ${next.local}`} /> · in{" "}
-        <b className="num">
-          {next.startsIn.days}d {next.startsIn.hours}h
-        </b>
-      </span>
-    </div>
-  );
-}
-
-/** The week's seven starters as an LCK lineup reveal and the next series on stream (Pick Team is the deadline bar's). */
-function LineupStage({ data }: { data: HomeIdleData }) {
-  return (
-    <div className="home__stage">
-      <h2 className="home__stage-title">Week {data.lineupWeek} lineup</h2>
-      <NextOnStream next={data.next} />
-      <span className="home__floor" />
-      <ol className="home__starters" aria-label={`Week ${data.lineupWeek} lineup`}>
-        {data.lineup.map((s) => (
-          <Starter key={s.slot} starter={s} />
+      <div className={cx("home__cards", boost && "home__cards--nine")}>
+        {[...cards, ...(boost ? benchCards : [])].map((c) => (
+          <LineupCard key={c.strip ?? c.slot} {...c} />
         ))}
-      </ol>
-    </div>
-  );
-}
-
-/** Home with nothing live: your lineup on the stage; last week, final, with its star and flop. */
-export function HomeIdle({ data, ...actions }: { data: HomeIdleData } & HomeActions) {
-  return (
-    <HomeFrame
-      data={data}
-      actions={actions}
-      hero={<LineupStage data={data} />}
-      side={
-        <SideSection title={data.week.label} note={<FinalTag final={data.week.final} />}>
-          <WeekTotal week={data.week} />
-          <PlayerList
-            label="Star and flop"
-            players={[
-              ...data.stars.map((p) => ({ ...p, stat: "Star" })),
-              ...data.flops.map((p) => ({ ...p, stat: "Flop" })),
-            ]}
-          />
-          <div className="home__more">
-            <LinkGo go={{ to: PATHS.points }}>Points</LinkGo>
-          </div>
-        </SideSection>
-      }
-    />
+      </div>
+      {!boost && (
+        <p className="home__bench">
+          <span className="quiet">{WORDS.bench}</span>
+          {data.bench.map((p, i) => (
+            <span key={p.name}>
+              <span className="quiet">{benchPlace(i + 1, p.role)}</span> <Who who={p} />
+            </span>
+          ))}
+        </p>
+      )}
+    </section>
   );
 }

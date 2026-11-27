@@ -1,0 +1,88 @@
+/* Home's side column (approved/home/, What binds 6 and 7). Every value is a token. */
+
+/* The Deadline panel: the countdown as the page's key figure, 44 with its units small and grey. */
+.home__count {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  padding-top: var(--s-3);
+  font-size: var(--size-key);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-tight);
+}
+.home__count small {
+  margin-left: var(--s-1);
+  font-family: var(--font-sans);
+  font-size: var(--size-head);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+}
+.home__when {
+  padding: var(--s-1) 0 var(--s-3);
+}
+.home__keys {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-2);
+  padding-bottom: var(--s-3);
+}
+.home__keys .outlined-key {
+  width: 100%;
+}
+.home__figs > div,
+.home__doubt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: var(--m-row);
+  margin: 0 calc(var(--s-4) * -1);
+  padding: 0 var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+}
+.home__figs dt {
+  color: var(--mid);
+}
+.home__figs dd {
+  font-weight: var(--w-semi);
+}
+.home__figs .home__plain {
+  font-weight: var(--w-regular);
+}
+.home__buff {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.home__buff-icon {
+  width: var(--s-5);
+  height: var(--s-5);
+}
+/* A starter who may not play: the warning triangle, who, his role, then his flag and note; it opens Pick Team. */
+.home__doubt {
+  justify-content: flex-start;
+  color: var(--text);
+}
+.home__flag {
+  display: inline-flex;
+  width: var(--m-news-flag);
+  height: var(--m-news-flag);
+}
+.home__doubt-end {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-left: auto;
+}
+
+/* The week's panel: the total and its tags. */
+.home__total {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-1) 0 var(--s-2);
+}
+.home__total b {
+  font-size: var(--size-title);
+  line-height: var(--lh-tight);
+}

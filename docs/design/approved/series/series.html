@@ -8,118 +8,136 @@
 <link rel="stylesheet" href="../pick-team/base.css">
 <link rel="stylesheet" href="../pick-team/look.css">
 <style>
-/* Series in Pick Team's look: the scorebug full width, the line under it, then a grid a team. Only what is Series' own is
-   here; the rest is ../pick-team/look.css. Panels, chips and the boxed points are Points' (../points/points.html). */
-:root { --head-band: #1D46A8; --up: #4CD98A; --down: #FF6B78;
-  /* A scoring line's mark has its own colour (plate.md, A scoring line's mark): blood red, gold for gold and the crown,
-     the drake's orange, Baron's purple, the Elder's teal, a tower's blue, green for the two clean lines. */
+/* Series, redrawn from scratch (Craig, 27 Nov 2026): the two teams mirrored about a centre spine, as the broadcast's
+   lineups strip, under FPL's two tabs: Events, then Player stats. Only what is Series' own is here; the rest is
+   ../pick-team/look.css. */
+:root { --head-band: #1D46A8; --up: #4CD98A; --down: #FF6B78; --spine: 96px; --mark: 192px;
+  /* A scoring line's mark has its own colour (plate.md, A scoring line's mark). */
   --m-fb: var(--down); --m-gold: var(--gold); --m-pog: var(--gold); --m-none: var(--up); --m-quick: var(--up);
   --m-drake: #FF9A3D; --m-baron: #B58CFF; --m-elder: #5FD4D0; --m-tower: #7FB2FF; --m-steal: #FFE27A; --m-multi: var(--gold);
   --m-dth: var(--down); --m-ast: var(--up); }
+.ic { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
 .ic--fb { color: var(--m-fb); } .ic--gold { color: var(--m-gold); } .ic--none { color: var(--m-none); } .ic--quick { color: var(--m-quick); }
 .ic--drake { color: var(--m-drake); } .ic--baron { color: var(--m-baron); } .ic--elder { color: var(--m-elder); } .ic--tower { color: var(--m-tower); }
-.ic--steal { color: var(--m-steal); } .ic--multi { color: var(--m-multi); } .ic--dth { color: var(--m-dth); } .ic--ast { color: var(--m-ast); }
+.ic--steal { color: var(--m-steal); } .ic--multi { color: var(--m-multi); }
 .page { display: block; }
-.team__bar { display: inline-block; width: 6px; height: 16px; margin-right: 6px; vertical-align: -1px; }
+.team__bar { display: inline-block; width: 6px; height: 20px; flex: none; }
 .tag--dash { border-style: dashed; }
 .tag--live { background: var(--text); color: var(--bg); font-weight: 600; }
-.yours { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--text); margin-left: 8px; }
+.yours { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--text); margin-left: 8px; vertical-align: 2px; }
 .crumb .link { display: inline-flex; align-items: center; min-height: 24px; }
+.neg { color: var(--down); }
+.none { color: var(--mid); }
 /* The scorebug, as Live's: each team on a panel, its crest, code and record; the series score between, turned over. */
 .bug { display: grid; grid-template-columns: 1fr auto 1fr; margin: 16px 0 12px; height: 112px; }
 .bug__team { display: flex; align-items: center; gap: 20px; padding: 0 32px; background: var(--paper); border: 1px solid var(--line); }
 .bug__team--b { justify-content: flex-end; border-right: 16px solid var(--team); }
 .bug__team:first-child { border-left: 16px solid var(--team); }
+.bug__score { display: flex; align-items: stretch; }
 .bug__score span { display: flex; align-items: center; justify-content: center; width: 96px; background: var(--fill); color: var(--text); font: 700 48px/56px var(--fig); }
 .bug__score span.is-won { background: var(--text); color: var(--bg); }
-.bug__score--v span { width: auto; padding: 0 40px; font-size: 28px; background: var(--text); color: var(--bg); }
+.bug__score--v span { width: 192px; font-size: 28px; background: var(--text); color: var(--bg); }
 .bug__team b { font: 700 44px/48px var(--head); }
 .bug__team small { color: var(--text); font: 400 16px/24px var(--fig); }
 .bug__team .crest { width: 72px; height: 72px; }
 .bug__team.is-lost b { font-weight: 400; }
-.bug__score { display: flex; align-items: stretch; }
 /* The line under it: the tags, the fixture, and at the right your points from the series beside the average manager's. */
-.meta { display: flex; gap: 24px; align-items: center; min-height: 48px; color: var(--text); }
-.versus { color: var(--mid); }
-.meta b { color: var(--text); font-weight: 600; }
+.meta { display: flex; gap: 24px; align-items: center; min-height: 48px; }
+.meta b { font-weight: 600; }
 .meta__tags { display: flex; gap: 8px; margin-right: -16px; }
-.versus { display: flex; align-items: baseline; gap: 8px; margin-left: auto; }
-.versus b { font: 600 20px/32px var(--fig); }
+.versus { display: flex; align-items: baseline; gap: 8px; margin-left: auto; color: var(--mid); }
+.versus b { font: 600 20px/32px var(--fig); color: var(--text); }
 .versus .you { color: var(--text); font-weight: 600; }
 .versus .you b { font: 700 32px/40px var(--fig); }
 .versus i { font-style: normal; margin: 0 4px; }
-td.tot small { white-space: nowrap; }
-.two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; align-items: start; }
-.grid { background: var(--paper); border: 1px solid var(--line); }
-.grid__head { border-bottom: 4px solid var(--team, var(--head-band)); display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 4px 16px; background: var(--head-band); font: 700 20px/24px var(--head); }
-.grid__head .crest { width: 32px; height: 32px; }
-.grid__head span { font-weight: 400; }
-.grid table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-.grid th { font: 400 12px/24px var(--sans); color: var(--text); text-align: left; padding: 8px; white-space: nowrap; }
-.grid th.n { text-align: right; padding-right: 16px; }
-.grid th b { color: var(--text); font-weight: 600; }
-.grid th .chip { margin: 0 4px; }
-.th__sub { display: block; line-height: 20px; }
-.grid th { vertical-align: bottom; }
-.grid td { padding: 0 8px; height: 60px; border-top: 1px solid var(--line); vertical-align: middle; }
-.grid td:first-child, .grid th:first-child { padding-left: 16px; }
-td.rl { color: var(--text); font-size: 12px; white-space: nowrap; }
-td.rl svg { width: 28px; height: 28px; vertical-align: -9px; margin-right: 8px; }
-td.pl { white-space: nowrap; }
-td.pl b { font: 600 16px/24px var(--sans); }
-td.pl small { color: var(--mid); font: 400 12px/16px var(--ko); margin-left: 8px; }
-.gm { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.gm > span:first-child { white-space: nowrap; min-width: 0; }
-.gm small { display: block; color: var(--mid); font: 400 12px/16px var(--fig); }
-/* A game cell: the champion, then K/D/A under the column's sword, skull and hand. */
-.ic { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
-.gm .ch { display: block; font-size: 12px; line-height: 16px; color: var(--text); overflow: hidden; text-overflow: ellipsis; }
-.gm .kda { display: block; font: 600 16px/24px var(--fig); }
-.gm .kda i { font-style: normal; color: var(--m-dth); }
-td.drop .gm .kda i { color: inherit; }
-.th__kda { display: block; line-height: 20px; color: var(--mid); }
-.th__kda .ic { width: 18px; height: 18px; margin: 0 1px; vertical-align: -4px; }
-.gm .p .ic--pog { color: var(--gold); }
-tr.is-me td { background: var(--fill); }
-tr.is-me td:first-child { box-shadow: inset 4px 0 0 var(--text); }
-/* The games: a line a game under the scorebug. */
-.games { display: grid; gap: 32px; margin-top: 24px; }
-.game { background: var(--paper); border: 1px solid var(--line); }
-.game__head { font: 400 14px/24px var(--sans); white-space: nowrap; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; border-left: 8px solid var(--text); }
-.game__head > b { font: 700 20px/24px var(--head); }
-.game__head .pogw b { font-weight: 600; }
-.game__head .crest { width: 28px; height: 28px; }
-.game__head .won { font-weight: 600; }
-.game__head .len { font-family: var(--fig); }
-.game__head .pogw { display: flex; align-items: center; gap: 6px; margin-left: auto; }
-.game__head .pogw .ic { color: var(--gold); width: 20px; height: 20px; }
-.game__head .yours { margin-left: 2px; }
-.sq { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; flex: none; background: var(--text); }
-.sq .ic { color: var(--bg); width: 20px; height: 20px; }
-.ev--none { color: var(--mid); justify-content: center; display: flex; }
-.gm .p { flex: none; font: 600 14px/20px var(--fig); min-width: 28px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.gm .p .box { min-width: 28px; font: 700 16px/26px var(--fig); text-align: center; background: var(--text); color: var(--bg); }
-td.drop .gm, td.drop .gm small, td.drop .gm .ch { color: var(--mid); }
-/* A minus is red, on a game and on a series. */
-.neg { color: var(--down); }
-.gm .p .box.neg { background: var(--down); color: var(--bg); }
-td.drop .gm .p { font-weight: 400; }
-td.tot { text-align: right; padding-right: 16px; font: 700 28px/32px var(--fig); border-left: 1px solid var(--line); }
-td.tot small { display: block; font: 400 12px/16px var(--fig); color: var(--mid); }
-tr.co td { border-top-color: var(--soft); }
-/* A team's events head its table: a row a scoring line, its mark on a square of its colour, then who earned it. */
-.grid tr.evr td { height: 44px; padding-top: 6px; padding-bottom: 6px; }
-.evr__what { display: flex; align-items: center; gap: 10px; font-weight: 600; }
-.evr__who { display: flex; flex-wrap: wrap; gap: 0 12px; align-items: center; }
-.evr__who b { font-weight: 600; }
-.evr__who .yours { margin-left: 6px; }
-.grid tr.evr + tr:not(.evr) td { border-top: 2px solid var(--soft); }
-.none { color: var(--mid); }
-.cap { position: static; display: inline-block; width: 20px; height: 20px; margin-left: 8px; border: 0; box-shadow: none; font: 700 12px/20px var(--sans); text-align: center; vertical-align: 1px; }
+/* The games: a line a game under the scorebug, its left edge the winner's colour. */
+.games { display: grid; gap: 16px; margin-top: 12px; }
+.game { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 16px; background: var(--paper); border: 1px solid var(--line); border-left: 8px solid var(--text); white-space: nowrap; }
+.game > b { font: 700 16px/24px var(--head); }
+.game .crest { width: 28px; height: 28px; }
+.game .won { font-weight: 600; }
+.game .len { font-family: var(--fig); }
+.game .pogw { display: flex; align-items: center; gap: 6px; margin-left: auto; font-weight: 600; }
+.game .pogw .ic { color: var(--gold); width: 20px; height: 20px; }
+.game .yours { margin-left: 2px; }
+/* FPL's two tabs, centred over the spine. */
+.tabs { display: flex; justify-content: center; gap: 32px; margin-top: 24px; border-bottom: 1px solid var(--line); }
+.tabs a { margin-bottom: -1px; padding: 12px 0; border-bottom: 2px solid transparent; color: var(--mid); font: 600 16px/24px var(--sans); }
+.tabs a.is-on { color: var(--text); border-bottom-color: var(--text); }
+/* The board: one panel, a team a half, mirrored about the centre. */
+.board { margin-top: 24px; background: var(--paper); border: 1px solid var(--line); }
+.band { display: grid; grid-template-columns: 1fr 1fr; background: var(--head-band); }
+.band__t { display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 0 16px; border-bottom: 4px solid var(--team); font: 700 20px/24px var(--head); letter-spacing: -0.01em; }
+.band__t--b { justify-content: flex-end; }
+.band__t .crest { width: 36px; height: 36px; }
+.band__t span { font-weight: 400; }
+/* Events: a row a scoring line, its mark and word in the centre, each team's names facing it. */
+.ev { display: grid; grid-template-columns: 1fr var(--mark) 1fr; min-height: 56px; border-top: 1px solid var(--line); }
+.ev:first-of-type { border-top: 0; }
+.ev__a, .ev__b { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px; padding: 8px 24px; font: 400 16px/24px var(--sans); }
+.ev__a { justify-content: flex-end; }
+.ev__a b, .ev__b b { font-weight: 600; }
+/* The event itself is centred, its mark over its word (Craig, 27 Nov 2026). */
+.ev__c { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px 16px; background: var(--band); font: 600 14px/20px var(--sans); text-align: center; }
+.ev--rule { border-top: 2px solid var(--soft); }
+.sq { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; flex: none; background: var(--text); }
+.sq .ic { color: var(--bg); width: 22px; height: 22px; }
+/* Player stats: a row a role, its icon in the spine; each side its name, a cell a game, and its series total at the spine. */
+.row { display: grid; grid-template-columns: minmax(0, 1fr) var(--spine) minmax(0, 1fr); border-top: 1px solid var(--line); }
+.row--head { border-top: 0; }
+.row--coach { border-top: 2px solid var(--soft); }
+/* A sub's row hangs under his role's: no second icon, no rule across the spine. */
+.row .half + .half.half--a, .row .half--b + .half--b { border-top: 1px solid var(--line); }
+.half { display: grid; align-items: center; min-height: 72px; }
+.half--a { grid-template-columns: repeat(var(--n), minmax(0, 1fr)) var(--nm) 72px; }
+.half--b { grid-template-columns: 72px var(--nm) repeat(var(--n), minmax(0, 1fr)); }
+.row--head .half { min-height: 40px; font-size: 12px; }
+.half.is-me { background: var(--fill); }
+.half--a.is-me { box-shadow: inset 4px 0 0 var(--text); }
+.half--b.is-me { box-shadow: inset -4px 0 0 var(--text); }
+.spine { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; background: var(--band); font: 400 12px/16px var(--sans); }
+.spine svg { width: 40px; height: 40px; }
+.nm { padding: 0 16px; font: 700 16px/24px var(--sans); white-space: nowrap; }
+/* A name sits beside its series total, at the spine (Craig, 27 Nov 2026). */
+.half--a .nm { text-align: right; }
+.nm small { display: block; font: 400 12px/16px var(--sans); color: var(--mid); }
+.tot { font: 700 28px/32px var(--fig); text-align: center; align-self: stretch; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.tot small { font: 400 12px/16px var(--fig); color: var(--text); }
+/* The series total stands out (Craig, 27 Nov 2026): a filled column either side of the spine, the head's blue; a minus on red. */
+.tot { background: var(--head-band); color: var(--text); }
+.tot--neg { background: var(--down); color: var(--bg); }
+.tot--neg small { color: var(--bg); }
+.half--a > .gc, .half--a > .gh:not(.gh--tot) { border-right: 1px solid var(--line); }
+.half--b > .gc, .half--b > .gh:not(.gh--tot) { border-left: 1px solid var(--line); }
+.gh { display: flex; align-items: center; gap: 8px; padding: 0 12px; align-self: stretch; font-weight: 600; }
+.gh--tot { justify-content: center; font-weight: 400; }
+.gc { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 8px 12px; align-self: stretch; }
+.gc__top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.ch { font-size: 12px; line-height: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.p { display: flex; align-items: center; gap: 4px; flex: none; }
+.p .ic { color: var(--gold); width: 18px; height: 18px; }
+.box, .bare { min-width: 28px; text-align: center; font: 700 16px/28px var(--fig); }
+.box { background: var(--text); color: var(--bg); }
+.box.neg { background: var(--down); }
+.bare { font-weight: 400; color: var(--mid); }
+/* K/D/A: each figure behind its own mark, in its own colour: a sword, a red skull, a green hand. */
+.kda { display: flex; font: 600 16px/24px var(--fig); }
+.kda span { display: flex; align-items: center; gap: 4px; width: 41px; }
+.kda .ic { width: 16px; height: 16px; }
+.kda .d { color: var(--m-dth); }
+.kda .a { color: var(--m-ast); }
+.gc.drop, .gc.drop .kda span { color: var(--mid); }
+.lines { display: flex; gap: 6px; min-height: 24px; align-items: center; }
+.lines .ic { width: 20px; height: 20px; }
 .chip { display: inline-block; min-width: 24px; height: 24px; padding: 0 6px; font: 600 12px/22px var(--fig); text-align: center; border: 1px solid transparent; }
 .chip--w { color: var(--up); border-color: var(--up); }
 .chip--l { color: var(--down); border-color: var(--down); }
 .chip--live { background: var(--text); color: var(--bg); }
+/* Before it starts: the rosters face each other across the spine. */
+.row--next .half { grid-template-columns: 1fr; min-height: 64px; }
+.tabs:empty, .games:empty { display: none; }
+.row--next .nm { font-size: 20px; }
+.row--next .spine svg { width: 32px; height: 32px; }
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><defs>
   <symbol id="i-top" viewBox="0 0 16 16"><path d="M1 1h14l-3 3H4v8l-3 3z" fill="#EEF1F8"/><rect x="6" y="6" width="4" height="4" fill="#9AA6C8"/><path d="M15 6v9H6l3-3h3V9z" fill="#7D8AB3"/></symbol>
@@ -151,12 +169,13 @@ tr.co td { border-top-color: var(--soft); }
   <div class="bug" id="bug"></div>
   <div class="meta" id="meta"></div>
   <div class="games" id="games"></div>
-  <div class="two" id="two"></div>
+  <nav class="tabs" id="tabs"></nav>
+  <div class="board" id="board"></div>
 </div>
 <footer class="foot small mid">Flol was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.</footer>
 <script>
 const $ = (id) => document.getElementById(id);
-const V = new URLSearchParams(location.search).get("v") || "final";
+const Q = new URLSearchParams(location.search), V = Q.get("v") || "final", T = Q.get("t") || "events";
 // Points from spec/05: kills +1 per 2 (top, support) or per 3 (jungle, mid, bot), at most +3; assists +1 per 5, at most +3;
 // deaths −1 per 3, per 4 for supports, at most −3; +1 gold lead at 15; +1 a solo kill; +1 first blood; +1 deathless;
 // quadra +1, penta +2; +1 a steal. Per game: [champion, K, D, A, gold lead, solo kills, first blood, multikill, steals]
@@ -166,12 +185,8 @@ const MINE = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"];
 const KIT = "../../../../data/lck/";
 const BAR = { T1: "#E2012D", GEN: "#AA8A00", HLE: "#F3741B", DK: "#F5F5F5" };
 const crest = (c) => `<img class="crest" src="${KIT}crests/${c}.svg" alt="">`;
-// You and Average (spec/12, Series page; Craig, 27 Nov 2026): your points from the series, your starters and the coach
-// with no Captain x1.5, beside the mean over every manager, rounded down. The averages are made up.
+// Average (spec/12, Series page): the mean over every manager, rounded down. Made up.
 const AVERAGE = { final: 14, f21: 19, live: 6 };
-let YOU = 0;
-// No Captain's C and no x1.5 on this page (Craig, 27 Nov 2026): a player's Series total is his own, and You is the sum of your players' totals on the page.
-const mine = (n, total) => { if (MINE.includes(n)) YOU += total; return total < 0 ? `<span class="neg">${fmt(total)}</span>` : fmt(total); };
 const fmt = (x) => String(x).replace("-", "−");
 const S = {
   // T1 v DK, Week 3, Sat 16 Jan, T1 2–0 (the hub's Results). Faker G1 Orianna 5/1/9 for 4, Siwoo G1 2, kkOma G1 2 (Points).
@@ -229,52 +244,75 @@ const sum = (xs) => xs.reduce((s, x) => s + x, 0);
 // best 2 games: the indexes that count (the earlier game wins a tie, as on Points)
 const best2 = (xs) => xs.map((x, i) => [x, i]).filter(([x]) => x !== null).sort((a, b) => b[0] - a[0] || a[1] - b[1]).slice(0, 2).map((x) => x[1]);
 const me = (n) => (MINE.includes(n) ? '<i class="yours" title="Yours"></i>' : "");
-const ic = (id, title = "", cls = "") => `<svg class="ic ic--${id} ${cls}"${title ? ` role="img" aria-label="${title}"` : ' aria-hidden="true"'}><use href="#i-${id}"/></svg>`;
-const pog = (s, i, n) => (s.games[i].pog === n ? ic("pog", "Player of the Game", "ic--pog") : "");
-const cell = (s, i, n, label, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}</span><span class="p">${pog(s, i, n)}${counted ? `<span class="box${p < 0 ? " neg" : ""}">${fmt(p)}</span>` : fmt(p)}</span></div></td>`;
+const ic = (id, title = "") => `<svg class="ic ic--${id}"${title ? ` role="img" aria-label="${title}"` : ' aria-hidden="true"'}><use href="#i-${id}"/></svg>`;
+const num = (x) => (x < 0 ? `<span class="neg">${fmt(x)}</span>` : fmt(x));
 const L = ["First tower", "Most drakes", "Most barons", "Most elders", "Quick win"], LI = ["tower", "drake", "baron", "elder", "quick"];
+const ROLES = ["top", "jng", "mid", "bot", "sup"];
+const role = (rl) => `<div class="spine"><svg aria-hidden="true"><use href="#i-${rl}"/></svg>${rl === "coach" ? "Coach" : RH[rl]}</div>`;
+const band = (a, an, b, bn) => `<div class="band"><div class="band__t" style="--team:${BAR[a]}">${crest(a)}<i class="team__bar" style="background:${BAR[a]}"></i><b>${a}</b>${an === a ? "" : `<span>${an}</span>`}</div><div class="band__t band__t--b" style="--team:${BAR[b]}">${bn === b ? "" : `<span>${bn}</span>`}<b>${b}</b><i class="team__bar" style="background:${BAR[b]}"></i>${crest(b)}</div></div>`;
+// A team's players and coach with their points: a series scores the best 2 games; the coach adds +3 for a series win, −1 for a loss.
+function model(s, code) {
+  const t = s[code], over = s.games.every((g) => g.w), wins = s.games.filter((g) => g.w === code).length;
+  const rows = t.p.map(([rl, nm, , gs, sub]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps); return { rl, nm, gs, sub, ps, c, total: sum(c.map((i) => ps[i])) }; });
+  const [nm, , gs] = t.coach, ps = gs.map(sum), c = best2(ps), sw = !over ? 0 : wins === 2 ? 3 : -1;
+  return { code, t, rows, coach: { rl: "coach", nm, gs, ps, c, sw, total: sum(c.map((i) => ps[i])) + sw } };
+}
 // A game's result, one line a game under the scorebug: who won, its Player of the Game, its length and its VOD.
-const game = (s, i) => { const g = s.games[i]; return `<section class="game"><h2 class="game__head"${g.w ? ` style="border-left-color:${BAR[g.w]}"` : ""}><b>Game ${i + 1}</b>${g.live ? `<span class="tag tag--live">Live</span><span class="len" style="margin-left:auto"><b>${g.live}</b></span>` : `${crest(g.w)}<span class="won">${g.w} won</span><span class="pogw">${ic("pog", "Player of the Game")}<b>${g.pog}</b>${me(g.pog)}</span><span class="len">${g.len}</span><a class="link" href="#">VOD ↗</a>`}</h2></section>`; };
-// A team's events over the series, a row a scoring line that somebody earned: who earned it, or the games for a coach line.
+const game = (s, i) => { const g = s.games[i]; return `<div class="game"${g.w ? ` style="border-left-color:${BAR[g.w]}"` : ""}><b>Game ${i + 1}</b>${g.live ? `<span class="tag tag--live">Live</span><span class="len" style="margin-left:auto">${g.live}</span>` : `${crest(g.w)}<span class="won">${g.w} won</span><span class="pogw">${ic("pog", "Player of the Game")}${g.pog}${me(g.pog)}</span><span class="len">${g.len}</span><a class="link" href="#">VOD ↗</a>`}</div>`; };
+// Events (the first tab): a row a scoring line somebody earned, as FPL's match details: a name once, its count when over one.
 const EV = [["fb", "First blood", (x) => x[6]], ["solo", "Solo kills", (x) => x[5]], ["steal", "Steals", (x) => x[8]], ["multi", "Quadras", (x) => (x[7] === 1 ? 1 : 0)], ["multi", "Pentas", (x) => (x[7] === 2 ? 1 : 0)], ["gold", "Gold lead at 15", (x) => x[4]], ["none", "Deathless", (x) => (x[2] === 0 && !x[9] ? 1 : 0)]];
-function events(s, t) {
-  const n = s.games.length, sq = (id) => `<span class="sq" style="background:var(--m-${id}, var(--text))">${ic(id)}</span>`;
-  // Over the series, as FPL: a name once, its count after it when over one, Faker (2). A coach line names its games.
+function events(s) {
   const count = (p, f) => sum(p[3].map((g) => (g ? f(g) : 0)));
   const who = (u) => [...EV.map(([, , f]) => u.p.filter((p) => count(p, f) > 0).map((p) => `<span><b>${p[1]}</b>${count(p, f) > 1 ? ` (${count(p, f)})` : ""}${me(p[1])}</span>`).join("")),
-    ...L.map((_, j) => s.games.map((_, i) => (u.coach[2][i][j] ? `<span>Game ${i + 1}</span>` : "")).join(""))];
-  // Both tables carry the same rows, a line either team earned, so their players line up.
-  const mine = who(t), a = who(s[s.a]), b = who(s[s.b]), W = [...EV, ...L.map((l, j) => [LI[j], l])];
-  return W.map(([id, word], k) => (a[k] || b[k] ? `<tr class="evr"><td colspan="2"><span class="evr__what">${sq(id)}${word}</span></td><td colspan="${n}">${mine[k] ? `<span class="evr__who">${mine[k]}</span>` : '<span class="none">—</span>'}</td><td class="tot"></td></tr>` : "")).join("");
+    ...L.map((_, j) => { const gs = s.games.map((_, i) => (u.coach[2][i][j] ? `<span>Game ${i + 1}</span>` : "")).join(""); return gs && `<span><b>${u.coach[0]}</b>${me(u.coach[0])}</span>${gs}`; })];
+  const a = who(s[s.a]), b = who(s[s.b]), W = [...EV, ...L.map((l, j) => [LI[j], l])], dash = '<span class="none">—</span>';
+  let ruled = false;
+  // Solo kills and steals are added when the series is final (spec/11), so their rows wait for it.
+  const live = s.games.some((g) => g.live);
+  return W.map(([id, word], k) => { if ((!a[k] && !b[k]) || (live && (id === "solo" || id === "steal"))) return ""; const rule = k >= EV.length && !ruled; if (rule) ruled = true;
+    return `<div class="ev${rule ? " ev--rule" : ""}"><div class="ev__a">${a[k] || dash}</div><div class="ev__c"><span class="sq" style="background:var(--m-${id}, var(--text))">${ic(id)}</span>${word}</div><div class="ev__b">${b[k] || dash}</div></div>`; }).join("");
 }
-function team(s, code) {
-  const t = s[code], won = s.games.map((g) => g.w === code), n = s.games.length, over = s.games.every((g) => g.w);
-  const head = `<colgroup><col style="width:${n > 2 ? 126 : 128}px"><col style="width:${n > 2 ? 98 : 124}px">${s.games.map(() => "<col>").join("")}<col style="width:72px"></colgroup>
-    <tr><th></th><th></th>${s.games.map((g, i) => `<th>Game ${i + 1} ${g.live ? `<span class="chip chip--live">Live</span>` : `<span class="chip chip--${g.w === code ? "w" : "l"}">${g.w === code ? "W" : "L"}</span>`}<span class="th__kda">${ic("kda", "Kills")}/${ic("dth", "Deaths")}/${ic("ast", "Assists")}</span></th>`).join("")}<th class="n">Series</th></tr>`;
-  const rows = t.p.map(([rl, nm, k, gs, sub]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps);
-    return `<tr${MINE.includes(nm) ? ' class="is-me"' : ""}><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}${sub ? " · sub" : ""}</td><td class="pl"><b>${nm}</b>${me(nm)}</td>
-      ${gs.map((g, i) => (g ? cell(s, i, nm, `<span class="ch">${g[0]}</span><span class="kda">${g[1]}/<i>${g[2]}</i>/${g[3]}</span>`, ps[i], c.includes(i)) : '<td><span class="none">—</span></td>')).join("")}<td class="tot">${mine(nm, sum(c.map((i) => ps[i])))}</td></tr>`; }).join("");
-  const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = !over ? 0 : won.filter(Boolean).length === 2 ? 3 : -1;
-  const coach = `<tr class="co${MINE.includes(cn) ? " is-me" : ""}"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b>${me(cn)}</td>
-    ${cg.map((g, i) => cell(s, i, cn, "", cp[i], c.includes(i))).join("")}
-    <td class="tot">${mine(cn, sum(c.map((i) => cp[i])) + sw)}<small>${sw > 0 ? "W +3" : sw < 0 ? "L −1" : "&nbsp;"}</small></td></tr>`;
-  return { html: `<section class="grid"><h2 class="grid__head" style="--team:${BAR[code]}">${crest(code)}<b><i class="team__bar" style="background:${BAR[code]}"></i>${code}</b>${t.name === code ? "" : `<span>${t.name}</span>`}</h2><table>${head}${events(s, t)}${rows}${coach}</table></section>` };
+// Player stats (the second tab): a cell a game. The champion and the points on one line, K/D/A under it, each figure behind its mark.
+const box = (p, counted) => (counted ? `<span class="box${p < 0 ? " neg" : ""}">${fmt(p)}</span>` : `<span class="bare">${fmt(p)}</span>`);
+function cell(s, r, i) {
+  const g = r.gs[i], counted = r.c.includes(i), crown = s.games[i].pog === r.nm ? ic("pog", "Player of the Game") : "";
+  if (!g) return '<div class="gc"><span class="none">—</span></div>';
+  if (r.rl === "coach") return `<div class="gc${counted ? "" : " drop"}"><div class="gc__top"><span class="lines">${g.map((x, j) => (x ? ic(LI[j], L[j]) : "")).join("")}</span><span class="p">${box(r.ps[i], counted)}</span></div></div>`;
+  return `<div class="gc${counted ? "" : " drop"}"><div class="gc__top"><span class="ch">${g[0]}</span><span class="p">${crown}${box(r.ps[i], counted)}</span></div>
+    <div class="kda"><span class="k">${ic("kda", "Kills")}${g[1]}</span><span class="d">${ic("dth", "Deaths")}${g[2]}</span><span class="a">${ic("ast", "Assists")}${g[3]}</span></div></div>`;
+}
+function half(s, r, side, at = "") {
+  const name = `<div class="nm">${r.nm}${me(r.nm)}${r.sub ? "<small>Sub</small>" : ""}</div>`, cells = s.games.map((_, i) => cell(s, r, i)).join("");
+  const tot = `<div class="tot${r.total < 0 ? " tot--neg" : ""}">${fmt(r.total)}${r.sw ? `<small>${r.sw > 0 ? "W +3" : "L −1"}</small>` : ""}</div>`;
+  return `<div class="half half--${side}${MINE.includes(r.nm) ? " is-me" : ""}"${at}>${side === "a" ? cells + name + tot : tot + name + cells}</div>`;
+}
+function players(s, A, B) {
+  const heads = (code, side) => { const gs = s.games.map((g, i) => `<div class="gh">Game ${i + 1}<span class="chip chip--${g.live ? "live" : g.w === code ? "w" : "l"}">${g.live ? "Live" : g.w === code ? "W" : "L"}</span></div>`).join(""), t = '<div class="gh gh--tot">Series</div>';
+    return `<div class="half half--${side}">${side === "a" ? gs + "<div></div>" + t : t + "<div></div>" + gs}</div>`; };
+  let html = `<div class="row row--head">${heads(s.a, "a")}<div class="spine"></div>${heads(s.b, "b")}</div>`;
+  for (const rl of ROLES) { const a = A.rows.filter((r) => r.rl === rl), b = B.rows.filter((r) => r.rl === rl);
+    // A role is one row; with a sub on one side it is two lines there, and the other side's player stands as tall as both.
+    const m = Math.max(a.length, b.length), at = (col, xs, i) => ` style="grid-column:${col};grid-row:${i + 1} / span ${i === xs.length - 1 ? m - i : 1}"`;
+    html += `<div class="row">${a.map((r, i) => half(s, r, "a", at(1, a, i))).join("")}${role(rl).replace('class="spine"', `class="spine" style="grid-column:2;grid-row:1 / span ${m}"`)}${b.map((r, i) => half(s, r, "b", at(3, b, i))).join("")}</div>`; }
+  return html + `<div class="row row--coach">${half(s, A.coach, "a")}${role("coach")}${half(s, B.coach, "b")}</div>`;
 }
 // Before it starts: Week 4's HLE v DK, Wednesday 20 Jan, opened at the hub's moment.
-const NEXT = { HLE: [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "김건우"], ["Gumayusi", "이민형"], ["Delight", "유환중"], ["Homme", "윤성영"]],
-  DK: [["Siwoo", "전시우"], ["Lucid", "최용혁"], ["ShowMaker", "허수"], ["Aiming", "김하람"], ["BeryL", "조건희"], ["cvMax", "김대호"]] };
+const NEXT = { HLE: ["Zeus", "Kanavi", "Zeka", "Gumayusi", "Delight", "Homme"], DK: ["Siwoo", "Lucid", "ShowMaker", "Aiming", "BeryL", "cvMax"] };
 if (V === "next") {
   $("bug").innerHTML = `<div class="bug__team" style="--team:${BAR.HLE}">${crest("HLE")}<b>HLE</b><small>4–2</small></div><div class="bug__score bug__score--v"><span>v</span></div><div class="bug__team bug__team--b" style="--team:${BAR.DK}"><small>3–3</small><b>DK</b>${crest("DK")}</div>`;
   $("meta").innerHTML = `<span>Bo3 · LCK Cup · Week 4 · Wed 20 Jan</span><span><b>8:00am</b></span><a class="link" href="#">Watch ›</a>`;
-  const ICO = ["top", "jng", "mid", "bot", "sup", "coach"];
-  $("two").innerHTML = Object.entries(NEXT).map(([c, ps]) => `<section class="grid"><h2 class="grid__head" style="--team:${BAR[c]}">${crest(c)}<b><i class="team__bar" style="background:${BAR[c]}"></i>${c}</b><span>${c === "HLE" ? "Hanwha Life" : "Dplus KIA"}</span></h2><table>
-    ${ps.map(([n, k], i) => `<tr class="${i === 5 ? "co" : ""}"><td class="rl" style="width:112px;height:40px"><svg><use href="#i-${ICO[i]}"/></svg>${i === 5 ? "Coach" : RH[ICO[i]]}</td><td class="pl" style="height:40px"><b>${n}</b>${me(n)}</td></tr>`).join("")}</table></section>`).join("");
+  $("board").innerHTML = band("HLE", "Hanwha Life", "DK", "Dplus KIA") + [...ROLES, "coach"].map((rl, i) => `<div class="row row--next${i === 5 ? " row--coach" : ""}">${["HLE", "DK"].map((c, j) => `<div class="half half--${j ? "b" : "a"}${MINE.includes(NEXT[c][i]) ? " is-me" : ""}"><div class="nm">${NEXT[c][i]}${me(NEXT[c][i])}</div></div>`).join(role(rl))}</div>`).join("").replace(/<div class="row row--next">/, '<div class="row row--next" style="border-top:0">');
 } else {
-  const s = S[V], A = team(s, s.a), B = team(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.filter((g) => g.w === s.b).length, live = s.games.some((g) => g.live);
+  const s = S[V], A = model(s, s.a), B = model(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.filter((g) => g.w === s.b).length, live = s.games.some((g) => g.live);
+  // You (spec/12, Series page): your starters' and your coach's points from the series, with no Captain x1.5, so it adds up from the page.
+  const YOU = sum([A, B].flatMap((m) => [...m.rows, m.coach]).filter((r) => MINE.includes(r.nm)).map((r) => r.total));
   $("bug").innerHTML = `<div class="bug__team ${!live && wa < wb ? "is-lost" : ""}" style="--team:${BAR[s.a]}">${crest(s.a)}<b>${s.a}</b><small>${s[s.a].rec}</small></div><div class="bug__score"><span class="${wa > wb || (live && wa >= wb) ? "is-won" : ""}">${wa}</span><span class="${wb > wa || (live && wb >= wa) ? "is-won" : ""}">${wb}</span></div><div class="bug__team bug__team--b ${!live && wb < wa ? "is-lost" : ""}" style="--team:${BAR[s.b]}"><small>${s[s.b].rec}</small><b>${s.b}</b>${crest(s.b)}</div>`;
   $("meta").innerHTML = `${live ? '<span class="meta__tags"><span class="tag tag--live">Live</span><span class="tag tag--dash">Not final</span></span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b></span>${live ? '<a class="link" href="#">Watch ›</a>' : ""}<span class="versus"><span class="you">You <b>${YOU}</b></span><i>·</i>Average <b>${AVERAGE[V]}</b></span>`;
   $("games").style.gridTemplateColumns = `repeat(${s.games.length}, 1fr)`;
   $("games").innerHTML = s.games.map((_, i) => game(s, i)).join("");
-  $("two").innerHTML = A.html + B.html;
+  $("tabs").innerHTML = `<a class="${T === "events" ? "is-on" : ""}" href="?v=${V}&t=events">Events</a><a class="${T === "players" ? "is-on" : ""}" href="?v=${V}&t=players">Player stats</a>`;
+  $("board").style.setProperty("--n", s.games.length);
+  $("board").style.setProperty("--nm", s.games.length > 2 ? "128px" : "160px");
+  $("board").innerHTML = band(s.a, s[s.a].name, s.b, s[s.b].name) + (T === "events" ? events(s) : players(s, A, B));
 }
 </script></body></html>

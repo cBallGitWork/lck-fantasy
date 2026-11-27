@@ -1,56 +1,59 @@
 # Series
 
-The Series page: one series, its games and each player's lines in each game (spec/12, Series page). It has its own link and opens from every series row anywhere: the LCK hub's Fixtures and Results, Points' series and the player card's series strip. **‹ LCK** goes back to the hub. It is part of the beta.
+The Series page: one series, its games, its events and each player's lines in each game (spec/12, Series page). It has its own link and opens from every series row anywhere: the LCK hub's Fixtures and Results, Points' series and the player card's series strip. **‹ LCK** goes back to the hub. It is part of the beta.
 
-**Approved:** Craig, 16 Nov 2026, "Save". Along the way he asked for POG ("series seems basic"), cut the draft strip ("i dont think we need draft info overload") and cut the Your players total ("its fluff"); on 27 Nov he brought your points back as the You and Average line. The names, teams and numbers are a made-up LCK Cup Week 3 (Saturday 16 Jan), opened at the LCK hub's moment (Week 4, Tuesday). They match the Points, Live and hub pictures. This picture binds layout, content and order; [plate.md](../../plate.md) binds how it is drawn. The source is [docs/design/proposals/2026-11-16-series/](../../proposals/2026-11-16-series/) (`brief.md`, `panel.md`).
+**Approved:** Craig, 27 Nov 2026, "Yes, save it". The page was redrawn from scratch that day, after three redraws read to him as text and grey squares with no League in it. He asked for one idea, the design team first, and sent FPL's finished-match page: "two tab system needed id imagine". Four designers (a League player, a visual designer, an FPL player and an LCK fan) each came back with the same idea, the broadcast's lineup strip: both teams facing each other across a centre spine. Along the way he moved each name beside its series total ("i dont like on player stats where the player name is so far away from their total week score") and centred each event, its name under its mark. Which tab opens first and how a coach's lines read he left to Claude.
 
-**Changed by Craig, 27 Nov 2026:** redrawn in the new look ([plate.md](../../plate.md)), each grid under a band with its team's crest, code and full name. The line under the scorebug ends with `You 22 · Average 14` ([spec/12](../../../../spec/12-pages.md), Series page): your points from the series beside the average manager's, rounded down. The scorebug shows crest, code and record only; a team's full name shows once, in its grid's band. The words beside Not final are gone.
-
-**Redrawn again, Craig, 27 Nov 2026:** the first redraw read to him as a dull mess of text and squares with no League in it, and he asked for icons and for first blood and the rest to show, as FPL and UCL fantasy set a finished match's events under its score. So: the scorebug is the page's hero; each game has a card of its events; a game cell carries a mark for each scoring line; your players' rows are filled. He approved the direction the same day, asked which of 3/2/9 was which, and took the Hangul names off this page for the space; a second review round cleaned it up. He still found it short of colour, with a dull grey font and role icons too small, and took the Captain's C and ×1.5 off this page; the design team (a League player, a visual designer and a sceptic) then gave it its colour: a colour a mark, filled points, team colour on the scorebug, the game lines and the grids, and the deaths figure in red. Last, he had the marks under K/D/A removed and the events moved into each team's table. The four reviewers' findings are in `git log` for this folder, not a panel file.
+The names, teams and numbers are a made-up LCK Cup Week 3 (Saturday 16 Jan), opened at the LCK hub's moment (Week 4, Tuesday). They match the Points, Live and hub pictures. This picture binds layout, content and order; [plate.md](../../plate.md) binds how it is drawn. The first approval was 16 Nov 2026 ([proposals/2026-11-16-series/](../../proposals/2026-11-16-series/)); the reviewers' findings for this round are in the PR.
 
 | File | Shows |
 |---|---|
-| `1440.png`, `series.html` | Final, 2–0: T1 v DK |
-| `1440-21.png`, `series.html?v=f21` | Final, 2–1: GEN v HLE. The dropped game is greyed; Zeka sat out G3 and a sub took his place |
-| `1440-live.png`, `series.html?v=live` | Live: T1 1–0 DK, game 2 at 14:20 |
+| `1440.png`, `series.html` | Final, 2–0: T1 v DK, the Events tab |
+| `1440-stats.png`, `series.html?t=players` | The same series, the Player stats tab |
+| `1440-21.png`, `series.html?v=f21&t=players` | Final, 2–1: GEN v HLE. The dropped game is greyed; Zeka sat out game 3 and a sub took his place |
+| `1440-live.png`, `series.html?v=live&t=players` | Live: T1 1–0 DK, game 2 at 14:20 |
 | `1440-next.png`, `series.html?v=next` | Before it starts: HLE v DK, Week 4 |
 
 ## Borrowed
 
-- **Points' player drawer**: games as columns, the best 2 boxed and a dropped game greyed. The Series page is ten of these drawers at once.
-- **Live's scorebug**: each team on a panel with its crest, the series score between them, turned over. Here it runs full width.
-- **gol.gg and Inven**: one column per game.
-- **FPL's and UCL fantasy's finished match** (looked at 27 Nov 2026): under the score, a row an event (goals, assists, saves, cards, bonus) with each team's names and a count, `Anderson (1)`; UCL leads with the Player of the Match. Here each team's events head its own table.
+- **FPL's finished match**: the score, then two tabs, Match details and Player stats; under Match details a block an event, its name centred and each team's names either side with a count, `Anderson (1)`.
+- **The broadcast's lineups strip** ([references/broadcast/](../../references/broadcast/)): five role rows, the two teams mirrored about a centre column.
+- **Live's scorebug**: each team on a panel with its crest, the series score between them, turned over.
+- **Points' player drawer**: the best 2 games filled, a dropped game greyed.
 
 ## Layout
 
-- **Type**: 44 team codes and 48 the series score in the scorebug, 32 You, 28 each player's series total, 20 Average and a game line's title, 16 names and per-game points, 14 body and K/D/A, 12 labels and champions. The nav is shared.
-- **Scorebug**, 112 tall: a 16px bar of the team's colour at each outer edge, team crest (72), code and record, and between them a 96px cell for each team's games won, the winner's turned over (white, dark figure). While it is live both cells follow the same rule, the leader's turned over. The loser's code drops to plain weight once the series is final; while it is live, neither does. A record is as of when the page is opened, so it is the record before the series while the series is live.
-- **The line under it**: a Final tag, or Live and a dashed Not final tag. Then the format, competition, week, day and time (your local time), and Watch › while live or before the start. At the right, You and Average, once the series has started; You is the larger.
-- **A line a game**, side by side under that line, its left edge the winner's colour: `Game 1`, the winner's crest and `T1 won`, then at the right a gold crown and the Player of the Game, the game's length and `VOD ↗`; a live game shows the Live tag and its clock.
-- **Two grids**, one per team, side by side. The whole page below the scorebug is cut by team (Craig, 27 Nov 2026: the events were by game and the points by team):
-  - under the game heads, the team's events over the series, a row a scoring line either team earned, in this order: First blood, Solo kills, Steals, Quadras, Pentas, Gold lead at 15, Deathless, First tower, Most drakes, Most barons, Most elders, Quick win. The line's mark sits on a 28px square of its own colour before its word; then who earned it, a name once with its count after it when over one, `Faker (2)`, as FPL; a coach line names its games, `Game 1 Game 2`. A line the other team alone earned shows a dash, so the two tables' players line up;
-  - one row per player in role order, then the coach under a rule;
-  - the name, with no Hangul (Craig, 27 Nov 2026), and a round dot after your own players, whose rows are filled (`--fill`) with a 4px white bar at the left; no Captain's C and no ×1.5 here (Craig, 27 Nov 2026), so a Series total is the player's own and You is the sum of yours;
-  - a column per game, headed `Game 1` with W or L, or the Live tag, and under it a sword, a red skull and a green hand for kills, deaths and assists, as League's scoreboard heads them;
-  - each game cell holds the champion, and K/D/A with the deaths figure in red; no marks under it, the events above saying who earned what (Craig, 27 Nov 2026: the marks meant nothing there). At the right, the points, the best 2 on a filled white square (red for a minus) and a dropped game greyed and bare. Rows are 60 tall, the role icon 28;
-  - a gold crown sits over the points of each game's Player of the Game;
-  - the Series column shows the best-2 total;
-  - the coach's game cell shows his points alone, his lines being in the events above. The coach's series total adds W +3 or L −1 once the series is final.
-- **A player who sat out a game**: a dash in that game. A sub has his own row, marked "· sub" beside his role.
-- **Before it starts**: both rosters, 40px rows, coach last.
+- **Scorebug**, 112 tall: a 16px bar of the team's colour at each outer edge, the crest (72), code and record, and between them a 96px cell for each team's games won, the winner's turned over. While it is live the leader's is turned over. The loser's code drops to plain weight once the series is final. A record is as of when the page is opened.
+- **The line under it**: a Final tag, or Live and a dashed Not final tag; the format, competition, week, day and time (yours); Watch › while live or before the start. At the right, You and Average, once the series has started.
+- **A line a game**, side by side, its left edge the winner's colour: `Game 1`, the winner's crest and `T1 won`, then a gold crown and the Player of the Game, the length and `VOD ↗`; a live game shows the Live tag and its clock.
+- **Tabs**, centred over the spine: `Events`, which opens first, and `Player stats`. None before the series starts.
+- **The board**, one panel for both teams: a `--head-band` head with each team's crest, colour bar, code and name at its own end, a 4px rule of its colour under it.
+- **Events**: a row an event somebody earned, in this order: First blood, Solo kills, Steals, Quadras, Pentas, Gold lead at 15, Deathless, then under a rule the coach's lines: First tower, Most drakes, Most barons, Most elders, Quick win. The centre cell, 192 wide on `--band`, holds the event's mark on a 32px square of its colour with its name under it. Each team's names face it, a count after a name when over one, `Faker (2)`; a coach's line names him and its games, `kkOma Game 1 Game 2`. A side that didn't earn it shows a dash. While live, Solo kills and Steals wait for the final.
+- **Player stats**: a row a role, 72 tall, its icon at 40 over its word in the 96px spine; the coach last, under a rule.
+  - Each side, from the spine outwards: the series total (28) on a filled `--head-band` column, a minus on `--down` (Craig, 27 Nov 2026: make it stand out more), the name, then a cell a game, headed `Game 1` with W or L, or the Live tag.
+  - A game cell holds the champion and the points on one line, and under it kills, deaths and assists, each figure behind its own mark: a sword in `--text`, a red skull, a green hand. The best 2 games' points sit on a filled white square (red for a minus); a dropped game is greyed and bare. A gold crown sits before the points of the Player of the Game.
+  - The coach's cell holds his points and the marks of the lines he scored; his total adds `W +3` or `L −1` once the series is final.
+  - Your own players carry the round dot after the name, on a filled (`--fill`) half-row with a 4px white bar at its outer edge. No Captain's C and no ×1.5 here, so You is the sum of yours on the page.
+- **A player who sat out a game**: a dash in that game. A sub has his own row under the player he replaced, marked `Sub`; the player facing them stands as tall as both.
+- **Before it starts**: both rosters facing each other across the spine, coach last.
 
 ## Controls
 
 - **‹ LCK**: back to the LCK hub.
+- **Events, Player stats**: the two tabs.
 - **VOD ↗**: that game's VOD on lolesports.
 - **Watch ›**: opens Live.
 - **A player or coach**: opens his card (the [player card](../player-card/), the [coach card](../coach-card/)).
 
 ## Not drawn
 
-- Series POG, picks and bans, blue or red side, the last meeting, and team colours: each was cut by Craig on 16 Nov 2026.
-- Champion portraits: [plate.md](../../plate.md) allows none of Riot's artwork, so a champion is his name. Craig has not been asked to change that.
+- Series POG, picks and bans, blue or red side and the last meeting: each was cut by Craig on 16 Nov 2026.
+- Champion portraits: [plate.md](../../plate.md) allows none of Riot's artwork, so a champion is his name.
+
+## Open
+
+- The role icons, the same on Live, Stats and Transfers, look close to Riot's own position icons at 40px, and Top and Bot are hard to tell apart (the reviewers, 27 Nov 2026). Left as they are here; a redraw of the set would be for every page at once.
+- The 2–1's made-up data plays a champion twice in the series (Xin Zhao, K'Sante, Azir). It matches the Points picture, so both change together or not at all.
 
 ## Marks
 

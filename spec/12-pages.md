@@ -75,16 +75,21 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     (Craig, 17 Nov 2026).
 - **Series page**: one series, its games and each player's lines in each game.
   - A page with its own link, opened from every series row anywhere (Craig, 16 Nov 2026).
-  - One grid per team: its players down the side, the games as columns, as in the Points drawer.
-    Each cell shows the champion, K/D/A and points; the best 2 are boxed and a dropped game is
-    greyed, as on Points (Craig, 16 Nov 2026).
+  - Two tabs, as FPL's Match details and Player stats: Events, which opens first, and Player stats
+    (Craig, 27 Nov 2026). On both, the two teams face each other across the centre, as the
+    broadcast's lineup.
+  - Player stats: a row a role, the games as columns on each side. Each cell shows the champion,
+    K/D/A and points; the best 2 are filled and a dropped game is greyed, as on Points (Craig,
+    16 Nov 2026). A player's name sits beside his series total, at the centre (Craig, 27 Nov 2026).
   - Each game shows its winner, length, a POG badge on its Player of the Game and a VOD link to
     lolesports. No series POG, picks, bans or sides: "i dont think we need draft info overload"
     (Craig, 16 Nov 2026).
-  - Each team's table is headed by its events over the series, as FPL lists a finished match's:
-    first blood, solo kills, steals, quadras and pentas, gold leads at 15, deathless games and
-    the coach lines, each with who got it and a count when over one, `Faker (2)`. The page is cut
-    by team throughout, not by game (Craig, 27 Nov 2026).
+  - Events lists the series' events as FPL lists a finished match's: first blood, solo kills,
+    steals, quadras and pentas, gold leads at 15, deathless games and the coach lines. Each event
+    is centred, its name under its mark, with each team's names either side and a count when over
+    one, `Faker (2)`; a coach line names the coach and its games, `kkOma Game 1 Game 2`. Only an
+    event somebody earned shows. The page is cut by team throughout, not by game (Craig, 27 Nov
+    2026).
   - The scorebug shows each team's record as of now. The coach row shows the coach lines that
     scored and the series +3 or −1. Your own players carry a mark (Craig, 16 Nov 2026).
   - One line sets your points from the series beside the average manager's: `You 31 · Average 24`.
@@ -97,9 +102,11 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - A coach's cell for a game his team didn't play shows `—`. A link to a series that doesn't
     exist shows `No such series` and `LCK hub ›` (Craig, 17 Nov 2026). The VOD link leaves Flol,
     so it ends with `↗` (plate.md).
-  - While live: provisional points, a Not final tag, solo kills and steals at final
+  - While live: provisional points, a Not final tag, solo kills and steals at final, their
+    Events rows with them
     ([spec/11](11-live-points.md)).
-  - A player who sat out a game shows a dash there; a sub has his own row.
+  - A player who sat out a game shows a dash there; a sub has his own row, under the player he
+    replaced, and the player facing them stands as tall as both.
   - Before it starts: the time (yours only, Craig, 19 Nov 2026), the format, both rosters and Watch ›.
   - The picture is `docs/design/approved/series/`.
 - **Player pop-up**: see [The player card](#the-player-card).

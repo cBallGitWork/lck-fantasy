@@ -63,14 +63,16 @@ export interface TierGap {
   tier: Tier;
 }
 
+/** Both gaps, shown at every tier (spec/08, Points; Craig, 27 Nov 2026). */
+export interface TierGaps {
+  promote: TierGap | null;
+  demote: TierGap | null;
+}
+
 /** spec/08, Points: the points to promote and the room before demotion, each the gap now to the
  *  nearest manager across the line, so only ≈ while others still score. Null where there is no
  *  line: Challenger, or the top tier this field can reach, has none above; the last tier none below. */
-export function tierGaps(
-  table: readonly TableRow[],
-  entryId: string,
-  cutoffs: readonly TierCutoff[],
-): { promote: TierGap | null; demote: TierGap | null } {
+export function tierGaps(table: readonly TableRow[], entryId: string, cutoffs: readonly TierCutoff[]): TierGaps {
   const own = table.find((row) => row.entryId === entryId);
   if (own === undefined) throw new Error(`${entryId} is not in the Overall table.`);
   const managers = table.length;
@@ -86,18 +88,6 @@ export function tierGaps(
   };
 }
 
-/** Points' one line: the points to promote, or to avoid demotion. */
-export type TierLine = TierGap & { to: "promote" | "demote" };
-
-/** spec/08, Points: always the points to promote; the room before demotion only at Challenger, with
- *  no tier above. Null where neither shows: the top tier a small field can reach. */
-export function tierLine(table: readonly TableRow[], entryId: string, cutoffs: readonly TierCutoff[]): TierLine | null {
-  const { promote, demote } = tierGaps(table, entryId, cutoffs);
-  if (promote !== null) return { to: "promote", ...promote };
-  const own = table.find((row) => row.entryId === entryId);
-  const atChallenger = own !== undefined && overallTier(own.rank, table.length, cutoffs).tier === "challenger";
-  return atChallenger && demote !== null ? { to: "demote", ...demote } : null;
-}
 
 /** What the season keeps of each manager when it ends: their final rank and tier on the whole
  *  Overall season table (spec/08; the profile's History tab lists them per season). */

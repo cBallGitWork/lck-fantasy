@@ -173,6 +173,12 @@
 .points__side th:last-child {
   padding-right: var(--s-4);
 }
+/* Your week's fact: its mark, then its word. */
+.points__fact {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
 .points__shield {
   width: var(--s-3);
   height: var(--s-4);
@@ -182,16 +188,30 @@
 .points__move {
   width: var(--m-col-figure);
 }
+/* Both tier gaps, under Overall's row and past its shield, with no rule between. */
+.points__side .points__gaps td {
+  height: auto;
+  padding: 0 0 var(--s-3) calc(var(--s-4) * 2);
+  border-top: 0;
+}
+.points__gap {
+  display: block;
+  line-height: var(--m-target);
+}
+/* Your week: a rule only between groups, not inside one. */
+.points__side .points__pick--more td {
+  border-top-color: transparent;
+}
 .points__leagues-foot {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   min-height: var(--m-row);
   margin: 0 calc(var(--s-4) * -1);
   padding: 0 var(--s-4);
   border-top: var(--m-rule) solid var(--line);
 }
-.points__tier b {
+.points__gap b {
   color: var(--text);
 }
 .points__owned {

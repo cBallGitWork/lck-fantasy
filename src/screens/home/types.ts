@@ -6,7 +6,7 @@ import type { CheerKind, FactKind as DrawnFact, Score, SeriesRow, Standing } fro
 import type { Mark, PersonRole, RoleKey, SlotKey } from "../../rift";
 
 /** Every fact Home names with its mark: Star, Flop and All managers' (approved/home/, What binds 7). */
-export type FactKind = DrawnFact | "captained";
+export type FactKind = Exclude<DrawnFact, "killer"> | "captained";
 
 export interface Countdown {
   days: number;

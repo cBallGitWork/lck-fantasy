@@ -72,7 +72,7 @@ export function PointsPage({
 
   const side = (
     <>
-      <Leagues leagues={data.leagues} tierLine={data.tierLine} />
+      <Leagues leagues={data.leagues} tierGaps={data.tierGaps} />
       {/* This week's series (What binds 8), the panel Home shares. */}
       <SeriesPanel title={WORDS.seriesTitle} series={data.series} className="points__side" />
       <YourWeek picks={data.yourWeek} />

@@ -22,3 +22,6 @@
 .fact-mark--sold {
   color: var(--down);
 }
+.fact-mark--killer {
+  color: var(--text);
+}

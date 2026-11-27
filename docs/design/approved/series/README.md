@@ -4,11 +4,9 @@ The Series page: one series, its games and each player's lines in each game (spe
 
 **Approved:** Craig, 16 Nov 2026, "Save". Along the way he asked for POG ("series seems basic"), cut the draft strip ("i dont think we need draft info overload") and cut the Your players total ("its fluff"); on 27 Nov he brought your points back as the You and Average line. The names, teams and numbers are a made-up LCK Cup Week 3 (Saturday 16 Jan), opened at the LCK hub's moment (Week 4, Tuesday). They match the Points, Live and hub pictures. This picture binds layout, content and order; [plate.md](../../plate.md) binds how it is drawn. The source is [docs/design/proposals/2026-11-16-series/](../../proposals/2026-11-16-series/) (`brief.md`, `panel.md`).
 
-**Changed by Craig, 16 Nov 2026:** the page says each thing once. Each grid is headed by its team's code (the scorebug names the teams); each game's length, VOD and live clock show once, in the left grid's heads, with W or L still on both; no Live tag in the G2 heads (the meta line says it).
-
 **Changed by Craig, 27 Nov 2026:** redrawn in the new look ([plate.md](../../plate.md)), each grid under a band with its team's crest, code and full name. The line under the scorebug ends with `You 27 · Average 14` ([spec/12](../../../../spec/12-pages.md), Series page): your points from the series beside the average manager's, rounded down. Your Captain carries his C, and his Series cell shows the total after ×1.5 with the sum under it (`15`, `10 ×1.5`), so You adds up from the page. The scorebug shows crest, code and record only; a team's full name shows once, in its grid's band. The words beside Not final are gone.
 
-**Redrawn again, Craig, 27 Nov 2026:** the first redraw read to him as a dull mess of text and squares with no League in it, and he asked for icons and for first blood and the rest to show, as FPL and UCL fantasy set a finished match's events under its score. So: the scorebug is the page's hero; each game has a card of its events; a game cell carries a mark for each scoring line; your players' rows are filled. He approved the direction the same day. The four reviewers' findings are in `git log` for this folder, not a panel file.
+**Redrawn again, Craig, 27 Nov 2026:** the first redraw read to him as a dull mess of text and squares with no League in it, and he asked for icons and for first blood and the rest to show, as FPL and UCL fantasy set a finished match's events under its score. So: the scorebug is the page's hero; each game has a card of its events; a game cell carries a mark for each scoring line; your players' rows are filled. He approved the direction the same day, asked which of 3/2/9 was which, and took the Hangul names off this page for the space; a second review round cleaned it up. The four reviewers' findings are in `git log` for this folder, not a panel file.
 
 | File | Shows |
 |---|---|
@@ -26,25 +24,25 @@ The Series page: one series, its games and each player's lines in each game (spe
 
 ## Layout
 
-- **Type**: 44 team codes and 48 the series score in the scorebug, 32 You, 20 Average, a game card's title and each player's series total, 14 body, K/D/A and per-game points, 12 labels and champions. The nav is shared.
+- **Type**: 44 team codes and 48 the series score in the scorebug, 44 You, 20 Average, a game card's title and each player's series total, 14 body, K/D/A and per-game points, 12 labels and champions. The nav is shared.
 - **Scorebug**, 112 tall: team crest (72), code and record, the score between. The loser's code drops to plain weight once the series is final; while it is live, neither does. A record is as of when the page is opened, so it is the record before the series while the series is live.
 - **The line under it**: a Final tag, or Live and a dashed Not final tag. Then the format, competition, week, day and time (your local time), and Watch › while live or before the start. At the right, You and Average, once the series has started; You is the larger.
-- **A card a game**, side by side under that line: `Game 1`, the winner's crest and `T1 won`, then its length and VOD ›; a live game shows the Live tag and its clock. Under the head, a row for each event that happened, in this order: Player of the Game, First blood, Solo kills, Steals, Quadra, Penta, then the coach lines 1st tower, Drakes, Baron, Elder, Quick win. The event's mark and word sit in the middle, the left team's names to its left and the right team's to its right. A player carries his C and your dot; a count over one reads `×2`; a coach line names the team by its bar and code. An event nobody got has no row.
+- **A card a game**, side by side under that line: `Game 1`, the winner's crest and `T1 won`, then at the right a gold crown and the Player of the Game, the game's length and `VOD ↗`; a live game shows the Live tag and its clock. Under the head, a row for each event that happened, in this order: First blood, Solo kills, Steals, Quadras, Pentas, then the coach lines First tower, Most drakes, Most barons, Most elders, Quick win. A row naming one of your players is filled. A card is as tall as its events. The event's mark and word sit in the middle, the left team's names to its left and the right team's to its right. A player carries his C and your dot; a count over one reads `×2`; a coach line names the team by its bar and code. An event nobody got has no row.
 - **Two grids**, one per team, side by side:
   - one row per player in role order, then the coach under a rule;
-  - the name with its Hangul beside it, and a round dot after your own players, whose rows are filled (`--fill`);
-  - a column per game, headed `Game 1` with W or L, or the Live tag;
-  - each game cell holds the champion (12, `--mid`), K/D/A after a sword, then a mark for each line that scored beyond them: first blood, a solo kill (one a kill), a steal, a quadra or penta, the gold lead at 15, a deathless game. At the right, the points, with the best 2 boxed and a dropped game greyed and unboxed. Rows are 68 tall;
+  - the name, with no Hangul (Craig, 27 Nov 2026), and a round dot after your own players, whose rows are filled (`--fill`);
+  - a column per game, headed `Game 1` with W or L, or the Live tag, and under it a sword, a skull and a hand for kills, deaths and assists, as League's scoreboard heads them;
+  - each game cell holds the champion (12, `--mid`), K/D/A, then a mark for each line that scored beyond them: first blood, a solo kill (one a kill), a steal, a quadra or penta, the gold lead at 15, a deathless game. At the right, the points, with the best 2 boxed and a dropped game greyed and unboxed. Rows are 68 tall;
   - a gold crown sits over the points of each game's Player of the Game;
   - the Series column shows the best-2 total;
-  - the coach cell shows a mark for each coach line that scored (1st tower, Drakes, Baron, Elder, Quick win). The coach's series total adds W +3 or L −1 once the series is final.
+  - the coach cell shows a mark for each coach line that scored (First tower, Most drakes, Most barons, Most elders, Quick win). The coach's series total adds W +3 or L −1 once the series is final.
 - **A player who sat out a game**: a dash in that game. A sub has his own row, marked "· sub" beside his role.
-- **Before it starts**: both rosters, 48px rows, coach last.
+- **Before it starts**: both rosters, 40px rows, coach last.
 
 ## Controls
 
 - **‹ LCK**: back to the LCK hub.
-- **VOD ›**: that game's VOD on lolesports.
+- **VOD ↗**: that game's VOD on lolesports.
 - **Watch ›**: opens Live.
 - **A player or coach**: opens his card (the [player card](../player-card/), the [coach card](../coach-card/)).
 
@@ -55,7 +53,7 @@ The Series page: one series, its games and each player's lines in each game (spe
 
 ## Marks
 
-Drawn for Flol in `series.html`'s symbols, none of them Riot's; [plate.md](../../plate.md), A scoring line's mark, is the rule. Sword: K/D/A. Drop: first blood. Two arrows meeting: solo kill. Bolt: steal. Star outline: quadra or penta. Coin: gold lead at 15. Shield: deathless. Gold crown: Player of the Game. Tower, flame, horned head, ringed flame, stopwatch: 1st tower, Drakes, Baron, Elder, Quick win.
+Drawn for Flol in `series.html`'s symbols, none of them Riot's; [plate.md](../../plate.md), A scoring line's mark, is the rule. Sword, skull, hand: kills, deaths, assists. Drop: first blood. Two arrows meeting: solo kill. Hooked arrow: steal. Star outline: quadra and penta, one mark for both. Coin with a rising arrow: gold lead at 15 minutes. Shield: deathless. Gold crown: Player of the Game. Tower, flame, crowned eye, ringed flame, stopwatch: First tower, Most drakes, Most barons, Most elders, Quick win.
 
 ## Placeholders
 

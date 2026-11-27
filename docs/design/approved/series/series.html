@@ -28,16 +28,16 @@
 .bug__score { display: flex; align-items: center; padding: 0 48px; background: var(--text); color: var(--bg); font: 600 48px/56px var(--fig); }
 .bug__score--v { font-size: 28px; }
 /* The line under it: the tags, the fixture, and at the right your points from the series beside the average manager's. */
-.meta { display: flex; gap: 24px; align-items: center; min-height: 32px; color: var(--mid); }
+.meta { display: flex; gap: 24px; align-items: center; min-height: 48px; color: var(--mid); }
 .meta b { color: var(--text); font-weight: 600; }
 .meta__tags { display: flex; gap: 8px; margin-right: -16px; }
 .versus { display: flex; align-items: baseline; gap: 8px; margin-left: auto; }
 .versus b { font: 600 20px/32px var(--fig); }
 .versus .you { color: var(--text); font-weight: 600; }
-.versus .you b { font: 700 32px/32px var(--fig); }
+.versus .you b { font: 700 44px/48px var(--fig); }
 .versus i { font-style: normal; margin: 0 4px; }
 td.tot small { white-space: nowrap; }
-.two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 16px; align-items: start; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; align-items: start; }
 .grid { background: var(--paper); border: 1px solid var(--line); }
 .grid__head { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 4px 16px; background: var(--head-band); font: 700 20px/24px var(--head); }
 .grid__head .crest { width: 32px; height: 32px; }
@@ -59,25 +59,31 @@ td.pl small { color: var(--mid); font: 400 12px/16px var(--ko); margin-left: 8px
 .gm { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
 .gm > span:first-child { white-space: nowrap; min-width: 0; }
 .gm small { display: block; color: var(--mid); font: 400 12px/16px var(--fig); }
-/* A game cell: the champion, K/D/A after its sword, then a mark for each line that scored (spec/05). */
+/* A game cell: the champion, K/D/A under the column's sword, skull and hand, then a mark for each line that scored (spec/05). */
 .ic { width: 16px; height: 16px; flex: none; vertical-align: -3px; }
 .gm .ch { display: block; font-size: 12px; line-height: 16px; color: var(--mid); overflow: hidden; text-overflow: ellipsis; }
 .gm .kda { display: block; font: 600 14px/20px var(--fig); }
-.gm .kda .ic { width: 14px; height: 14px; margin-right: 2px; color: var(--mid); }
-.gm .mk { display: flex; gap: 4px; height: 16px; margin-top: 2px; }
+.th__kda { display: block; line-height: 20px; color: var(--mid); }
+.th__kda .ic { width: 14px; height: 14px; color: var(--text); margin: 0 1px; }
+.gm .mk { display: flex; gap: 6px; height: 16px; margin-top: 2px; }
 .gm .p .ic--pog { color: var(--gold); }
 tr.is-me td { background: var(--fill); }
 /* The games, as FPL and UCL fantasy set a finished match's events under its score: a card a game, a row an event,
    each team's names on its own side of the event's mark. */
-.games { display: grid; gap: 32px; margin-top: 16px; }
+.games { display: grid; gap: 32px; margin-top: 24px; align-items: start; }
 .game { background: var(--paper); border: 1px solid var(--line); }
-.game__head { font: 400 14px/24px var(--sans); display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 16px; border-bottom: 2px solid var(--text); }
-.game__head b { font: 700 20px/24px var(--head); }
+.game__head { font: 400 14px/24px var(--sans); white-space: nowrap; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; border-bottom: 2px solid var(--text); }
+.game__head > b { font: 700 20px/24px var(--head); }
+.game__head .pogw b { font-weight: 600; }
 .game__head .crest { width: 28px; height: 28px; }
 .game__head .won { font-weight: 600; }
-.game__head .len { margin-left: auto; font-family: var(--fig); }
-.ev { display: grid; grid-template-columns: 1fr 168px 1fr; align-items: center; min-height: 36px; padding: 0 16px; border-top: 1px solid var(--line); }
+.game__head .len { font-family: var(--fig); }
+.game__head .pogw { display: flex; align-items: center; gap: 6px; margin-left: auto; }
+.game__head .pogw .ic { color: var(--gold); width: 20px; height: 20px; }
+.game__head .yours { margin-left: 2px; }
+.ev { display: grid; grid-template-columns: 1fr 148px 1fr; gap: 0 12px; align-items: center; min-height: 36px; padding: 0 16px; border-top: 1px solid var(--line); }
 .ev:first-of-type { border-top: 0; }
+.ev.is-me { background: var(--fill); }
 .ev__what { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--mid); font-size: 12px; }
 .ev__what .ic { color: var(--text); width: 20px; height: 20px; }
 .ev__what .ic--pog { color: var(--gold); }
@@ -111,17 +117,19 @@ tr.co td { border-top-color: var(--soft); }
   <symbol id="i-sup" viewBox="0 0 16 16"><path d="M8 3l2 2-2 9-2-9zM1 4h5l1 2-2 2zM15 4h-5l-1 2 2 2zM6 2l2-1 2 1-2 1z" fill="#EEF1F8"/></symbol>
   <symbol id="i-coach" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" fill="none" stroke="#EEF1F8" stroke-width="1.6"/><path d="M5 7h6M5 10h4" stroke="#EEF1F8" stroke-width="1.4"/></symbol>
   <!-- The scoring lines' marks, drawn for Flol: one mark a line, the same wherever the line shows. -->
-  <symbol id="i-kda" viewBox="0 0 16 16"><path d="M13.5 2.5 6.5 9.5M4.5 7.5l4 4M5.5 10.5 2.5 13.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+  <symbol id="i-kda" viewBox="0 0 16 16"><path d="M14 2 6.5 9.5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"/><path d="M4 7l5 5M5.5 10.5 2.5 13.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-dth" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.5a5.5 5.5 0 0 0-5.5 5.5c0 1.7.8 3 2 3.9V13h7v-2.1c1.2-.9 2-2.2 2-3.9A5.5 5.5 0 0 0 8 1.5zM5.7 6a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6zM10.3 6a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6z" fill="currentColor"/><path d="M6.5 13v1.5M9.5 13v1.5" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-ast" viewBox="0 0 16 16"><path d="M4.5 8.5V4M7 8V2.5M9.5 8V3M12 9V5M4.5 8.5 2.5 7.5M4.5 8.5V11a3.5 3.5 0 0 0 3.5 3.5h.5A3.5 3.5 0 0 0 12 11V9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-fb" viewBox="0 0 16 16"><path d="M8 1.5S3.5 7 3.5 10.2a4.5 4.5 0 0 0 9 0C12.5 7 8 1.5 8 1.5z" fill="currentColor"/></symbol>
-  <symbol id="i-solo" viewBox="0 0 16 16"><path d="M1 8h5.5M4 5.5 6.5 8 4 10.5M15 8H9.5M12 5.5 9.5 8l2.5 2.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
-  <symbol id="i-steal" viewBox="0 0 16 16"><path d="M9.8 1 3 9h4l-1 6 7-8.5H8.8z" fill="currentColor"/></symbol>
-  <symbol id="i-gold" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="8" r="2.4" fill="currentColor"/></symbol>
+  <symbol id="i-solo" viewBox="0 0 16 16"><path d="M1 8h5M3.8 5.6 6.2 8l-2.4 2.4M15 8h-5M12.2 5.6 9.8 8l2.4 2.4M8 3v2M8 11v2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-steal" viewBox="0 0 16 16"><path d="M3 13V7.5a4.5 4.5 0 0 1 9 0V10M9 7.5l3 3 3-3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/></symbol>
+  <symbol id="i-gold" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13zM8 4.3l3 3.2H9.2v4H6.8v-4H5z" fill="currentColor"/></symbol>
   <symbol id="i-none" viewBox="0 0 16 16"><path d="M8 1.5l5.5 2V8c0 3.2-2.3 5.4-5.5 6.5C4.8 13.4 2.5 11.2 2.5 8V3.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
   <symbol id="i-multi" viewBox="0 0 16 16"><path d="M8 1l1.8 4.3L14.5 5.7 11 8.8l1 4.7L8 11l-4 2.5 1-4.7L1.5 5.7l4.7-.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
   <symbol id="i-pog" viewBox="0 0 16 16"><path d="M2.5 13h11l1.5-8.5-4 3.5L8 2.5 5 8 1 4.5z" fill="currentColor"/></symbol>
   <symbol id="i-tower" viewBox="0 0 16 16"><path d="M4 1.5h2v2h1.5v-2h1v2H10v-2h2V6l-1.5 1.5V13H13v1.5H3V13h2.5V7.5L4 6z" fill="currentColor"/></symbol>
   <symbol id="i-drake" viewBox="0 0 16 16"><path d="M8 1c.5 3 4 4.5 4 8.5a4 4 0 0 1-8 0c0-1.8 1-2.8 1.600-4 .4 1 .9 1.600 1.600 1.900C7.600 5.4 7 3.200 8 1z" fill="currentColor"/></symbol>
-  <symbol id="i-baron" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M2.5 1.5 5.5 5h5l3-3.5.5 7a6 6 0 0 1-12 0zM8 7.3a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4z" fill="currentColor"/></symbol>
+  <symbol id="i-baron" viewBox="0 0 16 16"><path d="M1 9.5C3 6.5 5.3 5 8 5s5 1.5 7 4.5C13 12.5 10.7 14 8 14s-5-1.5-7-4.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="9.5" r="2" fill="currentColor"/><path d="M4 4.5 3 1.5M8 3V.8M12 4.5l1-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="i-elder" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6.8" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 3.5c.3 1.8 2.4 2.7 2.4 5.100a2.4 2.4 0 0 1-4.8 0c0-1.100.6-1.7 1-2.4.2.600.5 1 1 1.100-.2-1.200-.2-2.600.4-3.8z" fill="currentColor"/></symbol>
   <symbol id="i-quick" viewBox="0 0 16 16"><circle cx="8" cy="9.5" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 9.5V6.8M6.3 1.5h3.4M8 1.5v3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
 </defs></svg>
@@ -151,7 +159,7 @@ const crest = (c) => `<img class="crest" src="${KIT}crests/${c}.svg" alt="">`;
 const CAPTAIN = "Faker", AVERAGE = { final: 14, f21: 19, live: 6 };
 let YOU = 0;
 // The Captain's series total shows after x1.5, the sum once under it, as Points' breakdown, so You adds up from the page.
-const mine = (n, total) => { const got = n === CAPTAIN ? Math.floor(total * 1.5) : total; if (MINE.includes(n)) YOU += got; return n === CAPTAIN ? `${got}<small>${total} ×1.5</small>` : fmt(total); };
+const mine = (n, total) => { const got = n === CAPTAIN ? Math.trunc(total * 1.5) : total; if (MINE.includes(n)) YOU += got; return n === CAPTAIN ? `${got}<small>${total} ×1.5</small>` : fmt(total); };
 const fmt = (x) => String(x).replace("-", "−");
 const S = {
   // T1 v DK, Week 3, Sat 16 Jan, T1 2–0 (the hub's Results). Faker G1 Orianna 5/1/9 for 4, Siwoo G1 2, kkOma G1 2 (Points).
@@ -175,12 +183,12 @@ const S = {
     GEN: { name: "Gen.G", rec: "5–1", coach: ["Ryu", "류상욱", [[1, 1, 1, 0, 0], [0, 0, 0, 0, 0], [1, 1, 1, 0, 0]]],
       p: [["top", "Kiin", "김기인", [["Rumble", 3, 1, 5, 1, 0, 0, 0, 0], ["Jax", 0, 4, 2, 0, 0, 0, 0, 0], ["K'Sante", 2, 2, 7, 0, 0, 0, 0, 0]]],
           ["jng", "Canyon", "김건부", [["Vi", 2, 2, 9, 1, 0, 0, 0, 0], ["Lee Sin", 3, 3, 3, 1, 0, 1, 0, 1], ["Xin Zhao", 4, 1, 10, 1, 0, 0, 0, 0]]],
-          ["mid", "Chovy", "정지훈", [["Azir", 4, 0, 6, 1, 0, 0, 0, 0], ["Orianna", 1, 4, 3, 0, 0, 0, 0, 0], ["Sylas", 7, 1, 5, 1, 0, 0, 0, 0]]],
+          ["mid", "Chovy", "정지훈", [["Azir", 4, 0, 6, 1, 0, 1, 0, 0], ["Orianna", 1, 4, 3, 0, 0, 0, 0, 0], ["Sylas", 7, 1, 5, 1, 0, 0, 0, 0]]],
           ["bot", "Ruler", "박재혁", [["Kai'Sa", 6, 1, 4, 1, 0, 0, 0, 0], ["Jinx", 3, 2, 2, 0, 0, 0, 0, 0], ["Kalista", 7, 1, 5, 1, 0, 0, 0, 0]]],
           ["sup", "Duro", "주민규", [["Rell", 1, 2, 12, 0, 0, 0, 0, 0], ["Braum", 0, 5, 5, 0, 0, 0, 0, 0], ["Rakan", 1, 2, 15, 0, 0, 0, 0, 0]]]] },
-    HLE: { name: "Hanwha Life", rec: "4–2", coach: ["Homme", "윤성영", [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0], [0, 1, 0, 0, 0]]],
+    HLE: { name: "Hanwha Life", rec: "4–2", coach: ["Homme", "윤성영", [[0, 0, 0, 0, 0], [1, 1, 1, 0, 0], [0, 0, 0, 0, 0]]],
       p: [["top", "Zeus", "최우제", [["Gnar", 2, 3, 2, 1, 1, 0, 0, 0], ["K'Sante", 4, 1, 6, 1, 1, 0, 0, 0], ["Renekton", 2, 4, 2, 0, 0, 0, 0, 0]]],
-          ["jng", "Kanavi", "서진혁", [["Xin Zhao", 1, 4, 3, 0, 0, 0, 0, 0], ["Viego", 4, 2, 8, 1, 0, 0, 0, 0], ["Maokai", 1, 6, 3, 0, 0, 0, 0, 0]]],
+          ["jng", "Kanavi", "서진혁", [["Xin Zhao", 1, 4, 3, 0, 0, 0, 0, 0], ["Viego", 4, 2, 8, 1, 0, 0, 0, 0], ["Maokai", 1, 6, 3, 0, 0, 1, 0, 0]]],
           ["mid", "Zeka", "김건우", [["Taliyah", 2, 3, 2, 0, 0, 0, 0, 0], ["Ahri", 5, 1, 7, 1, 0, 0, 0, 0], null]],
           // a made-up academy mid, subbed in for G3 (spec/01 lines 49–51)
           ["mid", "Kael", "김태율", [null, null, ["Azir", 2, 4, 3, 0, 0, 0, 0, 0]], "sub"],
@@ -192,7 +200,7 @@ const S = {
 S.live = JSON.parse(JSON.stringify(S.final));
 S.live.games[1] = { live: "14:20", blue: "DK" };
 const G2 = { T1: [["Rumble", 1, 0, 1, 0], ["Xin Zhao", 1, 0, 2, 0], ["Sylas", 3, 0, 2, 0], ["Varus", 1, 0, 3, 0], ["Nautilus", 0, 1, 4, 0]],
-  DK: [["Gnar", 1, 0, 1, 1], ["Maokai", 0, 2, 1, 0], ["Azir", 0, 2, 1, 0], ["Zeri", 0, 1, 0, 0], ["Alistar", 0, 1, 2, 0]] };
+  DK: [["Gnar", 1, 0, 0, 1], ["Maokai", 0, 2, 1, 0], ["Azir", 0, 2, 0, 0], ["Zeri", 0, 1, 0, 0], ["Alistar", 0, 1, 0, 0]] };
 for (const c of ["T1", "DK"]) S.live[c].p.forEach((p, j) => { const [ch, k, d, a, fb] = G2[c][j]; p[3][1] = [ch, k, d, a, 0, 0, fb, 0, 0, true]; });
 S.live.T1.coach[2][1] = [0, 0, 0, 0, 0];
 // Records are as of the moment the page is opened: before this series while it is live.
@@ -212,27 +220,27 @@ const me = (n) => (n === CAPTAIN ? '<span class="tile__c cap">C</span>' : "") + 
 const ic = (id, title = "", cls = "") => `<svg class="ic ${cls}"${title ? ` role="img" aria-label="${title}"` : ' aria-hidden="true"'}><use href="#i-${id}"/></svg>`;
 const pog = (s, i, n) => (s.games[i].pog === n ? ic("pog", "Player of the Game", "ic--pog") : "");
 // A player's marks for a game: one for each line that scored beyond kills, deaths and assists.
-const marks = ([, , d, , gold, solo, fb, multi, steal, live]) => [fb && ic("fb", "First blood"), ...Array(solo).fill(ic("solo", "Solo kill")), ...Array(steal).fill(ic("steal", "Steal")), multi && ic("multi", multi > 1 ? "Penta" : "Quadra"), gold && ic("gold", "Gold lead at 15"), d === 0 && !live && ic("none", "Deathless")].filter(Boolean).join("");
+const marks = ([, , d, , gold, solo, fb, multi, steal, live]) => [fb && ic("fb", "First blood"), ...Array(solo).fill(ic("solo", "Solo kill")), ...Array(steal).fill(ic("steal", "Steal")), multi && ic("multi", multi > 1 ? "Penta" : "Quadra"), gold && ic("gold", "Gold lead at 15 minutes"), d === 0 && !live && ic("none", "Deathless")].filter(Boolean).join("");
 const cell = (s, i, n, label, p, counted) => `<td class="${counted ? "" : "drop"}"><div class="gm"><span>${label}</span><span class="p">${pog(s, i, n)}${counted ? `<span class="box">${fmt(p)}</span>` : fmt(p)}</span></div></td>`;
-const L = ["1st tower", "Drakes", "Baron", "Elder", "Quick win"], LI = ["tower", "drake", "baron", "elder", "quick"];
+const L = ["First tower", "Most drakes", "Most barons", "Most elders", "Quick win"], LI = ["tower", "drake", "baron", "elder", "quick"];
 // A game's events, as FPL's and UCL fantasy's finished match: a row an event that happened, each team's names on its side.
 function game(s, i) {
   const g = s.games[i], side = (code) => { const t = s[code], at = (f) => t.p.filter((p) => p[3][i] && f(p[3][i]) > 0).map((p) => `<span><b>${p[1]}</b>${f(p[3][i]) > 1 ? ` ×${f(p[3][i])}` : ""}${me(p[1])}</span>`).join("");
     const own = `<span><i class="team__bar" style="background:${BAR[code]}"></i><b>${code}</b></span>`, c = t.coach[2][i];
-    return [t.p.some((p) => p[1] === g.pog) ? `<span><b>${g.pog}</b>${me(g.pog)}</span>` : "", at((x) => x[6]), at((x) => x[5]), at((x) => x[8]), at((x) => (x[7] === 1 ? 1 : 0)), at((x) => (x[7] === 2 ? 1 : 0)), ...c.map((x) => (x ? own : ""))]; };
-  const A = side(s.a), B = side(s.b), W = [["pog", "Player of the Game", "ic--pog"], ["fb", "First blood"], ["solo", "Solo kills"], ["steal", "Steals"], ["multi", "Quadra"], ["multi", "Penta"], ...L.map((l, j) => [LI[j], l])];
-  const rows = W.map(([id, word, cls], j) => (A[j] || B[j] ? `<div class="ev"><span class="ev__a">${A[j]}</span><span class="ev__what">${ic(id, "", cls)}${word}</span><span class="ev__b">${B[j]}</span></div>` : "")).join("");
-  return `<section class="game"><h2 class="game__head"><b>Game ${i + 1}</b>${g.live ? `<span class="tag tag--live">Live</span><span class="len"><b>${g.live}</b></span>` : `${crest(g.w)}<span class="won">${g.w} won</span><span class="len">${g.len}</span><a class="link" href="#">VOD ›</a>`}</h2>${rows || '<div class="ev ev--none">—</div>'}</section>`;
+    return [at((x) => x[6]), at((x) => x[5]), at((x) => x[8]), at((x) => (x[7] === 1 ? 1 : 0)), at((x) => (x[7] === 2 ? 1 : 0)), ...c.map((x) => (x ? own : ""))]; };
+  const A = side(s.a), B = side(s.b), W = [["fb", "First blood"], ["solo", "Solo kills"], ["steal", "Steals"], ["multi", "Quadras"], ["multi", "Pentas"], ...L.map((l, j) => [LI[j], l])];
+  const rows = W.map(([id, word, cls], j) => (A[j] || B[j] ? `<div class="ev${(A[j] + B[j]).includes("yours") ? " is-me" : ""}"><span class="ev__a">${A[j]}</span><span class="ev__what">${ic(id, "", cls)}${word}</span><span class="ev__b">${B[j]}</span></div>` : "")).join("");
+  return `<section class="game"><h2 class="game__head"><b>Game ${i + 1}</b>${g.live ? `<span class="tag tag--live">Live</span><span class="len" style="margin-left:auto"><b>${g.live}</b></span>` : `${crest(g.w)}<span class="won">${g.w} won</span><span class="pogw">${ic("pog", "Player of the Game")}<b>${g.pog}</b>${me(g.pog)}</span><span class="len">${g.len}</span><a class="link" href="#">VOD ↗</a>`}</h2>${rows || '<div class="ev ev--none">—</div>'}</section>`;
 }
 function team(s, code) {
   const t = s[code], won = s.games.map((g) => g.w === code), n = s.games.length, over = s.games.every((g) => g.w);
-  const head = `<colgroup><col style="width:${n > 2 ? 96 : 104}px"><col style="width:${n > 2 ? 136 : 170}px">${s.games.map(() => "<col>").join("")}<col style="width:72px"></colgroup>
-    <tr><th></th><th></th>${s.games.map((g, i) => `<th>Game ${i + 1} ${g.live ? `<span class="chip chip--live">Live</span>` : `<span class="chip chip--${g.w === code ? "w" : "l"}">${g.w === code ? "W" : "L"}</span>`}</th>`).join("")}<th class="n">Series</th></tr>`;
+  const head = `<colgroup><col style="width:${n > 2 ? 96 : 104}px"><col style="width:${n > 2 ? 112 : 136}px">${s.games.map(() => "<col>").join("")}<col style="width:72px"></colgroup>
+    <tr><th></th><th></th>${s.games.map((g, i) => `<th>Game ${i + 1} ${g.live ? `<span class="chip chip--live">Live</span>` : `<span class="chip chip--${g.w === code ? "w" : "l"}">${g.w === code ? "W" : "L"}</span>`}<span class="th__kda">${ic("kda", "Kills")}/${ic("dth", "Deaths")}/${ic("ast", "Assists")}</span></th>`).join("")}<th class="n">Series</th></tr>`;
   const rows = t.p.map(([rl, nm, k, gs, sub]) => { const ps = gs.map((g) => pts(rl, g)), c = best2(ps);
-    return `<tr${MINE.includes(nm) ? ' class="is-me"' : ""}><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}${sub ? " · sub" : ""}</td><td class="pl"><b>${nm}</b><small>${k}</small>${me(nm)}</td>
-      ${gs.map((g, i) => (g ? cell(s, i, nm, `<span class="ch">${g[0]}</span><span class="kda">${ic("kda")}${g[1]}/${g[2]}/${g[3]}</span><span class="mk">${marks(g)}</span>`, ps[i], c.includes(i)) : '<td><span class="none">—</span></td>')).join("")}<td class="tot">${mine(nm, sum(c.map((i) => ps[i])))}</td></tr>`; }).join("");
+    return `<tr${MINE.includes(nm) ? ' class="is-me"' : ""}><td class="rl"><svg><use href="#i-${rl}"/></svg>${RH[rl]}${sub ? " · sub" : ""}</td><td class="pl"><b>${nm}</b>${me(nm)}</td>
+      ${gs.map((g, i) => (g ? cell(s, i, nm, `<span class="ch">${g[0]}</span><span class="kda">${g[1]}/${g[2]}/${g[3]}</span><span class="mk">${marks(g)}</span>`, ps[i], c.includes(i)) : '<td><span class="none">—</span></td>')).join("")}<td class="tot">${mine(nm, sum(c.map((i) => ps[i])))}</td></tr>`; }).join("");
   const [cn, ck, cg] = t.coach, cp = cg.map(sum), c = best2(cp), sw = !over ? 0 : won.filter(Boolean).length === 2 ? 3 : -1;
-  const coach = `<tr class="co${MINE.includes(cn) ? " is-me" : ""}"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b><small>${ck}</small>${me(cn)}</td>
+  const coach = `<tr class="co${MINE.includes(cn) ? " is-me" : ""}"><td class="rl"><svg><use href="#i-coach"/></svg>Coach</td><td class="pl"><b>${cn}</b>${me(cn)}</td>
     ${cg.map((g, i) => cell(s, i, cn, `<span class="${g.some(Boolean) ? "co-l" : "none"}">${g.map((x, j) => (x ? ic(LI[j], L[j]) : "")).join("") || "—"}</span>`, cp[i], c.includes(i))).join("")}
     <td class="tot">${mine(cn, sum(c.map((i) => cp[i])) + sw)}<small>${sw > 0 ? "W +3" : sw < 0 ? "L −1" : "&nbsp;"}</small></td></tr>`;
   return { html: `<section class="grid"><h2 class="grid__head">${crest(code)}<b><i class="team__bar" style="background:${BAR[code]}"></i>${code}</b>${t.name === code ? "" : `<span>${t.name}</span>`}</h2><table>${head}${rows}${coach}</table></section>` };
@@ -245,7 +253,7 @@ if (V === "next") {
   $("meta").innerHTML = `<span>Bo3 · LCK Cup · Week 4 · Wed 20 Jan</span><span><b>8:00am</b></span><a class="link" href="#">Watch ›</a>`;
   const ICO = ["top", "jng", "mid", "bot", "sup", "coach"];
   $("two").innerHTML = Object.entries(NEXT).map(([c, ps]) => `<section class="grid"><h2 class="grid__head">${crest(c)}<b><i class="team__bar" style="background:${BAR[c]}"></i>${c}</b><span>${c === "HLE" ? "Hanwha Life" : "Dplus KIA"}</span></h2><table>
-    ${ps.map(([n, k], i) => `<tr class="${i === 5 ? "co" : ""}"><td class="rl" style="width:112px;height:40px"><svg><use href="#i-${ICO[i]}"/></svg>${i === 5 ? "Coach" : RH[ICO[i]]}</td><td class="pl" style="height:40px"><b>${n}</b><small>${k}</small>${me(n)}</td></tr>`).join("")}</table></section>`).join("");
+    ${ps.map(([n, k], i) => `<tr class="${i === 5 ? "co" : ""}"><td class="rl" style="width:112px;height:40px"><svg><use href="#i-${ICO[i]}"/></svg>${i === 5 ? "Coach" : RH[ICO[i]]}</td><td class="pl" style="height:40px"><b>${n}</b>${me(n)}</td></tr>`).join("")}</table></section>`).join("");
 } else {
   const s = S[V], A = team(s, s.a), B = team(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.filter((g) => g.w === s.b).length, live = s.games.some((g) => g.live);
   $("bug").innerHTML = `<div class="bug__team ${!live && wa < wb ? "is-lost" : ""}">${crest(s.a)}<b>${s.a}</b><small>${s[s.a].rec}</small></div><div class="bug__score">${wa}–${wb}</div><div class="bug__team bug__team--b ${!live && wb < wa ? "is-lost" : ""}"><small>${s[s.b].rec}</small><b>${s.b}</b>${crest(s.b)}</div>`;

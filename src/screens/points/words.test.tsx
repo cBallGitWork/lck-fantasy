@@ -12,6 +12,7 @@ test("Points' C, Flex, tiers and Killer each carry their hover's line", () => {
   expect(out).toContainEqual(["Flex", "Any role"]);
   expect(out).toContainEqual(["Emerald I", "Overall rank as a LoL tier"]);
   expect(out).toContainEqual(["Diamond IV", "Overall rank as a LoL tier"]);
-  expect(out).toContainEqual(["Killer", "Top scorer you don't own"]);
-  expect(out.map(([word]) => word)).not.toContain("Star");
+  expect(out).toContainEqual(["Emerald II", "Overall rank as a LoL tier"]);
+  expect(out).toContainEqual(["Killers", "Top scorer you don't own"]);
+  expect(out.map(([word]) => word)).not.toContain("Stars");
 });

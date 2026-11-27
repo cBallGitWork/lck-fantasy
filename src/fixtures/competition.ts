@@ -39,6 +39,8 @@ const COUNTED_PER_SERIES = 2;
 export const BEST_OF = 3;
 export const TEAM_CAP = season.settings.squad.teamCap;
 export const HIT_POINTS = season.settings.transfers.hitPoints;
+/** How many Stars and Killers Points' Your week lists (spec/12, Points, Your own week). */
+export const YOUR_WEEK_PICKS = 3;
 export const BUFFS = ["Bench Boost", "Double Captain", "Coach Diff"] as const;
 export type BuffName = (typeof BUFFS)[number];
 

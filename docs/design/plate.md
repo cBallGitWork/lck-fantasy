@@ -118,7 +118,7 @@ Each part is drawn one way on every screen.
   16 Nov 2026).
 - **A link** ends with `›`, in `--text` (Craig, 16 Nov 2026), and names where it goes: `Full stats ›`. Not underlined, save
   a link inside a sentence. A link leaving Flol ends with `↗`.
-- **Deadline**, one way everywhere: `Deadline Wed 7:45am` and the countdown `9h 45m`, a figure in `--mid` with no box round it (Craig, 19 Nov 2026).
+- **Deadline**, one way everywhere: `Deadline Wed 7:45am` and the countdown `9h 45m`, a figure in `--mid` with no box round it (Craig, 19 Nov 2026). On Home alone the countdown is the deadline panel's key figure, 28 in `--text`, the time after it in `--mid` (Craig, 27 Nov 2026; `approved/home/`).
 - **Times:** the manager's own only, with no zone, in am/pm: lower case, no space, no leading
   zero (`8:00am`, `10:30pm`) (Craig, 19 Nov 2026). Game clocks (`12:04`) stay as they are. A column
   of times has a head.

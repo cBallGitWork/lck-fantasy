@@ -26,9 +26,9 @@ Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in Pick Tea
    - Before any tap it shows the Captain's week. The tapped tile is outlined.
    - A third series in a week is a third header row with its games.
 6. **The Rift, its panels and the card stay on screen** while the side column scrolls.
-7. **Leagues**, the side column's first panel: each league with your rank and its move, green up and red down; Overall with its tier and shield; `≈6 pts to Diamond IV` and All leagues ›.
+7. **Leagues**, the side column's first panel: each league with your rank and its move, green up and red down; Overall with its tier and shield; under Overall, both tier gaps, `≈6 pts to Diamond IV` and `≈5 pts clear of Emerald II`, the number alone in bold; All leagues › alone at the foot (Craig, 27 Nov 2026).
 8. **This week's series:** each with both teams' bars, its result, `Live` with the score, or its time.
-9. **Your week**, below the series (Craig, 16 Nov 2026): Star, Flop and Killer, each with points and ownership; a dot marks a player of yours. Each carries its mark before the word, Killer's crossed swords (plate.md, Parts, A fact's mark), and the player his team's bar and code (Craig, 27 Nov 2026).
+9. **Your week**, below the series (Craig, 16 Nov 2026; Stars and Killers, 27 Nov 2026: "Approve as recommended"): three Stars, the Flop and three Killers, each with points and effective ownership under `Pts` and `Owned`, spec/12's sums pick each three, and the three are listed by points, highest first (Craig, 27 Nov 2026: "looks cleaner"). Each group's word and mark sit on its first row only, with no rule inside a group (plate.md, Parts, A fact's mark); each player has his team's bar and code. No dot here: Stars and the Flop are always yours, Killers never. The coach has no tag, as on Home.
 10. Then the sponsor slot.
 
 ## The card round, 27 Nov 2026

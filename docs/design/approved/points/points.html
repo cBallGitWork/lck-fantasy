@@ -47,8 +47,9 @@
 .figs dd { font-weight: 600; }
 .total__live { display: flex; align-items: center; gap: 8px; min-height: var(--row); border-top: 1px solid var(--line); }
 .total__live .link { margin-left: auto; }
-.picks .pick { display: grid; grid-template-columns: 88px 1fr 96px; align-items: center; min-height: var(--row); border-top: 1px solid var(--line); }
+.picks .pick { display: grid; grid-template-columns: 80px 1fr 96px; align-items: center; min-height: var(--row); border-top: 1px solid var(--line); }
 .picks .pick--head { min-height: 20px; border-top: 0; }
+.picks .pick:not(.pick--first):not(.pick--head) { border-top-color: transparent; }
 .pick dt { color: var(--mid); }
 .pick dd { display: flex; align-items: center; gap: 6px; }
 .pick dd .team__bar { margin-right: 0; }
@@ -105,7 +106,10 @@
 .lg td:last-child { width: 88px; }
 .up { color: var(--up); }
 .down { color: var(--down); }
-.lg__foot { display: flex; justify-content: space-between; align-items: center; min-height: var(--row); margin: 0 -16px; padding: 0 16px; border-top: 1px solid var(--line); }
+.lg .lg__gaps td { border-top: 0; height: auto; padding: 0 0 12px 18px; }
+.lg__gaps b { color: var(--text); }
+.lg__gaps td > span { display: block; line-height: 24px; white-space: nowrap; }
+.lg__foot { display: flex; justify-content: flex-end; align-items: center; min-height: var(--row); margin: 0 -16px; padding: 0 16px; border-top: 1px solid var(--line); }
 .ws td:first-child { width: 56px; }
 .ws b { font-weight: 600; }
 </style>

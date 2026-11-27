@@ -25,7 +25,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     - Flop: your lowest starter who played.
     - Killers: the players you don't own, by points × effective ownership. Example: Chovy, 15
       points at 41%, ranks above a 20-point player at 5%.
-    - The sum only ranks them: no cost or gain number is shown.
+    - The sum only picks each three: no cost or gain number is shown, and the three are listed by
+      points, highest first (Craig, 27 Nov 2026: "looks cleaner"). Example: Killers Chovy 15, Zeka
+      14, Kiin 12, though Kiin's sum beats Zeka's.
     - The coach is in the running for both. A Star tie goes to the lower effective ownership, a
       Killer tie to the higher.
     - They show while series are in play, under the Not final tag, as the rest of Points.

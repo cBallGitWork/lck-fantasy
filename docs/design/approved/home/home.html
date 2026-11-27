@@ -103,8 +103,10 @@
 .tpanel dl + .all tr:first-child td { border-top: 1px solid var(--line); }
 
 /* The side column. The deadline: the countdown as Home's key figure, the two keys, a starter who may not play, then the next deadlines. */
-.dl__count { display: flex; align-items: baseline; gap: 12px; padding: 12px 0 8px; }
-.dl__count b { font: 700 28px/32px var(--fig); }
+/* The countdown is Home's one key figure: 44, its units small and grey so the numbers carry it (Craig, 27 Nov 2026: it needs to pop more). */
+.dl__count { display: flex; flex-direction: column; gap: 4px; padding: 16px 0 12px; }
+.dl__count b { display: flex; align-items: baseline; gap: 4px; font: 700 44px/48px var(--fig); letter-spacing: -0.02em; }
+.dl__count b i { font: 400 20px/24px var(--sans); font-style: normal; color: var(--mid); margin-right: 12px; letter-spacing: 0; }
 .dl__keys { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding-bottom: 12px; }
 .dl__keys .key { min-height: 40px; font-size: 14px; }
 .dl__keys .save { padding: 0; border: 0; }

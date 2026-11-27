@@ -74,7 +74,7 @@
   // The side column. The deadline first: the countdown, Pick Team (the page's one filled key) and Transfers, a starter who
   // may not play, then the next three deadlines.
   const deadline = `<section class="tpanel" aria-label="Deadline"><h2 class="tpanel__title">Week 4 deadline</h2>
-    <p class="dl__count"><b class="fig">${idle ? "9h 45m" : "3d 22h 45m"}</b><span class="mid">Wed 7:45am</span></p>
+    <p class="dl__count"><b class="fig">${(idle ? "9h 45m" : "3d 22h 45m").replace(/([dhm])/g, "<i>$1</i>")}</b><span class="mid">Wed 7:45am</span></p>
     <p class="dl__keys"><a class="key save" href="#">Pick Team</a><a class="key" href="#">Transfers</a></p>
     <p class="dl__row"><span class="mid">Free transfers</span><b class="fig">1</b></p>
     ${boost && idle ? '<p class="dl__row"><span class="mid">Buff</span><b>Bench Boost</b></p>' : ""}

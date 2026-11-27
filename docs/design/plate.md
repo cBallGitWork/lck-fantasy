@@ -141,6 +141,11 @@ Each part is drawn one way on every screen.
   contents 16 in. One treatment for every panel; a screen's side sections become panels as it is
   redrawn. From Transfers on, a panel's title sits on a `--head-band` band in place of the 2px rule
   (Craig, 26 Nov 2026); Pick Team's panels follow when it is next redrawn.
+- **The player's card** under the Rift (Points, Transfers; Craig, 27 Nov 2026, `approved/points/README.md`): its head is the
+  panel's `--head-band` on one line, read as a tile: crest 32, the role in a `--band` strip, the team's bar and code, the
+  name 20/700, the key figure 28 at the right; nothing under the name. Its body is ruled, never tiles. A result is an
+  outlined 24px chip, `W` in `--up` and `L` in `--down`; `Live` is the filled tag; counted points sit in a 1px `--text`
+  box, dropped ones in `--mid` with none.
 - **Marks:** C is round, and so are the live dot, your-player dot (8px, after the name)
   and a radio button. C is gold (`--ink`), its letter `--on-ink`. A crest keeps its team's shape (`approved/crests/`). Everything else is square, radius 0, save a Rift tile's card (Craig, 16 Nov 2026).
 - **A team's colour** is a 4px bar before its code, 6px in Transfers' lists (Craig, 26 Nov 2026), wherever a list names a team (Craig, 24 Nov 2026:

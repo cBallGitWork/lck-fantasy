@@ -1,54 +1,57 @@
 # Points
 
-Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in the shared frame.
+Your gameweek. Reached from **Points** in the top bar. Drawn at 1440 in Pick Team's look ([plate.md](../../plate.md); the shared styles are `../pick-team/look.css`): the Rift at the main column's left, a column of panels beside it, the tapped player's week under both, leagues, the week's series and your week in the side column.
 
-**Approved:** Craig, 14 Nov 2026. A start was approved on 13 Nov ("Seems ok as a start?", after "Riff on the left, Bench underneath, Widget/info on right"; PR #47, never merged). On 14 Nov it was brought up to the spec with fresh eyes and less explaining text, Craig picked what stays, and said "File and merge". Names, teams and numbers are a made-up LCK Cup Week 3, not roster data. Redrawn to [plate.md](../../plate.md) on 15 Nov 2026; this binds layout, content and order, and plate.md how it is drawn. The source is [docs/design/proposals/2026-11-14-points/](../../proposals/2026-11-14-points/) (`points.html`, `brief.md`).
+**Approved:** Craig, 27 Nov 2026: "Yes, save both" (Points, and the player card it shares with Transfers). The redraw of the 14 to 17 Nov pictures in the new look. On 26 Nov he put the breakdown under the Rift, opened the page on the Captain's week and let the Captain's ×1.5 show once. On 27 Nov he cut each tile to the week's total, asked for a card round because the card was a mish-mash of fonts and shapes with no colour (research on FPL and UCL Fantasy, the review team's wants, three proposals, one final), and then took the line under the name out of the card's head. Names, teams and numbers are a made-up Split 1 Week 3, not roster data. This binds layout, content and order; plate.md how it is drawn.
 
 | File | Shows |
 |---|---|
-| `1440.png`, `points.html` | Saturday, T1 v DK live: your team on the Rift, the bench bar, Faker's games open in the side column, which is gone: the sheet, below, replaces it, and the picture isn't redrawn, your week, leagues, the week's series |
-| `breakdown.png`, `breakdown.html` | A tapped player's breakdown sheet: Faker, the Carry, two series |
-| `breakdown-coach.png`, `breakdown-coach.html` | The same sheet for the coach: kkOma |
-| `breakdown-brief.md`, `bg.png` | The sheet's brief; the page behind it |
+| `1440.png`, `points.html` | Saturday, T1 v DK live in game 2, GEN v HLE still to come: the page as it opens, the Captain's week under the Rift |
+| `1440-coach.png`, `points.html?p=kkoma` | The coach tapped: his lines, and each series' `Series win +3` row |
+| `1440-bench.png`, `points.html?p=bdd` | A bench player with no games tapped |
 
-## Changed by Craig, 16 Nov 2026
+`render.js` draws every state; players and places are Pick Team's (`../pick-team/data.js`). Card view is not redrawn yet and keeps its 14 Nov layout.
 
-After using the built page; these override the picture.
+## What binds
 
-- The Carry shows only his result (`25`), never the working (`17×1.5`, `12 + 5 = 17 × 1.5`), on his tile, his card and his games. Perfect game follows.
-- No auto-sub line (`Subbed in for Bdd`) on a tile or a card.
-- The bottom row tidied: Coach stands under Top and Flex under Jungle, and Support and Bot stand a little higher, so the four shirts sit on one line. Perfect game shares the places. Replaced later that day by the square Rift's places, below.
-- Each series in a player's games opens its Series page.
-- Your week moves below Leagues and the week's series, above the sponsor.
-- A series in a player's games is its opponent alone: `v DK`, no day.
-- The Rift is square (later that day), 720 a side, centred in the main column, and the map redrawn for it: lanes, river, bases, towers and pits (`measure.rift`).
-- Each starter in his place: top in top lane, jungle in the jungle, mid in mid lane, Bot over Support (Craig, 16 Nov 2026) together in bot lane, Coach and Flex by the blue base.
-- Tiles as FPL's: the shirt on a faint lighter card, C or V at its top right and a news flag `!` at its top left, a white name plate, then a dark band (fixtures, or points and series). No role icon on a tile: his place on the Rift says it; the Flex's and Coach's place is a label over the shirt (`FLEX`, `Coach 감독`), and nothing goes under a Flex's tile: no `Flex · plays Top`, no `Not starting` tag (his flag `!` stays at the shirt's corner, the words in his card). No team crests on the tiles. The points sit in the dark band, the series under them. Pick Team and Perfect game share the places.
-- The bench shows the Rift's own tiles (shirt on its card, name plate, points band, `Didn't play` under a dash), each under its order and role, `1. Mid`, as FPL's bench and its `1. DEF`.
-- Live said once per place: on the head's live bar, the open game's row and the week's series (a shared list, kept). A tile's or card's series line and a series result in a player's games drop it: `v DK 5`, `1–0`.
-- `Final` on the head alone (Changed by Craig, 16 Nov 2026): a series result in a player's games is `W 2–1`, not `W 2–1 · final`; the head's tag is `Final`, or `Not final` while the week isn't, `Live` while a game is. Perfect game, reached by Highest ›, keeps its `Final` and drops `Cap 2`.
-- A tap opens a breakdown sheet (Changed by Craig, 16 Nov 2026: "tapping a player card on points rift view didn't do anything, should show that gameweek's points breakdown like FPL"; "your call" on popup or scroll; then "huge info dump", so slimmed; approved with "File both approve"). A 544 modal over the page, replacing the side panel: portrait, name and hangul, a bigger C or V, the total, then Average Carry for the Carry. Each series is a header (day, opponent, result ›, its points) over one 32px row per game (the pictures draw 40; 32 binds): champion and W/L, K/D/A, the bonus lines that scored as words, the points boxed when counted and in `--mid` when dropped. The ×1.5 stays hidden: the total is his result. The coach gets the same sheet with his lines and the series' +3 or −1. Full stats › at the foot.
-- Week arrows as FPL's (Changed by Craig, 16 Nov 2026): ‹ and › are 32px keys, text on paper with a mid edge, beside the week. Each is a link by the router, the week in the path (`/points/2`; `/points` is the latest), so a week can be linked; › is a disabled key at the latest week and ‹ at Week 1. The made-up data has Weeks 1 and 2, final, to step back to.
+1. **Head:** the team's name and hangul, then ‹ week › as two 32px keys, off at Week 1 and at the latest week; `Rift view | Card view` at the right.
+2. **A tile** is Pick Team's (role strip, shirt, the Captain's C, the white plate with team and name) with one dark band: the week's total alone (Craig, 27 Nov 2026: no series row). With a series still to come it is the total so far, then that opponent: `7, v GEN`. A live series is under way, so its tile shows the total alone. The Captain's tile shows his result, never the working.
+3. **Total**, a panel beside the Rift: the week's points at 28, `Not final` until the week is, Average, Highest ›, and the live game said once with Watch ›.
+4. **Bench**, a panel under it on the Rift's green: each player under his order and role (`1. Mid`), his points grey because they don't count, a dash and `Didn't play` with no games.
+5. **The player's week**, under the Rift and its panels (Craig, 26 Nov 2026, in place of the sheet over the page): the card of the card round.
+   - Head: the panels' blue band on one line, read as a tile: crest, the role in its dark strip, the team's bar and code, the name, his hangul, the C; his total at the right at 28. Nothing under the name (Craig, 27 Nov 2026). The Captain's shows `17 ×1.5` and `Captains averaged 19` once, before the total.
+   - Body: one ruled table. A series is a header row on `--fill`: day, the opponent's crest, `v HLE ›`, the result outlined (`W 2–1`) or a filled `Live` and the score so far, its points at the right. A game is a 32px row: `G1`, `W` or `L` outlined in green or red, the champion, K, D and A each in its column with D grey, the lines that scored, the points boxed when counted and grey when dropped.
+   - The coach has no champion and no K D A; each of his series ends with `Series win +3` or `Series loss −1`.
+   - Foot: Full stats ›.
+   - Before any tap it shows the Captain's week. The tapped tile is outlined.
+   - A third series in a week is a third header row with its games.
+6. **The Rift, its panels and the card stay on screen** while the side column scrolls.
+7. **Leagues**, the side column's first panel: each league with your rank and its move, green up and red down; Overall with its tier and shield; `≈6 pts to Diamond IV` and All leagues ›.
+8. **This week's series:** each with both teams' bars, its result, `Live` with the score, or its time.
+9. **Your week**, below the series (Craig, 16 Nov 2026): Star, Flop and Killer, each with points and ownership; a dot marks a player of yours.
+10. Then the sponsor slot.
+
+## The card round, 27 Nov 2026
+
+- Looked at: FPL's player card (a team banner, a stat strip with ranks, form and fixtures as badges with points chips, coloured results) and its Points page (name and points on a tile, nothing else); UCL Fantasy's card (the series strip as crest, code and points).
+- The review team wanted team colour, coloured results, one chip shape, one figure system, and series drawn the same on both screens.
+- Three proposals: a team-colour band, a lineup card with the shirt, and a scoreboard. Three of four ranked the scoreboard first; nobody wanted a full team-colour head.
+- The final takes the scoreboard's band, K D A columns and series rows, the band proposal's stat strip (on Transfers), the lineup card's role label, and UCL Fantasy's series strip (on Transfers). W and L are outlined so filled green stays Buy's.
 
 ## Borrowed
 
-- **FPL's Points page**: total beside Average and Highest, the squad with the bench under it, a tap opening a player's breakdown.
-- **LiveFPL**: your Carry against the average Carry, points to climb, Killer.
-- **Summoner's Rift**: each starter in his lane; Coach and Flex in your base.
+- **FPL's Points page**: the total beside Average and Highest, name and points on a tile, a tap showing the player's week.
+- **FPL's and UCL Fantasy's player cards**: coloured results, a stat strip with ranks, the series strip.
+- **The LCK's in-game scoreboard**: K, D and A in columns.
 - **LoL ranked tiers**: overall rank as "Emerald I" ([spec/08](../../../../spec/08-leagues.md#overall-tiers)).
-
-## Layout
-
-- **Header:** team name and hangul; ‹ week ›; your points, not final, Average, Highest ›; the live bar while a series is live, with Watch ›.
-- **Left:** Rift view | Card view (Rift first, then remembered); each starter's points and his series under the shirt; C and V; under the pitch the bench bar, one row: order, role icon, name, team and the week's points, "Didn't play" and — for a bench player with no games (redrawn 15 Nov 2026 from the grey band of two shirts).
-- **Right:** Leagues with moves and the points to the next tier, the week's series, your week (Star, Flop, Killer), the sponsor slot.
 
 ## Controls
 
-- **A player, coach or bench tile**: opens his breakdown sheet; ✕, Esc or the page behind closes it. Each series (`v HLE ›`) opens its Series page.
-- **Full stats ›**: the player card.
-- **‹ ›**: the week before or after (`/points/2`); off at Week 1 and past the current week.
-- **Highest ›**: the top team's week. **All leagues ›**: Leagues.
+- **A player, coach or bench tile**: shows his week under the Rift.
+- **`v HLE ›`** on a series: its Series page. **Full stats ›**: the player card.
+- **‹ ›**: the week before or after (`/points/2`).
+- **Highest ›**: the top team's week. **Watch ›**: Live. **All leagues ›**: Leagues.
+- **Rift view | Card view**: the shared remembered view (spec/12).
 
 ## Placeholders
 
@@ -57,14 +60,8 @@ After using the built page; these override the picture.
 | Series, games, stats | #36 |
 | Live points | #34 |
 | Final points, ranks | #33 |
-| Scoring | #30 |
-| Carry ×1.5 | #19 |
+| Captain ×1.5 | #19 |
 | Auto-subs | #14 |
 | Leagues | #38 |
-| Buffs, hits (shown beside the total when played or taken) | #25, #20 |
 | Overall tiers | #108, #109 |
-| Hangul banner, sponsors, birthday cake | spec/13 |
-
-## Still open
-
-Overall rank as tiers is specced in [spec/08](../../../../spec/08-leagues.md#overall-tiers). The profile's Points tab follows this page's Card view.
+| Hangul names, sponsors | spec/13 |

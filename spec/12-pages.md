@@ -23,6 +23,11 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - The Captain's games show your Captain's points beside the average Captain's.
   - A player's breakdown shows his total alone; only the Captain's has the average Captain's under it,
     as FPL (Craig, 17 Nov 2026).
+  - On a desk the breakdown sits under the Rift, a series a column, not over the page; before any
+    tap it shows the Captain's week. The Captain's breakdown shows his ×1.5 once, by his total
+    (`25`, `17 ×1.5`); his tile shows the result alone (Craig, 26 Nov 2026).
+  - A tile shows the week's total alone, not each series' points. With a series still to come it
+    shows the total so far and that opponent: `7, v GEN` (Craig, 27 Nov 2026).
   - The coach's breakdown ends each series with its own row under its games: `Series win +3` or
     `Series loss −1` (Craig, 17 Nov 2026).
   - A bench player opens his breakdown too, as FPL: his points in grey when they don't count (no

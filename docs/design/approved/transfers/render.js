@@ -142,18 +142,22 @@
   const sel = NONE ? P.faker : SOLD ? PERFECT : OVER ? VIPER : KINGEN;
   const L = LINES[sel.name];
   const mine = !SOLD;
-  // His next 3 series: the week's two, then next week's first (made up).
-  const AFTER = { T1: ["DK", "Wed"], KT: ["BRO", "Thu"], NS: ["KT", "Wed"], HLE: ["GEN", "Thu"] };
+  // His next 3 series in the order played: the week's two, then a third (made up, on a later day so the three read in order).
+  const AFTER = { T1: ["DK", "Sun"], KT: ["BRO", "Sun"], NS: ["KT", "Sun"], HLE: ["GEN", "Sun"] };
   const next3 = [...T.series.filter((g) => g.home === sel.team || g.away === sel.team).map((g) => [g.home === sel.team ? g.away : g.home, g.day]), AFTER[sel.team]];
   const ord = (n) => n + (n === 1 ? "st" : n === 2 ? "nd" : n === 3 ? "rd" : "th");
-  const stat = (word, fig, rank) => `<div><dt class="small mid">${word}</dt><dd><b class="fig">${fig}</b>${rank ? `<span class="small mid${rank > 0 ? " fig" : ""}">${rank > 0 ? ord(rank) : rank}</span>` : ""}</dd></div>`;
+  // The card family of the card round (27 Nov 2026), shared with Points: the panels' blue band holding one line, read as
+  // a Rift tile (role strip, the team's bar and code, his name, his price), his season points at the right; a ruled
+  // strip of his season figures, the rank under each; then his last 3 and next 3 series, a crest, a code and the
+  // points or the day, and his one key.
+  const stat = (word, fig, rank) => `<div><span class="small mid">${word}</span><b class="fig">${fig}</b><span class="small mid fig">${rank ? ord(rank) : "&nbsp;"}</span></div>`;
+  const mini = (code) => `<img class="mini" src="${KIT}crests/${code}.svg" alt="">`;
   const pcard = `<section class="pcard" aria-label="${sel.name}">
-    <div class="pcard__who"><div class="card__head"><img class="crest" src="${KIT}crests/${sel.team}.svg" alt="${sel.team}"><div class="card__who"><h2 class="card__name">${sel.name}</h2><span class="card__meta">${sel.team} · ${ROLE[sel.role]} · <span class="fig">${money(sel.priceM)}</span></span></div></div>
-      <div class="pcard__keys">${mine ? `<button class="key pcard__sell" type="button">× Sell</button>` : `<button class="key pcard__buy" type="button">+ Buy</button>`}<a class="link" href="#">Full card ›</a></div></div>
-    <div class="pcard__mid"><p class="small mid pcard__of">Season · among ${L.of}</p>
-      <dl class="pcard__stats">${stat("Points", sel.season, L.seasonRank)}${stat("Owned", `${sel.ownedPct}%`, L.ownedRank)}${stat("Gold lead at 15", L.gold, "games")}${stat("Solo kills", L.solo)}${stat("Kills per game", L.kda[0].toFixed(1))}${stat("Deaths per game", L.kda[1].toFixed(1))}${stat("Assists per game", L.kda[2].toFixed(1))}${stat("First blood", L.fb)}</dl></div>
-    <div class="pcard__series"><p class="small mid">Last 3 series</p><div class="pcard__cells">${sel.last3.map((n, i) => `<span><b class="fig">${n}</b><span class="small mid">v ${L.was[i]}</span></span>`).join("")}</div>
-      <p class="small mid">Next 3 series</p><div class="pcard__cells">${next3.map(([opp, day]) => `<span><b>v ${opp}</b><span class="small mid">${day} · Bo3</span></span>`).join("")}</div></div>
+    <div class="pcard__head"><img class="crest" src="${KIT}crests/${sel.team}.svg" alt=""><span class="pcard__role">${ROLE[sel.role]}</span><h2 class="card__name"><span class="pcard__team"><i class="team__bar" style="background:${BAR[sel.team]}"></i>${sel.team}</span> ${sel.name}</h2><span class="fig">${money(sel.priceM)}</span>
+      <span class="pcard__total"><span class="small">Season points · ${ord(L.seasonRank)} of ${L.of}</span><b class="fig">${sel.season}</b></span></div>
+    <div class="pcard__strip">${stat("Owned", `${sel.ownedPct}%`, L.ownedRank)}${stat("Gold lead at 15", L.gold)}${stat("Solo kills", L.solo)}${stat("First blood", L.fb)}${stat("Kills per game", L.kda[0].toFixed(1))}${stat("Deaths per game", L.kda[1].toFixed(1))}${stat("Assists per game", L.kda[2].toFixed(1))}</div>
+    <div class="pcard__foot"><span class="pcard__run"><span class="small mid">Last 3</span>${sel.last3.map((n, i) => `<span class="sc">${mini(L.was[i])}<span>${L.was[i]}</span><b class="fig">${n}</b></span>`).join("")}</span><span class="pcard__run"><span class="small mid">Next 3</span>${next3.map(([opp, day]) => `<span class="sc">${mini(opp)}<span>${opp}</span><span class="mid">${day}</span></span>`).join("")}</span>
+      <span class="pcard__keys"><a class="link" href="#">Full card ›</a>${mine ? `<button class="key pcard__sell" type="button">× Sell</button>` : `<button class="key pcard__buy" type="button">+ Buy</button>`}</span></div>
   </section>`;
 
   const nav = T.nav.map((n) => (n === "Live" ? `<a class="nav__live" href="#"><span class="dot"></span>Live</a>` : `<a href="#"${n === "Transfers" ? ' class="is-here"' : ""}>${n}</a>`)).join("");

@@ -25,7 +25,7 @@ The reference shots were of Craig's signed-in pages, so they are not in the repo
 ## What binds
 
 1. **Head:** the team's name and hangul; beside it Overall as a tier: the shield, the tier and its hangul, the rank and its move under them, the sponsor's badge. No points to the next tier here (spec/08 keeps that on Points).
-2. **The object, a series live:** one panel. Its head on the blue band: the `Live` tag, the score, the game and series length, **Live ›**. Under it the stream, muted, 16:9; beside it a 296px column: `Streams` with `More ▾`, the picker's rows (the chosen one on `--fill` with a `--text` edge), then `Your players`: each of your players in this series with his points so far, in 32px rows.
+2. **The object, a series live:** one panel. Its head on the blue band: the `Live` tag, the score, the game and series length, **Live ›**. Under it the stream, muted, 16:9; beside it a 296px column: `Streams` with `More ▾`, the picker's rows (the chosen one on `--fill` with a `--text` edge), then `Your players`: each of your players in this series with his points so far, in 32px rows. The Captain's figure is the series' own points, before ×1.5, as Points shows a series.
 3. **The object, nothing live:** `Week N lineup` on the blue band; the seven starters as Card view's cards (role strip, crest, C, `Not starting`, name, team, the week's opponents); under them one row, `Bench` and the two bench players in their order.
 4. **Under the object, three panels in a row:** the week's series (Points' panel, titled with its week); Following (the latest feed items, each with its points and `Cheer / Jeer ›`, the latest cheer or jeer as its LED panel, **Following ›**); All managers (Most captained under the week it was set for; Most bought and Most sold under `Week N so far`).
 5. **Side column, in order:** Deadline; the week; Leagues; the sponsor slot.
@@ -61,6 +61,6 @@ The reference shots were of Craig's signed-in pages, so they are not in the repo
 | Leagues, ranks and moves | #38 |
 | Overall tier, its cut-offs and shield | #108, #109 |
 | Series and player stats | #36 |
-| Streams list and picker | spec/12, no issue yet |
+| Streams list and picker | spec/12, the Live page; no issue yet |
 | Who may not start, the next deadlines and All managers' counts | #473 |
 | Sponsor slots and badge | spec/13, no issue yet |

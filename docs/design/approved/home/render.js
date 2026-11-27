@@ -57,7 +57,7 @@
 
   const FOLLOWING = [["Minji", "GEN v KT", 20], ["Dan", "T1 v HLE", 34], ["Jae", "NS v KRX", 9]];
   const following = `<section class="tpanel" aria-label="Following"><h2 class="tpanel__title">Following</h2>
-    <table class="fol"><tr class="sub"><td>Week 3</td><td class="num">Pts</td><td></td></tr>${FOLLOWING.map(([who, what, pts]) => `<tr><td><b>${who}</b> <span class="fol__what">· ${what}</span></td><td class="num"><b class="fig">${pts}</b></td><td class="num"><a class="link" href="#">Cheer / Jeer ›</a></td></tr>`).join("")}</table>
+    <table class="fol"><tr class="sub"><td>Week 3${idle ? "" : ' <span class="tag tag--dash">Not final</span>'}</td><td class="num">Pts</td><td></td></tr>${FOLLOWING.map(([who, what, pts]) => `<tr><td><b>${who}</b> <span class="fol__what">· ${what}</span></td><td class="num"><b class="fig">${pts}</b></td><td class="num"><a class="link" href="#">Cheer / Jeer ›</a></td></tr>`).join("")}</table>
     <div class="dl__row" style="display:block;padding-top:0"><span class="led">Sell your bot laner</span><p class="led__by">Jeer from <b>Minji</b> · Week 3</p></div>
     <p class="tpanel__foot tpanel__foot--end"><a class="link" href="#">Following ›</a></p>
   </section>`;
@@ -67,7 +67,7 @@
   const pick = (word, name, mine, pts, owned) => `<tr><td>${word}</td><td><b>${name}</b>${mine ? yours : ""}</td><td class="num pts"><b class="fig">${pts}</b></td><td class="num fig own">${owned}%</td></tr>`;
   const all = `<section class="tpanel" aria-label="All managers"><h2 class="tpanel__title">All managers</h2>
     <table class="all">${idle ? "" : `<tr class="sub"><td colspan="4">Week 3</td></tr>${fact("Most captained", "Chovy", false, "38%")}`}<tr class="sub"><td colspan="4">Week 4 so far</td></tr>
-      ${idle ? fact("Most captained", "Faker", true, "34%") : ""}${fact("Most bought", "Kiin", false, idle ? "41,208" : "36,750")}${fact("Most sold", "Zeka", false, idle ? "28,930" : "31,412")}
+      ${idle ? fact("Most captained", "Faker", true, "34%") : ""}${fact("Most bought", "Kiin", false, idle ? "41,208" : "36,750")}${fact("Most sold", "Zeka", false, idle ? "31,412" : "28,930")}
     </table>
   </section>`;
 
@@ -78,21 +78,21 @@
     <p class="dl__keys"><a class="key save" href="#">Pick Team</a><a class="key" href="#">Transfers</a></p>
     <p class="dl__row"><span class="mid">Free transfers</span><b class="fig">1</b></p>
     ${boost && idle ? '<p class="dl__row"><span class="mid">Buff</span><b>Bench Boost</b></p>' : ""}
-    <a class="dl__row" href="#" title="Pick Team">${FLAG}<b>Siwoo</b><span class="mid">${bar("DK")}DK · Top</span><span><span class="tag">Not starting</span> <span class="mid">Wed</span> ›</span></a>
+    <a class="dl__row" href="#" title="Pick Team">${FLAG}<b>Siwoo</b><span class="mid">${bar("DK")}DK · Top</span><span class="dl__warn"><span class="tag">Not starting</span><span class="mid">Wed</span><span>›</span></span></a>
     <dl class="figs"><div class="sub"><dt>Next</dt><dd></dd></div>${[["Week 5", "Wed 14 Apr 7:45am"], ["Week 6", "Wed 21 Apr 7:45am"], ["Week 7", "Wed 28 Apr 7:45am"]].map(([w, when]) => `<div><dt>${w}</dt><dd style="font-weight:400">${when}</dd></div>`).join("")}</dl>
   </section>`;
 
-  // The week: your total between Average and Highest, then the last gameweek's star and flop (spec/12, Home), the same pair
+  // The week: your total between Average and Highest (with Bench Boost on, the bench's points are in it: 69 and Cuzz's 9), then the last gameweek's star and flop (spec/12, Home), the same pair
   // for every manager, each with its points and effective ownership.
   const starFlop = (week, rows) => `<table class="all"><tr class="sub"><td colspan="2">${week}</td><td class="num pts">Pts</td><td class="num own">Owned</td></tr>${rows}</table>`;
   const yourWeek = idle
     ? `<section class="tpanel" aria-label="Week 3"><h2 class="tpanel__title">Week 3<a class="link" href="#">Points ›</a></h2>
       <p class="week__big"><b class="fig">109</b><span class="tag">Final</span></p>
       <dl class="figs"><div><dt>Average</dt><dd class="fig">79</dd></div><div><dt>Highest</dt><dd><a class="link" href="#"><span class="fig">136</span> ›</a></dd></div></dl>
-      ${starFlop("", pick("Star", "Kiin", false, 19, 9) + pick("Flop", "Chovy", false, 4, 58))}
+      ${starFlop("Week 3", pick("Star", "Kiin", false, 19, 9) + pick("Flop", "Oner", false, 3, 52))}
     </section>`
     : `<section class="tpanel" aria-label="Week 3"><h2 class="tpanel__title">Week 3<a class="link" href="#">Points ›</a></h2>
-      <p class="week__big"><b class="fig">69</b>${boost ? '<span class="tag">Bench Boost</span>' : ""}<span class="tag tag--dash">Not final</span></p>
+      <p class="week__big"><b class="fig">${boost ? 78 : 69}</b>${boost ? '<span class="tag">Bench Boost</span>' : ""}<span class="tag tag--dash">Not final</span></p>
       <dl class="figs"><div><dt>Average</dt><dd class="fig">58</dd></div><div><dt>Highest</dt><dd><a class="link" href="#"><span class="fig">104</span> ›</a></dd></div></dl>
       ${starFlop("Week 2", pick("Star", "Kiin", false, 15, 8) + pick("Flop", "Faker", true, 2, 62))}
     </section>`;

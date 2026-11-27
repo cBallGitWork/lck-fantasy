@@ -32,7 +32,7 @@ The reference shots were of Craig's signed-in pages, so they are not in the repo
 6. **Deadline panel:** the countdown as the page's key figure, 44 with its units small and grey (Craig, 27 Nov 2026: "needs to pop more"), the time under it; **Pick Team** (the page's one filled key) and **Transfers**; Free transfers; the played buff, when there is one; a row for each starter who may not play; `Next` and the three deadlines after this one.
 7. **The week's panel:** titled with its week, **Points ›** in its band; the total and its tag (`Not final` or `Final`, and the buff's name when one is on); Average; Highest ›; then Star and Flop with points and effective ownership. With a week live they are the last finished week's, under a band naming it.
 8. **Leagues:** each league's rank and move, Overall left out since the head shows it; **All leagues ›** in the band.
-9. **A played buff:** before the deadline, a row in the Deadline panel and a tag by the lineup's title; Bench Boost puts the bench in the lineup as two more cards (`1. Mid`, `2. Jungle`) and drops the bench row. In the week it is on, a tag by the week's total. Not drawn: Double Captain (both Captains carry the C) and Coach Diff (`×3` on the coach's card).
+9. **A played buff:** before the deadline, a row in the Deadline panel with the buff's gold icon as on Pick Team (Craig, 27 Nov 2026), and a tag by the lineup's title; Bench Boost puts the bench in the lineup as two more cards (`1. Mid`, `2. Jungle`) and drops the bench row. In the week it is on, a tag by the week's total. Not drawn: Double Captain (both Captains carry the C) and Coach Diff (`×3` on the coach's card).
 
 ## Controls
 

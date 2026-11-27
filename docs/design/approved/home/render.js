@@ -5,7 +5,8 @@
 (function () {
   const T = window.TRIAL;
   const idle = new URLSearchParams(location.search).get("s") === "idle";
-  // ?b=bb: Bench Boost played. Before the deadline it is a row in the Deadline panel and the lineup shows all nine; in
+  // ?b=bb: Bench Boost played. Before the deadline it is a row in the Deadline panel, with its gold icon as Pick Team
+  // draws it (../pick-team/render.js, BUFF_ICON), and the lineup shows all nine; in
   // the week it is on, a tag by the week's total (Craig, 27 Nov 2026).
   const boost = new URLSearchParams(location.search).get("b") === "bb";
   const ROLE = { top: "Top", jng: "Jungle", mid: "Mid", bot: "Bot", sup: "Support", coach: "Coach" };
@@ -77,7 +78,7 @@
     <p class="dl__count"><b class="fig">${(idle ? "9h 45m" : "3d 22h 45m").replace(/([dhm])/g, "<i>$1</i>")}</b><span class="mid">Wed 7:45am</span></p>
     <p class="dl__keys"><a class="key save" href="#">Pick Team</a><a class="key" href="#">Transfers</a></p>
     <p class="dl__row"><span class="mid">Free transfers</span><b class="fig">1</b></p>
-    ${boost && idle ? '<p class="dl__row"><span class="mid">Buff</span><b>Bench Boost</b></p>' : ""}
+    ${boost && idle ? '<p class="dl__row"><span class="mid">Buff</span><span class="dl__buff"><svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16h18M4 13h16M5 16v4M19 16v4M12 10V3M8.500 6.500 12 3l3.500 3.500"/></svg><b>Bench Boost</b></span></p>' : ""}
     <a class="dl__row" href="#" title="Pick Team">${FLAG}<b>Siwoo</b><span class="mid">${bar("DK")}DK · Top</span><span class="dl__warn"><span class="tag">Not starting</span><span class="mid">Wed</span><span>›</span></span></a>
     <dl class="figs"><div class="sub"><dt>Next</dt><dd></dd></div>${[["Week 5", "Wed 14 Apr 7:45am"], ["Week 6", "Wed 21 Apr 7:45am"], ["Week 7", "Wed 28 Apr 7:45am"]].map(([w, when]) => `<div><dt>${w}</dt><dd style="font-weight:400">${when}</dd></div>`).join("")}</dl>
   </section>`;

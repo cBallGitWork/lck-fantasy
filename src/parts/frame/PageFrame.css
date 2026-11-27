@@ -6,7 +6,8 @@
 .page-frame--wide-side {
   grid-template-columns: minmax(0, 1fr) var(--m-transfers-side);
 }
-.page-frame--wide-side > .page-frame__main {
+/* The main column stuck while the side scrolls (Points, Transfers). */
+.page-frame--stick > .page-frame__main {
   position: sticky;
   top: var(--s-4);
   align-self: start;
@@ -19,7 +20,7 @@
   .page-frame--wide-side {
     grid-template-columns: minmax(0, 1fr);
   }
-  .page-frame--wide-side > .page-frame__main {
+  .page-frame--stick > .page-frame__main {
     position: static;
   }
 }

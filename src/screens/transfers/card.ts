@@ -24,6 +24,6 @@ export interface CardFacts {
   season?: SeasonLines;
   /** His last 3 series, oldest first: his points and who against. */
   last3: { points: number; opponent: string }[];
-  /** His next 3 series: who against, the day and the series' length. */
-  next3: { opponent: string; day: string; bestOf: number }[];
+  /** His next 3 series: who against and the day. */
+  next3: { opponent: string; day: string }[];
 }

@@ -3,6 +3,7 @@
 // It stands in for the backend until a later issue wires real data (series and games #36,
 // live points #34, final points and ranks #33).
 
+import { CAPTAIN_MULTIPLIER } from "../../fixtures/competition";
 import { MY_LEAGUES, MY_OVERALL } from "../../fixtures/myLeagues";
 import { playedFromSide, seriesById } from "../../fixtures/series";
 import {
@@ -136,7 +137,7 @@ const WEEKS: WeekFacts[] = [
 /** The week's ‹ and ›, by the router: the week in the path (`/points/2`). */
 function weekNav(week: number, latest: number) {
   const to = (n: number): Go => ({ to: PATHS.pointsWeek, params: { week: String(n) } });
-  return { label: `${COMPETITION} · Week ${week}`, ...weekSteps(week, latest, to) };
+  return { label: `${COMPETITION} Week ${week}`, ...weekSteps(week, latest, to) };
 }
 
 function pointsWeek(facts: WeekFacts, latest: number): PointsData {
@@ -147,8 +148,9 @@ function pointsWeek(facts: WeekFacts, latest: number): PointsData {
     const plays = flexPlays(pick.slot, pick.role);
     if (pick.mark !== "C") return [{ ...player, slot: pick.slot, plays }];
     // The Captain's points ×1.5, a minus towards zero (spec/05-scoring.md); his own are already the result.
-    const points = player.points === undefined ? undefined : captained(player.points);
-    return [{ ...player, slot: pick.slot, plays, points, captain: { average: facts.averageCaptain } }];
+    if (player.points === undefined) return [{ ...player, slot: pick.slot, plays }];
+    const captain = { before: player.points, by: CAPTAIN_MULTIPLIER, average: facts.averageCaptain };
+    return [{ ...player, slot: pick.slot, plays, points: captained(player.points), captain }];
   });
   const played = starters.filter((p) => p.points !== undefined);
   const byPoints = [...played].sort((a, b) => (b.points ?? 0) - (a.points ?? 0));

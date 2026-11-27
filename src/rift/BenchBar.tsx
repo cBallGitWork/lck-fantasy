@@ -8,11 +8,11 @@ import { benchPlace, WORDS } from "./words";
 /**
  * The bench, beside or under the Rift: a panel on the Rift's own ground, `Bench`, then each bench
  * player's tile. Under the cards (`cards`), a plain panel of their lineup cards, each a starter's width
- * (plate.md, Card view).
+ * (plate.md, Card view). `band` sets its title on the blue band, as every panel from Transfers on.
  */
-export function BenchBar({ className, cards, children }: { className?: string; cards?: boolean; children: ReactNode }) {
+export function BenchBar({ className, cards, band, children }: { className?: string; cards?: boolean; band?: boolean; children: ReactNode }) {
   return (
-    <Panel title={WORDS.bench} className={cx("bench-bar", cards && "bench-bar--cards", className)}>
+    <Panel title={WORDS.bench} band={band} className={cx("bench-bar", cards && "bench-bar--cards", className)}>
       <div className="bench-bar__tiles">{children}</div>
     </Panel>
   );

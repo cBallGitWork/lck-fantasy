@@ -4,7 +4,6 @@
 
 import { opponent, seriesOf } from "../../fixtures/series";
 import {
-  BEST_OF,
   COMPETITION,
   finalPickOf,
   formOf,
@@ -154,7 +153,7 @@ function last3Of(name: string, team: string): CardFacts["last3"] {
 function next3Of(team: string): CardFacts["next3"] {
   const week4 = seriesOf(WEEK4_SERIES, team).map((s) => ({ opponent: opponent(s, team), day: s.day }));
   const week5 = WEEK5_FIRST.filter((s) => s.teams.includes(team as TeamCode)).map((s) => ({ opponent: s.teams.find((t) => t !== team) ?? team, day: s.day }));
-  return [...week4, ...week5].slice(0, 3).map((s) => ({ ...s, bestOf: BEST_OF }));
+  return [...week4, ...week5].slice(0, 3);
 }
 
 /** A person's card figures: Stats' season lines for a player, his ranks among his role, his series. */

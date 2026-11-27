@@ -2,6 +2,7 @@
 export { BenchBar, BenchTile } from "./BenchBar";
 export { Lineup, LineupCard, type LineupCardProps } from "./Lineup";
 export { PanelFoot, PanelGame, PanelSeries, PanelSum, PanelSumLabel, PlayerPanel } from "./PlayerPanel";
+export { CardPoints, ResultChip, RiftCard } from "./RiftCard";
 export { RiftMap } from "./RiftMap";
 export { RoleIcon } from "./RoleIcon";
 export {

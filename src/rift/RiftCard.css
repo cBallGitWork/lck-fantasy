@@ -1,0 +1,84 @@
+/* The player's card under the Rift, Points' and Transfers' (plate.md, The player's card). Every value is a token. */
+
+.rift-card {
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
+}
+/* The head: the panels' blue band on one line, read as a tile. */
+.rift-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  min-height: var(--m-card-head);
+  padding: var(--s-1) var(--s-4);
+  background: var(--head-band);
+  color: var(--text);
+}
+.rift-card__role {
+  padding: 0 var(--s-2);
+  background: var(--band);
+  font-size: var(--size-small);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-body);
+}
+.rift-card__name {
+  font-size: var(--size-head);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+  white-space: nowrap;
+}
+.rift-card__team {
+  font-weight: var(--w-regular);
+}
+.rift-card__hangul {
+  font-size: var(--size-body);
+}
+.rift-card__total {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  margin-left: auto;
+}
+.rift-card__note {
+  font-size: var(--size-small);
+}
+.rift-card__figure {
+  font-size: var(--size-title);
+  line-height: var(--lh-tight);
+}
+
+/* A result: outlined `W` green and `L` red, so filled green stays Buy's; `Live` filled. */
+.result-chip {
+  display: inline-block;
+  min-width: var(--m-target);
+  padding: 0 var(--s-1);
+  border: var(--m-rule) solid transparent;
+  font-size: var(--size-small);
+  font-weight: var(--w-semi);
+  line-height: calc(var(--m-target) - 2 * var(--m-rule));
+  text-align: center;
+  white-space: nowrap;
+}
+.result-chip--w {
+  color: var(--up);
+  border-color: var(--up);
+}
+.result-chip--l {
+  color: var(--down);
+  border-color: var(--down);
+}
+.result-chip--live {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Points: boxed when counted (base.css's `.counted`), grey with no box when dropped. */
+.rift-card__points {
+  display: inline-block;
+  min-width: var(--m-target);
+  text-align: center;
+}
+.rift-card__points--dropped {
+  color: var(--mid);
+  font-weight: var(--w-regular);
+}

@@ -44,8 +44,22 @@ describe("Rift view mid-transfer (approved/transfers/1440.png)", () => {
   });
 
   test("the card under them shows the player just bought, with × Sell", () => {
-    expectInOrder(out, ["Kingen", "NS · Top · ₩6.5m", "× Sell", "Full card ›", "Season · among 10 tops", "Points", "Owned", "Gold lead at 15", "games", "Solo kills", "Kills per game", "Deaths per game", "Assists per game", "First blood", "Last 3 series", "Next 3 series", "v DNS", "Thu · Bo3", "v HLE", "Sat · Bo3"]);
-    expect(page).toContain('class="crest"');
+    expectInOrder(out, [
+      "TopNS Kingen₩6.5mSeason points · 6th of 10 tops24",
+      "Owned3%5th",
+      "Gold lead at 155 of 13",
+      "Solo kills6",
+      "First blood1",
+      "Kills per game2.3",
+      "Deaths per game1.4",
+      "Assists per game2.5",
+      "Last 3BRO4DK4KRX4",
+      "Next 3DNSThuHLESatKRXWed",
+      "Full card ›× Sell",
+    ]);
+    expect(out).not.toContain("› ›");
+    expect(page).toContain('alt="NS crest"');
+    expect(page).toContain('alt="DNS crest"');
     expect(out).not.toMatch(/Form\b/);
   });
 
@@ -86,7 +100,7 @@ describe("a player just sold (approved/transfers/1440-sold.png)", () => {
   });
 
   test("before any tap the card shows the player just sold, with + Buy", () => {
-    expectInOrder(out, ["Siwoo", "DK · Top · ₩11.5m", "+ Buy"]);
+    expectInOrder(out, ["TopDK Siwoo₩11.5m", "Full card ›+ Buy"]);
   });
 });
 
@@ -101,7 +115,7 @@ describe("List view (approved/transfers/1440-list.png)", () => {
   });
 
   test("the card sits under the table", () => {
-    expectInOrder(out, ["kkOma", "× Sell", "Season · among 10 tops"]);
+    expectInOrder(out, ["kkOma", "Season points ·", "× Sell"]);
   });
 
   test("a sold player's row offers him back", () => {

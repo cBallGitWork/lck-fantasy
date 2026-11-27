@@ -177,12 +177,12 @@ const MINE = ["Zeus", "Canyon", "Faker", "Ruler", "Delight", "Siwoo", "kkOma"];
 const KIT = "../../../../data/lck/";
 const BAR = { T1: "#E2012D", GEN: "#AA8A00", HLE: "#F3741B", DK: "#F5F5F5" };
 const crest = (c) => `<img class="crest" src="${KIT}crests/${c}.svg" alt="">`;
-// You and Average (spec/12, Series page; Craig, 27 Nov 2026): your points from the series as Points counts them, your
-// starters, the Captain x1.5 and the coach, beside the mean over every manager, rounded down. The averages are made up.
-const CAPTAIN = "Faker", AVERAGE = { final: 14, f21: 19, live: 6 };
+// You and Average (spec/12, Series page; Craig, 27 Nov 2026): your points from the series, your starters and the coach
+// with no Captain x1.5, beside the mean over every manager, rounded down. The averages are made up.
+const AVERAGE = { final: 14, f21: 19, live: 6 };
 let YOU = 0;
-// No Captain's C and no x1.5 on this page (Craig, 27 Nov 2026): a player's Series total is his own. You still counts the Captain x1.5, as Points.
-const mine = (n, total) => { const got = n === CAPTAIN ? Math.trunc(total * 1.5) : total; if (MINE.includes(n)) YOU += got; return total < 0 ? `<span class="neg">${fmt(total)}</span>` : fmt(total); };
+// No Captain's C and no x1.5 on this page (Craig, 27 Nov 2026): a player's Series total is his own, and You is the sum of your players' totals on the page.
+const mine = (n, total) => { if (MINE.includes(n)) YOU += total; return total < 0 ? `<span class="neg">${fmt(total)}</span>` : fmt(total); };
 const fmt = (x) => String(x).replace("-", "−");
 const S = {
   // T1 v DK, Week 3, Sat 16 Jan, T1 2–0 (the hub's Results). Faker G1 Orianna 5/1/9 for 4, Siwoo G1 2, kkOma G1 2 (Points).

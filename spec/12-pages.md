@@ -87,8 +87,9 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
   - The scorebug shows each team's record as of now. The coach row shows the coach lines that
     scored and the series +3 or −1. Your own players carry a mark (Craig, 16 Nov 2026).
   - One line sets your points from the series beside the average manager's: `You 31 · Average 24`.
-    No worked difference. Yours count as Points counts them: starters, the Captain ×1.5, the
-    coach. The average is over every manager, 0 for one with nobody in the series, and rounds down:
+    No worked difference. Yours are your starters' and your coach's points from the series, with
+    no Captain ×1.5, so You adds up from the page; the page shows no Captain's C either (Craig,
+    27 Nov 2026). The average is over every manager, 0 for one with nobody in the series, and rounds down:
     14.6 shows as 14 (Craig, 27 Nov 2026). It shows while
     the series is live, under the Not final tag (Craig, 27 Nov 2026, over 16 Nov's cut of your
     players' total alone).

@@ -2,9 +2,11 @@
 
 The Series page: one series, its games and each player's lines in each game (spec/12, Series page). It has its own link and opens from every series row anywhere: the LCK hub's Fixtures and Results, Points' series and the player card's series strip. **‹ LCK** goes back to the hub. It is part of the beta.
 
-**Approved:** Craig, 16 Nov 2026, "Save". Along the way he asked for POG ("series seems basic"), cut the draft strip ("i dont think we need draft info overload") and cut the Your players total ("its fluff"). The names, teams and numbers are a made-up LCK Cup Week 3 (Saturday 16 Jan), opened at the LCK hub's moment (Week 4, Tuesday). They match the Points, Live and hub pictures. There is no `plate.md` yet, so this picture binds layout, content and order, not colour or type. The source is [docs/design/proposals/2026-11-16-series/](../../proposals/2026-11-16-series/) (`brief.md`, `panel.md`).
+**Approved:** Craig, 16 Nov 2026, "Save". Along the way he asked for POG ("series seems basic"), cut the draft strip ("i dont think we need draft info overload") and cut the Your players total ("its fluff"); on 27 Nov he brought your points back as the You and Average line. The names, teams and numbers are a made-up LCK Cup Week 3 (Saturday 16 Jan), opened at the LCK hub's moment (Week 4, Tuesday). They match the Points, Live and hub pictures. This picture binds layout, content and order; [plate.md](../../plate.md) binds how it is drawn. The source is [docs/design/proposals/2026-11-16-series/](../../proposals/2026-11-16-series/) (`brief.md`, `panel.md`).
 
 **Changed by Craig, 16 Nov 2026:** the page says each thing once. Each grid is headed by its team's code (the scorebug names the teams); each game's length, VOD and live clock show once, in the left grid's heads, with W or L still on both; no Live tag in the G2 heads (the meta line says it).
+
+**Changed by Craig, 27 Nov 2026:** redrawn in the new look ([plate.md](../../plate.md)), each grid under a band with its team's crest, code and full name. The line under the scorebug ends with `You 27 · Average 14` ([spec/12](../../../../spec/12-pages.md), Series page): your points from the series beside the average manager's, rounded down. Your Captain carries his C, and his Series cell shows the total after ×1.5 with the sum under it (`15`, `10 ×1.5`), so You adds up from the page. The scorebug shows crest, code and record only; a team's full name shows once, in its grid's band. The words beside Not final are gone.
 
 | File | Shows |
 |---|---|
@@ -16,14 +18,14 @@ The Series page: one series, its games and each player's lines in each game (spe
 ## Borrowed
 
 - **Points' player drawer**: games as columns, the best 2 boxed and a dropped game greyed. The Series page is ten of these drawers at once.
-- **Live's scorebug**: each team in a white box, the series score between them on black. Here it runs full width.
+- **Live's scorebug**: each team on a panel with its crest, the series score between them, turned over. Here it runs full width.
 - **gol.gg and Inven**: one column per game, each with its winner and length.
 
 ## Layout
 
-- **Type**: 28 team codes in the scorebug, 20 the series score and each player's series total, 14 body and per-game points, 12 labels. The nav is shared.
-- **Scorebug**: team code and record, the score between. The loser's code drops to plain weight once the series is final; while it is live, neither does. A record is as of when the page is opened, so it is the record before the series while the series is live.
-- **The line under it**: a Final tag, or Live and a dashed Not final tag with "Solo kills, steals at final". Then the format, competition, week, day and time (your local time), and Watch › while live or before the start.
+- **Type**: 28 team codes and the series score in the scorebug, 20 each player's series total, 14 body and per-game points, 12 labels. The nav is shared.
+- **Scorebug**: team crest, code and record, the score between. The loser's code drops to plain weight once the series is final; while it is live, neither does. A record is as of when the page is opened, so it is the record before the series while the series is live.
+- **The line under it**: a Final tag, or Live and a dashed Not final tag. Then the format, competition, week, day and time (your local time), and Watch › while live or before the start. At the right, You and Average, once the series has started.
 - **Two grids**, one per team, side by side:
   - one row per player in role order, then the coach under a rule;
   - the name with its Hangul beside it, and a round dot after your own players;
@@ -44,7 +46,7 @@ The Series page: one series, its games and each player's lines in each game (spe
 
 ## Not drawn
 
-- Series POG, picks and bans, blue or red side, the last meeting, team colours and a Your players total: each was cut by Craig in this round.
+- Series POG, picks and bans, blue or red side, the last meeting, and team colours: each was cut by Craig on 16 Nov 2026.
 
 ## Placeholders
 

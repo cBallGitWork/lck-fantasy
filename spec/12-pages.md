@@ -85,7 +85,8 @@ FPL's, or FPL's logic ([SPEC.md](../SPEC.md), the base assumption). Open questio
     scored and the series +3 or −1. Your own players carry a mark (Craig, 16 Nov 2026).
   - One line sets your points from the series beside the average manager's: `You 31 · Average 24`.
     No worked difference. Yours count as Points counts them: starters, the Captain ×1.5, the
-    coach. The average is over every manager, 0 for one with nobody in the series. It shows while
+    coach. The average is over every manager, 0 for one with nobody in the series, and rounds down:
+    14.6 shows as 14 (Craig, 27 Nov 2026). It shows while
     the series is live, under the Not final tag (Craig, 27 Nov 2026, over 16 Nov's cut of your
     players' total alone).
   - A coach's cell for a game his team didn't play shows `—`. A link to a series that doesn't

@@ -102,7 +102,7 @@ const KIT = "../../../../data/lck/";
 const BAR = { T1: "#E2012D", GEN: "#AA8A00", HLE: "#F3741B", DK: "#F5F5F5" };
 const crest = (c) => `<img class="crest" src="${KIT}crests/${c}.svg" alt="">`;
 // You and Average (spec/12, Series page; Craig, 27 Nov 2026): your points from the series as Points counts them, your
-// starters, the Captain x1.5 and the coach, beside the mean over every manager. The averages are made up.
+// starters, the Captain x1.5 and the coach, beside the mean over every manager, rounded down. The averages are made up.
 const CAPTAIN = "Faker", AVERAGE = { final: 14, f21: 19, live: 6 };
 let YOU = 0;
 // The Captain's series total shows after x1.5, the sum once under it, as Points' breakdown, so You adds up from the page.
@@ -184,16 +184,15 @@ function team(s, code) {
 const NEXT = { HLE: [["Zeus", "최우제"], ["Kanavi", "서진혁"], ["Zeka", "김건우"], ["Gumayusi", "이민형"], ["Delight", "유환중"], ["Homme", "윤성영"]],
   DK: [["Siwoo", "전시우"], ["Lucid", "최용혁"], ["ShowMaker", "허수"], ["Aiming", "김하람"], ["BeryL", "조건희"], ["cvMax", "김대호"]] };
 if (V === "next") {
-  $("bug").innerHTML = `<div class="bug__team">${crest("HLE")}<b>HLE</b><small>Hanwha Life · 4–2</small></div><div class="bug__score bug__score--v">v</div><div class="bug__team bug__team--b"><small>3–3 · Dplus KIA</small><b>DK</b>${crest("DK")}</div>`;
+  $("bug").innerHTML = `<div class="bug__team">${crest("HLE")}<b>HLE</b><small>4–2</small></div><div class="bug__score bug__score--v">v</div><div class="bug__team bug__team--b"><small>3–3</small><b>DK</b>${crest("DK")}</div>`;
   $("meta").innerHTML = `<span>Bo3 · LCK Cup · Week 4 · Wed 20 Jan</span><span><b>8:00am</b></span><a class="link" href="#">Watch ›</a>`;
   const ICO = ["top", "jng", "mid", "bot", "sup", "coach"];
   $("two").innerHTML = Object.entries(NEXT).map(([c, ps]) => `<section class="grid"><h2 class="grid__head">${crest(c)}<b><i class="team__bar" style="background:${BAR[c]}"></i>${c}</b><span>${c === "HLE" ? "Hanwha Life" : "Dplus KIA"}</span></h2><table>
     ${ps.map(([n, k], i) => `<tr class="${i === 5 ? "co" : ""}"><td class="rl" style="width:112px;height:40px"><svg><use href="#i-${ICO[i]}"/></svg>${i === 5 ? "Coach" : RH[ICO[i]]}</td><td class="pl" style="height:40px"><b>${n}</b><small>${k}</small>${me(n)}</td></tr>`).join("")}</table></section>`).join("");
 } else {
   const s = S[V], A = team(s, s.a), B = team(s, s.b), wa = s.games.filter((g) => g.w === s.a).length, wb = s.games.filter((g) => g.w === s.b).length, live = s.games.some((g) => g.live);
-  const rec = (c) => (s[c].name === c ? s[c].rec : `${s[c].name} · ${s[c].rec}`);
-  $("bug").innerHTML = `<div class="bug__team ${!live && wa < wb ? "is-lost" : ""}">${crest(s.a)}<b>${s.a}</b><small>${rec(s.a)}</small></div><div class="bug__score">${wa}–${wb}</div><div class="bug__team bug__team--b ${!live && wb < wa ? "is-lost" : ""}"><small>${s[s.b].rec}${s[s.b].name === s.b ? "" : ` · ${s[s.b].name}`}</small><b>${s.b}</b>${crest(s.b)}</div>`;
-  $("meta").innerHTML = `${live ? '<span class="meta__tags"><span class="tag tag--live">Live</span><span class="tag tag--dash">Not final</span></span><span>Solo kills, steals at final</span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b></span>${live ? '<a class="link" href="#">Watch ›</a>' : ""}<span class="versus">You <b>${YOU}</b><i>·</i>Average <b>${AVERAGE[V]}</b></span>`;
+  $("bug").innerHTML = `<div class="bug__team ${!live && wa < wb ? "is-lost" : ""}">${crest(s.a)}<b>${s.a}</b><small>${s[s.a].rec}</small></div><div class="bug__score">${wa}–${wb}</div><div class="bug__team bug__team--b ${!live && wb < wa ? "is-lost" : ""}"><small>${s[s.b].rec}</small><b>${s.b}</b>${crest(s.b)}</div>`;
+  $("meta").innerHTML = `${live ? '<span class="meta__tags"><span class="tag tag--live">Live</span><span class="tag tag--dash">Not final</span></span>' : '<span class="tag">Final</span>'}<span>Bo3 · LCK Cup · Week 3 · Sat 16 Jan</span><span><b>${s.time[0]}</b></span>${live ? '<a class="link" href="#">Watch ›</a>' : ""}<span class="versus">You <b>${YOU}</b><i>·</i>Average <b>${AVERAGE[V]}</b></span>`;
   $("two").innerHTML = A.html + B.html;
 }
 </script></body></html>

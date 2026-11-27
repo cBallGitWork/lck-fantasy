@@ -23,6 +23,6 @@ export { Shirt } from "./Shirt";
 export { PLAN } from "./riftPlan";
 export { RIFT_SLOTS, type RiftPlace, type RiftPoint } from "./slots";
 export { MarkBadge, type Mark } from "./MarkBadge";
-export { Rift, Tile } from "./Tile";
+export { NewsFlag, Rift, Tile } from "./Tile";
 export { RIFT_VIEW, type BoardView } from "./views";
 export { benchPlace, MARK_NAME, markKey, markNews, ROLE_NAME, VIEWS } from "./words";

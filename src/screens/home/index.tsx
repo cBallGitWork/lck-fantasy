@@ -4,14 +4,13 @@ import { PATHS } from "../../paths";
 import type { FollowingData } from "../following/feed";
 import { FOLLOWING } from "../following/fixtures";
 import { useCheerPicker, type Picking } from "../following/useCheerPicker";
-import { HOME_IDLE, HOME_LIVE } from "./fixtures";
-import { HomeIdle } from "./Idle";
-import { HomeLive } from "./Live";
+import { HOME_LIVE, HOME_STATES } from "./fixtures";
+import { HomePage } from "./Home";
 import type { HomeData } from "./types";
 
 /**
  * Home in whichever state its data is in: a series live, or nothing live. `following` feeds the
- * cheer picker its Following card opens (spec/14), Following's made-up Week 3 until the backend
+ * cheer picker its Following panel opens (spec/14), Following's made-up Week 3 until the backend
  * feeds it (#89, #90); `initialPicking` opens the picker.
  */
 export function Home({
@@ -30,18 +29,19 @@ export function Home({
   const actions = {
     onPickTeam: () => void navigate({ to: PATHS.pickTeam }),
     onTransfers: () => void navigate({ to: PATHS.transfers }),
+    onPickStream,
     sent: cheering.data.sent,
     onCheer: cheering.open,
   };
   return (
     <>
-      {data.state === "live" ? <HomeLive data={data} onPickStream={onPickStream} {...actions} /> : <HomeIdle data={data} {...actions} />}
+      <HomePage data={data} actions={actions} />
       {cheering.sheet}
     </>
   );
 }
 
-/** The route: made-up data until the backend's query feeds it (issue #80). `?state=idle` opens nothing live, in dev. */
+/** The route: made-up data until the backend's query feeds it (issue #80). `?state=idle`, `boost` or `boost-live` opens the pictures' other states, in dev. */
 export function HomeScreen() {
-  return <Home data={useDevState({ idle: HOME_IDLE }) ?? HOME_LIVE} />;
+  return <Home data={useDevState(HOME_STATES) ?? HOME_LIVE} />;
 }

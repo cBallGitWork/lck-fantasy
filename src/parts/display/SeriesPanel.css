@@ -1,0 +1,4 @@
+/* The week's series: SeriesList's ruled rows, edge to edge under the band. */
+.series-panel {
+  padding-bottom: var(--s-1);
+}

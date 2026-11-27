@@ -1,99 +1,56 @@
-import type { ReactNode } from "react";
-import { Columns, MainAction, OutlinedKey, PageFrame, PageHead, Placeholder, SectionHead, SponsorNote, TierMark, Time, type Standing } from "../../parts";
-import { Following, Leagues, type Cheering } from "./band";
+import { PageFrame, PageHead, Placeholder, SeriesPanel, SponsorNote, TierMark } from "../../parts";
+import { AllManagers, Following, type Cheering } from "./band";
 import "./home.css";
-import type { Countdown, HomeShared } from "./types";
+import { LineupPanel } from "./Idle";
+import { StreamPanel } from "./Live";
+import { DeadlinePanel, Leagues, WeekPanel, type DeadlineKeys } from "./side";
+import type { HomeData } from "./types";
+import { seriesTitle, WORDS } from "./words";
 
 /** What Home's keys do; the route wires them. */
-export interface HomeActions extends Cheering {
-  onPickTeam?: () => void;
-  onTransfers?: () => void;
+export interface HomeActions extends Cheering, DeadlineKeys {
+  onPickStream?: (id: string) => void;
 }
 
-/** The team name and hangul; beside it, Overall as a tier, its rank and move, the sponsor's badge. */
-function HomeHead({ team, hangul, overall }: { team: string; hangul: string; overall: Standing }) {
+/** The head (What binds 1): the team's name and hangul; beside it Overall as a tier, its rank and move, the sponsor's badge. */
+function HomeHead({ data }: { data: HomeData }) {
   return (
     <div className="home__head">
-      <PageHead title={team} hangul={hangul} />
+      <PageHead title={data.team} hangul={data.hangul} />
       <div className="home__tier">
-        <TierMark standing={overall} />
+        <TierMark standing={data.overall} />
         <span className="home__badge">
-          <Placeholder word="Badge" fill />
+          <Placeholder word={WORDS.badge} fill />
         </span>
       </div>
     </div>
-  );
-}
-
-function CountdownFigure({ countdown }: { countdown: Countdown }) {
-  return (
-    <div className="home__countdown num">
-      {countdown.days}
-      <small>d</small>
-      {countdown.hours}
-      <small>h</small>
-      {countdown.minutes}
-      <small>m</small>
-    </div>
-  );
-}
-
-/** The full-width deadline bar: the countdown and your time; on the side column's line, Pick Team, Transfers, free transfers. */
-function DeadlineBar({ data, actions }: { data: HomeShared; actions: HomeActions }) {
-  const { deadline } = data;
-  return (
-    <section className="home__deadline">
-      <SectionHead note={deadline.competition} className="home__deadline-title">
-        Week {deadline.week} deadline
-      </SectionHead>
-      <div className="home__deadline-left">
-        <CountdownFigure countdown={data.countdown} />
-        <div className="home__deadline-when">
-          <Time local={deadline.local} />
-        </div>
-      </div>
-      <div className="home__deadline-keys">
-        <MainAction onClick={actions.onPickTeam}>Pick Team</MainAction>
-        <OutlinedKey onClick={actions.onTransfers}>Transfers</OutlinedKey>
-        <span className="home__free">
-          <b className="num">{data.freeTransfers}</b> free {data.freeTransfers === 1 ? "transfer" : "transfers"}
-        </span>
-      </div>
-    </section>
   );
 }
 
 /**
- * Home in either state: the head, the deadline bar, then the state's own main and side (`hero`,
- * `side`), then Following and Leagues, then the sponsor.
+ * Home (docs/design/approved/home/): the head; the object (the stream while a series is live, else
+ * the week's lineup); under it the week's series, Following and All managers; in the side column the
+ * Deadline panel, the week's, Leagues and the sponsor.
  */
-export function HomeFrame({
-  data,
-  actions,
-  hero,
-  side,
-}: {
-  data: HomeShared;
-  actions: HomeActions;
-  hero: ReactNode;
-  side: ReactNode;
-}) {
-  return (
-    <PageFrame screen="home" active="home" account={data.team}>
-      <HomeHead team={data.team} hangul={data.hangul} overall={data.overall} />
-      <DeadlineBar data={data} actions={actions} />
-      <Columns className="home__row">
-        <div className="home__main">{hero}</div>
-        <aside className="home__side">{side}</aside>
-      </Columns>
-      <Columns className="home__row home__row--band">
-        <Following items={data.following} sent={actions.sent} onCheer={actions.onCheer} />
-        <Leagues leagues={data.leagues} />
-      </Columns>
-      <div className="home__sponsor">
-        <Placeholder word="Sponsor" fill />
-      </div>
+export function HomePage({ data, actions }: { data: HomeData; actions: HomeActions }) {
+  const side = (
+    <>
+      <DeadlinePanel deadline={data.deadline} onPickTeam={actions.onPickTeam} onTransfers={actions.onTransfers} />
+      <WeekPanel week={data.week} />
+      <Leagues leagues={data.leagues} />
+      <Placeholder word={WORDS.sponsor} height="sponsorH" />
       <SponsorNote />
+    </>
+  );
+  return (
+    <PageFrame screen="home" active="home" account={data.team} side={side}>
+      <HomeHead data={data} />
+      {data.state === "live" ? <StreamPanel data={data} onPickStream={actions.onPickStream} /> : <LineupPanel data={data} buff={data.deadline.buff} />}
+      <div className="home__under">
+        <SeriesPanel title={seriesTitle(data.series.week)} series={data.series.rows} className="home__panel" />
+        <Following following={data.following} sent={actions.sent} onCheer={actions.onCheer} />
+        <AllManagers weeks={data.managers} />
+      </div>
     </PageFrame>
   );
 }

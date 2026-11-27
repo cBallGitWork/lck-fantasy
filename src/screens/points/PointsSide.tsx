@@ -1,4 +1,4 @@
-import { Hint, HINTS, LinkGo, MeDot, Panel, pct, RankMove, SeriesList, tierName, TierShield } from "../../parts";
+import { Hint, HINTS, LinkGo, MeDot, Panel, pct, RankMove, tierName, TierShield } from "../../parts";
 import { PATHS } from "../../paths";
 import type { PointsData, WeekPick } from "./types";
 import { dot, PICK_WORDS, toTier, WORDS } from "./words";
@@ -77,15 +77,6 @@ export function Leagues({ leagues, tierLine }: Pick<PointsData, "leagues" | "tie
         )}
         <LinkGo go={{ to: PATHS.leagues }}>{WORDS.allLeagues}</LinkGo>
       </div>
-    </Panel>
-  );
-}
-
-/** This week's series (What binds 8): each with both teams' bars, its result, `Live` with the score, or its time. */
-export function WeekSeries({ series }: Pick<PointsData, "series">) {
-  return (
-    <Panel title={WORDS.seriesTitle} band className="points__side points__series">
-      <SeriesList series={series} ruled />
     </Panel>
   );
 }

@@ -1,4 +1,5 @@
-/* Home, drawn to docs/design/approved/home/ (live.html, idle.html). Every value is a token. */
+/* Home, drawn to docs/design/approved/home/ (home.html, render.js). Every value is a token. The phone is
+   the theme's `measure.phone` (a media query can't read a token). */
 
 /* Head: team name and hangul, then Overall as a tier. The tier keeps the head's own bottom margin so the two centre. */
 .home__head {
@@ -10,173 +11,260 @@
   display: flex;
   align-items: center;
   gap: var(--s-3);
-  margin: 0 0 var(--s-4) var(--s-5);
-  padding-left: var(--s-5);
+  margin: 0 0 var(--s-4) var(--s-4);
+  padding-left: var(--s-4);
   border-left: var(--m-rule) solid var(--line);
 }
 .home__badge {
   display: flex;
   align-self: flex-start;
-  width: calc(var(--s-7) + var(--s-4));
+  width: calc(var(--s-7) + var(--s-2));
   height: var(--m-target);
 }
 
-/* Deadline bar: full width under the head, its keys on the side column's line. */
-.home__deadline {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) var(--m-side);
-  column-gap: var(--s-6);
-  align-items: end;
-  margin-bottom: var(--s-5);
+/* The object: one panel, its head on the blue band (What binds 2 and 3). */
+.home__object {
+  margin-bottom: var(--s-4);
+  background: var(--paper);
+  border: var(--m-rule) solid var(--line);
 }
-.home__deadline-title {
-  grid-column: 1 / -1;
-}
-.home__deadline-left {
+.home__band {
   display: flex;
-  align-items: baseline;
-  gap: var(--s-5);
+  align-items: center;
+  gap: var(--s-3);
+  min-height: var(--m-card-head);
+  padding: var(--s-1) var(--s-4);
+  background: var(--head-band);
 }
-.home__countdown {
-  font-size: var(--size-title);
+.home__band-title {
+  font-size: var(--size-head);
   font-weight: var(--w-bold);
+  letter-spacing: var(--track-head);
   line-height: var(--lh-snug);
 }
-.home__countdown small {
-  margin: 0 var(--s-2) 0 var(--s-1);
-  font-size: var(--size-lead);
-  font-weight: var(--w-regular);
-  color: var(--mid);
-}
-.home__deadline-when {
-  color: var(--mid);
-}
-.home__deadline-keys {
-  display: flex;
-  align-items: center;
-  gap: var(--s-2);
-}
-.home__free {
+.home__band-go {
   margin-left: auto;
-}
-.home__free b {
-  font-size: var(--size-lead);
-}
-
-/* The main and side columns, twice: the state's own, then Following and Leagues. */
-.home__row {
-  align-items: start;
-}
-.home__row--band {
-  margin-top: var(--s-5);
-}
-
-/* The side column: the week's total, then lists of players. */
-.home__total {
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-4);
-  margin-bottom: var(--s-4);
-  padding-bottom: var(--s-3);
-  border-bottom: var(--m-rule) solid var(--line);
-}
-.home__total-figure {
-  font-size: var(--size-key);
-  font-weight: var(--w-bold);
-  line-height: var(--lh-tight);
-}
-.home__fig {
-  font-size: var(--size-lead);
-  color: var(--mid);
-}
-.home__fig b {
-  margin-left: var(--s-1);
-  color: var(--text);
-}
-.home__fig--link {
-  display: inline-flex;
-  align-items: baseline;
-  min-height: var(--m-target);
-}
-.home__fig--link i {
-  margin-left: var(--s-1);
-  font-style: normal;
-  color: var(--text);
-}
-.home__sub {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: var(--s-2);
-  font-size: var(--size-lead);
-  font-weight: var(--w-bold);
-}
-.home__players + .home__sub {
-  margin-top: var(--s-4);
-}
-.home__sub-note {
-  font-weight: var(--w-regular);
-}
-.home__players {
-  list-style: none;
-}
-.home__player {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) calc(var(--s-7) * 2) minmax(var(--s-6), auto);
-  align-items: center;
-  height: var(--m-row);
-  border-bottom: var(--m-rule) solid var(--fill);
-}
-.home__player .home__role-icon {
-  width: var(--s-3);
-  height: var(--s-3);
-  margin-right: var(--s-2);
-  vertical-align: middle;
-}
-.home__mark {
-  margin-left: var(--s-1);
-  vertical-align: middle;
-}
-.home__player-team,
-.home__player-stat,
-.home__player-eo {
-  font-size: var(--size-small);
-  color: var(--mid);
-}
-.home__player-points {
-  text-align: right;
   font-weight: var(--w-semi);
 }
-.home__more {
-  margin-top: var(--s-2);
+
+/* A series live: the stream, muted, 16:9; the picker beside it, then your players in this series. */
+.home__stream {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--m-stream-picker);
+}
+.home__stream .home__band {
+  grid-column: 1 / -1;
+}
+.home__screen {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: var(--ratio-stream);
+  background: var(--stage);
+}
+.home__muted {
+  position: absolute;
+  left: var(--s-4);
+  bottom: var(--s-3);
+  font-size: var(--size-small);
+}
+.home__picker {
+  display: flex;
+  flex-direction: column;
+  border-left: var(--m-rule) solid var(--line);
+}
+.home__picker-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--s-3) var(--s-4) var(--s-2);
+}
+.home__picker-head h2 {
+  font-size: var(--size-lead);
+  font-weight: var(--w-bold);
+}
+.home__pick {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-height: var(--m-row);
+  padding: 0 var(--s-4);
+  font: inherit;
+  color: var(--text);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-top: var(--m-rule) solid var(--line);
+  cursor: pointer;
+}
+.home__pick small {
+  font-size: var(--size-small);
+}
+/* The pick on `--fill` with a `--text` edge (What binds 2). */
+.home__pick--on {
+  font-weight: var(--w-semi);
+  background: var(--fill);
+  box-shadow: inset var(--m-rule-heavy) 0 0 var(--text);
+}
+.home__pick--off {
+  color: var(--mid);
+  cursor: default;
+}
+.home__yours td {
+  height: var(--m-card-row);
+}
+.home__yours-who {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
 }
 
-/* Following: each item, Cheer / Jeer › on its right; a cheer or jeer received on its LED panel. */
-.home__feed-row {
+/* Nothing live: the starters as Card view's cards, the bench as one row under them. */
+.home__cards {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: var(--s-2);
+  padding: var(--s-4);
+}
+.home__cards--nine {
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+.home__bench {
+  display: flex;
   align-items: center;
-  padding: var(--s-2) 0;
-  border-bottom: var(--m-rule) solid var(--fill);
+  gap: var(--s-5);
+  min-height: var(--m-row);
+  padding: 0 var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
 }
-.home__feed-row--received {
-  grid-template-columns: calc(var(--s-7) * 3 + var(--s-2)) minmax(0, 1fr);
+
+/* Under the object: three panels in a row. */
+.home__under {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+  align-items: start;
 }
-.home__feed-small {
-  display: block;
+
+/* Every panel: ruled rows edge to edge, a grey sub-band over them, figures at the right. */
+.home__panel {
+  margin-bottom: var(--s-5);
+  padding-bottom: 0;
 }
+.home__under .home__panel {
+  margin-bottom: 0;
+}
+.home__rows {
+  width: calc(100% + 2 * var(--s-4));
+  margin: 0 calc(var(--s-4) * -1);
+  border-collapse: collapse;
+}
+.home__object .home__rows {
+  width: 100%;
+  margin: 0;
+}
+.home__rows td,
+.home__rows th {
+  height: var(--m-row);
+  border-top: var(--m-rule) solid var(--line);
+  white-space: nowrap;
+}
+.home__rows td:first-child,
+.home__rows th:first-child {
+  padding-left: var(--s-4);
+}
+.home__rows td:last-child,
+.home__rows th:last-child {
+  padding-right: var(--s-4);
+}
+.home__fig {
+  text-align: right;
+}
+/* Grey words at the body's size, as the pictures draw a role, a series or a fact's word. */
+.home__mid {
+  color: var(--mid);
+}
+.home__panel > .home__rows:first-of-type thead tr:first-child th,
+.home__panel > .home__rows:first-of-type tbody:first-child tr:first-child th {
+  border-top: 0;
+}
+.home__sub th,
+.home__sub td,
+.home__figs .home__sub {
+  height: var(--m-row-sub);
+  min-height: var(--m-row-sub);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+  color: var(--mid);
+  background: var(--fill);
+}
+.home__rows b {
+  font-weight: var(--w-semi);
+}
+.home__owned,
+.home__move {
+  width: var(--m-col-figure);
+  font-size: var(--size-small);
+}
+.home__who {
+  white-space: nowrap;
+}
+.home__who b {
+  font-weight: var(--w-semi);
+}
+.home__fact {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.home__foot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-height: var(--m-row);
+  margin: 0 calc(var(--s-4) * -1);
+  padding: 0 var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+  font-weight: var(--w-semi);
+}
+
+/* Following: each row's Cheer / Jeer ›; the latest cheer or jeer on its LED panel. */
 .home__cheer,
 .home__sent {
   display: inline-flex;
   align-items: center;
   min-height: var(--m-target);
+  font-weight: var(--w-semi);
 }
 .home__cheer {
   color: var(--text);
 }
+.home__received {
+  margin: 0 calc(var(--s-4) * -1);
+  padding: var(--s-3) var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+}
+.home__received-by {
+  margin-top: var(--s-1);
+  font-size: var(--size-small);
+}
 
-.home__sponsor {
-  display: flex;
-  height: calc(var(--s-7) * 2);
+/* The phone stacks every panel in one column (up to 600px). */
+@media (max-width: 600px) {
+  .home__head {
+    flex-wrap: wrap;
+  }
+  .home__stream,
+  .home__under {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .home__picker {
+    border-left: 0;
+  }
+  .home__cards,
+  .home__cards--nine {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

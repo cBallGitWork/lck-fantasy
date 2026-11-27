@@ -12,18 +12,26 @@ export function Panel({
   title,
   label,
   band,
+  go,
   className,
   children,
 }: {
   title?: string;
   label?: string;
   band?: boolean;
+  /** A link at the band's right, as Home's `Points ›` (approved/home/). */
+  go?: ReactNode;
   className?: string;
   children: ReactNode;
 }) {
   return (
     <section className={cx("panel", band && "panel--band", className)} aria-label={title ? undefined : label}>
-      {title && <h2 className="panel__title">{title}</h2>}
+      {title && (
+        <h2 className="panel__title">
+          {title}
+          {go && <span className="panel__go">{go}</span>}
+        </h2>
+      )}
       {children}
     </section>
   );

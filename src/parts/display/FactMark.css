@@ -1,0 +1,24 @@
+/* A fact's mark (plate.md, Parts, A fact's mark): 20px, in the colour the fact already has elsewhere. */
+.fact-mark {
+  flex: none;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--stroke-fact);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.fact-mark__fill {
+  fill: currentColor;
+}
+.fact-mark--star {
+  color: var(--ink);
+}
+.fact-mark--bought {
+  color: var(--add);
+}
+.fact-mark--flop,
+.fact-mark--sold {
+  color: var(--down);
+}

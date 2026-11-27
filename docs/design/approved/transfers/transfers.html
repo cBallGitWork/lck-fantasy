@@ -86,20 +86,29 @@
 
 /* The tapped player's card, docked under the Rift: who he is and his one key, his stats with their rank, his series.
    The Rift, its panels and the card stay in view as the long list scrolls. */
-.pcard { display: grid; grid-template-columns: 216px minmax(0, 1fr) 256px; background: var(--paper); border: 1px solid var(--line); border-top: 2px solid var(--head-band, var(--text)); }
-.pcard > * + * { border-left: 1px solid var(--line); }
-.pcard__who { display: flex; flex-direction: column; justify-content: space-between; }
-.pcard__keys { display: flex; align-items: center; gap: 16px; padding: 0 16px 16px; }
-.pcard__keys .key { flex: 1; min-height: 40px; font-weight: 700; color: var(--bg); border: 0; }
+.pcard { background: var(--paper); border: 1px solid var(--line); }
+.pcard__head { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 4px 16px; background: var(--head-band, var(--fill)); }
+.pcard__head .crest { width: 32px; height: 32px; }
+.pcard__head .card__name { font: 700 20px/24px var(--head); }
+.pcard__team { font-weight: 400; }
+.pcard__team .team__bar { width: 6px; height: 16px; margin-right: 6px; vertical-align: -1px; }
+.pcard__role { background: var(--band); font: 700 12px/20px var(--sans); padding: 0 8px; }
+.pcard__total { display: flex; align-items: baseline; gap: 12px; margin-left: auto; }
+.pcard__total b { font: 700 28px/32px var(--fig); }
+.pcard__strip { display: grid; grid-template-columns: repeat(7, 1fr); border-bottom: 1px solid var(--line); }
+.pcard__strip > div { display: flex; flex-direction: column; padding: 8px 12px 8px 16px; white-space: nowrap; }
+.pcard__strip > div + div { border-left: 1px solid var(--line); }
+.pcard__strip b { font: 600 20px/28px var(--fig); }
+.pcard__foot { display: flex; align-items: center; gap: 24px; padding: 8px 16px; }
+.pcard__run { display: flex; align-items: center; gap: 4px; }
+.pcard__run > .small { margin-right: 8px; }
+.sc { display: flex; flex-direction: column; align-items: center; width: 56px; padding: 4px 0; background: var(--fill); font-size: 12px; line-height: 16px; }
+.sc b { font: 600 14px/20px var(--fig); }
+.mini { width: 24px; height: 24px; }
+.pcard__keys { display: flex; align-items: center; gap: 16px; margin-left: auto; }
+.pcard__keys .key { min-height: 40px; min-width: 120px; font-weight: 700; color: var(--bg); border: 0; }
 .pcard__sell { background: var(--rise); }
 .pcard__buy { background: var(--add, var(--text)); }
-.pcard__mid { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 12px 16px; }
-.pcard__stats { display: grid; grid-template-columns: repeat(4, auto); gap: 8px; }
-.pcard__stats > div { display: flex; flex-direction: column; justify-content: center; min-height: 56px; padding: 0 6px; background: var(--fill); white-space: nowrap; }
-.pcard__stats dd { display: flex; align-items: baseline; gap: 6px; font-size: 16px; }
-.pcard__series { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 12px 16px; }
-.pcard__cells { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-bottom: 8px; }
-.pcard__cells > * { display: flex; flex-direction: column; justify-content: center; min-height: 40px; padding: 0 6px; background: var(--fill); white-space: nowrap; }
 .plist tr.is-tapped td { background: var(--fill); }
 .plist tr.is-tapped td:first-child { box-shadow: inset 2px 0 0 var(--select); }
 @media (min-width: 601px) { .main { position: sticky; top: 16px; align-self: start; } }

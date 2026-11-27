@@ -72,11 +72,16 @@
     Flop: ico('<path d="M3 7l6 6 4-4 8 8M21 11v6h-6"/>', "flop"),
     Killer: ico('<path d="M14.500 17.500 3 6V3h3l11.500 11.500M13 19l6-6M16 16l4 4M19 21l2-2M14.500 6.500 18 3h3v3l-3.500 3.500M5 14l4 4M7 17l-3 3M3 19l2 2"/>', "killer"),
   };
-  const PICK_TEAM = { Faker: "T1", Delight: "HLE", Chovy: "GEN" };
+  const PICK_TEAM = { Faker: "T1", kkOma: "T1", Siwoo: "DK", Delight: "HLE", Chovy: "GEN", Zeka: "HLE", Kiin: "GEN" };
   const who = (name) => `<i class="team__bar" style="background:${BAR[PICK_TEAM[name]]}"></i><span class="who__team">${PICK_TEAM[name]}</span> <b>${name}</b>`;
-  const pick = (word, name, mine, pts, owned) => `<div class="pick"><dt class="fact">${ICON[word]}${word}</dt><dd>${who(name)}${mine ? '<i class="yours" title="Yours"></i>' : ""}</dd><dd class="pick__figs"><b class="fig">${pts}</b><span class="small mid fig">${owned}%</span></dd></div>`;
+  // Three Stars, the Flop, three Killers (spec/12, Points, Your own week): the word and its mark head each group, on its
+  // first row only. Stars are your starters by points x (1 - effective ownership), Killers the players you don't own by
+  // points x effective ownership; the sum ranks them and is never shown. Owned is effective ownership.
+  // No dot here: Stars and the Flop are always yours and Killers never (Craig, 27 Nov 2026).
+  const pick = (word, name, mine, pts, owned, first = true) => `<div class="pick${first ? " pick--first" : ""}"><dt class="fact">${first ? ICON[word === "Stars" ? "Star" : word === "Killers" ? "Killer" : word] + word : ""}</dt><dd>${who(name)}</dd><dd class="pick__figs"><b class="fig">${pts}</b><span class="small mid fig">${owned}%</span></dd></div>`;
+  const group = (word, rows, mine) => rows.map(([name, pts, owned], i) => pick(word, name, mine, pts, owned, i === 0)).join("");
   const yourWeek = `<section class="tpanel side-panel side-panel--pad" aria-label="Your week"><h2 class="tpanel__title">Your week</h2>
-    <dl class="picks"><div class="pick pick--head small mid"><dt></dt><dd></dd><dd class="pick__figs"><span>Pts</span><span>Owned</span></dd></div>${pick("Star", "Faker", true, 25, 46)}${pick("Flop", "Delight", true, 5, 12)}${pick("Killer", "Chovy", false, 15, 41)}</dl>
+    <dl class="picks"><div class="pick pick--head small mid"><dt></dt><dd></dd><dd class="pick__figs"><span>Pts</span><span>Owned</span></dd></div>${group("Stars", [["Faker", 25, 46], ["kkOma", 10, 18], ["Siwoo", 8, 6]], true)}${pick("Flop", "Delight", true, 5, 12)}${group("Killers", [["Chovy", 15, 41], ["Kiin", 12, 33], ["Zeka", 14, 22]], false)}</dl>
   </section>`;
 
   // Under the Rift: the tapped player's week, a series a column, a game a row; the points boxed when counted.
@@ -105,9 +110,11 @@
   const LEAGUES = [["Overall · Emerald I", "48,211", 1, "6,904"], ["United Kingdom", "1,402", 1, "233"], ["T1 supporters", "3,118", 1, "510"], ["Pub League", "2nd", 1, "1"], ["Flol Discord", "14th", -1, "2"]];
   // Overall's tier shield: one --text fill for every tier (plate.md, Colour).
   const SHIELD = '<svg class="shield" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>';
+  // Both tier gaps, under Overall's row: the points to promote and the points clear of demotion (spec/08, Overall tiers).
+  const GAPS = '<tr class="lg__gaps"><td colspan="3"><span class="mid"><b class="fig">≈6</b> pts to Diamond IV</span><span class="mid"><b class="fig">≈5</b> pts clear of Emerald II</span></td></tr>';
   const leagues = `<section class="tpanel side-panel" aria-label="Leagues"><h2 class="tpanel__title">Leagues</h2>
-    <table class="lg">${LEAGUES.map(([name, rank, dir, by]) => `<tr><td>${name.startsWith("Overall") ? SHIELD : ""}${name}</td><td class="num"><b class="fig">${rank}</b></td><td class="num fig ${dir > 0 ? "up" : "down"}">${dir > 0 ? "▲" : "▼"} ${by}</td></tr>`).join("")}</table>
-    <p class="lg__foot"><span><b class="fig">≈6 pts</b> <span class="mid">to Diamond IV</span></span><a class="link" href="#">All leagues ›</a></p>
+    <table class="lg">${LEAGUES.map(([name, rank, dir, by]) => `<tr><td>${name.startsWith("Overall") ? SHIELD : ""}${name}</td><td class="num"><b class="fig">${rank}</b></td><td class="num fig ${dir > 0 ? "up" : "down"}">${dir > 0 ? "▲" : "▼"} ${by}</td></tr>${name.startsWith("Overall") ? GAPS : ""}`).join("")}</table>
+    <p class="lg__foot"><a class="link" href="#">All leagues ›</a></p>
   </section>`;
   const SERIES = [["Wed", "T1", "HLE", "2–1"], ["Wed", "GEN", "KT", "2–0"], ["Thu", "DK", "NS", "2–0"], ["Thu", "BRO", "DNS", "1–2"], ["Fri", "KT", "BFX", "2–1"], ["Fri", "NS", "KRX", "0–2"], ["Sat", "T1", "DK", "1–0", "Live"], ["Sat", "GEN", "HLE", "10:30am"], ["Sun", "KRX", "BRO", "8:00am"], ["Sun", "BFX", "DNS", "10:30am"]];
   const bar = (code) => `<i class="team__bar" style="background:${BAR[code]}"></i>`;

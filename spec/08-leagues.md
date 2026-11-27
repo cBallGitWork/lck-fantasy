@@ -87,8 +87,8 @@ Overall shows each manager's place as a LoL ranked tier, Iron to Challenger (Cra
     ([approved picture](../docs/design/approved/home/)).
   - Points: the tier, the points to promote and the points clear of demotion, at every tier
     (Craig, 27 Nov 2026, over 18 Nov's Challenger only). Each is the gap to the manager at that
-    cut-off now, shown with ≈ as others still score. Example: `≈6 pts to Diamond IV · ≈5 clear of
-    Platinum I`. Challenger has nothing above and Iron IV nothing below. Home doesn't show them.
+    cut-off now, shown with ≈ as others still score. Example: `≈6 pts to Diamond IV · ≈5 pts clear
+    of Emerald II`. Challenger has nothing above and Iron IV nothing below. Home doesn't show them.
   - The manager's profile, by the team name in its banner, as on Home: the shield, tier, rank and
     its move. It shows there only, not again in the Leagues column (Craig, 18 Nov 2026, over the
     approved picture, which puts it beside Overall).

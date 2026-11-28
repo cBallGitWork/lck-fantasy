@@ -109,6 +109,28 @@ export function chaseTag(table: readonly TableRow[], entryId: string): ChaseTag 
   return lead > 0 ? { kind: "clear", points: lead } : null;
 }
 
+/** How a long table's first page is cut: its rows a page, the top rows it keeps, and the rows either
+ *  side of the manager's own. Data, as the page size is (spec/08, The Leagues page). */
+export interface FirstPageCut {
+  pageSize: number;
+  top: number;
+  around: number;
+}
+
+/** A table's first page as runs of rows, a gap between runs (spec/08, The Leagues page; Craig,
+ *  28 Nov 2026): where the table runs past one page and the manager's row is not among its top rows,
+ *  the top rows, then the rows round theirs; one run where the two meet. Otherwise the page as it is.
+ *  Example: 86 managers, yours 14th, top 5 and 2 either side: 1st to 5th, then 12th to 16th. */
+export function firstPage<R>(table: readonly R[], isMine: (row: R) => boolean, cut: FirstPageCut): R[][] {
+  const page = [table.slice(0, cut.pageSize)];
+  if (table.length <= cut.pageSize) return page;
+  const mine = table.findIndex(isMine);
+  if (mine < cut.top) return page;
+  const from = mine - cut.around;
+  const to = mine + cut.around + 1;
+  return from <= cut.top ? [table.slice(0, to)] : [table.slice(0, cut.top), table.slice(from, to)];
+}
+
 /** The Carry column shows each manager's Carry only once the gameweek's deadline has passed, as
  *  FPL hides picks until then (spec/08, The Leagues page). */
 export function carryShown(deadline: number, now: number): boolean {

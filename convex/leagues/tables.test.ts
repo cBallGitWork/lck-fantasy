@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { carryShown, chaseTag, leagueTable, legendAndRise, legendRiseTable, overallSplits, rankMovement, type LeagueMember } from "./tables";
+import { carryShown, chaseTag, firstPage, leagueTable, legendAndRise, legendRiseTable, overallSplits, rankMovement, type LeagueMember } from "./tables";
 
 // Fixture calendar: Split 1 is gameweeks 1–4 (Road to MSI is gameweek 4), Split 2 is 5–6.
 const SEASON = { first: 1, last: 6 };
@@ -118,5 +118,39 @@ describe("overallSplits", () => {
     expect(overallSplits({ overallSplits: true })).toBe(true);
     expect(overallSplits({ overallSplits: false })).toBe(false);
     expect(overallSplits({})).toBe(true);
+  });
+});
+
+describe("firstPage", () => {
+  /** Ranks 1 to `size`. */
+  const ranks = (size: number) => Array.from({ length: size }, (_, i) => i + 1);
+  const cut = { pageSize: 50, top: 5, around: 2 };
+  const pageOf = (size: number, mine: number) => firstPage(ranks(size), (rank) => rank === mine, cut);
+
+  test("spec/08's example: Flol Discord, 86 managers, yours 14th: 1st to 5th, a gap, then 12th to 16th", () => {
+    expect(pageOf(86, 14)).toEqual([
+      [1, 2, 3, 4, 5],
+      [12, 13, 14, 15, 16],
+    ]);
+  });
+
+  test("past one page and deep in it, as on Overall: the top rows, then yours with its neighbours", () => {
+    expect(firstPage(ranks(1000), (rank) => rank === 900, { ...cut, top: 7 })).toEqual([
+      [1, 2, 3, 4, 5, 6, 7],
+      [898, 899, 900, 901, 902],
+    ]);
+  });
+
+  test("among the top rows, or not in the table, the page is the page as it is", () => {
+    expect(pageOf(86, 3)).toEqual([ranks(50)]);
+    expect(pageOf(86, 0)).toEqual([ranks(50)]);
+  });
+
+  test("where the top rows meet yours, one run with no gap", () => {
+    expect(pageOf(86, 8)).toEqual([ranks(10)]);
+  });
+
+  test("a league on one page shows every row, wherever yours is", () => {
+    expect(pageOf(12, 11)).toEqual([ranks(12)]);
   });
 });

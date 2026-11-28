@@ -1,5 +1,5 @@
 import { useId, useState, type ReactNode } from "react";
-import { BACK, Empty, ErrorState, MainAction, Menu, OutlinedKey, Panel, Table, TabPanel, Tabs, type MenuItem } from "../../parts";
+import { BACK, Empty, ErrorState, MainAction, Menu, OutlinedKey, Panel, Table, TabPanel, Tabs, type Column, type MenuItem } from "../../parts";
 import { CalendarMark } from "./Marks";
 import { Pager } from "./Pager";
 import { Standings, type Removing } from "./Standings";
@@ -60,7 +60,7 @@ export function LeaguePanel({
         {tabs}
         <span className="leagues__keys">{keys}</span>
       </div>
-      {children}
+      <div className="leagues__body">{children}</div>
     </Panel>
   );
 }
@@ -81,10 +81,10 @@ export function TableBody({
   removing,
 }: { league: LeagueView; tiered?: boolean; removing?: Removing } & Omit<TableProps, "competition" | "tab" | "onTab">) {
   if (status === "loading") return <LoadingTable week={league.week} deadlinePassed={league.deadlinePassed} />;
-  if (status === "error") return <ErrorState title={WORDS.tableFailed} line={WORDS.checkConnection} onRetry={onRetry} />;
+  if (status === "error") return <ErrorState title={WORDS.tableFailed} line={WORDS.checkConnection} onRetry={onRetry} centre />;
   if (!table) {
     const starts = league.startsOn;
-    return starts ? <Empty title={WORDS.noTable} line={weekStartsOn(starts.week, starts.starts)} mark={<CalendarMark />} /> : <Empty title={WORDS.noTable} />;
+    return starts ? <Empty title={WORDS.noTable} line={weekStartsOn(starts.week, starts.starts)} mark={<CalendarMark />} centre /> : <Empty title={WORDS.noTable} centre />;
   }
   return (
     <>
@@ -96,12 +96,23 @@ export function TableBody({
 
 /** A table on its way: its heads, and `--fill` bars where each row's figures go (plate.md, States). */
 function LoadingTable({ week, deadlinePassed }: { week: number; deadlinePassed: boolean }) {
-  const bar = <span className="leagues__skel" />;
-  const heads = [WORDS.rank, "", WORDS.teamManager, ...(deadlinePassed ? [WORDS.captain, weekHead(week)] : []), WORDS.total];
+  const bar = () => <span className="leagues__skel" />;
+  const columns: Column<number>[] = [
+    { key: "rank", head: WORDS.rank, cell: bar },
+    { key: "move", head: "", cell: bar },
+    { key: "name", head: WORDS.teamManager, cell: bar },
+    ...(deadlinePassed
+      ? [
+          { key: "captain", head: WORDS.captain, cell: bar },
+          { key: "week", head: weekHead(week), figure: true, cell: bar },
+        ]
+      : []),
+    { key: "total", head: WORDS.total, figure: true, cell: bar },
+  ];
   return (
     <div role="status" aria-label={WORDS.tableLoading}>
       <Table
-        columns={heads.map((head, i) => ({ key: String(i), head, figure: i >= heads.length - (deadlinePassed ? 2 : 1), cell: () => bar }))}
+        columns={columns}
         rows={Array.from({ length: LOADING_ROWS }, (_, i) => i)}
         rowKey={String}
       />

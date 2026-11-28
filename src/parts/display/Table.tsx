@@ -53,7 +53,7 @@ export function Table<R>({
   columns: Column<R>[];
   rows: R[];
   rowKey: (row: R) => string;
-  /** The row drawn bold on `--fill`, such as yours in a league. */
+  /** The row drawn bold on `--fill` with a white left edge, such as yours in a league. */
   selected?: (row: R) => boolean;
   /** A page's own class on a row, such as the row Leagues' Remove picked. */
   rowClass?: (row: R) => string | undefined;

@@ -36,7 +36,12 @@ const GENERAL_MARKS: Record<string, LeagueMark> = {
   "t1-supporters": { kind: "crest", team: "T1" },
 };
 
-const markOf = ({ id, kind }: MyLeague): LeagueMark => (kind === "private" ? { kind: "group" } : (GENERAL_MARKS[id] ?? { kind: "group" }));
+function markOf({ id, kind }: MyLeague): LeagueMark {
+  if (kind === "private") return { kind: "group" };
+  const mark = GENERAL_MARKS[id];
+  if (!mark) throw new Error(`${id} has no mark in GENERAL_MARKS`);
+  return mark;
+}
 
 export const LEAGUE_LIST: LeagueSummary[] = [
   { id: "overall", name: "Overall", kind: "general", mark: { kind: "tier", tier: MY_OVERALL.tier }, rank: MY_OVERALL.rank, move: MY_OVERALL.move, size: MY_OVERALL.size },

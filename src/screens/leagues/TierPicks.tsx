@@ -11,7 +11,9 @@ import { weekHead, WORDS } from "./words";
 export function TierPicks({ week, picks }: { week: number; picks: TierPick[] }) {
   return (
     <Panel title={WORDS.captainsAndBuffs} sub={weekHead(week)} band className="leagues__panel leagues__tiers">
-      <Table columns={COLUMNS} rows={picks} rowKey={(p) => p.tier} selected={(p) => p.mine} label={WORDS.captainsAndBuffs} />
+      <div className="leagues__body">
+        <Table columns={COLUMNS} rows={picks} rowKey={(p) => p.tier} selected={(p) => p.mine} label={WORDS.captainsAndBuffs} />
+      </div>
     </Panel>
   );
 }

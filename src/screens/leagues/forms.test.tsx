@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, test } from "vitest";
-import { expectInOrder, html, noop, text } from "../../testing/render";
+import { expectInOrder, html, noop, plain, text } from "../../testing/render";
 import { JOINABLE, LEAGUE_NAME_MAX, MY_LEAGUES_NOW, NEW_LEAGUE, NEW_TABLE, PRIVATE_LEAGUE_CAP, REMOVED_FROM, SCORING_WEEKS } from "./fixtures";
 import { codeOf, freeCode, joinOutcome, makeLeague, privateCount, removeManager, renameLeague, withLeague, withoutLeague } from "./forms";
 import { CreatedSheet, CreateSheet, DeleteSheet, JoinSheet, LeaveSheet, RemoveSheet } from "./Sheets";
@@ -58,7 +58,7 @@ describe("each sheet holds its picture's content in order", () => {
 
   test("join-bad.html: a code that finds nothing says the spec's line under the field, after the warning mark, the field edged", () => {
     const sheet = html(<JoinSheet privates={TWO_OF_CAP} initialCode="NOPE" error={WORDS.noSuchCode} onJoin={noop} onClose={noop} />);
-    expect(text(<JoinSheet privates={TWO_OF_CAP} initialCode="NOPE" error={WORDS.noSuchCode} onJoin={noop} onClose={noop} />)).toContain("No league with that code");
+    expect(plain(sheet)).toContain("No league with that code");
     expect(sheet).toContain("field__box--error");
     expect(sheet).toMatch(/<p [^>]*class="field__error"><svg class="warn-mark"/);
   });

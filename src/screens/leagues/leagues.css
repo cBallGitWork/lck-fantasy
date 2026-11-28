@@ -14,14 +14,6 @@
 .leagues__panel {
   padding-bottom: 0;
 }
-.leagues__panel > .panel__title {
-  display: flex;
-  align-items: center;
-  min-height: var(--s-7);
-}
-.leagues__main > .leagues__panel:first-child > .panel__title {
-  font-size: var(--size-head);
-}
 .leagues__bar {
   display: flex;
   align-items: stretch;
@@ -31,18 +23,14 @@
   padding: 0 var(--s-4);
   border-bottom: var(--m-rule) solid var(--line);
 }
-.leagues__bar .tabs {
-  margin-right: auto;
-}
 .leagues__keys {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: var(--s-2);
 }
-.leagues__panel .table,
-.leagues__panel [role="tabpanel"] > .state {
+.leagues__body {
   margin: 0 calc(var(--s-4) * -1);
-  width: calc(100% + var(--s-4) * 2);
 }
 .leagues__code {
   border: var(--m-rule) solid var(--line);
@@ -107,10 +95,6 @@
 .leagues__pod--3 {
   background: var(--tier-bronze);
 }
-/* Your own row: filled, a white left edge, no dot (plate.md, Parts). */
-.leagues .table__row--selected td:first-child {
-  box-shadow: inset var(--s-1) 0 0 var(--text);
-}
 /* The manager the maker picked to remove, filled behind the confirm. */
 .leagues__picked td {
   background: var(--fill);
@@ -131,18 +115,12 @@
   background: var(--fill);
   vertical-align: middle;
 }
-.leagues__panel .state {
-  align-items: center;
-  text-align: center;
-  padding: var(--s-7) var(--s-4);
-}
 
 /* The pager. */
 .leagues__pager {
   display: flex;
   justify-content: flex-end;
   gap: var(--s-2);
-  margin: 0 calc(var(--s-4) * -1);
   padding: var(--s-3) var(--s-4);
   border-top: var(--m-rule) solid var(--line);
 }

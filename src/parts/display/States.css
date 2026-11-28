@@ -15,6 +15,12 @@
   gap: var(--s-1);
   padding: var(--s-5) 0;
 }
+/* Centred in a table's place (approved/leagues/). */
+.state--centre {
+  align-items: center;
+  text-align: center;
+  padding: var(--s-7) var(--s-4);
+}
 .state__title {
   font-size: var(--size-lead);
   font-weight: var(--w-bold);

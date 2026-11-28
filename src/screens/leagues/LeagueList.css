@@ -2,9 +2,6 @@
 .leagues__list {
   padding-bottom: 0;
 }
-.leagues__list > .panel__title {
-  margin-bottom: 0;
-}
 .leagues__list-sub {
   margin: 0 calc(var(--s-4) * -1);
   padding: var(--s-1) var(--s-4);

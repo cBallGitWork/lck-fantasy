@@ -23,7 +23,7 @@ One source draws every picture: `leagues.html` and `render.js`, the picture chos
 | `1440-delete.png` | `delete` | Delete confirm |
 | `1440-leave.png` | `leave` | Leave confirm |
 
-The states (drawn 28 Nov 2026, not yet approved):
+The states, drawn 28 Nov 2026. Craig's calls that day: past eight private leagues the list scrolls in place; an error carries a red warning mark; Unranked is an outlined shield with no rank under it.
 
 | File | `?v=` | Shows |
 |---|---|---|
@@ -36,6 +36,7 @@ The states (drawn 28 Nov 2026, not yet approved):
 | `1440-soon.png` | `soon` | A league whose scoring hasn't started |
 | `1440-loading.png` | `loading` | A table on its way: bars where figures go |
 | `1440-error.png` | `error` | A table that didn't load |
+| `1440-unranked.png` | `unranked` | Before gameweek 1 is final: no table, an outlined shield and Unranked in the list, no ranks |
 
 ## Borrowed
 

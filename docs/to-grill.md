@@ -32,8 +32,6 @@ effective ownership on every player (2).
 - The Following tab, and a cheer's or jeer's panel drawn as the side of an LED truck (Craig,
   24 Nov 2026: "maybe make the truck actually look like the side of the truck"). A `/design` round.
 
-- How Unranked looks before gameweek 1 is final (spec/08): proposed, an outlined shield and
-  `Unranked` with no rank line; Home's picture doesn't draw it.
 - The team's name on its shirt, so a 28px shirt says whose it is, such as the code on the hem or
   collar (Craig, 17 Nov 2026). Redraws all ten: for the shirts' design round after the reskin.
 - The screens and the look ([docs/design/](design/)). Shirts and player photos are settled in [spec/13](../spec/13-korean-touches.md#shirts-and-crests).

@@ -4,6 +4,8 @@ export { BuffCard, type BuffState } from "./display/BuffCard";
 export { BuffIcon } from "./display/BuffIcon";
 export { FactMark, type FactKind } from "./display/FactMark";
 export { Crest } from "./display/Crest";
+export { Flag } from "./display/Flag";
+export { WarnMark } from "./display/WarnMark";
 export { TeamBar } from "./display/TeamBar";
 export { Kit, kitUrl } from "./display/Kit";
 export { Columns } from "./frame/Columns";

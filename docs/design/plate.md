@@ -157,6 +157,8 @@ Each part is drawn one way on every screen.
 - **Your players** are marked by that dot, on every screen.
 - **A key that ends something** (Delete league, Leave) has a `--down` edge in its confirm sheet, and is a plain key elsewhere (Craig, 27 Nov 2026).
 - **Your own row** in a league table or the tier panel is filled (`--fill`) with a 4px `--text` left edge, and no dot (Craig, 27 Nov 2026).
+- **Leagues' side list** scrolls in place past eight private leagues, Create and Join staying in view (Craig, 28 Nov 2026).
+- **Unranked**, before gameweek 1 is final, is an outlined `--text` shield and the word, with no rank under it (Craig, 28 Nov 2026).
 - **A league's mark** (Leagues' side list; Craig, 27 Nov 2026): 20px before its name. Overall its tier shield, a country its flag, a team its crest, a private league a group in `--text`.
 - **A fact's mark** (Home's Star, Flop and All managers, Points' Star, Flop and Killer; Craig, 27 Nov 2026, "keep them", after the pages read dull): a 20px mark before the fact's word, its colour the one that fact already has elsewhere: Star a gold star, Flop a red falling line, Killer crossed swords in `--text`, having no colour of its own (Craig, 27 Nov 2026), Most captained the Captain's C, Most bought a green plus in a ring and Most sold a red minus in a ring, as Transfers' Buy and Sell. One mark a fact, the same on every page.
 - **A scoring line's mark** (Series; Craig, 27 Nov 2026, after the page read as text and squares): a mark, drawn for Flol with none of Riot's artwork, for each scoring line a player or coach earned in a game, on a 32px filled square over the line's word, centred, on Series' Events tab (Craig, 27 Nov 2026; was 28px before the word, heading a team's table); never alone under a player's K/D/A, where it meant nothing (Craig, 27 Nov 2026). A coach's game cell carries his lines' marks bare, at 20px, Events naming them. Each line's mark has its own colour (Craig, 27 Nov 2026, the page still short of colour): red for blood and deaths, gold for gold and the crown, orange drakes, purple Baron, teal Elder, blue tower, yellow steal, green for the clean lines. Kills, deaths and assists are a single sword, a skull and a hand, crossed swords being Killer's. On Series each K/D/A figure sits behind its own mark, kills in `--text`, deaths red, assists green, never as `3/2/9` (Craig, 27 Nov 2026: he could not tell which was which). Player of the Game is a crown in `--ink`, the star being Star's. One mark a line, the same on every page; the set is `approved/series/`, Marks.
@@ -189,7 +191,7 @@ Every screen part is drawn for each state it can be in.
 - **Disabled:** one look for every key, `.key-off`: text `--mid` on `--fill`, no edge, with the reason beside it (`No changes`).
 - **Loading:** the layout drawn with `--fill` bars where figures go; no spinners.
 - **Empty:** a title and at most one short line (`No moves yet`).
-- **Error:** a title and one line, and `Try again ›` where trying again can help.
+- **Error:** a title and one line, and `Try again ›` where trying again can help. Every error carries a warning triangle in `--down`, before a field's line or over a panel's title, so red is never its only sign (Craig, 28 Nov 2026).
 - **Motion:** 150 to 250ms, ease-out; a changed live figure fades in. With reduced motion, nothing
   moves.
 

@@ -12,6 +12,7 @@
    16 Nov 2026). Only what is Leagues' own is here; the rest is ../pick-team/look.css. Panels are Points' and Home's. */
 :root { --head-band: #1D46A8; --up: #4CD98A; --down: #FF6B78; }
 .num { text-align: right; }
+[hidden] { display: none !important; }
 .up { color: var(--up); }
 .down { color: var(--down); }
 .team__bar { display: inline-block; width: 4px; height: 12px; margin-right: 6px; vertical-align: -1px; }
@@ -84,6 +85,32 @@ img.lmark { width: 20px; height: 20px; vertical-align: -5px; }
 .lst__row.is-here { background: var(--fill); box-shadow: inset 2px 0 0 var(--text); font-weight: 600; }
 .lst__row.is-here small { font-weight: 400; }
 .lst__acts { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--line); }
+.lst__none { padding: 12px 16px; border-top: 1px solid var(--line); color: var(--mid); }
+.lst__row .nil { color: var(--mid); }
+.key-off { background: var(--fill); color: var(--mid); border-color: transparent; }
+.lst__none .lmark { color: var(--mid); }
+.lst__cap { padding: 0 16px 12px; }
+.lst__cap span { display: block; }
+/* Past eight private leagues the list scrolls in place, Create and Join staying in view. */
+.lst__scroll { position: relative; max-height: 456px; overflow: hidden; }
+.lst__thumb { position: absolute; right: 2px; top: 4px; width: 4px; height: 140px; background: var(--soft); }
+.state__mark { width: 32px; height: 32px; margin-bottom: 12px; color: var(--mid); }
+.state__mark--bad, .sheet__mark { color: var(--down); }
+.sheet__mark { width: 14px; height: 14px; margin-right: 6px; vertical-align: -2px; }
+.st tr.is-picked td { background: var(--fill); }
+.key--row { min-height: 24px; padding: 0 8px; font-size: 12px; }
+.st .go:has(.key--row) { width: 88px; }
+.rename { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 12px; background: var(--bg); border: 1px solid var(--text); font: 700 20px/24px var(--head) !important; }
+.rename small { font: 400 12px/20px var(--sans); color: var(--mid); margin-left: 16px; }
+.caret { width: 1px; height: 22px; margin-left: -6px; background: var(--text); }
+/* A table's states (plate.md, States): empty and error a title and one line; loading, bars where figures go. */
+.state { padding: 56px 16px; text-align: center; }
+.state h3 { font: 700 20px/24px var(--head); margin-bottom: 8px; }
+.state p { color: var(--mid); }
+.state a { display: inline-block; margin-top: 16px; font-weight: 600; }
+.skel { display: inline-block; height: 12px; background: var(--fill); vertical-align: middle; }
+.sheet__in--bad { border-color: var(--down); }
+.sheet__err { margin-top: 8px; color: var(--down); }
 .side .placeholder { height: 112px; }
 /* A sheet over the page, as Transfers' confirm; the Admin menu under its key. */
 .scrim { position: absolute; inset: 0; background: rgba(5, 10, 24, 0.7); z-index: 5; }

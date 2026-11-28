@@ -70,7 +70,7 @@ export { SheetKeys } from "./controls/SheetKeys";
 export { TabPanel, Tabs } from "./controls/Tabs";
 export { FinalTag, LiveTag, NotFinalTag, Tag } from "./display/Tag";
 export { TierMark, TierTag, type Standing } from "./display/TierMark";
-export { TierShield } from "./display/TierShield";
+export { tierInk, TierShield, type TierKind } from "./display/TierShield";
 export { Toast } from "./controls/Toast";
 export { Time } from "./display/Time";
 export { TopBar } from "./frame/TopBar";

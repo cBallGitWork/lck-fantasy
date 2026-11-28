@@ -34,6 +34,18 @@ export const game = {
     mapStoneLine: "#4C5A60",
     mapStoneCourt: "#5C6B72",
     mapStoneFloor: "#64747B",
+    /** Each Overall tier's ranked colour (plate.md, Colour; Craig, 27 Nov 2026): its shield, its share bar,
+     *  and silver and bronze for a league table's ranks 2 and 3. Gold is pale to stay clear of `ink`. */
+    tierIron: "#948D86",
+    tierBronze: "#B0733F",
+    tierSilver: "#A9B6C6",
+    tierGold: "#F0D58C",
+    tierPlatinum: "#3FB0A6",
+    tierEmerald: "#2FBF74",
+    tierDiamond: "#6F94FF",
+    tierMaster: "#B46AE6",
+    tierGrandmaster: "#F0606B",
+    tierChallenger: "#5CCFF2",
     /** A player with news: a yellow warning triangle and the dark mark on it, as the picture. */
     news: "#F2C230",
     onNews: "#16181B",

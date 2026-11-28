@@ -1,11 +1,12 @@
-/* Overall's tier shield, filled and outlined as Home's; the page gives it its width. */
+/* Overall's tier shield, filled in its tier's colour and outlined, or outlined alone in `--text` for Unranked; the page gives it its width. */
 .tier-shield {
   display: block;
   aspect-ratio: 40 / 46;
+  color: var(--text);
 }
 .tier-shield__body {
-  fill: var(--text);
-  stroke: var(--text);
+  fill: currentColor;
+  stroke: currentColor;
   stroke-width: var(--stroke-shirt);
 }
 .tier-shield__band {
@@ -19,4 +20,36 @@
 }
 .tier-shield--unranked .tier-shield__band {
   display: none;
+}
+
+/* Each tier's ranked colour (plate.md, Colour), as `color`: a shield's fill, a share bar's. */
+.tier-ink--iron {
+  color: var(--tier-iron);
+}
+.tier-ink--bronze {
+  color: var(--tier-bronze);
+}
+.tier-ink--silver {
+  color: var(--tier-silver);
+}
+.tier-ink--gold {
+  color: var(--tier-gold);
+}
+.tier-ink--platinum {
+  color: var(--tier-platinum);
+}
+.tier-ink--emerald {
+  color: var(--tier-emerald);
+}
+.tier-ink--diamond {
+  color: var(--tier-diamond);
+}
+.tier-ink--master {
+  color: var(--tier-master);
+}
+.tier-ink--grandmaster {
+  color: var(--tier-grandmaster);
+}
+.tier-ink--challenger {
+  color: var(--tier-challenger);
 }

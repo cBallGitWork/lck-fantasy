@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Tier crests</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&display=swap">
+<style>
+/* A proposal sheet: Overall's tier mark redrawn after League's ranked crests (Craig, 28 Nov 2026: look at League). */
+body { margin: 0; width: 1440px; background: #0A1226; color: #EEF1F8; font: 14px/20px "IBM Plex Sans", sans-serif; }
+main { padding: 32px; }
+h1 { font: 700 28px/32px "IBM Plex Sans"; margin: 0 0 24px; }
+h2 { font: 700 16px/24px "IBM Plex Sans"; margin: 32px 0 12px; }
+.grid { display: grid; grid-template-columns: repeat(11, 1fr); gap: 8px; }
+.cell { background: #111B36; border: 1px solid #22305A; padding: 16px 4px 10px; text-align: center; }
+.cell small { display: block; margin-top: 8px; color: #9AA6C8; font-size: 12px; }
+.sizes { display: flex; gap: 12px; align-items: center; justify-content: center; margin-top: 12px; }
+.rows { width: 560px; background: #111B36; border: 1px solid #22305A; }
+.rows div { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 16px; border-top: 1px solid #22305A; }
+.rows div:first-child { border-top: 0; }
+.rows b { margin-left: auto; font-weight: 600; }
+.two { display: flex; gap: 32px; align-items: flex-start; }
+img.ref { width: 640px; border: 1px solid #22305A; }
+</style></head><body><main>
+<h1>Tier crests</h1>
+<div id="app"></div>
+</main>
+<script>
+const INK = { Unranked: "#5A6690", Iron: "#948D86", Bronze: "#B0733F", Silver: "#A9B6C6", Gold: "#E3B552", Platinum: "#3FB0A6", Emerald: "#2FBF74", Diamond: "#6F94FF", Master: "#B46AE6", Grandmaster: "#F0606B", Challenger: "#5CCFF2" };
+// Each tier's wings: blades a side, spread, rise, lower fangs, spikes over the gem. After League's ranked crests.
+const SHAPE = { Iron: [1, 11, 7, 0, 0], Bronze: [1, 13, 9, 0, 0], Silver: [2, 15, 11, 0, 0], Gold: [2, 17, 13, 1, 0], Platinum: [2, 18, 15, 1, 0], Emerald: [3, 19, 16, 1, 0], Diamond: [3, 20, 17, 1, 1], Master: [3, 21, 19, 2, 1], Grandmaster: [4, 22, 19, 2, 3], Challenger: [4, 23, 20, 2, 3] };
+const TIERS = Object.keys(INK);
+const DEFS = '<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="sh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></linearGradient></defs></svg>';
+function crest(tier, size) {
+  const c = INK[tier], h = Math.round(size * 40 / 48), fine = size >= 40;
+  if (tier === "Unranked") return `<svg viewBox="0 0 48 40" width="${size}" height="${h}" aria-hidden="true"><circle cx="24" cy="21" r="12" fill="none" stroke="${c}" stroke-width="2.6"/><path d="M24 12 29 20 24 31 19 20z" fill="${c}"/></svg>`;
+  const [n, s, r, fangs, spikes] = SHAPE[tier], gold = tier === "Challenger" ? "#E8BC55" : c;
+  const rim = fine ? ' stroke="#fff" stroke-opacity=".4" stroke-width=".5"' : "";
+  let wing = "";
+  for (let k = 0; k < n; k++) {
+    const tx = 24 + s - k * 4.4, ty = 22 - r + k * 4.2;
+    const d = `M25 ${28 - k * 0.8} C ${tx - 3} ${32 - k * 1.5} ${tx + 4} ${ty + 13} ${tx} ${ty} C ${tx - 2.2} ${ty + 9} ${tx - 9 + k} ${20 + k} 25 ${19 + k * 1.4} Z`;
+    wing += `<path d="${d}" fill="${c}"${rim}/><path d="${d}" fill="url(#sh)"/>${k ? `<path d="${d}" fill="#000" opacity="${k * 0.13}"/>` : ""}`;
+  }
+  for (let f = 0; f < fangs; f++) { const d = `M25 ${27 + f} L ${33 + f * 4} ${31 - f * 1.5} L ${29.5 + f * 2.5} ${36.5 - f * 2} L 25.5 ${32} Z`; wing = `<path d="${d}" fill="${c}"/><path d="${d}" fill="#000" opacity=".3"/>` + wing; }
+  const spike = (x, top, w) => `<path d="M${x} ${top} L${x + w} 12 L${x} 10.4 L${x - w} 12 Z" fill="${gold}"/><path d="M${x} ${top} L${x + w} 12 L${x} 10.4 Z" fill="#000" opacity=".25"/>`;
+  const crown = spikes === 0 ? "" : spikes === 1 ? spike(24, 2, 2.6) : spike(24, 1, 2.6) + spike(19.4, 5, 2) + spike(28.6, 5, 2);
+  return `<svg viewBox="0 0 48 40" width="${size}" height="${h}" aria-hidden="true"><g>${wing}</g><g transform="translate(48 0) scale(-1 1)">${wing}</g>${crown}
+    <path d="M16.500 18 24 25 31.500 18 33 21.500 24 31 15 21.500z" fill="${gold}"/><path d="M16.500 18 24 25 31.500 18 33 21.500 24 31 15 21.500z" fill="#000" opacity=".42"/>
+    <path d="M24 10 29.500 18 24 37 18.500 18z" fill="${gold}"${rim}/><path d="M24 10 29.500 18 24 37z" fill="#000" opacity=".3"/><path d="M24 10 18.500 18 24 22 29.500 18z" fill="#fff" opacity=".38"/></svg>`.replaceAll(".500", ".5");
+}
+const shield = (tier, size) => tier === "Unranked"
+  ? `<svg viewBox="0 0 12 14" width="${size * 0.75}" height="${size * 0.875}"><path d="M6 .8 11.3 2.5V8c0 2.6-2.2 4.4-5.3 5.3C2.9 12.4.7 10.6.7 8V2.5z" fill="none" stroke="#EEF1F8" stroke-width="1.2"/></svg>`
+  : `<svg viewBox="0 0 12 14" width="${size * 0.75}" height="${size * 0.875}"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="${tier === "Gold" ? "#F0D58C" : INK[tier]}"/></svg>`;
+const grid = (draw) => `<div class="grid">${TIERS.map((t) => `<div class="cell">${draw(t, 96)}<div class="sizes">${draw(t, 40)}${draw(t, 24)}</div><small>${t}</small></div>`).join("")}</div>`;
+const rows = (draw, size) => `<div class="rows">${[["Challenger", "Unkillable FC", "1"], ["Diamond II", "Mid Diff Daily", "9,204"], ["Emerald I", "Baron Steal FC", "48,211"], ["Gold III", "Ward Bros", "301,877"], ["Iron IV", "Feeding Frenzy", "712,480"]].map(([t, n, r]) => `<div>${draw(t.split(" ")[0], size)}<span>${t}</span><span style="color:#9AA6C8">${n}</span><b>${r}</b></div>`).join("")}</div>`;
+document.getElementById("app").innerHTML = DEFS + `
+  <h2>A. Winged crests, Flol's own, after League's: hooked blades that multiply, spread and rise with the tier; fangs from Gold, a spike from Diamond, a crown for the top two (96, 40 and 24px)</h2>${grid(crest)}
+  <h2>B. Today's shield, coloured (96, 40 and 24px)</h2>${grid(shield)}
+  <div class="two"><div><h2>A in a table row, 24px</h2>${rows(crest, 24)}<h2>B in a table row</h2>${rows(shield, 18)}</div>
+  <div><h2>League's own crests, Season 2023 (wiki.leagueoflegends.com), for reference</h2><img class="ref" src="league-crests-2023.jpg" alt=""></div></div>`;
+</script></body></html>

@@ -12,14 +12,14 @@
   // A player named in a row: his team's bar and code, then his name (plate.md, Parts).
   const who = (name) => `<i class="team__bar" style="background:${BAR[TEAM[name]]}"></i><span class="who__team">${TEAM[name]}</span> <b>${name}</b>`;
   const KIT = "../../../../data/lck/";
-  // A tier's shield in its ranked colour (the design team, 27 Nov 2026; Craig's call: 16 Nov had one white shield).
-  const TIER_INK = { Iron: "#948D86", Bronze: "#B0733F", Silver: "#A9B6C6", Gold: "#F0D58C", Platinum: "#3FB0A6", Emerald: "#2FBF74", Diamond: "#6F94FF", Master: "#B46AE6", Grandmaster: "#F0606B", Challenger: "#5CCFF2" };
-  const shield = (tier, size = 14) => `<svg class="shield" viewBox="0 0 12 14" width="${size}" height="${Math.round(size * 14 / 12)}" style="color:${TIER_INK[tier.split(" ")[0]]}" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/><path d="M6 2.2 10 3.6v4.3c0 1.9-1.6 3.3-4 4.1z" fill="#fff" opacity=".28"/></svg>`;
+  // A tier's crest in its colour (../tier-crests/crest.js; Craig, 28 Nov 2026, over 27 Nov's coloured shield).
+  const TIER_INK = window.TIER_INK;
+  const shield = (tier, size = 24) => window.tierCrest(tier.split(" ")[0], size).replace("<svg", '<svg class="shield"');
   // The mark before each of your leagues: its tier, its flag, its team's crest, a group on a private one.
   const ico = (body, cls) => `<svg class="lmark ${cls}" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round">${body}</svg>`;
   const GROUP = '<circle cx="7" cy="7" r="3"/><path d="M1.5 17a5.5 5.5 0 0 1 11 0"/><circle cx="14.5" cy="8" r="2.4"/><path d="M14 12.2a4.6 4.6 0 0 1 4.8 4.8"/>';
   const MARK = {
-    Overall: `<span class="lmark lmark--box">${shield("Emerald", 16)}</span>`,
+    Overall: `<span class="lmark lmark--box">${shield("Emerald", 24)}</span>`,
     "United Kingdom": '<span class="lmark lmark--box"><svg viewBox="0 0 60 40" width="20" height="14" aria-hidden="true"><rect width="60" height="40" fill="#1F3A93"/><path d="M0 0 60 40M60 0 0 40" stroke="#fff" stroke-width="8"/><path d="M0 0 60 40M60 0 0 40" stroke="#E2012D" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="12"/><path d="M30 0v40M0 20h60" stroke="#E2012D" stroke-width="7"/></svg></span>',
     "T1 supporters": `<img class="lmark" src="${KIT}crests/T1.svg" alt="">`,
     "Pub League": ico(GROUP, ""),
@@ -83,8 +83,8 @@
   const PRIVATE = V === "none" ? [["", null]] : [["Pub League", "2nd", 1, "12 managers"], ["Flol Discord", "14th", -2, "86 managers"],
     ...(soon ? [["Office Rift", "–", 0, "1 manager"]] : []),
     ...(capped ? MORE.map((n, i) => [n, nth(2 + (i * 7) % 19), [1, 0, -2, 3, -1][i % 5], `${6 + (i * 11) % 40} managers`]) : [])];
-  // Before gameweek 1 is final: an outlined shield and Unranked, no rank under it; no league has a rank yet.
-  const NO_RANK = '<svg class="shield" viewBox="0 0 12 14" width="16" height="19" aria-hidden="true"><path d="M6 .8 11.3 2.5V8c0 2.6-2.2 4.4-5.3 5.3C2.9 12.4.7 10.6.7 8V2.5z" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>';
+  // Before gameweek 1 is final: the crest's ring and Unranked, no rank under it; no league has a rank yet.
+  const NO_RANK = shield("Unranked", 24);
   const LIST = unranked ? [["General"], ["Overall · Unranked", "", 0, ""], ["United Kingdom", "–", 0, ""], ["T1 supporters", "–", 0, ""], ["Private"], ["Pub League", "–", 0, "9 managers"]] : [["General"], ["Overall · Emerald I", "48,211", 6904, "of 712,480"], ["United Kingdom", "1,402", 233, "of 9,377"], ["T1 supporters", "3,118", 510, "of 41,902"], ["Private"], ...PRIVATE];
   const list = `<section class="tpanel" aria-label="Your leagues"><h2 class="tpanel__title">Your leagues</h2><div class="lst">
     ${LIST.map(([name, rank, m, sub], i) => (capped && name === "Private" && rank === undefined ? '<div class="lst__sub">Private</div><div class="lst__scroll"><i class="lst__thumb"></i>' : "") + (capped && name === "Private" && rank === undefined ? "" :  rank === undefined ? `<div class="lst__sub">${name}</div>` : rank === null ? `<div class="lst__none">${ico(GROUP, "")}None yet</div>` : `<a class="lst__row${name.startsWith(open) ? " is-here" : ""}" href="#"><span>${unranked && name.startsWith("Overall") ? `<span class="lmark lmark--box">${NO_RANK}</span>` : MARK[name.split(" · ")[0]] || ico(GROUP, "")}${name}</span><b>${rank}</b>${rank === "" ? "" : m === 0 ? '<span class="m nil">–</span>' : `<span class="m ${m > 0 ? "up" : "down"}">${m > 0 ? "▲" : "▼"} ${Math.abs(m).toLocaleString("en")}</span>`}<small>${sub}</small></a>`)).join("")}${capped ? "</div>" : ""}

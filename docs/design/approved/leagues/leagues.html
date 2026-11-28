@@ -17,7 +17,7 @@
 .down { color: var(--down); }
 .team__bar { display: inline-block; width: 4px; height: 12px; margin-right: 6px; vertical-align: -1px; }
 .who__team { font-weight: 400; }
-.shield { margin-right: 6px; vertical-align: -2px; }
+.shield { margin-right: 6px; vertical-align: -5px; }
 .tpanel { background: var(--paper); border: 1px solid var(--line); }
 .tpanel__title { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 4px 16px; background: var(--head-band); font: 700 20px/24px var(--head); }
 .tpanel__title span { font: 400 14px/24px var(--sans); }
@@ -72,7 +72,7 @@
 .lmark { margin-right: 8px; vertical-align: -4px; }
 img.lmark { width: 20px; height: 20px; vertical-align: -5px; }
 .lmark--box { display: inline-flex; width: 20px; height: 20px; align-items: center; justify-content: center; vertical-align: -5px; }
-.lmark--box .shield { margin: 0; }
+.lmark--box .shield { margin: 0 -2px; flex: none; }
 .lst__row small { padding-left: 28px; }
 .tiers td:last-child, .tiers th:last-child { padding-right: 16px; }
 /* The side column: your leagues, the open one marked. */
@@ -134,6 +134,7 @@ body { position: relative; }
 </head>
 <body>
 <div id="app"></div>
+<script src="../tier-crests/crest.js"></script>
 <script src="render.js"></script>
 </body>
 </html>

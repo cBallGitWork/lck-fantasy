@@ -108,8 +108,8 @@
 
   // The side column: leagues with each rank's move, the week's series with results.
   const LEAGUES = [["Overall · Emerald I", "48,211", 1, "6,904"], ["United Kingdom", "1,402", 1, "233"], ["T1 supporters", "3,118", 1, "510"], ["Pub League", "2nd", 1, "1"], ["Flol Discord", "14th", -1, "2"]];
-  // Overall's tier shield: one --text fill for every tier (plate.md, Colour).
-  const SHIELD = '<svg class="shield" viewBox="0 0 12 14" width="12" height="14" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>';
+  // Overall's tier crest (../tier-crests/crest.js).
+  const SHIELD = window.tierCrest("Emerald", 24).replace("<svg", '<svg class="shield"');
   // Both tier gaps, under Overall's row: the points to promote and the points clear of demotion (spec/08, Overall tiers).
   const GAPS = '<tr class="lg__gaps"><td colspan="3"><span class="mid"><b class="fig">≈6</b> pts to Diamond IV</span><span class="mid"><b class="fig">≈5</b> pts clear of Emerald II</span></td></tr>';
   const leagues = `<section class="tpanel side-panel" aria-label="Leagues"><h2 class="tpanel__title">Leagues</h2>

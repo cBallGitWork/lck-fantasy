@@ -8,7 +8,7 @@
     "lint": "eslint .",
     "typecheck": "tsc",
     "test": "vitest run",
-    "verify": "node scripts/contents-lists.mjs && node scripts/studio-kit.mjs && node scripts/design/lint.mjs docs/design/approved &&.claude/hooks/test.sh && npm run lint && npm run typecheck && npm test"
+    "verify": "node scripts/contents-lists.mjs && node scripts/studio-kit.mjs && node scripts/design/lint.mjs docs/design/approved && .claude/hooks/test.sh && npm run lint && npm run typecheck && npm test"
   },
   "dependencies": {
     "@tanstack/react-router": "^1.170.46",

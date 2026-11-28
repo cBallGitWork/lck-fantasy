@@ -6,7 +6,7 @@ Every league a manager is in, and one league's table. Reached from **Leagues** i
 
 **Changed by Craig, 16 Nov 2026:** the list of leagues moves to the side column on the right, as on every page; the open league's table is the main column.
 
-**Redrawn, 27 Nov 2026**, in Pick Team's look, with the Captain column (was Carry) and Overall's panel of Captains and buffs by tier ([spec/08](../../../../spec/08-leagues.md#the-leagues-page)). Craig's calls that day, after the screen read as text and grey: tier shields in their ranked colours, over 16 Nov's one white shield; ranks 1 to 3 as gold, silver and bronze squares; a Captain's share as a bar in its tier's colour, no bar for a buff; a mark before each league in the list; `Overall · Emerald I` in the list; your own row filled with a white left edge and no dot; no chase tag on Overall; no Week column before the deadline; a red edge on Delete league and Leave in their confirm sheets. Error and empty states (no private leagues, a bad code, a full league) are not drawn yet: their own round.
+**Redrawn, 27 Nov 2026**, in Pick Team's look, with the Captain column (was Carry) and Overall's panel of Captains and buffs by tier ([spec/08](../../../../spec/08-leagues.md#the-leagues-page)). Craig's calls that day, after the screen read as text and grey: tier shields in their ranked colours, over 16 Nov's one white shield; ranks 1 to 3 as gold, silver and bronze squares; a Captain's share as a bar in its tier's colour, no bar for a buff; a mark before each league in the list; `Overall · Emerald I` in the list; your own row filled with a white left edge and no dot; no chase tag on Overall; no Week column before the deadline; a red edge on Delete league and Leave in their confirm sheets.
 
 One source draws every picture: `leagues.html` and `render.js`, the picture chosen by `?v=`.
 
@@ -22,6 +22,20 @@ One source draws every picture: `leagues.html` and `render.js`, the picture chos
 | `1440-member.png` | `member` | A league you're a member of: Leave in place of Admin |
 | `1440-delete.png` | `delete` | Delete confirm |
 | `1440-leave.png` | `leave` | Leave confirm |
+
+The states (drawn 28 Nov 2026, not yet approved):
+
+| File | `?v=` | Shows |
+|---|---|---|
+| `1440-join-bad.png` | `join-bad` | Join with a code no league has: a red edge, a mark and the spec's line |
+| `1440-remove-pick.png` | `remove-pick` | Remove a manager: a Remove key on every row but yours, Done in Admin's place |
+| `1440-remove.png` | `remove` | The Remove confirm, the picked row filled behind it |
+| `1440-rename.png` | `rename` | Rename in place: the name as a box with its count, Save and Back |
+| `1440-cap.png` | `cap` | 25 private leagues: the list scrolls in place, Create and Join off with the reason |
+| `1440-none.png` | `none` | No private league yet |
+| `1440-soon.png` | `soon` | A league whose scoring hasn't started |
+| `1440-loading.png` | `loading` | A table on its way: bars where figures go |
+| `1440-error.png` | `error` | A table that didn't load |
 
 ## Borrowed
 

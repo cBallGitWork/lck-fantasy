@@ -24,7 +24,7 @@
 
 /* The head: the team's name, then Overall as a tier (spec/08): the shield, the tier and its hangul, the rank and its move. */
 .tier { display: flex; align-items: center; gap: 12px; padding-left: 16px; border-left: 1px solid var(--line); align-self: center; }
-.tier__shield { width: 28px; height: 32px; flex: none; }
+.tier__shield { width: 48px; height: 40px; flex: none; }
 .tier__name { font: 700 16px/20px var(--head); }
 .tier__name span { font: 400 12px/20px var(--ko); color: var(--mid); margin-left: 4px; }
 .tier__rank { font-size: 12px; line-height: 16px; }
@@ -141,6 +141,7 @@
 <body>
 <div id="app"></div>
 <script src="../pick-team/data.js"></script>
+<script src="../tier-crests/crest.js"></script>
 <script src="render.js"></script>
 </body>
 </html>

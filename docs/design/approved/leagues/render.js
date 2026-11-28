@@ -83,7 +83,7 @@
   const PRIVATE = V === "none" ? [["", null]] : [["Pub League", "2nd", 1, "12 managers"], ["Flol Discord", "14th", -2, "86 managers"],
     ...(soon ? [["Office Rift", "–", 0, "1 manager"]] : []),
     ...(capped ? MORE.map((n, i) => [n, nth(2 + (i * 7) % 19), [1, 0, -2, 3, -1][i % 5], `${6 + (i * 11) % 40} managers`]) : [])];
-  // Before gameweek 1 is final: an outlined shield and Unranked, no rank under it; no league has a rank yet.
+  // Before gameweek 1 is final: the crest's ring and Unranked, no rank under it; no league has a rank yet.
   const NO_RANK = shield("Unranked", 24);
   const LIST = unranked ? [["General"], ["Overall · Unranked", "", 0, ""], ["United Kingdom", "–", 0, ""], ["T1 supporters", "–", 0, ""], ["Private"], ["Pub League", "–", 0, "9 managers"]] : [["General"], ["Overall · Emerald I", "48,211", 6904, "of 712,480"], ["United Kingdom", "1,402", 233, "of 9,377"], ["T1 supporters", "3,118", 510, "of 41,902"], ["Private"], ...PRIVATE];
   const list = `<section class="tpanel" aria-label="Your leagues"><h2 class="tpanel__title">Your leagues</h2><div class="lst">

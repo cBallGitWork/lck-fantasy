@@ -36,7 +36,7 @@ The states, drawn 28 Nov 2026. Craig's calls that day: past eight private league
 | `1440-soon.png` | `soon` | A league whose scoring hasn't started |
 | `1440-loading.png` | `loading` | A table on its way: bars where figures go |
 | `1440-error.png` | `error` | A table that didn't load |
-| `1440-unranked.png` | `unranked` | Before gameweek 1 is final: no table, an outlined shield and Unranked in the list, no ranks |
+| `1440-unranked.png` | `unranked` | Before gameweek 1 is final: no table, the crest's ring and Unranked in the list, no ranks |
 
 ## Borrowed
 

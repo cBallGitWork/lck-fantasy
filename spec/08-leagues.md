@@ -84,7 +84,7 @@ Overall shows each manager's place as a LoL ranked tier, Iron to Challenger (Cra
 - The tier moves whenever the rank does, when a series turns final
   ([spec/11](11-live-points.md)). No protection: a manager drops a tier as soon as their rank
   does. Example: T1 v Gen.G turns final at 10pm KST; Emerald IV becomes Emerald III.
-- Everyone is Unranked until gameweek 1 is final: the shield is outlined, the tier reads `Unranked`
+- Everyone is Unranked until gameweek 1 is final: the crest is a grey ring, the tier reads `Unranked`
   and no rank shows under it. Until then a league has no table and no ranks (Craig, 28 Nov 2026).
 - Only Overall has tiers. Country, team and private leagues show plain ranks.
 - Where it shows:

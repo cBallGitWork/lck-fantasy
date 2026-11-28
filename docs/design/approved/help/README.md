@@ -10,6 +10,7 @@ The rules and a beginner's guide, as FPL's Help (spec/12, Help). Reached from th
 | `1440-help-step4.png`, `help.html#points-scored` | Help tab, one step on its own page with Back and Next |
 | `1440-rules.png`, `help.html#rules` | Rules tab, first item open |
 | `1440-rules-open.png` | Rules tab with Captain, Player prices and How players score open |
+| `1440-ranks.png`, `help.html#ranks` | Rules tab with Ranks open: each tier's shield in its colour beside its name (Craig, 28 Nov 2026) |
 
 ## Since approval
 

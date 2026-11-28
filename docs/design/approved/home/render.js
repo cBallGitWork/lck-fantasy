@@ -117,7 +117,7 @@
     <table class="lg">${LEAGUES.map(([name, rank, dir, by]) => `<tr><td>${name}</td><td class="num"><b class="fig">${rank}</b></td><td class="num fig ${dir > 0 ? "up" : "down"}">${dir > 0 ? "▲" : "▼"} ${by}</td></tr>`).join("")}</table>
   </section>`;
 
-  const tier = `<div class="tier"><svg class="tier__shield" viewBox="0 0 28 32" aria-hidden="true"><path d="M14 1 27 5v12c0 7-5.5 11.500-13 14C6.500 28.500 1 24 1 17V5z" fill="currentColor"/></svg>
+  const tier = `<div class="tier"><svg class="tier__shield" viewBox="0 0 28 32" style="color:#2FBF74" aria-hidden="true"><path d="M14 1 27 5v12c0 7-5.5 11.500-13 14C6.500 28.500 1 24 1 17V5z" fill="currentColor"/></svg>
     <div><p class="tier__name">Emerald I<span lang="ko">에메랄드 1</span></p><p class="tier__rank"><b class="fig">48,211</b><span class="fig up">▲ 6,904</span></p></div>
     <span class="placeholder">Badge</span></div>`;
 

@@ -102,6 +102,7 @@ td.m { color: var(--mid); }
 .buffs td:first-child, .tiers td:first-child { width: 200px; font-weight: 600; }
 .buffs td.like { color: var(--mid); width: 240px; }
 .tiers td.n { width: auto; }
+.tiers .shield { margin-right: 8px; vertical-align: -3px; }
 .up { color: var(--rise); }
 .foot { grid-column: 1 / -1; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); display: flex; gap: 24px; font-size: 12px; color: var(--mid); align-items: center; }
 .foot a { color: var(--mid); display: inline-flex; align-items: center; min-height: 24px; } .foot a.on { color: var(--text); }
@@ -391,16 +392,16 @@ td.m { color: var(--mid); }
         <li>Iron to Diamond each have four steps, IV up to I, and I is the best, as in League.</li>
       </ul>
       <table class="tiers"><tr><th>Top % of everyone</th><th class="n">I</th><th class="n">II</th><th class="n">III</th><th class="n">IV</th></tr>
-      <tr><td>Challenger</td><td class="n">0.02</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
-      <tr><td>Grandmaster</td><td class="n">0.06</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
-      <tr><td>Master</td><td class="n">0.7</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
-      <tr><td>Diamond</td><td class="n">1.5</td><td class="n">2.4</td><td class="n">3.3</td><td class="n">4.4</td></tr>
-      <tr><td>Emerald</td><td class="n">6.9</td><td class="n">9.6</td><td class="n">13</td><td class="n">16</td></tr>
-      <tr><td>Platinum</td><td class="n">20</td><td class="n">24</td><td class="n">29</td><td class="n">34</td></tr>
-      <tr><td>Gold</td><td class="n">39</td><td class="n">45</td><td class="n">51</td><td class="n">58</td></tr>
-      <tr><td>Silver</td><td class="n">62</td><td class="n">68</td><td class="n">73</td><td class="n">80</td></tr>
-      <tr><td>Bronze</td><td class="n">83</td><td class="n">87</td><td class="n">91</td><td class="n">96</td></tr>
-      <tr><td>Iron</td><td class="n">97</td><td class="n">98</td><td class="n">99</td><td class="n">100</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#5CCFF2" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Challenger</td><td class="n">0.02</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#F0606B" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Grandmaster</td><td class="n">0.06</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#B46AE6" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Master</td><td class="n">0.7</td><td class="n m">—</td><td class="n m">—</td><td class="n m">—</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#6F94FF" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Diamond</td><td class="n">1.5</td><td class="n">2.4</td><td class="n">3.3</td><td class="n">4.4</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#2FBF74" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Emerald</td><td class="n">6.9</td><td class="n">9.6</td><td class="n">13</td><td class="n">16</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#3FB0A6" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Platinum</td><td class="n">20</td><td class="n">24</td><td class="n">29</td><td class="n">34</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#F0D58C" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Gold</td><td class="n">39</td><td class="n">45</td><td class="n">51</td><td class="n">58</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#A9B6C6" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Silver</td><td class="n">62</td><td class="n">68</td><td class="n">73</td><td class="n">80</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#B0733F" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Bronze</td><td class="n">83</td><td class="n">87</td><td class="n">91</td><td class="n">96</td></tr>
+      <tr><td><svg class="shield" viewBox="0 0 12 14" width="14" height="16" style="color:#948D86" aria-hidden="true"><path d="M6 0 12 2v6c0 3-2.5 5-6 6-3.5-1-6-3-6-6V2z" fill="currentColor"/></svg>Iron</td><td class="n">97</td><td class="n">98</td><td class="n">99</td><td class="n">100</td></tr>
     </table>
     </div></details>
   </section>

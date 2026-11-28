@@ -141,9 +141,13 @@ describe("firstPage", () => {
     ]);
   });
 
-  test("among the top rows, or not in the table, the page is the page as it is", () => {
+  test("among the top rows, the page is the page as it is", () => {
     expect(pageOf(86, 3)).toEqual([ranks(50)]);
+  });
+
+  test("no row is yours, as before a league's scoring starts: the whole first page, never a short cut", () => {
     expect(pageOf(86, 0)).toEqual([ranks(50)]);
+    expect(firstPage(ranks(86), () => false, { ...cut, top: 0 })).toEqual([ranks(50)]);
   });
 
   test("where the top rows meet yours, one run with no gap", () => {

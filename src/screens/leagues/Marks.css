@@ -1,0 +1,27 @@
+/* A league's mark: 20px before its name (plate.md, A league's mark); the calendar over a table yet to start, 32px in `--mid`. */
+.leagues__mark {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--m-mark);
+  height: var(--m-mark);
+  margin-right: var(--s-2);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--stroke-fact);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.leagues__mark-shield {
+  width: var(--s-4);
+}
+.leagues__mark-flag {
+  width: var(--m-mark);
+}
+.leagues__mark--big {
+  width: var(--s-6);
+  height: var(--s-6);
+  margin-right: 0;
+  color: var(--mid);
+}

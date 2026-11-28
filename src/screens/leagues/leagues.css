@@ -1,100 +1,119 @@
-/* Leagues (docs/design/approved/leagues/): the open league's table, then the list on the right. */
+/* Leagues (docs/design/approved/leagues/): the open league's panel and Overall's tier panel, then your leagues on the right. */
 .leagues {
   margin-top: var(--s-2);
 }
-
-/* The list of your leagues. */
-.leagues__list-title {
-  margin-top: var(--s-5);
-}
-.leagues__list section:first-child .leagues__list-title {
-  margin-top: 0;
-}
-.leagues__list-row {
-  display: grid;
-  grid-template-columns: 1fr auto calc(var(--s-6) * 2);
-  gap: 0 var(--s-2);
-  align-items: baseline;
-  padding: var(--s-2) var(--s-3);
-  background: var(--paper);
-  border-bottom: var(--m-rule) solid var(--fill);
-}
-.leagues__list-row:hover {
-  background: var(--fill);
-}
-.leagues__list-row small {
-  grid-column: 1;
-  color: var(--mid);
-  font-size: var(--size-small);
-}
-.leagues__list-move {
-  text-align: right;
-}
-.leagues__list-row--on {
-  box-shadow: inset var(--m-rule-heavy) 0 0 var(--text);
-  background: var(--fill);
-  font-weight: var(--w-bold);
-}
-.leagues__list-row--on small {
-  font-weight: var(--w-regular);
-}
-.leagues__list-actions {
+.leagues__main,
+.leagues__side {
   display: flex;
-  gap: var(--s-2);
-  margin-top: var(--s-4);
+  flex-direction: column;
+  gap: var(--s-5);
+  min-width: 0;
 }
 
-/* The open league's head. */
-.leagues__head {
+/* A league's panel: the band, then the tabs at the left and its keys at the right, then the table edge to edge. */
+.leagues__panel {
+  padding-bottom: 0;
+}
+.leagues__panel > .panel__title {
   display: flex;
   align-items: center;
-  gap: var(--s-3);
+  min-height: var(--s-7);
 }
-.leagues__name-head {
+.leagues__main > .leagues__panel:first-child > .panel__title {
   font-size: var(--size-head);
-  font-weight: var(--w-bold);
 }
-.leagues__sub {
-  color: var(--mid);
-  font-size: var(--size-body);
+.leagues__bar {
+  display: flex;
+  align-items: stretch;
+  gap: var(--s-2);
+  min-height: calc(var(--m-row) + var(--s-2));
+  margin: 0 calc(var(--s-4) * -1);
+  padding: 0 var(--s-4);
+  border-bottom: var(--m-rule) solid var(--line);
 }
-.leagues__spacer {
-  flex: 1;
+.leagues__bar .tabs {
+  margin-right: auto;
+}
+.leagues__keys {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.leagues__panel .table,
+.leagues__panel [role="tabpanel"] > .state {
+  margin: 0 calc(var(--s-4) * -1);
+  width: calc(100% + var(--s-4) * 2);
 }
 .leagues__code {
   border: var(--m-rule) solid var(--line);
-  background: var(--paper);
-  padding: var(--s-1) var(--s-2);
-}
-.leagues__rename {
-  font: inherit;
-  font-size: var(--size-head);
-  font-weight: var(--w-bold);
-  height: var(--m-row);
-  padding: 0 var(--s-3);
-  color: var(--text);
-  background: var(--paper);
-  border: var(--m-rule) solid var(--text);
+  padding: 0 var(--s-2);
 }
 /* Admin ▾, drawn as an outlined key. */
 .leagues__admin {
   font-weight: var(--w-bold);
   padding: var(--s-2) var(--s-4);
-  background: var(--paper);
   border: var(--m-rule) solid var(--text);
 }
-.leagues__tabs-line {
-  position: relative;
+
+/* Rename, in place on the band: the name as a box with its count, then Save and Back. */
+.leagues__rename {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
 }
-.leagues__sponsor {
-  position: absolute;
-  right: 0;
-  bottom: var(--s-1);
+.leagues__rename button {
+  font-size: var(--size-body);
+}
+.leagues__rename-box {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  height: calc(var(--m-row) - var(--s-1));
+  padding: 0 var(--s-3);
+  background: var(--bg);
+  border: var(--m-rule) solid var(--text);
+}
+.leagues__rename-box input {
+  font: inherit;
+  color: var(--text);
+  background: none;
+  border: 0;
+  outline: none;
+}
+.leagues__rename-box small {
+  color: var(--mid);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
 }
 
-/* The table: the Table part's, its rank bold and the manager in mid grey after the team. */
+/* The table: rank, the podium's squares, the manager in mid grey after the team. */
 .leagues__rank {
   font-weight: var(--w-semi);
+}
+.leagues__pod {
+  display: inline-block;
+  min-width: var(--m-target);
+  line-height: var(--m-target);
+  text-align: center;
+  font-weight: var(--w-bold);
+  color: var(--bg);
+}
+.leagues__pod--1 {
+  background: var(--ink);
+}
+.leagues__pod--2 {
+  background: var(--tier-silver);
+}
+.leagues__pod--3 {
+  background: var(--tier-bronze);
+}
+/* Your own row: filled, a white left edge, no dot (plate.md, Parts). */
+.leagues .table__row--selected td:first-child {
+  box-shadow: inset var(--s-1) 0 0 var(--text);
+}
+/* The manager the maker picked to remove, filled behind the confirm. */
+.leagues__picked td {
+  background: var(--fill);
 }
 .leagues__name small {
   color: var(--mid);
@@ -104,19 +123,35 @@
 .leagues__chase {
   margin-left: var(--s-2);
 }
+/* A table on its way: `--fill` bars where its figures go. */
+.leagues__skel {
+  display: inline-block;
+  width: calc(var(--s-7) + var(--s-6));
+  height: var(--s-3);
+  background: var(--fill);
+  vertical-align: middle;
+}
+.leagues__panel .state {
+  align-items: center;
+  text-align: center;
+  padding: var(--s-7) var(--s-4);
+}
 
 /* The pager. */
 .leagues__pager {
   display: flex;
   justify-content: flex-end;
   gap: var(--s-2);
-  margin-top: var(--s-4);
+  margin: 0 calc(var(--s-4) * -1);
+  padding: var(--s-3) var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
 }
 .leagues__page {
   font: inherit;
   color: var(--text);
+  min-width: var(--s-6);
   padding: var(--s-1) var(--s-2);
-  background: var(--paper);
+  background: none;
   border: var(--m-rule) solid var(--line);
   cursor: pointer;
 }
@@ -129,4 +164,35 @@
 }
 .leagues__page--gap {
   cursor: default;
+}
+
+/* Captains and buffs by tier: a Captain's share as a bar in the tier's colour, a buff's with none. */
+.leagues__share {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.leagues__share-figure {
+  min-width: var(--s-6);
+  text-align: right;
+}
+.leagues__share-bar {
+  display: inline-block;
+  width: calc(var(--s-7) * 2 + var(--s-5));
+  height: var(--s-2);
+  background: var(--line);
+}
+.leagues__share-bar i {
+  display: block;
+  height: 100%;
+  background: currentColor;
+}
+.leagues__buff {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+.leagues__buff-icon {
+  width: var(--m-mark);
+  height: var(--m-mark);
 }

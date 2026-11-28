@@ -2,13 +2,17 @@
 // the deadline, so Captain shows. The pictures (docs/design/approved/leagues/) draw a made-up Split 2
 // Week 14; they bind the layout, tabs and groups, and this file holds Week 3's figures. Names and numbers are
 // examples. The sample manager and the Pub League's managers in MANAGERS are the shared ones. The backend feeds each of
-// these once it is wired (#38).
+// these once it is wired (#38); the panel of Captains and buffs by tier is #485's read.
 
+import type { BuffEffect } from "../../../convex/squads/buffs";
+import type { TierName } from "../../../convex/leagues/tiers";
 import { MANAGERS, MINJI_WEEK3, type MadeUpManager } from "../../fixtures/managers";
 import { MY_LEAGUES, MY_OVERALL, MY_SEASON_TOTAL, overallTierOf, type MyLeague } from "../../fixtures/myLeagues";
+import { teamOf } from "../../fixtures/rosters";
 import { seriesById } from "../../fixtures/series";
-import { MANAGER, MY_WEEK3, POINTS_WEEK, SEASON, WEEK3_DEADLINE, WEEK4_SERIES } from "../../fixtures/week3";
-import type { CompetitionTabs, PrivateEntry, LeagueSummary, LeagueView, NewTable, ScoringWeeks, Standings, StandingRow } from "./types";
+import { MANAGER, MY_WEEK3, POINTS_WEEK, SEASON, WEEK3_DEADLINE, WEEK4_SERIES, type BuffName } from "../../fixtures/week3";
+import type { MyLeagues } from "./forms";
+import type { CompetitionTabs, LeagueMark, LeagueSummary, LeagueView, NewTable, PrivateEntry, ScoringWeeks, Standings, StandingRow, TierPick } from "./types";
 
 const WEEK = POINTS_WEEK.week;
 
@@ -26,20 +30,43 @@ const THIS_SPLIT = "Split 1";
 /** The league a bare /leagues opens, as the picture does. */
 export const OPEN_LEAGUE_ID = "pub-league";
 
+/** Each general league's mark past Overall's tier: the country's flag, the team's crest (plate.md, A league's mark). */
+const GENERAL_MARKS: Record<string, LeagueMark> = {
+  "united-kingdom": { kind: "flag", country: "United Kingdom" },
+  "t1-supporters": { kind: "crest", team: "T1" },
+};
+
+const markOf = ({ id, kind }: MyLeague): LeagueMark => (kind === "private" ? { kind: "group" } : (GENERAL_MARKS[id] ?? { kind: "group" }));
+
 export const LEAGUE_LIST: LeagueSummary[] = [
-  { id: "overall", name: "Overall", kind: "general", rank: MY_OVERALL.rank, move: MY_OVERALL.move, size: MY_OVERALL.size },
-  ...MY_LEAGUES.map(({ id, name, kind, rank, move, size }): LeagueSummary => ({ id, name, kind: kind === "private" ? "private" : "general", rank, move, size })),
+  { id: "overall", name: "Overall", kind: "general", mark: { kind: "tier", tier: MY_OVERALL.tier }, rank: MY_OVERALL.rank, move: MY_OVERALL.move, size: MY_OVERALL.size },
+  ...MY_LEAGUES.map((league): LeagueSummary => {
+    const { id, name, kind, rank, move, size } = league;
+    return { id, name, kind: kind === "private" ? "private" : "general", mark: markOf(league), rank, move, size };
+  }),
 ];
 
 type Line = [rank: number, move: number | null, team: string, manager: string, captain: string, week: number, total: number, split?: number];
 
-/** A table's rows from its lines; the sample manager's row is marked yours, and with `chasing` tagged with the points to the row above. */
+/** A table's rows from its lines, each Captain with his team; the sample manager's row is marked yours, and with `chasing` tagged with the points to the row above. */
 function rows(lines: Line[], chasing = false): StandingRow[] {
   return lines.map(([rank, move, team, manager, captain, week, total, split], i) => {
     const mine = team === MANAGER.team;
     const above = lines[i - 1];
     const chase: StandingRow["chase"] = mine && chasing && above ? { kind: "chasing", points: above[6] - total, rank: above[0] } : null;
-    return { rank, move, team, manager, managerId: manager.toLowerCase().replace(/\W+/g, "-"), captain, week, total, split, mine, chase };
+    return {
+      rank,
+      move,
+      team,
+      manager,
+      managerId: manager.toLowerCase().replace(/\W+/g, "-"),
+      captain: { team: teamOf(captain), name: captain },
+      week,
+      total,
+      split,
+      mine,
+      chase,
+    };
   });
 }
 
@@ -64,7 +91,7 @@ const PUB_LEAGUE: LeagueView = {
   code: "PUB-7K2Q",
   role: "maker",
   week: WEEK,
-  captainShown: true,
+  deadlinePassed: true,
   openTab: "Season",
   tables: {
     Season: {
@@ -92,6 +119,10 @@ const PUB_LEAGUE: LeagueView = {
   },
 };
 
+/** The row the Remove pictures pick (remove-pick, remove). */
+export const REMOVE_PICK = PUB_LEAGUE.tables.Season?.runs[0]?.find((r) => r.manager === MANAGERS.priya.name);
+
+/** Flol Discord's first page: 86 managers, yours 14th, so the top five, a gap, then 12th to 16th (spec/08's example; `firstPage`). */
 const FLOL_DISCORD: LeagueView = {
   kind: "private",
   id: "flol-discord",
@@ -100,7 +131,7 @@ const FLOL_DISCORD: LeagueView = {
   code: "FLOL-22XB",
   role: "member",
   week: WEEK,
-  captainShown: true,
+  deadlinePassed: true,
   openTab: "Season",
   tables: {
     Season: {
@@ -119,7 +150,7 @@ const FLOL_DISCORD: LeagueView = {
             fromThisWeek(13, null, "Siwoo Sweep", "Mei Lin", "Chovy", 96),
             me("flol-discord", MY_WEEK3.liveTotal),
             fromThisWeek(15, 1, "Oner Way Ticket", "Sean Doyle", "Oner", 92),
-            fromThisWeek(16, -1, "Clid Was Here", "Ines Silva", "Viper", 90),
+            fromThisWeek(16, -1, "Clid Was Here", "Ines Silva", "Zeka", 90),
           ],
           true,
         ),
@@ -128,7 +159,7 @@ const FLOL_DISCORD: LeagueView = {
   },
 };
 
-/** Overall's rows, each with its manager's tier from the tier function (spec/08). */
+/** Overall's rows, each with its manager's tier from the tier function (spec/08). Overall has no chase tag: Points shows the gap to the next tier. */
 const tiered = (lines: Line[]): StandingRow[] => rows(lines).map((row) => ({ ...row, tier: overallTierOf(row.rank) }));
 
 /** Overall at Week 3: the season and Split 1 are one table until Split 2 starts. */
@@ -142,7 +173,7 @@ const OVERALL_STANDINGS: Standings = {
       [4, -1, "Showmaker's Shadow", "Ben Price", "ShowMaker", 94, 344],
       [5, 2, "GenG Got Game", "Kenji Sato", "Chovy", 109, 342],
       [6, null, "Faker Ate My Homework", "Ollie Dunn", "Faker", 97, 340],
-      [7, -2, "Viper's Nest", "Mina Lee", "Viper", 80, 338],
+      [7, -2, "Viper's Nest", "Mina Lee", "Chovy", 80, 338],
     ]),
     tiered([
       [MY_OVERALL.rank - 2, 6880, "Rookie Mistake", "Jon Park", "Bdd", 97, MY_SEASON_TOTAL + 1],
@@ -154,29 +185,60 @@ const OVERALL_STANDINGS: Standings = {
   ],
 };
 
-const OVERALL: LeagueView = {
+/** The buffs as the panel names them, with their icons. */
+const BUFF: Record<BuffName, BuffEffect> = { "Bench Boost": "benchBoost", "Double Captain": "doubleCaptain", "Coach Diff": "coachMultiplier" };
+
+type PickLine = [tier: TierName, captain: string, share: number, buff: BuffName | null, buffShare: number];
+
+/** Week 3's Captains and buffs by tier, Challenger down to Iron, as the overall picture's; your tier's row marked. */
+const TIER_PICKS: TierPick[] = (
+  [
+    ["challenger", "Chovy", 61, "Double Captain", 9],
+    ["grandmaster", "Chovy", 54, "Double Captain", 7],
+    ["master", "Faker", 47, "Bench Boost", 6],
+    ["diamond", "Faker", 44, "Bench Boost", 5],
+    ["emerald", "Faker", 41, "Coach Diff", 4],
+    ["platinum", "Faker", 39, "Bench Boost", 4],
+    ["gold", "Faker", 43, "Bench Boost", 3],
+    ["silver", "Faker", 48, "Coach Diff", 3],
+    ["bronze", "Faker", 52, "Bench Boost", 2],
+    ["iron", "Faker", 58, null, 0],
+  ] satisfies PickLine[]
+).map(([tier, captain, captainShare, buff, buffShare]) => ({
+  tier,
+  captain: { team: teamOf(captain), name: captain },
+  captainShare,
+  buff: buff && { name: buff, effect: BUFF[buff], share: buffShare },
+  mine: MY_OVERALL.tier.tier === tier,
+}));
+
+const OVERALL: Extract<LeagueView, { kind: "overall" }> = {
   kind: "overall",
   id: "overall",
   name: "Overall",
   season: SEASON,
   week: WEEK,
-  captainShown: true,
+  deadlinePassed: true,
   openTab: THIS_SPLIT,
   openGroup: "Legend",
   tables: {
     [COMPETITION.seasonTab]: OVERALL_STANDINGS,
     [THIS_SPLIT]: OVERALL_STANDINGS,
   },
+  tierPicks: TIER_PICKS,
 };
 
 /** Each league the list opens, by its id. The two general leagues past Overall have no picture yet. */
 export const LEAGUES: Record<string, LeagueView> = {
   overall: OVERALL,
-  "united-kingdom": { kind: "general", id: "united-kingdom", name: "United Kingdom", week: WEEK, captainShown: true, openTab: "Season", tables: {} },
-  "t1-supporters": { kind: "general", id: "t1-supporters", name: "T1 supporters", week: WEEK, captainShown: true, openTab: "Season", tables: {} },
+  "united-kingdom": { kind: "general", id: "united-kingdom", name: "United Kingdom", week: WEEK, deadlinePassed: true, openTab: "Season", tables: {} },
+  "t1-supporters": { kind: "general", id: "t1-supporters", name: "T1 supporters", week: WEEK, deadlinePassed: true, openTab: "Season", tables: {} },
   "pub-league": PUB_LEAGUE,
   "flol-discord": FLOL_DISCORD,
 };
+
+/** Every league the sample manager is in. */
+export const MY_LEAGUES_NOW: MyLeagues = { list: LEAGUE_LIST, views: LEAGUES };
 
 /** How many private leagues a manager can be in (spec/08). Data, per competition. */
 export const PRIVATE_LEAGUE_CAP = 25;
@@ -198,12 +260,23 @@ export const SCORING_WEEKS: ScoringWeeks = [
 export const NEW_LEAGUE = { name: "Office Rift", code: "OFF-9R3D" } as const;
 
 /** How a new or joined league's table opens: this week, Season, no rows yet. */
-export const NEW_TABLE: NewTable = { week: WEEK, captainShown: true, openTab: COMPETITION.seasonTab };
+export const NEW_TABLE: NewTable = { week: WEEK, deadlinePassed: true, openTab: COMPETITION.seasonTab };
 
-/** A league the Join picture's code finds (join.html). Its rank and size are made up. */
+/** A league the Join picture's code finds (join.html), and one the sample manager was removed from. Ranks and sizes are made up. */
 export const JOINABLE: PrivateEntry[] = [
   {
-    summary: { id: "gank-squad", name: "Gank Squad", kind: "private", rank: 9, move: null, size: 9 },
+    summary: { id: "gank-squad", name: "Gank Squad", kind: "private", mark: { kind: "group" }, rank: 9, move: null, size: 9 },
     view: { kind: "private", id: "gank-squad", name: "Gank Squad", code: "GANK-4TQ1", scoringFrom: 2, role: "member", ...NEW_TABLE, tables: {} },
   },
+  {
+    summary: { id: "dragon-pit", name: "Dragon Pit", kind: "private", mark: { kind: "group" }, rank: 4, move: null, size: 15 },
+    view: { kind: "private", id: "dragon-pit", name: "Dragon Pit", code: "DRGN-5PX3", scoringFrom: 1, role: "member", ...NEW_TABLE, tables: {} },
+  },
 ];
+
+/** The codes of the leagues the sample manager was removed from: Join finds nothing there (spec/08). */
+export const REMOVED_FROM: ReadonlySet<string> = new Set(["DRGN-5PX3"]);
+
+/** The code the join-bad picture types: one character off Gank Squad's. */
+export const BAD_CODE = "GANK-4TQ9";
+

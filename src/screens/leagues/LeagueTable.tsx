@@ -1,9 +1,13 @@
-import { useId, useRef, useState, type ReactNode } from "react";
-import { Empty, Menu, OutlinedKey, TabPanel, Tabs, type MenuItem } from "../../parts";
+import { useId, useState, type ReactNode } from "react";
+import { BACK, Empty, ErrorState, MainAction, Menu, OutlinedKey, Panel, Table, TabPanel, Tabs, type MenuItem } from "../../parts";
+import { CalendarMark } from "./Marks";
 import { Pager } from "./Pager";
-import { Standings } from "./Standings";
-import type { CompetitionTabs, LeagueView, Standings as StandingsData, TableTab } from "./types";
-import { scoringFrom, WORDS } from "./words";
+import { Standings, type Removing } from "./Standings";
+import type { CompetitionTabs, LeagueView, StandingRow, Standings as StandingsData, TableTab } from "./types";
+import { nameCount, scoringFrom, weekHead, weekStartsOn, WORDS } from "./words";
+
+/** A table on its way, or one that didn't come (plate.md, States). */
+export type TableStatus = "loading" | "error";
 
 /** The table shown, and turning its tabs and pages. */
 export interface TableProps {
@@ -13,6 +17,9 @@ export interface TableProps {
   onTab: (tab: TableTab) => void;
   /** The table on this tab and page; absent when there is none yet. */
   table?: StandingsData;
+  /** Set while the table loads, or when it didn't. */
+  status?: TableStatus;
+  onRetry: () => void;
   page: number;
   onPage: (page: number) => void;
   onFindMe: () => void;
@@ -22,126 +29,184 @@ export interface TableProps {
 export interface LeagueActions {
   onCopyLink: () => void;
   onRename: (name: string) => void;
-  onRemoveManager: () => void;
+  /** A manager picked to remove: the confirm opens. */
+  onRemove: (row: StandingRow) => void;
   onDelete: () => void;
   onLeave: () => void;
 }
 
-/** A league's head: its name and what's beside it, then whatever sits on the right. */
-export function LeagueHead({ name, sub, children }: { name: ReactNode; sub?: string; children?: ReactNode }) {
+/** What the maker is doing in the league's head: nothing, the Admin menu open, renaming, or picking a manager to remove. */
+export type MakerMode = "idle" | "admin" | "renaming" | "removing";
+
+/** A league's panel: its name on the band with what's beside it, then a line with the tabs at the left and the league's own keys at the right. */
+export function LeaguePanel({
+  title,
+  sub,
+  label,
+  tabs,
+  keys,
+  children,
+}: {
+  title: ReactNode;
+  sub?: string;
+  label: string;
+  tabs: ReactNode;
+  keys?: ReactNode;
+  children: ReactNode;
+}) {
   return (
-    <div className="leagues__head">
-      {name}
-      {sub && <small className="leagues__sub">{sub}</small>}
-      <span className="leagues__spacer" />
+    <Panel title={title} sub={sub} label={label} band className="leagues__panel">
+      <div className="leagues__bar">
+        {tabs}
+        <span className="leagues__keys">{keys}</span>
+      </div>
       {children}
-    </div>
+    </Panel>
   );
 }
 
-/** The table, and its pager where it holds more than one page. `tiered`: Overall's season table, with its Tier column. */
+/** Rows a loading table draws, bars where its figures go. */
+const LOADING_ROWS = 12;
+
+/** The table, and its pager where it holds more than one page; or its state: on its way, didn't load, or none yet. `tiered`: Overall's season table, with its Tier column. */
 export function TableBody({
   league,
   table,
+  status,
+  onRetry,
   page,
   onPage,
   onFindMe,
   tiered = false,
-}: { league: LeagueView; tiered?: boolean } & Omit<TableProps, "competition" | "tab" | "onTab">) {
-  if (!table) return <Empty title={WORDS.noTable} />;
+  removing,
+}: { league: LeagueView; tiered?: boolean; removing?: Removing } & Omit<TableProps, "competition" | "tab" | "onTab">) {
+  if (status === "loading") return <LoadingTable week={league.week} deadlinePassed={league.deadlinePassed} />;
+  if (status === "error") return <ErrorState title={WORDS.tableFailed} line={WORDS.checkConnection} onRetry={onRetry} />;
+  if (!table) {
+    const starts = league.startsOn;
+    return starts ? <Empty title={WORDS.noTable} line={weekStartsOn(starts.week, starts.starts)} mark={<CalendarMark />} /> : <Empty title={WORDS.noTable} />;
+  }
   return (
     <>
-      <Standings table={table} week={league.week} captainShown={league.captainShown} tiered={tiered} />
+      <Standings table={table} week={league.week} deadlinePassed={league.deadlinePassed} tiered={tiered} removing={removing} />
       {table.pages > 1 && <Pager pages={table.pages} page={page} onPage={onPage} onFindMe={onFindMe} />}
     </>
   );
 }
 
+/** A table on its way: its heads, and `--fill` bars where each row's figures go (plate.md, States). */
+function LoadingTable({ week, deadlinePassed }: { week: number; deadlinePassed: boolean }) {
+  const bar = <span className="leagues__skel" />;
+  const heads = [WORDS.rank, "", WORDS.teamManager, ...(deadlinePassed ? [WORDS.captain, weekHead(week)] : []), WORDS.total];
+  return (
+    <div role="status" aria-label={WORDS.tableLoading}>
+      <Table
+        columns={heads.map((head, i) => ({ key: String(i), head, figure: i >= heads.length - (deadlinePassed ? 2 : 1), cell: () => bar }))}
+        rows={Array.from({ length: LOADING_ROWS }, (_, i) => i)}
+        rowKey={String}
+      />
+    </div>
+  );
+}
+
 /**
- * A league that isn't Overall: name and when its scoring starts; for a private league its code,
- * Copy link, and Admin ▾ for the maker or Leave for a member; the competition's tabs; the table.
+ * A league that isn't Overall: its name on the band and when its scoring starts; the competition's tabs, and for a private
+ * league its code, Copy link, and Admin ▾ for the maker or Leave for a member; the table. The maker renames in place on the
+ * band, and removes a manager by a Remove key on each row, Done in Admin's place.
  */
 export function LeagueTable({
   league,
   nameMax,
   actions,
-  adminOpen,
+  startMode = "idle",
+  picked,
   ...table
 }: {
   league: Exclude<LeagueView, { kind: "overall" }>;
   /** The longest name Rename takes. */
   nameMax: number;
   actions: LeagueActions;
-  /** The Admin menu opens at once (admin.html). */
-  adminOpen?: boolean;
+  /** What the maker is doing as it opens (the pictures' admin, rename and remove-pick). */
+  startMode?: MakerMode;
+  /** The manager picked to remove, filled behind the confirm. */
+  picked?: string;
 } & TableProps) {
-  const [renaming, setRenaming] = useState(false);
+  const [mode, setMode] = useState<MakerMode>(startMode);
   const tabsId = useId();
-  const name = renaming ? (
+  const renaming = mode === "renaming";
+  const title = renaming ? (
     <RenameField
       name={league.name}
       maxLength={nameMax}
       onDone={(next) => {
-        setRenaming(false);
+        setMode("idle");
         if (next) actions.onRename(next);
       }}
     />
   ) : (
-    <h2 className="leagues__name-head">{league.name}</h2>
+    league.name
   );
+  const keys =
+    league.kind === "private" ? (
+      <>
+        <span className="leagues__code num">{league.code}</span>
+        <OutlinedKey onClick={actions.onCopyLink}>{WORDS.copyLink}</OutlinedKey>
+        {league.role === "member" ? (
+          <OutlinedKey onClick={actions.onLeave}>{WORDS.leave}</OutlinedKey>
+        ) : mode === "removing" ? (
+          <OutlinedKey onClick={() => setMode("idle")}>{WORDS.done}</OutlinedKey>
+        ) : (
+          <Menu label={WORDS.admin} className="leagues__admin" items={adminItems(actions, setMode)} startOpen={mode === "admin"} />
+        )}
+      </>
+    ) : undefined;
   return (
-    <section className="leagues__panel" aria-label={league.name}>
-      {league.kind === "private" ? (
-        <LeagueHead name={name} sub={scoringFrom(league.scoringFrom)}>
-          <span className="leagues__code num">{league.code}</span>
-          <OutlinedKey onClick={actions.onCopyLink}>{WORDS.copyLink}</OutlinedKey>
-          {league.role === "maker" ? (
-            <Menu label={WORDS.admin} className="leagues__admin" items={adminItems(actions, () => setRenaming(true))} startOpen={adminOpen} />
-          ) : (
-            <OutlinedKey onClick={actions.onLeave}>{WORDS.leave}</OutlinedKey>
-          )}
-        </LeagueHead>
-      ) : (
-        <LeagueHead name={name} />
-      )}
-      <Tabs id={tabsId} tabs={table.competition.tabs} chosen={table.tab} onChoose={table.onTab} label={WORDS.table} />
+    <LeaguePanel
+      title={title}
+      sub={league.kind === "private" && !renaming ? scoringFrom(league.scoringFrom) : undefined}
+      label={league.name}
+      tabs={<Tabs id={tabsId} tabs={table.competition.tabs} chosen={table.tab} onChoose={table.onTab} label={WORDS.table} />}
+      keys={keys}
+    >
       <TabPanel id={tabsId}>
-        <TableBody league={league} {...table} />
+        <TableBody league={league} removing={mode === "removing" ? { onPick: actions.onRemove, picked } : undefined} {...table} />
       </TabPanel>
-    </section>
+    </LeaguePanel>
   );
 }
 
-/** The maker's Admin menu: Rename edits the name in place; the other two open their sheets. */
-export const adminItems = (actions: LeagueActions, onRename: () => void): MenuItem[] => [
-  { label: WORDS.rename, onChoose: onRename },
-  { label: WORDS.removeManager, onChoose: actions.onRemoveManager },
+/** The maker's Admin menu: Rename edits the name in place; Remove a manager puts a Remove key on each row; Delete league… opens its sheet. */
+export const adminItems = (actions: LeagueActions, setMode: (mode: MakerMode) => void): MenuItem[] => [
+  { label: WORDS.rename, onChoose: () => setMode("renaming") },
+  { label: WORDS.removeManager, onChoose: () => setMode("removing") },
   { label: WORDS.deleteLeague, onChoose: actions.onDelete, apart: true },
 ];
 
-/** Rename, in place: Enter keeps the new name, Esc keeps the old. A blank name keeps the old. */
+/** Rename, in place on the band: the name as a box with its count, then Save and Back. Enter saves, Esc goes back. A blank or unchanged name keeps the old. */
 function RenameField({ name, maxLength, onDone }: { name: string; maxLength: number; onDone: (name: string | null) => void }) {
   const [value, setValue] = useState(name);
-  const done = useRef(false);
-  const finish = (keep: boolean) => {
-    if (done.current) return;
-    done.current = true;
+  const save = () => {
     const next = value.trim();
-    onDone(keep && next && next !== name ? next : null);
+    onDone(next && next !== name ? next : null);
   };
   return (
-    <input
-      className="leagues__rename"
-      aria-label={WORDS.leagueName}
-      value={value}
-      maxLength={maxLength}
-      autoFocus
-      onChange={(e) => setValue(e.target.value)}
-      onBlur={() => finish(true)}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") finish(true);
-        if (e.key === "Escape") finish(false);
-      }}
-    />
+    <span className="leagues__rename">
+      <span className="leagues__rename-box">
+        <input
+          aria-label={WORDS.leagueName}
+          value={value}
+          maxLength={maxLength}
+          autoFocus
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") save();
+            if (e.key === "Escape") onDone(null);
+          }}
+        />
+        <small className="num">{nameCount(value.length, maxLength)}</small>
+      </span>
+      <MainAction onClick={save}>{WORDS.save}</MainAction>
+      <OutlinedKey onClick={() => onDone(null)}>{BACK}</OutlinedKey>
+    </span>
   );
 }

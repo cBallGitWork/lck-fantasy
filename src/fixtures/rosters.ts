@@ -21,6 +21,15 @@ export const T1_PRICES_M: readonly number[] = ROSTERS.T1.map(([name]) => statsOf
 
 const HANGUL = new Map(Object.values(ROSTERS).flat());
 
+const TEAM_OF = new Map(Object.entries(ROSTERS).flatMap(([team, roster]) => roster.map(([name]) => [name, team as TeamCode])));
+
+/** A rostered player's or coach's team; a name off every roster is a broken fixture. */
+export function teamOf(name: string): TeamCode {
+  const team = TEAM_OF.get(name);
+  if (team === undefined) throw new Error(`${name} is on no LCK roster`);
+  return team;
+}
+
 /** A rostered player's or coach's hangul; a name off every roster is a broken fixture. */
 export function hangulOf(name: string): string {
   const hangul = HANGUL.get(name);

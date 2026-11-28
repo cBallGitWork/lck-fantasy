@@ -1,0 +1,75 @@
+/* The list of your leagues: General and Private as sub-heads on `--fill`, the private leagues scrolling in place past eight. */
+.leagues__list {
+  padding-bottom: 0;
+}
+.leagues__list > .panel__title {
+  margin-bottom: 0;
+}
+.leagues__list-sub {
+  margin: 0 calc(var(--s-4) * -1);
+  padding: var(--s-1) var(--s-4);
+  background: var(--fill);
+  color: var(--mid);
+  font-size: var(--size-small);
+  font-weight: var(--w-regular);
+}
+.leagues__list-scroll {
+  max-height: var(--m-league-list);
+  overflow-y: auto;
+  margin: 0 calc(var(--s-4) * -1);
+}
+.leagues__list-scroll .leagues__list-row {
+  margin: 0;
+}
+.leagues__list-row {
+  display: grid;
+  grid-template-columns: 1fr auto calc(var(--s-6) * 2 + var(--s-2));
+  gap: 0 var(--s-2);
+  align-items: baseline;
+  margin: 0 calc(var(--s-4) * -1);
+  padding: var(--s-2) var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+}
+.leagues__list-row:hover {
+  background: var(--fill);
+}
+.leagues__list-name {
+  display: inline-flex;
+  align-items: center;
+}
+.leagues__list-row small {
+  grid-column: 1;
+  padding-left: calc(var(--m-mark) + var(--s-2));
+  color: var(--mid);
+  font-size: var(--size-small);
+}
+.leagues__list-move {
+  text-align: right;
+}
+.leagues__list-row--on {
+  box-shadow: inset var(--m-rule-heavy) 0 0 var(--text);
+  background: var(--fill);
+  font-weight: var(--w-semi);
+}
+.leagues__list-row--on small {
+  font-weight: var(--w-regular);
+}
+.leagues__list-none {
+  display: flex;
+  align-items: center;
+  padding: var(--s-3) var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+}
+.leagues__list-actions {
+  display: flex;
+  gap: var(--s-2);
+  margin: 0 calc(var(--s-4) * -1);
+  padding: var(--s-3) var(--s-4);
+  border-top: var(--m-rule) solid var(--line);
+}
+.leagues__list-cap {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--s-3);
+  font-size: var(--size-small);
+}

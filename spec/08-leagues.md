@@ -147,6 +147,10 @@ As FPL's (Craig, 13 Nov 2026):
 - A table opens on its Season tab, as FPL (Craig, 17 Nov 2026).
 - A table shows 50 rows a page, as FPL, and Find me opens the page holding the manager's row. The
   page size is data (Craig, 17 Nov 2026).
+- Where a league runs past one page and the manager's row is not among its top rows, page 1 shows
+  the top rows, a gap, then the rows around theirs, in every league as on Overall (Craig, 28 Nov
+  2026). Example: Flol Discord, 86 managers, shows 1st to 5th, a gap, then 12th to 16th round the
+  manager's 14th.
 - A row's › opens that manager's Points for the latest gameweek, as FPL (Craig, 17 Nov 2026).
 - Under a league's name, the competition and season, with the split on a split tab: `LCK 2027`,
   `LCK 2027 · Split 1` (Craig, 17 Nov 2026).

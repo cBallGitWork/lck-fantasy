@@ -1,8 +1,9 @@
 import { useId, type InputHTMLAttributes } from "react";
+import { WarnMark } from "../display/WarnMark";
 import { cx } from "../util/cx";
 import "./Field.css";
 
-/** A form field: its label above, the field 40px tall; an error is one line under it, the field edged. */
+/** A form field: its label above, the field 40px tall; an error is one line under it in `--down` after the warning mark, the field edged in `--down`. */
 export function Field({
   label,
   error,
@@ -33,6 +34,7 @@ export function Field({
       </span>
       {error !== undefined && (
         <p id={errorId} className="field__error">
+          <WarnMark />
           {error}
         </p>
       )}

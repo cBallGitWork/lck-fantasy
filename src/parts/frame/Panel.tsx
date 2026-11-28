@@ -10,13 +10,17 @@ import "./Panel.css";
  */
 export function Panel({
   title,
+  sub,
   label,
   band,
   go,
   className,
   children,
 }: {
-  title?: string;
+  /** Words, or what stands in their place while they are edited (Leagues' Rename). */
+  title?: ReactNode;
+  /** What sits after the title in 14/400 (`LCK 2027 · Split 2`; approved/leagues/). */
+  sub?: string;
   label?: string;
   band?: boolean;
   /** A link at the band's right, as Home's `Points ›` (approved/home/). */
@@ -25,10 +29,11 @@ export function Panel({
   children: ReactNode;
 }) {
   return (
-    <section className={cx("panel", band && "panel--band", className)} aria-label={title ? undefined : label}>
+    <section className={cx("panel", band && "panel--band", className)} aria-label={label}>
       {title && (
         <h2 className="panel__title">
           {title}
+          {sub && <span className="panel__sub">{sub}</span>}
           {go && <span className="panel__go">{go}</span>}
         </h2>
       )}

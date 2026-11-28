@@ -20,6 +20,12 @@
   padding: var(--s-3) var(--s-4) var(--s-2);
   background: var(--head-band);
 }
+/* What sits after the title: Leagues' season and split (approved/leagues/). */
+.panel__sub {
+  margin-left: var(--s-3);
+  font-size: var(--size-body);
+  font-weight: var(--w-regular);
+}
 /* A link at the band's right (approved/home/). */
 .panel__title:has(.panel__go) {
   display: flex;

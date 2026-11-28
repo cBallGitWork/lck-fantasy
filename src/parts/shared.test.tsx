@@ -46,9 +46,10 @@ test("a series strip holds the last series with points, the rule, then the next 
   expect(out).toContain('<span class="series-strip__next num">v GEN</span>');
 });
 
-test("the tier shield draws its own outlined body and band, sized by the page's class, and no text", () => {
-  const out = html(<TierShield className="home__shield" />);
-  expect(out).toContain('<svg class="tier-shield home__shield" viewBox="0 0 40 46" aria-hidden="true">');
+test("the tier shield draws its own body and band in its tier's colour, sized by the page's class, and no text", () => {
+  const out = html(<TierShield tier="emerald" className="home__shield" />);
+  expect(out).toContain('<svg class="tier-shield tier-ink--emerald home__shield" viewBox="0 0 40 46" aria-hidden="true">');
+  expect(html(<TierShield tier="unranked" className="home__shield" />)).toContain('<svg class="tier-shield tier-shield--unranked home__shield"');
   expect(out).toContain('class="tier-shield__body"');
   expect(out).toContain('<path class="tier-shield__band" d="M5 15 H35"></path>');
   expect(out).not.toContain("<text");
@@ -66,12 +67,12 @@ test("a tier's short name and hangul: divisions I to IV, none for Master to Chal
 
 test("the tier mark: shield, tier and hangul, the rank and move beneath; Unranked outlined, with no rank", () => {
   const ranked = html(<TierMark standing={{ tier: { tier: "diamond", division: 4 }, rank: 31_349, move: -12 }} />);
-  expect(ranked).toContain('<svg class="tier-shield tier-mark__shield"');
+  expect(ranked).toContain('<svg class="tier-shield tier-ink--diamond tier-mark__shield"');
   expect(ranked).toMatch(/Diamond IV.*다이아몬드 4.*31,349.*aria-label="down 12"/);
   const unranked = html(<TierMark standing={{ tier: { tier: "unranked" }, rank: null, move: null }} />);
   expect(unranked).toContain('<svg class="tier-shield tier-shield--unranked tier-mark__shield"');
   expect(unranked).not.toContain("tier-mark__rank");
-  expect(html(<TierTag tier={{ tier: "master", division: null }} />)).toMatch(/^<span class="tier-tag"><svg class="tier-shield tier-tag__shield".*<\/svg>Master<\/span>$/);
+  expect(html(<TierTag tier={{ tier: "master", division: null }} />)).toMatch(/^<span class="tier-tag"><svg class="tier-shield tier-ink--master tier-tag__shield".*<\/svg>Master<\/span>$/);
 });
 
 test("the LED panel is one part, its line as given; big for the picker's preview", () => {

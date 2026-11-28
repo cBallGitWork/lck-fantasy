@@ -4,15 +4,9 @@ import { useId, useState } from "react";
 import { count, Field, GoLink, MainAction, Modal, OutlinedKey, placeOf, plural, SheetKeys } from "../../parts";
 import { leagueGo } from "../../paths";
 import { capReason } from "./forms";
-import type { PrivateLeague, ScoringWeeks } from "./types";
-import { deleteLine, deleteTitle, leaveTitle, nameCount, privateCountLine, scoringFrom, weekStarts, WORDS } from "./words";
+import type { PrivateCount, PrivateLeague, ScoringWeeks } from "./types";
+import { deleteLine, deleteTitle, leaveTitle, nameCount, privateCountLine, removeTitle, scoringFrom, weekStarts, WORDS } from "./words";
 import "./Sheets.css";
-
-/** How many private leagues you're in, and the cap. */
-interface PrivateCount {
-  count: number;
-  cap: number;
-}
 
 const CountLine = ({ count, cap }: PrivateCount) => <p className="leagues__count quiet">{privateCountLine(count, cap)}</p>;
 
@@ -121,15 +115,15 @@ export function JoinSheet({
   );
 }
 
-/** A member leaving: the league, their rank in it, then Leave (leave.html). */
-export function LeaveSheet({ name, rank, size, onLeave, onClose }: { name: string; rank: number; size: number; onLeave: () => void; onClose: () => void }) {
+/** A member leaving: the league, their rank in it where they have one, then Leave (leave.html). */
+export function LeaveSheet({ name, rank, size, onLeave, onClose }: { name: string; rank: number | null; size: number; onLeave: () => void; onClose: () => void }) {
   return (
     <Modal kind="sheet" title={leaveTitle(name)} onClose={onClose}>
-      <p>
-        {placeOf(rank, count(size))}
-      </p>
+      {rank !== null && <p>{placeOf(rank, count(size))}</p>}
       <SheetKeys onBack={onClose}>
-        <MainAction onClick={onLeave}>{WORDS.leave}</MainAction>
+        <OutlinedKey ends onClick={onLeave}>
+          {WORDS.leave}
+        </OutlinedKey>
       </SheetKeys>
     </Modal>
   );
@@ -153,7 +147,23 @@ export function DeleteSheet({
     <Modal kind="sheet" title={deleteTitle(name)} onClose={onClose}>
       <p>{deleteLine(plural(size, WORDS.manager), firstWeek)}</p>
       <SheetKeys onBack={onClose}>
-        <MainAction onClick={onDelete}>{WORDS.deleteKey}</MainAction>
+        <OutlinedKey ends onClick={onDelete}>
+          {WORDS.deleteKey}
+        </OutlinedKey>
+      </SheetKeys>
+    </Modal>
+  );
+}
+
+/** The maker removing a manager: the team, the ban, then Remove (remove.html; spec/08). */
+export function RemoveSheet({ team, onRemove, onClose }: { team: string; onRemove: () => void; onClose: () => void }) {
+  return (
+    <Modal kind="sheet" title={removeTitle(team)} onClose={onClose}>
+      <p>{WORDS.cantRejoin}</p>
+      <SheetKeys onBack={onClose}>
+        <OutlinedKey ends onClick={onRemove}>
+          {WORDS.remove}
+        </OutlinedKey>
       </SheetKeys>
     </Modal>
   );

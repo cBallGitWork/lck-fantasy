@@ -104,6 +104,8 @@ const measure = {
   colOut: 240,
   colArrow: 30,
   colIn: 260,
+  /** Leagues' private list scrolls in place past eight leagues: eight rows' height (plate.md, Parts; Craig, 28 Nov 2026). */
+  leagueList: 456,
   /** A menu's list: the Admin menu. */
   menuW: 220,
   cardHead: 48,

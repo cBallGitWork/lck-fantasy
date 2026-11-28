@@ -63,7 +63,7 @@ export function Leagues({ leagues, tierGaps }: Pick<PointsData, "leagues" | "tie
             <Fragment key={l.name}>
               <tr>
                 <td>
-                  {l.tier && <TierShield className="points__shield" unranked={l.tier.tier === "unranked"} />}
+                  {l.tier && <TierShield tier={l.tier.tier} className="points__shield" />}
                   {l.name}
                   {l.tier && (
                     <>

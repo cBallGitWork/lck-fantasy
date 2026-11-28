@@ -25,7 +25,7 @@ export function TierMark({ standing, className }: { standing: Standing; classNam
   const hangul = tierHangul(tier);
   return (
     <div className={cx("tier-mark", className)}>
-      <TierShield className="tier-mark__shield" unranked={unranked} />
+      <TierShield tier={tier.tier} className="tier-mark__shield" />
       <div>
         <div className="tier-mark__name">
           <Hint line={HINTS.tier}>{tierName(tier)}</Hint>
@@ -50,7 +50,7 @@ export function TierMark({ standing, className }: { standing: Standing; classNam
 export function TierTag({ tier }: { tier: Tier }) {
   return (
     <span className="tier-tag">
-      <TierShield className="tier-tag__shield" unranked={tier.tier === "unranked"} />
+      <TierShield tier={tier.tier} className="tier-tag__shield" />
       {tierName(tier)}
     </span>
   );

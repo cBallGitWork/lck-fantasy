@@ -52,10 +52,12 @@ What shows a fact: tags, tables, lists, crests, states.
 - `Table.tsx`: 40px rows, figures right, long names truncated with their full text, a sorted head, column groups, a rule above a row starting a group (`ruleAbove`), a row's `›` (`open`); sticky head and name column for the wide table.
 - `SeriesList.tsx`: the week's series: day, teams, then score and state, or the time.
 - `SeriesStrip.tsx`: a card's series strip: the last 3 with points (`Live` while live), a 2px `--text` rule, the next 3 with `Bo3`, the first in `--text` (player card, coach card).
-- `States.tsx`: `Loading` (fill bars), `Empty` (a title, one line), `ErrorState` (a title, one line, `Try again ›`).
+- `States.tsx`: `Loading` (fill bars), `Empty` (a mark where drawn, a title, one line), `ErrorState` (the warning mark, a title, one line, `Try again ›`).
+- `WarnMark.tsx`: the warning triangle in `--down` every error carries, before a field's line or over a panel's title (plate.md, States).
 - `BuffCard.tsx`: a buff: its gold icon, its name with what it does as its hover, its state, and Play or Cancel. Never a count.
 - `ProviderMark.tsx`: the sign-in provider's mark, `G` or `D` (Settings, the sign-up sheet).
 - `Crest.tsx`: a team's crest at a measure, from `data/lck/crests/<code>.svg` (docs/design/approved/crests/); a dashed round box with the code where none is drawn.
+- `Flag.tsx`: a country league's flag, from `data/flags/<country>.svg`; a dashed box where none is drawn.
 - `TeamBar.tsx`: a small bar of a team's own kit colour before its code, wherever a list names a team; the first kit colour that shows on the ground (`data/lck/teams.json`).
 - `Kit.tsx`: a team's kit beside its code at a measure, from `data/lck/shirts/<code>.svg`: either side of a fixture's time.
 - `PlayerPhoto.tsx`: a player's media-day portrait credited `Photo: LCK` (`PHOTO_CREDIT`), or his team's crest without one (spec/13).

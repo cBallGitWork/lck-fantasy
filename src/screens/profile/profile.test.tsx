@@ -107,7 +107,7 @@ describe("History", () => {
     expect(text(page("History"))).not.toContain("Past seasons");
     const ended: ProfileData = { ...PROFILE, pastSeasons: [{ season: "LCK 2027", tier: { tier: "diamond", division: 2 }, rank: 2_104 }] };
     expectInOrder(text(page("History", ended)), ["Buffs left: Double Captain · Coach Diff", "Past seasons", "Season", "Tier", "Rank", "LCK 2027", "Diamond II", "2,104th", "Leagues"]);
-    expect(html(page("History", ended))).toContain('<span class="tier-tag"><svg class="tier-shield tier-tag__shield"');
+    expect(html(page("History", ended))).toContain('<span class="tier-tag"><svg class="tier-shield tier-ink--diamond tier-tag__shield"');
   });
 });
 

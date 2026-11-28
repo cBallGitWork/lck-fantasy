@@ -1,0 +1,16 @@
+/* An error's warning triangle (plate.md, States): before a field's line at the line's size, or over a panel's title. */
+.warn-mark {
+  flex: none;
+  width: var(--size-body);
+  height: var(--size-body);
+  color: var(--down);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: var(--stroke-fact);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.warn-mark--big {
+  width: var(--s-6);
+  height: var(--s-6);
+}

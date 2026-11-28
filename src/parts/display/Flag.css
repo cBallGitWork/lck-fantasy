@@ -1,0 +1,10 @@
+/* A country's flag, 3:2; the page gives it its width. */
+.flag {
+  display: block;
+  flex: none;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.flag--none {
+  border: var(--m-rule) dashed var(--soft);
+}

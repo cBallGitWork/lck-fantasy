@@ -1,26 +1,30 @@
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import { MANAGER } from "../../fixtures/week3";
 import { useDevState } from "../../parts";
-import { leagueJoinGo, pathTo } from "../../paths";
+import { leagueGo, leagueJoinGo, pathTo } from "../../paths";
 import {
+  BAD_CODE,
   COMPETITION,
   JOINABLE,
-  LEAGUE_LIST,
   LEAGUE_NAME_MAX,
   LEAGUES,
+  MY_LEAGUES_NOW,
   NEW_LEAGUE,
   NEW_TABLE,
   OPEN_LEAGUE_ID,
   PRIVATE_LEAGUE_CAP,
+  REMOVE_PICK,
+  REMOVED_FROM,
   SCORING_WEEKS,
 } from "./fixtures";
-import { capReason, codeOf, findByCode, freeCode, makeLeague, privateCount, renameLeague, withLeague, withoutLeague, type MyLeagues, type OpenForm } from "./forms";
+import { capReason, codeOf, freeCode, joinOutcome, makeLeague, privateCount, removeManager, renameLeague, withLeague, withoutLeague, type MyLeagues, type OpenForm } from "./forms";
 import { LeagueList } from "./LeagueList";
 import { LeaguesPage } from "./LeaguesPage";
-import { LeagueTable, type LeagueActions } from "./LeagueTable";
+import { LeagueTable, type LeagueActions, type MakerMode, type TableStatus } from "./LeagueTable";
 import { OverallTable } from "./OverallTable";
-import { CreatedSheet, CreateSheet, DeleteSheet, JoinSheet, LeaveSheet } from "./Sheets";
+import { CreatedSheet, CreateSheet, DeleteSheet, JoinSheet, LeaveSheet, RemoveSheet } from "./Sheets";
+import { AT_CAP, BEFORE_DEADLINE, NO_PRIVATE, SOON, SOON_ID, UNRANKED } from "./stateFixtures";
 import { tableKey, type OverallGroup, type PrivateEntry, type TableTab } from "./types";
 import { WORDS } from "./words";
 
@@ -31,7 +35,7 @@ const FIRST_PAGE = 1;
  * The made-up leagues, kept here so a league made or left survives the move between `/leagues` and
  * `/leagues/$leagueId`, two routes that each mount this screen. The backend holds them once wired (#38).
  */
-let kept: MyLeagues = { list: LEAGUE_LIST, views: LEAGUES };
+let kept: MyLeagues = MY_LEAGUES_NOW;
 
 /** A private league's link, as Copy link gives it: it opens Join a league with the code in (spec/08). */
 const joinLink = (code: string) => new URL(pathTo(leagueJoinGo(code)), location.origin).href;
@@ -42,25 +46,50 @@ function copy(what: string, words: string) {
   navigator.clipboard.writeText(words).catch((err: unknown) => console.error(`${what} failed`, err));
 }
 
-/** Remove a manager picks a row then confirms (README); no picture draws either yet. */
-const removeManager = () => console.warn("Remove a manager: no picture of its row pick or confirm yet");
+/** A picture's state (docs/design/approved/leagues/README.md): a sheet, the maker's mode, the leagues as they stand, the table's state, the league open. */
+interface DevLeagues {
+  form?: OpenForm;
+  mode?: MakerMode;
+  mine?: MyLeagues;
+  status?: TableStatus;
+  joinCode?: string;
+  open?: string;
+}
+
+/** The Remove pictures' picked row, as the confirm opens on it. */
+const removePicked: OpenForm = REMOVE_PICK ? { kind: "remove", id: OPEN_LEAGUE_ID, managerId: REMOVE_PICK.managerId, team: REMOVE_PICK.team } : null;
 
 /**
  * Leagues and one league's table (`/leagues/$leagueId`), on the shared Week 3 of Split 1, with the league forms as sheets over it.
  * A league's link (`/leagues/join/$code`) opens Join a league with its code in; the manager still presses Join (spec/08).
- * In dev, `?state=` opens a picture's sheet over the league (`create`, `created`, `join`, `delete`, `leave`) or its Admin menu (`admin`).
+ * In dev, `?state=` opens a picture's state: a sheet over the league, the maker's Admin menu, Rename or Remove, the cap, no private
+ * league, a league yet to start, a table loading or failed, Overall before the deadline, or everyone Unranked.
  */
 export function LeaguesScreen() {
-  const { leagueId = OPEN_LEAGUE_ID, code: linkedCode } = useParams({ strict: false });
-  const dev = useDevState<{ form?: OpenForm; adminOpen?: true }>({
-    admin: { adminOpen: true },
+  const params = useParams({ strict: false });
+  const navigate = useNavigate();
+  const dev = useDevState<DevLeagues>({
+    admin: { mode: "admin" },
+    rename: { mode: "renaming" },
+    "remove-pick": { mode: "removing" },
+    remove: { mode: "removing", form: removePicked },
     create: { form: { kind: "create" } },
     created: { form: { kind: "created", league: makeLeague(NEW_LEAGUE.name, SCORING_WEEKS[0].week, NEW_LEAGUE.code, NEW_TABLE).view } },
     join: { form: { kind: "join" } },
-    delete: { form: { kind: "delete", id: leagueId } },
-    leave: { form: { kind: "leave", id: leagueId } },
+    "join-bad": { form: { kind: "join" }, joinCode: BAD_CODE },
+    delete: { form: { kind: "delete", id: params.leagueId ?? OPEN_LEAGUE_ID } },
+    leave: { form: { kind: "leave", id: params.leagueId ?? OPEN_LEAGUE_ID } },
+    cap: { mine: AT_CAP },
+    none: { mine: NO_PRIVATE, open: "overall" },
+    soon: { mine: SOON, open: SOON_ID },
+    loading: { status: "loading" },
+    error: { status: "error" },
+    before: { mine: BEFORE_DEADLINE, open: "overall" },
+    unranked: { mine: UNRANKED, open: "overall" },
   });
-  const [mine, setMineState] = useState(kept);
+  const leagueId = params.leagueId ?? dev?.open ?? OPEN_LEAGUE_ID;
+  const linkedCode = params.code;
+  const [mine, setMineState] = useState(dev?.mine ?? kept);
   const setMine = (next: MyLeagues) => {
     kept = next;
     setMineState(next);
@@ -73,12 +102,13 @@ export function LeaguesScreen() {
   const [pages, setPages] = useState<Record<string, number>>({});
   const page = pages[league.id] ?? FIRST_PAGE;
   const setPage = (next: number) => setPages({ ...pages, [league.id]: next });
+  const [status, setStatus] = useState(dev?.status);
   // A sheet belongs to the league it opened over, so Open league, moving to another, closes it.
   const [sheet, setSheet] = useState<{ on: string; form: OpenForm }>({ on: leagueId, form: dev?.form ?? (linkedCode ? { kind: "join" } : null) });
   const form = sheet.on === leagueId ? sheet.form : null;
   const open = (next: OpenForm) => setSheet({ on: leagueId, form: next });
   const close = () => open(null);
-  const [joinError, setJoinError] = useState<string>();
+  const [joinError, setJoinError] = useState<string | undefined>(dev?.joinCode ? WORDS.noSuchCode : undefined);
   const privates = { count: privateCount(mine), cap: PRIVATE_LEAGUE_CAP };
 
   const add = (entry: PrivateEntry) => setMine(withLeague(mine, entry));
@@ -88,19 +118,19 @@ export function LeaguesScreen() {
   };
   const create = (name: string, scoringFrom: number) => {
     if (capReason(privates.count, privates.cap)) return;
-    const made = makeLeague(name, scoringFrom, freeCode(NEW_LEAGUE.code, mine), NEW_TABLE);
+    const startsOn = SCORING_WEEKS.find((w) => w.week === scoringFrom && w.week > NEW_TABLE.week);
+    const made = makeLeague(name, scoringFrom, freeCode(NEW_LEAGUE.code, mine), NEW_TABLE, startsOn);
     add(made);
     open({ kind: "created", league: made.view });
   };
   const join = (codeOrLink: string) => {
-    const found = findByCode(JOINABLE, codeOrLink);
-    if (!found) return setJoinError(WORDS.noSuchCode);
+    const outcome = joinOutcome(mine, JOINABLE, REMOVED_FROM, codeOrLink);
+    if (outcome.kind === "none") return setJoinError(WORDS.noSuchCode);
     setJoinError(undefined);
-    if (!(found.view.id in mine.views)) {
-      if (capReason(privates.count, privates.cap)) return;
-      add(found);
-    }
     close();
+    if (outcome.kind === "open") return void navigate(leagueGo(outcome.id));
+    if (capReason(privates.count, privates.cap)) return;
+    add(outcome.entry);
   };
 
   const tab = tabs[league.id] ?? league.openTab;
@@ -112,6 +142,8 @@ export function LeaguesScreen() {
       setPage(FIRST_PAGE);
     },
     table: page === FIRST_PAGE ? league.tables[tableKey(COMPETITION, tab, group)] : undefined,
+    status,
+    onRetry: () => setStatus(undefined),
     page,
     onPage: setPage,
     onFindMe: () => setPage(FIRST_PAGE),
@@ -121,7 +153,7 @@ export function LeaguesScreen() {
       if (league.kind === "private") copy("Copy link", joinLink(league.code));
     },
     onRename: (name) => setMine(renameLeague(mine, league.id, name)),
-    onRemoveManager: removeManager,
+    onRemove: (row) => open({ kind: "remove", id: league.id, managerId: row.managerId, team: row.team }),
     onDelete: () => open({ kind: "delete", id: league.id }),
     onLeave: () => open({ kind: "leave", id: league.id }),
   };
@@ -130,7 +162,7 @@ export function LeaguesScreen() {
   return (
     <LeaguesPage
       account={MANAGER.team}
-      list={<LeagueList leagues={mine.list} openId={league.id} onCreate={() => open({ kind: "create" })} onJoin={() => open({ kind: "join" })} />}
+      list={<LeagueList leagues={mine.list} openId={league.id} privates={privates} onCreate={() => open({ kind: "create" })} onJoin={() => open({ kind: "join" })} />}
     >
       {league.kind === "overall" ? (
         <OverallTable
@@ -143,7 +175,15 @@ export function LeaguesScreen() {
           {...table}
         />
       ) : (
-        <LeagueTable key={league.id} league={league} nameMax={LEAGUE_NAME_MAX} actions={actions} adminOpen={dev?.adminOpen} {...table} />
+        <LeagueTable
+          key={league.id}
+          league={league}
+          nameMax={LEAGUE_NAME_MAX}
+          actions={actions}
+          startMode={dev?.mode}
+          picked={form?.kind === "remove" ? form.managerId : undefined}
+          {...table}
+        />
       )}
 
       {form?.kind === "create" && (
@@ -160,7 +200,7 @@ export function LeaguesScreen() {
       {form?.kind === "join" && (
         <JoinSheet
           privates={privates}
-          initialCode={linkedCode ? codeOf(linkedCode) : JOINABLE[0]?.view.code}
+          initialCode={dev?.joinCode ?? (linkedCode ? codeOf(linkedCode) : JOINABLE[0]?.view.code)}
           error={joinError}
           onJoin={join}
           onClose={() => {
@@ -172,6 +212,16 @@ export function LeaguesScreen() {
       {form?.kind === "leave" && summary && <LeaveSheet name={summary.name} rank={summary.rank} size={summary.size} onLeave={() => drop(form.id)} onClose={close} />}
       {form?.kind === "delete" && summary && league.kind === "private" && (
         <DeleteSheet name={league.name} size={summary.size} scoringFrom={league.scoringFrom} onDelete={() => drop(form.id)} onClose={close} />
+      )}
+      {form?.kind === "remove" && (
+        <RemoveSheet
+          team={form.team}
+          onRemove={() => {
+            setMine(removeManager(mine, form.id, form.managerId));
+            close();
+          }}
+          onClose={close}
+        />
       )}
     </LeaguesPage>
   );

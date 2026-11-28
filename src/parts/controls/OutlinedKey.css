@@ -7,6 +7,16 @@
   border: var(--m-rule) solid var(--text);
   cursor: pointer;
 }
+/* A key that ends something, in its confirm sheet (plate.md, Parts; Craig, 27 Nov 2026). */
+.outlined-key--ends {
+  border-color: var(--down);
+}
+/* A key on a table's row: inside the row's height. */
+.outlined-key--small {
+  padding: 0 var(--s-2);
+  min-height: var(--m-target);
+  font-size: var(--size-small);
+}
 .outlined-key__off {
   display: inline-flex;
   align-items: center;

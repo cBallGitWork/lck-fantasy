@@ -42,6 +42,7 @@ export function Table<R>({
   rows,
   rowKey,
   selected,
+  rowClass,
   ruleAbove,
   subAbove,
   open,
@@ -52,8 +53,10 @@ export function Table<R>({
   columns: Column<R>[];
   rows: R[];
   rowKey: (row: R) => string;
-  /** The row drawn bold on `--fill`, such as yours in a league. */
+  /** The row drawn bold on `--fill` with a white left edge, such as yours in a league. */
   selected?: (row: R) => boolean;
+  /** A page's own class on a row, such as the row Leagues' Remove picked. */
+  rowClass?: (row: R) => string | undefined;
   /** A row with a `--line` rule above it, starting a group such as a new week. */
   ruleAbove?: (row: R) => boolean;
   /** The sub-row drawn above a row, where it has one. */
@@ -90,7 +93,7 @@ export function Table<R>({
         {rows.map((row) => (
           <Fragment key={rowKey(row)}>
             <Sub sub={subAbove?.(row)} span={columns.length + (open ? 1 : 0)} />
-            <tr className={cx(selected?.(row) && "table__row--selected", ruleAbove?.(row) && "table__row--rule")}>
+            <tr className={cx(selected?.(row) && "table__row--selected", ruleAbove?.(row) && "table__row--rule", rowClass?.(row))}>
               {columns.map((c) => {
                 const full = c.fullText?.(row);
                 return (
